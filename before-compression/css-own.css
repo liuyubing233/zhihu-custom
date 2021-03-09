@@ -1,0 +1,48 @@
+body {
+  width: 100%;
+}
+
+.pf-mark {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  overflow-y: auto;
+}
+
+.pf-modal-bg {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-height: 400px;
+}
+
+.pf-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  z-index: 99999;
+  padding: 12px;
+}
+
+.pf-modal-content {
+  display: flex;
+  height: 300px;
+  width: 100%;
+}
+
+.pf-left {
+  width: 200px;
+  border-right: 1px solid #eee;
+}
+
+.pf-right {
+  flex: 1;
+}
