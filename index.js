@@ -14,38 +14,28 @@
   'use strict'
 
   let pfConfig = {
-    versionHeart: '1000', // 版心
-    positionAnswer: 'right', // 回答问题栏位置
-    positionAnswerIndex: '1', // 优先级
-    positionCreation: 'right', // 创作中心位置
+    versionHeart: '1000', // version heart
+    positionAnswer: 'right',
+    positionAnswerIndex: '1', // priority
+    positionCreation: 'right',
     positionCreationIndex: '2',
-    positionTable: 'right', // 圆桌模块位置
+    positionTable: 'right',
     positionTableIndex: '3',
-    positionFavorites: 'right', // 收藏夹栏位置
+    positionFavorites: 'right',
     positionFavoritesIndex: '4',
-    positionFooter: 'right', // 指南Footer位置
+    positionFooter: 'right',
     positionFooterIndex: '5',
+    stickyLeft: false, // left dom is sticky
+    stickyRight: false, // right dom is sticky
   }
 
-  // 缓存页面元素
-  const positionDoms = {
-    positionAnswer: { class: 'GlobalWrite', even: $('.GlobalWrite') }, // 回答问题栏
-    positionCreation: { class: 'CreatorEntrance', even: $('.GlobalSideBar-creator') }, // 创作中心
-    positionTable: { class: 'GlobalSideBar-category', even: $('.GlobalSideBar-category') }, // 圆桌模块
-    positionFavorites: { class: 'GlobalSideBar-navList', even: $('.GlobalSideBar-navList') }, // 收藏夹栏
-    positionFooter: { class: 'Footer', even: $('.Footer') }, // 指南Footer
-  }
-  console.log($('.GlobalSideBar-creator'))
+  let positionDoms = {} // cache dom for position
+  let firstInitDoms = true // is first init for position
+  let timeoutToFindCreator = null // timeout to find creator dom
 
-  const GlobalWrite = $('.GlobalWrite') // 缓存页面元素 --- 回答问题栏
-  const CreatorEntrance = $('.CreatorEntrance') // 缓存页面元素 --- 创作中心
-  const GlobalSideBarCategory = $('.GlobalSideBar-category') // 缓存页面元素 --- 圆桌模块
-  const GlobalSideBarNavList = $('.GlobalSideBar-navList').parent() // 缓存页面元素 --- 收藏夹栏
-  const Footer = $('.Footer') // 缓存页面元素 --- 指南Footer
-
-  // 页面注入html和css 初始化页面配置
+  // init html and css, init config
   function initHtml () {
-    const dom = function (p, a, c, k, e, r) { e = function (c) { return (c < 62 ? '' : e(parseInt(c / 62))) + ((c = c % 62) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if ('0'.replace(0, e) == 0) { while (c--) r[e(c)] = k[c]; k = [function (e) { return r[e] || e }]; e = function () { return '[06-9ac-zA-D]' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p }('<a style="display: none;"8="7-mark"><a 8="7-r-bg"><a 8="7-r"><a 8="7-r-content"><y 8="7-h"><q>基础设置</q><q>返回内容设置</q></y><a 8="7-i"><a id="7-f-basis"><a 8="7-f-heart 7-9-a">版心大小<0><6 8="7-6"c="s"d="9"e="z"/>z</0><0><6 8="7-6"c="s"d="9"e="A"/>A</0><0><6 8="7-6"c="s"d="9"e="B"/>B</0></a><a 8="7-f-g-j 7-9-a">回答问题栏位置<0><6 8="7-6"c="t"d="9"e="h"/>左侧</0><0><6 8="7-6"c="t"d="9"e="i"/>右侧</0><0><6 8="7-6"c="t"d="9"e="k"/>隐藏</0></a><a 8="7-f-g-j 7-9-a">回答问题栏优先级<0><6 8="7-6"c="l"d="9"e="1"/>1</0><0><6 8="7-6"c="l"d="9"e="2"/>2</0><0><6 8="7-6"c="l"d="9"e="3"/>3</0><0><6 8="7-6"c="l"d="9"e="4"/>4</0><0><6 8="7-6"c="l"d="9"e="5"/>5</0></a><a 8="7-f-g-creation 7-9-a">创作中心位置<0><6 8="7-6"c="u"d="9"e="h"/>左侧</0><0><6 8="7-6"c="u"d="9"e="i"/>右侧</0><0><6 8="7-6"c="u"d="9"e="k"/>隐藏</0></a><a 8="7-f-g-j 7-9-a">创作中心优先级<0><6 8="7-6"c="m"d="9"e="1"/>1</0><0><6 8="7-6"c="m"d="9"e="2"/>2</0><0><6 8="7-6"c="m"d="9"e="3"/>3</0><0><6 8="7-6"c="m"d="9"e="4"/>4</0><0><6 8="7-6"c="m"d="9"e="5"/>5</0></a><a 8="7-f-g-table 7-9-a">圆桌模块位置<0><6 8="7-6"c="v"d="9"e="h"/>左侧</0><0><6 8="7-6"c="v"d="9"e="i"/>右侧</0><0><6 8="7-6"c="v"d="9"e="k"/>隐藏</0></a><a 8="7-f-g-j 7-9-a">圆桌模块优先级<0><6 8="7-6"c="n"d="9"e="1"/>1</0><0><6 8="7-6"c="n"d="9"e="2"/>2</0><0><6 8="7-6"c="n"d="9"e="3"/>3</0><0><6 8="7-6"c="n"d="9"e="4"/>4</0><0><6 8="7-6"c="n"d="9"e="5"/>5</0></a><a 8="7-f-g-favorites 7-9-a">收藏夹栏位置<0><6 8="7-6"c="w"d="9"e="h"/>左侧</0><0><6 8="7-6"c="w"d="9"e="i"/>右侧</0><0><6 8="7-6"c="w"d="9"e="k"/>隐藏</0></a><a 8="7-f-g-j 7-9-a">收藏夹栏优先级<0><6 8="7-6"c="o"d="9"e="1"/>1</0><0><6 8="7-6"c="o"d="9"e="2"/>2</0><0><6 8="7-6"c="o"d="9"e="3"/>3</0><0><6 8="7-6"c="o"d="9"e="4"/>4</0><0><6 8="7-6"c="o"d="9"e="5"/>5</0></a><a 8="7-f-g-footer 7-9-a">指南C位置<0><6 8="7-6"c="x"d="9"e="h"/>左侧</0><0><6 8="7-6"c="x"d="9"e="i"/>右侧</0><0><6 8="7-6"c="x"d="9"e="k"/>隐藏</0></a><a 8="7-f-g-j 7-9-a">指南C优先级<0><6 8="7-6"c="p"d="9"e="1"/>1</0><0><6 8="7-6"c="p"d="9"e="2"/>2</0><0><6 8="7-6"c="p"d="9"e="3"/>3</0><0><6 8="7-6"c="p"d="9"e="4"/>4</0><0><6 8="7-6"c="p"d="9"e="5"/>5</0></a></a></a></a><D 8="7-b-close">关闭</D></a></a></a>', [], 40, 'label||||||input|pf|class|radio|div||name|type|value|set|position|left|right|answer|hidden|positionAnswerIndex|positionCreationIndex|positionTableIndex|positionFavoritesIndex|positionFooterIndex|li|modal|versionHeart|positionAnswer|positionCreation|positionTable|positionFavorites|positionFooter|ul|1000|1200|1500|Footer|button'.split('|'), 0, {})
+    const dom = function (p, a, c, k, e, r) { e = function (c) { return (c < 62 ? '' : e(parseInt(c / 62))) + ((c = c % 62) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if ('0'.replace(0, e) == 0) { while (c--) r[e(c)] = k[c]; k = [function (e) { return r[e] || e }]; e = function () { return '[06-9ac-zA-D]' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p }('<a style="display: none;"8="7-mark"><a 8="7-p-bg"><a 8="7-p"><a 8="7-p-content"><w 8="7-f"><n>基础设置</n><n>返回内容设置</n></w><a 8="7-g"><a id="7-x-basis"><a 8="7-x-heart 7-9-a">版心大小<0><6 8="7-6"c="q"d="9"e="y"/>y</0><0><6 8="7-6"c="q"d="9"e="z"/>z</0><0><6 8="7-6"c="q"d="9"e="A"/>A</0></a><a 8="7-9-a">回答问题栏位置<0><6 8="7-6"c="r"d="9"e="f"/>左侧</0><0><6 8="7-6"c="r"d="9"e="g"/>右侧</0><0><6 8="7-6"c="r"d="9"e="h"/>隐藏</0></a><a 8="7-9-a">回答问题栏优先级<0><6 8="7-6"c="i"d="9"e="1"/>1</0><0><6 8="7-6"c="i"d="9"e="2"/>2</0><0><6 8="7-6"c="i"d="9"e="3"/>3</0><0><6 8="7-6"c="i"d="9"e="4"/>4</0><0><6 8="7-6"c="i"d="9"e="5"/>5</0></a><a 8="7-9-a">创作中心位置<0><6 8="7-6"c="s"d="9"e="f"/>左侧</0><0><6 8="7-6"c="s"d="9"e="g"/>右侧</0><0><6 8="7-6"c="s"d="9"e="h"/>隐藏</0></a><a 8="7-9-a">创作中心优先级<0><6 8="7-6"c="j"d="9"e="1"/>1</0><0><6 8="7-6"c="j"d="9"e="2"/>2</0><0><6 8="7-6"c="j"d="9"e="3"/>3</0><0><6 8="7-6"c="j"d="9"e="4"/>4</0><0><6 8="7-6"c="j"d="9"e="5"/>5</0></a><a 8="7-9-a">圆桌模块位置<0><6 8="7-6"c="t"d="9"e="f"/>左侧</0><0><6 8="7-6"c="t"d="9"e="g"/>右侧</0><0><6 8="7-6"c="t"d="9"e="h"/>隐藏</0></a><a 8="7-9-a">圆桌模块优先级<0><6 8="7-6"c="k"d="9"e="1"/>1</0><0><6 8="7-6"c="k"d="9"e="2"/>2</0><0><6 8="7-6"c="k"d="9"e="3"/>3</0><0><6 8="7-6"c="k"d="9"e="4"/>4</0><0><6 8="7-6"c="k"d="9"e="5"/>5</0></a><a 8="7-9-a">收藏夹栏位置<0><6 8="7-6"c="u"d="9"e="f"/>左侧</0><0><6 8="7-6"c="u"d="9"e="g"/>右侧</0><0><6 8="7-6"c="u"d="9"e="h"/>隐藏</0></a><a 8="7-9-a">收藏夹栏优先级<0><6 8="7-6"c="l"d="9"e="1"/>1</0><0><6 8="7-6"c="l"d="9"e="2"/>2</0><0><6 8="7-6"c="l"d="9"e="3"/>3</0><0><6 8="7-6"c="l"d="9"e="4"/>4</0><0><6 8="7-6"c="l"d="9"e="5"/>5</0></a><a 8="7-9-a">指南B位置<0><6 8="7-6"c="v"d="9"e="f"/>左侧</0><0><6 8="7-6"c="v"d="9"e="g"/>右侧</0><0><6 8="7-6"c="v"d="9"e="h"/>隐藏</0></a><a 8="7-9-a">指南B优先级<0><6 8="7-6"c="m"d="9"e="1"/>1</0><0><6 8="7-6"c="m"d="9"e="2"/>2</0><0><6 8="7-6"c="m"d="9"e="3"/>3</0><0><6 8="7-6"c="m"d="9"e="4"/>4</0><0><6 8="7-6"c="m"d="9"e="5"/>5</0></a><a 8="7-o-a"><0>左侧栏是否固定<6 8="7-6"c="stickyLeft"d="o"e="C"/></0></a><a 8="7-o-a"><0>右侧栏是否固定<6 8="7-6"c="stickyRight"d="o"e="C"/></0></a></a></a></a><D 8="7-b-close">关闭</D></a></a></a>', [], 40, 'label||||||input|pf|class|radio|div||name|type|value|left|right|hidden|positionAnswerIndex|positionCreationIndex|positionTableIndex|positionFavoritesIndex|positionFooterIndex|li|checkbox|modal|versionHeart|positionAnswer|positionCreation|positionTable|positionFavorites|positionFooter|ul|set|1000|1200|1500|Footer|on|button'.split('|'), 0, {})
 
     const htmlModal = $(dom)
     const cssOwn = '<style type="text/css" id="pf-css-own">' +
@@ -59,24 +49,24 @@
     $('.pf-open-modal')[0].onclick = modalShow
     $('.pf-b-close')[0].onclick = modalHidden
 
-    // 主页左侧添加隐藏栏
-    $('.Topstory-container').prepend('<div class="pf-left-container" style="display: none; flex: 1; margin-right: 10px;"></div>')
+    // add left box at home page
+    $('.Topstory-container').prepend('<div class="pf-left-container" style="display: none; flex: 1; margin-right: 10px;"><div class="Sticky"></div></div>')
   }
   initHtml()
 
-  // 隐藏弹窗
+  // hidden modal
   function modalHidden () {
     $('.pf-mark')[0].style.display = 'none'
     recoverScroll()
   }
 
-  // 显示弹窗
+  // show modal
   function modalShow () {
     $('.pf-mark')[0].style.display = 'block'
     stopScroll()
   }
 
-  // 初始化数据
+  // init data
   function initData () {
     const config = localStorage.getItem('pfConfig')
     const nConfig = config ? JSON.parse(config) : {}
@@ -85,11 +75,6 @@
       ...nConfig,
     }
     changeVersion(pfConfig.versionHeart)
-    // changePositionCon('GlobalWrite', pfConfig.positionAnswer, pfConfig.positionAnswerIndex)
-    // changePositionCon('CreatorEntrance', pfConfig.positionCreation, pfConfig.positionCreationIndex)
-    // changePositionCon('GlobalSideBar-category', pfConfig.positionTable, pfConfig.positionTableIndex)
-    // changePositionCon('GlobalSideBar-navList', pfConfig.positionFavorites, pfConfig.positionFavoritesIndex)
-    // changePositionCon('Footer', pfConfig.positionFooter, pfConfig.positionFooterIndex)
 
     for (let even of $('.pf-input')) {
       // console.log(even.id, even.name)
@@ -102,30 +87,73 @@
           break
       }
       even.onchange = (e) => {
-        const { name, value } = e.target
-        // console.log(e.target.value, e.target.name, e, '??11?')
-        throttle(changeConfig(name, value), 300)
+        switch (e.target.type) {
+          case 'checkbox':
+            throttle(changeConfigByCheckbox(e.target), 300)
+            break
+          case 'radio':
+            throttle(changeConfig(e.target), 300)
+            break
+        }
       }
     }
 
-    // $('.pf-right').click = (event) => {
-    //   console.log(event.target.value, event.target.name, '???', event)
-    // const changerObj = {
-    //   'versionHeart': changeVersion
-    // }
-    // changerObj[event.target.name] && changerObj[event.target.name].call(this, event.target.value)
-    // }
-
-    // initPositionPage()
+    initPositionPage()
   }
   initData()
 
-  // 初始化左右栏
-  function initPositionPage () {
-    // 清空左右栏
-    $('.pf-left-container').empty()
-    $('.GlobalSideBar .Sticky').empty()
+  // change config by checkbox
+  function changeConfigByCheckbox (ev) {
+    const { name, checked } = ev
+    pfConfig[name] = checked
+    localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
+    const changerObj = {
+      'stickyLeft': () => stickyBetween(),
+      'stickyRight': () => stickyBetween(),
+    }
+    changerObj[name] && changerObj[name]()
+  }
 
+  // change config default (by radio, text)
+  function changeConfig (ev) {
+    const { name, value } = ev
+    pfConfig[name] = value
+    localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
+    const changerObj = {
+      'versionHeart': () => changeVersion(),
+      // 'stickyLeft': () => stickyBetween(),
+      // 'stickyRight': () => stickyBetween(),
+    }
+    if (/^position/.test(name)) {
+      initPositionPage()
+    } else {
+      changerObj[name] && changerObj[name]()
+    }
+  }
+
+  // init between box
+  function initPositionPage () {
+    if (firstInitDoms) {
+      timeoutToFindCreator = setTimeout(() => {
+        clearTimeout(timeoutToFindCreator)
+        // have creator box
+        if ($('.GlobalSideBar-creator').length) {
+          firstInitDoms = false
+          positionDoms = {
+            positionAnswer: { class: 'GlobalWrite', even: $('.GlobalWrite') },
+            positionCreation: { class: 'CreatorEntrance', even: $('.GlobalSideBar-creator') },
+            positionTable: { class: 'GlobalSideBar-category', even: $('.GlobalSideBar-category') },
+            positionFavorites: { class: 'GlobalSideBar-navList', even: $('.GlobalSideBar-navList') },
+            positionFooter: { class: 'Footer', even: $('.Footer') },
+          }
+        }
+        initPositionPage()
+      }, 100)
+      return
+    }
+    // clean between box
+    $('.pf-left-container .Sticky').empty()
+    $('.GlobalSideBar .Sticky').empty()
     const leftDom = []
     const rightDom = []
     // 添加元素
@@ -139,45 +167,14 @@
     })
     leftDom.sort((a, b) => a.index - b.index)
     rightDom.sort((a, b) => a.index - b.index)
-    leftDom.forEach(({ even }) => {
-      $('.pf-left-container').append(even)
-    })
-    console.log(rightDom)
-    rightDom.forEach(({ even }) => {
-      console.log(even, $('.GlobalSideBar .Sticky'))
-      $('.GlobalSideBar .Sticky').append(even)
-    })
-
-    // 判断左右测盒子是否有子元素
-    $('.pf-left-container')[0].style.display = $('.pf-left-container').children().length > 0 ? 'block' : 'none'
+    leftDom.forEach(({ even }) => { $('.pf-left-container .Sticky').append(even) })
+    rightDom.forEach(({ even }) => { $('.GlobalSideBar .Sticky').append(even) })
+    // detect between box is have children
+    $('.pf-left-container')[0].style.display = $('.pf-left-container .Sticky').children().length > 0 ? 'block' : 'none'
     $('.GlobalSideBar')[0].style.display = $('.GlobalSideBar .Sticky').children().length > 0 ? 'block' : 'none'
   }
 
-  // 修改配置
-  function changeConfig (name, value) {
-    pfConfig[name] = value
-    localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
-    const changerObj = {
-      'versionHeart': () => changeVersion(),
-      // 'positionAnswer': () => changePositionCon('GlobalWrite', pfConfig.positionAnswer, pfConfig.positionAnswerIndex),
-      // 'positionCreation': () => changePositionCon('CreatorEntrance', pfConfig.positionCreation, pfConfig.positionCreationIndex),
-      // 'positionTable': () => changePositionCon('GlobalSideBar-category', pfConfig.positionTable, pfConfig.positionTableIndex),
-      // 'positionFavorites': () => changePositionCon('GlobalSideBar-navList', pfConfig.positionFavorites, pfConfig.positionFavoritesIndex),
-      // 'positionFooter': () => changePositionCon('Footer', pfConfig.positionFooter, pfConfig.positionFooterIndex),
-    }
-    if (/^position/.test(name)) {
-      // if (/Index$/.test(name)) {
-
-      // } else {
-      //   changePositionCon(name, pfConfig[name], pfConfig[`${name}Index`])
-      // }
-      initPositionPage()
-    } else {
-      changerObj[name] && changerObj[name]()
-    }
-  }
-
-  // 版面修改
+  // change version
   function changeVersion () {
     const cssVersion = '<style type="text/css" id="pf-css-version">' +
       `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.Question-main .Question-mainColumn,.ColumnPageHeader-content,.QuestionPage .RichContent .ContentItem-actions.is-fixed,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${pfConfig.versionHeart}px!important;}`
@@ -187,41 +184,6 @@
     $('body').append(cssVersion)
   }
 
-  // function changePosition (name) {
-  //   // let nName = ''
-
-  // }
-
-  // 修改左右侧栏内容的位置
-  // function changePositionCon (name, status) {
-  //   console.log('change', name, status)
-  //   // const nameObj = {
-  //   //   'GlobalWrite': GlobalWrite,
-  //   //   'CreatorEntrance': CreatorEntrance,
-  //   //   'GlobalSideBar-category': GlobalSideBarCategory,
-  //   //   'GlobalSideBar-navList': GlobalSideBarNavList,
-  //   //   'Footer': Footer,
-  //   // }
-
-  //   $(`.${positionDoms[name].class}`).remove()
-  //   const statusObj = {
-  //     left: () => $('.pf-left-container').prepend(positionDoms[name].even),
-  //     right: () => $('.GlobalSideBar .Sticky').prepend(positionDoms[name].even)
-  //   }
-  //   statusObj[status] && statusObj[status]()
-
-  //   // 判断左右测盒子是否有子元素
-  //   $('.pf-left-container')[0].style.display = $('.pf-left-container').children().length > 0 ? 'block' : 'none'
-  //   let globalSideBarChildren = 0
-  //   Object.keys(positionDoms).forEach((key) => {
-  //     $('.GlobalSideBar').find(`.${positionDoms[key].class}`).length && (globalSideBarChildren++)
-  //   })
-  //   $('.GlobalSideBar')[0].style.display = globalSideBarChildren > 0 ? 'block' : 'none'
-
-  //   // 判断元素顺序
-  // }
-
-  // 节流
   function throttle (fn, timeout = 300) {
     let canRun = true
     return function () {
@@ -234,18 +196,55 @@
     }
   }
 
-  // 展示弹窗时，阻止背景滚动
+  // prevent background scroll when show modal
   function stopScroll () {
     let top = document.body.scrollTop || document.documentElement.scrollTop
     document.body.style.position = 'fixed'
     document.body.style.top = `${-1 * top}px`
   }
-  // 隐藏弹窗时，恢复背景的滚动
+  // restore background scroll when hidden modal
   function recoverScroll () {
     let top = -parseInt(document.body.style.top)
     document.body.style.position = 'static'
     document.body.style.top = 0
     window.scrollTo(0, top)
+  }
+
+  window.onscroll = scrollStyle
+  function scrollStyle (e) {
+    stickyBetween()
+  }
+
+  function stickyBetween () {
+    window.scrollY > 0 ? throttle(fixedPosition()) : throttle(inheritPosition())
+  }
+
+  function fixedPosition () {
+    if (pfConfig.stickyLeft) {
+      $('.pf-left-container .Sticky').css({
+        width: $('.pf-left-container')[0].offsetWidth,
+        position: 'fixed',
+        left: $('.pf-left-container')[0].offsetLeft,
+        top: $('.pf-left-container')[0].offsetTop,
+      })
+    } else {
+      $('.pf-left-container .Sticky').removeAttr('style', '')
+    }
+    if (pfConfig.stickyRight) {
+      $('.GlobalSideBar .Sticky').css({
+        width: $('.GlobalSideBar')[0].offsetWidth,
+        position: 'fixed',
+        right: $('.GlobalSideBar')[0].offsetRight,
+        top: $('.GlobalSideBar')[0].offsetTop,
+      })
+    } else {
+      $('.GlobalSideBar .Sticky').removeAttr('style', '')
+    }
+  }
+
+  function inheritPosition () {
+    $('.pf-left-container .Sticky').removeAttr('style', '')
+    $('.GlobalSideBar .Sticky').removeAttr('style', '')
   }
 
 })()
