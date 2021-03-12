@@ -34,7 +34,7 @@
     hiddenLogo: false, // hidden logo
     titleIco: '', // the logo at page title
     colorBackground: '#fff', // background color
-    colorsBackground: ['#f6f6f6', '#fff', '#000'],
+    colorsBackground: ['#f6f6f6', '#fff', '#000'], // TODO: 想办法解决stroage缓存这个的问题
     // colorTheme: '',
     // colorsTheme: ['']
   }
