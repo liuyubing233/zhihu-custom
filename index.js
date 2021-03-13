@@ -15,6 +15,7 @@
   'use strict'
   // TODO: 页面圆角，颜色配置，背景颜色，阴影配置，部分字体大小，自定义样式textarea，部分页面间距调整，border配置，锚点颜色
 
+  // const version = '0.0.1'
   let pfConfig = {
     versionHeart: '1000', // version heart
     positionAnswer: 'right',
@@ -34,9 +35,16 @@
     hiddenLogo: false, // hidden logo
     titleIco: '', // the logo at page title
     colorBackground: '#fff', // background color
-    colorsBackground: ['#f6f6f6', '#fff', '#000'], // TODO: 想办法解决stroage缓存这个的问题
-    // colorTheme: '',
-    // colorsTheme: ['']
+    colorsBackground: [],
+    colorTheme: '',
+    colorsTheme: ['']
+  }
+
+  // Use location colors config to resolve question about version update colors list is not update
+  const colorsLocation = {
+    colorsBackground: ['#fff', '#15202b', '#000'],
+    // colorsTheme: ['#fff', '#15202b', '#000']
+    // colorsTheme: ['#fff', '#15202b', '#000']
   }
 
   let cacheColors = {} // cache color list
@@ -47,7 +55,7 @@
   let timeoutToFindCreator = null // timeout to find creator dom
 
   // init html and css, init config
-  function initHtml () {
+  function initHtml() {
     const dom = function (p, a, c, k, e, r) { e = function (c) { return (c < 62 ? '' : e(parseInt(c / 62))) + ((c = c % 62) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if ('0'.replace(0, e) == 0) { while (c--) r[e(c)] = k[c]; k = [function (e) { return r[e] || e }]; e = function () { return '([06-9c-fh-zA-Z]|1\\w)' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p }('<9 U="display: none;"7="6-mark"><9 7="6-z-V"><9 7="6-z"><9 7="6-z-title">U r啊</9><9 7="6-z-s"><W 7="6-n"><k><a A="#6-l-X">基础设置</a></k><k><a A="#6-l-I">颜色设置</a></k><k><a A="#6-l-r">配置导出导入</a></k><!--<k><a A="#6-l-Y-s">返回内容设置</a></k>--></W><9 7="6-o"><9 B="6-l-X"><p>基础设置</p><9 7="6-c-9"><h 7="6-0">版心大小</h><0><8 7="6-8"d="J"e="c"f="Z"/>Z</0><0><8 7="6-8"d="J"e="c"f="10"/>10</0><0><8 7="6-8"d="J"e="c"f="11"/>11</0></9><9 7="6-c-9"><h 7="6-0">回答问题栏位置</h><0><8 7="6-8"d="K"e="c"f="n"/>左侧</0><0><8 7="6-8"d="K"e="c"f="o"/>右侧</0><0><8 7="6-8"d="K"e="c"f="q"/>隐藏</0></9><9 7="6-c-9"><h 7="6-0">回答问题栏优先级</h><0><8 7="6-8"d="t"e="c"f="1"/>1</0><0><8 7="6-8"d="t"e="c"f="2"/>2</0><0><8 7="6-8"d="t"e="c"f="3"/>3</0><0><8 7="6-8"d="t"e="c"f="4"/>4</0><0><8 7="6-8"d="t"e="c"f="5"/>5</0></9><9 7="6-c-9"><h 7="6-0">创作中心位置</h><0><8 7="6-8"d="L"e="c"f="n"/>左侧</0><0><8 7="6-8"d="L"e="c"f="o"/>右侧</0><0><8 7="6-8"d="L"e="c"f="q"/>隐藏</0></9><9 7="6-c-9"><h 7="6-0">创作中心优先级</h><0><8 7="6-8"d="u"e="c"f="1"/>1</0><0><8 7="6-8"d="u"e="c"f="2"/>2</0><0><8 7="6-8"d="u"e="c"f="3"/>3</0><0><8 7="6-8"d="u"e="c"f="4"/>4</0><0><8 7="6-8"d="u"e="c"f="5"/>5</0></9><9 7="6-c-9"><h 7="6-0">圆桌模块位置</h><0><8 7="6-8"d="M"e="c"f="n"/>左侧</0><0><8 7="6-8"d="M"e="c"f="o"/>右侧</0><0><8 7="6-8"d="M"e="c"f="q"/>隐藏</0></9><9 7="6-c-9"><h 7="6-0">圆桌模块优先级</h><0><8 7="6-8"d="v"e="c"f="1"/>1</0><0><8 7="6-8"d="v"e="c"f="2"/>2</0><0><8 7="6-8"d="v"e="c"f="3"/>3</0><0><8 7="6-8"d="v"e="c"f="4"/>4</0><0><8 7="6-8"d="v"e="c"f="5"/>5</0></9><9 7="6-c-9"><h 7="6-0">收藏夹栏位置</h><0><8 7="6-8"d="N"e="c"f="n"/>左侧</0><0><8 7="6-8"d="N"e="c"f="o"/>右侧</0><0><8 7="6-8"d="N"e="c"f="q"/>隐藏</0></9><9 7="6-c-9"><h 7="6-0">收藏夹栏优先级</h><0><8 7="6-8"d="w"e="c"f="1"/>1</0><0><8 7="6-8"d="w"e="c"f="2"/>2</0><0><8 7="6-8"d="w"e="c"f="3"/>3</0><0><8 7="6-8"d="w"e="c"f="4"/>4</0><0><8 7="6-8"d="w"e="c"f="5"/>5</0></9><9 7="6-c-9"><h 7="6-0">指南12位置</h><0><8 7="6-8"d="O"e="c"f="n"/>左侧</0><0><8 7="6-8"d="O"e="c"f="o"/>右侧</0><0><8 7="6-8"d="O"e="c"f="q"/>隐藏</0></9><9 7="6-c-9"><h 7="6-0">指南12优先级</h><0><8 7="6-8"d="x"e="c"f="1"/>1</0><0><8 7="6-8"d="x"e="c"f="2"/>2</0><0><8 7="6-8"d="x"e="c"f="3"/>3</0><0><8 7="6-8"d="x"e="c"f="4"/>4</0><0><8 7="6-8"d="x"e="c"f="5"/>5</0></9><9 7="6-m-9"><0><h 7="6-0">左侧栏是否固定</h><8 7="6-8"d="stickyLeft"e="m"f="C"/></0></9><9 7="6-m-9"><0><h 7="6-0">右侧栏是否固定</h><8 7="6-8"d="stickyRight"e="m"f="C"/></0></9><9 7="6-m-9"><0><h 7="6-0">隐藏13</h><8 7="6-8"d="hiddenLogo"e="m"f="C"/></0></9><9 7="6-raido-9 6-zoom-answer-image"><h 7="6-0">回答和专栏图片缩放</h><9 7="6-s"><0><8 7="6-8"d="y"e="c"f="q"/>隐藏</0><0><8 7="6-8"d="y"e="c"f="14"/>极小(14)</0><0><8 7="6-8"d="y"e="c"f="15"/>小(15)</0><0><8 7="6-8"d="y"e="c"f="16"/>中(16)</0><0><8 7="6-8"d="y"e="c"f="default"/>默认</0></9></9><9 7="6-m-9"><0><h 7="6-0">回答页面右侧信息隐藏</h><8 7="6-8"d="hiddenAnswerRightFooter"e="m"f="C"/></0></9><9 7="6-c-9"><h 7="6-0">更改网页标题图片</h><br/><0 7="6-c-i-D"><8 7="6-8"d="E"e="c"f="P"/><i F="G://P.githubassets.17/18/Q.svg"H="P"7="6-c-i"></0><0 7="6-c-i-D"><8 7="6-8"d="E"e="c"f="19"/><i F="G://g.csdnimg.cn/1a/13/favicon32.R"H="19"7="6-c-i"></0><0 7="6-c-i-D"><8 7="6-8"d="E"e="c"f="1b"/><i F="G://b-gold-cdn.xitu.io/18/v2/Q.R"H="1b"7="6-c-i"></0><0 7="6-c-i-D"><8 7="6-8"d="E"e="c"f="S"/><i F="G://1a.S.17/heifetz/Q.R"H="S"7="6-c-i"></0></9></9><9 B="6-l-I"><p>颜色设置</p><9 7="6-c-9 6-I-V"><9 7="6-0">背景颜色修改</9><!--<8 e="text">--><9 7="6-s"d="colorsBackground"></9></9></9><!--<9 B="6-l-Y-s"></9>--><9 B="6-l-r"><p>配置导出导入</p><j 7="6-export-r 6-j">导出当前配置</j><9 7="6-1c-dom"><T 7="6-T"d="configImport"></T><j 7="6-1c-r 6-j">导入</j></9></9></9></9><j 7="6-b-close 6-j">关闭</j></9></9></9>', [], 75, 'label||||||pf|class|input|div|||radio|name|type|value||span|img|button|li|set|checkbox|left|right|h3|hidden|config|content|positionAnswerIndex|positionCreationIndex|positionTableIndex|positionFavoritesIndex|positionFooterIndex|zoomAnswerImage|modal|href|id|on|select|titleIco|src|https|alt|color|versionHeart|positionAnswer|positionCreation|positionTable|positionFavorites|positionFooter|github|favicon|ico|zhihu|textarea|style|bg|ul|basis|back|1000|1200|1500|Footer|logo|100px|200px|400px|com|favicons|csdn|static|juejin|import'.split('|'), 0, {})
 
     const htmlModal = $(dom)
@@ -73,19 +81,19 @@
   initHtml()
 
   // hidden modal
-  function buttonModalHidden () {
+  function buttonModalHidden() {
     $('.pf-mark')[0].style.display = 'none'
     recoverScroll()
   }
 
   // show modal
-  function buttonModalShow () {
+  function buttonModalShow() {
     $('.pf-mark')[0].style.display = 'block'
     stopScroll()
   }
 
   // export file of config bg txt
-  function buttonExportConfig () {
+  function buttonExportConfig() {
     const url = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(localStorage.getItem('pfConfig'))
     let link = document.createElement('a')
     link.href = url
@@ -96,25 +104,19 @@
   }
 
   // import config
-  function buttonImportConfig () {
+  function buttonImportConfig() {
     const configImport = $('[name=configImport]')[0].value
     const config = JSON.parse(configImport)
-    pfConfig = {
-      ...pfConfig,
-      ...config,
-    }
+    pfConfig = formatPfConfig(config)
     localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
     initData()
   }
 
   // init data
-  function initData () {
+  function initData() {
     const config = localStorage.getItem('pfConfig')
     const nConfig = config ? JSON.parse(config) : {}
-    pfConfig = {
-      ...pfConfig,
-      ...nConfig,
-    }
+    pfConfig = getPfConfigAfterFormat(nConfig)
 
     for (let even of $('.pf-input')) {
       // even.value = pfConfig[even.name]
@@ -146,9 +148,35 @@
   }
   initData()
 
+  // format pfConfig when init or import
+  function getPfConfigAfterFormat(config) {
+    const c = {
+      ...pfConfig,
+      ...config,
+    }
+    // color list is concat from location and storage
+    Object.keys(colorsLocation).forEach((key) => {
+      c[key] = getArrayRemoveSame([].concat(colorsLocation[key], config[key] || []))
+    })
+
+    return c
+  }
+
+  // arr to remove same one
+  // item is string
+  function getArrayRemoveSame(arr) {
+    const nArr = []
+    arr.forEach((i) => {
+      if (!nArr.includes(i)) {
+        nArr.push(i)
+      }
+    })
+    return nArr
+  }
+
   // init color list to choose them
   // can change some color ep:background, theme
-  function initColorsList () {
+  function initColorsList() {
     // init cache object when first init
     if (firstInitColors) {
       firstInitColors = false
@@ -167,12 +195,13 @@
   }
 
   // init html about choose color
-  function initColorsHtml (key, colors) {
+  function initColorsHtml(key, colors) {
     cacheColors[key] = pfConfig[key]
     $(`[name="${key}"]`).children().length > 0 && $(`[name="${key}"]`).empty()
     colors.forEach((item) => {
       const name = key.replace(/colors/, 'color')
-      const dom = $(`<label class="pf-color-choose-label"><input class="pf-input" name="${name}" type="radio" value="${item}" checked="${item === pfConfig[name]}"/><div class="pf-color-radio-item"><div style="background: ${item};"></div></div></label>`)
+      const dom = $(`<label class="pf-color-choose-label"><input class="pf-input" name="${name}" type="radio" value="${item}"/><div class="pf-color-radio-item"><div style="background: ${item};"></div></div></label>`)
+      dom.find('input')[0].checked = item === pfConfig[name]
       dom.find('input')[0].onchange = (e) => {
         throttle(changeConfig(e.target), 300)
       }
@@ -182,7 +211,7 @@
   }
 
   // change config by checkbox
-  function changeConfigByCheckbox (ev) {
+  function changeConfigByCheckbox(ev) {
     const { name, checked } = ev
     pfConfig[name] = checked
     localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
@@ -196,7 +225,7 @@
   }
 
   // change config default (by radio, text)
-  function changeConfig (ev) {
+  function changeConfig(ev) {
     const { name, value } = ev
     pfConfig[name] = value
     localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
@@ -216,7 +245,7 @@
   }
 
   // change icon at page title
-  function changeTitleIco () {
+  function changeTitleIco() {
     const ico = {
       github: '<link rel="icon" class="js-site-favicon" id="pf-ico" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">',
       csdn: '<link href="https://g.csdnimg.cn/static/logo/favicon32.ico" id="pf-ico" rel="shortcut icon" type="image/x-icon">',
@@ -228,7 +257,7 @@
   }
 
   // init between box
-  function initPositionPage () {
+  function initPositionPage() {
     if (firstInitDoms) {
       timeoutToFindCreator = setTimeout(() => {
         clearTimeout(timeoutToFindCreator)
@@ -271,7 +300,7 @@
   }
 
   // change version
-  function changeVersion () {
+  function changeVersion() {
     // the width about question main
     const qMByVersionHeart = {
       '1000': '694px',
@@ -288,7 +317,7 @@
   }
 
   // change page color add css
-  function changeColor () {
+  function changeColor() {
     const cssColor = '<style type="text/css" id="pf-css-color">' +
       `html,.HotListNav-wrapper,#root,.QuestionWaiting-typesTopper{background:${pfConfig.colorBackground}!important;}`
       + '</style>'
@@ -297,7 +326,7 @@
     $('head').append(cssColor)
   }
 
-  function throttle (fn, timeout = 300) {
+  function throttle(fn, timeout = 300) {
     let canRun = true
     return function () {
       if (!canRun) return
@@ -310,13 +339,13 @@
   }
 
   // prevent background scroll when show modal
-  function stopScroll () {
+  function stopScroll() {
     let top = document.body.scrollTop || document.documentElement.scrollTop
     document.body.style.position = 'fixed'
     document.body.style.top = `${-1 * top}px`
   }
   // restore background scroll when hidden modal
-  function recoverScroll () {
+  function recoverScroll() {
     let top = -parseInt(document.body.style.top)
     document.body.style.position = 'static'
     document.body.style.top = 0
@@ -324,15 +353,15 @@
   }
 
   window.onscroll = scrollStyle
-  function scrollStyle (e) {
+  function scrollStyle(e) {
     stickyBetween()
   }
 
-  function stickyBetween () {
+  function stickyBetween() {
     window.scrollY > 0 ? throttle(fixedPosition()) : throttle(inheritPosition())
   }
 
-  function fixedPosition () {
+  function fixedPosition() {
     if (pfConfig.stickyLeft && $('.pf-left-container')[0]) {
       $('.pf-left-container .Sticky').css({
         width: $('.pf-left-container')[0].offsetWidth,
@@ -356,7 +385,7 @@
     }
   }
 
-  function inheritPosition () {
+  function inheritPosition() {
     $('.pf-left-container .Sticky').removeAttr('style', '')
     $('.GlobalSideBar .Sticky').removeAttr('style', '')
     $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
