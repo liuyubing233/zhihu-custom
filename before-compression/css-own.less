@@ -101,39 +101,51 @@ body {
             content: '：';
           }
 
-          .pf-color-choose-label,
           .pf-radio-img-select {
             display: inline-block;
             text-align: center;
+            .pf-radio-img {
+              width: 32px;
+              height: 32px;
+            }
             input {
               margin: 0;
               display: none;
-              &:checked + .pf-radio-img,
-              &:checked + .pf-color-radio-item {
+              &:checked + .pf-radio-img {
                 border: 2px solid #4286f4;
               }
             }
           }
 
-          .pf-radio-img-select {
-            padding: 8px;
-          }
-
-          .pf-color-radio-item {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #eeeeee;
-            & > div {
-              width: 100%;
-              height: 100%;
-            }
-          }
-
-          .pf-radio-img-select {
-            .pf-radio-img {
-              width: 32px;
-              height: 32px;
-              display: block;
+          [name='colorsBackground'] {
+            .pf-color-choose-label {
+              display: inline-block;
+              width: 100px;
+              height: 50px;
+              position: relative;
+              margin-right: 12px;
+              input,
+              span {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 1;
+              }
+              input {
+                left: 12px;
+                &:checked + .pf-color-radio-item {
+                  border: 2px solid #4286f4;
+                }
+              }
+              span {
+                right: 20px;
+              }
+              .pf-color-radio-item {
+                width: 100%;
+                height: 100%;
+                border: 2px solid transparent;
+                border-radius: 12px;
+              }
             }
           }
 
@@ -203,25 +215,8 @@ body {
   overflow: hidden;
 }
 
-// .QuestionHeader,
-// .ContentItem-actions.is-fixed,
-// .ExploreSpecialCard,
-// .ExploreRoundtableCard,
-// .ExploreCollectionCard,
-// .Topstory-mainColumnCard,
-// .Card,
-// .GlobalSideBar .CreatorEntrance,
-// .AppHeader,
-// .QuestionWaiting-types--fixed,
-// .SearchTabs.SearchTab-bottomShadow,
-// .css-ul9l2m,
-// .css-1bwzp6r {
-//   box-shadow: none !important;
-// }
-
-// .HotListNav,
-// .App-main .HotListNavEditPad,
-// .HotListNav,
-// .QuestionItem-footer--writeAnswerButton {
-//   border: 0 !important;
-// }
+.ExploreSpecialCard,
+.ExploreRoundtableCard,
+.ExploreCollectionCard {
+  width: 48% !important;
+}
