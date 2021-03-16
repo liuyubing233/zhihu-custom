@@ -98,7 +98,6 @@
     const config = localStorage.getItem('pfConfig')
     const nConfig = config ? JSON.parse(config) : {}
     pfConfig = getPfConfigAfterFormat(nConfig)
-
     for (let even of $('.pf-input')) {
       // even.value = pfConfig[even.name]
       switch (even.type) {
@@ -304,7 +303,7 @@
       '1500': '1194px',
     }
     const cssVersion = '<style type="text/css" id="pf-css-version">' +
-      `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.QuestionPage .RichContent .ContentItem-actions.is-fixed,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${pfConfig.versionHeart}px!important;}img.lazy{${pfConfig.zoomAnswerImage !== 'default' ? pfConfig.zoomAnswerImage === 'hidden' ? 'display: none!important;' : 'width:' + pfConfig.zoomAnswerImage + '!important' : ''}}.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main{width:${qMByVersionHeart[pfConfig.versionHeart]}!important;margin-right:0!important;}.Question-sideColumn{display: ${pfConfig.hiddenAnswerRightFooter ? 'none' : 'block'}}.ZhihuLogoLink{${pfConfig.hiddenLogo ? 'display: none!important;' : ''}}}`
+      `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.QuestionPage .RichContent .ContentItem-actions.is-fixed,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${pfConfig.versionHeart}px!important;}img.lazy{${pfConfig.zoomAnswerImage !== 'default' ? pfConfig.zoomAnswerImage === 'hidden' ? 'display: none!important;' : 'width:' + pfConfig.zoomAnswerImage + '!important' : ''}}.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main{width:${qMByVersionHeart[pfConfig.versionHeart]}!important;margin-right:0!important;}.Question-sideColumn{display: ${pfConfig.hiddenAnswerRightFooter ? 'none' : 'block'}}.ZhihuLogoLink,.TopTabNavBar-logo-3d0k{${pfConfig.hiddenLogo ? 'display: none!important;' : ''}}}`
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
@@ -312,18 +311,20 @@
 
   // change page color add css
   function changeColorBackground () {
-    const objBg = getCssBackground()
-    const cssColor = `<style type="text/css" id="pf-css-background">${Object.keys(objBg).map(i => objBg[i]()).join('')}</style>`
+    const filter = {
+      '#ffffff': { invert: 0, 'hue-rotate': '0' },
+      '#15202b': { invert: 0.7, 'hue-rotate': '180deg', contrast: 1.7 },
+      '#000000': { invert: 1, 'hue-rotate': '180deg' },
+    }
+    const fi = filter[pfConfig.colorBackground]
+    // use filter to reverse color
+    const cssColor = `<style type="text/css" id="pf-css-background">html,html img,.pf-color-radio-item{${filterObj(fi)}}</style>`
     $('#pf-css-background') && $('#pf-css-background').remove()
     $('head').append(cssColor)
-    // remove style on xen maker
-    $('.VideoGallery-root-7Z1Ci')[0] && $('.VideoGallery-root-7Z1Ci').removeAttr('style', '')
-    $('.GalleryCell-title-38fBA')[0] && $('.GalleryCell-title-38fBA').removeAttr('style', '')
-    $('.GalleryCell-footer-h9wzn')[0] && $('.GalleryCell-footer-h9wzn').removeAttr('style', '')
-    // add css at iframe
-    document.querySelector('.Iframe') && document.querySelector('.Iframe').contentWindow.document.querySelector('head').append(cssColor)
-    // change theme color after background, to solve theme color be covered
-    changeColorTheme()
+  }
+
+  function filterObj (fi) {
+    return `filter: ${Object.keys(fi).map((name) => `${name}(${fi[name]})`).join(' ')};`
   }
 
   // change page theme add css
@@ -448,55 +449,8 @@
         return `.QuestionType--active, html[data-theme=dark] .QuestionType--active {background: ${hexToRgba(colorTheme, '0.08')}!important;}`
       },
       color () {
-        return `.QuestionType--active, html[data-theme=dark] .QuestionType--active,.QuestionType--active .QuestionType-icon, html[data-theme=dark] .QuestionType--active .QuestionType-icon{color: ${colorTheme}!important}`
+        return `.QuestionType--active, html[data-theme=dark] .QuestionType--active,.QuestionType--active .QuestionType-icon, html[data-theme=dark] .QuestionType--active .QuestionType-icon,.HotListNav-item.is-active,.HotListNav-sortableItem[data-hotlist-identifier=total].is-active, html[data-theme=dark] .HotListNav-sortableItem[data-hotlist-identifier=total].is-active,.TabNavBarItem-tab-MS9i.TabNavBarItem-isActive-1iXL{color: ${colorTheme}!important}`
       }
-    }
-  }
-
-  // get css background config
-  function getCssBackground () {
-    const { colorBackground } = pfConfig
-    return {
-      bg () {
-        return `html,.HotListNav-wrapper,#root,.QuestionWaiting-typesTopper,.AppHeader,.Card,.ContentItem-actions,.GlobalSideBar-navList,.pf-mark .pf-modal-bg .pf-modal,.QuestionHeader,.QuestionHeader-footer,.CornerButton,.TopicVoteCheckbox>input+label,.Popover-content,.Popover-arrow:after,.ProfileHeader-wrapper,.HoverCard,.HoverCard-loading,.InputLike,.css-1sry9ao,.css-1akafz2,.Editable-toolbar,.AnswerForm-footer,.css-lpo24q,.css-16zrry9,.css-ovbogu,.css-1v840mj,.Input-wrapper,.css-ygii7h,.skeleton,.AnalyticsChart-tooltip,.CreatorRecruit-container,.CreatorRecruitTitle,.CreatorRecruitDesc-image,.CreatorRecruit-section,#app,.VideoGallery-root-7Z1Ci,.css-1bwzp6r,.css-w14w61,.css-w215gm,.ExploreSpecialCard,.ExploreHomePage-ContentSection-moreButton a,.ExploreCollectionCard,.ExploreColumnCard,.ExploreRoundtableCard,.QuestionWaiting-types,.ColumnPageHeader,.ColumnHomeColumnCard,.Post-content,.PostItem,.CommentsV2-footer,.CommentsV2-withPagination,.PagingButton,.Topbar,.CommentEditorV2-inputWrap--active,.Modal-inner,.zu-top,.SearchTabs,.KfeCollection-PcCollegeCard-root{background:${colorBackground}!important;}body{${reverseCss(colorBackground)}}`
-      },
-      bgTransparent () {
-        return `.ColumnHomeTop:before,.ColumnHomeBottom {${colorBackground !== '#ffffff' ? 'background: transparent!important;' : ''}}`
-      },
-      reColor () {
-        return `.ContentItem-title,.ContentItem-actions,.css-qqgmyv .AppHeader-TabsLink.is-active,.css-qqgmyv .AppHeader-TabsLink:hover,.GlobalWrite-topTitle,li a,.GlobalSideBar-navNumber, html[data-theme=dark] .GlobalSideBar-navNumber,input.Input,.QuestionHeader-title,.QuestionTopicReviewCardExtraInfo-cardTitle,.AnswerAuthor-user-name,.NumberBoard-itemValue,.ProfileHeader-detail,.CreatorEntrance-title,.SelfCollectionItem-title,.PlaceHolder-inner,.css-jt1vdv,.css-nymych,.css-p54g1l,.css-uq88u1,.css-8u7moq,.css-1204lgo,.css-nsw6sf,.css-1dpmqsl,.css-1myqwel,.CreatorRecruitTitle,.SkuTitle-skuTitleText-iVc91 span,.GalleryCell-title-38fBA,.ToolsCopyright-FieldName,.ColumnHomeTitle-text,.ColumnHomeColumnCard-description,.ColumnHomeColumnCard-meta,.ColumnHomeTop-subTitle,.BlockTitle,.PostItem-Title,.CommentTopbar-title,.WriteIndex-pageTitle,.WriteCover-previewWrapper--empty::after,.WriteCover-uploadIcon,.Search-container,.Search-container,.TopSearch-itemLink,.Search-container .SearchItem-meta{${reverseCss(colorBackground, true)}}.WriteCover-previewWrapper--empty::after{content: '添加题图'}`
-      },
-      reBgf6f6f6 () {
-        return `.GlobalSideBar-navLink:hover,.GlobalSideBar-navNumber,.Input-wrapper.Input-wrapper--grey,.SimpleSearchBar-input,.VotableTopicCard,.Menu-item.is-active,.Select-option:focus,.PlaceHolder-inner,.css-1vwmxb4:hover,.css-1da4iq8,.css-oqge09,.css-1stnbni:hover,.css-cyj5pk,.skeleton__line,.css-1xegbra,.CreatorRecruitSourceItemSet,.App-root-74PLx,.css-xevy9w tbody tr:nth-of-type(odd),.ToolsCopyright-FormSet:disabled .ToolsCopyright-input,.ExploreSpecialCard-contentTag,.Recommendations-Main{${reverseCss('#f6f6f6', true, 'background')}}.ToolsCopyright-FormSet:disabled .ToolsCopyright-input,.QuestionType, html[data-theme=dark] .QuestionType{opacity: 0.3}.QuestionType, html[data-theme=dark] .QuestionType,.CommentEditorV2-inputWrap,.WriteCover-wrapper,body{${reverseCss('#f6f6f6', false, 'background')}}`
-      },
-      reBgEBEBEB () {
-        return `.css-1b1irul{${reverseCss('#EBEBEB', true, 'background')}}`
-      },
-      reColor9b9b9b () {
-        return `.RichContent.is-collapsed .RichContent-inner:hover,.ExploreRoundtableCard-questionCounts{${reverseCss('#9b9b9b', true)}}`
-      },
-      reColor444444 () {
-        return `.CreatorEntrance-indexPageTitle,.ProfileSideCreator-readCountNumber,.AuthorInfo-name,.css-1sry9ao,.css-dh57eh,.CreatorRecruitDesc-text,.CreatorRecruitApplyCondition-additionalIntroTitle,.CreatorRecruitApplyCondition-subtitle,.CreatorRecruitApplyCondition-optionalSourceItemSource,.CreatorRecruitSourceItemSet-name,.CreatorRecruitApplyCondition-conditionItemText,.GalleryCell-footer-h9wzn,.css-1stnbni,.css-1esj255,.ToolsCopyright-Header,.ToolsCopyright-declareList,.ToolsCopyright-checkboxDesc,.ExploreColumnCard-intro,.ExploreCollectionCard-contentExcerpt,.ExploreCollectionCard-creatorName{${reverseCss('#444444', true)}}.QuestionType,.ColumnHomeRecommendation-refreshButton,.ColumnHomeBottom-requestButton,.ColumnHomeTop-writeButton,.MinorHotSpot-TitleLine{${reverseCss('#444444', false)}}`
-      },
-      reColor646464 () {
-        return `.AuthorInfo-badgeText,.RichContent.is-collapsed .RichContent-inner:hover,.CreatorRecruitSourceItemSet-bindStatusText,.css-6nxlm6,.ColumnHomeRecommendation-refreshButton,.ColumnHomeBottom-requestButton{${reverseCss('#646464', true)}}`
-      },
-      reColor8590a6 () {
-        return `.MoreAnswers .List-headerText,.CornerButton,.TopicVoteCheckbox>input+label,.css-1dhr6ij,.css-xevy9w thead th,.css-1cn472d,.ToolsCopyright-addCopy,.ExploreSpecialCard-contentTag,.ExploreHomePage-ContentSection-moreButton a,.QuestionType .QuestionType-icon, html[data-theme=dark] .QuestionType .QuestionType-icon,.PostItem-Footer,.CommentItemV2-time,.Editable-control,.CommentCollapseButton,.KfeCollection-PcCollegeCard-status{${reverseCss('#8590a6', true)}}`
-      },
-      reColor808080 () {
-        return `.css-1vwmxb4,.css-cyj5pk,.css-1qe9rzp{${reverseCss('#808080', true)}}`
-      },
-      reBorderColorEbebeb () {
-        return `.QuestionHeaderTopicMeta.Card,.Popover-content,.css-1xegbra,.css-1842imd,.ToolsCopyright-FormSet:disabled .ToolsCopyright-input,.BlockTitle,.CommentEditorV2-inputWrap--active,.CommentCollapseButton{${reverseCss('#ebebeb', true, 'border-color')}}`
-      },
-      reBorderColor141414 () {
-        return `.QuestionHeaderTopicMeta.Card, .Popover-content,.Popover-arrow:after,.ColumnHomeTop-writeButton{${reverseCss('#141414', true, 'border-color')}}`
-      },
-      reBorder () {
-        return `.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreHomePage-ContentSection-moreButton a,.ExploreColumnCard,.ColumnHomeColumnCard {border: 1px solid ${reverseCssCon(colorBackground)};}
-        `
-      },
     }
   }
 
