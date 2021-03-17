@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         zhihu style
+// @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @description  知乎样式自定义-
+// @description  知乎样式修改器-支持版心修改，左右模块位置调整、隐藏，夜间模式，logo隐藏，页面标头修改，自定义样式等
 // @author       super puffer fish
 // @match         *://www.zhihu.com/*
 // @match         *://zhuanlan.zhihu.com/*
