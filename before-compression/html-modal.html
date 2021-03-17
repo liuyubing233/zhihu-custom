@@ -1,7 +1,7 @@
 <div style="display: none;" class="pf-mark">
   <div class="pf-modal-bg">
     <div class="pf-modal">
-      <div class="pf-modal-title">style config 啊</div>
+      <div class="pf-modal-title">样式编辑器</div>
       <div class="pf-modal-content">
         <ul class="pf-left">
           <li><a href="#pf-set-basis">基础设置</a></li>
@@ -141,11 +141,15 @@
                 <img src="https://static.zhihu.com/heifetz/favicon.ico" alt="zhihu" class="pf-radio-img">
               </label>
             </div>
+            <div class="pf-radio-div">
+              <span class="pf-label">更改网页标题</span>
+              <input class="pf-input" name="title" type="text" style="height: 25px;" />
+            </div>
           </div>
           <div id="pf-set-color">
             <h3>颜色设置</h3>
             <div class="pf-radio-div pf-color-bg">
-              <div class="pf-label">背景颜色（后两种可以看作夜间模式）</div>
+              <div class="pf-label">背景</div>
               <div class="pf-content" name="colorsBackground"></div>
             </div>
             <!-- <div class="pf-radio-div pf-color-theme">
@@ -156,10 +160,19 @@
           <!-- <div id="pf-set-back-content"></div> -->
           <div id="pf-set-config">
             <h3>配置导出导入</h3>
-            <button class="pf-export-config pf-button">导出当前配置</button>
-            <div class="pf-import-dom">
-              <textarea class="pf-textarea" name="configImport"></textarea>
-              <button class="pf-import-config pf-button">导入</button>
+            <div class="pf-local-config">
+              <button class="pf-export-config pf-button">导出当前配置</button>
+              <div class="pf-import-dom">
+                <textarea class="pf-textarea" name="configImport" placeholder="配置可参考导出格式"></textarea>
+                <button class="pf-import-config pf-button">导入</button>
+              </div>
+            </div>
+            <div class="pf-customize-css">
+              <div class="pf-label">自定义css</div>
+              <div class="pf-content">
+                <textarea class="pf-textarea pf-input" name="customizeCss"></textarea>
+                <button class="pf-customize-css-button pf-button">确定</button>
+              </div>
             </div>
           </div>
         </div>

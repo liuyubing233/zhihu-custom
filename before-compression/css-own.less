@@ -2,7 +2,33 @@ body {
   width: 100%;
 }
 
+@font-face {
+  font-family: 'own-iconfont'; /* project id 2324733 */
+  src: url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot');
+  src: url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot?#iefix')
+      format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff') format('woff'),
+    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.svg#own-iconfont')
+      format('svg');
+}
+
+.iconfont {
+  font-family: 'own-iconfont' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .pf-mark {
+  box-sizing: border-box;
+  textarea,
+  input {
+    box-sizing: border-box;
+  }
   position: fixed;
   height: 100%;
   width: 100%;
@@ -74,10 +100,15 @@ body {
           flex: 1;
           overflow-y: auto;
           scroll-behavior: smooth;
-          padding: 0 12px;
+          padding: 0 12px 100px;
+          & > div {
+            padding-bottom: 24px;
+          }
           h3 {
             margin-top: 4px;
             margin-bottom: 8px;
+            font-size: 18px;
+            font-weight: bold;
           }
           #pf-set-basis {
             .pf-zoom-answer-image {
@@ -154,41 +185,60 @@ body {
               padding: 4px;
             }
           }
+
+          #pf-set-config {
+            .pf-import-dom,
+            .pf-customize-css .pf-content {
+              padding-top: 8px;
+              display: flex;
+              align-items: center;
+              .pf-textarea {
+                width: 70%;
+                height: 50px;
+              }
+              button {
+                height: 50px;
+                line-height: 50px;
+                width: 25%;
+                margin-left: 5%;
+                padding: 0 !important;
+              }
+            }
+          }
         }
       }
 
       .pf-button {
-        appearance: auto;
-        text-rendering: auto !important;
-        color: -internal-light-dark(black, white) !important;
-        letter-spacing: normal !important;
-        word-spacing: normal !important;
-        text-transform: none !important;
-        text-indent: 0px !important;
-        text-shadow: none !important;
-        display: inline-block !important;
-        text-align: center !important;
-        align-items: flex-start !important;
-        cursor: default !important;
-        background-color: -internal-light-dark(
-          rgb(239, 239, 239),
-          rgb(59, 59, 59)
-        ) !important;
-        box-sizing: border-box !important;
-        margin: 0em !important;
-        font: 400 13.3333px Arial !important;
-        padding: 1px 6px !important;
-        border-width: 2px !important;
-        border-style: outset !important;
-        border-color: -internal-light-dark(
-          rgb(118, 118, 118),
-          rgb(133, 133, 133)
-        ) !important;
-        border-image: initial !important;
-        border-radius: 2px !important;
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #ddd;
+        position: relative;
+        border: 1px solid #bbb;
+        &:hover {
+          background: #eee;
+        }
+        &:active {
+          &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.2);
+          }
+        }
+        &:focus {
+          outline: none;
+        }
       }
     }
   }
+}
+
+.pf-open-modal {
+  margin-right: 12px;
+  cursor: pointer;
 }
 
 .GlobalSideBar-navList {

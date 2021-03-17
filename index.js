@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         zhihu style
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      1.0.0
 // @description  知乎样式自定义-
 // @author       super puffer fish
 // @match         *://www.zhihu.com/*
@@ -13,9 +13,6 @@
 
 (function () {
   'use strict'
-  // TODO: 页面圆角，颜色配置，阴影配置，部分字体大小，自定义样式textarea，部分页面间距调整，border配置，锚点颜色
-
-  // const version = '0.0.1'
   let pfConfig = {
     versionHeart: '1000', // version heart
     positionAnswer: 'right',
@@ -34,10 +31,12 @@
     hiddenAnswerRightFooter: false, // answer page is hidden right footer
     hiddenLogo: false, // hidden logo
     titleIco: '', // the logo at page title
+    title: '', // the title at page title
     colorBackground: '#ffffff', // background color
     colorsBackground: [],
     colorTheme: '#0066ff',
-    colorsTheme: []
+    colorsTheme: [],
+    customizeCss: '',
   }
 
   // Use location colors config to resolve question about version update colors list is not update
@@ -54,13 +53,13 @@
     '#000000': '纯黑',
   }
 
+  let thisPageTitle = '' // cache this page title
   let cacheColors = {} // cache color list
   let firstInitColors = true // is first init for color list
-
   let positionDoms = {} // cache dom for position
   let firstInitDoms = true // is first init for position
   let timeoutToFindCreator = null // timeout to find creator dom
-
+  const openButton = '<i class="pf-open-modal iconfont">&#xe603;</i>'
   // hidden modal
   function buttonModalHidden () {
     $('.pf-mark')[0].style.display = 'none'
@@ -70,6 +69,7 @@
   // show modal
   function buttonModalShow () {
     $('.pf-mark')[0].style.display = 'block'
+    initScrollModal()
     stopScroll()
   }
 
@@ -95,7 +95,7 @@
 
   // init data
   function initData () {
-
+    thisPageTitle = document.title
     for (let even of $('.pf-input')) {
       // even.value = pfConfig[even.name]
       switch (even.type) {
@@ -105,12 +105,22 @@
           }
           break
       }
+
+      if (even.name === 'title') {
+        even.value = pfConfig.title || document.title
+      }
+
+      if (even.name === 'customizeCss') {
+        even.value = pfConfig['customizeCss']
+      }
+
       even.onchange = (e) => {
         switch (e.target.type) {
           case 'checkbox':
             throttle(changeConfigByCheckbox(e.target), 300)
             break
           case 'radio':
+          case 'text':
             throttle(changeConfig(e.target), 300)
             break
         }
@@ -120,7 +130,7 @@
     initPositionPage()
     changeTitleIco()
     initColorsList()
-    // proxyServer()
+    changeTitle()
   }
 
   // format pfConfig when init or import
@@ -178,7 +188,8 @@
       const dom = $(`<label class="pf-color-choose-label"><input class="pf-input" name="${name}" type="radio" value="${item}"/><div class="pf-color-radio-item" style="background: ${item};">${colorHtmlItem(name, item)}</div></label>`)
       dom.find('input')[0].checked = item === pfConfig[name]
       dom.find('input')[0].onchange = (e) => {
-        throttle(changeConfig(e.target), 300)
+        // throttle(changeConfig(e.target), 300)
+        changeConfig(e.target)
       }
       // name is dom`s name of class pf-content
       $(`[name="${key}"]`).length && $(`[name="${key}"]`).append(dom)
@@ -224,15 +235,26 @@
       'zoomAnswerImage': () => changeVersion(),
       'titleIco': () => changeTitleIco(),
       'colorBackground': () => changeColorBackground(),
-      'colorTheme': () => changeColorTheme()
-      // 'stickyLeft': () => stickyBetween(),
-      // 'stickyRight': () => stickyBetween(),
+      'colorTheme': () => changeColorTheme(),
+      'title': () => changeTitle(),
+      'customizeCss': () => changeCustomCss()
     }
     if (/^position/.test(name)) {
       initPositionPage()
     } else {
       changerObj[name] && changerObj[name]()
     }
+  }
+
+  function changeCustomCss() {
+    const cssCustom = `<style type="text/css" id="pf-css-custom">${pfConfig.customizeCss}</style>`
+    $('#pf-css-custom') && $('#pf-css-custom').remove()
+    $('head').append(cssCustom)
+  }
+
+  // change page title
+  function changeTitle () {
+    document.title = pfConfig.title || thisPageTitle
   }
 
   // change icon at page title
@@ -425,36 +447,35 @@
         return `.QuestionType--active, html[data-theme=dark] .QuestionType--active {background: ${hexToRgba(colorTheme, '0.08')}!important;}`
       },
       color () {
-        return `.QuestionType--active, html[data-theme=dark] .QuestionType--active,.QuestionType--active .QuestionType-icon, html[data-theme=dark] .QuestionType--active .QuestionType-icon,.HotListNav-item.is-active,.HotListNav-sortableItem[data-hotlist-identifier=total].is-active, html[data-theme=dark] .HotListNav-sortableItem[data-hotlist-identifier=total].is-active,.TabNavBarItem-tab-MS9i.TabNavBarItem-isActive-1iXL{color: ${colorTheme}!important}`
+        return `.QuestionType--active, html[data-theme=dark] .QuestionType--active,.QuestionType--active .QuestionType-icon, html[data-theme=dark] .QuestionType--active .QuestionType-icon,.HotListNav-item.is-active,.HotListNav-sortableItem[data-hotlist-identifier=total].is-active, html[data-theme=dark] .HotListNav-sortableItem[data-hotlist-identifier=total].is-active,.TabNavBarItem-tab-MS9i.TabNavBarItem-isActive-1iXL,.pf-open-modal:hover{color: ${colorTheme}!important}`
       }
     }
   }
 
   // init html and css, init config
   function initHtml () {
-    const dom = function (p, a, c, k, e, r) { e = function (c) { return (c < 62 ? '' : e(parseInt(c / 62))) + ((c = c % 62) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if ('0'.replace(0, e) == 0) { while (c--) r[e(c)] = k[c]; k = [function (e) { return r[e] || e }]; e = function () { return '([06-9c-fh-zA-Z]|1\\w)' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p }('<9 U="display: none;"7="0-mark"><9 7="0-z-V"><9 7="0-z"><9 7="0-z-title">U s啊</9><9 7="0-z-n"><W 7="0-o"><k><a A="#0-l-X">基础设置</a></k><k><a A="#0-l-B">颜色设置</a></k><k><a A="#0-l-s">配置导出导入</a></k><!--<k><a A="#0-l-Y-n">返回内容设置</a></k>--></W><9 7="0-p"><9 C="0-l-X"><q>基础设置</q><9 7="0-c-9"><h 7="0-6">版心大小</h><6><8 7="0-8"d="J"e="c"f="Z"/>Z</6><6><8 7="0-8"d="J"e="c"f="10"/>10</6><6><8 7="0-8"d="J"e="c"f="11"/>11</6></9><9 7="0-c-9"><h 7="0-6">回答问题栏位置</h><6><8 7="0-8"d="K"e="c"f="o"/>左侧</6><6><8 7="0-8"d="K"e="c"f="p"/>右侧</6><6><8 7="0-8"d="K"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">回答问题栏优先级</h><6><8 7="0-8"d="t"e="c"f="1"/>1</6><6><8 7="0-8"d="t"e="c"f="2"/>2</6><6><8 7="0-8"d="t"e="c"f="3"/>3</6><6><8 7="0-8"d="t"e="c"f="4"/>4</6><6><8 7="0-8"d="t"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">创作中心位置</h><6><8 7="0-8"d="L"e="c"f="o"/>左侧</6><6><8 7="0-8"d="L"e="c"f="p"/>右侧</6><6><8 7="0-8"d="L"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">创作中心优先级</h><6><8 7="0-8"d="u"e="c"f="1"/>1</6><6><8 7="0-8"d="u"e="c"f="2"/>2</6><6><8 7="0-8"d="u"e="c"f="3"/>3</6><6><8 7="0-8"d="u"e="c"f="4"/>4</6><6><8 7="0-8"d="u"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">圆桌模块位置</h><6><8 7="0-8"d="M"e="c"f="o"/>左侧</6><6><8 7="0-8"d="M"e="c"f="p"/>右侧</6><6><8 7="0-8"d="M"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">圆桌模块优先级</h><6><8 7="0-8"d="v"e="c"f="1"/>1</6><6><8 7="0-8"d="v"e="c"f="2"/>2</6><6><8 7="0-8"d="v"e="c"f="3"/>3</6><6><8 7="0-8"d="v"e="c"f="4"/>4</6><6><8 7="0-8"d="v"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">收藏夹栏位置</h><6><8 7="0-8"d="N"e="c"f="o"/>左侧</6><6><8 7="0-8"d="N"e="c"f="p"/>右侧</6><6><8 7="0-8"d="N"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">收藏夹栏优先级</h><6><8 7="0-8"d="w"e="c"f="1"/>1</6><6><8 7="0-8"d="w"e="c"f="2"/>2</6><6><8 7="0-8"d="w"e="c"f="3"/>3</6><6><8 7="0-8"d="w"e="c"f="4"/>4</6><6><8 7="0-8"d="w"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">指南12位置</h><6><8 7="0-8"d="O"e="c"f="o"/>左侧</6><6><8 7="0-8"d="O"e="c"f="p"/>右侧</6><6><8 7="0-8"d="O"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">指南12优先级</h><6><8 7="0-8"d="x"e="c"f="1"/>1</6><6><8 7="0-8"d="x"e="c"f="2"/>2</6><6><8 7="0-8"d="x"e="c"f="3"/>3</6><6><8 7="0-8"d="x"e="c"f="4"/>4</6><6><8 7="0-8"d="x"e="c"f="5"/>5</6></9><9 7="0-m-9"><6><h 7="0-6">左侧栏是否固定</h><8 7="0-8"d="stickyLeft"e="m"f="D"/></6></9><9 7="0-m-9"><6><h 7="0-6">右侧栏是否固定</h><8 7="0-8"d="stickyRight"e="m"f="D"/></6></9><9 7="0-m-9"><6><h 7="0-6">隐藏13</h><8 7="0-8"d="hiddenLogo"e="m"f="D"/></6></9><9 7="0-raido-9 0-zoom-answer-image"><h 7="0-6">回答和专栏图片缩放</h><9 7="0-n"><6><8 7="0-8"d="y"e="c"f="r"/>隐藏</6><6><8 7="0-8"d="y"e="c"f="14"/>极小(14)</6><6><8 7="0-8"d="y"e="c"f="15"/>小(15)</6><6><8 7="0-8"d="y"e="c"f="16"/>中(16)</6><6><8 7="0-8"d="y"e="c"f="default"/>默认</6></9></9><9 7="0-m-9"><6><h 7="0-6">回答页面右侧信息隐藏</h><8 7="0-8"d="hiddenAnswerRightFooter"e="m"f="D"/></6></9><9 7="0-c-9"><h 7="0-6">更改网页标题图片</h><br/><6 7="0-c-i-E"><8 7="0-8"d="F"e="c"f="P"/><i G="H://P.githubassets.17/18/Q.svg"I="P"7="0-c-i"></6><6 7="0-c-i-E"><8 7="0-8"d="F"e="c"f="19"/><i G="H://g.csdnimg.cn/1a/13/favicon32.R"I="19"7="0-c-i"></6><6 7="0-c-i-E"><8 7="0-8"d="F"e="c"f="1b"/><i G="H://b-gold-cdn.xitu.io/18/v2/Q.R"I="1b"7="0-c-i"></6><6 7="0-c-i-E"><8 7="0-8"d="F"e="c"f="S"/><i G="H://1a.S.17/heifetz/Q.R"I="S"7="0-c-i"></6></9></9><9 C="0-l-B"><q>颜色设置</q><9 7="0-c-9 0-B-V"><9 7="0-6">背景颜色（后两种可以看作夜间模式）</9><9 7="0-n"d="colorsBackground"></9></9><!--<9 7="0-c-9 0-B-theme"><9 7="0-6">主题颜色</9><9 7="0-n"d="colorsTheme"></9></9>--></9><!--<9 C="0-l-Y-n"></9>--><9 C="0-l-s"><q>配置导出导入</q><j 7="0-export-s 0-j">导出当前配置</j><9 7="0-1c-dom"><T 7="0-T"d="configImport"></T><j 7="0-1c-s 0-j">导入</j></9></9></9></9><j 7="0-b-close 0-j">关闭</j></9></9></9>', [], 75, 'pf||||||label|class|input|div|||radio|name|type|value||span|img|button|li|set|checkbox|content|left|right|h3|hidden|config|positionAnswerIndex|positionCreationIndex|positionTableIndex|positionFavoritesIndex|positionFooterIndex|zoomAnswerImage|modal|href|color|id|on|select|titleIco|src|https|alt|versionHeart|positionAnswer|positionCreation|positionTable|positionFavorites|positionFooter|github|favicon|ico|zhihu|textarea|style|bg|ul|basis|back|1000|1200|1500|Footer|logo|100px|200px|400px|com|favicons|csdn|static|juejin|import'.split('|'), 0, {})
+    const dom = function(p,a,c,k,e,r){e=function(c){return(c<62?'':e(parseInt(c/62)))+((c=c%62)>35?String.fromCharCode(c+29):c.toString(36))};if('0'.replace(0,e)==0){while(c--)r[e(c)]=k[c];k=[function(e){return r[e]||e}];e=function(){return'([06-9c-fh-zA-Z]|1\\w)'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('<9 V="display: none;"7="0-mark"><9 7="0-A-W"><9 7="0-A"><9 7="0-A-X">样式编辑器</9><9 7="0-A-n"><Y 7="0-o"><k><a B="#0-l-Z">基础设置</a></k><k><a B="#0-l-C">颜色设置</a></k><k><a B="#0-l-t">配置导出导入</a></k><!--<k><a B="#0-l-10-n">返回内容设置</a></k>--></Y><9 7="0-p"><9 D="0-l-Z"><q>基础设置</q><9 7="0-c-9"><h 7="0-6">版心大小</h><6><8 7="0-8"d="K"e="c"f="11"/>11</6><6><8 7="0-8"d="K"e="c"f="12"/>12</6><6><8 7="0-8"d="K"e="c"f="13"/>13</6></9><9 7="0-c-9"><h 7="0-6">回答问题栏位置</h><6><8 7="0-8"d="L"e="c"f="o"/>左侧</6><6><8 7="0-8"d="L"e="c"f="p"/>右侧</6><6><8 7="0-8"d="L"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">回答问题栏优先级</h><6><8 7="0-8"d="u"e="c"f="1"/>1</6><6><8 7="0-8"d="u"e="c"f="2"/>2</6><6><8 7="0-8"d="u"e="c"f="3"/>3</6><6><8 7="0-8"d="u"e="c"f="4"/>4</6><6><8 7="0-8"d="u"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">创作中心位置</h><6><8 7="0-8"d="M"e="c"f="o"/>左侧</6><6><8 7="0-8"d="M"e="c"f="p"/>右侧</6><6><8 7="0-8"d="M"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">创作中心优先级</h><6><8 7="0-8"d="v"e="c"f="1"/>1</6><6><8 7="0-8"d="v"e="c"f="2"/>2</6><6><8 7="0-8"d="v"e="c"f="3"/>3</6><6><8 7="0-8"d="v"e="c"f="4"/>4</6><6><8 7="0-8"d="v"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">圆桌模块位置</h><6><8 7="0-8"d="N"e="c"f="o"/>左侧</6><6><8 7="0-8"d="N"e="c"f="p"/>右侧</6><6><8 7="0-8"d="N"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">圆桌模块优先级</h><6><8 7="0-8"d="w"e="c"f="1"/>1</6><6><8 7="0-8"d="w"e="c"f="2"/>2</6><6><8 7="0-8"d="w"e="c"f="3"/>3</6><6><8 7="0-8"d="w"e="c"f="4"/>4</6><6><8 7="0-8"d="w"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">收藏夹栏位置</h><6><8 7="0-8"d="O"e="c"f="o"/>左侧</6><6><8 7="0-8"d="O"e="c"f="p"/>右侧</6><6><8 7="0-8"d="O"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">收藏夹栏优先级</h><6><8 7="0-8"d="x"e="c"f="1"/>1</6><6><8 7="0-8"d="x"e="c"f="2"/>2</6><6><8 7="0-8"d="x"e="c"f="3"/>3</6><6><8 7="0-8"d="x"e="c"f="4"/>4</6><6><8 7="0-8"d="x"e="c"f="5"/>5</6></9><9 7="0-c-9"><h 7="0-6">指南14位置</h><6><8 7="0-8"d="P"e="c"f="o"/>左侧</6><6><8 7="0-8"d="P"e="c"f="p"/>右侧</6><6><8 7="0-8"d="P"e="c"f="r"/>隐藏</6></9><9 7="0-c-9"><h 7="0-6">指南14优先级</h><6><8 7="0-8"d="y"e="c"f="1"/>1</6><6><8 7="0-8"d="y"e="c"f="2"/>2</6><6><8 7="0-8"d="y"e="c"f="3"/>3</6><6><8 7="0-8"d="y"e="c"f="4"/>4</6><6><8 7="0-8"d="y"e="c"f="5"/>5</6></9><9 7="0-m-9"><6><h 7="0-6">左侧栏是否固定</h><8 7="0-8"d="stickyLeft"e="m"f="E"/></6></9><9 7="0-m-9"><6><h 7="0-6">右侧栏是否固定</h><8 7="0-8"d="stickyRight"e="m"f="E"/></6></9><9 7="0-m-9"><6><h 7="0-6">隐藏15</h><8 7="0-8"d="hiddenLogo"e="m"f="E"/></6></9><9 7="0-raido-9 0-zoom-answer-image"><h 7="0-6">回答和专栏图片缩放</h><9 7="0-n"><6><8 7="0-8"d="z"e="c"f="r"/>隐藏</6><6><8 7="0-8"d="z"e="c"f="16"/>极小(16)</6><6><8 7="0-8"d="z"e="c"f="17"/>小(17)</6><6><8 7="0-8"d="z"e="c"f="18"/>中(18)</6><6><8 7="0-8"d="z"e="c"f="default"/>默认</6></9></9><9 7="0-m-9"><6><h 7="0-6">回答页面右侧信息隐藏</h><8 7="0-8"d="hiddenAnswerRightFooter"e="m"f="E"/></6></9><9 7="0-c-9"><h 7="0-6">更改网页标题图片</h><br/><6 7="0-c-j-F"><8 7="0-8"d="G"e="c"f="Q"/><j H="I://Q.githubassets.19/1a/R.svg"J="Q"7="0-c-j"></6><6 7="0-c-j-F"><8 7="0-8"d="G"e="c"f="1b"/><j H="I://g.csdnimg.cn/1c/15/favicon32.S"J="1b"7="0-c-j"></6><6 7="0-c-j-F"><8 7="0-8"d="G"e="c"f="1d"/><j H="I://b-gold-cdn.xitu.io/1a/v2/R.S"J="1d"7="0-c-j"></6><6 7="0-c-j-F"><8 7="0-8"d="G"e="c"f="T"/><j H="I://1c.T.19/heifetz/R.S"J="T"7="0-c-j"></6></9><9 7="0-c-9"><h 7="0-6">更改网页标题</h><8 7="0-8"d="X"e="text"V="height: 25px;"/></9></9><9 D="0-l-C"><q>颜色设置</q><9 7="0-c-9 0-C-W"><9 7="0-6">背景</9><9 7="0-n"d="colorsBackground"></9></9><!--<9 7="0-c-9 0-C-theme"><9 7="0-6">主题颜色</9><9 7="0-n"d="colorsTheme"></9></9>--></9><!--<9 D="0-l-10-n"></9>--><9 D="0-l-t"><q>配置导出导入</q><9 7="0-local-t"><i 7="0-export-t 0-i">导出当前配置</i><9 7="0-1e-dom"><s 7="0-s"d="configImport"placeholder="配置可参考导出格式"></s><i 7="0-1e-t 0-i">导入</i></9></9><9 7="0-1f-U"><9 7="0-6">自定义U</9><9 7="0-n"><s 7="0-s 0-8"d="customizeCss"></s><i 7="0-1f-U-i 0-i">确定</i></9></9></9></9></9><i 7="0-b-close 0-i">关闭</i></9></9></9>',[],78,'pf||||||label|class|input|div|||radio|name|type|value||span|button|img|li|set|checkbox|content|left|right|h3|hidden|textarea|config|positionAnswerIndex|positionCreationIndex|positionTableIndex|positionFavoritesIndex|positionFooterIndex|zoomAnswerImage|modal|href|color|id|on|select|titleIco|src|https|alt|versionHeart|positionAnswer|positionCreation|positionTable|positionFavorites|positionFooter|github|favicon|ico|zhihu|css|style|bg|title|ul|basis|back|1000|1200|1500|Footer|logo|100px|200px|400px|com|favicons|csdn|static|juejin|import|customize'.split('|'),0,{})
 
     const htmlModal = $(dom)
-
-    const openButton = '<i class="pf-open-modal">打</i>'
     $('.AppHeader-userInfo').prepend(openButton)
     $('.ColumnPageHeader-Button').prepend(openButton)
     $('body').append(htmlModal)
-
     $('.pf-open-modal')[0] && ($('.pf-open-modal')[0].onclick = buttonModalShow)
     $('.pf-b-close')[0].onclick = buttonModalHidden
     $('.pf-export-config')[0].onclick = buttonExportConfig
     $('.pf-import-config')[0].onclick = buttonImportConfig
-
+    $('.pf-customize-css-button')[0].onclick = () => changeConfig($('[name="customizeCss"]')[0])
     // add left box at home page
     const leftDom = $('<div class="pf-left-container" style="display: none; flex: 1; margin-right: 10px;"><div class="Sticky"></div></div>')
     $('.Topstory-container').prepend(leftDom)
     $('.QuestionWaiting').prepend(leftDom)
+    initScrollHeader()
+    // initScrollModal()
   }
 
   function initCss () {
     const cssOwn = '<style type="text/css" id="pf-css-own">' +
-      `body{width:100%}.pf-mark{position:fixed;height:100%;width:100%;top:0;left:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto}.pf-mark .pf-modal-bg{position:relative;height:100%;width:100%;min-height:400px}.pf-mark .pf-modal-bg .pf-modal{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:500px;height:400px;background:#fff;z-index:99999;padding:12px;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar{width:.25rem;height:.25rem;background:#eee}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-track{border-radius:0}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:.25rem}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.pf-mark .pf-modal-bg .pf-modal .pf-modal-title{padding-bottom:12px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content{display:flex;height:340px;width:100%;font-size:14px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left{width:100px;border-right:1px solid #ddd;list-style:none;margin:0px;padding:0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li{padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li a{text-decoration:none;color:#111f2c}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right h3{margin-top:4px;margin-bottom:8px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image{display:flex}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content{flex:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content label{display:block}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div{border-bottom:1px solid #eee;padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div label{padding-right:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-label::after{content:'：'}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select{display:inline-block;text-align:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select .pf-radio-img{width:32px;height:32px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input{margin:0;display:none}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input:checked+.pf-radio-img{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label{display:inline-block;width:100px;height:50px;position:relative;margin-right:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{position:absolute;top:50%;transform:translateY(-50%);z-index:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input{left:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input:checked+.pf-color-radio-item{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{right:20px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label .pf-color-radio-item{width:100%;height:100%;border:2px solid transparent;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-color .pf-content{padding:4px}.pf-mark .pf-modal-bg .pf-modal .pf-button{appearance:auto;text-rendering:auto !important;color:-internal-light-dark(black, white) !important;letter-spacing:normal !important;word-spacing:normal !important;text-transform:none !important;text-indent:0px !important;text-shadow:none !important;display:inline-block !important;text-align:center !important;align-items:flex-start !important;cursor:default !important;background-color:-internal-light-dark(#efefef, #3b3b3b) !important;box-sizing:border-box !important;margin:0em !important;font:400 13.3333px Arial !important;padding:1px 6px !important;border-width:2px !important;border-style:outset !important;border-color:-internal-light-dark(#767676, #858585) !important;border-image:initial !important;border-radius:2px !important}.GlobalSideBar-navList{margin-bottom:10px;background:#fff;overflow:hidden;border-radius:2px;box-shadow:0 1px 3px rgba(18,18,18,0.1);box-sizing:border-box}.Question-main .Question-mainColumn,.ListShortcut{flex:1;width:100%}.AnswerAuthor{margin-left:12px}.ModalWrap .ModalExp-content{height:0 !important;overflow:hidden}.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard{width:48% !important}`
+      `body{width:100%}@font-face{font-family:'own-iconfont';src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot');src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot?#iefix') format('embedded-opentype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff2') format('woff2'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff') format('woff'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.ttf') format('truetype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.svg#own-iconfont') format('svg')}.iconfont{font-family:'own-iconfont' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.pf-mark{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto}.pf-mark textarea,.pf-mark input{box-sizing:border-box}.pf-mark .pf-modal-bg{position:relative;height:100%;width:100%;min-height:400px}.pf-mark .pf-modal-bg .pf-modal{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:500px;height:400px;background:#fff;z-index:99999;padding:12px;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar{width:.25rem;height:.25rem;background:#eee}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-track{border-radius:0}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:.25rem}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.pf-mark .pf-modal-bg .pf-modal .pf-modal-title{padding-bottom:12px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content{display:flex;height:340px;width:100%;font-size:14px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left{width:100px;border-right:1px solid #ddd;list-style:none;margin:0px;padding:0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li{padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li a{text-decoration:none;color:#111f2c}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 12px 100px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right>div{padding-bottom:24px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right h3{margin-top:4px;margin-bottom:8px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image{display:flex}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content{flex:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content label{display:block}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div{border-bottom:1px solid #eee;padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div label{padding-right:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-label::after{content:'：'}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select{display:inline-block;text-align:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select .pf-radio-img{width:32px;height:32px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input{margin:0;display:none}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input:checked+.pf-radio-img{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label{display:inline-block;width:100px;height:50px;position:relative;margin-right:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{position:absolute;top:50%;transform:translateY(-50%);z-index:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input{left:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input:checked+.pf-color-radio-item{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{right:20px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label .pf-color-radio-item{width:100%;height:100%;border:2px solid transparent;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-color .pf-content{padding:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content{padding-top:8px;display:flex;align-items:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom .pf-textarea,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content .pf-textarea{width:70%;height:50px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom button,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content button{height:50px;line-height:50px;width:25%;margin-left:5%;padding:0 !important}.pf-mark .pf-modal-bg .pf-modal .pf-button{padding:4px 8px;border-radius:4px;background:#ddd;position:relative;border:1px solid #bbb}.pf-mark .pf-modal-bg .pf-modal .pf-button:hover{background:#eee}.pf-mark .pf-modal-bg .pf-modal .pf-button:active::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,0.2)}.pf-mark .pf-modal-bg .pf-modal .pf-button:focus{outline:none}.pf-open-modal{margin-right:12px;cursor:pointer}.GlobalSideBar-navList{margin-bottom:10px;background:#fff;overflow:hidden;border-radius:2px;box-shadow:0 1px 3px rgba(18,18,18,0.1);box-sizing:border-box}.Question-main .Question-mainColumn,.ListShortcut{flex:1;width:100%}.AnswerAuthor{margin-left:12px}.ModalWrap .ModalExp-content{height:0 !important;overflow:hidden}.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard{width:48% !important}`
       + '</style>'
     $('head').append(cssOwn)
   }
@@ -467,12 +488,53 @@
     initCss()
     changeVersion()
     changeColorBackground()
+    changeColorTheme()
+    changeCustomCss()
   })()
 
   // the html and data init when document onload
   window.onload = () => {
     initHtml()
     initData()
+  }
+
+  window.onscroll = () => {
+    initScrollHeader()
+  }
+
+  // init dom at page
+  function initScrollHeader () {
+    if ($('.TopstoryPageHeader-aside')[0] && !$('.TopstoryPageHeader-aside .pf-open-modal')[0]) {
+      $('.TopstoryPageHeader-aside').prepend(openButton)
+      $('.TopstoryPageHeader-aside .pf-open-modal')[0] && ($('.TopstoryPageHeader-aside .pf-open-modal')[0].onclick = buttonModalShow)
+    }
+
+    if ($('.PageHeader.is-shown .QuestionHeader-side')[0] && !$('.PageHeader.is-shown .QuestionHeader-side .pf-open-modal')[0]) {
+      $('.PageHeader.is-shown .QuestionHeader-side').prepend(openButton)
+      $('.PageHeader.is-shown .QuestionHeader-side .pf-open-modal')[0] && ($('.PageHeader.is-shown .QuestionHeader-side .pf-open-modal')[0].onclick = buttonModalShow)
+    }
+  }
+
+  // init scroll about js modal to find id at <a></a>
+  function initScrollModal () {
+    const hrefArr = []
+    for (let i of $('.pf-left a')) {
+      const id = i.href.replace(/.*#/, '')
+      hrefArr.push({
+        id,
+        offsetTop: $(`#${id}`)[0].offsetTop
+      })
+    }
+    scrollModal(hrefArr)
+    $('.pf-right')[0].onscroll = throttle(() => scrollModal(hrefArr), 100)
+  }
+
+  function scrollModal (hrefArr) {
+    const scHere = $('.pf-right')[0].offsetHeight / 2 + $('.pf-right')[0].scrollTop
+    const id = hrefArr.find((item, index) => item.offsetTop <= scHere && ((hrefArr[index + 1] && hrefArr[index + 1].offsetTop > scHere) || !hrefArr[index + 1])).id
+    for (let i of $('.pf-left a')) {
+      i.style = i.href.replace(/.*#/, '') === id ? `color: ${pfConfig.colorTheme}` : ''
+    }
   }
 
 })()
