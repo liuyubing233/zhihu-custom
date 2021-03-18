@@ -104,6 +104,11 @@
             even.checked = true
           }
           break
+        case 'checkbox':
+          if (pfConfig[even.name]) {
+            even.checked = true
+          }
+          break
       }
 
       if (even.name === 'title') {
@@ -246,7 +251,7 @@
     }
   }
 
-  function changeCustomCss() {
+  function changeCustomCss () {
     const cssCustom = `<style type="text/css" id="pf-css-custom">${pfConfig.customizeCss}</style>`
     $('#pf-css-custom') && $('#pf-css-custom').remove()
     $('head').append(cssCustom)
@@ -321,7 +326,7 @@
       '1500': '1194px',
     }
     const cssVersion = '<style type="text/css" id="pf-css-version">' +
-      `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.QuestionPage .RichContent .ContentItem-actions.is-fixed,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${pfConfig.versionHeart}px!important;}img.lazy{${pfConfig.zoomAnswerImage !== 'default' ? pfConfig.zoomAnswerImage === 'hidden' ? 'display: none!important;' : 'width:' + pfConfig.zoomAnswerImage + '!important' : ''}}.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main{width:${qMByVersionHeart[pfConfig.versionHeart]}!important;margin-right:0!important;}.Question-sideColumn{display: ${pfConfig.hiddenAnswerRightFooter ? 'none' : 'block'}}.ZhihuLogoLink,.TopTabNavBar-logo-3d0k{${pfConfig.hiddenLogo ? 'display: none!important;' : ''}}}`
+      `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.QuestionPage .RichContent .ContentItem-actions.is-fixed,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${pfConfig.versionHeart}px!important;}img.lazy{${pfConfig.zoomAnswerImage !== 'default' ? pfConfig.zoomAnswerImage === 'hidden' ? 'display: none!important;' : 'width:' + pfConfig.zoomAnswerImage + '!important' : ''}}.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main{width:${qMByVersionHeart[pfConfig.versionHeart]}!important;margin-right:0!important;}.Question-sideColumn{display: ${pfConfig.hiddenAnswerRightFooter ? 'none' : 'block'}}.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2{${pfConfig.hiddenLogo ? 'display: none!important;' : ''}}`
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
@@ -381,13 +386,8 @@
     window.scrollTo(0, top)
   }
 
-  window.onscroll = scrollStyle
-  function scrollStyle (e) {
-    stickyBetween()
-  }
-
   function stickyBetween () {
-    window.scrollY > 0 ? throttle(fixedPosition()) : throttle(inheritPosition())
+    window.scrollY > 0 ? fixedPosition() : inheritPosition()
   }
 
   function fixedPosition () {
@@ -498,9 +498,10 @@
     initData()
   }
 
-  window.onscroll = () => {
+  window.onscroll = throttle(() => {
     initScrollHeader()
-  }
+    stickyBetween()
+  }, 100)
 
   // init dom at page
   function initScrollHeader () {
