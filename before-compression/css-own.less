@@ -120,6 +120,10 @@ body {
                 }
               }
             }
+          }
+
+          #pf-set-home,
+          #pf-set-basis {
             & > div {
               border-bottom: 1px solid #eee;
               padding: 4px 0;
@@ -128,6 +132,7 @@ body {
               }
             }
           }
+
           .pf-label::after {
             content: '：';
           }
@@ -187,6 +192,10 @@ body {
           }
 
           #pf-set-config {
+            .pf-restore-config {
+              margin-left: 12px;
+            }
+
             .pf-import-dom,
             .pf-customize-css .pf-content {
               padding-top: 8px;
@@ -269,4 +278,14 @@ body {
 .ExploreRoundtableCard,
 .ExploreCollectionCard {
   width: 48% !important;
+}
+
+.GlobalWrite-navTop {
+  display: flex!important;
+  justify-content: space-between!important;
+  flex-wrap: wrap!important;
+  .GlobalWrite-topItem {
+    margin-right: 0!important;
+    margin-bottom: 12px!important;
+  }
 }

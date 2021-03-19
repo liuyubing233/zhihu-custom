@@ -5,6 +5,8 @@
       <div class="pf-modal-content">
         <ul class="pf-left">
           <li><a href="#pf-set-basis">基础设置</a></li>
+          <li><a href="#pf-set-home">首页设置</a></li>
+          <li><a href="#pf-set-question-detail">问题详情设置</a></li>
           <li><a href="#pf-set-color">颜色设置</a></li>
           <li><a href="#pf-set-config">配置导出导入</a></li>
           <!-- <li><a href="#pf-set-back-content">返回内容设置</a></li> -->
@@ -18,6 +20,48 @@
               <label><input class="pf-input" name="versionHeart" type="radio" value="1200" />1200</label>
               <label><input class="pf-input" name="versionHeart" type="radio" value="1500" />1500</label>
             </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">隐藏logo</span>
+                <input class="pf-input" name="hiddenLogo" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-raido-div pf-zoom-answer-image">
+              <span class="pf-label">回答和专栏图片缩放</span>
+              <div class="pf-content">
+                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="hidden" />隐藏</label>
+                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="100px" />极小(100px)</label>
+                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="200px" />小(200px)</label>
+                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="400px" />中(400px)</label>
+                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="default" />默认</label>
+              </div>
+            </div>
+            <div class="pf-radio-div">
+              <span class="pf-label">更改网页标题图片</span><br />
+              <label class="pf-radio-img-select">
+                <input class="pf-input" name="titleIco" type="radio" value="github" />
+                <img src="https://github.githubassets.com/favicons/favicon.svg" alt="github" class="pf-radio-img">
+              </label>
+              <label class="pf-radio-img-select">
+                <input class="pf-input" name="titleIco" type="radio" value="csdn" />
+                <img src="https://g.csdnimg.cn/static/logo/favicon32.ico" alt="csdn" class="pf-radio-img">
+              </label>
+              <label class="pf-radio-img-select">
+                <input class="pf-input" name="titleIco" type="radio" value="juejin" />
+                <img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico" alt="juejin" class="pf-radio-img">
+              </label>
+              <label class="pf-radio-img-select">
+                <input class="pf-input" name="titleIco" type="radio" value="zhihu" />
+                <img src="https://static.zhihu.com/heifetz/favicon.ico" alt="zhihu" class="pf-radio-img">
+              </label>
+            </div>
+            <div class="pf-radio-div">
+              <span class="pf-label">更改网页标题</span>
+              <input class="pf-input" name="title" type="text" style="height: 25px;" />
+            </div>
+          </div>
+          <div id="pf-set-home">
+            <h3>首页设置</h3>
             <div class="pf-radio-div">
               <span class="pf-label">回答问题栏位置</span>
               <label><input class="pf-input" name="positionAnswer" type="radio" value="left" />左侧</label>
@@ -100,50 +144,14 @@
                 <input class="pf-input" name="stickyRight" type="checkbox" value="on" />
               </label>
             </div>
+          </div>
+          <div id="pf-set-question-detail">
+            <h3>问题详情设置</h3>
             <div class="pf-checkbox-div">
               <label>
-                <span class="pf-label">隐藏logo</span>
-                <input class="pf-input" name="hiddenLogo" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-raido-div pf-zoom-answer-image">
-              <span class="pf-label">回答和专栏图片缩放</span>
-              <div class="pf-content">
-                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="hidden" />隐藏</label>
-                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="100px" />极小(100px)</label>
-                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="200px" />小(200px)</label>
-                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="400px" />中(400px)</label>
-                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="default" />默认</label>
-              </div>
-            </div>
-            <div class="pf-checkbox-div">
-              <label>
-                <span class="pf-label">回答页面右侧信息隐藏</span>
+                <span class="pf-label">移除右侧信息栏</span>
                 <input class="pf-input" name="hiddenAnswerRightFooter" type="checkbox" value="on" />
               </label>
-            </div>
-            <div class="pf-radio-div">
-              <span class="pf-label">更改网页标题图片</span><br/>
-              <label class="pf-radio-img-select">
-                <input class="pf-input" name="titleIco" type="radio" value="github" />
-                <img src="https://github.githubassets.com/favicons/favicon.svg" alt="github" class="pf-radio-img">
-              </label>
-              <label class="pf-radio-img-select">
-                <input class="pf-input" name="titleIco" type="radio" value="csdn" />
-                <img src="https://g.csdnimg.cn/static/logo/favicon32.ico" alt="csdn" class="pf-radio-img">
-              </label>
-              <label class="pf-radio-img-select">
-                <input class="pf-input" name="titleIco" type="radio" value="juejin" />
-                <img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico" alt="juejin" class="pf-radio-img">
-              </label>
-              <label class="pf-radio-img-select">
-                <input class="pf-input" name="titleIco" type="radio" value="zhihu" />
-                <img src="https://static.zhihu.com/heifetz/favicon.ico" alt="zhihu" class="pf-radio-img">
-              </label>
-            </div>
-            <div class="pf-radio-div">
-              <span class="pf-label">更改网页标题</span>
-              <input class="pf-input" name="title" type="text" style="height: 25px;" />
             </div>
           </div>
           <div id="pf-set-color">
@@ -162,6 +170,7 @@
             <h3>配置导出导入</h3>
             <div class="pf-local-config">
               <button class="pf-export-config pf-button">导出当前配置</button>
+              <button class="pf-restore-config pf-button">恢复默认配置</button>
               <div class="pf-import-dom">
                 <textarea class="pf-textarea" name="configImport" placeholder="配置可参考导出格式"></textarea>
                 <button class="pf-import-config pf-button">导入</button>

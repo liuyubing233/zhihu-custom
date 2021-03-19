@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
+// @version      1.1.0
 // @description  知乎样式修改器-支持版心修改，左右模块位置调整、隐藏，夜间模式，logo隐藏，页面标头修改，自定义样式等
 // @author       super puffer fish
 // @match         *://www.zhihu.com/*
@@ -14,66 +14,69 @@
 (function () {
   'use strict'
   let pfConfig = {
-    versionHeart: '1000', // version heart
-    positionAnswer: 'right',
-    positionAnswerIndex: '1', // priority
+    versionHeart: '1200', // 版心宽度
+    positionAnswer: 'left',
+    positionAnswerIndex: '1', // 优先级
     positionCreation: 'right',
     positionCreationIndex: '2',
     positionTable: 'right',
     positionTableIndex: '3',
-    positionFavorites: 'right',
+    positionFavorites: 'left',
     positionFavoritesIndex: '4',
     positionFooter: 'right',
     positionFooterIndex: '5',
-    stickyLeft: false, // left dom is sticky
-    stickyRight: false, // right dom is sticky
-    zoomAnswerImage: 'default', // zoom answer and special column image size
-    hiddenAnswerRightFooter: false, // answer page is hidden right footer
-    hiddenLogo: false, // hidden logo
-    titleIco: '', // the logo at page title
-    title: '', // the title at page title
-    colorBackground: '#ffffff', // background color
+    stickyLeft: false, // 首页左侧栏是否固定
+    stickyRight: false, // 首页右侧栏是否固定
+    zoomAnswerImage: '100px', // 图片缩放大小 hidden 100px 200px 400px default
+    hiddenAnswerRightFooter: true, // 回答页面右侧内容隐藏
+    hiddenLogo: false, // 隐藏logo
+    titleIco: '', // 网页标题logo图
+    title: '', // 网页标题
+    colorBackground: '#ffffff', // 背景色
     colorsBackground: [],
     colorTheme: '#0066ff',
     colorsTheme: [],
     customizeCss: '',
   }
 
-  // Use location colors config to resolve question about version update colors list is not update
+  let pfConfigCache = {} // 缓存初始配置
+
+  // 使用位置颜色配置来解决有关版本更新颜色列表未更新的问题
   const colorsLocation = {
     colorsBackground: ['#ffffff', '#15202b', '#000000'],
     colorsTheme: ['#0066ff']
     // colorsTheme: ['#fff', '#15202b', '#000']
   }
 
-  // background text on choose tag
+  // 背景色对应名称
   const backgroundText = {
     '#ffffff': '默认',
     '#15202b': '黯淡',
     '#000000': '纯黑',
   }
 
-  let thisPageTitle = '' // cache this page title
-  let cacheColors = {} // cache color list
-  let firstInitColors = true // is first init for color list
-  let positionDoms = {} // cache dom for position
-  let firstInitDoms = true // is first init for position
-  let timeoutToFindCreator = null // timeout to find creator dom
+  let thisPageTitle = '' // 缓存页面原标题
+  let cacheColors = {} // 缓存颜色列表
+  let firstInitColors = true // 是否第一次加载颜色模块
+  let positionDoms = {} // 缓存首页原右侧元素
+  let firstInitDoms = true // 是否第一次进入页面操作首页
+  let timeoutToFindCreator = null // 定时器---用来查找首页创作中心（因为是页面加载完成后动态写入）
   const openButton = '<i class="pf-open-modal iconfont">&#xe603;</i>'
-  // hidden modal
+
+  // 隐藏弹窗
   function buttonModalHidden () {
     $('.pf-mark')[0].style.display = 'none'
     recoverScroll()
   }
 
-  // show modal
+  // 开启弹窗
   function buttonModalShow () {
     $('.pf-mark')[0].style.display = 'block'
     initScrollModal()
     stopScroll()
   }
 
-  // export file of config bg txt
+  // 导出现有配置为.txt格式
   function buttonExportConfig () {
     const url = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(localStorage.getItem('pfConfig'))
     let link = document.createElement('a')
@@ -84,16 +87,27 @@
     document.body.removeChild(link)
   }
 
-  // import config
+  // 导入配置
   function buttonImportConfig () {
     const configImport = $('[name=configImport]')[0].value
     const config = JSON.parse(configImport)
-    pfConfig = formatPfConfig(config)
+    pfConfig = getPfConfigAfterFormat(config)
     localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
     initData()
+    initDataOnDocumentStart()
   }
 
-  // init data
+  // 恢复默认配置
+  function buttonRestoreConfig () {
+    pfConfig = {
+      ...pfConfigCache,
+      ...colorsLocation,
+    }
+    localStorage.setItem('pfConfig', JSON.stringify(pfConfig))
+    initData()
+    initDataOnDocumentStart()
+  }
+
   function initData () {
     thisPageTitle = document.title
     for (let even of $('.pf-input')) {
@@ -138,13 +152,13 @@
     changeTitle()
   }
 
-  // format pfConfig when init or import
+  // 在加载和导入前格式化页面配置
   function getPfConfigAfterFormat (config) {
     const c = {
       ...pfConfig,
       ...config,
     }
-    // color list is concat from location and storage
+    // 颜色列表从本js和本地存储中合并去重
     Object.keys(colorsLocation).forEach((key) => {
       c[key] = getArrayRemoveSame([].concat(colorsLocation[key], config[key] || []))
     })
@@ -152,8 +166,7 @@
     return c
   }
 
-  // arr to remove same one
-  // item is string
+  // 数组去重 格式为string[]
   function getArrayRemoveSame (arr) {
     const nArr = []
     arr.forEach((i) => {
@@ -164,27 +177,24 @@
     return nArr
   }
 
-  // init color list to choose them
-  // can change some color ep:background, theme
+  // 加载颜色列表
   function initColorsList () {
-    // init cache object when first init
+    // 第一进入时加载暂存内容
     if (firstInitColors) {
       firstInitColors = false
       Object.keys(pfConfig).forEach((key) => {
         /^colors/.test(key) && initColorsHtml(key, pfConfig[key])
       })
     } else {
-      // is not first init
       Object.keys(pfConfig).forEach((key) => {
         if (/^colors/.test(key)) {
-          // if new config content is not same to cache colors list, reload this colors html by name
+          // 如果配置中的颜色在缓存中不相等，则重新加载颜色元素
           pfConfig[key] !== cacheColors[key] && initColorsHtml(key, pfConfig[key])
         }
       })
     }
   }
 
-  // init html about choose color
   function initColorsHtml (key, colors) {
     cacheColors[key] = pfConfig[key]
     $(`[name="${key}"]`).children().length > 0 && $(`[name="${key}"]`).empty()
@@ -196,12 +206,10 @@
         // throttle(changeConfig(e.target), 300)
         changeConfig(e.target)
       }
-      // name is dom`s name of class pf-content
       $(`[name="${key}"]`).length && $(`[name="${key}"]`).append(dom)
     })
   }
 
-  // children dom in color html
   function colorHtmlItem (name, item) {
     const doms = {
       'colorBackground': `<span style="color: ${colorReverse(item)}">${backgroundText[item]}</span>`
@@ -209,14 +217,14 @@
     return doms[name] || ''
   }
 
-  // color reverse, use #ffffff, do not use #fff
+  // 颜色取反 格式是16进制6位 例如用#ffffff而不是#fff
   function colorReverse (OldColorValue) {
     var OldColorValue = "0x" + OldColorValue.replace(/#/g, "")
     var str = "000000" + (0xFFFFFF - OldColorValue).toString(16)
     return '#' + str.substring(str.length - 6, str.length)
   }
 
-  // change config by checkbox
+  // 修改配置 checkbox
   function changeConfigByCheckbox (ev) {
     const { name, checked } = ev
     pfConfig[name] = checked
@@ -230,7 +238,7 @@
     changerObj[name] && changerObj[name]()
   }
 
-  // change config default (by radio, text)
+  // 修改配置 radio text
   function changeConfig (ev) {
     const { name, value } = ev
     pfConfig[name] = value
@@ -257,12 +265,12 @@
     $('head').append(cssCustom)
   }
 
-  // change page title
+  // 修改页面标题
   function changeTitle () {
     document.title = pfConfig.title || thisPageTitle
   }
 
-  // change icon at page title
+  // 修改页面标题ico
   function changeTitleIco () {
     const ico = {
       github: '<link rel="icon" class="js-site-favicon" id="pf-ico" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">',
@@ -274,12 +282,12 @@
     ico[pfConfig.titleIco] && $('head').append(ico[pfConfig.titleIco])
   }
 
-  // init between box
+  // 加载两侧数据
   function initPositionPage () {
     if (firstInitDoms) {
       timeoutToFindCreator = setTimeout(() => {
         clearTimeout(timeoutToFindCreator)
-        // have creator box
+        // 循环定时直到存在创作中心
         if ($('.GlobalSideBar-creator').length) {
           firstInitDoms = false
           positionDoms = {
@@ -294,12 +302,12 @@
       }, 100)
       return
     }
-    // clean between box
+    // 清除两侧盒子内容
     $('.pf-left-container .Sticky').empty()
     $('.GlobalSideBar .Sticky').empty()
     const leftDom = []
     const rightDom = []
-    // append dom
+    // 添加dom
     Object.keys(positionDoms).forEach((key) => {
       const e = { even: positionDoms[key].even, index: Number(pfConfig[`${key}Index`]) }
       if (pfConfig[key] === 'left') {
@@ -312,27 +320,27 @@
     rightDom.sort((a, b) => a.index - b.index)
     leftDom.forEach(({ even }) => { $('.pf-left-container .Sticky').append(even) })
     rightDom.forEach(({ even }) => { $('.GlobalSideBar .Sticky').append(even) })
-    // detect between box is have children
+    // 两侧盒子不存在子元素则隐藏
     $('.pf-left-container')[0] && ($('.pf-left-container')[0].style.display = $('.pf-left-container .Sticky').children().length > 0 ? 'block' : 'none')
     $('.GlobalSideBar')[0] && ($('.GlobalSideBar')[0].style.display = $('.GlobalSideBar .Sticky').children().length > 0 ? 'block' : 'none')
   }
 
-  // change version
+  // 修改版心方法
   function changeVersion () {
-    // the width about question main
+    // 版心对应的问题内容宽度
     const qMByVersionHeart = {
       '1000': '694px',
       '1200': '894px',
       '1500': '1194px',
     }
     const cssVersion = '<style type="text/css" id="pf-css-version">' +
-      `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.QuestionPage .RichContent .ContentItem-actions.is-fixed,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${pfConfig.versionHeart}px!important;}img.lazy{${pfConfig.zoomAnswerImage !== 'default' ? pfConfig.zoomAnswerImage === 'hidden' ? 'display: none!important;' : 'width:' + pfConfig.zoomAnswerImage + '!important' : ''}}.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main{width:${qMByVersionHeart[pfConfig.versionHeart]}!important;margin-right:0!important;}.Question-sideColumn{display: ${pfConfig.hiddenAnswerRightFooter ? 'none' : 'block'}}.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2{${pfConfig.hiddenLogo ? 'display: none!important;' : ''}}`
+      `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.QuestionPage .RichContent .ContentItem-actions.is-fixed,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${pfConfig.versionHeart}px!important;}img.lazy{${pfConfig.zoomAnswerImage !== 'default' ? pfConfig.zoomAnswerImage === 'hidden' ? 'display: none!important;' : 'width:' + pfConfig.zoomAnswerImage + '!important' : ''}}.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main{width:${qMByVersionHeart[pfConfig.versionHeart]}!important;margin-right:0!important;}.Question-sideColumn{display: ${pfConfig.hiddenAnswerRightFooter ? 'none' : 'block'}!important;}.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2{${pfConfig.hiddenLogo ? 'display: none!important;' : ''}}`
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
   }
 
-  // change page color add css
+  // 修改页面背景的css
   function changeColorBackground () {
     const filter = {
       '#ffffff': { invert: 0, 'hue-rotate': '0' },
@@ -340,7 +348,7 @@
       '#000000': { invert: 1, 'hue-rotate': '180deg' },
     }
     const fi = filter[pfConfig.colorBackground]
-    // use filter to reverse color
+    // 使用filter方法来实现夜间模式
     const cssColor = `<style type="text/css" id="pf-css-background">html,html img,.pf-color-radio-item{${filterObj(fi)}}</style>`
     $('#pf-css-background') && $('#pf-css-background').remove()
     $('head').append(cssColor)
@@ -350,14 +358,12 @@
     return `filter: ${Object.keys(fi).map((name) => `${name}(${fi[name]})`).join(' ')};`
   }
 
-  // change page theme add css
+  // 页面主题方法
   function changeColorTheme () {
     const objBg = getCssTheme()
     const cssColor = `<style type="text/css" id="pf-css-theme">${Object.keys(objBg).map(i => objBg[i]()).join('')}</style>`
     $('#pf-css-theme') && $('#pf-css-theme').remove()
     $('head').append(cssColor)
-    // add css at iframe
-    document.querySelector('.Iframe') && document.querySelector('.Iframe').contentWindow.document.querySelector('head').append(cssColor)
   }
 
   function throttle (fn, timeout = 300) {
@@ -372,13 +378,13 @@
     }
   }
 
-  // prevent background scroll when show modal
+  // 在打开弹窗时候停止页面滚动，只允许弹窗滚动
   function stopScroll () {
     let top = document.body.scrollTop || document.documentElement.scrollTop
     document.body.style.position = 'fixed'
     document.body.style.top = `${-1 * top}px`
   }
-  // restore background scroll when hidden modal
+  // 关闭弹窗的时候恢复页面滚动
   function recoverScroll () {
     let top = -parseInt(document.body.style.top)
     document.body.style.position = 'static'
@@ -420,22 +426,21 @@
     $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
   }
 
-
-  //hex -> rgba
+  // hex -> rgba
   function hexToRgba (hex, opacity) {
     return 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ',' + parseInt('0x' + hex.slice(3, 5)) + ','
       + parseInt('0x' + hex.slice(5, 7)) + ',' + opacity + ')'
   }
 
-  // reverse color at background
-  function reverseCss (color, isImportant = false, name = 'color') {
-    return pfConfig.colorBackground !== '#ffffff' ? `${name}: ${colorReverse(color)}${isImportant ? '!important' : ''};` : ''
-  }
+  // // reverse color at background
+  // function reverseCss (color, isImportant = false, name = 'color') {
+  //   return pfConfig.colorBackground !== '#ffffff' ? `${name}: ${colorReverse(color)}${isImportant ? '!important' : ''};` : ''
+  // }
 
-  // reverse color's content at background
-  function reverseCssCon (color) {
-    return pfConfig.colorBackground !== '#ffffff' ? colorReverse(color) : color
-  }
+  // // reverse color's content at background
+  // function reverseCssCon (color) {
+  //   return pfConfig.colorBackground !== '#ffffff' ? colorReverse(color) : color
+  // }
 
   function getCssTheme () {
     const { colorTheme } = pfConfig
@@ -452,10 +457,10 @@
     }
   }
 
-  // init html and css, init config
+  // 注入弹窗元素和默认css
   function initHtml () {
-    const dom = '<div style="display: none;"class="pf-mark"><div class="pf-modal-bg"><div class="pf-modal"><div class="pf-modal-title">样式编辑器</div><div class="pf-modal-content"><ul class="pf-left"><li><a href="#pf-set-basis">基础设置</a></li><li><a href="#pf-set-color">颜色设置</a></li><li><a href="#pf-set-config">配置导出导入</a></li><!--<li><a href="#pf-set-back-content">返回内容设置</a></li>--></ul><div class="pf-right"><div id="pf-set-basis"><h3>基础设置</h3><div class="pf-radio-div"><span class="pf-label">版心大小</span><label><input class="pf-input"name="versionHeart"type="radio"value="1000"/>1000</label><label><input class="pf-input"name="versionHeart"type="radio"value="1200"/>1200</label><label><input class="pf-input"name="versionHeart"type="radio"value="1500"/>1500</label></div><div class="pf-radio-div"><span class="pf-label">回答问题栏位置</span><label><input class="pf-input"name="positionAnswer"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">回答问题栏优先级</span><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">创作中心位置</span><label><input class="pf-input"name="positionCreation"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">创作中心优先级</span><label><input class="pf-input"name="positionCreationIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">圆桌模块位置</span><label><input class="pf-input"name="positionTable"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionTable"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionTable"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">圆桌模块优先级</span><label><input class="pf-input"name="positionTableIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">收藏夹栏位置</span><label><input class="pf-input"name="positionFavorites"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">收藏夹栏优先级</span><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">指南Footer位置</span><label><input class="pf-input"name="positionFooter"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">指南Footer优先级</span><label><input class="pf-input"name="positionFooterIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="5"/>5</label></div><div class="pf-checkbox-div"><label><span class="pf-label">左侧栏是否固定</span><input class="pf-input"name="stickyLeft"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">右侧栏是否固定</span><input class="pf-input"name="stickyRight"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">隐藏logo</span><input class="pf-input"name="hiddenLogo"type="checkbox"value="on"/></label></div><div class="pf-raido-div pf-zoom-answer-image"><span class="pf-label">回答和专栏图片缩放</span><div class="pf-content"><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="hidden"/>隐藏</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="100px"/>极小(100px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="200px"/>小(200px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="400px"/>中(400px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="default"/>默认</label></div></div><div class="pf-checkbox-div"><label><span class="pf-label">回答页面右侧信息隐藏</span><input class="pf-input"name="hiddenAnswerRightFooter"type="checkbox"value="on"/></label></div><div class="pf-radio-div"><span class="pf-label">更改网页标题图片</span><br/><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="github"/><img src="https://github.githubassets.com/favicons/favicon.svg"alt="github"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="csdn"/><img src="https://g.csdnimg.cn/static/logo/favicon32.ico"alt="csdn"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="juejin"/><img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico"alt="juejin"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="zhihu"/><img src="https://static.zhihu.com/heifetz/favicon.ico"alt="zhihu"class="pf-radio-img"></label></div><div class="pf-radio-div"><span class="pf-label">更改网页标题</span><input class="pf-input"name="title"type="text"style="height: 25px;"/></div></div><div id="pf-set-color"><h3>颜色设置</h3><div class="pf-radio-div pf-color-bg"><div class="pf-label">背景</div><div class="pf-content"name="colorsBackground"></div></div><!--<div class="pf-radio-div pf-color-theme"><div class="pf-label">主题颜色</div><div class="pf-content"name="colorsTheme"></div></div>--></div><!--<div id="pf-set-back-content"></div>--><div id="pf-set-config"><h3>配置导出导入</h3><div class="pf-local-config"><button class="pf-export-config pf-button">导出当前配置</button><div class="pf-import-dom"><textarea class="pf-textarea"name="configImport"placeholder="配置可参考导出格式"></textarea><button class="pf-import-config pf-button">导入</button></div></div><div class="pf-customize-css"><div class="pf-label">自定义css</div><div class="pf-content"><textarea class="pf-textarea pf-input"name="customizeCss"></textarea><button class="pf-customize-css-button pf-button">确定</button></div></div></div></div></div><button class="pf-b-close pf-button">关闭</button></div></div></div>'
-
+    const dom =
+      '<div style="display: none;"class="pf-mark"><div class="pf-modal-bg"><div class="pf-modal"><div class="pf-modal-title">样式编辑器</div><div class="pf-modal-content"><ul class="pf-left"><li><a href="#pf-set-basis">基础设置</a></li><li><a href="#pf-set-home">首页设置</a></li><li><a href="#pf-set-question-detail">问题详情设置</a></li><li><a href="#pf-set-color">颜色设置</a></li><li><a href="#pf-set-config">配置导出导入</a></li><!--<li><a href="#pf-set-back-content">返回内容设置</a></li>--></ul><div class="pf-right"><div id="pf-set-basis"><h3>基础设置</h3><div class="pf-radio-div"><span class="pf-label">版心大小</span><label><input class="pf-input"name="versionHeart"type="radio"value="1000"/>1000</label><label><input class="pf-input"name="versionHeart"type="radio"value="1200"/>1200</label><label><input class="pf-input"name="versionHeart"type="radio"value="1500"/>1500</label></div><div class="pf-checkbox-div"><label><span class="pf-label">隐藏logo</span><input class="pf-input"name="hiddenLogo"type="checkbox"value="on"/></label></div><div class="pf-raido-div pf-zoom-answer-image"><span class="pf-label">回答和专栏图片缩放</span><div class="pf-content"><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="hidden"/>隐藏</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="100px"/>极小(100px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="200px"/>小(200px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="400px"/>中(400px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="default"/>默认</label></div></div><div class="pf-radio-div"><span class="pf-label">更改网页标题图片</span><br/><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="github"/><img src="https://github.githubassets.com/favicons/favicon.svg"alt="github"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="csdn"/><img src="https://g.csdnimg.cn/static/logo/favicon32.ico"alt="csdn"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="juejin"/><img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico"alt="juejin"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="zhihu"/><img src="https://static.zhihu.com/heifetz/favicon.ico"alt="zhihu"class="pf-radio-img"></label></div><div class="pf-radio-div"><span class="pf-label">更改网页标题</span><input class="pf-input"name="title"type="text"style="height: 25px;"/></div></div><div id="pf-set-home"><h3>首页设置</h3><div class="pf-radio-div"><span class="pf-label">回答问题栏位置</span><label><input class="pf-input"name="positionAnswer"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">回答问题栏优先级</span><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionAnswerIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">创作中心位置</span><label><input class="pf-input"name="positionCreation"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">创作中心优先级</span><label><input class="pf-input"name="positionCreationIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionCreationIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">圆桌模块位置</span><label><input class="pf-input"name="positionTable"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionTable"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionTable"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">圆桌模块优先级</span><label><input class="pf-input"name="positionTableIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionTableIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">收藏夹栏位置</span><label><input class="pf-input"name="positionFavorites"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">收藏夹栏优先级</span><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionFavoritesIndex"type="radio"value="5"/>5</label></div><div class="pf-radio-div"><span class="pf-label">指南Footer位置</span><label><input class="pf-input"name="positionFooter"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="hidden"/>隐藏</label></div><div class="pf-radio-div"><span class="pf-label">指南Footer优先级</span><label><input class="pf-input"name="positionFooterIndex"type="radio"value="1"/>1</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="2"/>2</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="3"/>3</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="4"/>4</label><label><input class="pf-input"name="positionFooterIndex"type="radio"value="5"/>5</label></div><div class="pf-checkbox-div"><label><span class="pf-label">左侧栏是否固定</span><input class="pf-input"name="stickyLeft"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">右侧栏是否固定</span><input class="pf-input"name="stickyRight"type="checkbox"value="on"/></label></div></div><div id="pf-set-question-detail"><h3>问题详情设置</h3><div class="pf-checkbox-div"><label><span class="pf-label">移除右侧信息栏</span><input class="pf-input"name="hiddenAnswerRightFooter"type="checkbox"value="on"/></label></div></div><div id="pf-set-color"><h3>颜色设置</h3><div class="pf-radio-div pf-color-bg"><div class="pf-label">背景</div><div class="pf-content"name="colorsBackground"></div></div><!--<div class="pf-radio-div pf-color-theme"><div class="pf-label">主题颜色</div><div class="pf-content"name="colorsTheme"></div></div>--></div><!--<div id="pf-set-back-content"></div>--><div id="pf-set-config"><h3>配置导出导入</h3><div class="pf-local-config"><button class="pf-export-config pf-button">导出当前配置</button><button class="pf-restore-config pf-button">恢复默认配置</button><div class="pf-import-dom"><textarea class="pf-textarea"name="configImport"placeholder="配置可参考导出格式"></textarea><button class="pf-import-config pf-button">导入</button></div></div><div class="pf-customize-css"><div class="pf-label">自定义css</div><div class="pf-content"><textarea class="pf-textarea pf-input"name="customizeCss"></textarea><button class="pf-customize-css-button pf-button">确定</button></div></div></div></div></div><button class="pf-b-close pf-button">关闭</button></div></div></div>'
     const htmlModal = $(dom)
     $('.AppHeader-userInfo').prepend(openButton)
     $('.ColumnPageHeader-Button').prepend(openButton)
@@ -464,8 +469,9 @@
     $('.pf-b-close')[0].onclick = buttonModalHidden
     $('.pf-export-config')[0].onclick = buttonExportConfig
     $('.pf-import-config')[0].onclick = buttonImportConfig
+    $('.pf-restore-config')[0].onclick = buttonRestoreConfig
     $('.pf-customize-css-button')[0].onclick = () => changeConfig($('[name="customizeCss"]')[0])
-    // add left box at home page
+    // 在首页加入左侧模块 用于调整创作中心 收藏夹等模块元素
     const leftDom = $('<div class="pf-left-container" style="display: none; flex: 1; margin-right: 10px;"><div class="Sticky"></div></div>')
     $('.Topstory-container').prepend(leftDom)
     $('.QuestionWaiting').prepend(leftDom)
@@ -475,24 +481,29 @@
 
   function initCss () {
     const cssOwn = '<style type="text/css" id="pf-css-own">' +
-      `body{width:100%}@font-face{font-family:'own-iconfont';src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot');src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot?#iefix') format('embedded-opentype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff2') format('woff2'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff') format('woff'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.ttf') format('truetype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.svg#own-iconfont') format('svg')}.iconfont{font-family:'own-iconfont' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.pf-mark{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto}.pf-mark textarea,.pf-mark input{box-sizing:border-box}.pf-mark .pf-modal-bg{position:relative;height:100%;width:100%;min-height:400px}.pf-mark .pf-modal-bg .pf-modal{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:500px;height:400px;background:#fff;z-index:99999;padding:12px;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar{width:.25rem;height:.25rem;background:#eee}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-track{border-radius:0}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:.25rem}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.pf-mark .pf-modal-bg .pf-modal .pf-modal-title{padding-bottom:12px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content{display:flex;height:340px;width:100%;font-size:14px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left{width:100px;border-right:1px solid #ddd;list-style:none;margin:0px;padding:0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li{padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li a{text-decoration:none;color:#111f2c}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 12px 100px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right>div{padding-bottom:24px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right h3{margin-top:4px;margin-bottom:8px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image{display:flex}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content{flex:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content label{display:block}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div{border-bottom:1px solid #eee;padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div label{padding-right:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-label::after{content:'：'}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select{display:inline-block;text-align:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select .pf-radio-img{width:32px;height:32px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input{margin:0;display:none}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input:checked+.pf-radio-img{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label{display:inline-block;width:100px;height:50px;position:relative;margin-right:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{position:absolute;top:50%;transform:translateY(-50%);z-index:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input{left:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input:checked+.pf-color-radio-item{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{right:20px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label .pf-color-radio-item{width:100%;height:100%;border:2px solid transparent;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-color .pf-content{padding:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content{padding-top:8px;display:flex;align-items:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom .pf-textarea,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content .pf-textarea{width:70%;height:50px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom button,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content button{height:50px;line-height:50px;width:25%;margin-left:5%;padding:0 !important}.pf-mark .pf-modal-bg .pf-modal .pf-button{padding:4px 8px;border-radius:4px;background:#ddd;position:relative;border:1px solid #bbb}.pf-mark .pf-modal-bg .pf-modal .pf-button:hover{background:#eee}.pf-mark .pf-modal-bg .pf-modal .pf-button:active::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,0.2)}.pf-mark .pf-modal-bg .pf-modal .pf-button:focus{outline:none}.pf-open-modal{margin-right:12px;cursor:pointer}.GlobalSideBar-navList{margin-bottom:10px;background:#fff;overflow:hidden;border-radius:2px;box-shadow:0 1px 3px rgba(18,18,18,0.1);box-sizing:border-box}.Question-main .Question-mainColumn,.ListShortcut{flex:1;width:100%}.AnswerAuthor{margin-left:12px}.ModalWrap .ModalExp-content{height:0 !important;overflow:hidden}.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard{width:48% !important}`
+      `body{width:100%}@font-face{font-family:'own-iconfont';src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot');src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot?#iefix') format('embedded-opentype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff2') format('woff2'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff') format('woff'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.ttf') format('truetype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.svg#own-iconfont') format('svg')}.iconfont{font-family:'own-iconfont' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.pf-mark{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto}.pf-mark textarea,.pf-mark input{box-sizing:border-box}.pf-mark .pf-modal-bg{position:relative;height:100%;width:100%;min-height:400px}.pf-mark .pf-modal-bg .pf-modal{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:500px;height:400px;background:#fff;z-index:99999;padding:12px;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar{width:.25rem;height:.25rem;background:#eee}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-track{border-radius:0}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:.25rem}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.pf-mark .pf-modal-bg .pf-modal .pf-modal-title{padding-bottom:12px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content{display:flex;height:340px;width:100%;font-size:14px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left{width:100px;border-right:1px solid #ddd;list-style:none;margin:0px;padding:0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li{padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li a{text-decoration:none;color:#111f2c}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 12px 100px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right>div{padding-bottom:24px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right h3{margin-top:4px;margin-bottom:8px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image{display:flex}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content{flex:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content label{display:block}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-home>div,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div{border-bottom:1px solid #eee;padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-home>div label,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div label{padding-right:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-label::after{content:'：'}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select{display:inline-block;text-align:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select .pf-radio-img{width:32px;height:32px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input{margin:0;display:none}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input:checked+.pf-radio-img{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label{display:inline-block;width:100px;height:50px;position:relative;margin-right:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{position:absolute;top:50%;transform:translateY(-50%);z-index:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input{left:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input:checked+.pf-color-radio-item{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{right:20px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label .pf-color-radio-item{width:100%;height:100%;border:2px solid transparent;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-color .pf-content{padding:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-restore-config{margin-left:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content{padding-top:8px;display:flex;align-items:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom .pf-textarea,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content .pf-textarea{width:70%;height:50px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom button,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content button{height:50px;line-height:50px;width:25%;margin-left:5%;padding:0 !important}.pf-mark .pf-modal-bg .pf-modal .pf-button{padding:4px 8px;border-radius:4px;background:#ddd;position:relative;border:1px solid #bbb}.pf-mark .pf-modal-bg .pf-modal .pf-button:hover{background:#eee}.pf-mark .pf-modal-bg .pf-modal .pf-button:active::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,0.2)}.pf-mark .pf-modal-bg .pf-modal .pf-button:focus{outline:none}.pf-open-modal{margin-right:12px;cursor:pointer}.GlobalSideBar-navList{margin-bottom:10px;background:#fff;overflow:hidden;border-radius:2px;box-shadow:0 1px 3px rgba(18,18,18,0.1);box-sizing:border-box}.Question-main .Question-mainColumn,.ListShortcut{flex:1;width:100%}.AnswerAuthor{margin-left:12px}.ModalWrap .ModalExp-content{height:0 !important;overflow:hidden}.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard{width:48% !important}.GlobalWrite-navTop{display:flex!important;justify-content:space-between !important;flex-wrap:wrap!important}.GlobalWrite-navTop .GlobalWrite-topItem{margin-right:0!important;margin-bottom:12px!important}`
       + '</style>'
     $('head').append(cssOwn)
   }
 
-  // init css or data when document start
-  (function initStartDocument () {
+  // 在启动时注入的内容
+  (function () {
+    pfConfigCache = pfConfig
     const config = localStorage.getItem('pfConfig')
     const nConfig = config ? JSON.parse(config) : {}
     pfConfig = getPfConfigAfterFormat(nConfig)
     initCss()
+    initDataOnDocumentStart()
+  })()
+
+  function initDataOnDocumentStart () {
     changeVersion()
     changeColorBackground()
     changeColorTheme()
     changeCustomCss()
-  })()
+  }
 
-  // the html and data init when document onload
+  // 在页面加载完成时注入的内容
   window.onload = () => {
     initHtml()
     initData()
@@ -503,7 +514,7 @@
     stickyBetween()
   }, 100)
 
-  // init dom at page
+  // 滚动在header加入弹窗启动按钮
   function initScrollHeader () {
     if ($('.TopstoryPageHeader-aside')[0] && !$('.TopstoryPageHeader-aside .pf-open-modal')[0]) {
       $('.TopstoryPageHeader-aside').prepend(openButton)
@@ -516,7 +527,7 @@
     }
   }
 
-  // init scroll about js modal to find id at <a></a>
+  // 在弹窗滚动中加入a标签锚点配置
   function initScrollModal () {
     const hrefArr = []
     for (let i of $('.pf-left a')) {
