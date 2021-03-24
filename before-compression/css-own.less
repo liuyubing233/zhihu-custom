@@ -1,6 +1,9 @@
 body {
   width: 100%;
 }
+* {
+  box-sizing: border-box;
+}
 
 @font-face {
   font-family: 'own-iconfont'; /* project id 2324733 */
@@ -23,6 +26,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.pf-op {
+  position: fixed;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  top: 100px;
+  left: -30px;
+  background: #ddd;
+  cursor: pointer;
+  &:hover {
+    animation: showOp 1s;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes showOp {
+  0% {
+    left: -30px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
 .pf-mark {
   box-sizing: border-box;
   textarea,
@@ -41,14 +71,14 @@ body {
     position: relative;
     height: 100%;
     width: 100%;
-    min-height: 400px;
+    min-height: 430px;
     .pf-modal {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 500px;
-      height: 400px;
+      height: 430px;
       background: #fff;
       z-index: 99999;
       padding: 12px;
@@ -185,6 +215,27 @@ body {
             }
           }
 
+          [name='colorsTheme'] {
+            .pf-color-choose-label {
+              display: inline-block;
+              width: 40px;
+              height: 40px;
+              margin-right: 12px;
+              input {
+                display: none;
+                &:checked + .pf-color-radio-item {
+                  border: 4px solid #4286f4;
+                }
+              }
+              .pf-color-radio-item {
+                width: 100%;
+                height: 100%;
+                border: 4px solid transparent;
+                border-radius: 12px;
+              }
+            }
+          }
+
           #pf-set-color {
             .pf-content {
               padding: 4px;
@@ -245,11 +296,6 @@ body {
   }
 }
 
-.pf-open-modal {
-  margin-right: 12px;
-  cursor: pointer;
-}
-
 .GlobalSideBar-navList {
   margin-bottom: 10px;
   background: #fff;
@@ -305,6 +351,14 @@ body {
   }
 }
 
-.css-1xy3kyp {
-  max-width: inherit!important;
+.css-1xy3kyp,
+.css-1kjxdzv,
+.css-qqgmyv {
+  max-width: none !important;
+}
+
+// 首页内容模块
+.Topstory-mainColumn {
+  flex: 1 !important;
+  min-width: 694px !important;
 }
