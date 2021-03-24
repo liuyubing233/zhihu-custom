@@ -7,9 +7,9 @@
 github: <a href="https://github.com/superPufferfish/custom-zhihu-style" target="_blank">https://github.com/superPufferfish/custom-zhihu-style</a><br/>
 tampermonkey: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a><br/>
 编辑器样式：<br/>
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/1.png">
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/2.png">
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/3.png">
+<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/1.jpg">
+<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/2.jpg">
+<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/3.jpg">
 <br/>
 <br/>
 按钮位置：<br/>
@@ -17,4 +17,4 @@ tampermonkey: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%
 <br/>
 <br/>
 夜间模式（背景修改）：<br/>
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/5.png">
+<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/5.jpg">
