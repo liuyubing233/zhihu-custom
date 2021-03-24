@@ -13,7 +13,7 @@ tampermonkey: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%
 <br/>
 <br/>
 按钮位置：<br/>
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/4.png">
+<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/4.jpg">
 <br/>
 <br/>
 夜间模式（背景修改）：<br/>
