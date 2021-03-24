@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.2.3
+// @version      1.2.4
 // @description  知乎样式修改器-支持版心修改，左右模块位置调整、隐藏，夜间模式，logo隐藏，页面标头修改，自定义样式等
 // @author       super puffer fish
 // @match         *://www.zhihu.com/*
@@ -364,7 +364,7 @@
     return {
       v,
       vContent: `calc(${v} - 296px)`,
-      leftSide: `calc(50vw - (${v} / 2 + 150px))`
+      leftSide: `calc(50vw - (${v} / 2))`
     }
   }
 
