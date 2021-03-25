@@ -54,30 +54,43 @@ body {
   }
 }
 
+.pf-preview,
 .pf-mark {
   box-sizing: border-box;
-  textarea,
-  input {
-    box-sizing: border-box;
-  }
   position: fixed;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
   overflow-y: auto;
+  z-index: 9999;
+  background-color: rgba(18, 18, 18, 0.65);
   .pf-modal-bg {
     position: relative;
     height: 100%;
     width: 100%;
-    min-height: 430px;
+    .pf-preview-img,
     .pf-modal {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.pf-preview img {
+  cursor: zoom-out;
+}
+
+.pf-mark {
+  textarea,
+  input {
+    box-sizing: border-box;
+  }
+  .pf-modal-bg {
+    min-height: 430px;
+    .pf-modal {
       width: 500px;
       height: 430px;
       background: #fff;
