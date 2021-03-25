@@ -37,6 +37,7 @@ body {
   top: 100px;
   left: -30px;
   background: #ddd;
+  z-index: 9999;
   cursor: pointer;
   &:hover {
     animation: showOp 1s;
@@ -157,6 +158,9 @@ body {
             & > div {
               border-bottom: 1px solid #eee;
               padding: 4px 0;
+              &.pf-z {
+                border: none;
+              }
               label {
                 padding-right: 4px;
               }
