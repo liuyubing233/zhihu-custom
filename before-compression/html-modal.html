@@ -17,12 +17,15 @@
             <h3>基础设置</h3>
             <div class="pf-radio-div">
               <span class="pf-label">版心大小</span>
-              <label><input class="pf-input" name="versionHeart" type="radio" value="1000" />1000</label>
-              <label><input class="pf-input" name="versionHeart" type="radio" value="1200" />1200</label>
-              <label><input class="pf-input" name="versionHeart" type="radio" value="1500" />1500</label>
-              <label><input class="pf-input" name="versionHeart" type="radio" value="100%" />拉满</label>
+              <select name="versionHeart" class="pf-input" style="width: 100px;">
+                <option value="800">800px</option>
+                <option value="1000">1000px</option>
+                <option value="1200">1200px</option>
+                <option value="1500">1500px</option>
+                <option value="100%">拉满</option>
+              </select>
             </div>
-            <div class="pf-raido-div pf-zoom-answer-image">
+            <div class="pf-raido-divoom-answer-image">
               <span class="pf-label">回答和专栏图片缩放</span>
               <div class="pf-content">
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="hidden" />隐藏</label>
@@ -58,75 +61,71 @@
           </div>
           <div id="pf-set-home">
             <h3>首页设置</h3>
+            <div class="pf-label fw-bold">模块位置</div>
             <div class="pf-radio-div pf-z">
-              <span class="pf-label">回答问题栏位置</span>
+              <span class="pf-label">回答问题</span>
               <label><input class="pf-input" name="positionAnswer" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionAnswer" type="radio" value="right" />右侧</label>
               <label><input class="pf-input" name="positionAnswer" type="radio" value="hidden" />隐藏</label>
-            </div>
-            <div class="pf-radio-div">
-              <span class="pf-label">优先级</span>
-              <label><input class="pf-input" name="positionAnswerIndex" type="radio" value="1" />1</label>
-              <label><input class="pf-input" name="positionAnswerIndex" type="radio" value="2" />2</label>
-              <label><input class="pf-input" name="positionAnswerIndex" type="radio" value="3" />3</label>
-              <label><input class="pf-input" name="positionAnswerIndex" type="radio" value="4" />4</label>
-              <label><input class="pf-input" name="positionAnswerIndex" type="radio" value="5" />5</label>
+              <select name="positionAnswerIndex" class="pf-input">
+                <option value="1">优先级1</option>
+                <option value="2">优先级2</option>
+                <option value="3">优先级3</option>
+                <option value="4">优先级4</option>
+                <option value="5">优先级5</option>
+              </select>
             </div>
             <div class="pf-radio-div pf-z">
-              <span class="pf-label">创作中心位置</span>
+              <span class="pf-label">创作中心</span>
               <label><input class="pf-input" name="positionCreation" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionCreation" type="radio" value="right" />右侧</label>
               <label><input class="pf-input" name="positionCreation" type="radio" value="hidden" />隐藏</label>
-            </div>
-            <div class="pf-radio-div">
-              <span class="pf-label">优先级</span>
-              <label><input class="pf-input" name="positionCreationIndex" type="radio" value="1" />1</label>
-              <label><input class="pf-input" name="positionCreationIndex" type="radio" value="2" />2</label>
-              <label><input class="pf-input" name="positionCreationIndex" type="radio" value="3" />3</label>
-              <label><input class="pf-input" name="positionCreationIndex" type="radio" value="4" />4</label>
-              <label><input class="pf-input" name="positionCreationIndex" type="radio" value="5" />5</label>
+              <select name="positionCreationIndex" class="pf-input">
+                <option value="1">优先级1</option>
+                <option value="2">优先级2</option>
+                <option value="3">优先级3</option>
+                <option value="4">优先级4</option>
+                <option value="5">优先级5</option>
+              </select>
             </div>
             <div class="pf-radio-div pf-z">
-              <span class="pf-label">圆桌模块位置</span>
+              <span class="pf-label">圆桌</span>
               <label><input class="pf-input" name="positionTable" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionTable" type="radio" value="right" />右侧</label>
               <label><input class="pf-input" name="positionTable" type="radio" value="hidden" />隐藏</label>
-            </div>
-            <div class="pf-radio-div">
-              <span class="pf-label">优先级</span>
-              <label><input class="pf-input" name="positionTableIndex" type="radio" value="1" />1</label>
-              <label><input class="pf-input" name="positionTableIndex" type="radio" value="2" />2</label>
-              <label><input class="pf-input" name="positionTableIndex" type="radio" value="3" />3</label>
-              <label><input class="pf-input" name="positionTableIndex" type="radio" value="4" />4</label>
-              <label><input class="pf-input" name="positionTableIndex" type="radio" value="5" />5</label>
+              <select name="positionTableIndex" class="pf-input">
+                <option value="1">优先级1</option>
+                <option value="2">优先级2</option>
+                <option value="3">优先级3</option>
+                <option value="4">优先级4</option>
+                <option value="5">优先级5</option>
+              </select>
             </div>
             <div class="pf-radio-div pf-z">
-              <span class="pf-label">收藏夹栏位置</span>
+              <span class="pf-label">收藏夹</span>
               <label><input class="pf-input" name="positionFavorites" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionFavorites" type="radio" value="right" />右侧</label>
               <label><input class="pf-input" name="positionFavorites" type="radio" value="hidden" />隐藏</label>
+              <select name="positionFavoritesIndex" class="pf-input">
+                <option value="1">优先级1</option>
+                <option value="2">优先级2</option>
+                <option value="3">优先级3</option>
+                <option value="4">优先级4</option>
+                <option value="5">优先级5</option>
+              </select>
             </div>
             <div class="pf-radio-div">
-              <span class="pf-label">优先级</span>
-              <label><input class="pf-input" name="positionFavoritesIndex" type="radio" value="1" />1</label>
-              <label><input class="pf-input" name="positionFavoritesIndex" type="radio" value="2" />2</label>
-              <label><input class="pf-input" name="positionFavoritesIndex" type="radio" value="3" />3</label>
-              <label><input class="pf-input" name="positionFavoritesIndex" type="radio" value="4" />4</label>
-              <label><input class="pf-input" name="positionFavoritesIndex" type="radio" value="5" />5</label>
-            </div>
-            <div class="pf-radio-div pf-z">
-              <span class="pf-label">指南Footer位置</span>
+              <span class="pf-label">指南</span>
               <label><input class="pf-input" name="positionFooter" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionFooter" type="radio" value="right" />右侧</label>
               <label><input class="pf-input" name="positionFooter" type="radio" value="hidden" />隐藏</label>
-            </div>
-            <div class="pf-radio-div">
-              <span class="pf-label">优先级</span>
-              <label><input class="pf-input" name="positionFooterIndex" type="radio" value="1" />1</label>
-              <label><input class="pf-input" name="positionFooterIndex" type="radio" value="2" />2</label>
-              <label><input class="pf-input" name="positionFooterIndex" type="radio" value="3" />3</label>
-              <label><input class="pf-input" name="positionFooterIndex" type="radio" value="4" />4</label>
-              <label><input class="pf-input" name="positionFooterIndex" type="radio" value="5" />5</label>
+              <select name="positionFooterIndex" class="pf-input">
+                <option value="1">优先级1</option>
+                <option value="2">优先级2</option>
+                <option value="3">优先级3</option>
+                <option value="4">优先级4</option>
+                <option value="5">优先级5</option>
+              </select>
             </div>
             <div class="pf-checkbox-div">
               <label>
@@ -155,6 +154,10 @@
               <label><input class="pf-input" name="hiddenQuestionActions" type="checkbox" value="on" />问题操作栏</label>
               <label><input class="pf-input" name="hiddenReward" type="checkbox" value="on" />赞赏按钮</label>
               <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏回答关联话题</label>
+              <label><input class="pf-input" name="hiddenListImg" type="checkbox" value="on" />问题列表图片</label>
+              <label><input class="pf-input" name="hiddenReadMoreText" type="checkbox" value="on" />阅读全文文字</label>
+              <br/>
+              <label><input class="pf-input" name="hiddenAD" type="checkbox" value="on" />广告</label>
             </div>
           </div>
           <!-- <div id="pf-set-question-detail">

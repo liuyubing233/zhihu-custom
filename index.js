@@ -59,6 +59,8 @@
     hiddenReward: false, // 赞赏按钮
     hiddenZhuanlanTag: false, // 专栏回答关联话题
     hiddenListImg: false, // 问题列表图片
+    hiddenReadMoreText: true, // 阅读全文文字
+    hiddenAD: true, // 广告
     // 隐藏内容模块 end --------
   }
 
@@ -119,8 +121,8 @@
     const config = JSON.parse(configImport)
     pfConfig = getPfConfigAfterFormat(config)
     await gmSetValue('pfConfig', JSON.stringify(pfConfig))
-    initData()
     initDataOnDocumentStart()
+    initData()
   }
 
   // 恢复默认配置
@@ -130,8 +132,8 @@
       ...colorsLocation,
     }
     await gmSetValue('pfConfig', JSON.stringify(pfConfig))
-    initData()
     initDataOnDocumentStart()
+    initData()
   }
 
   function initData () {
@@ -259,11 +261,14 @@
   async function changeConfigBySelect (ev) {
     const { name, value } = ev
     pfConfig[name] = value
+    const changerObj = {
+      'versionHeart': changeVersion,
+    }
     await gmSetValue('pfConfig', JSON.stringify(pfConfig))
     if (/^position/.test(name)) {
       initPositionPage()
     } else {
-      console.log(name, value)
+      changerObj[name] && changerObj[name]()
     }
   }
 
@@ -273,8 +278,9 @@
     pfConfig[name] = checked
     await gmSetValue('pfConfig', JSON.stringify(pfConfig))
     const changerObj = {
-      'stickyLeft': () => stickyBetween(),
-      'stickyRight': () => stickyBetween(),
+      'stickyLeft': stickyBetween,
+      'stickyRight': stickyBetween,
+      'presetActions': changeVersion
       // 'hiddenAnswerRightFooter': () => changeVersion(),
       // 'hiddenLogo': () => changeVersion(),
     }
@@ -291,13 +297,12 @@
     pfConfig[name] = value
     await gmSetValue('pfConfig', JSON.stringify(pfConfig))
     const changerObj = {
-      'versionHeart': () => changeVersion(),
-      'zoomAnswerImage': () => changeVersion(),
-      'titleIco': () => changeTitleIco(),
-      'colorBackground': () => changeColorBackground(),
-      'colorTheme': () => changeColorTheme(),
-      'title': () => changeTitle(),
-      'customizeCss': () => changeCustomCss()
+      'zoomAnswerImage': changeVersion,
+      'titleIco': changeTitleIco,
+      'colorBackground': changeColorBackground,
+      // 'colorTheme': () => changeColorTheme(),
+      'title': changeTitle,
+      'customizeCss': changeCustomCss
     }
     if (/^position/.test(name)) {
       initPositionPage()
@@ -384,13 +389,15 @@
       + `${pfConfig.hiddenHeader ? '.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}' : ''}`
       + `${pfConfig.hiddenHeaderScroll ? '.AppHeader.is-fixed{display:none!important;}' : ''}`
       + `${pfConfig.hiddenItemActions ? '.ContentItem-actions{opacity:0!important;height:0!important;padding:0!important;}' : ''}`
-      + `${pfConfig.hiddenAnswerText ? '.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;}.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}.VoteButton{color: #8590a6!important; }.VoteButton.is-active{color: red!important;}' : ''}`
+      + `${pfConfig.hiddenAnswerText ? '.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}.VoteButton{color: #8590a6!important; }.VoteButton.is-active{color: #0066ff!important;}.ContentItem-action{margin-left:8px!important;}' : ''}`
       + `${pfConfig.hiddenQuestionTag ? '.QuestionHeader-tags{display: none!important;}' : ''}`
       + `${pfConfig.hiddenQuestionShare ? '.Popover.ShareMenu{display: none!important;}' : ''}`
       + `${pfConfig.hiddenQuestionActions ? '.QuestionHeader-footer{display: none!important;}' : ''}`
       + `${pfConfig.hiddenReward ? '.Reward{display: none!important;}' : ''}`
       + `${pfConfig.hiddenZhuanlanTag ? '.Post-topicsAndReviewer{display: none!important;}' : ''}`
       + `${pfConfig.hiddenListImg ? '.RichContent-cover,.HotItem-img{display:none!important;}.HotItem-metrics--bottom{position: initial!important;}' : ''}`
+      + `${pfConfig.hiddenReadMoreText ? '.ContentItem-more{font-size:0!important;}' : ''}`
+      + `${pfConfig.hiddenAD ? '.TopstoryItem--advertCard{display: none!important;}' : ''}`
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
@@ -474,12 +481,12 @@
   }
 
   // 页面主题方法
-  function changeColorTheme () {
-    const objBg = getCssTheme()
-    const cssColor = `<style type="text/css" id="pf-css-theme">${Object.keys(objBg).map(i => objBg[i]).join('')}</style>`
-    $('#pf-css-theme') && $('#pf-css-theme').remove()
-    $('head').append(cssColor)
-  }
+  // function changeColorTheme () {
+  //   const objBg = getCssTheme()
+  //   const cssColor = `<style type="text/css" id="pf-css-theme">${Object.keys(objBg).map(i => objBg[i]).join('')}</style>`
+  //   $('#pf-css-theme') && $('#pf-css-theme').remove()
+  //   $('head').append(cssColor)
+  // }
 
   function throttle (fn, timeout = 300) {
     let canRun = true
@@ -557,21 +564,21 @@
   //   return pfConfig.colorBackground !== '#ffffff' ? colorReverse(color) : color
   // }
 
-  function getCssTheme () {
-    const { colorTheme } = pfConfig
-    return {
-      bg: `.Tabs-link.is-active:after,.Button--primary.Button--blue,.BounceLoading .BounceLoading-child,.CollectionsHeader-tabsLink.is-active:after,.Favlists-privacyOptionRadio:checked, html[data-theme=dark] .Favlists-privacyOptionRadio:checked{background-color:${colorTheme}!important;}`,
-      bg1: `.VoteButton, html[data-theme=dark] .VoteButton,.Tag{background-color: ${hexToRgba(colorTheme, '0.1')};}`,
-      bg15: `.VoteButton:not(:disabled):hover, html[data-theme=dark] .VoteButton:not(:disabled):hover{background-color: ${hexToRgba(colorTheme, '0.15')};}`,
-      bg80: `.QuestionType--active,html[data-theme=dark] .QuestionType--active,.Button--primary.Button--blue:hover{background-color: ${hexToRgba(colorTheme, '0.8')};}`,
-      color: `.QuestionType--active,html[data-theme=dark] .QuestionType--active,.QuestionType--active .QuestionType-icon,html[data-theme=dark] .QuestionType--active .QuestionType-icon,.HotListNav-item.is-active,.HotListNav-sortableItem[data-hotlist-identifier=total].is-active, html[data-theme=dark] .HotListNav-sortableItem[data-hotlist-identifier=total].is-active,.TabNavBarItem-tab-MS9i.TabNavBarItem-isActive-1iXL,.pf-open-modal:hover,.TopstoryTabs-link.is-active, html[data-theme=dark] .TopstoryTabs-link.is-active,.VoteButton,.GlobalWrite-navNumber, html[data-theme=dark] .GlobalWrite-navNumber,.css-1y4nzu1,.GlobalSideBar-categoryItem .Button:hover,.Button--blue,.Tag, html[data-theme=dark] .Tag,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.CollectionsHeader-addFavlistButton, html[data-theme=dark] .CollectionsHeader-addFavlistButton,.css-1hzmtho{color: ${colorTheme}!important}`,
-      color8: `.TopstoryTabs-link:hover,.ContentItem-more,.ContentItem-title a:hover,.GlobalWrite--old .GlobalWrite-topItem:hover .GlobalWrite-topTitle,.GlobalWrite-navTitle:hover,a.Footer-item:hover,.RichText a.UserLink-link,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.QuestionMainAction:hover,.Button--link:hover,.CollectionsHeader-tabsLink:hover,.SideBarCollectionItem-title{color: ${hexToRgba(colorTheme, '0.8')}!important;}`,
-      border: `.Button--primary.Button--blue,.Button--blue,.Favlists-privacyOptionRadio:checked, html[data-theme=dark] .Favlists-privacyOptionRadio:checked{border-color: ${colorTheme}!important}`,
-      border8: `.Button--primary.Button--blue:hover{border-color: ${hexToRgba(colorTheme, '0.8')}!important;}`,
-      colorFFF: `.Button--primary.Button--blue{color:#ffffff!important;}`,
-      fill: `.CollectionsHeader-addFavlistButton svg, html[data-theme=dark] .CollectionsHeader-addFavlistButton svg{fill: ${colorTheme}!important;}`
-    }
-  }
+  // function getCssTheme () {
+  //   const { colorTheme } = pfConfig
+  //   return {
+  //     bg: `.Tabs-link.is-active:after,.Button--primary.Button--blue,.BounceLoading .BounceLoading-child,.CollectionsHeader-tabsLink.is-active:after,.Favlists-privacyOptionRadio:checked, html[data-theme=dark] .Favlists-privacyOptionRadio:checked{background-color:${colorTheme}!important;}`,
+  //     bg1: `.VoteButton, html[data-theme=dark] .VoteButton,.Tag{background-color: ${hexToRgba(colorTheme, '0.1')};}`,
+  //     bg15: `.VoteButton:not(:disabled):hover, html[data-theme=dark] .VoteButton:not(:disabled):hover{background-color: ${hexToRgba(colorTheme, '0.15')};}`,
+  //     bg80: `.QuestionType--active,html[data-theme=dark] .QuestionType--active,.Button--primary.Button--blue:hover{background-color: ${hexToRgba(colorTheme, '0.8')};}`,
+  //     color: `.QuestionType--active,html[data-theme=dark] .QuestionType--active,.QuestionType--active .QuestionType-icon,html[data-theme=dark] .QuestionType--active .QuestionType-icon,.HotListNav-item.is-active,.HotListNav-sortableItem[data-hotlist-identifier=total].is-active, html[data-theme=dark] .HotListNav-sortableItem[data-hotlist-identifier=total].is-active,.TabNavBarItem-tab-MS9i.TabNavBarItem-isActive-1iXL,.pf-open-modal:hover,.TopstoryTabs-link.is-active, html[data-theme=dark] .TopstoryTabs-link.is-active,.VoteButton,.GlobalWrite-navNumber, html[data-theme=dark] .GlobalWrite-navNumber,.css-1y4nzu1,.GlobalSideBar-categoryItem .Button:hover,.Button--blue,.Tag, html[data-theme=dark] .Tag,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.CollectionsHeader-addFavlistButton, html[data-theme=dark] .CollectionsHeader-addFavlistButton,.css-1hzmtho{color: ${colorTheme}!important}`,
+  //     color8: `.TopstoryTabs-link:hover,.ContentItem-more,.ContentItem-title a:hover,.GlobalWrite--old .GlobalWrite-topItem:hover .GlobalWrite-topTitle,.GlobalWrite-navTitle:hover,a.Footer-item:hover,.RichText a.UserLink-link,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.QuestionMainAction:hover,.Button--link:hover,.CollectionsHeader-tabsLink:hover,.SideBarCollectionItem-title{color: ${hexToRgba(colorTheme, '0.8')}!important;}`,
+  //     border: `.Button--primary.Button--blue,.Button--blue,.Favlists-privacyOptionRadio:checked, html[data-theme=dark] .Favlists-privacyOptionRadio:checked{border-color: ${colorTheme}!important}`,
+  //     border8: `.Button--primary.Button--blue:hover{border-color: ${hexToRgba(colorTheme, '0.8')}!important;}`,
+  //     colorFFF: `.Button--primary.Button--blue{color:#ffffff!important;}`,
+  //     fill: `.CollectionsHeader-addFavlistButton svg, html[data-theme=dark] .CollectionsHeader-addFavlistButton svg{fill: ${colorTheme}!important;}`
+  //   }
+  // }
 
   // 注入弹窗元素和默认css
   function initHtml () {
