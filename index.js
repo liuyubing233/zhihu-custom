@@ -18,7 +18,7 @@
   'use strict'
 
   // 开发使用 勿动 ---- start
-  const isDev = false
+  const isDev = true
   const INNER_HTML = null
   const INNER_CSS = null
   // 开发使用 勿动 ---- end
@@ -98,56 +98,110 @@
   let bodySize = 0
   let bodySizePrev = 0
 
-  // 隐藏弹窗
-  function buttonModalHidden () {
-    $('.pf-mark')[0].style.display = 'none'
-    recoverScroll()
-  }
-
-  // 开启弹窗
-  function buttonModalShow () {
-    $('.pf-mark')[0].style.display = 'block'
-    initScrollModal()
-    stopScroll()
-  }
-
-  // 导出现有配置为.txt格式
-  async function buttonExportConfig () {
-    const config = await gmGetValue('pfConfig')
-    const url = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config)
-    let link = document.createElement('a')
-    link.href = url
-    link.download = '配置.txt'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
-  // 导入配置
-  async function buttonImportConfig () {
-    const configImport = $('[name=configImport]')[0].value
-    const config = JSON.parse(configImport)
-    pfConfig = getPfConfigAfterFormat(config)
-    await gmSetValue('pfConfig', JSON.stringify(pfConfig))
-    initDataOnDocumentStart()
-    initData()
-  }
-
-  // 恢复默认配置
-  async function buttonRestoreConfig () {
-    pfConfig = {
-      ...pfConfigCache,
-      ...colorsLocation,
+  /**
+   * 存储使用油猴自己的GM存储，解决数据不共通的问题，添加localStorage与GM判断，获取最新存储
+   */
+  const myStorage = {
+    set: async (name, value) => {
+      let v = value
+      if (name === 'pfConfig') {
+        const valueParse = JSON.parse(value)
+        valueParse.t = +new Date()
+        v = JSON.stringify(valueParse)
+      }
+      localStorage.setItem(name, v)
+      await GM_setValue(name, v)
+    },
+    get: async (name) => {
+      const config = await GM_getValue(name)
+      const configLocal = localStorage.getItem(name)
+      let c = config
+      if (name === 'pfConfig') {
+        const cParse = config ? JSON.parse(config) : null
+        const cLParse = configLocal ? JSON.parse(configLocal) : null
+        c = !cParse && !cLParse
+          ? ''
+          : !cParse
+            ? configLocal
+            : !cLParse
+              ? config
+              : cParse.t < cLParse.t
+                ? configLocal
+                : config
+      }
+      return c
     }
-    await gmSetValue('pfConfig', JSON.stringify(pfConfig))
-    initDataOnDocumentStart()
-    initData()
+  }
+
+  /**
+   * onclick方法汇总
+   */
+  const myClick = {
+    // 开启设置弹窗
+    openModal: () => {
+      $('.pf-mark')[0].style.display = 'block'
+      initScrollModal()
+      stopScroll()
+    },
+    // 关闭设置弹窗
+    hideModal: () => {
+      $('.pf-mark')[0].style.display = 'none'
+      recoverScroll()
+    },
+    // 导出配置
+    exportConfig: async () => {
+      const config = await myStorage.get('pfConfig')
+      let link = document.createElement('a')
+      link.href = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config)
+      link.download = '配置.txt'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    },
+    // 导入配置
+    importConfig: async () => {
+      const configImport = $('[name=configImport]')[0].value
+      const config = JSON.parse(configImport)
+      pfConfig = getPfConfigAfterFormat(config)
+      await myStorage.set('pfConfig', JSON.stringify(pfConfig))
+      initDataOnDocumentStart()
+      initData()
+    },
+    // 恢复默认配置
+    restoreConfig: async () => {
+      pfConfig = { ...pfConfigCache, ...colorsLocation }
+      await myStorage.set('pfConfig', JSON.stringify(pfConfig))
+      initDataOnDocumentStart()
+      initData()
+    },
+    // 开启预览弹窗
+    openPreview: (src) => {
+      $('.pf-preview-img')[0].src = src
+      $('.pf-preview')[0].style.display = 'block'
+      stopScroll()
+    },
+    // 关闭预览弹窗
+    hidePreview: () => {
+      $('.pf-preview')[0].style.display = 'none'
+      $('.pf-preview-img')[0].src = ''
+      recoverScroll()
+    },
+    // 启用极简模式
+    useSimple: async () => {
+      let isUse = confirm('是否启用极简模式？\n启用该模式会覆盖默认配置，建议先将配置导出保存')
+      if (isUse) {
+        const config = { versionHeart: '800', positionAnswer: 'hidden', positionAnswerIndex: '1', positionCreation: 'hidden', positionCreationIndex: '2', positionTable: 'hidden', positionTableIndex: '3', positionFavorites: 'hidden', positionFavoritesIndex: '4', positionFooter: 'hidden', positionFooterIndex: '5', stickyLeft: false, stickyRight: false, zoomAnswerImage: '100px', titleIco: '', title: '', colorBackground: '#ffffff', colorsBackground: ['#ffffff', '#15202b', '#000000'], colorTheme: '#0066ff', colorsTheme: ['#0066ff', '#ffad1f', '#e0245e', '#f45d22', '#17bf63', '#794bc4'], customizeCss: '', usePresetStyle: true, hiddenAnswerRightFooter: true, hiddenLogo: true, hiddenHeader: true, hiddenHeaderScroll: true, hiddenItemActions: false, hiddenAnswerText: false, hiddenQuestionShare: true, hiddenQuestionTag: true, hiddenQuestionActions: true, hiddenReward: true, hiddenZhuanlanTag: true, hiddenListImg: true, hiddenReadMoreText: true, hiddenAD: true, hiddenAnswerRights: true, hiddenAnswerRightsText: false, hiddenAnswers: true, hiddenHotListWrapper: true, suspensionHomeTab: true, suspensionHomeTabPoLR: 'left', suspensionHomeTabPoTB: 'top', suspensionHomeTabPoLRValue: '20', suspensionHomeTabPoTBValue: '60', }
+        pfConfig = getPfConfigAfterFormat(config)
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig))
+        initDataOnDocumentStart()
+        initData()
+      }
+    }
   }
 
   function initData () {
     thisPageTitle = document.title
     for (let even of $('.pf-input')) {
-      // even.value = pfConfig[even.name]
       switch (even.type) {
         case 'radio':
           if (pfConfig[even.name] && even.value === pfConfig[even.name]) {
@@ -203,10 +257,7 @@
 
   // 在加载和导入前格式化页面配置
   function getPfConfigAfterFormat (config) {
-    const c = {
-      ...pfConfig,
-      ...config,
-    }
+    const c = { ...pfConfig, ...config }
     // 颜色列表从本js和本地存储中合并去重
     Object.keys(colorsLocation).forEach((key) => {
       c[key] = getArrayRemoveSame([].concat(colorsLocation[key], config[key] || []))
@@ -219,9 +270,7 @@
   function getArrayRemoveSame (arr) {
     const nArr = []
     arr.forEach((i) => {
-      if (!nArr.includes(i)) {
-        nArr.push(i)
-      }
+      !nArr.includes(i) && nArr.push(i)
     })
     return nArr
   }
@@ -280,7 +329,7 @@
     const changerObj = {
       'versionHeart': changeVersion,
     }
-    await gmSetValue('pfConfig', JSON.stringify(pfConfig))
+    await myStorage.set('pfConfig', JSON.stringify(pfConfig))
     if (/^position/.test(name)) {
       initPositionPage()
     } else {
@@ -292,7 +341,7 @@
   async function changeConfigByCheckbox (ev) {
     const { name, checked } = ev
     pfConfig[name] = checked
-    await gmSetValue('pfConfig', JSON.stringify(pfConfig))
+    await myStorage.set('pfConfig', JSON.stringify(pfConfig))
     const changerObj = {
       'stickyLeft': stickyBetween,
       'stickyRight': stickyBetween,
@@ -312,7 +361,7 @@
   async function changeConfig (ev) {
     const { name, value } = ev
     pfConfig[name] = value
-    await gmSetValue('pfConfig', JSON.stringify(pfConfig))
+    await myStorage.set('pfConfig', JSON.stringify(pfConfig))
     const changerObj = {
       'zoomAnswerImage': changeVersion,
       'titleIco': changeTitleIco,
@@ -483,34 +532,8 @@
 
     for (let events of imgEvents) {
       for (let e of events) {
-        e.onclick = () => onPreview(e.src)
+        e.onclick = () => myClick.openPreview(e.src)
       }
-    }
-  }
-
-  // 开启预览弹窗
-  function onPreview (src) {
-    $('.pf-preview-img')[0].src = src
-    $('.pf-preview')[0].style.display = 'block'
-    stopScroll()
-  }
-
-  // 关闭预览弹窗
-  function onPreviewHidden () {
-    $('.pf-preview')[0].style.display = 'none'
-    $('.pf-preview-img')[0].src = ''
-    recoverScroll()
-  }
-
-  // 启用极简模式
-  async function onUseSimple () {
-    let isUse = confirm('是否启用极简模式？\n启用该模式会覆盖默认配置，建议先将配置导出保存')
-    if (isUse) {
-      const config = { versionHeart: '800', positionAnswer: 'hidden', positionAnswerIndex: '1', positionCreation: 'hidden', positionCreationIndex: '2', positionTable: 'hidden', positionTableIndex: '3', positionFavorites: 'hidden', positionFavoritesIndex: '4', positionFooter: 'hidden', positionFooterIndex: '5', stickyLeft: false, stickyRight: false, zoomAnswerImage: '100px', titleIco: '', title: '', colorBackground: '#ffffff', colorsBackground: ['#ffffff', '#15202b', '#000000'], colorTheme: '#0066ff', colorsTheme: ['#0066ff', '#ffad1f', '#e0245e', '#f45d22', '#17bf63', '#794bc4'], customizeCss: '', usePresetStyle: true, hiddenAnswerRightFooter: true, hiddenLogo: true, hiddenHeader: true, hiddenHeaderScroll: true, hiddenItemActions: false, hiddenAnswerText: false, hiddenQuestionShare: true, hiddenQuestionTag: true, hiddenQuestionActions: true, hiddenReward: true, hiddenZhuanlanTag: true, hiddenListImg: true, hiddenReadMoreText: true, hiddenAD: true, hiddenAnswerRights: true, hiddenAnswerRightsText: false, hiddenAnswers: true, hiddenHotListWrapper: true, suspensionHomeTab: true, suspensionHomeTabPoLR: 'left', suspensionHomeTabPoTB: 'top', suspensionHomeTabPoLRValue: '20', suspensionHomeTabPoTBValue: '60', }
-      pfConfig = getPfConfigAfterFormat(config)
-      await gmSetValue('pfConfig', JSON.stringify(pfConfig))
-      initDataOnDocumentStart()
-      initData()
     }
   }
 
@@ -650,14 +673,14 @@
     // $('.ColumnPageHeader-Button').prepend(openButton)
     $('body').append(openButton)
     $('body').append(htmlModal)
-    $('.pf-open-modal')[0] && ($('.pf-open-modal')[0].onclick = buttonModalShow)
-    $('.pf-b-close')[0].onclick = buttonModalHidden
-    $('.pf-export-config')[0].onclick = buttonExportConfig
-    $('.pf-import-config')[0].onclick = buttonImportConfig
-    $('.pf-restore-config')[0].onclick = buttonRestoreConfig
+    $('.pf-open-modal')[0] && ($('.pf-open-modal')[0].onclick = myClick.openModal)
+    $('.pf-b-close')[0].onclick = myClick.hideModal
+    $('.pf-export-config')[0].onclick = myClick.exportConfig
+    $('.pf-import-config')[0].onclick = myClick.importConfig
+    $('.pf-restore-config')[0].onclick = myClick.restoreConfig
     $('.pf-customize-css-button')[0].onclick = () => changeConfig($('[name="customizeCss"]')[0])
-    $('.pf-preview')[0].onclick = onPreviewHidden
-    $('.pf-simple-button')[0].onclick = onUseSimple
+    $('.pf-preview')[0].onclick = myClick.hidePreview
+    $('.pf-simple-button')[0].onclick = myClick.useSimple
     // 在首页加入左侧模块 用于调整创作中心 收藏夹等模块元素
     const leftDom = $('<div class="pf-left-container" style="display: none; flex: 1; margin-right: 10px;"><div class="Sticky"></div></div>')
     $('.Topstory-container').prepend(leftDom)
@@ -676,7 +699,7 @@
   // 在启动时注入的内容
   (async function () {
     pfConfigCache = pfConfig
-    const config = await gmGetValue('pfConfig')
+    const config = await myStorage.get('pfConfig')
     const nConfig = config ? JSON.parse(config) : {}
     pfConfig = getPfConfigAfterFormat(nConfig)
     initCss()
@@ -749,38 +772,6 @@
     for (let i of $('.pf-left a')) {
       i.style = i.href.replace(/.*#/, '') === id ? `color: ${pfConfig.colorTheme}` : ''
     }
-  }
-
-  // 存储使用油猴自己的GM存储，解决数据不共通的问题，添加localStorage与GM判断，获取最新存储
-  async function gmSetValue (name, value) {
-    let v = value
-    if (name === 'pfConfig') {
-      const valueParse = JSON.parse(value)
-      valueParse.t = +new Date()
-      v = JSON.stringify(valueParse)
-    }
-    localStorage.setItem(name, v)
-    await GM_setValue(name, v)
-  }
-
-  async function gmGetValue (name) {
-    const config = await GM_getValue(name)
-    const configLocation = localStorage.getItem(name)
-    let c = config
-    if (name === 'pfConfig') {
-      const cParse = config ? JSON.parse(config) : null
-      const cLParse = configLocation ? JSON.parse(configLocation) : null
-      c = !cParse && !cLParse
-        ? ''
-        : !cParse
-          ? configLocation
-          : !cLParse
-            ? config
-            : cParse.t < cLParse.t
-              ? configLocation
-              : config
-    }
-    return c
   }
 
 })()
