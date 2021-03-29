@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         知乎样式自定义修改器
+// @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
 // @version      1.4.0
-// @description  知乎样式修改器-支持夜间模式、模块隐藏、可配置及自定义样式、图片全部可预览、过滤广告等
+// @description  知乎样式自定义修改器-支持夜间模式、模块隐藏、可配置及自定义样式、图片全部可预览、过滤广告等
 // @author       super puffer fish
 // @match         *://www.zhihu.com/*
 // @match         *://zhuanlan.zhihu.com/*
