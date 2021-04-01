@@ -77,7 +77,7 @@
 
   // 使用位置颜色配置来解决有关版本更新颜色列表未更新的问题
   const colorsLocation = {
-    colorsBackground: ['#ffffff', '#15202b', '#000000'],
+    colorsBackground: ['#ffffff', '#15202b', '#000000', 'bisque', '#FAF9DE'],
     colorsTheme: ['#0066ff', '#ffad1f', '#e0245e', '#f45d22', '#17bf63', '#794bc4']
   }
 
@@ -86,6 +86,8 @@
     '#ffffff': '默认',
     '#15202b': '黯淡',
     '#000000': '纯黑',
+    'bisque': '护眼红',
+    '#FAF9DE': '杏仁黄',
   }
 
   let thisPageTitle = '' // 缓存页面原标题
@@ -331,7 +333,6 @@
     changeTitleIco()
     changeTitle()
     initColorsList()
-    // onSuspensionHomeTab()
     cSuspensionStyle('suspensionHomeTab')
   }
 
@@ -347,7 +348,7 @@
     }
     for (let i of timeArr) {
       // num是触发次数 fun是定时函数 isFind 判断是否查找到元素
-      timer[i] = { num: 0, fun: null, isFind: false }
+      !timer[i] && (timer[i] = { num: 0, fun: null, isFind: false })
       timeFun[i] && timeFun[i](i)
     }
   }
@@ -378,6 +379,7 @@
 
   // 加载两侧数据
   function initPositionPage () {
+    console.log(!timer.creator.isFind)
     if (!timer.creator.isFind) {
       timer.creator.fun && clearTimeout(timer.creator.fun)
       timer.creator.fun = setTimeout(() => {
@@ -668,18 +670,18 @@
 
   // 修改页面背景的css
   function changeColorBackground () {
+    // 使用filter方法来实现夜间模式
     const filter = {
-      '#ffffff': { invert: 0, 'hue-rotate': '0' },
       '#15202b': { invert: 0.7, 'hue-rotate': '180deg', contrast: 1.7 },
       '#000000': { invert: 1, 'hue-rotate': '180deg' },
     }
-    const fi = filter[pfConfig.colorBackground]
-    // 使用filter方法来实现夜间模式
-    const cssColor = `<style type="text/css" id="pf-css-background">`
-      + `html,html img,.pf-color-radio-item,iframe{${filterObj(fi)}}`
-      + `.zu-top,.zu-top-nav-userinfo.selected, html.no-touchevents .top-nav-profile:hover .zu-top-nav-userinfo,.top-nav-profile a{${isNotF() ? 'background:#ffffff!important;border-color: #eeeeee!important;' : ''}}
-      .zu-top .zu-top-nav-link,.top-nav-profile .zu-top-nav-userinfo,.top-nav-dropdown li a{${isNotF() ? 'color: #111f2c!important;' : ''}}html.no-touchevents .top-nav-dropdown a:hover {${isNotF() ? 'background:#eeeeee!important' : ''}}`
-      + `</style>`
+    const fi = filter[pfConfig.colorBackground] || ''
+    const cssValue = fi
+      ? `html,html img,.pf-color-radio-item,iframe{${filterObj(fi)}}.zu-top,.zu-top-nav-userinfo.selected, html.no-touchevents .top-nav-profile:hover .zu-top-nav-userinfo,.top-nav-profile a{background:#ffffff!important;border-color: #eeeeee!important;}.zu-top .zu-top-nav-link,.top-nav-profile .zu-top-nav-userinfo,.top-nav-dropdown li a{color: #111f2c!important;}html.no-touchevents .top-nav-dropdown a:hover {background:#eeeeee!important}`
+      : isNotF()
+        ? `body,.Post-content,.HotList,.AppHeader,.HotListNavEditPad,.ColumnPageHeader{background-color: ${pfConfig.colorBackground}!important;}.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main,.CommentsV2-withPagination,.RichContent-actions{background-color:rgba(255,255,255,0.6)!important}.QuestionHeader-footer,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.RichContent-actions.is-fixed{background: transparent!important;}`
+        : ''
+    const cssColor = `<style type="text/css" id="pf-css-background">${cssValue}</style>`
     $('#pf-css-background') && $('#pf-css-background').remove()
     $('head').append(cssColor)
   }
