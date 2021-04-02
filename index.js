@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.5.2
+// @version      1.5.3
 // @description  知乎样式自定义修改器-支持夜间模式、模块隐藏、可配置及自定义样式、图片全部可预览、过滤广告等
 // @author       pufferfish
 // @match         *://www.zhihu.com/*
@@ -717,7 +717,7 @@
     },
     useInitBackground: (bg) => {
       return `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader{background-color: ${bg}!important;}`
-        + `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main,.CommentsV2-withPagination,.RichContent-actions,.QuestionHeader-footer,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.RichContent-actions.is-fixed,.Select-plainButton,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer,.Popover-arrow:after,.Messages-footer{background-color:${backgroundOp[bg]}!important}`
+        + `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main,.CommentsV2-withPagination,.RichContent-actions,.QuestionHeader-footer,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.RichContent-actions.is-fixed,.Select-plainButton,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer,.Popover-arrow:after,.Messages-footer,.Modal-inner{background-color:${backgroundOp[bg]}!important}`
     }
   }
 
