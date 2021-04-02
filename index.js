@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.5.1
+// @version      1.5.2
 // @description  知乎样式自定义修改器-支持夜间模式、模块隐藏、可配置及自定义样式、图片全部可预览、过滤广告等
 // @author       pufferfish
 // @match         *://www.zhihu.com/*
@@ -697,17 +697,16 @@
   // 加载预览图片方法，解决部分图片无法点击预览的问题
   function initPreviewImg () {
     const images = [
-      // $('img.lazy'),
       document.querySelectorAll('.TitleImage'),
       document.querySelectorAll('.GifPlayer img'),
       document.querySelectorAll('.ArticleItem-image'),
       document.querySelectorAll('.ztext figure .content_image'),
-      // $('.ztext figure .origin_image')
     ]
 
     images.forEach((events) => {
       events.forEach((e) => {
-        e.onclick = () => myClick.openPreview(e.src)
+        const src = e.src || (e.style.backgroundImage && e.style.backgroundImage.split('("')[1].split('")')[0])
+        e.onclick = () => myClick.openPreview(src)
       })
     })
   }
@@ -822,6 +821,16 @@
     $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
   }
 
+  // 知乎外链直接打开(修改外链内容，去除知乎重定向)
+  function initLinkChanger () {
+    document.querySelectorAll('a.external').forEach((even) => {
+      const evenH = even.href
+      const href = decodeURIComponent(even.href.replace(/^https:\/\/link\.zhihu\.com\/\?target\=/, '') || '')
+      // console.log(evenH, true, href)
+      even.href = href
+    })
+  }
+
   // // reverse color at background
   // function reverseCss (color, isImportant = false, name = 'color') {
   //   return pfConfig.colorBackground !== '#ffffff' ? `${name}: ${colorReverse(color)}${isImportant ? '!important' : ''};` : ''
@@ -906,8 +915,15 @@
   // 使用ResizeObserver监听body高度
   const resizeObserver = new ResizeObserver(throttle(resizeFun, 500))
   function resizeFun () {
-    // 重新复制img预览
-    bodySize === bodySizePrev ? initPreviewImg() : bodySizePrev = bodySize
+    // 页面高度发生改变
+    if (bodySize === bodySizePrev) {
+      // 重新复制img预览
+      initPreviewImg()
+      // 外链直接打开
+      initLinkChanger()
+    } else {
+      bodySizePrev = bodySize
+    }
 
     // body高度变更后比较推荐模块内容高度与网页高度
     // 如果模块高度小于网页高度则手动触发resize使其加载数据
