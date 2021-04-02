@@ -313,7 +313,7 @@
 
   function initData () {
     thisPageTitle = document.title
-    for (let even of $('.pf-input')) {
+    document.querySelectorAll('.pf-input').forEach((even) => {
       switch (even.type) {
         case 'radio':
           if (pfConfig[even.name] && even.value === pfConfig[even.name]) {
@@ -356,7 +356,7 @@
             break
         }
       }
-    }
+    })
 
     initPositionPage()
     cacheHeader()
@@ -696,19 +696,20 @@
 
   // 加载预览图片方法，解决部分图片无法点击预览的问题
   function initPreviewImg () {
-    const imgEvents = [
+    const images = [
       // $('img.lazy'),
-      $('.GifPlayer img'),
-      $('.ArticleItem-image'),
-      $('.ztext figure .content_image'),
+      document.querySelectorAll('.TitleImage'),
+      document.querySelectorAll('.GifPlayer img'),
+      document.querySelectorAll('.ArticleItem-image'),
+      document.querySelectorAll('.ztext figure .content_image'),
       // $('.ztext figure .origin_image')
     ]
 
-    for (let events of imgEvents) {
-      for (let e of events) {
+    images.forEach((events) => {
+      events.forEach((e) => {
         e.onclick = () => myClick.openPreview(e.src)
-      }
-    }
+      })
+    })
   }
 
   const myBackground = {
@@ -949,13 +950,13 @@
   // 在弹窗滚动中加入a标签锚点配置
   function initScrollModal () {
     const hrefArr = []
-    for (let i of $('.pf-left a')) {
+    document.querySelectorAll('.pf-left a').forEach((i) => {
       const id = i.href.replace(/.*#/, '')
       hrefArr.push({
         id,
         offsetTop: $(`#${id}`)[0].offsetTop
       })
-    }
+    })
     scrollModal(hrefArr)
     $('.pf-right')[0].onscroll = throttle(() => scrollModal(hrefArr), 100)
   }
@@ -963,9 +964,9 @@
   function scrollModal (hrefArr) {
     const scHere = $('.pf-right')[0].offsetHeight / 2 + $('.pf-right')[0].scrollTop
     const id = hrefArr.find((item, index) => item.offsetTop <= scHere && ((hrefArr[index + 1] && hrefArr[index + 1].offsetTop > scHere) || !hrefArr[index + 1])).id
-    for (let i of $('.pf-left a')) {
+    document.querySelectorAll('.pf-left a').forEach((i) => {
       i.style = i.href.replace(/.*#/, '') === id ? `color: ${pfConfig.colorTheme}` : ''
-    }
+    })
   }
 
 })()
