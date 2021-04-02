@@ -457,46 +457,45 @@ body {
 .VoteButton.is-active {
   color: #0066ff !important;
 }
+// header中原本包裹search的元素，现在将search拿出来这个元素隐藏
+.css-1acwmmj {
+  display: none !important;
+}
 
-// test
-// .Topstory-container .TopstoryTabs {
-//   position: fixed;
-//   top: 20px;
-//   left: 20px;
-//   z-index: 100;
-//   display: flex;
-//   flex-direction: column;
-//   height: initial!important;
-// }
-// .Topstory-container .TopstoryTabs > a {
-//   font-size: 0 !important;
-//   border-radius: 50%;
-// }
-// .Topstory-container .TopstoryTabs > a::after {
-//   font-size: 16px !important;
-//   display: inline-block;
-//   padding: 6px 8px;
-//   border: 1px solid #999999;
-//   margin-bottom: 4px;
-//   color: #999999;
-// }
-// .Topstory-container .TopstoryTabs > a.TopstoryTabs-link {
-//   margin: 0!important;
-// }
-// .Topstory-container .TopstoryTabs > a.TopstoryTabs-link.is-active::after {
-//   color: #0066ff !important;
-//   border-color: #0066ff !important;
-// }
-// .Topstory [aria-controls='Topstory-recommend']::after {
-//   content: '推';
-//   border-top-left-radius: 4px;
-//   border-top-right-radius: 4px;
-// }
-// .Topstory [aria-controls='Topstory-follow']::after {
-//   content: '关';
-// }
-// .Topstory [aria-controls='Topstory-hot']::after {
-//   content: '热';
-//   border-bottom-left-radius: 4px;
-//   border-bottom-right-radius: 4px;
-// }
+// header三大金刚定位
+.position-suspensionFind,
+.position-suspensionSearch,
+.position-suspensionUser {
+  position: fixed;
+  z-index: 100;
+}
+
+.position-suspensionFind {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  .Tabs-item {
+    padding: 0 !important;
+    margin-bottom: 4px;
+    .Tabs-link {
+      padding: 8px !important;
+      border-radius: 4px;
+      &::after {
+        content: '' !important;
+        display: none !important;
+      }
+    }
+  }
+}
+
+.position-suspensionUser {
+  width: fit-content !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  .AppHeader-messages,
+  .AppHeader-notifications {
+    margin-right: 0 !important;
+    margin-bottom: 12px;
+  }
+}
