@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.5.4
+// @version      1.5.5
 // @description  知乎样式自定义修改器-支持夜间模式、模块隐藏、可配置及自定义样式、图片全部可预览、过滤广告等
 // @author       pufferfish
 // @match         *://www.zhihu.com/*
@@ -81,6 +81,7 @@
     hiddenAnswerRightsText: false, // 收藏喜欢举报按钮文字
     hiddenAnswers: false, // 问题列表回答内容
     hiddenHotListWrapper: false, // 热榜榜单TAG
+    hiddenZhuanlanActions: false, // 专栏下方操作条
     // 隐藏内容模块 end --------
   }
 
@@ -220,7 +221,7 @@
     useSimple: async () => {
       let isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存')
       if (isUse) {
-        const config = { versionHeart: '800', positionAnswer: 'hidden', positionAnswerIndex: '1', positionCreation: 'hidden', positionCreationIndex: '2', positionTable: 'hidden', positionTableIndex: '3', positionFavorites: 'hidden', positionFavoritesIndex: '4', positionFooter: 'hidden', positionFooterIndex: '5', stickyLeft: false, stickyRight: false, zoomAnswerImage: '100px', customizeCss: '', usePresetStyle: true, hiddenAnswerRightFooter: true, hiddenLogo: true, hiddenHeader: true, hiddenHeaderScroll: true, hiddenItemActions: true, hiddenAnswerText: false, hiddenQuestionShare: true, hiddenQuestionTag: true, hiddenQuestionActions: true, hiddenReward: true, hiddenZhuanlanTag: true, hiddenListImg: true, hiddenReadMoreText: true, hiddenAD: true, hiddenAnswerRights: true, hiddenAnswerRightsText: false, hiddenAnswers: true, hiddenHotListWrapper: true, suspensionHomeTab: true, suspensionHomeTabFixed: true, suspensionHomeTabPo: 'left: 20px; top: 100px;', suspensionHomeTabStyle: 'transparent', questionTitleTag: true, suspensionFind: false, suspensionFindFixed: false, suspensionFindPo: 'left: 10px; top: 380px;', suspensionFindStyle: 'transparent', suspensionUser: true, suspensionUserFixed: true, suspensionUserPo: 'right: 60px; top: 100px;', fixedListItemMore: true }
+        const config = { versionHeart: '800', positionAnswer: 'hidden', positionAnswerIndex: '1', positionCreation: 'hidden', positionCreationIndex: '2', positionTable: 'hidden', positionTableIndex: '3', positionFavorites: 'hidden', positionFavoritesIndex: '4', positionFooter: 'hidden', positionFooterIndex: '5', stickyLeft: false, stickyRight: false, zoomAnswerImage: '100px', customizeCss: '', usePresetStyle: true, hiddenAnswerRightFooter: true, hiddenLogo: true, hiddenHeader: true, hiddenHeaderScroll: true, hiddenItemActions: true, hiddenAnswerText: false, hiddenQuestionShare: true, hiddenQuestionTag: true, hiddenQuestionActions: true, hiddenReward: true, hiddenZhuanlanTag: true, hiddenListImg: true, hiddenReadMoreText: true, hiddenAD: true, hiddenAnswerRights: true, hiddenAnswerRightsText: false, hiddenAnswers: true, hiddenHotListWrapper: true, suspensionHomeTab: true, suspensionHomeTabFixed: true, suspensionHomeTabPo: 'left: 20px; top: 100px;', suspensionHomeTabStyle: 'transparent', questionTitleTag: true, suspensionFind: false, suspensionFindFixed: false, suspensionFindPo: 'left: 10px; top: 380px;', suspensionFindStyle: 'transparent', suspensionUser: true, suspensionUserFixed: true, suspensionUserPo: 'right: 60px; top: 100px;', fixedListItemMore: true, hiddenZhuanlanActions: true }
         pfConfig = getPfConfigAfterFormat(config)
         await myStorage.set('pfConfig', JSON.stringify(pfConfig))
         initDataOnDocumentStart()
@@ -312,7 +313,7 @@
     useR: ['suspensionUser'], // 使用right定位的name
   }
 
-  function initData () {
+  function initData() {
     thisPageTitle = document.title
     document.querySelectorAll('.pf-input').forEach((even) => {
       switch (even.type) {
@@ -368,7 +369,7 @@
   }
 
   // 缓存header内元素
-  function cacheHeader () {
+  function cacheHeader() {
     // 查找header内的三个元素
     if (!findEvent.header.isFind) {
       findEvent.header.fun && clearTimeout(findEvent.header.fun)
@@ -379,7 +380,7 @@
             findEvent.header.isFind = true
             doms.headerDoms = {
               suspensionFind: { class: '.AppHeader-inner .AppHeader-Tabs', even: $('.AppHeader-inner .AppHeader-Tabs'), index: 1 },
-              // suspensionSearch: { class: '.AppHeader-inner .AppHeader-SearchBar', even: $('.AppHeader-inner .AppHeader-SearchBar'), index: 2 },
+              suspensionSearch: { class: '.AppHeader-inner .AppHeader-SearchBar', even: $('.AppHeader-inner .AppHeader-SearchBar'), index: 2 },
               suspensionUser: { class: '.AppHeader-inner .AppHeader-userInfo', even: $('.AppHeader-inner .AppHeader-userInfo'), index: 3 },
             }
           }
@@ -390,8 +391,8 @@
       return
     }
     // 直接使用eventName中的顺序，减少一次循环排序
-    const eventNames = ['suspensionFind', 'suspensionUser']
-    // const eventNames = ['suspensionFind', 'suspensionSearch', 'suspensionUser']
+    // const eventNames = ['suspensionFind', 'suspensionUser']
+    const eventNames = ['suspensionFind', 'suspensionSearch', 'suspensionUser']
     eventNames.forEach((name) => {
       if (pfConfig[name]) {
         doms.headerDoms[name].even.addClass(`position-${name}`)
@@ -407,7 +408,7 @@
   }
 
   // 加载两侧数据
-  function initPositionPage () {
+  function initPositionPage() {
     if (!findEvent.creator.isFind) {
       findEvent.creator.fun && clearTimeout(findEvent.creator.fun)
       findEvent.creator.fun = setTimeout(() => {
@@ -455,7 +456,7 @@
   }
 
   // 在加载和导入前格式化页面配置
-  function getPfConfigAfterFormat (config) {
+  function getPfConfigAfterFormat(config) {
     const c = { ...pfConfig, ...config }
     // 颜色列表从本js和本地存储中合并去重
     Object.keys(colorsLocation).forEach((key) => {
@@ -466,7 +467,7 @@
   }
 
   // 数组去重 格式为string[]
-  function getArrayRemoveSame (arr) {
+  function getArrayRemoveSame(arr) {
     const nArr = []
     arr.forEach((i) => {
       !nArr.includes(i) && nArr.push(i)
@@ -475,7 +476,7 @@
   }
 
   // 加载颜色列表
-  function initColorsList () {
+  function initColorsList() {
     // 第一进入时加载暂存内容
     if (firstInitColors) {
       firstInitColors = false
@@ -492,7 +493,7 @@
     }
   }
 
-  function initColorsHtml (key, colors) {
+  function initColorsHtml(key, colors) {
     cacheColors[key] = pfConfig[key]
     $(`[name="${key}"]`).children().length > 0 && $(`[name="${key}"]`).empty()
     colors.forEach((item) => {
@@ -507,7 +508,7 @@
     })
   }
 
-  function colorHtmlItem (name, item) {
+  function colorHtmlItem(name, item) {
     const doms = {
       'colorBackground': `<span style="color: ${colorReverse(item)}">${backgroundText[item]}</span>`
     }
@@ -515,14 +516,14 @@
   }
 
   // 颜色取反 格式是16进制6位 例如用#ffffff而不是#fff
-  function colorReverse (OldColorValue) {
+  function colorReverse(OldColorValue) {
     var OldColorValue = "0x" + OldColorValue.replace(/#/g, "")
     var str = "000000" + (0xFFFFFF - OldColorValue).toString(16)
     return '#' + str.substring(str.length - 6, str.length)
   }
 
   // 修改配置 select
-  async function onSelectChanger (ev) {
+  async function onSelectChanger(ev) {
     const { name, value } = ev
     pfConfig[name] = value
     const changerObj = {
@@ -539,7 +540,7 @@
   }
 
   // 修改配置 checkbox
-  async function onCheckboxChanger (ev) {
+  async function onCheckboxChanger(ev) {
     const { name, checked } = ev
     pfConfig[name] = checked
     await myStorage.set('pfConfig', JSON.stringify(pfConfig))
@@ -564,7 +565,7 @@
   }
 
   // 悬浮模块切换样式
-  function cSuspensionStyle (name) {
+  function cSuspensionStyle(name) {
     const cssObj = {
       'suspensionHomeTab': '.Topstory-container .TopstoryTabs',
       'suspensionFind': '.AppHeader-Tabs',
@@ -583,7 +584,7 @@
   }
 
   // 修改配置 radio text
-  async function onConfigChanger (ev) {
+  async function onConfigChanger(ev) {
     const { name, value } = ev
     pfConfig[name] = value
     await myStorage.set('pfConfig', JSON.stringify(pfConfig))
@@ -602,19 +603,19 @@
     }
   }
 
-  function changeCustomCss () {
+  function changeCustomCss() {
     const cssCustom = `<style type="text/css" id="pf-css-custom">${pfConfig.customizeCss}</style>`
     $('#pf-css-custom') && $('#pf-css-custom').remove()
     $('head').append(cssCustom)
   }
 
   // 修改页面标题
-  function changeTitle () {
+  function changeTitle() {
     document.title = pfConfig.title || thisPageTitle
   }
 
   // 修改页面标题ico
-  function changeTitleIco () {
+  function changeTitleIco() {
     const ico = {
       github: '<link rel="icon" class="js-site-favicon" id="pf-ico" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">',
       csdn: '<link href="https://g.csdnimg.cn/static/logo/favicon32.ico" id="pf-ico" rel="shortcut icon" type="image/x-icon">',
@@ -626,13 +627,26 @@
   }
 
   // 修改版心方法
-  function initCSSVersion () {
+  function initCSSVersion() {
     const cssVersion = '<style type="text/css" id="pf-css-version">' +
       `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.SettingsMain,.App-main .Creator,.Collections-container,.Balance-Layout{width:${vHeart().v}!important;}`
       + `.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main,.Post-RichTextContainer,.ContentItem-time,.Post-topicsAndReviewer,.Post-content .RichContent-actions,.Post-NormalMain .Post-Header, .Post-NormalMain>div, .Post-NormalSub>div,.css-1xy3kyp,.css-1voxft1,.WriteIndexLayout-main{width:${vHeart().vContent}!important;}`
       + `.Post-SideActions{left: ${vHeart().leftSide}}`
       + `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image, .ztext figure .origin_image,.TitleImage{${vImgSize()}}`
-      + `${pfConfig.hiddenAnswerRightFooter ? '.Question-sideColumn{display: none!important;}' : ''}`
+      + `${hiddenCSS()}`
+      + `${pfConfig.suspensionHomeTab ? `.Topstory-container .TopstoryTabs{position:fixed;${pfConfig.suspensionHomeTabPo}z-index:100;display:flex;flex-direction:column;height:initial!important}.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}.Topstory-container .TopstoryTabs>a::after{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;${vSuspensionColor(pfConfig.suspensionHomeTabStyle).normal}}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link{margin:0!important}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{${vSuspensionColor(pfConfig.suspensionHomeTabStyle).active}}.Topstory [aria-controls='Topstory-recommend']::after{content:'推';border-top-left-radius:4px;border-top-right-radius:4px}.Topstory [aria-controls='Topstory-follow']::after{content:'关'}.Topstory [aria-controls='Topstory-hot']::after{content:'热';border-bottom-left-radius:4px;border-bottom-right-radius:4px}` : ''}`
+      + `${pfConfig.questionTitleTag ? `.AnswerItem .ContentItem-title::before{content:'回答';background:#ec7259}.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}.ContentItem-title div{display:inline}` : ''}`
+      + `.position-suspensionFind{${pfConfig.suspensionFindPo}}.position-suspensionUser{${pfConfig.suspensionUserPo}}`
+      + `.position-suspensionFind .Tabs-link{${vSuspensionColor(pfConfig.suspensionFindStyle).normal}}.position-suspensionFind .Tabs-link.is-active{${vSuspensionColor(pfConfig.suspensionFindStyle).active}}`
+      + `${pfConfig.fixedListItemMore ? '.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{opacity: 1!important;position: absolute;top: 20px;right: 10px;}' : ''}`
+      + '</style>'
+    $('#pf-css-version') && $('#pf-css-version').remove()
+    $('head').append(cssVersion)
+  }
+
+  // 隐藏模块的css
+  function hiddenCSS() {
+    return `${pfConfig.hiddenAnswerRightFooter ? '.Question-sideColumn{display: none!important;}' : ''}`
       + `${pfConfig.hiddenLogo ? '.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo{display: none!important;}' : ''}`
       + `${pfConfig.hiddenHeader ? '.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}' : ''}`
       + `${pfConfig.hiddenHeaderScroll ? '.AppHeader.is-fixed{display:none!important;}' : ''}`
@@ -645,23 +659,16 @@
       + `${pfConfig.hiddenZhuanlanTag ? '.Post-topicsAndReviewer{display: none!important;}' : ''}`
       + `${pfConfig.hiddenListImg ? '.RichContent-cover,.HotItem-img{display:none!important;}.HotItem-metrics--bottom{position: initial!important;}' : ''}`
       + `${pfConfig.hiddenReadMoreText ? '.ContentItem-more{font-size:0!important;}' : ''}`
-      + `${pfConfig.hiddenAD ? '.TopstoryItem--advertCard{display: none!important;}' : ''}`
+      + `${pfConfig.hiddenAD ? '.TopstoryItem--advertCard,.Pc-card{display: none!important;}' : ''}`
       + `${pfConfig.hiddenAnswerRights ? '.ContentItem-actions .ShareMenu ~ button.ContentItem-action{display: none;}.ContentItem-rightButton{display:block!important;}' : ''}`
       + `${pfConfig.hiddenAnswerRightsText ? '.ContentItem-actions .ShareMenu ~ .ContentItem-action{font-size: 0!important;}.ContentItem-actions .ShareMenu ~ .ContentItem-action>span{font-size:12px!important;}' : ''}`
       + `${pfConfig.hiddenAnswers ? '.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine{display: none;}' : ''}`
       + `${pfConfig.hiddenHotListWrapper ? '.HotListNav-wrapper{display: none;}' : ''}`
-      + `${pfConfig.suspensionHomeTab ? `.Topstory-container .TopstoryTabs{position:fixed;${pfConfig.suspensionHomeTabPo}z-index:100;display:flex;flex-direction:column;height:initial!important}.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}.Topstory-container .TopstoryTabs>a::after{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;${vSuspensionColor(pfConfig.suspensionHomeTabStyle).normal}}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link{margin:0!important}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{${vSuspensionColor(pfConfig.suspensionHomeTabStyle).active}}.Topstory [aria-controls='Topstory-recommend']::after{content:'推';border-top-left-radius:4px;border-top-right-radius:4px}.Topstory [aria-controls='Topstory-follow']::after{content:'关'}.Topstory [aria-controls='Topstory-hot']::after{content:'热';border-bottom-left-radius:4px;border-bottom-right-radius:4px}` : ''}`
-      + `${pfConfig.questionTitleTag ? `.AnswerItem .ContentItem-title::before{content:'回答';background:#ec7259}.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}.ContentItem-title div{display:inline}` : ''}`
-      + `.position-suspensionFind{${pfConfig.suspensionFindPo}}.position-suspensionUser{${pfConfig.suspensionUserPo}}`
-      + `.position-suspensionFind .Tabs-link{${vSuspensionColor(pfConfig.suspensionFindStyle).normal}}.position-suspensionFind .Tabs-link.is-active{${vSuspensionColor(pfConfig.suspensionFindStyle).active}}`
-      + `${pfConfig.fixedListItemMore ? '.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{opacity: 1!important;position: absolute;top: 20px;right: 10px;}' : ''}`
-      + '</style>'
-    $('#pf-css-version') && $('#pf-css-version').remove()
-    $('head').append(cssVersion)
+      + `${pfConfig.hiddenZhuanlanActions ? '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}' : ''}`
   }
 
   // 悬浮模块颜色填充
-  function vSuspensionColor (value) {
+  function vSuspensionColor(value) {
     // 跟页面背景颜色同步
     const bg = backgroundOp[pfConfig.colorBackground] || '#ffffff'
     const normal = {
@@ -679,7 +686,7 @@
   }
 
   // 图片size调整
-  function vImgSize () {
+  function vImgSize() {
     return pfConfig.zoomAnswerImage !== 'default'
       ? pfConfig.zoomAnswerImage === 'hidden'
         ? 'display: none!important;'
@@ -688,7 +695,7 @@
   }
 
   // 判断版心是否为100vw 返回根据版心调整的宽度内容
-  function vHeart () {
+  function vHeart() {
     let v = pfConfig.versionHeart === '100%' ? pfConfig.versionHeart : pfConfig.versionHeart + 'px'
     return {
       v,
@@ -698,7 +705,7 @@
   }
 
   // 加载预览图片方法，解决部分图片无法点击预览的问题
-  function initPreviewImg () {
+  function initPreviewImg() {
     const images = [
       document.querySelectorAll('.TitleImage'),
       document.querySelectorAll('.GifPlayer img'),
@@ -720,12 +727,15 @@
     },
     useInitBackground: (bg) => {
       return `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader{background-color: ${bg}!important;}`
-        + `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main,.CommentsV2-withPagination,.RichContent-actions,.QuestionHeader-footer,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.RichContent-actions.is-fixed,.Select-plainButton,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer,.Popover-arrow:after,.Messages-footer,.Modal-inner{background-color:${backgroundOp[bg]}!important}`
+        + `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main,.CommentsV2-withPagination,.QuestionHeader-footer,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer,.Popover-arrow:after,.Messages-footer,.Modal-inner{background-color:${backgroundOp[bg]}!important}`
+    },
+    transparentBackground: () => {
+      return `.RichContent-actions.is-fixed{background-color: transparent;}`
     }
   }
 
   // 修改页面背景的css
-  function initCSSBackground () {
+  function initCSSBackground() {
     // 使用filter方法来实现夜间模式
     const filter = {
       '#15202b': { invert: 0.7, 'hue-rotate': '180deg', contrast: 1.7 },
@@ -734,7 +744,9 @@
     const fi = filter[pfConfig.colorBackground] || ''
     const cssValue = fi
       ? myBackground.useFilter(fi)
-      : isNotF() ? myBackground.useInitBackground(pfConfig.colorBackground) : ''
+      : isNotF()
+        ? `${myBackground.useInitBackground(pfConfig.colorBackground)}${myBackground.transparentBackground()}`
+        : ''
 
     const cssColor = `<style type="text/css" id="pf-css-background">${cssValue}</style>`
     $('#pf-css-background') && $('#pf-css-background').remove()
@@ -742,16 +754,16 @@
   }
 
   // 背景颜色选择不是#ffffff
-  function isNotF () {
+  function isNotF() {
     return pfConfig.colorBackground !== '#ffffff'
   }
 
-  function filterObj (fi) {
+  function filterObj(fi) {
     return `filter: ${Object.keys(fi).map((name) => `${name}(${fi[name]})`).join(' ')};`
   }
 
   // hex -> rgba
-  function hexToRgba (hex, opacity) {
+  function hexToRgba(hex, opacity) {
     return 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ',' + parseInt('0x' + hex.slice(3, 5)) + ','
       + parseInt('0x' + hex.slice(5, 7)) + ',' + opacity + ')'
   }
@@ -764,7 +776,7 @@
   //   $('head').append(cssColor)
   // }
 
-  function throttle (fn, timeout = 300) {
+  function throttle(fn, timeout = 300) {
     let canRun = true
     return function () {
       if (!canRun) return
@@ -777,24 +789,24 @@
   }
 
   // 在打开弹窗时候停止页面滚动，只允许弹窗滚动
-  function stopScroll () {
+  function stopScroll() {
     let top = document.body.scrollTop || document.documentElement.scrollTop
     document.body.style.position = 'fixed'
     document.body.style.top = `${-1 * top}px`
   }
   // 关闭弹窗的时候恢复页面滚动
-  function recoverScroll () {
+  function recoverScroll() {
     let top = -parseInt(document.body.style.top)
     document.body.style.position = 'static'
     document.body.style.top = 0
     window.scrollTo(0, top)
   }
 
-  function stickyBetween () {
+  function stickyBetween() {
     window.scrollY > 0 ? fixedPosition() : inheritPosition()
   }
 
-  function fixedPosition () {
+  function fixedPosition() {
     if (pfConfig.stickyLeft && $('.pf-left-container')[0]) {
       $('.pf-left-container .Sticky').css({
         width: $('.pf-left-container')[0].offsetWidth,
@@ -818,14 +830,14 @@
     }
   }
 
-  function inheritPosition () {
+  function inheritPosition() {
     $('.pf-left-container .Sticky').removeAttr('style', '')
     $('.GlobalSideBar .Sticky').removeAttr('style', '')
     $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
   }
 
   // 知乎外链直接打开(修改外链内容，去除知乎重定向)
-  function initLinkChanger () {
+  function initLinkChanger() {
     document.querySelectorAll('a.external').forEach((even) => {
       const evenH = even.href
       const href = decodeURIComponent(even.href.replace(/^https:\/\/link\.zhihu\.com\/\?target\=/, '') || '')
@@ -861,9 +873,9 @@
   // }
 
   // 注入弹窗元素和默认css
-  function initHtml () {
+  function initHtml() {
     const dom = isDev ? INNER_HTML :
-      '<div style="display: none;"class="pf-mark"><div class="pf-modal-bg"><div class="pf-modal"><div class="pf-modal-title">样式编辑器</div><div class="pf-modal-content"><ul class="pf-left"><li><a href="#pf-set-basis">基础设置</a></li><li><a href="#pf-set-home">首页设置</a></li><li><a href="#pf-set-hidden">隐藏内容</a></li><!--<li><a href="#pf-set-question-detail">问题详情设置</a></li>--><li><a href="#pf-set-color">颜色设置</a></li><li><a href="#pf-set-config">配置导出导入</a></li><!--<li><a href="#pf-set-back-content">返回内容设置</a></li>--></ul><div class="pf-right"><div id="pf-set-basis"><h3>基础设置</h3><button class="pf-simple-button pf-button">启用极简模式</button><div class="pf-radio-div"><span class="pf-label">版心大小</span><select name="versionHeart"class="pf-input"style="width: 100px;"><option value="800">800px</option><option value="1000">1000px</option><option value="1200">1200px</option><option value="1500">1500px</option><option value="100%">拉满</option></select></div><div class="pf-raido-divoom-answer-image"><span class="pf-label">回答和专栏图片缩放</span><div class="pf-content"><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="hidden"/>隐藏</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="100px"/>极小(100px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="200px"/>小(200px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="400px"/>中(400px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="default"/>默认</label></div></div><div class="pf-radio-div"><span class="pf-label">更改网页标题图片</span><br/><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="github"/><img src="https://github.githubassets.com/favicons/favicon.svg"alt="github"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="csdn"/><img src="https://g.csdnimg.cn/static/logo/favicon32.ico"alt="csdn"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="juejin"/><img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico"alt="juejin"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="zhihu"/><img src="https://static.zhihu.com/heifetz/favicon.ico"alt="zhihu"class="pf-radio-img"></label></div><div class="pf-radio-div"><span class="pf-label">更改网页标题</span><input class="pf-input"name="title"type="text"style="height: 25px;"/></div></div><div id="pf-set-home"><h3>首页设置</h3><div class="pf-label fw-bold border-none">模块位置</div><div class="pf-radio-div pf-z"><span class="pf-label">回答问题</span><label><input class="pf-input"name="positionAnswer"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="hidden"/>隐藏</label><select name="positionAnswerIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">创作中心</span><label><input class="pf-input"name="positionCreation"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="hidden"/>隐藏</label><select name="positionCreationIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">圆桌</span><label><input class="pf-input"name="positionTable"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionTable"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionTable"type="radio"value="hidden"/>隐藏</label><select name="positionTableIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">收藏夹</span><label><input class="pf-input"name="positionFavorites"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="hidden"/>隐藏</label><select name="positionFavoritesIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div"><span class="pf-label">指南</span><label><input class="pf-input"name="positionFooter"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="hidden"/>隐藏</label><select name="positionFooterIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-checkbox-div"><label><span class="pf-label">左侧栏固定</span><input class="pf-input"name="stickyLeft"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">右侧栏固定</span><input class="pf-input"name="stickyRight"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">列表更多按钮固定至题目右侧</span><input class="pf-input"name="fixedListItemMore"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">内容标题添加类别标签<span class="pf-label-tag pf-label-tag-Article">文章</span><span class="pf-label-tag pf-label-tag-Answer">回答</span><span class="pf-label-tag pf-label-tag-ZVideo">视频</span></span><input class="pf-input"name="questionTitleTag"type="checkbox"value="on"/></label></div><div class="pf-label fw-bold border-none">悬浮模块</div><div class="pf-commit pf-z">拖动悬浮模块定位位置</div><div class="pf-commit pf-z">固定即不可拖动，取消则可以重新拖动位置</div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">问题列表切换</span><input class="pf-input"name="suspensionHomeTab"type="checkbox"value="on"/></label><select name="suspensionHomeTabStyle"class="pf-input pf-suspensionHomeTab"style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select><label><span class="pf-label">固定</span><input class="pf-input"name="suspensionHomeTabFixed"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">顶部发现模块</span><input class="pf-input"name="suspensionFind"type="checkbox"value="on"/></label><select name="suspensionFindStyle"class="pf-input pf-suspensionFind"style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select><label><span class="pf-label">固定</span><input class="pf-input"name="suspensionFindFixed"type="checkbox"value="on"/></label></div><!--<div class="pf-checkbox-div pf-z"><label><span class="pf-label">搜索栏</span><input class="pf-input"name="suspensionSearch"type="checkbox"value="on"/></label></div>--><div class="pf-checkbox-div"><label><span class="pf-label">个人中心</span><input class="pf-input"name="suspensionUser"type="checkbox"value="on"/></label><label><span class="pf-label">固定</span><input class="pf-input"name="suspensionUserFixed"type="checkbox"value="on"/></label></div></div><div id="pf-set-hidden"><h3>隐藏内容</h3><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenLogo"type="checkbox"value="on"/>logo</label><label><input class="pf-input"name="hiddenHeader"type="checkbox"value="on"/>顶部header</label><label><input class="pf-input"name="hiddenHeaderScroll"type="checkbox"value="on"/>顶部滚动header</label><label><input class="pf-input"name="hiddenAnswerRightFooter"type="checkbox"value="on"/>详情右侧信息栏</label><label><input class="pf-input"name="hiddenHotListWrapper"type="checkbox"value="on"/>热榜榜单TAG</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenAnswers"type="checkbox"value="on"/>问题列表回答内容</label><label><input class="pf-input"name="hiddenItemActions"type="checkbox"value="on"/>列表回答操作</label><label><input class="pf-input"name="hiddenAnswerText"type="checkbox"value="on"/>回答操作文字</label><label><input class="pf-input"name="hiddenReadMoreText"type="checkbox"value="on"/>阅读全文文字</label><label><input class="pf-input"name="hiddenAnswerRights"type="checkbox"value="on"/>收藏喜欢举报</label><label><input class="pf-input"name="hiddenAnswerRightsText"type="checkbox"value="on"/>收藏喜欢举报文字</label><label><input class="pf-input"name="hiddenListImg"type="checkbox"value="on"/>问题列表图片</label><label><input class="pf-input"name="hiddenReward"type="checkbox"value="on"/>赞赏按钮</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenQuestionShare"type="checkbox"value="on"/>问题分享</label><label><input class="pf-input"name="hiddenQuestionTag"type="checkbox"value="on"/>问题话题</label><label><input class="pf-input"name="hiddenQuestionActions"type="checkbox"value="on"/>问题操作栏</label><label><input class="pf-input"name="hiddenZhuanlanTag"type="checkbox"value="on"/>专栏回答关联话题</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenAD"type="checkbox"value="on"/>广告</label></div></div><!--<div id="pf-set-question-detail"><h3>问题详情设置</h3><div class="pf-checkbox-div"><label><input class="pf-input"name="hiddenAnswerRightFooter"type="checkbox"value="on"/>详情右侧信息栏</label></div></div>--><div id="pf-set-color"><h3>颜色设置</h3><div class="pf-radio-div pf-color-bg"><div class="pf-label">背景</div><div class="pf-content"name="colorsBackground"></div></div><!--<div class="pf-radio-div pf-color-theme"><div class="pf-label">主题颜色</div><div class="pf-content"name="colorsTheme"></div></div>--></div><!--<div id="pf-set-back-content"></div>--><div id="pf-set-config"><h3>配置导出导入</h3><div class="pf-local-config"><button class="pf-export-config pf-button">导出当前配置</button><button class="pf-restore-config pf-button">恢复默认配置</button><div class="pf-import-dom"><textarea class="pf-textarea"name="configImport"placeholder="配置可参考导出格式"></textarea><button class="pf-import-config pf-button">导入</button></div></div><div class="pf-customize-css"><div class="pf-label">自定义css</div><div class="pf-content"><textarea class="pf-textarea pf-input"name="customizeCss"></textarea><button class="pf-customize-css-button pf-button">确定</button></div></div></div></div></div><button class="pf-b-close pf-button">关闭</button></div></div></div><div style="display: none;"class="pf-preview"><div class="pf-modal-bg"><img class="pf-preview-img"src=""></div></div>'
+      '<div style="display: none;" class="pf-mark"><div class="pf-modal-bg"><div class="pf-modal"><div class="pf-modal-title">样式编辑器</div><div class="pf-modal-content"><ul class="pf-left"><li><a href="#pf-set-basis">基础设置</a></li><li><a href="#pf-set-home">首页设置</a></li><li><a href="#pf-set-hidden">隐藏内容</a></li><li><a href="#pf-set-color">颜色设置</a></li><li><a href="#pf-set-config">配置导出导入</a></li></ul><div class="pf-right"><div id="pf-set-basis"><h3>基础设置</h3><button class="pf-simple-button pf-button">启用极简模式</button><div class="pf-radio-div"><span class="pf-label">版心大小</span><select name="versionHeart" class="pf-input" style="width: 100px;"><option value="800">800px</option><option value="1000">1000px</option><option value="1200">1200px</option><option value="1500">1500px</option><option value="100%">拉满</option></select></div><div class="pf-raido-divoom-answer-image"><span class="pf-label">回答和专栏图片缩放</span><div class="pf-content"><label><input class="pf-input" name="zoomAnswerImage" type="radio" value="hidden" />隐藏</label><label><input class="pf-input" name="zoomAnswerImage" type="radio" value="100px" />极小(100px)</label><label><input class="pf-input" name="zoomAnswerImage" type="radio" value="200px" />小(200px)</label><label><input class="pf-input" name="zoomAnswerImage" type="radio" value="400px" />中(400px)</label><label><input class="pf-input" name="zoomAnswerImage" type="radio" value="default" />默认</label></div></div><div class="pf-radio-div"><span class="pf-label">更改网页标题图片</span><br /><label class="pf-radio-img-select"><input class="pf-input" name="titleIco" type="radio" value="github" /><img src="https://github.githubassets.com/favicons/favicon.svg" alt="github" class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input" name="titleIco" type="radio" value="csdn" /><img src="https://g.csdnimg.cn/static/logo/favicon32.ico" alt="csdn" class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input" name="titleIco" type="radio" value="juejin" /><img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico" alt="juejin" class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input" name="titleIco" type="radio" value="zhihu" /><img src="https://static.zhihu.com/heifetz/favicon.ico" alt="zhihu" class="pf-radio-img"></label></div><div class="pf-radio-div"><span class="pf-label">更改网页标题</span><input class="pf-input" name="title" type="text" style="height: 25px;" /></div></div><div id="pf-set-home"><h3>首页设置</h3><div class="pf-label fw-bold border-none">模块位置</div><div class="pf-radio-div pf-z"><span class="pf-label">回答问题</span><label><input class="pf-input" name="positionAnswer" type="radio" value="left" />左侧</label><label><input class="pf-input" name="positionAnswer" type="radio" value="right" />右侧</label><label><input class="pf-input" name="positionAnswer" type="radio" value="hidden" />隐藏</label><select name="positionAnswerIndex" class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">创作中心</span><label><input class="pf-input" name="positionCreation" type="radio" value="left" />左侧</label><label><input class="pf-input" name="positionCreation" type="radio" value="right" />右侧</label><label><input class="pf-input" name="positionCreation" type="radio" value="hidden" />隐藏</label><select name="positionCreationIndex" class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">圆桌</span><label><input class="pf-input" name="positionTable" type="radio" value="left" />左侧</label><label><input class="pf-input" name="positionTable" type="radio" value="right" />右侧</label><label><input class="pf-input" name="positionTable" type="radio" value="hidden" />隐藏</label><select name="positionTableIndex" class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">收藏夹</span><label><input class="pf-input" name="positionFavorites" type="radio" value="left" />左侧</label><label><input class="pf-input" name="positionFavorites" type="radio" value="right" />右侧</label><label><input class="pf-input" name="positionFavorites" type="radio" value="hidden" />隐藏</label><select name="positionFavoritesIndex" class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div"><span class="pf-label">指南</span><label><input class="pf-input" name="positionFooter" type="radio" value="left" />左侧</label><label><input class="pf-input" name="positionFooter" type="radio" value="right" />右侧</label><label><input class="pf-input" name="positionFooter" type="radio" value="hidden" />隐藏</label><select name="positionFooterIndex" class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-checkbox-div"><label><span class="pf-label">左侧栏固定</span><input class="pf-input" name="stickyLeft" type="checkbox" value="on" /></label></div><div class="pf-checkbox-div"><label><span class="pf-label">右侧栏固定</span><input class="pf-input" name="stickyRight" type="checkbox" value="on" /></label></div><div class="pf-checkbox-div"><label><span class="pf-label">列表更多按钮固定至题目右侧</span><input class="pf-input" name="fixedListItemMore" type="checkbox" value="on" /></label></div><div class="pf-checkbox-div"><label><span class="pf-label">                  内容标题添加类别标签<span class="pf-label-tag pf-label-tag-Article">文章</span><span class="pf-label-tag pf-label-tag-Answer">回答</span><span class="pf-label-tag pf-label-tag-ZVideo">视频</span></span><input class="pf-input" name="questionTitleTag" type="checkbox" value="on" /></label></div><div class="pf-label fw-bold border-none">悬浮模块</div><div class="pf-commit pf-z">拖动悬浮模块定位位置</div><div class="pf-commit pf-z">固定即不可拖动，取消则可以重新拖动位置</div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">问题列表切换</span><input class="pf-input" name="suspensionHomeTab" type="checkbox" value="on" /></label><select name="suspensionHomeTabStyle" class="pf-input pf-suspensionHomeTab" style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select><label><span class="pf-label">固定</span><input class="pf-input" name="suspensionHomeTabFixed" type="checkbox" value="on" /></label></div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">顶部发现模块</span><input class="pf-input" name="suspensionFind" type="checkbox" value="on" /></label><select name="suspensionFindStyle" class="pf-input pf-suspensionFind" style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select><label><span class="pf-label">固定</span><input class="pf-input" name="suspensionFindFixed" type="checkbox" value="on" /></label></div><div class="pf-checkbox-div"><label><span class="pf-label">个人中心</span><input class="pf-input" name="suspensionUser" type="checkbox" value="on" /></label><label><span class="pf-label">固定</span><input class="pf-input" name="suspensionUserFixed" type="checkbox" value="on" /></label></div></div><div id="pf-set-hidden"><h3>隐藏内容</h3><div class="pf-hidden-labels"><label><input class="pf-input" name="hiddenLogo" type="checkbox" value="on" />logo</label><label><input class="pf-input" name="hiddenHeader" type="checkbox" value="on" />顶部header</label><label><input class="pf-input" name="hiddenHeaderScroll" type="checkbox" value="on" />顶部滚动header</label><label><input class="pf-input" name="hiddenAnswerRightFooter" type="checkbox" value="on" />详情右侧信息栏</label><label><input class="pf-input" name="hiddenHotListWrapper" type="checkbox" value="on" />热榜榜单TAG</label></div><div class="pf-hidden-labels"><label><input class="pf-input" name="hiddenAnswers" type="checkbox" value="on" />问题列表回答内容</label><label><input class="pf-input" name="hiddenItemActions" type="checkbox" value="on" />列表回答操作</label><label><input class="pf-input" name="hiddenAnswerText" type="checkbox" value="on" />回答操作文字</label><label><input class="pf-input" name="hiddenReadMoreText" type="checkbox" value="on" />阅读全文文字</label><label><input class="pf-input" name="hiddenAnswerRights" type="checkbox" value="on" />收藏喜欢举报</label><label><input class="pf-input" name="hiddenAnswerRightsText" type="checkbox" value="on" />收藏喜欢举报文字</label><label><input class="pf-input" name="hiddenListImg" type="checkbox" value="on" />问题列表图片</label><label><input class="pf-input" name="hiddenReward" type="checkbox" value="on" />赞赏按钮</label></div><div class="pf-hidden-labels"><label><input class="pf-input" name="hiddenQuestionShare" type="checkbox" value="on" />问题分享</label><label><input class="pf-input" name="hiddenQuestionTag" type="checkbox" value="on" />问题话题</label><label><input class="pf-input" name="hiddenQuestionActions" type="checkbox" value="on" />问题操作栏</label><label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏回答关联话题</label><label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏下方操作条</label></div><div class="pf-hidden-labels"><label><input class="pf-input" name="hiddenAD" type="checkbox" value="on" />广告</label></div></div><div id="pf-set-color"><h3>颜色设置</h3><div class="pf-radio-div pf-color-bg"><div class="pf-label">背景</div><div class="pf-content" name="colorsBackground"></div></div></div><div id="pf-set-config"><h3>配置导出导入</h3><div class="pf-local-config"><button class="pf-export-config pf-button">导出当前配置</button><button class="pf-restore-config pf-button">恢复默认配置</button><div class="pf-import-dom"><textarea class="pf-textarea" name="configImport" placeholder="配置可参考导出格式"></textarea><button class="pf-import-config pf-button">导入</button></div></div><div class="pf-customize-css"><div class="pf-label">自定义css</div><div class="pf-content"><textarea class="pf-textarea pf-input" name="customizeCss"></textarea><button class="pf-customize-css-button pf-button">确定</button></div></div></div></div></div><button class="pf-b-close pf-button">关 闭</button></div></div></div><div style="display: none;" class="pf-preview"><div class="pf-modal-bg"><img class="pf-preview-img" src=""></div></div>'
     const htmlModal = $(dom)
     const openButton = '<div class="pf-op"><i class="pf-open-modal iconfont">&#xe603;</i></div>'
     $('body').append(openButton)
@@ -884,7 +896,7 @@
     // initScrollModal()
   }
 
-  function initCSS () {
+  function initCSS() {
     const cssOwn = isDev ? `<style type="text/css" id="pf-css-own">${INNER_CSS}</style>` : '<style type="text/css" id="pf-css-own">' +
       `body{width:100%}*{box-sizing:border-box}@font-face{font-family:'own-iconfont';src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot');src:url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot?#iefix') format('embedded-opentype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff2') format('woff2'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff') format('woff'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.ttf') format('truetype'),url('//at.alicdn.com/t/font_2324733_zogpuw5b208.svg#own-iconfont') format('svg')}.iconfont{font-family:'own-iconfont' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.pf-op{position:fixed;width:50px;height:40px;text-align:center;line-height:40px;border-top-right-radius:12px;border-bottom-right-radius:12px;top:100px;left:-30px;background:#ddd;z-index:9999;cursor:pointer}.pf-op:hover{animation:showOp 1s;animation-fill-mode:forwards}@keyframes showOp{0%{left:-30px}100%{left:0}}.pf-preview,.pf-mark{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;overflow-y:auto;z-index:9999;background-color:rgba(18,18,18,0.65)}.pf-preview .pf-modal-bg,.pf-mark .pf-modal-bg{position:relative;height:100%;width:100%}.pf-preview .pf-modal-bg .pf-preview-img,.pf-mark .pf-modal-bg .pf-preview-img,.pf-preview .pf-modal-bg .pf-modal,.pf-mark .pf-modal-bg .pf-modal{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)}.pf-preview img{cursor:zoom-out}.pf-mark textarea,.pf-mark input{box-sizing:border-box}.pf-mark .pf-modal-bg{min-height:430px}.pf-mark .pf-modal-bg .pf-modal{width:500px;height:430px;background:#fff;z-index:99999;padding:12px;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar{width:.25rem;height:.25rem;background:#eee}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-track{border-radius:0}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:.25rem}.pf-mark .pf-modal-bg .pf-modal ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.pf-mark .pf-modal-bg .pf-modal .pf-modal-title{padding-bottom:12px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content{display:flex;height:340px;width:100%;font-size:14px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left{width:100px;border-right:1px solid #ddd;list-style:none;margin:0px;padding:0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li{padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-left li a{text-decoration:none;color:#111f2c}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 12px 100px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right>div{padding-bottom:24px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right h3{margin-top:4px;margin-bottom:8px;font-size:18px;font-weight:bold}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image{display:flex}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content{flex:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-zoom-answer-image .pf-content label{display:block}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis .pf-simple-button{margin-bottom:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-home>div,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div{border-bottom:1px solid #eee;padding:4px 0}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-home>div.pf-z,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div.pf-z{border:none}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-home>div label,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-basis>div label{padding-right:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-label::after{content:'：'}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select{display:inline-block;text-align:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select .pf-radio-img{width:32px;height:32px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input{margin:0;display:none}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right .pf-radio-img-select input:checked+.pf-radio-img{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label{display:inline-block;width:100px;height:50px;position:relative;margin-right:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{position:absolute;top:50%;transform:translateY(-50%);z-index:1}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input{left:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label input:checked+.pf-color-radio-item{border:2px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label span{right:20px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsBackground'] .pf-color-choose-label .pf-color-radio-item{width:100%;height:100%;border:2px solid transparent;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsTheme'] .pf-color-choose-label{display:inline-block;width:40px;height:40px;margin-right:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsTheme'] .pf-color-choose-label input{display:none}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsTheme'] .pf-color-choose-label input:checked+.pf-color-radio-item{border:4px solid #4286f4}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right [name='colorsTheme'] .pf-color-choose-label .pf-color-radio-item{width:100%;height:100%;border:4px solid transparent;border-radius:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-color .pf-content{padding:4px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-restore-config{margin-left:12px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content{padding-top:8px;display:flex;align-items:center}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom .pf-textarea,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content .pf-textarea{width:70%;height:50px}.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-import-dom button,.pf-mark .pf-modal-bg .pf-modal .pf-modal-content .pf-right #pf-set-config .pf-customize-css .pf-content button{height:50px;line-height:50px;width:25%;margin-left:5%;padding:0 !important}.pf-mark .pf-modal-bg .pf-modal .pf-button{padding:4px 8px;border-radius:4px;background:#ddd;position:relative;border:1px solid #bbb}.pf-mark .pf-modal-bg .pf-modal .pf-button:hover{background:#eee}.pf-mark .pf-modal-bg .pf-modal .pf-button:active::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,0.2)}.pf-mark .pf-modal-bg .pf-modal .pf-button:focus{outline:none}.pf-mark .pf-modal-bg .pf-modal .pf-hidden-labels{padding-bottom:6px;border-bottom:1px solid #eeeeee;margin-bottom:6px}.pf-mark .pf-modal-bg .pf-modal .pf-home-tab-is-suspension{border-bottom:1px solid #eeeeee}.pf-mark .pf-modal-bg .pf-modal .pf-home-tab-is-suspension>div{padding-bottom:8px}.pf-mark .pf-modal-bg .pf-modal .pf-label-tag-Answer{background:#ec7259}.pf-mark .pf-modal-bg .pf-modal .pf-label-tag-ZVideo{background:#12c2e9}.pf-mark .pf-modal-bg .pf-modal .pf-label-tag-Article{background:#00965e}.pf-mark .pf-modal-bg .pf-modal .pf-label-tag{margin-right:6px;font-weight:normal;display:inline-block;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}.pf-mark .border-none{border:none !important}.pf-mark .pf-commit{color:#999;font-size:12px}.fw-bold{font-weight:bold}.GlobalSideBar-navList{margin-bottom:10px;background:#fff;overflow:hidden;border-radius:2px;box-shadow:0 1px 3px rgba(18,18,18,0.1);box-sizing:border-box}.Question-main .Question-mainColumn,.ListShortcut{flex:1;width:100%}.AnswerAuthor{margin-left:12px}.ModalWrap .ModalExp-content{height:0 !important;overflow:hidden}.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard{width:48% !important}.GlobalWrite-navTop{display:flex !important;justify-content:space-between !important;flex-wrap:wrap !important}.GlobalWrite-navTop .GlobalWrite-topItem{margin-right:0 !important;margin-bottom:12px !important}.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn,.Collections-mainColumn,.Balance-Main{margin-right:0 !important}.Post-Main .RichContent-actions{left:50% !important}.Post-Main .RichContent-actions .ContentItem-actions{transform:translateX(-50%) !important}.css-1xy3kyp,.css-1kjxdzv,.css-qqgmyv{max-width:none !important}.Topstory-mainColumn{flex:1 !important;min-width:694px !important}.ContentItem-action,.Button--plain{font-size:12px !important}.ContentItem-actions{padding-top:0 !important;padding-bottom:0 !important}.ContentItem-actions>button,.ContentItem-actions>div{margin-left:8px}.RichContent-inner{margin-top:8px !important}.Post-SideActions-icon,.Post-SideActions button.like,.VoteButton{background:none !important;color:#8590a6 !important;font-size:12px !important;padding:0 !important}.Post-SideActions button.like.active .Post-SideActions-icon,.Post-SideActions button.like.active .likeCount-inner,.VoteButton.is-active{color:#0066ff !important}.css-1acwmmj{display:none !important}.position-suspensionFind,.position-suspensionSearch,.position-suspensionUser{position:fixed;z-index:100}.position-suspensionFind{display:flex;flex-direction:column;margin:0 !important}.position-suspensionFind .Tabs-item{padding:0 !important;margin-bottom:4px}.position-suspensionFind .Tabs-item .Tabs-link{padding:8px !important;border-radius:4px}.position-suspensionFind .Tabs-item .Tabs-link::after{content:'' !important;display:none !important}.position-suspensionUser{width:fit-content !important;margin:0 !important;display:flex;flex-direction:column}.position-suspensionUser .AppHeader-messages,.position-suspensionUser .AppHeader-notifications{margin-right:0 !important;margin-bottom:12px}`
       + '</style>'
@@ -901,7 +913,7 @@
     initDataOnDocumentStart()
   })()
 
-  function initDataOnDocumentStart () {
+  function initDataOnDocumentStart() {
     initCSSVersion()
     initCSSBackground()
     // changeColorTheme()
@@ -917,7 +929,7 @@
 
   // 使用ResizeObserver监听body高度
   const resizeObserver = new ResizeObserver(throttle(resizeFun, 500))
-  function resizeFun () {
+  function resizeFun() {
     // 页面高度发生改变
     if (bodySize === bodySizePrev) {
       // 重新复制img预览
@@ -967,7 +979,7 @@
   // }
 
   // 在弹窗滚动中加入a标签锚点配置
-  function initScrollModal () {
+  function initScrollModal() {
     const hrefArr = []
     document.querySelectorAll('.pf-left a').forEach((i) => {
       const id = i.href.replace(/.*#/, '')
@@ -980,7 +992,7 @@
     $('.pf-right')[0].onscroll = throttle(() => scrollModal(hrefArr), 100)
   }
 
-  function scrollModal (hrefArr) {
+  function scrollModal(hrefArr) {
     const scHere = $('.pf-right')[0].offsetHeight / 2 + $('.pf-right')[0].scrollTop
     const id = hrefArr.find((item, index) => item.offsetTop <= scHere && ((hrefArr[index + 1] && hrefArr[index + 1].offsetTop > scHere) || !hrefArr[index + 1])).id
     document.querySelectorAll('.pf-left a').forEach((i) => {
