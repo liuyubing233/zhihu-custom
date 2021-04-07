@@ -7,13 +7,13 @@ body {
 
 @font-face {
   font-family: 'own-iconfont'; /* project id 2324733 */
-  src: url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot');
-  src: url('//at.alicdn.com/t/font_2324733_zogpuw5b208.eot?#iefix')
+  src: url('//at.alicdn.com/t/font_2324733_d6hud9caum.eot');
+  src: url('//at.alicdn.com/t/font_2324733_d6hud9caum.eot?#iefix')
       format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff2') format('woff2'),
-    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.woff') format('woff'),
-    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_2324733_zogpuw5b208.svg#own-iconfont')
+    url('//at.alicdn.com/t/font_2324733_d6hud9caum.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_2324733_d6hud9caum.woff') format('woff'),
+    url('//at.alicdn.com/t/font_2324733_d6hud9caum.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_2324733_d6hud9caum.svg#own-iconfont')
       format('svg');
 }
 
@@ -36,7 +36,7 @@ body {
   border-bottom-right-radius: 12px;
   top: 100px;
   left: -30px;
-  background: #ddd;
+  background: rgba(211, 211, 211, 0.7);
   z-index: 9999;
   cursor: pointer;
   &:hover {
@@ -463,8 +463,8 @@ body {
 }
 
 // header三大金刚定位
-.position-suspensionFind,
 .position-suspensionSearch,
+.position-suspensionFind,
 .position-suspensionUser {
   position: fixed;
   z-index: 100;
@@ -497,5 +497,53 @@ body {
   .AppHeader-notifications {
     margin-right: 0 !important;
     margin-bottom: 12px;
+  }
+}
+.AppHeader-SearchBar {
+  flex: 1;
+}
+
+.position-suspensionSearch {
+  line-height: 30px;
+  .my-search-icon,
+  .my-search-pick-up {
+    cursor: pointer;
+    color: #0066ff;
+    &:hover {
+      color: #005ce6;
+    }
+  }
+  .my-search-pick-up {
+    font-size: 24px;
+    margin-left: 4px;
+  }
+  & > form,
+  & > button,
+  .my-search-pick-up {
+    display: none;
+  }
+  .my-search-icon {
+    display: block;
+  }
+  &.focus {
+    animation: openSearch 1s;
+    animation-fill-mode: forwards;
+    & > form,
+    & > button,
+    .my-search-pick-up {
+      display: block;
+    }
+    .my-search-icon {
+      display: none;
+    }
+  }
+}
+
+@keyframes openSearch {
+  0% {
+    width: 20px;
+  }
+  100% {
+    width: 300px;
   }
 }
