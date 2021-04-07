@@ -7,13 +7,13 @@ body {
 
 @font-face {
   font-family: 'own-iconfont'; /* project id 2324733 */
-  src: url('//at.alicdn.com/t/font_2324733_d6hud9caum.eot');
-  src: url('//at.alicdn.com/t/font_2324733_d6hud9caum.eot?#iefix')
+  src: url('//at.alicdn.com/t/font_2324733_efyd1mx2xpo.eot');
+  src: url('//at.alicdn.com/t/font_2324733_efyd1mx2xpo.eot?#iefix')
       format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_2324733_d6hud9caum.woff2') format('woff2'),
-    url('//at.alicdn.com/t/font_2324733_d6hud9caum.woff') format('woff'),
-    url('//at.alicdn.com/t/font_2324733_d6hud9caum.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_2324733_d6hud9caum.svg#own-iconfont')
+    url('//at.alicdn.com/t/font_2324733_efyd1mx2xpo.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_2324733_efyd1mx2xpo.woff') format('woff'),
+    url('//at.alicdn.com/t/font_2324733_efyd1mx2xpo.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_2324733_efyd1mx2xpo.svg#own-iconfont')
       format('svg');
 }
 
@@ -462,12 +462,56 @@ body {
   display: none !important;
 }
 
+.my-unlock,
+.my-lock,
+.my-lock-mask {
+  display: none;
+  color: #999;
+  cursor: pointer;
+}
+
+.my-unlock,
+.my-lock {
+  margin: 4px;
+}
+
+.my-lock-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200;
+}
+
 // header三大金刚定位
 .position-suspensionSearch,
 .position-suspensionFind,
 .position-suspensionUser {
   position: fixed;
   z-index: 100;
+}
+.position-suspensionSearch,
+.position-suspensionFind,
+.position-suspensionUser,
+.Topstory-container .TopstoryTabs {
+  &:hover {
+    .my-unlock {
+      display: block;
+    }
+  }
+  &.my-move-this {
+    .my-unlock {
+      display: none !important;
+    }
+    .my-lock,
+    .my-lock-mask {
+      display: block;
+    }
+    .my-lock {
+      z-index: 201;
+      color: #cccccc;
+    }
+  }
 }
 
 .position-suspensionFind {
@@ -505,6 +549,7 @@ body {
 
 .position-suspensionSearch {
   line-height: 30px;
+  border-radius: 16px;
   .my-search-icon,
   .my-search-pick-up {
     cursor: pointer;
