@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.6.6
+// @version      1.6.7
 // @description  一键极简模式，去除不必要的元素（可自动配置，随时还原），给你最简单的知乎；首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；页面背景色修改，黑色为夜间模式；列表的问题，文章和视频添加区分标签；去除广告，外链直接打开；更多功能请在插件里体验；想要的最终功能是页面大部分模块全可配置，目前努力更新中...
 // @author       pufferfish
 // @match         *://www.zhihu.com/*
@@ -50,18 +50,18 @@
     // 悬浮模块 start ----------------
     suspensionHomeTab: false, // 问题列表切换
     suspensionHomeTabPo: 'left: 20px; top: 100px;', // 定位
-    suspensionHomeTabFixed: false,
+    suspensionHomeTabFixed: true,
     suspensionHomeTabStyle: 'transparent', // 样式
     suspensionFind: false, // 顶部发现模块
     suspensionFindPo: 'left: 10px; top: 380px;',
-    suspensionFindFixed: false,
+    suspensionFindFixed: true,
     suspensionFindStyle: 'transparent',
     suspensionSearch: false, // 搜索栏
     suspensionSearchPo: 'left: 200px; top: 100px;',
-    suspensionSearchFixed: false,
+    suspensionSearchFixed: true,
     suspensionUser: false, // 个人中心
     suspensionUserPo: 'right: 60px; top: 100px;',
-    suspensionUserFixed: false,
+    suspensionUserFixed: true,
     suspensionPickUp: false, // 长回答和列表收起按钮
     previewOpenGIF: true, // 动图弹窗显示
     // 悬浮模块 end ------------------
@@ -464,7 +464,6 @@
         appendLock(even, name)
         even.addClass(`position-${name}`)
         $('body').append(even)
-        cSuspensionStyle(name)
       } else {
         if (name === 'suspensionSearch') {
           $('.my-search-icon')[0] && $('.my-search-icon').remove()
@@ -476,6 +475,7 @@
         even.removeAttr('style', '')
         $('.AppHeader-inner').append(even)
       }
+      cSuspensionStyle(name)
     })
     initCSSVersion()
   }
@@ -700,8 +700,11 @@
       juejin: '<link data-n-head="ssr" rel="shortcut icon" id="pf-ico" href="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico">',
       zhihu: '<link rel="shortcut icon" type="image/x-icon" id="pf-ico" href="https://static.zhihu.com/heifetz/favicon.ico">',
     }
-    $('#pf-ico').length && $('#pf-ico').remove()
-    ico[pfConfig.titleIco] && $('head').append(ico[pfConfig.titleIco])
+    if (ico[pfConfig.titleIco]) {
+      $('[type="image/x-icon"]')[0] && $('[type="image/x-icon"]').remove()
+      $('#pf-ico')[0] && $('#pf-ico').remove()
+      ico[pfConfig.titleIco] && $('head').append(ico[pfConfig.titleIco])
+    }
   }
 
   // 修改版心方法
