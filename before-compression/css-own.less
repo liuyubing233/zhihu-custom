@@ -36,7 +36,7 @@ body {
   border-bottom-right-radius: 12px;
   top: 100px;
   left: -30px;
-  background: rgba(211, 211, 211, 0.7);
+  background: rgba(0, 0, 0, 0.2);
   z-index: 9999;
   cursor: pointer;
   &:hover {
@@ -65,22 +65,19 @@ body {
   overflow-y: auto;
   z-index: 9999;
   background-color: rgba(18, 18, 18, 0.65);
-  .pf-modal-bg {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    .pf-preview-img,
-    .pf-modal {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
 }
 
-.pf-preview img {
-  cursor: zoom-out;
+// 预览图片和设置弹窗定位方式不同
+.pf-preview {
+  .pf-modal-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    img {
+      cursor: zoom-out;
+    }
+  }
 }
 
 .pf-mark {
@@ -89,8 +86,15 @@ body {
     box-sizing: border-box;
   }
   .pf-modal-bg {
+    position: relative;
+    height: 100%;
     min-height: 430px;
+    width: 100%;
     .pf-modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 500px;
       height: 430px;
       background: #fff;
@@ -360,6 +364,7 @@ body {
   font-weight: bold;
 }
 
+/*----------------- 页面内容排版 ---------------------start*/
 .GlobalSideBar-navList {
   margin-bottom: 10px;
   background: #fff;
@@ -400,12 +405,16 @@ body {
   }
 }
 .QuestionHeader-main,
-.SearchMain,
 .Profile-mainColumn,
 .CollectionsDetailPage-mainColumn,
 .Collections-mainColumn,
 .Balance-Main {
   margin-right: 0 !important;
+}
+
+.QuestionHeader,
+.Post-content {
+  min-width: 0!important;
 }
 
 .Post-Main .RichContent-actions {
@@ -419,6 +428,10 @@ body {
 .css-1kjxdzv,
 .css-qqgmyv {
   max-width: none !important;
+}
+
+.SearchTopicReview {
+  width: 100px !important;
 }
 
 // 首页内容模块
@@ -461,6 +474,8 @@ body {
 .css-1acwmmj {
   display: none !important;
 }
+
+/*----------------- 页面内容排版 ---------------------end*/
 
 .my-unlock,
 .my-lock,
