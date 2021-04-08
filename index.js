@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.6.1
+// @version      1.6.2
 // @description  一键极简模式，去除不必要的元素（可自动配置，随时还原），给你最简单的知乎；首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；页面背景色修改，黑色为夜间模式；列表的问题，文章和视频添加区分标签；去除广告，外链直接打开；更多功能请在插件里体验；想要的最终功能是页面大部分模块全可配置，目前努力更新中...
 // @author       pufferfish
 // @match         *://www.zhihu.com/*
@@ -696,7 +696,7 @@
       + `${pfConfig.questionTitleTag ? `.AnswerItem .ContentItem-title::before{content:'回答';background:#ec7259}.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}.ContentItem-title div{display:inline}.TopstoryQuestionAskItem .ContentItem-title::before{content:'提问';background:#533b77}` : ''}`
       + `.position-suspensionFind{${pfConfig.suspensionFindPo}}.position-suspensionUser{${pfConfig.suspensionUserPo}}.position-suspensionSearch{${pfConfig.suspensionSearchPo}}`
       + `.position-suspensionFind .Tabs-link{${vSuspensionColor(pfConfig.suspensionFindStyle).normal}}.position-suspensionFind .Tabs-link.is-active{${vSuspensionColor(pfConfig.suspensionFindStyle).active}}`
-      + `${pfConfig.fixedListItemMore ? '.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{opacity: 1!important;position: absolute;top: 20px;right: 10px;}' : ''}`
+      + `${pfConfig.fixedListItemMore ? '.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{visibility: visible!important;position: absolute;top: 20px;right: 10px;}' : ''}`
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
