@@ -157,7 +157,7 @@
             </div>
             <div class="pf-label fw-bold border-none">悬浮模块</div>
             <div class="pf-commit pf-z">拖动悬浮模块定位位置</div>
-            <div class="pf-commit pf-z">固定即不可拖动，取消则可以重新拖动位置</div>
+            <div class="pf-commit pf-z">鼠标放置显示解锁按钮解锁即可拖动</div>
             <div class="pf-checkbox-div pf-z">
               <label>
                 <span class="pf-label">问题列表切换</span>
@@ -184,11 +184,18 @@
                 <input class="pf-input" name="suspensionUser" type="checkbox" value="on" />
               </label>
             </div>
-            <div class="pf-checkbox-div">
+            <div class="pf-checkbox-div pf-z">
               <label>
                 <span class="pf-label">搜索栏</span>
                 <input class="pf-input" name="suspensionSearch" type="checkbox" value="on" />
               </label>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">长回答和列表收起按钮</span>
+                <input class="pf-input" name="suspensionPickUp" type="checkbox" value="on" />
+              </label>
+              <div class="pf-commit pf-z">建议在隐藏底部悬浮操作条时使用</div>
             </div>
           </div>
           <div id="pf-set-hidden">
@@ -214,6 +221,7 @@
               <label><input class="pf-input" name="hiddenQuestionShare" type="checkbox" value="on" />问题分享</label>
               <label><input class="pf-input" name="hiddenQuestionTag" type="checkbox" value="on" />问题话题</label>
               <label><input class="pf-input" name="hiddenQuestionActions" type="checkbox" value="on" />问题操作栏</label>
+              <label><input class="pf-input" name="hiddenFixedActions" type="checkbox" value="on" />回答下方悬浮操作条</label>
               <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏回答关联话题</label>
               <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏下方操作条</label>
               <label><input class="pf-input" name="hiddenZhuanlanTitleImage" type="checkbox" value="on" />专栏标题图片</label>

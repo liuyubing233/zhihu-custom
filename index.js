@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.6.0
+// @version      1.6.1
 // @description  一键极简模式，去除不必要的元素（可自动配置，随时还原），给你最简单的知乎；首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；页面背景色修改，黑色为夜间模式；列表的问题，文章和视频添加区分标签；去除广告，外链直接打开；更多功能请在插件里体验；想要的最终功能是页面大部分模块全可配置，目前努力更新中...
 // @author       pufferfish
 // @match         *://www.zhihu.com/*
@@ -62,9 +62,11 @@
     suspensionUser: false, // 个人中心
     suspensionUserPo: 'right: 60px; top: 100px;',
     suspensionUserFixed: false,
+    suspensionPickUp: false, // 长回答和列表收起按钮
     // 悬浮模块 end ------------------
     // 隐藏内容模块 start --------
     hiddenAnswerRightFooter: true, // 回答页面右侧内容
+    hiddenFixedActions: false, // 回答下方悬浮操作条
     hiddenLogo: false, // logo
     hiddenHeader: false, // header
     hiddenHeaderScroll: false, // 顶部滚动header
@@ -460,32 +462,35 @@
 
   // 悬浮模块是否固定改为鼠标放置到模块上显示开锁图标 点击即可移动模块
   function appendLock(even, name) {
-    !even.children('.my-unlock')[0] && even.append('<i class="iconfont my-unlock">&#xe688;</i>')
-    !even.children('.my-lock')[0] && even.append('<i class="iconfont my-lock">&#xe700;</i>')
-    !even.children('.my-lock-mask')[0] && even.append('<div class="my-lock-mask"></div>')
+    if (even[0]) {
+      !even.children('.my-unlock')[0] && even.append('<i class="iconfont my-unlock">&#xe688;</i>')
+      !even.children('.my-lock')[0] && even.append('<i class="iconfont my-lock">&#xe700;</i>')
+      !even.children('.my-lock-mask')[0] && even.append('<div class="my-lock-mask"></div>')
+      even.children('.my-unlock')[0].onclick = async () => {
+        pfConfig[name + 'Fixed'] = false
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig))
+        even.addClass('my-move-this')
+      }
 
-    even.children('.my-unlock')[0].onclick = async () => {
-      pfConfig[name + 'Fixed'] = false
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig))
-      even.addClass('my-move-this')
-    }
+      even.children('.my-lock')[0].onclick = async () => {
+        pfConfig[name + 'Fixed'] = true
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig))
+        even.removeClass('my-move-this')
+      }
 
-    even.children('.my-lock')[0].onclick = async () => {
-      pfConfig[name + 'Fixed'] = true
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig))
-      even.removeClass('my-move-this')
-    }
-
-    // 如果进入页面的时候该项的FIXED为false则添加class
-    if (pfConfig[name + 'Fixed'] === false) {
-      even.addClass('my-move-this')
+      // 如果进入页面的时候该项的FIXED为false则添加class
+      if (pfConfig[name + 'Fixed'] === false) {
+        even.addClass('my-move-this')
+      }
     }
   }
 
   function removeLock(even, name) {
-    even.children('.my-unlock')[0] && even.children('.my-unlock').remove()
-    even.children('.my-lock')[0] && even.children('.my-lock').remove()
-    even.children('.my-lock-mask')[0] && even.children('.my-lock-mask').remove()
+    if (even[0]) {
+      even.children('.my-unlock')[0] && even.children('.my-unlock').remove()
+      even.children('.my-lock')[0] && even.children('.my-lock').remove()
+      even.children('.my-lock-mask')[0] && even.children('.my-lock-mask').remove()
+    }
   }
 
   // 加载两侧数据
@@ -692,7 +697,6 @@
       + `.position-suspensionFind{${pfConfig.suspensionFindPo}}.position-suspensionUser{${pfConfig.suspensionUserPo}}.position-suspensionSearch{${pfConfig.suspensionSearchPo}}`
       + `.position-suspensionFind .Tabs-link{${vSuspensionColor(pfConfig.suspensionFindStyle).normal}}.position-suspensionFind .Tabs-link.is-active{${vSuspensionColor(pfConfig.suspensionFindStyle).active}}`
       + `${pfConfig.fixedListItemMore ? '.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{opacity: 1!important;position: absolute;top: 20px;right: 10px;}' : ''}`
-      // + `${pfConfig.suspensionSearch ? `.pf-search{display: block;${pfConfig.suspensionSearchPo}}` : '.pf-search{display: none;}'}`
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
@@ -704,7 +708,7 @@
       + `${pfConfig.hiddenLogo ? '.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo{display: none!important;}' : ''}`
       + `${pfConfig.hiddenHeader ? '.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}' : ''}`
       + `${pfConfig.hiddenHeaderScroll ? '.AppHeader.is-fixed{display:none!important;}' : ''}`
-      + `${pfConfig.hiddenItemActions ? '.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button,.Topstory-container .ContentItem-actions>div,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint{opacity:0!important;height:0!important;padding:0!important;}.TopstoryQuestionAskItem-hint{margin: 0!important;}' : ''}`
+      + `${pfConfig.hiddenItemActions ? '.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button,.Topstory-container .ContentItem-actions>div,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint{visibility:hidden!important;height:0!important;padding:0!important;}.TopstoryQuestionAskItem-hint{margin: 0!important;}' : ''}`
       + `${pfConfig.hiddenAnswerText ? '.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}.VoteButton{color: #8590a6!important; }.VoteButton.is-active{color: #0066ff!important;}.ContentItem-action{margin-left:8px!important;}' : ''}`
       + `${pfConfig.hiddenQuestionTag ? '.QuestionHeader-tags{display: none!important;}' : ''}`
       + `${pfConfig.hiddenQuestionShare ? '.Popover.ShareMenu{display: none!important;}' : ''}`
@@ -720,6 +724,7 @@
       + `${pfConfig.hiddenHotListWrapper ? '.HotListNav-wrapper{display: none;}' : ''}`
       + `${pfConfig.hiddenZhuanlanActions ? '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}' : ''}`
       + `${pfConfig.hiddenZhuanlanTitleImage ? '.TitleImage{display: none;!important}' : ''}`
+      + `${pfConfig.hiddenFixedActions ? '.ContentItem .RichContent-actions.is-fixed, .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}' : ''}`
   }
 
   // 悬浮模块颜色填充
@@ -781,11 +786,11 @@
       return `html,html img,.pf-color-radio-item,iframe{${filterObj(fi)}}.zu-top,.zu-top-nav-userinfo.selected, html.no-touchevents .top-nav-profile:hover .zu-top-nav-userinfo,.top-nav-profile a{background:#ffffff!important;border-color: #eeeeee!important;}.zu-top .zu-top-nav-link,.top-nav-profile .zu-top-nav-userinfo,.top-nav-dropdown li a{color: #111f2c!important;}html.no-touchevents .top-nav-dropdown a:hover {background:#eeeeee!important}`
     },
     useInitBackground: (bg) => {
-      return `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main,.CommentsV2-withPagination,.QuestionHeader-footer,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer,.Popover-arrow:after,.Messages-footer,.Modal-inner,.RichContent-actions,.CommentListV2-header-divider,.Input-wrapper{background-color:${myLocalC.backgroundOpacity[bg]}!important}`
+      return `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main,.CommentsV2-withPagination,.QuestionHeader-footer,.HoverCard,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer,.Popover-arrow:after,.Messages-footer,.Modal-inner,.RichContent-actions,.CommentListV2-header-divider,.Input-wrapper,.TopstoryItem .ZVideoToolbar{background-color:${myLocalC.backgroundOpacity[bg]}!important}`
         + `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar,.position-suspensionSearch.focus{background-color: ${bg}!important;}`
     },
     transparentBackground: () => {
-      return `.RichContent-actions.is-fixed{background-color: transparent;}`
+      return `.zhuanlan .RichContent-actions.is-fixed{background-color: transparent!important;}`
     }
   }
 
@@ -883,7 +888,7 @@
   const useSimple = async () => {
     let isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存')
     if (isUse) {
-      const config = { versionHeart: '1000', positionAnswer: 'hidden', positionAnswerIndex: '1', positionCreation: 'hidden', positionCreationIndex: '2', positionTable: 'hidden', positionTableIndex: '3', positionFavorites: 'hidden', positionFavoritesIndex: '4', positionFooter: 'hidden', positionFooterIndex: '5', stickyLeft: false, stickyRight: false, zoomAnswerImage: '100px', customizeCss: '', usePresetStyle: true, hiddenAnswerRightFooter: true, hiddenLogo: true, hiddenHeader: true, hiddenHeaderScroll: true, hiddenItemActions: true, hiddenAnswerText: false, hiddenQuestionShare: true, hiddenQuestionTag: true, hiddenQuestionActions: true, hiddenReward: true, hiddenZhuanlanTag: true, hiddenListImg: true, hiddenReadMoreText: true, hiddenAD: true, hiddenAnswerRights: true, hiddenAnswerRightsText: false, hiddenAnswers: true, hiddenHotListWrapper: true, suspensionHomeTab: true, suspensionHomeTabFixed: true, suspensionHomeTabPo: 'left: 20px; top: 100px;', suspensionHomeTabStyle: 'transparent', questionTitleTag: true, suspensionFind: false, suspensionFindFixed: false, suspensionFindPo: 'left: 10px; top: 380px;', suspensionFindStyle: 'transparent', suspensionUser: true, suspensionUserFixed: true, suspensionUserPo: 'right: 60px; top: 100px;', fixedListItemMore: true, hiddenZhuanlanActions: true, hiddenZhuanlanTitleImage: true, suspensionSearch: true, suspensionSearchFixed: true, suspensionSearchPo: 'left: 20px; top: 300px;' }
+      const config = { versionHeart: '1000', positionAnswer: 'hidden', positionAnswerIndex: '1', positionCreation: 'hidden', positionCreationIndex: '2', positionTable: 'hidden', positionTableIndex: '3', positionFavorites: 'hidden', positionFavoritesIndex: '4', positionFooter: 'hidden', positionFooterIndex: '5', stickyLeft: false, stickyRight: false, zoomAnswerImage: '100px', customizeCss: '', usePresetStyle: true, hiddenAnswerRightFooter: true, hiddenLogo: true, hiddenHeader: true, hiddenHeaderScroll: true, hiddenItemActions: true, hiddenAnswerText: false, hiddenQuestionShare: true, hiddenQuestionTag: true, hiddenQuestionActions: true, hiddenReward: true, hiddenZhuanlanTag: true, hiddenListImg: true, hiddenReadMoreText: true, hiddenAD: true, hiddenAnswerRights: true, hiddenAnswerRightsText: false, hiddenAnswers: true, hiddenHotListWrapper: true, suspensionHomeTab: true, suspensionHomeTabFixed: true, suspensionHomeTabPo: 'left: 20px; top: 100px;', suspensionHomeTabStyle: 'transparent', questionTitleTag: true, suspensionFind: false, suspensionFindFixed: false, suspensionFindPo: 'left: 10px; top: 380px;', suspensionFindStyle: 'transparent', suspensionUser: true, suspensionUserFixed: true, suspensionUserPo: 'right: 60px; top: 100px;', fixedListItemMore: true, hiddenZhuanlanActions: true, hiddenZhuanlanTitleImage: true, suspensionSearch: true, suspensionSearchFixed: true, suspensionSearchPo: 'left: 20px; top: 300px;', hiddenFixedActions: true, suspensionPickUp: true }
       pfConfig = Util.configF(config)
       await myStorage.set('pfConfig', JSON.stringify(pfConfig))
       initDataOnDocumentStart()
@@ -894,7 +899,7 @@
   // 注入弹窗元素和默认css
   function initHTML() {
     const dom = isDev ? INNER_HTML :
-      '<div style="display: none;"class="pf-mark"><div class="pf-modal-bg"><div class="pf-modal"><div class="pf-modal-title">样式编辑器</div><div class="pf-modal-content"><ul class="pf-left"><li><a href="#pf-set-basis">基础设置</a></li><li><a href="#pf-set-home">首页设置</a></li><li><a href="#pf-set-hidden">隐藏内容</a></li><li><a href="#pf-set-color">颜色设置</a></li><li><a href="#pf-set-config">配置导出导入</a></li></ul><div class="pf-right"><div id="pf-set-basis"><h3>基础设置</h3><button class="pf-simple-button pf-button">启用极简模式</button><div class="pf-radio-div"><span class="pf-label">版心大小</span><select name="versionHeart"class="pf-input"style="width: 100px;"><option value="800">800px</option><option value="1000">1000px</option><option value="1200">1200px</option><option value="1500">1500px</option><option value="100%">拉满</option></select></div><div class="pf-raido-divoom-answer-image"><span class="pf-label">回答和专栏图片缩放</span><div class="pf-content"><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="hidden"/>隐藏</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="100px"/>极小(100px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="200px"/>小(200px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="400px"/>中(400px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="default"/>默认</label></div></div><div class="pf-radio-div"><span class="pf-label">更改网页标题图片</span><br/><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="github"/><img src="https://github.githubassets.com/favicons/favicon.svg"alt="github"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="csdn"/><img src="https://g.csdnimg.cn/static/logo/favicon32.ico"alt="csdn"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="juejin"/><img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico"alt="juejin"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="zhihu"/><img src="https://static.zhihu.com/heifetz/favicon.ico"alt="zhihu"class="pf-radio-img"></label></div><div class="pf-radio-div"><span class="pf-label">更改网页标题</span><input class="pf-input"name="title"type="text"style="height: 25px;"/></div></div><div id="pf-set-home"><h3>首页设置</h3><div class="pf-label fw-bold border-none">模块位置</div><div class="pf-radio-div pf-z"><span class="pf-label">回答问题</span><label><input class="pf-input"name="positionAnswer"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="hidden"/>隐藏</label><select name="positionAnswerIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">创作中心</span><label><input class="pf-input"name="positionCreation"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="hidden"/>隐藏</label><select name="positionCreationIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">圆桌</span><label><input class="pf-input"name="positionTable"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionTable"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionTable"type="radio"value="hidden"/>隐藏</label><select name="positionTableIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">收藏夹</span><label><input class="pf-input"name="positionFavorites"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="hidden"/>隐藏</label><select name="positionFavoritesIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div"><span class="pf-label">指南</span><label><input class="pf-input"name="positionFooter"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="hidden"/>隐藏</label><select name="positionFooterIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-checkbox-div"><label><span class="pf-label">左侧栏固定</span><input class="pf-input"name="stickyLeft"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">右侧栏固定</span><input class="pf-input"name="stickyRight"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">列表更多按钮固定至题目右侧</span><input class="pf-input"name="fixedListItemMore"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">内容标题添加类别标签<span class="pf-label-tag pf-label-tag-Article">文章</span><span class="pf-label-tag pf-label-tag-Answer">回答</span><span class="pf-label-tag pf-label-tag-ZVideo">视频</span></span><input class="pf-input"name="questionTitleTag"type="checkbox"value="on"/></label></div><div class="pf-label fw-bold border-none">悬浮模块</div><div class="pf-commit pf-z">拖动悬浮模块定位位置</div><div class="pf-commit pf-z">固定即不可拖动，取消则可以重新拖动位置</div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">问题列表切换</span><input class="pf-input"name="suspensionHomeTab"type="checkbox"value="on"/></label><select name="suspensionHomeTabStyle"class="pf-input pf-suspensionHomeTab"style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select></div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">顶部发现模块</span><input class="pf-input"name="suspensionFind"type="checkbox"value="on"/></label><select name="suspensionFindStyle"class="pf-input pf-suspensionFind"style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select></div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">个人中心</span><input class="pf-input"name="suspensionUser"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">搜索栏</span><input class="pf-input"name="suspensionSearch"type="checkbox"value="on"/></label></div></div><div id="pf-set-hidden"><h3>隐藏内容</h3><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenLogo"type="checkbox"value="on"/>logo</label><label><input class="pf-input"name="hiddenHeader"type="checkbox"value="on"/>顶部header</label><label><input class="pf-input"name="hiddenHeaderScroll"type="checkbox"value="on"/>顶部滚动header</label><label><input class="pf-input"name="hiddenAnswerRightFooter"type="checkbox"value="on"/>详情右侧信息栏</label><label><input class="pf-input"name="hiddenHotListWrapper"type="checkbox"value="on"/>热榜榜单TAG</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenAnswers"type="checkbox"value="on"/>问题列表回答内容</label><label><input class="pf-input"name="hiddenItemActions"type="checkbox"value="on"/>列表回答操作</label><label><input class="pf-input"name="hiddenAnswerText"type="checkbox"value="on"/>回答操作文字</label><label><input class="pf-input"name="hiddenReadMoreText"type="checkbox"value="on"/>阅读全文文字</label><label><input class="pf-input"name="hiddenAnswerRights"type="checkbox"value="on"/>收藏喜欢举报</label><label><input class="pf-input"name="hiddenAnswerRightsText"type="checkbox"value="on"/>收藏喜欢举报文字</label><label><input class="pf-input"name="hiddenListImg"type="checkbox"value="on"/>问题列表图片</label><label><input class="pf-input"name="hiddenReward"type="checkbox"value="on"/>赞赏按钮</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenQuestionShare"type="checkbox"value="on"/>问题分享</label><label><input class="pf-input"name="hiddenQuestionTag"type="checkbox"value="on"/>问题话题</label><label><input class="pf-input"name="hiddenQuestionActions"type="checkbox"value="on"/>问题操作栏</label><label><input class="pf-input"name="hiddenZhuanlanTag"type="checkbox"value="on"/>专栏回答关联话题</label><label><input class="pf-input"name="hiddenZhuanlanActions"type="checkbox"value="on"/>专栏下方操作条</label><label><input class="pf-input"name="hiddenZhuanlanTitleImage"type="checkbox"value="on"/>专栏标题图片</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenAD"type="checkbox"value="on"/>广告</label></div></div><div id="pf-set-color"><h3>颜色设置</h3><div class="pf-radio-div pf-color-bg"><div class="pf-label">背景</div><div class="pf-content"name="colorsBackground"></div></div></div><div id="pf-set-config"><h3>配置导出导入</h3><div class="pf-local-config"><button class="pf-export-config pf-button">导出当前配置</button><button class="pf-restore-config pf-button">恢复默认配置</button><div class="pf-import-dom"><textarea class="pf-textarea"name="configImport"placeholder="配置可参考导出格式"></textarea><button class="pf-import-config pf-button">导入</button></div></div><div class="pf-customize-css"><div class="pf-label">自定义css</div><div class="pf-content"><textarea class="pf-textarea pf-input"name="customizeCss"></textarea><button class="pf-customize-css-button pf-button">确定</button></div></div></div></div></div><button class="pf-b-close pf-button">关闭</button></div></div></div><div style="display: none;"class="pf-preview"><div class="pf-modal-bg"><img class="pf-preview-img"src=""></div></div><!--<div class="pf-search"><input type="text"name="mySearchContent"class="pf-search-input"/><i class="pf-search-button iconfont">&#xe600;</i></div>-->'
+      '<div style="display: none;"class="pf-mark"><div class="pf-modal-bg"><div class="pf-modal"><div class="pf-modal-title">样式编辑器</div><div class="pf-modal-content"><ul class="pf-left"><li><a href="#pf-set-basis">基础设置</a></li><li><a href="#pf-set-home">首页设置</a></li><li><a href="#pf-set-hidden">隐藏内容</a></li><li><a href="#pf-set-color">颜色设置</a></li><li><a href="#pf-set-config">配置导出导入</a></li></ul><div class="pf-right"><div id="pf-set-basis"><h3>基础设置</h3><button class="pf-simple-button pf-button">启用极简模式</button><div class="pf-radio-div"><span class="pf-label">版心大小</span><select name="versionHeart"class="pf-input"style="width: 100px;"><option value="800">800px</option><option value="1000">1000px</option><option value="1200">1200px</option><option value="1500">1500px</option><option value="100%">拉满</option></select></div><div class="pf-raido-divoom-answer-image"><span class="pf-label">回答和专栏图片缩放</span><div class="pf-content"><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="hidden"/>隐藏</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="100px"/>极小(100px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="200px"/>小(200px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="400px"/>中(400px)</label><label><input class="pf-input"name="zoomAnswerImage"type="radio"value="default"/>默认</label></div></div><div class="pf-radio-div"><span class="pf-label">更改网页标题图片</span><br/><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="github"/><img src="https://github.githubassets.com/favicons/favicon.svg"alt="github"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="csdn"/><img src="https://g.csdnimg.cn/static/logo/favicon32.ico"alt="csdn"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="juejin"/><img src="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico"alt="juejin"class="pf-radio-img"></label><label class="pf-radio-img-select"><input class="pf-input"name="titleIco"type="radio"value="zhihu"/><img src="https://static.zhihu.com/heifetz/favicon.ico"alt="zhihu"class="pf-radio-img"></label></div><div class="pf-radio-div"><span class="pf-label">更改网页标题</span><input class="pf-input"name="title"type="text"style="height: 25px;"/></div></div><div id="pf-set-home"><h3>首页设置</h3><div class="pf-label fw-bold border-none">模块位置</div><div class="pf-radio-div pf-z"><span class="pf-label">回答问题</span><label><input class="pf-input"name="positionAnswer"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionAnswer"type="radio"value="hidden"/>隐藏</label><select name="positionAnswerIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">创作中心</span><label><input class="pf-input"name="positionCreation"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionCreation"type="radio"value="hidden"/>隐藏</label><select name="positionCreationIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">圆桌</span><label><input class="pf-input"name="positionTable"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionTable"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionTable"type="radio"value="hidden"/>隐藏</label><select name="positionTableIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div pf-z"><span class="pf-label">收藏夹</span><label><input class="pf-input"name="positionFavorites"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFavorites"type="radio"value="hidden"/>隐藏</label><select name="positionFavoritesIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-radio-div"><span class="pf-label">指南</span><label><input class="pf-input"name="positionFooter"type="radio"value="left"/>左侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="right"/>右侧</label><label><input class="pf-input"name="positionFooter"type="radio"value="hidden"/>隐藏</label><select name="positionFooterIndex"class="pf-input"><option value="1">优先级1</option><option value="2">优先级2</option><option value="3">优先级3</option><option value="4">优先级4</option><option value="5">优先级5</option></select></div><div class="pf-checkbox-div"><label><span class="pf-label">左侧栏固定</span><input class="pf-input"name="stickyLeft"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">右侧栏固定</span><input class="pf-input"name="stickyRight"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">列表更多按钮固定至题目右侧</span><input class="pf-input"name="fixedListItemMore"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">内容标题添加类别标签<span class="pf-label-tag pf-label-tag-Article">文章</span><span class="pf-label-tag pf-label-tag-Answer">回答</span><span class="pf-label-tag pf-label-tag-ZVideo">视频</span></span><input class="pf-input"name="questionTitleTag"type="checkbox"value="on"/></label></div><div class="pf-label fw-bold border-none">悬浮模块</div><div class="pf-commit pf-z">拖动悬浮模块定位位置</div><div class="pf-commit pf-z">鼠标放置显示解锁按钮解锁即可拖动</div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">问题列表切换</span><input class="pf-input"name="suspensionHomeTab"type="checkbox"value="on"/></label><select name="suspensionHomeTabStyle"class="pf-input pf-suspensionHomeTab"style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select></div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">顶部发现模块</span><input class="pf-input"name="suspensionFind"type="checkbox"value="on"/></label><select name="suspensionFindStyle"class="pf-input pf-suspensionFind"style="display: none;"><option value="transparent">透明</option><option value="filling">填充</option></select></div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">个人中心</span><input class="pf-input"name="suspensionUser"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div pf-z"><label><span class="pf-label">搜索栏</span><input class="pf-input"name="suspensionSearch"type="checkbox"value="on"/></label></div><div class="pf-checkbox-div"><label><span class="pf-label">长回答和列表收起按钮</span><input class="pf-input"name="suspensionPickUp"type="checkbox"value="on"/></label><div class="pf-commit pf-z">建议在隐藏底部悬浮操作条时使用</div></div></div><div id="pf-set-hidden"><h3>隐藏内容</h3><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenLogo"type="checkbox"value="on"/>logo</label><label><input class="pf-input"name="hiddenHeader"type="checkbox"value="on"/>顶部header</label><label><input class="pf-input"name="hiddenHeaderScroll"type="checkbox"value="on"/>顶部滚动header</label><label><input class="pf-input"name="hiddenAnswerRightFooter"type="checkbox"value="on"/>详情右侧信息栏</label><label><input class="pf-input"name="hiddenHotListWrapper"type="checkbox"value="on"/>热榜榜单TAG</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenAnswers"type="checkbox"value="on"/>问题列表回答内容</label><label><input class="pf-input"name="hiddenItemActions"type="checkbox"value="on"/>列表回答操作</label><label><input class="pf-input"name="hiddenAnswerText"type="checkbox"value="on"/>回答操作文字</label><label><input class="pf-input"name="hiddenReadMoreText"type="checkbox"value="on"/>阅读全文文字</label><label><input class="pf-input"name="hiddenAnswerRights"type="checkbox"value="on"/>收藏喜欢举报</label><label><input class="pf-input"name="hiddenAnswerRightsText"type="checkbox"value="on"/>收藏喜欢举报文字</label><label><input class="pf-input"name="hiddenListImg"type="checkbox"value="on"/>问题列表图片</label><label><input class="pf-input"name="hiddenReward"type="checkbox"value="on"/>赞赏按钮</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenQuestionShare"type="checkbox"value="on"/>问题分享</label><label><input class="pf-input"name="hiddenQuestionTag"type="checkbox"value="on"/>问题话题</label><label><input class="pf-input"name="hiddenQuestionActions"type="checkbox"value="on"/>问题操作栏</label><label><input class="pf-input"name="hiddenFixedActions"type="checkbox"value="on"/>回答下方悬浮操作条</label><label><input class="pf-input"name="hiddenZhuanlanTag"type="checkbox"value="on"/>专栏回答关联话题</label><label><input class="pf-input"name="hiddenZhuanlanActions"type="checkbox"value="on"/>专栏下方操作条</label><label><input class="pf-input"name="hiddenZhuanlanTitleImage"type="checkbox"value="on"/>专栏标题图片</label></div><div class="pf-hidden-labels"><label><input class="pf-input"name="hiddenAD"type="checkbox"value="on"/>广告</label></div></div><div id="pf-set-color"><h3>颜色设置</h3><div class="pf-radio-div pf-color-bg"><div class="pf-label">背景</div><div class="pf-content"name="colorsBackground"></div></div></div><div id="pf-set-config"><h3>配置导出导入</h3><div class="pf-local-config"><button class="pf-export-config pf-button">导出当前配置</button><button class="pf-restore-config pf-button">恢复默认配置</button><div class="pf-import-dom"><textarea class="pf-textarea"name="configImport"placeholder="配置可参考导出格式"></textarea><button class="pf-import-config pf-button">导入</button></div></div><div class="pf-customize-css"><div class="pf-label">自定义css</div><div class="pf-content"><textarea class="pf-textarea pf-input"name="customizeCss"></textarea><button class="pf-customize-css-button pf-button">确定</button></div></div></div></div></div><button class="pf-b-close pf-button">关闭</button></div></div></div><div style="display: none;"class="pf-preview"><div class="pf-modal-bg"><img class="pf-preview-img"src=""></div></div><!--<div class="pf-search"><input type="text"name="mySearchContent"class="pf-search-input"/><i class="pf-search-button iconfont">&#xe600;</i></div>-->'
     const htmlModal = $(dom)
     const openButton = '<div class="pf-op"><i class="pf-open-modal iconfont">&#xe603;</i></div>'
     $('body').append(openButton)
@@ -930,6 +935,11 @@
     pfConfig = Util.configF(nConfig)
     initCSS()
     initDataOnDocumentStart()
+
+    if (location.host === 'zhuanlan.zhihu.com') {
+      // html添加css区分专栏页面
+      $('html').addClass('zhuanlan')
+    }
   })()
 
   function initDataOnDocumentStart() {
@@ -972,29 +982,32 @@
 
   window.onscroll = throttle(() => {
     stickyBetween()
-    // SuspensionPackUp($('.List-item'))
-    // SuspensionPackUp($('.TopstoryItem'))
+    if (pfConfig.suspensionPickUp) {
+      SuspensionPackUp($('.List-item'))
+      SuspensionPackUp($('.TopstoryItem'))
+      SuspensionPackUp($('.AnswerCard'))
+    }
   }, 100)
 
-  // // 漂浮收起按钮的方法
-  // function SuspensionPackUp(eventList, right = 150) {
-  //   for (let i = 0; i < eventList.length; i++) {
-  //     const even = eventList[i]
-  //     const evenPrev = i > 0 ? eventList[i - 1] : null
-  //     const evenBottom = even.offsetTop + even.offsetHeight
-  //     const evenPrevBottom = evenPrev ? evenPrev.offsetTop + evenPrev.offsetHeight : 0
-  //     const hST = $('html')[0].scrollTop
-  //     // 收起按钮
-  //     const evenButton = even.querySelector('.ContentItem-rightButton')
-  //     if (evenButton) {
-  //       if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
-  //         evenButton.style = `position: fixed!important;bottom: 12px; left: ${even.offsetLeft + even.offsetWidth - right}px;box-shadow: 0 1px 3px rgb(18 18 18 / 10%);height: 40px;line-height:40px;padding: 0 12px!important;`
-  //       } else {
-  //         evenButton.style = ''
-  //       }
-  //     }
-  //   }
-  // }
+  // 漂浮收起按钮的方法
+  function SuspensionPackUp(eventList, right = 60) {
+    for (let i = 0; i < eventList.length; i++) {
+      const even = eventList[i]
+      const evenPrev = i > 0 ? eventList[i - 1] : null
+      const evenBottom = even.offsetTop + even.offsetHeight
+      const evenPrevBottom = evenPrev ? evenPrev.offsetTop + evenPrev.offsetHeight : 0
+      const hST = $('html')[0].scrollTop
+      // 收起按钮
+      const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton')
+      if (evenButton) {
+        if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
+          evenButton.style = `visibility:visible!important;position: fixed!important;bottom: 12px; left: ${even.offsetLeft + even.offsetWidth - right}px;box-shadow: 0 1px 3px rgb(18 18 18 / 10%);height: 40px!important;line-height:40px;padding: 0 12px!important;`
+        } else {
+          evenButton.style = ''
+        }
+      }
+    }
+  }
 
   // 在弹窗滚动中加入a标签锚点配置
   function initScrollModal() {
