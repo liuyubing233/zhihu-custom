@@ -6,6 +6,7 @@
         <ul class="pf-left">
           <li><a href="#pf-set-basis">基础设置</a></li>
           <li><a href="#pf-set-home">首页设置</a></li>
+          <li><a href="#pf-set-remove-answer">过滤回答</a></li>
           <li><a href="#pf-set-hidden">隐藏内容</a></li>
           <li><a href="#pf-set-color">颜色设置</a></li>
           <li><a href="#pf-set-config">配置导出导入</a></li>
@@ -204,8 +205,26 @@
               <div class="pf-commit pf-z">建议在隐藏底部悬浮操作条时使用</div>
             </div>
           </div>
+          <div id="pf-set-remove-answer">
+            <h3>
+              过滤回答
+              <span class="pf-commit">此部分更改后请重新刷新页面</span>
+            </h3>
+            <div class="pf-hidden-labels">
+              <label><input class="pf-input" name="removeZhihuOfficial" type="checkbox" value="on" />知乎官方账号</label>
+              <div class="pf-commit">此选项会过滤所有官方账号回答，请酌情选择</div>
+            </div>
+            <div class="pf-hidden-labels">
+              <label><input class="pf-input" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label>
+              <label><input class="pf-input" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label>
+              <label><input class="pf-input" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏的</label>
+            </div>
+          </div>
           <div id="pf-set-hidden">
             <h3>隐藏内容</h3>
+            <div class="pf-hidden-labels">
+              <label><input class="pf-input" name="hiddenAD" type="checkbox" value="on" />广告</label>
+            </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenLogo" type="checkbox" value="on" />logo</label>
               <label><input class="pf-input" name="hiddenHeader" type="checkbox" value="on" />顶部header</label>
@@ -238,9 +257,6 @@
               <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏回答关联话题</label>
               <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏下方操作条</label>
               <label><input class="pf-input" name="hiddenZhuanlanTitleImage" type="checkbox" value="on" />专栏标题图片</label>
-            </div>
-            <div class="pf-hidden-labels">
-              <label><input class="pf-input" name="hiddenAD" type="checkbox" value="on" />广告</label>
             </div>
           </div>
           <div id="pf-set-color">
