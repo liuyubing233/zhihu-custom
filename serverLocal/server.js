@@ -62,7 +62,7 @@ async function loop () {
   const html = await innerHTML()
   const js = await innerJS()
   // 将html 和css 插入到js
-  const jsReplace = js.replace(/(?<=INNER_HTML[\s\=]*)null/, '`' + html + '`').replace(/(?<=INNER_CSS[\s\=]*)null/, '`' + css + '`')
+  const jsReplace = js.replace(/(?<=INNER_HTML[^`]*)`[^`]*`/, '`' + html + '`').replace(/(?<=INNER_CSS[^`]*)`[^`]*`/, '`' + css + '`')
   if (code !== jsReplace) {
     GM_setValue('code', jsReplace)
     location.reload()
