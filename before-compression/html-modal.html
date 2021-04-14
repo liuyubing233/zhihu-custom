@@ -58,6 +58,56 @@
               <span class="pf-label">更改网页标题</span>
               <input class="pf-input" name="title" type="text" style="height: 25px;" />
             </div>
+            <div class="pf-label fw-bold border-none">悬浮模块</div>
+            <div class="pf-commit pf-z">拖动悬浮模块定位位置</div>
+            <div class="pf-commit pf-z">鼠标放置显示解锁按钮解锁即可拖动</div>
+            <div class="pf-checkbox-div pf-z">
+              <label>
+                <span class="pf-label">问题列表切换</span>
+                <input class="pf-input" name="suspensionHomeTab" type="checkbox" value="on" />
+              </label>
+              <select name="suspensionHomeTabStyle" class="pf-input pf-suspensionHomeTab" style="display: none;">
+                <option value="transparent">透明</option>
+                <option value="filling">填充</option>
+              </select>
+            </div>
+            <div class="pf-checkbox-div pf-z">
+              <label>
+                <span class="pf-label">顶部发现模块</span>
+                <input class="pf-input" name="suspensionFind" type="checkbox" value="on" />
+              </label>
+              <select name="suspensionFindStyle" class="pf-input pf-suspensionFind" style="display: none;">
+                <option value="transparent">透明</option>
+                <option value="filling">填充</option>
+              </select>
+            </div>
+            <div class="pf-checkbox-div pf-z">
+              <label>
+                <span class="pf-label">个人中心</span>
+                <input class="pf-input" name="suspensionUser" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-checkbox-div pf-z">
+              <label>
+                <span class="pf-label">搜索栏</span>
+                <input class="pf-input" name="suspensionSearch" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">长回答和列表收起按钮</span>
+                <input class="pf-input" name="suspensionPickUp" type="checkbox" value="on" />
+              </label>
+              <div class="pf-commit pf-z">建议在隐藏底部悬浮操作条时使用</div>
+            </div>
+            <div class="pf-raido-divoom-answer-image">
+              <span class="pf-label">购物链接显示设置</span>
+              <div class="pf-content">
+                <label><input class="pf-input" name="shoppingLink" type="radio" value="default" />默认</label>
+                <label><input class="pf-input" name="shoppingLink" type="radio" value="justText" />仅文字</label>
+                <label><input class="pf-input" name="shoppingLink" type="radio" value="hidden" />隐藏</label>
+              </div>
+            </div>
           </div>
           <div id="pf-set-home">
             <h3>首页设置</h3>
@@ -150,7 +200,7 @@
                 <span class="pf-label">
                   内容标题添加类别标签
                   <span class="pf-label-tag pf-label-tag-Article">文章</span>
-                  <span class="pf-label-tag pf-label-tag-Answer">回答</span>
+                  <span class="pf-label-tag pf-label-tag-Answer">问答</span>
                   <span class="pf-label-tag pf-label-tag-ZVideo">视频</span>
                 </span>
                 <input class="pf-input" name="questionTitleTag" type="checkbox" value="on" />
@@ -161,48 +211,6 @@
                 <span class="pf-label">动图弹窗显示</span>
                 <input class="pf-input" name="previewOpenGIF" type="checkbox" value="on" />
               </label>
-            </div>
-            <div class="pf-label fw-bold border-none">悬浮模块</div>
-            <div class="pf-commit pf-z">拖动悬浮模块定位位置</div>
-            <div class="pf-commit pf-z">鼠标放置显示解锁按钮解锁即可拖动</div>
-            <div class="pf-checkbox-div pf-z">
-              <label>
-                <span class="pf-label">问题列表切换</span>
-                <input class="pf-input" name="suspensionHomeTab" type="checkbox" value="on" />
-              </label>
-              <select name="suspensionHomeTabStyle" class="pf-input pf-suspensionHomeTab" style="display: none;">
-                <option value="transparent">透明</option>
-                <option value="filling">填充</option>
-              </select>
-            </div>
-            <div class="pf-checkbox-div pf-z">
-              <label>
-                <span class="pf-label">顶部发现模块</span>
-                <input class="pf-input" name="suspensionFind" type="checkbox" value="on" />
-              </label>
-              <select name="suspensionFindStyle" class="pf-input pf-suspensionFind" style="display: none;">
-                <option value="transparent">透明</option>
-                <option value="filling">填充</option>
-              </select>
-            </div>
-            <div class="pf-checkbox-div pf-z">
-              <label>
-                <span class="pf-label">个人中心</span>
-                <input class="pf-input" name="suspensionUser" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div pf-z">
-              <label>
-                <span class="pf-label">搜索栏</span>
-                <input class="pf-input" name="suspensionSearch" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div">
-              <label>
-                <span class="pf-label">长回答和列表收起按钮</span>
-                <input class="pf-input" name="suspensionPickUp" type="checkbox" value="on" />
-              </label>
-              <div class="pf-commit pf-z">建议在隐藏底部悬浮操作条时使用</div>
             </div>
           </div>
           <div id="pf-set-remove-answer">
@@ -224,6 +232,7 @@
             <h3>隐藏内容</h3>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenAD" type="checkbox" value="on" />广告</label>
+              <label><input class="pf-input" name="hiddenToShop" type="checkbox" value="on" />购物链接</label>
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenLogo" type="checkbox" value="on" />logo</label>
@@ -237,18 +246,22 @@
               <label><input class="pf-input" name="hiddenHotItemIndex" type="checkbox" value="on" />热门排序</label>
               <label><input class="pf-input" name="hiddenHotItemLabel" type="checkbox" value="on" />热门"新"元素</label>
               <label><input class="pf-input" name="hiddenHotItemMetrics" type="checkbox" value="on" />热门热度值</label>
+            </div>
+            <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenAnswers" type="checkbox" value="on" />问题列表回答内容</label>
-              <label><input class="pf-input" name="hiddenItemActions" type="checkbox" value="on" />列表回答操作</label>
-              <label><input class="pf-input" name="hiddenAnswerText" type="checkbox" value="on" />回答操作文字</label>
-              <label><input class="pf-input" name="hiddenReadMoreText" type="checkbox" value="on" />阅读全文文字</label>
+              <label><input class="pf-input" name="hiddenItemActions" type="checkbox" value="on" />问题列表回答操作</label>
+              <label><input class="pf-input" name="hiddenAnswerText" type="checkbox" value="on" />问题列表操作文字</label>
+              <label><input class="pf-input" name="hiddenReadMoreText" type="checkbox" value="on" />问题列表阅读全文文字</label>
+              <label><input class="pf-input" name="hiddenListImg" type="checkbox" value="on" />问题列表图片</label>
               <label><input class="pf-input" name="hiddenAnswerRights" type="checkbox" value="on" />收藏喜欢举报</label>
               <label><input class="pf-input" name="hiddenAnswerRightsText" type="checkbox" value="on" />收藏喜欢举报文字</label>
-              <label><input class="pf-input" name="hiddenListImg" type="checkbox" value="on" />问题列表图片</label>
-              <label><input class="pf-input" name="hiddenReward" type="checkbox" value="on" />赞赏按钮</label>
+            </div>
+            <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenDetailAvatar" type="checkbox" value="on" />详情回答人头像</label>
               <label><input class="pf-input" name="hiddenDetailName" type="checkbox" value="on" />详情回答人姓名</label>
               <label><input class="pf-input" name="hiddenDetailBadge" type="checkbox" value="on" />详情回答人简介</label>
               <label><input class="pf-input" name="hiddenDetailVoters" type="checkbox" value="on" />详情回答人下赞同数</label>
+              <label><input class="pf-input" name="hiddenReward" type="checkbox" value="on" />赞赏按钮</label>
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenQuestionShare" type="checkbox" value="on" />问题分享</label>
