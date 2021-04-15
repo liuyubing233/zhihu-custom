@@ -39,7 +39,7 @@ body {
   cursor: pointer;
   user-select: none;
   &:hover {
-    animation: showOp 1s;
+    animation: showOp 0.5s;
     animation-fill-mode: forwards;
   }
 }
@@ -264,27 +264,6 @@ body {
                 width: 100%;
                 height: 100%;
                 border: 2px solid transparent;
-                border-radius: 12px;
-              }
-            }
-          }
-
-          [name='colorsTheme'] {
-            .pf-color-choose-label {
-              display: inline-block;
-              width: 40px;
-              height: 40px;
-              margin-right: 12px;
-              input {
-                display: none;
-                &:checked + .pf-color-radio-item {
-                  border: 4px solid #4286f4;
-                }
-              }
-              .pf-color-radio-item {
-                width: 100%;
-                height: 100%;
-                border: 4px solid transparent;
                 border-radius: 12px;
               }
             }

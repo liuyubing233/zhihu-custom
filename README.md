@@ -1,22 +1,25 @@
 # 知乎样式修改器
 
-使用方法：在页面左侧鼠标触摸出现眼镜按钮点击出现修改器弹窗<br/>
+<p>使用方法：在页面左侧鼠标触摸出现眼镜按钮点击出现修改器弹窗</p>
 <br/>
-一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；<br/>
-设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答；<br/>
-首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；<br/>
-支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；<br/>
-页面背景色修改，黑色为夜间模式；<br/>
-列表的问题，文章和视频添加区分标签；<br/>
-去除广告，外链直接打开；<br/>
-更多功能请在插件里体验；<br/>
-想要的最终功能是页面大部分模块全可配置，目前努力更新中...<br/>
+<p>一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；</p>
+<p>设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答；</p>
+<p>首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；</p>
+<p>支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；</p>
+<p>页面背景色修改，黑色为夜间模式；</p>
+<p>列表的问题，文章和视频添加区分标签；</p>
+<p>去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开；</p>
+<p>更多功能请在插件里体验；</p>
+<p>想要的最终功能是页面大部分模块全可配置，目前努力更新中...</p>
 
 <br/>
-因为是初版，所以发现bug和想要添加的内容请反馈给我。
+<p>因为是初版，所以发现bug和想要添加的内容请反馈给我。...</p>
 <br/>
-github: <a href="https://github.com/superPufferfish/custom-zhihu-style" target="_blank">https://github.com/superPufferfish/custom-zhihu-style</a><br/>
-tampermonkey: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a><br/>
+<p>github: <a href="https://github.com/superPufferfish/custom-zhihu-style" target="_blank">https://github.com/superPufferfish/custom-zhihu-style</a></p>
+
+<p>tampermonkey: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a></p>
+
+<br/>
 编辑器样式：<br/>
 <img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/1.jpg">
 <img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/2.jpg">
