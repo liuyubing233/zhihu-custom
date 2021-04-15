@@ -102,10 +102,19 @@
             </div>
             <div class="pf-raido-divoom-answer-image">
               <span class="pf-label">购物链接显示设置</span>
-              <div class="pf-content">
-                <label><input class="pf-input" name="shoppingLink" type="radio" value="default" />默认</label>
-                <label><input class="pf-input" name="shoppingLink" type="radio" value="justText" />仅文字</label>
-                <label><input class="pf-input" name="shoppingLink" type="radio" value="hidden" />隐藏</label>
+              <label><input class="pf-input" name="shoppingLink" type="radio" value="default" />默认</label>
+              <label><input class="pf-input" name="shoppingLink" type="radio" value="justText" />仅文字</label>
+              <label><input class="pf-input" name="shoppingLink" type="radio" value="hidden" />隐藏</label>
+            </div>
+            <div class="pf-raido-divoom-answer-image">
+              <label>
+                <span class="pf-label">页面右下停靠返回主页按钮</span>
+                <input class="pf-input" name="toHomeButton" type="checkbox" value="on" />
+              </label>
+              <div style="padding-top: 8px;">
+                <span class="pf-label">专栏返回主页</span>
+                <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhihu" />知乎首页</label>
+                <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhuanlan" />专栏首页</label>
               </div>
             </div>
           </div>
@@ -315,3 +324,6 @@
     <video class="pf-preview-video" src="" autoplay></video>
   </div>
 </div>
+<a href="https://www.zhihu.com" target="_self" class="pf-to-home" title="返回首页">
+  <i class="iconfont">&#xe606;</i>
+</a>
