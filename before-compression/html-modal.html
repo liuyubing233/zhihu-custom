@@ -17,7 +17,7 @@
             <button class="pf-simple-button pf-button">启用极简模式</button>
             <div class="pf-radio-div">
               <span class="pf-label">版心大小</span>
-              <select name="versionHeart" class="pf-input" style="width: 100px;">
+              <select name="versionHeart" class="pf-input w-100">
                 <option value="800">800px</option>
                 <option value="1000">1000px</option>
                 <option value="1200">1200px</option>
@@ -56,7 +56,7 @@
             </div>
             <div class="pf-radio-div">
               <span class="pf-label">更改网页标题</span>
-              <input class="pf-input" name="title" type="text" style="height: 25px;" />
+              <input class="pf-input h-25" name="title" type="text"/>
             </div>
             <div class="pf-label fw-bold border-none">悬浮模块</div>
             <div class="pf-commit pf-z">拖动悬浮模块定位位置</div>
@@ -105,7 +105,7 @@
                 <span class="pf-label">页面右下停靠返回主页按钮</span>
                 <input class="pf-input" name="toHomeButton" type="checkbox" value="on" />
               </label>
-              <div style="padding-top: 8px;">
+              <div class="p-t-8">
                 <span class="pf-label">专栏返回主页</span>
                 <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhihu" />知乎首页</label>
                 <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhuanlan" />专栏首页</label>
@@ -219,7 +219,7 @@
           <div id="pf-set-remove-answer">
             <h3>
               过滤回答
-              <span class="pf-commit">此部分更改后请重新刷新页面</span>
+              <span class="pf-commit pf-title-commit">此部分更改后请重新刷新页面</span>
             </h3>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="removeZhihuOfficial" type="checkbox" value="on" />知乎官方账号</label>
@@ -229,6 +229,13 @@
               <label><input class="pf-input" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label>
               <label><input class="pf-input" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label>
               <label><input class="pf-input" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏的回答</label>
+            </div>
+            <div class="pf-hidden-labels">
+              <label>
+                <span class="pf-label">屏蔽关键词</span>
+                <input name="filterKeyword" type="text" class="h-25"/>
+              </label>
+              <div class="pf-filter-keywords"></div>
             </div>
           </div>
           <div id="pf-set-hidden">

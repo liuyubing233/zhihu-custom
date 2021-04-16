@@ -4,15 +4,16 @@ body {
 * {
   box-sizing: border-box;
 }
-
 @font-face {
-  font-family: 'own-iconfont';  /* project id 2324733 */
-  src: url('//at.alicdn.com/t/font_2324733_qyfrbeock0o.eot');
-  src: url('//at.alicdn.com/t/font_2324733_qyfrbeock0o.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2324733_qyfrbeock0o.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2324733_qyfrbeock0o.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2324733_qyfrbeock0o.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2324733_qyfrbeock0o.svg#own-iconfont') format('svg');
+  font-family: 'own-iconfont'; /* project id 2324733 */
+  src: url('//at.alicdn.com/t/font_2324733_crf90gl2giq.eot');
+  src: url('//at.alicdn.com/t/font_2324733_crf90gl2giq.eot?#iefix')
+      format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_2324733_crf90gl2giq.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_2324733_crf90gl2giq.woff') format('woff'),
+    url('//at.alicdn.com/t/font_2324733_crf90gl2giq.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_2324733_crf90gl2giq.svg#own-iconfont')
+      format('svg');
 }
 
 .iconfont {
@@ -356,6 +357,34 @@ body {
         font-size: 12px;
         color: #ffffff;
       }
+
+      .pf-filter-keywords-item {
+        display: inline-block;
+        background: #999;
+        padding: 2px 4px;
+        color: #fff;
+        margin-right: 4px;
+        margin-top: 4px;
+        border-radius: 4px;
+        .pf-filter-keywords-item-text {
+          margin-right: 4px;
+        }
+        .pf-filter-keywords-item-delete {
+          cursor: pointer;
+          &:hover {
+            color: #444;
+          }
+        }
+      }
+
+      #pf-set-remove-answer {
+        background: #efefef;
+        padding: 12px;
+        margin: 0 -12px 12px;
+        .pf-title-commit {
+          color: red;
+        }
+      }
     }
   }
 
@@ -367,10 +396,6 @@ body {
     color: #999;
     font-size: 12px;
   }
-}
-
-.fw-bold {
-  font-weight: bold;
 }
 
 .stopScroll {
@@ -626,3 +651,19 @@ body {
 }
 
 /*----------------- 页面内容排版 ---------------------end*/
+
+/*--------通用样式 start--------*/
+.fw-bold {
+  font-weight: bold;
+}
+.w-100 {
+  width: 100px;
+}
+.h-25 {
+  height: 25px;
+}
+.p-t-8 {
+  padding-top: 8px;
+}
+
+/*--------通用样式 end----------*/
