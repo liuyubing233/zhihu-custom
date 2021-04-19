@@ -189,19 +189,17 @@ body {
             font-size: 18px;
             font-weight: bold;
           }
-          #pf-set-basis {
-            .pf-zoom-answer-image {
-              display: flex;
-              .pf-content {
-                flex: 1;
-                label {
-                  display: block;
-                }
+          .pf-zoom-answer-image {
+            display: flex;
+            .pf-content {
+              flex: 1;
+              label {
+                display: block;
               }
             }
-            .pf-simple-button {
-              margin-bottom: 12px;
-            }
+          }
+          .pf-simple-button {
+            margin-bottom: 12px;
           }
 
           #pf-set-home,
@@ -209,17 +207,18 @@ body {
             & > div {
               border-bottom: 1px solid #eee;
               padding: 4px 0;
-              &.pf-z {
-                border: none;
-              }
+
               label {
                 padding-right: 4px;
               }
             }
           }
 
-          .pf-label::after {
-            content: '：';
+          .pf-label {
+            padding: 4px 0;
+            &::after {
+              content: '：';
+            }
           }
 
           .pf-radio-img-select {
@@ -380,17 +379,24 @@ body {
           }
         }
       }
-
-      #pf-set-remove-answer {
-        background: #efefef;
-        padding: 12px;
-        margin: 0 -12px 12px;
-        .pf-title-commit {
-          color: red;
-          margin-left: 4px;
-        }
-      }
     }
+  }
+
+  .pf-other-bg {
+    background: #efefef;
+    padding: 12px !important;
+    margin: 0 -12px 12px;
+    .pf-title-commit {
+      color: red;
+      margin-left: 4px;
+    }
+  }
+  .pf-checkbox-div {
+    padding: 2px 0;
+  }
+
+  .pf-z {
+    border: none !important;
   }
 
   .border-none {
@@ -400,6 +406,7 @@ body {
   .pf-commit {
     color: #999;
     font-size: 12px;
+    padding: 2px 0;
   }
 }
 
