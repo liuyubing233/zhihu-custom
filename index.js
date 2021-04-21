@@ -355,11 +355,9 @@
    * 均有return值
    */
   const Util = {
-    // 数组去重 格式为string[]
+    // 数组去重
     arraySameDe: (arr) => {
-      const nArr = []
-      arr.forEach((i) => !nArr.includes(i) && nArr.push(i))
-      return nArr
+      return [...new Set(arr)]
     },
     // 颜色取反 格式是16进制6位 例如用#ffffff而不是#fff
     colorReverse: (OldColorValue) => {
