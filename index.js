@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.8.9
+// @version      1.8.10
 // @description  一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容；未登录状态下问答和专栏移除登录弹窗；设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答；首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；页面背景色修改，黑色为夜间模式；列表的问题，文章和视频添加区分标签；去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开；更多功能请在插件里体验；想要的最终功能是页面大部分模块全可配置，目前努力更新中...
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -112,7 +112,7 @@
   // 脚本内配置
   const myLocalC = {
     cachePfConfig: {}, // 缓存初始配置
-    backgrounds: ['#ffffff', '#15202b', '#000000', 'bisque', '#FAF9DE', '#E3EDCD', '#EAEAEF', '#E9EBFE'],
+    backgrounds: ['#ffffff', '#15202b', '#000000', 'bisque', '#FAF9DE', '#cce8cf', '#EAEAEF', '#E9EBFE'],
     // 背景色对应名称
     backgroundName: {
       '#ffffff': '默认',
@@ -120,14 +120,14 @@
       '#000000': '纯黑',
       'bisque': '护眼红',
       '#FAF9DE': '杏仁黄',
-      '#E3EDCD': '青草绿',
+      '#cce8cf': '青草绿',
       '#EAEAEF': '极光灰',
       '#E9EBFE': '葛巾紫',
     },
     backgroundOpacity: {
       '#FAF9DE': '#fdfdf2',
       'bisque': '#fff4e7',
-      '#E3EDCD': '#f0f4e7',
+      '#cce8cf': '#e5f1e7',
       '#EAEAEF': '#f3f3f5',
       '#E9EBFE': '#f2f3fb',
     },
@@ -234,7 +234,11 @@
     restore: async () => {
       let isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存')
       if (isUse) {
-        pfConfig = myLocalC.cachePfConfig
+        const { filterKeywords = [] } = pfConfig
+        pfConfig = {
+          ...myLocalC.cachePfConfig,
+          filterKeywords,
+        }
         await myStorage.set('pfConfig', JSON.stringify(pfConfig))
         onDocumentStart()
         initData()
@@ -381,7 +385,7 @@
     hexToRgba: (hex, opacity) => {
       return 'rgba(' + parseInt('0x' + hex.slice(1, 3)) + ',' + parseInt('0x' + hex.slice(3, 5)) + ','
         + parseInt('0x' + hex.slice(5, 7)) + ',' + opacity + ')'
-    }
+    },
   }
 
   async function myChanger(ev, type) {
@@ -1098,7 +1102,7 @@
   const useSimple = async () => {
     let isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存')
     if (isUse) {
-      pfConfig = {
+      const c = {
         versionHeart: '1000',
         positionAnswer: 'hidden',
         positionAnswerIndex: '1',
@@ -1174,6 +1178,10 @@
         removeItemAboutAnswer: false, // 问答
         removeItemAboutVideo: false, // 视频
         removeItemAboutAsk: true, // 提问
+      }
+      pfConfig = {
+        ...c,
+        filterKeywords: pfConfig.filterKeywords || [],
       }
       await myStorage.set('pfConfig', JSON.stringify(pfConfig))
       onDocumentStart()
