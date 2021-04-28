@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.8.10
+// @version      1.8.11
 // @description  一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容；未登录状态下问答和专栏移除登录弹窗；设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答；首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；页面背景色修改，黑色为夜间模式；列表的问题，文章和视频添加区分标签；去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开；更多功能请在插件里体验；想要的最终功能是页面大部分模块全可配置，目前努力更新中...
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -748,60 +748,70 @@
 
   // 修改版心方法
   function initCSSVersion() {
-    const heartV = `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner`
+    const heartV =
+      `.QuestionHeader .QuestionHeader-content,.QuestionHeader-footer .QuestionHeader-footer-inner`
       + `,.QuestionHeader-content,.Question-main,.AppHeader-inner,.TopstoryPageHeader,.Topstory-container`
       + `,.ExploreHomePage,.QuestionWaiting,.SearchTabs-inner,.Search-container,.ProfileHeader`
       + `,.Profile-main,.CollectionsDetailPage,.ColumnPageHeader-content,.SettingsMain,.App-main .Creator`
       + `,.Collections-container,.Balance-Layout,.zhuanlan .Post-NormalMain .Post-Header`
-      + `,.zhuanlan .Post-RichTextContainer,.zhuanlan .Post-NormalMain>div,.zhuanlan .Post-content .RichContent-actions`
+      + `,.zhuanlan .Post-RichTextContainer,.zhuanlan .Post-NormalMain>div`
+      + `,.zhuanlan .Post-content .RichContent-actions`
       + `,.zhuanlan .Post-NormalSub>div`
       + `{width:${vHeart().v}!important;}`
 
-    const heartVC = `.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn`
-      + `,.Collections-mainColumn,.Balance-Main,.Post-RichTextContainer,.ContentItem-time,.Post-topicsAndReviewer`
-      + `,.Post-content .RichContent-actions,.Post-NormalMain .Post-Header, .Post-NormalMain>div,.Post-NormalSub>div`
+    const heartVC =
+      `.QuestionHeader-main,.SearchMain,.Profile-mainColumn,.CollectionsDetailPage-mainColumn`
+      + `,.Collections-mainColumn,.Balance-Main,.Post-RichTextContainer,.ContentItem-time`
+      + `,.Post-content .RichContent-actions,.Post-NormalMain .Post-Header`
+      + `,.Post-NormalMain>div,.Post-NormalSub>div,.Post-topicsAndReviewer`
       + `,.css-1xy3kyp,.css-1voxft1,.WriteIndexLayout-main`
       + `{width:${vHeart().vContent}!important;}`
 
-    const imgSize = `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image`
-      + `,.ztext figure .origin_image,.TitleImage{${vImgSize()}}`
-      + `.GifPlayer.isPlaying img{cursor:pointer!important;}`
+    const imgSize =
+      `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image`
+      + `,.ztext figure .origin_image,.TitleImage {${vImgSize()}}`
+      + `.GifPlayer.isPlaying img {cursor:pointer!important;}`
 
-    const susHomeTab = `.Topstory-container .TopstoryTabs`
-      + `{position:fixed;${pfConfig.suspensionHomeTabPo}z-index:100;display:flex;flex-direction:column;height:initial!important}`
+    const susHomeTab =
+      `.Topstory-container .TopstoryTabs`
+      + `{${pfConfig.suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}`
       + `.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}`
       + `.Topstory-container .TopstoryTabs>a::after`
       + `{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;${vSusColor(pfConfig.suspensionHomeTabStyle).normal}}`
-      + `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link{margin:0!important}`
-      + `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{${vSusColor(pfConfig.suspensionHomeTabStyle).active}}`
-      + `.Topstory [aria-controls='Topstory-recommend']::after{content:'推';border-top-left-radius:4px;border-top-right-radius:4px}`
-      + `.Topstory [aria-controls='Topstory-follow']::after{content:'关'}`
-      + `.Topstory [aria-controls='Topstory-hot']::after{content:'热';border-bottom-left-radius:4px;border-bottom-right-radius:4px}`
+      + `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link {margin:0!important}`
+      + `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after {${vSusColor(pfConfig.suspensionHomeTabStyle).active}}`
+      + `.Topstory [aria-controls='Topstory-recommend']::after {content:'推';border-top-left-radius:4px;border-top-right-radius:4px}`
+      + `.Topstory [aria-controls='Topstory-follow']::after {content:'关'}`
+      + `.Topstory [aria-controls='Topstory-hot']::after {content:'热';border-bottom-left-radius:4px;border-bottom-right-radius:4px}`
 
-    const questionTag = `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}`
+    const questionTag =
+      `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}`
       + `.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}`
       + `.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}`
       + `.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}`
-      + `.ContentItem-title div{display:inline}.TopstoryQuestionAskItem .ContentItem-title::before{content:'提问';background:#533b77}`
+      + `.ContentItem-title div{display:inline}`
+      + `.TopstoryQuestionAskItem .ContentItem-title::before{content:'提问';background:#533b77}`
 
-    const cssVersion = '<style type="text/css" id="pf-css-version">'
+    const cssVersion =
+      '<style type="text/css" id="pf-css-version">'
       + heartV
       + heartVC
       + imgSize
       + hiddenCSS()
       + shoppingLinkCSS()
       + `.Post-SideActions{left: ${vHeart().leftSide}}`
-      + `${pfConfig.suspensionHomeTab ? susHomeTab : ''}`
-      + `${pfConfig.questionTitleTag ? questionTag : ''}`
+      + (pfConfig.suspensionHomeTab ? susHomeTab : '')
+      + (pfConfig.questionTitleTag ? questionTag : '')
       + `.position-suspensionFind{${pfConfig.suspensionFindPo}}`
       + `.position-suspensionUser{${pfConfig.suspensionUserPo}}`
       + `.position-suspensionSearch{${pfConfig.suspensionSearchPo}}`
       + `.position-suspensionFind .Tabs-link{${vSusColor(pfConfig.suspensionFindStyle).normal}}`
       + `.position-suspensionFind .Tabs-link.is-active{${vSusColor(pfConfig.suspensionFindStyle).active}}`
-      + `${pfConfig.fixedListItemMore
-        ? '.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{visibility: visible!important;position: absolute;top: 20px;right: 10px;}'
-        : ''}`
-      + `${pfConfig.toHomeButton ? '.pf-to-home{display:block;}' : '.pf-to-home{display:none;}'}`
+      + (pfConfig.fixedListItemMore
+        ? `.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action`
+        + `{visibility: visible!important;position: absolute;top: 20px;right: 10px;}`
+        : '')
+      + (pfConfig.toHomeButton ? '.pf-to-home{display:block;}' : '.pf-to-home{display:none;}')
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
@@ -810,8 +820,8 @@
   // 购物链接设置样式
   function shoppingLinkCSS() {
     const shopCSSObj = {
-      'default': '',
-      'justText':
+      default: '',
+      justText:
         '.MCNLinkCard-imageContainer,.MCNLinkCard-button,.MCNLinkCard-source'
         + ',.ecommerce-ad-commodity-img,.ecommerce-ad-commodity-box-icon'
         + '{display: none!important;}'
@@ -827,7 +837,7 @@
         + '{color: #06f!important;justify-content: start!important;}'
         + '.MCNLinkCard-titleContainer::before,.ecommerce-ad-commodity-main-content-des span::before{content: "购物链接："}'
         + '.MCNLinkCard-title{color: #06f!important;}',
-      'hidden':
+      hidden:
         'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box'
         + '{display: none!important;}'
     }
@@ -836,73 +846,74 @@
 
   // 隐藏模块的css
   function hiddenCSS() {
-    return `${pfConfig.hiddenAnswerRightFooter ? '.Question-sideColumn{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenLogo
-        ? '.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo'
-        + '{display: none!important;}'
-        : ''}`
-      + `${pfConfig.hiddenHeader ? '.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenHeaderScroll ? '.AppHeader.is-fixed{display:none!important;}' : ''}`
-      + `${pfConfig.hiddenItemActions
-        ? '.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button'
-        + ',.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a'
-        + ',.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint'
-        + '{visibility:hidden!important;height:0!important;padding:0!important;}'
-        + '.TopstoryQuestionAskItem-hint{margin: 0!important;}'
-        : ''}`
-      + `${pfConfig.hiddenAnswerText
-        ? '.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}'
-        + '.ContentItem-action,.ContentItem-action button,.ContentItem-actions button'
-        + '{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}'
-        + '.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}'
-        + '.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}'
-        + '.VoteButton{color: #8590a6!important; }'
-        + '.VoteButton.is-active{color: #0066ff!important;}'
-        + '.ContentItem-action{margin-left:8px!important;}'
-        : ''}`
-      + `${pfConfig.hiddenQuestionTag ? '.QuestionHeader-tags{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenQuestionShare ? '.Popover.ShareMenu{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenQuestionActions ? '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenReward ? '.Reward{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenZhuanlanTag ? '.Post-topicsAndReviewer{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenListImg
-        ? '.RichContent-cover,.HotItem-img{display:none!important;}.HotItem-metrics--bottom{position: initial!important;}'
-        : ''}`
-      + `${pfConfig.hiddenReadMoreText ? '.ContentItem-more{font-size:0!important;}' : ''}`
-      + `${pfConfig.hiddenAD
-        ? '.TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}'
-        : ''}`
-      + `${pfConfig.hiddenAnswerRights
-        ? '.ContentItem-actions .ShareMenu ~ button.ContentItem-action{display: none;}'
-        + '.ContentItem-rightButton{display:block!important;}'
-        : ''}`
-      + `${pfConfig.hiddenAnswerRightsText
-        ? '.ContentItem-actions .ShareMenu ~ .ContentItem-action{font-size: 0!important;}'
-        + '.ContentItem-actions .ShareMenu ~ .ContentItem-action>span{font-size:12px!important;}'
-        : ''}`
-      + `${pfConfig.hiddenAnswers
-        ? '.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine'
-        + ',.TopstoryQuestionAskItem .RichContent .RichContent-inner,.HotItem-content .HotItem-excerpt{display: none;}'
-        : ''}`
-      + `${pfConfig.hiddenHotListWrapper ? '.HotListNav-wrapper{display: none;}' : ''}`
-      + `${pfConfig.hiddenZhuanlanActions ? '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}' : ''}`
-      + `${pfConfig.hiddenZhuanlanTitleImage ? '.TitleImage{display: none;!important}' : ''}`
-      + `${pfConfig.hiddenFixedActions
-        ? '.ContentItem .RichContent-actions.is-fixed, .List-item .RichContent-actions.is-fixed'
-        + '{visibility: hidden!important;}'
-        : ''}`
-      + `${pfConfig.hiddenHotItemMetrics ? '.HotItem-content .HotItem-metrics{display: none;}' : ''}`
-      + `${pfConfig.hiddenHotItemIndex ? '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}' : ''}`
-      + `${pfConfig.hiddenHotItemLabel ? '.HotItem-label{display: none;}' : ''}`
-      + `${pfConfig.hiddenDetailAvatar
+    return (pfConfig.hiddenAnswerRightFooter ? '.Question-sideColumn{display: none!important;}' : '')
+      + (pfConfig.hiddenLogo
+        ? `.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"]`
+        + ',.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo'
+        + `{display: none!important;}`
+        : '')
+      + (pfConfig.hiddenHeader ? `.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}` : '')
+      + (pfConfig.hiddenHeaderScroll ? `.AppHeader.is-fixed{display:none!important;}` : '')
+      + (pfConfig.hiddenItemActions
+        ? `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button`
+        + `,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a`
+        + `,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint`
+        + `{visibility:hidden!important;height:0!important;padding:0!important;}`
+        + `.TopstoryQuestionAskItem-hint{margin: 0!important;}`
+        : '')
+      + (pfConfig.hiddenAnswerText
+        ? `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}`
+        + `.ContentItem-action,.ContentItem-action button,.ContentItem-actions button`
+        + `{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}`
+        + `.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}`
+        + `.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}`
+        + `.VoteButton{color: #8590a6!important; }`
+        + `.VoteButton.is-active{color: #0066ff!important;}`
+        + `.ContentItem-action{margin-left:8px!important;}`
+        : '')
+      + (pfConfig.hiddenQuestionTag ? '.QuestionHeader-tags{display: none!important;}' : '')
+      + (pfConfig.hiddenQuestionShare ? '.Popover.ShareMenu{display: none!important;}' : '')
+      + (pfConfig.hiddenQuestionActions ? '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}' : '')
+      + (pfConfig.hiddenReward ? '.Reward{display: none!important;}' : '')
+      + (pfConfig.hiddenZhuanlanTag ? '.Post-topicsAndReviewer{display: none!important;}' : '')
+      + (pfConfig.hiddenListImg
+        ? `.RichContent-cover,.HotItem-img{display:none!important;}`
+        + `.HotItem-metrics--bottom{position: initial!important;}`
+        : '')
+      + (pfConfig.hiddenReadMoreText ? '.ContentItem-more{font-size:0!important;}' : '')
+      + (pfConfig.hiddenAD ? '.TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}' : '')
+      + (pfConfig.hiddenAnswerRights
+        ? `.ContentItem-actions .ShareMenu ~ button.ContentItem-action{display: none;}`
+        + `.ContentItem-rightButton{display:block!important;}`
+        : '')
+      + (pfConfig.hiddenAnswerRightsText
+        ? `.ContentItem-actions .ShareMenu ~ .ContentItem-action{font-size: 0!important;}`
+        + `.ContentItem-actions .ShareMenu ~ .ContentItem-action>span{font-size:12px!important;}`
+        : '')
+      + (pfConfig.hiddenAnswers
+        ? `.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine`
+        + `,.TopstoryQuestionAskItem .RichContent .RichContent-inner,.HotItem-content .HotItem-excerpt`
+        + `{display: none;}`
+        : '')
+      + (pfConfig.hiddenHotListWrapper ? '.HotListNav-wrapper{display: none;}' : '')
+      + (pfConfig.hiddenZhuanlanActions ? '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}' : '')
+      + (pfConfig.hiddenZhuanlanTitleImage ? '.TitleImage{display: none;!important}' : '')
+      + (pfConfig.hiddenFixedActions
+        ? `.ContentItem .RichContent-actions.is-fixed, .List-item .RichContent-actions.is-fixed`
+        + `{visibility: hidden!important;}`
+        : '')
+      + (pfConfig.hiddenHotItemMetrics ? '.HotItem-content .HotItem-metrics{display: none;}' : '')
+      + (pfConfig.hiddenHotItemIndex ? '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}' : '')
+      + (pfConfig.hiddenHotItemLabel ? '.HotItem-label{display: none;}' : '')
+      + (pfConfig.hiddenDetailAvatar
         ? '.AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}'
         + '.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}'
-        : ''}`
-      + `${pfConfig.hiddenDetailBadge ? '.AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}' : ''}`
-      + `${pfConfig.hiddenDetailVoters ? '.AnswerItem .css-h5al4j{display: none;}' : ''}`
-      + `${pfConfig.hiddenDetailName ? '.AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}' : ''}`
-      + `${pfConfig.hiddenHomeTab ? '.Topstory-container .TopstoryTabs{display: none!important;}' : ''}`
-      + `${pfConfig.hiddenQuestionSide ? '.QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}' : ''}`
+        : '')
+      + (pfConfig.hiddenDetailBadge ? '.AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}' : '')
+      + (pfConfig.hiddenDetailVoters ? '.AnswerItem .css-h5al4j{display: none;}' : '')
+      + (pfConfig.hiddenDetailName ? '.AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}' : '')
+      + (pfConfig.hiddenHomeTab ? '.Topstory-container .TopstoryTabs{display: none!important;}' : '')
+      + (pfConfig.hiddenQuestionSide ? '.QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}' : '')
   }
 
   // 悬浮模块颜色填充
@@ -990,24 +1001,29 @@
         : ''
     },
     filter: (fi) => {
-      const customBG = `.zu-top,.zu-top-nav-userinfo.selected`
+      const customBG =
+        `.zu-top,.zu-top-nav-userinfo.selected`
         + `,html.no-touchevents .top-nav-profile:hover .zu-top-nav-userinfo,.top-nav-profile a`
         + `{background:#ffffff!important;border-color: #eeeeee!important;}`
 
-      const customColor = `.zu-top .zu-top-nav-link,.top-nav-profile .zu-top-nav-userinfo`
+      const customColor =
+        `.zu-top .zu-top-nav-link,.top-nav-profile .zu-top-nav-userinfo`
         + `,.top-nav-dropdown li a`
         + `{color: #111f2c!important;}`
 
       return `html,html img,.pf-color-radio-item,iframe{${fi}}`
         + `html.no-touchevents .top-nav-dropdown a:hover{background:#eeeeee!important}`
-        + `${customBG}${customColor}`
+        + customBG
+        + customColor
     },
     normal: (bg) => {
-      const normalBG = `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar`
+      const normalBG =
+        `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar`
         + `,.position-suspensionSearch.focus`
         + `{background-color: ${bg}!important;}`
 
-      const opacityBG = `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main`
+      const opacityBG =
+        `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main`
         + `,.CommentsV2-withPagination,.QuestionHeader-footer,.HoverCard,.ContentItem-actions`
         + `,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton`
         + `,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard`
@@ -1015,12 +1031,14 @@
         + `,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer`
         + `,.Popover-arrow:after,.Messages-footer,.Modal-inner,.RichContent-actions`
         + `,.CommentListV2-header-divider,.Input-wrapper,.TopstoryItem .ZVideoToolbar,.SearchTabs,.Topic-bar`
+        + `,.VotableTopicCard`
         + `{background-color:${myLocalC.backgroundOpacity[bg]}!important}`
 
-      const transparentBG = `.zhuanlan .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
+      const transparentBG =
+        `.zhuanlan .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
         + `{background-color: transparent!important;}`
 
-      return `${normalBG}${opacityBG}${transparentBG}`
+      return normalBG + opacityBG + transparentBG
     },
   }
 
@@ -1414,7 +1432,9 @@
 
     // body高度变更后比较推荐模块内容高度与网页高度
     // 如果模块高度小于网页高度则手动触发resize使其加载数据
-    if ($('.Topstory-recommend')[0] && $('.Topstory-recommend')[0].offsetHeight < window.innerHeight) {
+    const recommendHeightLess = $('.Topstory-recommend')[0] && $('.Topstory-recommend')[0].offsetHeight < window.innerHeight
+    const contentHeightLess = $('.Topstory-content')[0] && $('.Topstory-content')[0].offsetHeight < window.innerHeight
+    if (recommendHeightLess || contentHeightLess) {
       const myEvent = new Event('resize')
       window.dispatchEvent(myEvent)
     }
@@ -1445,9 +1465,12 @@
       const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton')
       if (evenButton) {
         if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
-          evenButton.style = `visibility:visible!important;position: fixed!important;bottom: 60px;`
+          evenButton.style =
+            `visibility:visible!important;position: fixed!important;bottom: 60px;`
             + `left: ${even.offsetLeft + even.offsetWidth - right}px;`
-            + `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);height: 40px!important;line-height:40px;padding: 0 12px!important;`
+            + `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);`
+            + `height: 40px!important;line-height:40px;padding: 0 12px!important;`
+            + `background: ${myLocalC.backgroundOpacity[pfConfig.colorBackground]}`
         } else {
           evenButton.style = ''
         }
