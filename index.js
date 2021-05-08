@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.8.19
+// @version      1.8.20
 // @description  一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容；未登录状态下问答和专栏移除登录弹窗；设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答；首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；页面背景色修改，黑色为夜间模式；列表的问题，文章和视频添加区分标签；去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开；更多功能请在插件里体验；想要的最终功能是页面大部分模块全可配置，目前努力更新中...
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -140,6 +140,9 @@
     bodySizePrev: 0,
     fetchHeaders: {}, // fetch的headers内容，获取下来以供使用
   }
+
+  let isLoading = true
+  let timeStart = 0
 
   // 缓存的doms
   const domCache = {
@@ -563,6 +566,11 @@
     changeTitle()
     changeSuspensionTab()
     onToHomeHref()
+
+    if (isLoading) {
+      isLoading = false
+      console.log('[customize]修改器加载完毕，加载时间：' + (performance.now() - timeStart).toFixed(2) + 'ms')
+    }
   }
 
   function onToHomeHref() {
@@ -1427,6 +1435,7 @@
 
   // 在启动时注入的内容
   ; (async function () {
+    timeStart = performance.now()
     myLocalC.cachePfConfig = pfConfig
     const config = await myStorage.get('pfConfig')
     const c = config ? JSON.parse(config) : {}
