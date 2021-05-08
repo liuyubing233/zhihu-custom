@@ -24,4 +24,4 @@
 <br/>
 
 预览：
-<img width="1200" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/preview.png">
+<img width="1200" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/development/preview.png">
