@@ -20,7 +20,7 @@
 const innerCSS = () => {
   return new Promise((resolve) => {
     GM_xmlhttpRequest({
-      url: 'http://127.0.0.1:5500/before-compression/css-own.css',
+      url: 'http://127.0.0.1:5500/development/css-own.css',
       onload: (e) => {
         if (e.status === 200) {
           resolve(e.responseText)
@@ -34,7 +34,7 @@ const innerCSS = () => {
 const innerHTML = () => {
   return new Promise((resolve) => {
     GM_xmlhttpRequest({
-      url: 'http://127.0.0.1:5500/before-compression/html-modal.html',
+      url: 'http://127.0.0.1:5500/development/html-modal.html',
       onload: (e) => {
         if (e.status === 200) {
           resolve(e.responseText)
