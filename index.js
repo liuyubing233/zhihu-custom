@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎样式修改器
 // @namespace    http://tampermonkey.net/
-// @version      1.8.18
+// @version      1.8.19
 // @description  一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容；未登录状态下问答和专栏移除登录弹窗；设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答；首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置；支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改；页面背景色修改，黑色为夜间模式；列表的问题，文章和视频添加区分标签；去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开；更多功能请在插件里体验；想要的最终功能是页面大部分模块全可配置，目前努力更新中...
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -1297,65 +1297,67 @@
       const events = $('.List-item')
       let lessNum = 0 // 每次减去的列表内容数量
       // 使用此循环方式是为了新的元素添加后从后面开始循环，减少遍历数量
-      for (let i = eachIndex, len = events.length; i < len - 1; i++) {
+      for (let i = eachIndex, len = events.length; i < len; i++) {
         const that = events[i]
-        if (pfConfig.removeZhihuOfficial) {
-          // 知乎官方账号优先级最高
-          const label = $(that).find('.AuthorInfo-name .css-n99yhz').attr('aria-label')
-          if (/知乎[\s]*官方帐号/.test(label)) {
-            $(that).remove()
-            lessNum++
-          }
-        } else {
-          const dataZop = $(that).children('.AnswerItem').attr('data-zop')
-          // 删除知乎档案局回答
-          if (pfConfig.removeStoryAnswer && /['"]authorName['":]*故事档案局/.test(dataZop)) {
-            // 用删除的方法来处理，解决回答中浮动模块的各种问题（主要还是懒得再处理了）
-            $(that).remove()
-            lessNum++
-          }
+        if (that) {
+          if (pfConfig.removeZhihuOfficial) {
+            // 知乎官方账号优先级最高
+            const label = $(that).find('.AuthorInfo-name .css-n99yhz').attr('aria-label')
+            if (/知乎[\s]*官方帐号/.test(label)) {
+              $(that).remove()
+              lessNum++
+            }
+          } else {
+            const dataZop = $(that).children('.AnswerItem').attr('data-zop')
+            // 删除知乎档案局回答
+            if (pfConfig.removeStoryAnswer && /['"]authorName['":]*故事档案局/.test(dataZop)) {
+              // 用删除的方法来处理，解决回答中浮动模块的各种问题（主要还是懒得再处理了）
+              $(that).remove()
+              lessNum++
+            }
 
-          // 删除盐选科普回答
-          if (pfConfig.removeYanxuanAnswer && /['"]authorName['":]*盐选科普/.test(dataZop)) {
-            $(that).remove()
-            lessNum++
-          }
-        }
-
-        // 删除选自盐选专栏的回答
-        if (pfConfig.removeFromYanxuan) {
-          const formYanxuan = $(that).find('.KfeCollection-OrdinaryLabel-content')[0] || $(that).find('.KfeCollection-IntroCard p:first-of-type')[0]
-          if (formYanxuan) {
-            const formYanxuanText = formYanxuan ? formYanxuan.innerText : ''
-            if (/盐选专栏/.test(formYanxuanText)) {
+            // 删除盐选科普回答
+            if (pfConfig.removeYanxuanAnswer && /['"]authorName['":]*盐选科普/.test(dataZop)) {
               $(that).remove()
               lessNum++
             }
           }
-        }
 
-        // 自动展开所有回答
-        if (pfConfig.answerUnfold) {
-          const unFoldButton = $(that).find('.ContentItem-expandButton')
-          if (unFoldButton && unFoldButton[0] && !$(that).hasClass('is-unfold')) {
-            unFoldButton[0].click()
-            $(that).addClass('is-unfold')
-            lessNum++
+          // 删除选自盐选专栏的回答
+          if (pfConfig.removeFromYanxuan) {
+            const formYanxuan = $(that).find('.KfeCollection-OrdinaryLabel-content')[0] || $(that).find('.KfeCollection-IntroCard p:first-of-type')[0]
+            if (formYanxuan) {
+              const formYanxuanText = formYanxuan ? formYanxuan.innerText : ''
+              if (/盐选专栏/.test(formYanxuanText)) {
+                $(that).remove()
+                lessNum++
+              }
+            }
           }
-        }
 
-        // 默认收起所有长回答
-        if (pfConfig.answerFoldStart) {
-          const foldButton = $(that).find('.RichContent-collapsedText')
-          if (foldButton && foldButton[0] && !$(that).hasClass('is-fold') && that.offsetHeight > 955) {
-            foldButton[0].click()
-            $(that).addClass('is-fold')
-            lessNum++
+          // 自动展开所有回答
+          if (pfConfig.answerUnfold) {
+            const unFoldButton = $(that).find('.ContentItem-expandButton')
+            if (unFoldButton && unFoldButton[0] && !$(that).hasClass('is-unfold')) {
+              unFoldButton[0].click()
+              $(that).addClass('is-unfold')
+              lessNum++
+            }
           }
-        }
 
-        if (i === events.length - 1) {
-          eachIndex = i - lessNum - 1
+          // 默认收起所有长回答
+          if (pfConfig.answerFoldStart) {
+            const foldButton = $(that).find('.RichContent-collapsedText')
+            if (foldButton && foldButton[0] && !$(that).hasClass('is-fold') && that.offsetHeight > 955) {
+              foldButton[0].click()
+              $(that).addClass('is-fold')
+              lessNum++
+            }
+          }
+
+          if (i === events.length - 1) {
+            eachIndex = i - lessNum - 1
+          }
         }
       }
     }
@@ -1464,7 +1466,6 @@
     if ($('.signFlowModal')[0]) {
       $('.signFlowModal').find('.Modal-closeButton')[0].click()
     }
-
   }
 
   // 使用ResizeObserver监听body高度
