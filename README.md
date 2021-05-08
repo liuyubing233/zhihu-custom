@@ -1,4 +1,4 @@
-# 知乎样式修改器
+# 知乎样式修改器✈持续更新✈努力实现功能最全的知乎配置插件
 
 <p>使用方法：在页面左侧鼠标触摸出现眼镜按钮点击出现修改器弹窗</p>
 <br/>
@@ -18,13 +18,10 @@
 <br/>
 <p>因为是初版，所以发现bug和想要添加的内容请反馈给我。...</p>
 <br/>
-<p>github: <a href="https://github.com/superPufferfish/custom-zhihu-style" target="_blank">https://github.com/superPufferfish/custom-zhihu-style</a></p>
+<p>Github: <a href="https://github.com/superPufferfish/custom-zhihu-style" target="_blank">https://github.com/superPufferfish/custom-zhihu-style</a></p>
 
-<p>tampermonkey: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a></p>
-
+<p>Greasyfork: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a></p>
 <br/>
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/1.jpg">
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/2.jpg">
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/3.jpg">
-<img width="500" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/4.jpg">
 
+预览：
+<img width="1200" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/image/preview.png">

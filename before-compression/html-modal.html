@@ -1,7 +1,13 @@
 <div style="display: none;" class="pf-mark">
-  <div class="pf-modal-bg">
+  <div class="pf-modal-parent">
+    <div class="pf-modal-bg"></div>
     <div class="pf-modal">
-      <div class="pf-modal-title">样式编辑器</div>
+      <div class="pf-modal-header">
+        <span class="pf-modal-header-title">
+          知乎样式编辑器<span>version: 2.0.0</span>
+        </span>
+        <i class="iconfont pf-b-close">&#xe61b;</i>
+      </div>
       <div class="pf-modal-content">
         <ul class="pf-left">
           <li><a href="#pf-set-basis">基础设置</a></li>
@@ -18,7 +24,7 @@
             <button class="pf-simple-button pf-button">启用极简模式</button>
             <div class="pf-radio-div">
               <span class="pf-label">版心大小</span>
-              <select name="versionHeart" class="pf-input w-100">
+              <select name="versionHeart" class="pf-input w-200">
                 <option value="800">800px</option>
                 <option value="1000">1000px</option>
                 <option value="1200">1200px</option>
@@ -29,11 +35,12 @@
             <div class="pf-raido-divoom-answer-image">
               <span class="pf-label">回答和专栏图片缩放</span>
               <div class="pf-content">
-                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="hidden" />隐藏</label>
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="100px" />极小(100px)</label>
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="200px" />小(200px)</label>
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="400px" />中(400px)</label>
+                <br>
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="default" />默认</label>
+                <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="hidden" />隐藏</label>
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="original" />原图</label>
               </div>
             </div>
@@ -58,7 +65,7 @@
             </div>
             <div class="pf-radio-div">
               <span class="pf-label">更改网页标题</span>
-              <input class="pf-input h-25" name="title" type="text" />
+              <input class="pf-input h-25 w-300" name="title" type="text" />
             </div>
             <div class="pf-other-bg">
               <div class="pf-label fw-bold border-none">悬浮模块</div>
@@ -246,7 +253,7 @@
             <div class="pf-hidden-labels">
               <label>
                 <span class="pf-label">屏蔽关键词</span>
-                <input name="filterKeyword" type="text" class="h-25" placeholder="输入后回车或失去焦点即可" />
+                <input name="filterKeyword" type="text" class="h-25 w-300" placeholder="输入后回车或失去焦点即可" />
               </label>
               <div class="pf-filter-keywords"></div>
             </div>
@@ -267,7 +274,10 @@
             </div>
           </div>
           <div id="pf-set-hidden">
-            <h3>隐藏内容</h3>
+            <h3>
+              隐藏内容
+              <span class="pf-commit pf-title-commit">勾选则隐藏相应模块</span>
+            </h3>
             <div class="pf-hidden-labels pf-other-bg">
               <span class="pf-label">购物链接显示设置</span>
               <label><input class="pf-input" name="shoppingLink" type="radio" value="default" />默认</label>
@@ -279,56 +289,54 @@
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenLogo" type="checkbox" value="on" />logo</label>
-              <br />
               <label><input class="pf-input" name="hiddenHeader" type="checkbox" value="on" />顶部悬浮模块</label>
+              <br />
               <label>
                 <input class="pf-input" name="hiddenHeaderScroll" type="checkbox" value="on" />
                 滚动顶部悬浮模块（问题名称）
               </label>
               <br />
               <label><input class="pf-input" name="hiddenAnswerRightFooter" type="checkbox" value="on" />详情右侧信息栏</label>
-              <label><input class="pf-input" name="hiddenHotListWrapper" type="checkbox" value="on" />热榜榜单TAG</label>
             </div>
             <div class="pf-hidden-labels">
-              <label><input class="pf-input" name="hiddenHotItemIndex" type="checkbox" value="on" />热门排序</label>
+              <label><input class="pf-input" name="hiddenHotListWrapper" type="checkbox" value="on" />热榜榜单TAG</label>
+              <label><input class="pf-input" name="hiddenHotItemIndex" type="checkbox" value="on" />热门排序编号</label>
               <label><input class="pf-input" name="hiddenHotItemLabel" type="checkbox" value="on" />热门"新"元素</label>
               <label><input class="pf-input" name="hiddenHotItemMetrics" type="checkbox" value="on" />热门热度值</label>
             </div>
             <div class="pf-hidden-labels">
-              <label><input class="pf-input" name="hiddenAnswers" type="checkbox" value="on" />问题列表回答内容</label>
-              <label><input class="pf-input" name="hiddenItemActions" type="checkbox" value="on" />问题列表回答操作</label>
+              <label><input class="pf-input" name="hiddenAnswers" type="checkbox" value="on" />列表回答内容</label>
+              <label><input class="pf-input" name="hiddenItemActions" type="checkbox" value="on" />列表回答操作</label>
               <br>
-              <label><input class="pf-input" name="hiddenAnswerText" type="checkbox" value="on" />问题列表操作文字</label>
+              <label><input class="pf-input" name="hiddenAnswerText" type="checkbox" value="on" />列表操作文字</label>
+              <label><input class="pf-input" name="hiddenListImg" type="checkbox" value="on" />列表图片</label>
               <label><input class="pf-input" name="hiddenReadMoreText" type="checkbox" value="on" />问题列表阅读全文文字</label>
               <br>
-              <label><input class="pf-input" name="hiddenListImg" type="checkbox" value="on" />问题列表图片</label>
               <label><input class="pf-input" name="hiddenAnswerRights" type="checkbox" value="on" />收藏喜欢举报</label>
               <label><input class="pf-input" name="hiddenAnswerRightsText" type="checkbox" value="on" />收藏喜欢举报文字</label>
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenDetailAvatar" type="checkbox" value="on" />详情回答人头像</label>
               <label><input class="pf-input" name="hiddenDetailName" type="checkbox" value="on" />详情回答人姓名</label>
-              <br>
               <label><input class="pf-input" name="hiddenDetailBadge" type="checkbox" value="on" />详情回答人简介</label>
+              <br>
               <label><input class="pf-input" name="hiddenDetailVoters" type="checkbox" value="on" />详情回答人下赞同数</label>
               <label><input class="pf-input" name="hiddenReward" type="checkbox" value="on" />赞赏按钮</label>
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenQuestionSide" type="checkbox" value="on" />问题关注和被浏览数</label>
               <label><input class="pf-input" name="hiddenQuestionShare" type="checkbox" value="on" />问题分享</label>
+              <label><input class="pf-input" name="hiddenFixedActions" type="checkbox" value="on" />回答悬浮操作条</label>
               <label><input class="pf-input" name="hiddenQuestionTag" type="checkbox" value="on" />问题话题</label>
               <br>
-              <label><input class="pf-input" name="hiddenFixedActions" type="checkbox" value="on" />回答下方悬浮操作条</label>
-              <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏回答关联话题</label>
-              <br>
-              <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏下方操作条</label>
+              <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏关联话题</label>
+              <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏操作条</label>
               <label><input class="pf-input" name="hiddenZhuanlanTitleImage" type="checkbox" value="on" />专栏标题图片</label>
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenQuestionActions" type="checkbox" value="on" />问题详情操作栏</label>
               <label><input class="pf-input" name="hiddenQuestionFollowing" type="checkbox" value="on" />关注问题按钮</label>
-              <label><input class="pf-input" name="hiddenQuestionAnswer" type="checkbox" value="on" />写回答按钮</label>
-              <br>
+              <label><input class="pf-input" name="hiddenQuestionAnswer" type="checkbox" value="on" />回答按钮</label>
               <label><input class="pf-input" name="hiddenQuestionInvite" type="checkbox" value="on" />邀请回答按钮</label>
             </div>
           </div>
@@ -359,7 +367,15 @@
           </div>
         </div>
       </div>
-      <button class="pf-b-close pf-button">关 闭</button>
+      <div class="pf-modal-footer">
+        <a href="https://github.com/superPufferfish/custom-zhihu-style" target="_blank">
+          <span class="fw-bold">点我~</span>Github 您的star⭐是我更新的动力😀
+        </a>
+        <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8"
+          target="_blank">
+          Greasyfork
+        </a>
+      </div>
     </div>
   </div>
 </div>
