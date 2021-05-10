@@ -23,5 +23,9 @@
 <p>Greasyfork: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a></p>
 <br/>
 
-预览：
-<img width="1200" src="https://github.com/superPufferfish/custom-zhihu-style/blob/main/development/preview.png">
+<p>预览：</p>
+<p>默认样式：</p>
+<img width="1200" src="https://raw.githubusercontent.com/superPufferfish/codeImages/custom-zhihu-style/default.png">
+<br/>
+<p>极简模式：</p>
+<img width="1200" src="https://raw.githubusercontent.com/superPufferfish/codeImages/custom-zhihu-style/simple.png">
