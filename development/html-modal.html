@@ -4,7 +4,8 @@
     <div class="pf-modal">
       <div class="pf-modal-header">
         <span class="pf-modal-header-title">
-          知乎样式编辑器<span>version: 2.0.5</span>
+          知乎编辑器
+          <span class="pf-version"></span>
         </span>
         <i class="iconfont pf-b-close">&#xe61b;</i>
       </div>
@@ -22,6 +23,7 @@
           <div id="pf-set-basis">
             <h3>基础设置</h3>
             <button class="pf-simple-button pf-button">启用极简模式</button>
+            <button class="pf-restore-config pf-button">恢复默认配置</button>
             <div class="pf-radio-div">
               <span class="pf-label">版心大小</span>
               <select name="versionHeart" class="pf-input w-200">
@@ -69,9 +71,9 @@
             </div>
             <div class="pf-other-bg">
               <div class="pf-label fw-bold border-none">悬浮模块</div>
-              <div class="pf-commit pf-z">拖动悬浮模块定位位置</div>
-              <div class="pf-commit pf-z">鼠标放置显示解锁按钮解锁即可拖动</div>
-              <div class="pf-checkbox-div pf-z">
+              <div class="pf-commit border-none">拖动悬浮模块定位位置</div>
+              <div class="pf-commit border-none">鼠标放置显示解锁按钮解锁即可拖动</div>
+              <div class="pf-checkbox-div border-none">
                 <label>
                   <span class="pf-label">问题列表切换</span>
                   <input class="pf-input" name="suspensionHomeTab" type="checkbox" value="on" />
@@ -82,7 +84,7 @@
                 </select>
                 <label>是否隐藏<input class="pf-input" name="hiddenHomeTab" type="checkbox" value="on" /></label>
               </div>
-              <div class="pf-checkbox-div pf-z">
+              <div class="pf-checkbox-div border-none">
                 <label>
                   <span class="pf-label">顶部发现模块</span>
                   <input class="pf-input" name="suspensionFind" type="checkbox" value="on" />
@@ -92,13 +94,13 @@
                   <option value="filling">填充</option>
                 </select>
               </div>
-              <div class="pf-checkbox-div pf-z">
+              <div class="pf-checkbox-div border-none">
                 <label>
                   <span class="pf-label">个人中心</span>
                   <input class="pf-input" name="suspensionUser" type="checkbox" value="on" />
                 </label>
               </div>
-              <div class="pf-checkbox-div pf-z">
+              <div class="pf-checkbox-div border-none">
                 <label>
                   <span class="pf-label">搜索栏</span>
                   <input class="pf-input" name="suspensionSearch" type="checkbox" value="on" />
@@ -109,7 +111,7 @@
                   <span class="pf-label">长回答和列表收起按钮</span>
                   <input class="pf-input" name="suspensionPickUp" type="checkbox" value="on" />
                 </label>
-                <div class="pf-commit pf-z">建议在隐藏底部悬浮操作条时使用</div>
+                <div class="pf-commit border-none">建议在隐藏底部悬浮操作条时使用</div>
               </div>
             </div>
             <div class="pf-raido-divoom-answer-image">
@@ -127,7 +129,7 @@
           <div id="pf-set-home">
             <h3>首页设置</h3>
             <div class="pf-label fw-bold border-none">模块位置</div>
-            <div class="pf-radio-div pf-z">
+            <div class="pf-radio-div border-none">
               <span class="pf-label">回答问题</span>
               <label><input class="pf-input" name="positionAnswer" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionAnswer" type="radio" value="right" />右侧</label>
@@ -140,7 +142,7 @@
                 <option value="5">优先级5</option>
               </select>
             </div>
-            <div class="pf-radio-div pf-z">
+            <div class="pf-radio-div border-none">
               <span class="pf-label">创作中心</span>
               <label><input class="pf-input" name="positionCreation" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionCreation" type="radio" value="right" />右侧</label>
@@ -153,7 +155,7 @@
                 <option value="5">优先级5</option>
               </select>
             </div>
-            <div class="pf-radio-div pf-z">
+            <div class="pf-radio-div border-none">
               <span class="pf-label">圆桌</span>
               <label><input class="pf-input" name="positionTable" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionTable" type="radio" value="right" />右侧</label>
@@ -166,7 +168,7 @@
                 <option value="5">优先级5</option>
               </select>
             </div>
-            <div class="pf-radio-div pf-z">
+            <div class="pf-radio-div border-none">
               <span class="pf-label">收藏夹</span>
               <label><input class="pf-input" name="positionFavorites" type="radio" value="left" />左侧</label>
               <label><input class="pf-input" name="positionFavorites" type="radio" value="right" />右侧</label>
@@ -253,7 +255,7 @@
             <div class="pf-hidden-labels">
               <label>
                 <span class="pf-label">屏蔽关键词</span>
-                <input name="filterKeyword" type="text" class="h-25 w-300" placeholder="输入后回车或失去焦点即可" />
+                <input name="filterKeyword" class="w-200" type="text" class="h-25 w-300" placeholder="输入后回车或失去焦点即可" />
               </label>
               <div class="pf-filter-keywords"></div>
             </div>
@@ -351,7 +353,6 @@
             <h3>配置导出导入</h3>
             <div class="pf-local-config">
               <button class="pf-export-config pf-button">导出当前配置</button>
-              <button class="pf-restore-config pf-button">恢复默认配置</button>
               <div class="pf-import-dom">
                 <textarea class="pf-textarea" name="configImport" placeholder="配置可参考导出格式"></textarea>
                 <button class="pf-import-config pf-button">导入</button>

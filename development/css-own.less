@@ -27,28 +27,19 @@ body {
   position: fixed;
   width: 50px;
   height: 40px;
-  text-align: center;
   line-height: 40px;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+  text-align: center;
+  border-radius: 0 12px 12px 0;
   top: 100px;
-  left: -30px;
+  left: 0;
   background: rgba(0, 0, 0, 0.2);
   z-index: 9999;
   cursor: pointer;
   user-select: none;
+  transform: translate(-30px);
+  transition: transform 0.5s;
   &:hover {
-    animation: showOp 0.5s;
-    animation-fill-mode: forwards;
-  }
-}
-
-@keyframes showOp {
-  0% {
-    left: -30px;
-  }
-  100% {
-    left: 0;
+    transform: translate(0);
   }
 }
 
@@ -56,7 +47,7 @@ body {
   position: fixed;
   user-select: none;
   bottom: 50px;
-  right: -32px;
+  right: 0;
   height: 40px;
   width: 40px;
   text-align: center;
@@ -64,21 +55,13 @@ body {
   border-radius: 50%;
   background: #0066ff;
   color: #fff;
+  transform: translate(30px);
+  transition: transform 0.5s;
   &:hover {
-    animation: showToHome 0.5s;
-    animation-fill-mode: forwards;
+    transform: translate(0);
   }
   i {
     font-size: 24px;
-  }
-}
-
-@keyframes showToHome {
-  0% {
-    right: -32px;
-  }
-  100% {
-    right: 0;
   }
 }
 
@@ -113,337 +96,328 @@ body {
   input {
     box-sizing: border-box;
   }
-  .pf-modal-parent {
-    position: relative;
-    height: 100%;
-    min-height: 500px;
-    width: 100%;
-  }
-  .pf-modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 500px;
-    background: #fff;
-    z-index: 99999;
-    padding: 12px 6px 0 12px;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-    ::-webkit-scrollbar {
-      width: 0.25rem;
-      height: 0.25rem;
-      background: #eee;
-    }
-    ::-webkit-scrollbar-track {
-      border-radius: 0;
-    }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 0;
-      background: #bbb;
-      transition: all 0.2s;
-      border-radius: 0.25rem;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background-color: rgba(95, 95, 95, 0.7);
-    }
-    .pf-modal-header {
-      padding-bottom: 12px;
-      height: 36px;
-      .pf-modal-header-title {
-        font-size: 20px;
-        span {
-          margin-left: 4px;
-          font-size: 12px;
-        }
-      }
-      .pf-b-close {
-        font-size: 16px;
-        width: 18px;
-        height: 18px;
-        float: right;
-        color: #999;
-        cursor: pointer;
-        &:hover {
-          color: #111f2c;
-        }
-      }
-    }
-
-    .pf-modal-footer {
-      padding: 12px 0;
-      a {
-        margin-right: 6px;
-        &:hover {
-          color: #005ce6;
-        }
-      }
-    }
-
-    .pf-modal-content {
-      display: flex;
-      flex: 1;
-      width: 100%;
-      font-size: 14px;
-      overflow: hidden;
-      .pf-left {
-        width: 120px;
-        border-right: 1px solid #ddd;
-        list-style: none;
-        margin: 0px;
-        padding: 0;
-        li {
-          padding: 4px 0;
-          a {
-            text-decoration: none;
-            color: #111f2c;
-          }
-        }
-      }
-
-      .pf-right {
-        flex: 1;
-        overflow-y: auto;
-        scroll-behavior: smooth;
-        padding: 0 12px 100px;
-        & > div {
-          padding-bottom: 24px;
-        }
-        h3 {
-          margin-top: 4px;
-          margin-bottom: 8px;
-          font-size: 18px;
-          font-weight: bold;
-        }
-        .pf-zoom-answer-image {
-          display: flex;
-          .pf-content {
-            flex: 1;
-            label {
-              display: block;
-            }
-          }
-        }
-        .pf-simple-button {
-          margin-bottom: 12px;
-        }
-
-        #pf-set-hidden h3 .pf-title-commit {
-          margin-left: 6px;
-        }
-
-        #pf-set-home,
-        #pf-set-basis {
-          & > div {
-            border-bottom: 1px solid #eee;
-            padding: 4px 0;
-
-            label {
-              padding-right: 4px;
-            }
-          }
-        }
-
-        .pf-label {
-          padding: 4px 0;
-          &::after {
-            content: '：';
-          }
-        }
-
-        .pf-radio-img-select {
-          display: inline-block;
-          text-align: center;
-          .pf-radio-img {
-            width: 32px;
-            height: 32px;
-          }
-          input {
-            margin: 0;
-            display: none;
-            &:checked + .pf-radio-img {
-              border: 2px solid #4286f4;
-            }
-          }
-        }
-
-        [name='colorsBackground'] {
-          .pf-color-choose-label {
-            display: inline-block;
-            width: 100px;
-            height: 50px;
-            position: relative;
-            margin-right: 6px;
-            margin-bottom: 6px;
-            input,
-            span {
-              position: absolute;
-              top: 50%;
-              transform: translateY(-50%);
-              z-index: 1;
-            }
-            input {
-              left: 12px;
-              &:checked + .pf-color-radio-item {
-                border: 2px solid #4286f4;
-              }
-            }
-            span {
-              right: 20px;
-            }
-            .pf-color-radio-item {
-              width: 100%;
-              height: 100%;
-              border: 2px solid transparent;
-              border-radius: 12px;
-            }
-          }
-        }
-
-        #pf-set-color {
-          .pf-content {
-            padding: 4px;
-          }
-        }
-
-        #pf-set-config {
-          .pf-restore-config {
-            margin-left: 12px;
-          }
-
-          .pf-import-dom,
-          .pf-customize-css .pf-content {
-            padding-top: 8px;
-            display: flex;
-            align-items: center;
-            .pf-textarea {
-              width: 70%;
-              height: 50px;
-            }
-            button {
-              height: 50px;
-              line-height: 50px;
-              width: 25%;
-              margin-left: 5%;
-              padding: 0 !important;
-            }
-          }
-        }
-      }
-    }
-
-    .pf-button {
-      padding: 4px 8px;
-      border-radius: 4px;
-      background: #ddd;
-      position: relative;
-      border: 1px solid #bbb;
-      &:hover {
-        background: #eee;
-      }
-      &:active {
-        &::after {
-          content: '';
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          background: rgba(0, 0, 0, 0.2);
-        }
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-
-    .pf-hidden-labels {
-      padding-bottom: 6px;
-      border-bottom: 1px solid #dddddd;
-      margin-bottom: 6px;
-    }
-    .pf-home-tab-is-suspension {
-      border-bottom: 1px solid #eeeeee;
-      & > div {
-        padding-bottom: 8px;
-      }
-    }
-
-    .pf-label-tag-Answer {
-      background: #ec7259;
-    }
-    .pf-label-tag-ZVideo {
-      background: #12c2e9;
-    }
-    .pf-label-tag-Article {
-      background: #00965e;
-    }
-    .pf-label-tag {
-      margin-right: 6px;
-      font-weight: normal;
-      display: inline-block;
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-size: 12px;
-      color: #ffffff;
-    }
-
-    [name='filterKeyword'] {
-      width: 200px;
-    }
-
-    .pf-filter-keywords-item {
-      display: inline-block;
-      background: #999;
-      padding: 2px 4px;
-      color: #fff;
-      margin-right: 4px;
-      margin-top: 4px;
-      border-radius: 4px;
-      .pf-filter-keywords-item-text {
-        margin-right: 4px;
-      }
-      .pf-filter-keywords-item-delete {
-        cursor: pointer;
-        &:hover {
-          color: #444;
-        }
-      }
-    }
-  }
   .pf-modal-bg {
     height: 100%;
     width: 100%;
   }
+}
 
-  .pf-other-bg {
-    background: #efefef;
-    padding: 12px !important;
-    margin: 0 -12px 12px;
-    .pf-title-commit {
-      color: red;
-      margin-left: 4px;
+.pf-modal-parent {
+  position: relative;
+  height: 100%;
+  min-height: 500px;
+  width: 100%;
+}
+
+.pf-checkbox-div {
+  padding: 2px 0;
+}
+
+.pf-commit {
+  color: #999;
+  font-size: 12px;
+  padding: 2px 0;
+}
+
+.pf-other-bg {
+  background: #efefef;
+  padding: 12px !important;
+  margin: 0 -12px 12px;
+  .pf-title-commit {
+    color: red;
+    margin-left: 4px;
+  }
+}
+
+.pf-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 500px;
+  background: #fff;
+  z-index: 99999;
+  padding: 12px 6px 0 12px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  ::-webkit-scrollbar {
+    width: 0.25rem;
+    height: 0.25rem;
+    background: #eee;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: #bbb;
+    transition: all 0.2s;
+    border-radius: 0.25rem;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(95, 95, 95, 0.7);
+  }
+}
+
+.pf-modal-header {
+  padding-bottom: 12px;
+  height: 36px;
+}
+
+.pf-modal-header-title {
+  font-size: 20px;
+  span {
+    margin-left: 4px;
+    font-size: 12px;
+  }
+}
+
+.pf-b-close {
+  font-size: 16px;
+  width: 18px;
+  height: 18px;
+  float: right;
+  color: #999;
+  cursor: pointer;
+  &:hover {
+    color: #111f2c;
+  }
+}
+
+.pf-modal-footer {
+  padding: 12px 0;
+  a {
+    margin-right: 6px;
+    &:hover {
+      color: #005ce6;
     }
   }
-  .pf-checkbox-div {
-    padding: 2px 0;
-  }
+}
 
-  .pf-z {
-    border: none !important;
-  }
+.pf-modal-content {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  font-size: 14px;
+  overflow: hidden;
+}
 
-  .border-none {
-    border: none !important;
+.pf-left {
+  width: 120px;
+  border-right: 1px solid #ddd;
+  list-style: none;
+  margin: 0px;
+  padding: 0;
+  li {
+    padding: 4px 0;
+    a {
+      text-decoration: none;
+      color: #111f2c;
+    }
   }
+}
 
-  .pf-commit {
-    color: #999;
-    font-size: 12px;
-    padding: 2px 0;
+.pf-right {
+  flex: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 0 12px 100px;
+  & > div {
+    padding-bottom: 24px;
+  }
+  h3 {
+    margin: 4px 0 8px 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+.pf-zoom-answer-image {
+  display: flex;
+  .pf-content {
+    flex: 1;
+    label {
+      display: block;
+    }
+  }
+}
+.pf-simple-button {
+  margin-bottom: 12px;
+}
+
+#pf-set-hidden .pf-title-commit {
+  margin-left: 6px;
+}
+
+#pf-set-home,
+#pf-set-basis {
+  & > div {
+    border-bottom: 1px solid #eee;
+    padding: 4px 0;
+    label {
+      padding-right: 4px;
+    }
+  }
+}
+
+.pf-label {
+  padding: 4px 0;
+  &::after {
+    content: '：';
+  }
+}
+
+.pf-radio-img-select {
+  display: inline-block;
+  text-align: center;
+  .pf-radio-img {
+    width: 32px;
+    height: 32px;
+  }
+  input {
+    margin: 0;
+    display: none;
+    &:checked + .pf-radio-img {
+      border: 2px solid #4286f4;
+    }
+  }
+}
+
+[name='colorsBackground'] {
+  .pf-color-choose-label {
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    position: relative;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    input,
+    span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    input {
+      left: 12px;
+      &:checked + .pf-color-radio-item {
+        border: 2px solid #4286f4;
+      }
+    }
+    span {
+      right: 20px;
+    }
+    .pf-color-radio-item {
+      width: 100%;
+      height: 100%;
+      border: 2px solid transparent;
+      border-radius: 12px;
+    }
+  }
+}
+
+#pf-set-color .pf-content {
+  padding: 4px;
+}
+
+#pf-set-config .pf-restore-config {
+  margin-left: 12px;
+}
+
+.pf-import-dom,
+.pf-customize-css .pf-content {
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  .pf-textarea {
+    width: 70%;
+    height: 50px;
+  }
+  button {
+    height: 50px;
+    line-height: 50px;
+    width: 25%;
+    margin-left: 5%;
+    padding: 0 !important;
+  }
+}
+
+.pf-button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #ddd;
+  position: relative;
+  border: 1px solid #bbb;
+  &:hover {
+    background: #eee;
+  }
+  &:active {
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.pf-hidden-labels {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 6px;
+}
+.pf-home-tab-is-suspension {
+  border-bottom: 1px solid #eeeeee;
+  & > div {
+    padding-bottom: 8px;
+  }
+}
+
+.pf-label-tag-Answer {
+  background: #ec7259;
+}
+.pf-label-tag-ZVideo {
+  background: #12c2e9;
+}
+.pf-label-tag-Article {
+  background: #00965e;
+}
+.pf-label-tag {
+  margin-right: 6px;
+  font-weight: normal;
+  display: inline-block;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.pf-filter-keywords-item {
+  display: inline-block;
+  background: #999;
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: 4px 4px 0 0;
+}
+
+.pf-filter-keywords-item-text {
+  margin-right: 4px;
+}
+
+.pf-filter-keywords-item-delete {
+  cursor: pointer;
+  &:hover {
+    color: #444;
   }
 }
 
@@ -545,6 +519,22 @@ body {
 .position-suspensionSearch {
   line-height: 30px;
   border-radius: 16px;
+  width: 20px;
+  transition: width 0.5s;
+  &.focus {
+    width: 300px;
+    & > form,
+    & > button,
+    .my-search-pick-up {
+      display: block;
+    }
+    .my-search-icon {
+      display: none;
+    }
+    &:hover {
+      width: 324px;
+    }
+  }
   .my-search-icon,
   .my-search-pick-up {
     cursor: pointer;
@@ -565,27 +555,6 @@ body {
   .my-search-icon {
     display: block;
   }
-  &.focus {
-    animation: openSearch 1s;
-    animation-fill-mode: forwards;
-    & > form,
-    & > button,
-    .my-search-pick-up {
-      display: block;
-    }
-    .my-search-icon {
-      display: none;
-    }
-  }
-}
-
-@keyframes openSearch {
-  0% {
-    width: 20px;
-  }
-  100% {
-    width: 300px;
-  }
 }
 
 /*----------------- 页面内容排版 ---------------------start*/
@@ -602,6 +571,10 @@ body {
 .ListShortcut {
   flex: 1;
   width: 100%;
+}
+
+.Question-sideColumn {
+  margin-left: 12px;
 }
 
 .AnswerAuthor {
@@ -714,9 +687,6 @@ body {
 .fw-bold {
   font-weight: bold;
 }
-.w-100 {
-  width: 100px;
-}
 .w-200 {
   width: 200px;
 }
@@ -728,6 +698,9 @@ body {
 }
 .p-t-8 {
   padding-top: 8px;
+}
+.border-none {
+  border: none !important;
 }
 
 /*--------通用样式 end----------*/
