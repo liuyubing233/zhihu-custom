@@ -13,7 +13,7 @@
 // @grant        GM_log
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
-// @require      https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
+// @require      https://libs.baidu.com/jquery/2.1.4/jquery.min.js
 // @connect      127.0.0.1
 // ==/UserScript==
 // 使用live server 启动
