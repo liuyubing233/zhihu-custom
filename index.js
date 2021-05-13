@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.1.8
+// @version      2.1.9
 // @description  列表种类和关键词强过滤内容|可设置收起所有长回答或展开所有回答|未登录状态下问答和专栏移除登录弹窗|过滤烦人的故事档案局和盐选科普回答，可一键过滤所有知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|支持版心修改，页面模块位置调整、隐藏，页面标头和图标修改|页面背景色修改|列表的问题，文章和视频添加区分标签|去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开|更多功能请在插件里体验
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -1492,6 +1492,7 @@
     const isTrue = (() => {
       return pfConfig.hiddenSearchPageListAD
     })()
+
     if (isTrue) {
       const events = $('.SearchResult-Card')
       let lessNum = 0 // 每次减去的列表内容数量
@@ -1628,6 +1629,10 @@
     // 判断body变化后的页面title是否变化
     // 原逻辑是在body变化后会请求查看是否有新的消息后再更改title
     pfConfig.title !== document.title && changeTitle()
+
+    if (pfConfig.hiddenSearchBoxTopSearch && $('.SearchBar-input input')[0]) {
+      $('.SearchBar-input input')[0].placeholder = ''
+    }
   }
 
   window.onscroll = throttle(() => {
