@@ -108,6 +108,9 @@ body {
   color: #999;
   font-size: 12px;
   padding: 2px 0;
+  i {
+    margin-left: 6px;
+  }
 }
 
 .pf-other-bg {
@@ -579,7 +582,6 @@ body {
 /*----------------- 页面内容排版 ---------------------start*/
 .GlobalSideBar-navList {
   margin-bottom: 10px;
-  background: #fff;
   overflow: hidden;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
@@ -726,3 +728,85 @@ body {
 }
 
 /*--------通用样式 end----------*/
+
+.pf-use-theme-dark {
+  display: flex;
+}
+
+.pf-switch {
+  position: relative;
+  width: 64px;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+.pf-switch-checkbox {
+  display: none;
+}
+
+.pf-switch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.pf-switch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+
+.pf-switch-inner::before,
+.pf-switch-inner::after {
+  display: block;
+  float: right;
+  width: 50%;
+  height: 25px;
+  padding: 0;
+  line-height: 25px;
+  font-size: 14px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.pf-switch-inner::after {
+  content: attr(data-on);
+  padding-left: 10px;
+  background-color: #0066ff;
+  color: #ffffff;
+}
+
+.pf-switch-inner::before {
+  content: attr(data-off);
+  padding-right: 10px;
+  background-color: #eeeeee;
+  color: #999999;
+  text-align: right;
+}
+
+.pf-switch-switch {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  background: #ffffff;
+  top: 0;
+  bottom: 0;
+  right: 40px;
+  border: 2px solid #999999;
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+}
+
+.pf-switch-checkbox:checked + .pf-switch-label .pf-switch-inner {
+  margin-left: 0;
+}
+
+.pf-switch-checkbox:checked + .pf-switch-label .pf-switch-switch {
+  right: 0px;
+}
