@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.1.10
+// @version      2.1.11
 // @description  一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）|列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|可设置自动收起所有长回答或自动展开所有回答|未登录状态下问答和专栏移除登录弹窗|设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改|页面背景色修改可调整|夜间模式开关|隐藏知乎热搜模块，体验纯净搜索|列表的问题，文章和视频添加区分标签|去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -431,6 +431,7 @@
       'isUseThemeDark': () => {
         initCSSVersion()
         doUseThemeDark(checked)
+        initCSSBackground()
       },
       'suspensionFind': cacheHeader,
       'suspensionSearch': cacheHeader,
@@ -874,10 +875,6 @@
       + (pfConfig.zoomAnswerText
         ? '.ContentItem-action,.ContentItem-actions .Button--plain,.Post-SideActions-icon,.Post-SideActions button.like,.VoteButton {font-size: 12px !important;}'
         : '.VoteButton-TriangleUp,.Zi--TriangleDown {width: 14px;height: 14px;}')
-      + (pfConfig.isUseThemeDark
-        ? '.pf-modal{background: #121212!important;}.pf-left li a{color: #fff;}'
-        + '.pf-other-bg{background:initial!important}.pf-button{background:#333}.pf-button:hover{background: #444;}'
-        : '')
       + '</style>'
     $('#pf-css-version') && $('#pf-css-version').remove()
     $('head').append(cssVersion)
@@ -1081,23 +1078,11 @@
 
   const myBG = {
     init: function (bg) {
-      return pfConfig.colorBackground !== '#ffffff' ? this.normal(bg) : ''
-    },
-    filter: (fi) => {
-      const customBG =
-        `.zu-top,.zu-top-nav-userinfo.selected`
-        + `,html.no-touchevents .top-nav-profile:hover .zu-top-nav-userinfo,.top-nav-profile a`
-        + `{background:#ffffff!important;border-color: #eeeeee!important;}`
-
-      const customColor =
-        `.zu-top .zu-top-nav-link,.top-nav-profile .zu-top-nav-userinfo`
-        + `,.top-nav-dropdown li a`
-        + `{color: #111f2c!important;}`
-
-      return `html,html img,.pf-color-radio-item,iframe{${fi}}`
-        + `html.no-touchevents .top-nav-dropdown a:hover{background:#eeeeee!important}`
-        + customBG
-        + customColor
+      return pfConfig.isUseThemeDark
+        ? '.pf-modal{background: #121212!important;}.pf-left li a{color: #fff;}'
+        + '.pf-other-bg{background:initial!important}.pf-button{background:#333}.pf-button:hover{background: #444;}'
+        + '.pf-b-close:hover{color: #333}'
+        : pfConfig.colorBackground !== '#ffffff' ? this.normal(bg) : ''
     },
     normal: (bg) => {
       const normalBG =
@@ -1565,18 +1550,16 @@
 
   let themeTimeout = null
   let themeFindIndex = 0
-  function findTheme(isFind) {
+  function findTheme() {
     if (themeTimeout) {
       clearTimeout(themeTimeout)
     }
-    if (themeFindIndex < 20 && !isFind) {
+    if (themeFindIndex < 20) {
       themeTimeout = setTimeout(() => {
         clearTimeout(themeTimeout)
         themeFindIndex++
-        if (pfConfig.isUseThemeDark) {
-          doUseThemeDark(pfConfig.isUseThemeDark)
-          findTheme()
-        }
+        doUseThemeDark(pfConfig.isUseThemeDark)
+        findTheme()
       }, 50)
     }
   }
