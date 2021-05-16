@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.1.14
+// @version      2.1.15
 // @description  一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）|列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|可设置自动收起所有长回答或自动展开所有回答|未登录状态下问答和专栏移除登录弹窗|设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改|页面背景色修改可调整|夜间模式开关|隐藏知乎热搜模块，体验纯净搜索|列表的问题，文章和视频添加区分标签|去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -251,6 +251,7 @@
       await myStorage.set('pfConfig', JSON.stringify(pfConfig))
       onDocumentStart()
       initData()
+      doUseThemeDark(pfConfig.isUseThemeDark)
     },
     // 恢复默认配置
     restore: async () => {
@@ -264,6 +265,7 @@
         await myStorage.set('pfConfig', JSON.stringify(pfConfig))
         onDocumentStart()
         initData()
+        doUseThemeDark(pfConfig.isUseThemeDark)
       }
     },
   }
@@ -1079,20 +1081,36 @@
   const myBG = {
     init: function (bg) {
       return pfConfig.isUseThemeDark
-        ? '.pf-modal{background: #121212!important;border: 1px solid #eee}.pf-left li a{color: #fff;}'
-        + '.pf-other-bg{background:initial!important}.pf-button{background:#333}.pf-button:hover{background: #444;}'
-        + '.pf-b-close:hover{color: #333}'
-        + '.css-ul9l2m{background: #121212!important;}'
+        ? this.dark()
         : pfConfig.colorBackground !== '#ffffff' ? this.normal(bg) : ''
     },
+    dark: () => {
+      const b12 = `.css-ul9l2m,.css-mq2czy,.css-1da4iq8,.css-oqge09,.css-lpo24q,.css-16zrry9,.css-u8y4hj`
+        + `,.css-1yq3jl6,.css-mzh2tk,.css-6mdg56,.CreatorRecruitFooter--fix,body .Recruit-buttonFix-placeholder`
+        + `,.css-1h84h63,.css-1bwzp6r,.css-w215gm`
+        + `,.css-ovbogu,.css-1v840mj,.css-huwkhm,.css-akuk2k,.css-ygii7h{background: #121212!important;}`
+
+      const b3 = `.pf-button,.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd)`
+        + `,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0{background:#333333!important;}`
+
+      const cF = `.pf-left li a,.css-1204lgo,.css-1ng3oge,.css-5abu0r,.css-p52k8h,.css-1dpmqsl,.css-1myqwel`
+        + `,html[data-theme=dark] .TopNavBar-inner-baxks .TopNavBar-tab-hBAaU a`
+        + `,html[data-theme=dark] .TopNavBar-logoContainer-vDhU2 .TopNavBar-zhihuLogo-jzM1f`
+        + `,html[data-theme=dark] .TopNavBar-userInfo-kfSJK .TopNavBar-icon-9TVP7`
+        + `,.css-oqge09,.css-8u7moq,.css-k0fmhp,css-bc6idi,.css-nsw6sf,.css-25wprl{color: #fff!important}`
+
+      const c3 = `.pf-b-close:hover,css-1x3upj1{color: #333!important}`
+
+      return '.pf-modal{background: #121212!important;border: 1px solid #eee}.pf-other-bg{background:initial!important}'
+        + '.pf-button:hover{background: #444!important;}'
+        + b12 + cF + c3 + b3
+    },
     normal: (bg) => {
-      const normalBG =
-        `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar`
+      const normalBG = `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar`
         + `,.position-suspensionSearch.focus,.Modal-modal-wf58`
         + `{background-color: ${bg}!important;}`
 
-      const opacityBG =
-        `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main`
+      const opacityBG = `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main`
         + `,.CommentsV2-withPagination,.QuestionHeader-footer,.HoverCard,.ContentItem-actions`
         + `,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton`
         + `,.AppHeader,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard`
@@ -1106,8 +1124,7 @@
         + `,.pf-modal,.pf-modal select,.pf-modal input,.pf-modal textarea`
         + `{background-color:${myLocalC.backgroundOpacity[bg]}!important;background:${myLocalC.backgroundOpacity[bg]}!important;}`
 
-      const transparentBG =
-        `.zhuanlan .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
+      const transparentBG = `.zhuanlan .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
         + `{background-color: transparent!important;}`
 
       return normalBG + opacityBG + transparentBG
@@ -1696,8 +1713,7 @@
       const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton')
       if (evenButton) {
         if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
-          evenButton.style =
-            `visibility:visible!important;position: fixed!important;bottom: 60px;`
+          evenButton.style = `visibility:visible!important;position: fixed!important;bottom: 60px;`
             + `left: ${even.offsetLeft + even.offsetWidth - right}px;`
             + `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);`
             + `height: 40px!important;line-height:40px;padding: 0 12px!important;`
