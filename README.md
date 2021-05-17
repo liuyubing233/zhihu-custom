@@ -1,5 +1,7 @@
 # 知乎修改器 ✈ 持续更新 ✈ 努力实现功能最全的知乎配置插件
 
+<p><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E4%BF%AE%E6%94%B9%E5%99%A8-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0-%E5%8A%AA%E5%8A%9B%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD%E6%9C%80%E5%85%A8%E7%9A%84%E7%9F%A5%E4%B9%8E%E9%85%8D%E7%BD%AE%E6%8F%92%E4%BB%B6/versions" target="_blank">更新日志</a></p>
+
 <p>使用方法：在页面左侧鼠标触摸出现眼镜按钮点击出现修改器弹窗</p>
 <img width="840" src="https://pic.liesio.com/2021/05/14/689992ccbf2d9.jpg">
 <br/>
