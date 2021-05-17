@@ -825,3 +825,52 @@ body {
 .pf-switch-checkbox:checked + .pf-switch-label .pf-switch-switch {
   right: 0px;
 }
+
+/*** notification start ***/
+.pf-notification {
+  position: fixed;
+  top: 24px;
+  right: 0;
+  z-index: 100;
+}
+
+.pf-notification-item {
+  position: relative;
+  padding: 16px 24px;
+  overflow: hidden;
+  line-height: 1.5;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  background: #fff;
+  font-size: 14px;
+  margin: 0 24px 24px 0;
+  width: 300px;
+  animation: openNotification 0.2s;
+  animation-fill-mode: forwards;
+}
+
+.pf-notification-title {
+  white-space: pre-wrap;
+}
+
+.pf-close-notification {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 12px;
+  color: #999;
+  cursor: pointer;
+}
+
+@keyframes openNotification {
+  0% {
+    transform: translate(300px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+/*** notification end *****/
