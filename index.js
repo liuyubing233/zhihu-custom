@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.1.17
+// @version      2.1.18
 // @description  一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）|列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|可设置自动收起所有长回答或自动展开所有回答|未登录状态下问答和专栏移除登录弹窗|设置过滤烦人的故事档案局和盐选科普回答，并可一键过滤所有知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|支持版心修改，页面模块位置调整、隐藏，页面表头和图标修改|页面背景色修改可调整|夜间模式开关|隐藏知乎热搜模块，体验纯净搜索|列表的问题，文章和视频添加区分标签|去除广告，可设置购买链接只显示文字还是隐藏，外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match         *://www.zhihu.com/*
@@ -1554,19 +1554,6 @@
     }
   }
 
-  // 屏蔽页面设置
-  function filterPageSetting() {
-    const removeFilterButton = $('<button class="pf-button" style="margin-left: 12px;">移除当前页所有屏蔽话题</button>')
-    removeFilterButton[0].onclick = () => {
-      document.querySelectorAll('.Tag-remove').forEach(item => item.click())
-    }
-    document.querySelectorAll('.css-j2uawy').forEach((item) => {
-      if (/已屏蔽话题/.test(item.innerText) && !$(item).find('.pf-button')[0]) {
-        $(item).append(removeFilterButton)
-      }
-    })
-  }
-
   // 在启动时注入的内容
   ; (async function () {
     timeStart = performance.now()
@@ -1594,20 +1581,18 @@
 
   })()
 
-  let themeTimeout = null
-  let themeFindIndex = 0
   function findTheme() {
-    if (themeTimeout) {
-      clearTimeout(themeTimeout)
-    }
-    if (themeFindIndex < 20) {
-      themeTimeout = setTimeout(() => {
-        clearTimeout(themeTimeout)
-        themeFindIndex++
+    // 开始进入先修改一次
+    doUseThemeDark(pfConfig.isUseThemeDark)
+    const eventHTML = $('html')
+    const muConfig = { attribute: true, attributeFilter: ['data-theme'] }
+    const muCallback = function () {
+      if ((eventHTML.attr('data-theme') === 'dark' && !pfConfig.isUseThemeDark) || (eventHTML.attr('data-theme') === 'light' && pfConfig.isUseThemeDark)) {
         doUseThemeDark(pfConfig.isUseThemeDark)
-        findTheme()
-      }, 10)
+      }
     }
+    const muObserver = new MutationObserver(muCallback)
+    muObserver.observe(eventHTML[0], muConfig)
   }
 
   function onDocumentStart() {
@@ -1656,26 +1641,34 @@
   history.replaceState = _historyWrap('replaceState')
 
   window.addEventListener('pushState', function (e) {
-    themeFindIndex = 0
-    if (pfConfig.isUseThemeDark) {
-      findTheme()
-    }
-
     findFilterPageSetting()
   })
 
   let filterTimeout = null
   function findFilterPageSetting() {
     if (/\/settings\/filter/.test(location.pathname)) {
-      if (filterTimeout) {
-        clearTimeout(filterTimeout)
-      }
+      filterTimeout && clearTimeout(filterTimeout)
       filterTimeout = setTimeout(() => {
         clearTimeout(filterTimeout)
         filterPageSetting()
         findFilterPageSetting()
       }, 500)
+    } else {
+      filterTimeout && clearTimeout(filterTimeout)
     }
+  }
+
+  // 屏蔽页面设置
+  function filterPageSetting() {
+    const removeFilterButton = $('<button class="pf-button" style="margin-left: 12px;">移除当前页所有屏蔽话题</button>')
+    removeFilterButton[0].onclick = () => {
+      document.querySelectorAll('.Tag-remove').forEach(item => item.click())
+    }
+    document.querySelectorAll('.css-j2uawy').forEach((item) => {
+      if (/已屏蔽话题/.test(item.innerText) && !$(item).find('.pf-button')[0]) {
+        $(item).append(removeFilterButton)
+      }
+    })
   }
 
   // 使用ResizeObserver监听body高度
