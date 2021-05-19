@@ -3,7 +3,7 @@
 <p><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E4%BF%AE%E6%94%B9%E5%99%A8-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0-%E5%8A%AA%E5%8A%9B%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD%E6%9C%80%E5%85%A8%E7%9A%84%E7%9F%A5%E4%B9%8E%E9%85%8D%E7%BD%AE%E6%8F%92%E4%BB%B6/versions" target="_blank">更新日志</a></p>
 
 <p>使用方法：在页面左侧鼠标触摸出现眼镜按钮点击出现修改器弹窗</p>
-<img width="840" src="https://pic.liesio.com/2021/05/14/689992ccbf2d9.jpg">
+<img width="840" src="https://i.postimg.cc/L53Q5dQf/2.jpg">
 <br/>
 <p>一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；</p>
 <p>列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容；</p>
@@ -31,18 +31,18 @@
 <img width="840" src="https://raw.githubusercontent.com/superPufferfish/codeImages/custom-zhihu-style/default.png">
 <br/>
 <p>极简模式：</p>
-<img width="840" src="https://pic.liesio.com/2021/05/14/e8286e6fbe873.jpg">
+<img width="840" src="https://i.postimg.cc/rskYqyjM/8.jpg">
 <br/>
 <p>悬浮模块：</p>
-<img width="840" src="https://pic.liesio.com/2021/05/14/8b26c499d64f2.jpg">
+<img width="840" src="https://i.postimg.cc/9F1Njh7H/1.jpg">
 <br/>
 <p>背景色修改：</p>
-<img width="840" src="https://pic.liesio.com/2021/05/14/86e19a408a197.jpg">
+<img width="840" src="https://i.postimg.cc/wBnGbQst/5.jpg">
 <br/>
 <p>夜间模式：</p>
-<img width="400" src="https://pic.liesio.com/2021/05/14/021c1c93fb04e.jpg">
-<img width="840" src="https://pic.liesio.com/2021/05/14/67bc8a6075f32.jpg">
+<img width="400" src="https://i.postimg.cc/FHWq04rV/4.jpg">
+<img width="840" src="https://i.postimg.cc/9MTn3wGL/7.jpg">
 <br/>
 <p>修改器预览：</p>
-<img width="400" src="https://pic.liesio.com/2021/05/14/729695e92c6b1.jpg">
-<img width="400" src="https://pic.liesio.com/2021/05/14/909e579f38ec1.jpg">
+<img width="400" src="https://i.postimg.cc/sgDqBXr2/6.jpg">
+<img width="400" src="https://i.postimg.cc/PqC74RNs/3.jpg">
