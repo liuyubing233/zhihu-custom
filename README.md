@@ -21,7 +21,7 @@
 <br/>
 <p>发现bug和想要添加的内容请反馈给我！！！</p>
 <br/>
-<p>Github: <a href="https://github.com/superPufferfish/custom-zhihu-style" target="_blank">https://github.com/superPufferfish/custom-zhihu-style</a></p>
+<p>Github: <a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">https://github.com/superPufferfish/custom-zhihu</a></p>
 
 <p>Greasyfork: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a></p>
 <br/>
