@@ -81,6 +81,23 @@
               <span class="pf-label">更改网页标题</span>
               <input class="pf-input h-25 w-300" name="title" type="text" />
             </div>
+            <div class="pf-raido-divoom-answer-image">
+              <label>
+                <span class="pf-label">页面右下停靠返回主页按钮</span>
+                <input class="pf-input" name="toHomeButton" type="checkbox" value="on" />
+              </label>
+              <div class="p-t-8">
+                <span class="pf-label">专栏返回主页</span>
+                <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhihu" />知乎首页</label>
+                <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhuanlan" />专栏首页</label>
+              </div>
+            </div>
+            <div class="pf-hidden-labels">
+              <label>
+                <span class="pf-label">问题显示创建和最后修改时间</span>
+                <input class="pf-input" name="questionCreatedAndModifiedTime" type="checkbox" value="on" />
+              </label>
+            </div>
             <div class="pf-other-bg">
               <div class="pf-label fw-bold border-none">悬浮模块</div>
               <div class="pf-commit border-none">拖动悬浮模块定位位置</div>
@@ -117,17 +134,6 @@
                   <span class="pf-label">搜索栏</span>
                   <input class="pf-input" name="suspensionSearch" type="checkbox" value="on" />
                 </label>
-              </div>
-            </div>
-            <div class="pf-raido-divoom-answer-image">
-              <label>
-                <span class="pf-label">页面右下停靠返回主页按钮</span>
-                <input class="pf-input" name="toHomeButton" type="checkbox" value="on" />
-              </label>
-              <div class="p-t-8">
-                <span class="pf-label">专栏返回主页</span>
-                <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhihu" />知乎首页</label>
-                <label><input class="pf-input" name="toHomeButtonZhuanlan" type="radio" value="zhuanlan" />专栏首页</label>
               </div>
             </div>
           </div>
@@ -343,14 +349,6 @@
               <label><input class="pf-input" name="hiddenQuestionShare" type="checkbox" value="on" />问题分享</label>
             </div>
             <div class="pf-hidden-labels">
-              <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏关联话题</label>
-              <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏操作条</label>
-              <label><input class="pf-input" name="hiddenZhuanlanTitleImage" type="checkbox" value="on" />专栏标题图片</label>
-              <br>
-              <label><input class="pf-input" name="hiddenZhuanlanShare" type="checkbox" value="on" />专栏悬浮分享按钮</label>
-              <label><input class="pf-input" name="hiddenZhuanlanVoters" type="checkbox" value="on" />专栏悬浮赞同按钮</label>
-            </div>
-            <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenQuestionActions" type="checkbox" value="on" />问题详情操作栏</label>
               <label><input class="pf-input" name="hiddenQuestionFollowing" type="checkbox" value="on" />关注问题按钮</label>
               <label><input class="pf-input" name="hiddenQuestionAnswer" type="checkbox" value="on" />回答按钮</label>
@@ -364,6 +362,14 @@
               <label><input class="pf-input" name="hiddenSearchPageFooter" type="checkbox" value="on" />搜索页知乎指南</label>
               <br>
               <label><input class="pf-input" name="hiddenSearchPageListAD" type="checkbox" value="on" />搜索页商业推广</label>
+            </div>
+            <div class="pf-hidden-labels">
+              <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏关联话题</label>
+              <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏操作条</label>
+              <label><input class="pf-input" name="hiddenZhuanlanTitleImage" type="checkbox" value="on" />专栏标题图片</label>
+              <br>
+              <label><input class="pf-input" name="hiddenZhuanlanShare" type="checkbox" value="on" />专栏悬浮分享按钮</label>
+              <label><input class="pf-input" name="hiddenZhuanlanVoters" type="checkbox" value="on" />专栏悬浮赞同按钮</label>
             </div>
           </div>
           <div id="pf-set-color">
