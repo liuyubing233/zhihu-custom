@@ -4,14 +4,16 @@
 // @version      0.0.1
 // @description  server local js about zhihu style,init this js into tampermonkey,save js can reload page
 // @author       super puffer fish
-// @match         *://www.zhihu.com/*
-// @match         *://zhuanlan.zhihu.com/*
+// @match        *://www.zhihu.com/*
+// @match        *://zhuanlan.zhihu.com/*
 // @match        *://localhost*/*
+// @match        *://video.zhihu.com/*
 // @grant        unsafeWindow
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_log
 // @grant        GM_xmlhttpRequest
+// @grant        GM_download
 // @run-at       document-start
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
 // @connect      127.0.0.1

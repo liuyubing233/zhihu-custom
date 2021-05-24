@@ -6,11 +6,11 @@ body {
 }
 @font-face {
   font-family: 'own-iconfont'; /* Project id 2324733 */
-  src: url('//at.alicdn.com/t/font_2324733_501silrna2e.woff2?t=1620462898565')
+  src: url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.woff2?t=1621842905739')
       format('woff2'),
-    url('//at.alicdn.com/t/font_2324733_501silrna2e.woff?t=1620462898565')
+    url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.woff?t=1621842905739')
       format('woff'),
-    url('//at.alicdn.com/t/font_2324733_501silrna2e.ttf?t=1620462898565')
+    url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.ttf?t=1621842905739')
       format('truetype');
 }
 
@@ -876,8 +876,33 @@ body {
 /*** notification end *****/
 
 .pf-question-time {
-  color: #999!important;
-  font-size: 14px!important;
-  font-weight: normal!important;
+  color: #999 !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
   line-height: 24px;
+}
+
+.pf-video-download,
+.pf-loading {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+
+.pf-loading {
+  animation: loading 2s;
+  animation-iteration-count: infinite;
+  cursor: default!important;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
