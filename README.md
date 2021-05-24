@@ -1,11 +1,34 @@
 # 知乎修改器 ✈ 持续更新 ✈ 努力实现功能最全的知乎配置插件
 
 <p><a href="https://github.com/superPufferfish/custom-zhihu/blob/main/development/changelog.md" target="_blank">更新日志</a></p>
+<p><a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a></p>
+<p><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">Greasyfork</a></p>
 
-<p>使用方法：在页面左侧鼠标触摸出现眼睛按钮点击出现修改器弹窗</p>
+### 一、唤起方式
+<p>在页面左侧处触摸出现眼睛按钮，点击弹出修改器弹窗：</p>
 <img src="https://by3302files.storage.live.com/y4m_D1FmhhLJ2ReyYnRZotoYadumsQtW_YhOtSRdSfCgNx9yb0xEDXJPI_B9TRBoJibAxWmS2osA5DYAg6XROxsM2dPHHUcC2ogaM_3YXxotSuNPRT-RSK69eaXPcDLNqBVIl7S7ZLrWSFEqluSJlSeVARGCtXzOZaAPvyavJifvaYppNjcTpioWu03HQLBWwtK?width=660&height=326&cropmode=none" width="660" height="326" />
-<br/>
-<p>一键极简模式，去除不必要的元素，给你最简单的知乎（可自动配置，随时还原）；</p>
+
+### 二、基础设置
+#### 1、极简模式及恢复默认配置
+<p>点击【启用极简模式】按钮则将页面改为本人配置的极简模式样式，如需修改在修改器配置修改即可。</p>
+<p>点击【恢复默认配置】按钮则将页面还原回默认配置样式。</p>
+
+#### 2、回答和专栏图片缩放
+<p>设置此项可以将回答和专栏内图片按照所设置的大小进行缩放，并且在缩放模式下添加了所有的图片弹窗预览</p>
+<p>【动图弹窗显示】在图片缩放模式下极为好用</p>
+
+#### 3、更改网页标题和标题图片
+
+#### 4、页面右下停靠返回主页按钮
+
+#### 5、页面悬浮模块
+【问题列表切换】【顶部发现模块】【个人中心】【搜索栏】四个模块可配置是否悬浮显示
+
+
+
+### 三、首页设置
+首页五个模块位置自定义配置，可设置是否隐藏
+
 <p>列表种类和关键词强过滤内容（目前只针对标题进行过滤），关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容；</p>
 <p>可设置自动收起所有长回答或自动展开所有回答；</p>
 <p>未登录状态下问答和专栏移除登录弹窗；</p>
@@ -22,9 +45,7 @@
 <br/>
 <p>发现bug和想要添加的内容请反馈给我！！！</p>
 <br/>
-<p>Github: <a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">https://github.com/superPufferfish/custom-zhihu</a></p>
 
-<p>Greasyfork: <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8</a></p>
 <br/>
 
 <p>预览：</p>
