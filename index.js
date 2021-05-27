@@ -156,6 +156,8 @@
     fetchHeaders: {}, // fetch的headers内容，获取下来以供使用
   }
 
+  let answerSortBy = 'default' // 列表内容排序方式
+
   // 根据名称删除的官方回答
   const removeAnswerByAuthorName = [
     { id: 'removeStoryAnswer', name: '故事档案局' },
@@ -1638,6 +1640,80 @@
     }
   }
 
+  // 监听问题详情里的#Popover11-toggle按钮
+  // answerSortBy
+  const answerSortIds = {
+    'Select1-0': { key: 'default', name: '默认排序' },
+    'Select1-1': { key: 'update', name: '按时间排序' },
+    'Select1-2': { key: 'vote', name: '点赞数排序' },
+    'Select1-3': { key: 'comment', name: '评论数排序' },
+  }
+  const sortKeys = {
+    vote: '点赞数排序',
+    comment: '评论数排序'
+  }
+  let isFirstToSort = true
+  function listenPopover11Toggle() {
+    if (answerSortBy === 'vote' || answerSortBy === 'comment') {
+      $('#Popover11-toggle')[0].innerHTML = $('#Popover11-toggle')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, sortKeys[answerSortBy])
+    }
+
+    const clickSort = (id) => {
+      eachIndex = 0
+      answerSortBy = answerSortIds[id].key
+      $('#Popover11-toggle')[0].innerHTML = $('#Popover11-toggle')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, answerSortIds[id].name)
+      if (answerSortIds[id].key === 'vote' || answerSortIds[id].key === 'comment') {
+        location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + answerSortIds[id].key
+      } else if (answerSortIds[id].key === 'default') {
+        /\?sort=/.test(location.href) && (location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ''))
+      }
+    }
+
+    const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] }
+    const buObserver = new MutationObserver(() => {
+      if ($('#Popover11-toggle').attr('aria-expanded') === 'true') {
+        const evenSortByVote = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-2">点赞数排序</button>')
+        const evenSortByComment = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-3">评论数排序</button>')
+        $('.Answers-select').append(evenSortByVote).append(evenSortByComment)
+        document.querySelectorAll('.Select-option').forEach((ev) => {
+          ev.onclick = () => clickSort(ev.id)
+        })
+      }
+    })
+    buObserver.observe($('#Popover11-toggle')[0], buConfig)
+  }
+
+  /**
+   * 排序列表
+   * 因为知乎并没有开放点赞数和评论排序参数，所以只能每次加载后按照当前的数据进行页面排序
+   * 为了防止页面错乱 只对前20条进行排序
+   */
+  function sortAnswer() {
+    if ((answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
+      const event = $('.List>div:nth-child(2)>div')
+      console.log(event.find('.List-item'))
+      const ev = event.find('.List-item:not(.PlaceHolder)').sort((a, b) => {
+        const aContent = $(a).find('.AnswerItem').attr('data-za-extra-module')
+          ? JSON.parse($(a).find('.AnswerItem').attr('data-za-extra-module')).card.content
+          : {}
+        const bContent = $(b).find('.AnswerItem').attr('data-za-extra-module')
+          ? JSON.parse($(b).find('.AnswerItem').attr('data-za-extra-module')).card.content
+          : {}
+        switch (answerSortBy) {
+          case 'vote':
+            return bContent.upvote_num - aContent.upvote_num
+          case 'comment':
+            return bContent.comment_num - aContent.comment_num
+          default:
+            return true
+        }
+      })
+      event.find('.List-item:not(.PlaceHolder)').remove()
+      event.append(ev)
+      isFirstToSort = false
+    }
+  }
+
   // 在启动时注入的内容
   ; (async function () {
     $('head').append(`<style type="text/css" id="pf-css-own">${INNER_CSS}</style>`)
@@ -1658,12 +1734,23 @@
       // 拦截fetch方法 获取option中的值
       const originFetch = fetch
       unsafeWindow.fetch = (url, opt) => {
+        // 如果是自定义排序则知乎回答页码增加到20条
+        if ((answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
+          if (/\/answers\?/.test(url)) {
+            url = url.replace(/(?<=limit=)\d+(?=&)/, '20')
+          }
+        }
+
         if (!myLocalC.fetchHeaders['x-ab-param']) {
           if (opt && opt.headers) {
             myLocalC.fetchHeaders = opt.headers
           }
         }
         return originFetch(url, opt)
+      }
+
+      if (/\/question/.test(location.pathname) && location.search.match(/(?<=sort=)\w+/)) {
+        answerSortBy = location.search.match(/(?<=sort=)\w+/)[0]
       }
     }
   })()
@@ -1716,7 +1803,10 @@
     }
 
     pathnameHasFn({
-      'question': addQuestionCreatedAndModifiedTime,
+      'question': () => {
+        addQuestionCreatedAndModifiedTime()
+        listenPopover11Toggle()
+      },
       'video': () => videoFns.init(),
     })
   }
