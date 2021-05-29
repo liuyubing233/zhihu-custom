@@ -8,42 +8,46 @@
 
 ## 插件目录
 
-- [一. 唤起方式](#一-唤起方式)
-- [二. 基础设置](#二-基础设置)
-  - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
-  - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
-  - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
-  - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
-  - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
-  - [6. 页面悬浮模块](#6-页面悬浮模块)
-- [三. 首页设置](#三-首页设置)
-- [四. 过滤回答](#四-过滤回答)
-  - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
-  - [2. 过滤列表类别](#2-过滤列表类别)
-  - [3. 关键词过滤](#3-关键词过滤)
-- [五. 回答设置](#五-回答设置)
-  - [1. 自动展开所有回答](#1-自动展开所有回答)
-  - [2. 默认收起所有长回答](#2-默认收起所有长回答)
-  - [3. 回答【收起】按钮悬浮](#3-回答收起按钮悬浮)
-- [六. 隐藏模块](#六-隐藏模块)
-  - [1. 购物链接显示设置](#1-购物链接显示设置)
-  - [2. 广告过滤](#2-广告过滤)
-  - [3. 顶部模块隐藏](#3-顶部模块隐藏)
-  - [4. 列表内容隐藏](#4-列表内容隐藏)
-  - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
-  - [6. 搜索内容隐藏](#6-搜索内容隐藏)
-  - [7. 专栏内容隐藏](#7-专栏内容隐藏)
-- [七. 颜色设置](#七-颜色设置)
-  - [1. 修改背景色](#1-修改背景色)
-  - [2. 夜间模式](#2-夜间模式)
-- [八. 配置导出导入](#八-配置导出导入)
-  - [1. 自定义 css](#1-自定义-css)
-- [九. 默认功能](#九-默认功能)
-  - [1. 外链直接打开](#1-外链直接打开)
-  - [2. 视频下载](#2-视频下载)
-  - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
-  - [4. 移除登录弹窗](#4-移除登录弹窗)
-- [更多功能请在修改其中体验](#更多功能请在修改其中体验)
+- [知乎修改器 ✈ 持续更新 ✈ 努力实现功能最全的知乎配置插件](#知乎修改器--持续更新--努力实现功能最全的知乎配置插件)
+  - [插件目录](#插件目录)
+    - [一. 唤起方式](#一-唤起方式)
+    - [二. 基础设置](#二-基础设置)
+      - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
+      - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
+      - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
+      - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
+      - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
+      - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
+      - [7. 页面悬浮模块](#7-页面悬浮模块)
+    - [三. 首页设置](#三-首页设置)
+    - [四. 过滤内容](#四-过滤内容)
+      - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
+      - [2. 过滤列表类别](#2-过滤列表类别)
+      - [3. 关键词过滤](#3-关键词过滤)
+      - [4. 关注列表过滤](#4-关注列表过滤)
+    - [五. 回答设置](#五-回答设置)
+      - [1. 自动展开所有回答](#1-自动展开所有回答)
+      - [2. 默认收起所有长回答](#2-默认收起所有长回答)
+      - [3. 回答【收起】按钮悬浮](#3-回答收起按钮悬浮)
+    - [六. 隐藏模块](#六-隐藏模块)
+      - [1. 购物链接显示设置](#1-购物链接显示设置)
+      - [2. 广告过滤](#2-广告过滤)
+      - [3. 顶部模块隐藏](#3-顶部模块隐藏)
+      - [4. 列表内容隐藏](#4-列表内容隐藏)
+      - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
+      - [6. 搜索内容隐藏](#6-搜索内容隐藏)
+      - [7. 专栏内容隐藏](#7-专栏内容隐藏)
+    - [七. 颜色设置](#七-颜色设置)
+      - [1. 修改背景色](#1-修改背景色)
+      - [2. 夜间模式](#2-夜间模式)
+    - [八. 配置导出导入](#八-配置导出导入)
+      - [1. 自定义 css](#1-自定义-css)
+    - [九. 默认功能](#九-默认功能)
+      - [1. 外链直接打开](#1-外链直接打开)
+      - [2. 视频下载](#2-视频下载)
+      - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
+      - [4. 移除登录弹窗](#4-移除登录弹窗)
+    - [更多功能请在修改其中体验](#更多功能请在修改其中体验)
 
 ### 一. 唤起方式
 
@@ -86,7 +90,15 @@
 
 <img src="https://by3302files.storage.live.com/y4muxyVssoNjJGR6jPVBwSrmqZQGvJAGYJf05588XA3BIZnqPpZgCSJ0dtLzVnCMjrG8FkEVIa3rJlV97WoDbppQZZ-wdY0lYs1eJZ-XPa2ohnJad6BFmnlsNMUirMouOXMLG6R_rls8xLVpVnVzKKBGpZ3H0kkODptXPGUPOAxboof01gU90NqxKW9IxOvCque?width=1024&height=351&cropmode=none" width="800" />
 
-#### 6. 页面悬浮模块
+#### 6. 关注列表高亮原创内容
+
+选择此项后关注列表里原创内容【发表回答】【发表文章】【提出问题】后将高亮显示，在所有颜色设置下生效
+
+<img src="https://by3302files.storage.live.com/y4m19EHE0XCoYwlBwhNfzOV1mvcpDDKJTmkYH616fSe5RCx5Gfd42ul8weBHLVcMKt3FyWBo2vzZKtUjNXP-5qPgEJN3P1Qa_VBin_TpLuY0yucgy8gYEXdC1MvwFE0G0V1U4yiz01oiClKM9o1Aryuiul3_IMxleO8Zzh4dNc5-rX19RLXJmF7V5QYtUnQ4uVJ?width=587&height=496&cropmode=none" width="587" />
+
+<img src="https://by3302files.storage.live.com/y4movgDT2h4PN6dyYuCvEcmgp4MoWThn4hmsHcuBcMCY_E8-ZfM4O5AvoyD26_WVx5bbqFZD8apMJVULc9vmJDRWfb_AEAk1a-KpuBamZ4isWwLRnpWBBYPNz494X0zc3EfTs9oa_J-Sa-St6UsAlmD6NBQVM5XO8vF_rGukUaJwZ9LOyq79e_TxUsperLfGscT?width=1024&height=758&cropmode=none" width="800" />
+
+#### 7. 页面悬浮模块
 
 模块可配置是否悬浮显示，其中问题列表切换模块可设置是否隐藏。
 
@@ -106,7 +118,7 @@
 
 <img src="https://by3302files.storage.live.com/y4mBQ5JJN6ET0jMbCzXx5CDDHnJ0VNB19k5rQvLVIylYhHu7BrXQvjU1jXVtkMlZ01zexqE-1Ak7d-rhAIatydoc6HG0KOYxbDIwxXJhjIjismqrALZWX0_SJOrJR9HNYMBdjtfA_4o_wFmX6jqaz-t4x-gW01hP8D2Jm5Wdta675Cbc9mmbYhItvhGCIgkIhS3?width=1024&height=534&cropmode=none" width="800" />
 
-### 四. 过滤回答
+### 四. 过滤内容
 
 #### 1. 过滤知乎官方账号
 
@@ -137,6 +149,10 @@
 选择【屏蔽内容后显示通知提醒框】则会在关键词过滤后右上方弹出弹窗提示过滤的内容，3 秒后自动消失（只是为了满足好奇心）。
 
 <img src="https://by3302files.storage.live.com/y4mSE-0VR0yzJI3WaR-1a3yfaeqo9D-RiomOTZ1t5-t0f5821DFQPXLnfcBUjMglJSzlYbB4k7pmx3tifr4-xGAFBVyTjTUGW4Tz7LAzHJS-F5CAnTN-6qPEaNXemOj8qV84Uy96XbgdyNoM_AMu086pZOzeYMRcp7TN7NZ-CG9QTmMU5hiHUKoWem4kCjZ7-xX?width=1024&height=536&cropmode=none" width="800" />
+
+#### 4. 关注列表过滤
+
+可以设置过滤关注列表的【关注人赞同回答】【关注人赞同文章】【关注人关注问题】内容
 
 ### 五. 回答设置
 
@@ -189,6 +205,7 @@
 #### 4. 列表内容隐藏
 
 如图所示，框选的内容均可配置隐藏。
+
 <img src="https://by3302files.storage.live.com/y4muFoyRI395-yfqXW05GhgrR2n9OMyDCr7hwcM0F9FI-pnI-jfFI_GaWXg-XDQnVcGouUOqWXn6AquROyaWnxmk6jTu2zQNnPQhY-RgY4jY_9OC76OD4i3MOiRE_WMIes14adsP8f0aUBpT8gJXd4XTeuEM9Bl7hl8p2_zrWKS7I_ta3n4yZ9qFbnZ-gLBcVlI?width=1024&height=506&cropmode=none" width="800" />
 
 <img src="https://by3302files.storage.live.com/y4m1H0sTO6g2eIoTrGlCxGPabm7_aK3pGk-mMuEgjryTN4T0XtOSbMX7ARoZLQ7CIEE1k3L3hukkhtyNMi87Izc88JRRfUcH8STC5AubTi0fZ2ovLNaUmb6IpuNN1m2yPXXHBhFIfaydpHrpAjM-5XyvVItz1mVmYwimSlVrBiZVv4jemYdjUA4V2u0_4jOVLCX?width=1024&height=505&cropmode=none" width="800" />
