@@ -591,15 +591,19 @@ body {
 .Question-main .Question-mainColumn,
 .ListShortcut {
   flex: 1;
-  width: 100%;
+  width: initial;
 }
 
 .Question-sideColumn {
   margin-left: 12px;
+  width: initial!important;
+  .Sticky.is-fixed {
+    width: 296px !important;
+  }
 }
 
-.AnswerAuthor {
-  margin-left: 12px;
+.Question-mainColumnLoginRightButton {
+  margin: 20px 22px 18px !important;
 }
 
 .ModalWrap .ModalExp-content {
@@ -894,7 +898,7 @@ body {
 .pf-loading {
   animation: loading 2s;
   animation-iteration-count: infinite;
-  cursor: default!important;
+  cursor: default !important;
 }
 
 @keyframes loading {
