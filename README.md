@@ -87,7 +87,7 @@
 
 调用浏览器打印方法，等待一段时间后生成PDF：
 
-<img src="https://by3302files.storage.live.com/y4m_pRdygrtK2gIxd0Xjm955M1TsQhPFNqHMcPRn26M--wtsqFyjwgQTUTkLAeoUyndeSPYSjQSCnKAv_NK_0tVxTqUR9XFSGZd8IBzLcyy_RGxQw3tb44P-wkt3PAs27lCEUVXlpoa8ECyYRuqx1HVL3cAANicRGdtPQ338tMYhw1q6UFuAJVo0CDuYFB3lJJ8?width=1024&height=458&cropmode=none" width="800" />
+<img src="https://by3302files.storage.live.com/y4m_pRdygrtK2gIxd0Xjm955M1TsQhPFNqHMcPRn26M--wtsqFyjwgQTUTkLAeoUyndeSPYSjQSCnKAv_NK_0tVxTqUR9XFSGZd8IBzLcyy_RGxQw3tb44P-wkt3PAs27lCEUVXlpoa8ECyYRuqx1HVL3cAANicRGdtPQ338tMYhw1q6UFuAJVo0CDuYFB3lJJ8?width=1919&height=859&cropmode=none" width="800" />
 
 下载的PDF预览
 
