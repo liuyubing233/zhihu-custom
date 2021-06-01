@@ -30,7 +30,6 @@ const innerCSS = () => {
       }
     })
   })
-
 }
 
 const innerHTML = () => {
