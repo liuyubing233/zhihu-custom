@@ -1721,7 +1721,7 @@
 
   // 收藏夹生成PDF 导出
   function collectionExport() {
-    const evenButton = $('<button class="pf-button pf-export-collection" style="font-size:16px;float:right;">将当前页码详细内容生成为PDF</button>')
+    const evenButton = $('<button class="pf-button pf-export-collection" style="font-size:16px;float:right;">生成PDF（没反应请刷新页面）</button>')
     $('.pf-export-collection')[0] && $('.pf-export-collection').remove()
     evenButton[0].onclick = function () {
       this.innerText = '加载中...'
