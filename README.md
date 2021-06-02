@@ -8,46 +8,44 @@
 
 ## 插件目录
 
-- [知乎修改器 ✈ 持续更新 ✈ 努力实现功能最全的知乎配置插件](#知乎修改器--持续更新--努力实现功能最全的知乎配置插件)
-  - [插件目录](#插件目录)
-    - [一. 唤起方式](#一-唤起方式)
-    - [二. 默认功能](#二-默认功能)
-      - [1. 外链直接打开](#1-外链直接打开)
-      - [2. 视频下载](#2-视频下载)
-      - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
-      - [4. 移除登录弹窗](#4-移除登录弹窗)
-      - [5. 收藏夹内容导出为PDF](#5-收藏夹内容导出为pdf)
-    - [三. 基础设置](#三-基础设置)
-      - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
-      - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
-      - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
-      - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
-      - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
-      - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
-      - [7. 页面悬浮模块](#7-页面悬浮模块)
-    - [四. 首页设置](#四-首页设置)
-    - [五. 过滤内容](#五-过滤内容)
-      - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
-      - [2. 过滤列表类别](#2-过滤列表类别)
-      - [3. 关键词过滤](#3-关键词过滤)
-      - [4. 关注列表过滤](#4-关注列表过滤)
-    - [六. 回答设置](#六-回答设置)
-      - [1. 自动展开所有回答](#1-自动展开所有回答)
-      - [2. 默认收起所有长回答](#2-默认收起所有长回答)
-      - [3. 回答【收起】按钮悬浮](#3-回答收起按钮悬浮)
-    - [七. 隐藏模块](#七-隐藏模块)
-      - [1. 购物链接显示设置](#1-购物链接显示设置)
-      - [2. 广告过滤](#2-广告过滤)
-      - [3. 顶部模块隐藏](#3-顶部模块隐藏)
-      - [4. 列表内容隐藏](#4-列表内容隐藏)
-      - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
-      - [6. 搜索内容隐藏](#6-搜索内容隐藏)
-      - [7. 专栏内容隐藏](#7-专栏内容隐藏)
-    - [八. 颜色设置](#八-颜色设置)
-      - [1. 修改背景色](#1-修改背景色)
-      - [2. 夜间模式](#2-夜间模式)
-    - [九. 配置导出导入](#九-配置导出导入)
-      - [1. 自定义 css](#1-自定义-css)
+- [一. 唤起方式](#一-唤起方式)
+- [二. 默认功能](#二-默认功能)
+  - [1. 外链直接打开](#1-外链直接打开)
+  - [2. 视频下载](#2-视频下载)
+  - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
+  - [4. 移除登录弹窗](#4-移除登录弹窗)
+  - [5. 收藏夹内容导出为PDF](#5-收藏夹内容导出为pdf)
+- [三. 基础设置](#三-基础设置)
+  - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
+  - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
+  - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
+  - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
+  - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
+  - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
+  - [7. 页面悬浮模块](#7-页面悬浮模块)
+- [四. 首页设置](#四-首页设置)
+- [五. 过滤内容](#五-过滤内容)
+  - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
+  - [2. 过滤列表类别](#2-过滤列表类别)
+  - [3. 关键词过滤](#3-关键词过滤)
+  - [4. 关注列表过滤](#4-关注列表过滤)
+- [六. 回答设置](#六-回答设置)
+  - [1. 自动展开所有回答](#1-自动展开所有回答)
+  - [2. 默认收起所有长回答](#2-默认收起所有长回答)
+  - [3. 回答【收起】按钮悬浮](#3-回答收起按钮悬浮)
+- [七. 隐藏模块](#七-隐藏模块)
+  - [1. 购物链接显示设置](#1-购物链接显示设置)
+  - [2. 广告过滤](#2-广告过滤)
+  - [3. 顶部模块隐藏](#3-顶部模块隐藏)
+  - [4. 列表内容隐藏](#4-列表内容隐藏)
+  - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
+  - [6. 搜索内容隐藏](#6-搜索内容隐藏)
+  - [7. 专栏内容隐藏](#7-专栏内容隐藏)
+- [八. 颜色设置](#八-颜色设置)
+  - [1. 修改背景色](#1-修改背景色)
+  - [2. 夜间模式](#2-夜间模式)
+- [九. 配置导出导入](#九-配置导出导入)
+  - [1. 自定义 css](#1-自定义-css)
 
 ### 一. 唤起方式
 
@@ -85,15 +83,15 @@
 
 点击导出当前页码的收藏夹详细内容。
 
-<img src="https://by3302files.storage.live.com/y4mz60jONPpBNgkg-uk9iXHkzI0-YGleKpe7HsDrVoQCEIz95pzRudnCt4_DUbjrqUvfRH_zNtImdmlToIXQA239dPk_ksNf1hRCLoTkiRblB5v-8TbKSjOuFJI4LgTCFcG125cItPwkYW1DeFCNmEd_yQ78Vt3JGXjedurHNp0b4et8xl6FGkv8329QZFxucZW?width=1024&height=756&cropmode=none" width="800" />
+<img src="https://by3302files.storage.live.com/y4mBAd7pcfJLDGO6eTp9QMr4BpIv9uJFOJp36mqHJ8TZZ8zxRIIBaeReR6BukraUXU7m_ixVKdcx52jlzfZBKy017Rqlc-ISArd3RgfBBQojfpSNrDO5J6WPvb54BueAT1y3ok2q7IOvx_9TOg3zPEEPH6q2igjIBavlSgyf3Fisvn-d2V1mYDQbJnLggz9otTR?width=1024&height=418&cropmode=none" width="800" />
 
 调用浏览器打印方法，等待一段时间后生成PDF：
 
-<img src="https://by3302files.storage.live.com/y4m_pRdygrtK2gIxd0Xjm955M1TsQhPFNqHMcPRn26M--wtsqFyjwgQTUTkLAeoUyndeSPYSjQSCnKAv_NK_0tVxTqUR9XFSGZd8IBzLcyy_RGxQw3tb44P-wkt3PAs27lCEUVXlpoa8ECyYRuqx1HVL3cAANicRGdtPQ338tMYhw1q6UFuAJVo0CDuYFB3lJJ8?width=1919&height=859&cropmode=none" width="800" />
+<img src="https://by3302files.storage.live.com/y4mh3hbhNlSEi28HSbRZAPJwwWymCrShD162KSkjBZqpPfmGSgn-nY8d7lh1aVOv83cAm5SN7_bzHNIH9ofUNrgZGslH7z8frjgeuZkYsH7r0QRawYD3yXC9M6cu6MEitWi4TX9imcayzg3pAnHsmkPULR8LW0kQ6psKwCDG_2cStbpNNJg-Q96PTM4x9VOz83N?width=1024&height=466&cropmode=none" width="800" />
 
 下载的PDF预览
 
-<img src="https://by3302files.storage.live.com/y4mGSipTg-MKzvDUsboucUggJFYWXFIE49xi6FtbbPDH-_te6W4CC3uFE2eoKsPN7qJ9s050UvlNNrRnRZ6AdRhoOsrlQN0ZJb-4LoEk1p7kXbAmbgHsbaLmZl_6IdoqbBpD4RwVZKAnHfXYTUqQk6oZbYQsQYR-NpZKXOC1tyeWcUlvkKpmQ4-_PUKbOwqF1Q8?width=1024&height=431&cropmode=none" width="800" />
+<img src="https://by3302files.storage.live.com/y4mVvDZC3X45KzJUxF4m4_aMPdeiInIyOKzXz8klEtw5Rs3_Ih0Cr_jZ2MN9QwZ0culgSkx7qqwrL2V--0ApvuO_F7TuIi9NPF2E8lnfZgYNSSGgStBYTyXavxCLfG1YNTc6yG2yQr-fQAe0PgfpwT8vEOscrtDSioFiVi1XSDDisDAEwZ0xz5XUj6dI6l6P9lx?width=1024&height=430&cropmode=none" width="800" />
 
 ### 三. 基础设置
 

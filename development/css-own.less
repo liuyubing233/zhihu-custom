@@ -382,27 +382,13 @@ body {
   }
 }
 
-.pf-pdf-dialog-item {
-  padding: 24px 0;
-  border-bottom: 1px solid #eee;
-}
-
 .pf-pdf-dialog-title {
   margin: 0 0 1.4em;
   font-size: 20px;
   font-weight: bold;
 }
 
-.pf-pdf-box {
-  height: 98vh;
-  width: 96vw;
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-}
-
 .pf-pdf-box-content {
-  flex: 1;
   width: 100%;
   background: #ffffff;
 }
@@ -410,7 +396,6 @@ body {
 .pf-pdf-view {
   width: 100%;
   background: #ffffff;
-  padding: 0 24px;
   word-break: break-all;
   white-space: pre-wrap;
   font-size: 14px;
@@ -426,13 +411,11 @@ body {
   }
 }
 
-.pf-pdf-box-buttons {
-  border-top: 2px solid #ccc;
-  text-align: center;
-  button {
-    padding: 6px 12px;
-    margin: 6px 12px;
-  }
+.pf-pdf-dialog-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  margin: 12px;
+  background: #ffffff;
 }
 
 .pf-hidden-labels {
@@ -440,10 +423,24 @@ body {
   border-bottom: 1px solid #dddddd;
   margin-bottom: 6px;
 }
+
 .pf-home-tab-is-suspension {
   border-bottom: 1px solid #eeeeee;
   & > div {
     padding-bottom: 8px;
+  }
+}
+
+.pf-export-collection-box {
+  float: right;
+  text-align: right;
+  button {
+    font-size: 16px;
+  }
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0;
   }
 }
 
