@@ -1,10 +1,12 @@
-# 知乎修改器 ✈ 持续更新 ✈ 努力实现功能最全的知乎配置插件
+<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/development/changelog.md" target="_blank">更新日志</a>
 
-<p><a href="https://github.com/superPufferfish/custom-zhihu/blob/main/development/changelog.md" target="_blank">更新日志</a></p>
-<p><a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a></p>
-<p><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">Greasyfork</a></p>
+<a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a>
+
+<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">Greasyfork</a>
 
 发现 bug 和想要添加的内容请反馈给我，感谢！！！
+
+插件目录跳转失效请移步<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/README.md" target="_blank">这里查看</a>
 
 ## 插件目录
 
@@ -14,7 +16,7 @@
   - [2. 视频下载](#2-视频下载)
   - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
   - [4. 移除登录弹窗](#4-移除登录弹窗)
-  - [5. 收藏夹内容导出为PDF](#5-收藏夹内容导出为pdf)
+  - [5. 收藏夹内容导出为 PDF](#5-收藏夹内容导出为-pdf)
 - [三. 基础设置](#三-基础设置)
   - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
   - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
@@ -77,19 +79,19 @@
 
 未登录状态下问答和专栏移除登录弹窗
 
-#### 5. 收藏夹内容导出为PDF
+#### 5. 收藏夹内容导出为 PDF
 
-在收藏夹名称上方显示【将当前页收藏夹内容生成为PDF】按钮，
+在收藏夹名称上方显示【将当前页收藏夹内容生成为 PDF】按钮，
 
 点击导出当前页码的收藏夹详细内容。
 
 <img src="https://by3302files.storage.live.com/y4mBAd7pcfJLDGO6eTp9QMr4BpIv9uJFOJp36mqHJ8TZZ8zxRIIBaeReR6BukraUXU7m_ixVKdcx52jlzfZBKy017Rqlc-ISArd3RgfBBQojfpSNrDO5J6WPvb54BueAT1y3ok2q7IOvx_9TOg3zPEEPH6q2igjIBavlSgyf3Fisvn-d2V1mYDQbJnLggz9otTR?width=1024&height=418&cropmode=none" width="800" />
 
-调用浏览器打印方法，等待一段时间后生成PDF：
+调用浏览器打印方法，等待一段时间后生成 PDF：
 
 <img src="https://by3302files.storage.live.com/y4mh3hbhNlSEi28HSbRZAPJwwWymCrShD162KSkjBZqpPfmGSgn-nY8d7lh1aVOv83cAm5SN7_bzHNIH9ofUNrgZGslH7z8frjgeuZkYsH7r0QRawYD3yXC9M6cu6MEitWi4TX9imcayzg3pAnHsmkPULR8LW0kQ6psKwCDG_2cStbpNNJg-Q96PTM4x9VOz83N?width=1024&height=466&cropmode=none" width="800" />
 
-下载的PDF预览
+下载的 PDF 预览
 
 <img src="https://by3302files.storage.live.com/y4mVvDZC3X45KzJUxF4m4_aMPdeiInIyOKzXz8klEtw5Rs3_Ih0Cr_jZ2MN9QwZ0culgSkx7qqwrL2V--0ApvuO_F7TuIi9NPF2E8lnfZgYNSSGgStBYTyXavxCLfG1YNTc6yG2yQr-fQAe0PgfpwT8vEOscrtDSioFiVi1XSDDisDAEwZ0xz5XUj6dI6l6P9lx?width=1024&height=430&cropmode=none" width="800" />
 
