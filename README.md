@@ -43,6 +43,7 @@
   - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
   - [6. 搜索内容隐藏](#6-搜索内容隐藏)
   - [7. 专栏内容隐藏](#7-专栏内容隐藏)
+  - [8. 回答列表中的视频显示方式](#8-回答列表中的视频显示方式)
 - [八. 颜色设置](#八-颜色设置)
   - [1. 修改背景色](#1-修改背景色)
   - [2. 夜间模式](#2-夜间模式)
@@ -81,7 +82,7 @@
 
 #### 5. 收藏夹内容导出为 PDF
 
-在收藏夹名称上方显示【生成PDF】按钮，
+在收藏夹名称上方显示【生成 PDF】按钮，
 
 点击导出当前页码的收藏夹详细内容。
 
@@ -269,6 +270,16 @@
 <img src="https://by3302files.storage.live.com/y4m0WrNz8IsEg77aGfERyfPzPKs2n5SxEGXyEDyJuwso0sCPWHpmb2m9OHkO4ZgDF8s8U-bhpt45vr8gMergapkDe7l8ySdNFwyKwWLM5H8ktdBnHHV5YzjwLkdHL9kZQI1uWudUW8Yv6HKlCaiuRegVlnwSFqVzfzr1i3hU4_sGT6k_K2luD2KRcBfozaZjPeL?width=1024&height=469&cropmode=none" width="800" />
 
 <img src="https://by3302files.storage.live.com/y4mu7BOFA15oSmt4crDMDWXXPr-LJuQzsP5M-ZFqqN6J16ZJ5-tDfVhr8mUVjJa8NZ0na30uNusubPvUXOC5FPIAYJvZHmx7UoM3GZe3ckXo9vjFscgsAzVVxF8w7NYAqf75orVwRvlOff6ax7OSEr53uWfFDngzoQRGFmNA7efEbDzbwoV_65_0BumZJcp6ntl?width=1024&height=462&cropmode=none" width="800" />
+
+#### 8. 回答列表中的视频显示方式
+
+可以设置是仅显示链接还是隐藏了，优化浏览体验
+
+<img src="https://by3302files.storage.live.com/y4mac46UjdolK1otk-NzbPMmxvzXP9hi41B6RDSJ6t-4wjBsEzfMdsZ7PNT_ojm3bhrX8WSbeegttwJQhzp94bOFc7xg3losXIdjmKVKLEX_JSScGdGX-3P3q7LmtQnAHHT9toI124h0IkDeSuswHDt15EWLaqGp91RsbYp6lskrnh8225cttrVc7tnccz-234A?width=1024&height=467&cropmode=none" width="800" />
+
+<img src="https://by3302files.storage.live.com/y4mvebx5k0lfaoYzj7zrI-LVLTtl_QOrmKJV9bcdWpxXV3kVwiKygE80P-83IVv6y18EnGhyi8TLmOX4VhA-t0Vxd9slXPuaHkLh7WBqybQupFGAi5npVCjaKde0GH6h1_q7z6CqHvAfidcLOZxcama7wxLQvrSAtLYm0F0bT1MS2dZf2RlShX8LGytG3R2c7Y7?width=1024&height=426&cropmode=none" width="800" />
+
+<img src="https://by3302files.storage.live.com/y4miv_QmrUpxq69Kyl5q5RA4P-EBl_1SZsw9R9lZYy25e39oIvbREktKRk2ltc0-jrsoLR1RhBXWWU-KRgVaG0wO3B0N3Snc4fCE4vdq1wgGtZ75kT15x-zUEbYJHZFqFjEAXT8yA0mWW3do6KHPg7GmTw9rLrT9Ms-02L2ZtLtaSTF8Rx1XZI7eV95bvRutUQH?width=1024&height=473&cropmode=none" width="800" />
 
 ### 八. 颜色设置
 
