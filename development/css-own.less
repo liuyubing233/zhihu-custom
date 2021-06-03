@@ -5,13 +5,10 @@ body {
   box-sizing: border-box;
 }
 @font-face {
-  font-family: 'own-iconfont'; /* Project id 2324733 */
-  src: url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.woff2?t=1621842905739')
-      format('woff2'),
-    url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.woff?t=1621842905739')
-      format('woff'),
-    url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.ttf?t=1621842905739')
-      format('truetype');
+  font-family: 'own-iconfont';  /* Project id 2324733 */
+  src: url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.woff2?t=1622733272249') format('woff2'),
+       url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.woff?t=1622733272249') format('woff'),
+       url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.ttf?t=1622733272249') format('truetype');
 }
 
 .iconfont {
@@ -78,8 +75,12 @@ body {
   z-index: 200;
   background-color: rgba(18, 18, 18, 0.4);
   textarea,
-  input {
+  input,
+  select {
     box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
   }
 }
 
@@ -348,9 +349,6 @@ body {
   .pf-textarea {
     width: 70%;
     height: 50px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    padding: 4px;
   }
   button {
     height: 50px;
