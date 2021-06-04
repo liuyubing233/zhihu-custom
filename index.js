@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.4.7
-// @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
+// @version      2.5.0
+// @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://www.zhihu.com/*
 // @match        *://zhuanlan.zhihu.com/*
@@ -1506,6 +1506,7 @@
   // 删除回答
   let eachIndex = 0
   function storyHidden() {
+    sortAnswer()
     const isTrue = (() => {
       let isHaveName = false
       removeAnswerByAuthorName.forEach((item) => {
@@ -1765,8 +1766,7 @@
   function sortAnswer() {
     if ((answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
       const event = $('.List>div:nth-child(2)>div')
-      console.log(event.find('.List-item'))
-      const ev = event.find('.List-item:not(.PlaceHolder)').sort((a, b) => {
+      const listSorted = event.find('.List-item:not(.PlaceHolder)').sort((a, b) => {
         const aContent = $(a).find('.AnswerItem').attr('data-za-extra-module')
           ? JSON.parse($(a).find('.AnswerItem').attr('data-za-extra-module')).card.content
           : {}
@@ -1783,7 +1783,7 @@
         }
       })
       event.find('.List-item:not(.PlaceHolder)').remove()
-      event.append(ev)
+      event.prepend(listSorted)
       isFirstToSort = false
     }
   }
@@ -1951,10 +1951,8 @@
       const originFetch = fetch
       unsafeWindow.fetch = (url, opt) => {
         // 如果是自定义排序则知乎回答页码增加到20条
-        if ((answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
-          if (/\/answers\?/.test(url)) {
-            url = url.replace(/(?<=limit=)\d+(?=&)/, '20')
-          }
+        if (/\/answers\?/.test(url) && (answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
+          url = url.replace(/(?<=limit=)\d+(?=&)/, '20')
         }
 
         if (!myLocalC.fetchHeaders['x-ab-param']) {
