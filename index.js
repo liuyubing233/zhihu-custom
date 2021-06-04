@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.5.0
+// @version      2.5.1
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://www.zhihu.com/*
@@ -951,8 +951,8 @@
 
       pathnameHasFn({
         'question': () => {
-          listenQuestionSideColumn()
           zoomVideos()
+          listenQuestionSideColumn()
         },
       })
     },
@@ -1715,7 +1715,7 @@
     }
   }
 
-  // 监听问题详情里的#Popover11-toggle按钮
+  // 监听问题详情里的.Select-button按钮
   // answerSortBy
   const answerSortIds = {
     'Select1-0': { key: 'default', name: '默认排序' },
@@ -1728,15 +1728,16 @@
     comment: '评论数排序'
   }
   let isFirstToSort = true
-  function listenPopover11Toggle() {
+  let buObserver = null
+  function listenSelectButton() {
     if (answerSortBy === 'vote' || answerSortBy === 'comment') {
-      $('#Popover11-toggle')[0].innerHTML = $('#Popover11-toggle')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, sortKeys[answerSortBy])
+      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, sortKeys[answerSortBy])
     }
 
     const clickSort = (id) => {
       eachIndex = 0
       answerSortBy = answerSortIds[id].key
-      $('#Popover11-toggle')[0].innerHTML = $('#Popover11-toggle')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, answerSortIds[id].name)
+      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, answerSortIds[id].name)
       if (answerSortIds[id].key === 'vote' || answerSortIds[id].key === 'comment') {
         location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + answerSortIds[id].key
       } else if (answerSortIds[id].key === 'default') {
@@ -1744,18 +1745,23 @@
       }
     }
 
-    const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] }
-    const buObserver = new MutationObserver(() => {
-      if ($('#Popover11-toggle').attr('aria-expanded') === 'true') {
-        const evenSortByVote = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-2">点赞数排序</button>')
-        const evenSortByComment = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-3">评论数排序</button>')
-        $('.Answers-select').append(evenSortByVote).append(evenSortByComment)
-        document.querySelectorAll('.Select-option').forEach((ev) => {
-          ev.onclick = () => clickSort(ev.id)
-        })
-      }
-    })
-    buObserver.observe($('#Popover11-toggle')[0], buConfig)
+    if ($('.Select-button')[0]) {
+      try {
+        buObserver.disconnect()
+      } catch { }
+      const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] }
+      buObserver = new MutationObserver(() => {
+        if ($('.Select-button').attr('aria-expanded') === 'true') {
+          const evenSortByVote = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-2">点赞数排序</button>')
+          const evenSortByComment = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-3">评论数排序</button>')
+          $('.Answers-select').append(evenSortByVote).append(evenSortByComment)
+          document.querySelectorAll('.Select-option').forEach((ev) => {
+            ev.onclick = () => clickSort(ev.id)
+          })
+        }
+      })
+      buObserver.observe($('.Select-button')[0], buConfig)
+    }
   }
 
   /**
@@ -2018,9 +2024,9 @@
 
     pathnameHasFn({
       'question': () => {
-        addQuestionCreatedAndModifiedTime()
-        listenPopover11Toggle()
+        listenSelectButton()
         listenQuestionSideColumn()
+        addQuestionCreatedAndModifiedTime()
       },
       'video': () => videoFns.init(),
       'collection': collectionExport
@@ -2118,9 +2124,10 @@
 
         pathnameHasFn({
           'question': () => {
-            storyHidden()
-            listenQuestionSideColumn()
             zoomVideos()
+            storyHidden()
+            listenSelectButton()
+            listenQuestionSideColumn()
           },
           'search': searchPageHidden,
           'collection': collectionExport
