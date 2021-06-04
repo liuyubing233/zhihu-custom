@@ -27,6 +27,9 @@
   - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
   - [7. 页面悬浮模块](#7-页面悬浮模块)
 - [四. 首页设置](#四-首页设置)
+  - [1. 首页五个模块位置自定义](#1-首页五个模块位置自定义)
+  - [2. 内容标题添加类别标签](#2-内容标题添加类别标签)
+  - [3. 推荐列表外置“不感兴趣”按钮](#3-推荐列表外置不感兴趣按钮)
 - [五. 过滤内容](#五-过滤内容)
   - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
   - [2. 过滤列表类别](#2-过滤列表类别)
@@ -162,6 +165,8 @@
 
 [返回目录](#插件目录)
 
+#### 1. 首页五个模块位置自定义
+
 首页五个模块位置自定义配置，可根据优先级排序，可设置是否隐藏。
 
 列表标题添加类别标签，清晰的区分列表种类。
@@ -169,6 +174,16 @@
 更多按钮（即列表中的【···】）是否固定到当前列表最右选项，极简模式默认启用。
 
 <img src="https://by3302files.storage.live.com/y4mBQ5JJN6ET0jMbCzXx5CDDHnJ0VNB19k5rQvLVIylYhHu7BrXQvjU1jXVtkMlZ01zexqE-1Ak7d-rhAIatydoc6HG0KOYxbDIwxXJhjIjismqrALZWX0_SJOrJR9HNYMBdjtfA_4o_wFmX6jqaz-t4x-gW01hP8D2Jm5Wdta675Cbc9mmbYhItvhGCIgkIhS3?width=1024&height=534&cropmode=none" width="800" />
+
+#### 2. 内容标题添加类别标签
+
+列表内容标题前添加类别标签，直观区分【问答】、【文章】、【视频】、【提问】
+
+#### 3. 推荐列表外置“不感兴趣”按钮
+
+推荐列表【不感兴趣】按钮可以设置是否外置，点击删除该条内容并且自动调用【不感兴趣】接口
+
+<img src="https://by3302files.storage.live.com/y4m-hW8_FsqrpJWLf9xtYxscE9M_9XMus4Eb9yLEy2c6T-hNfHuITz7_he2mcI75K2eomhdCm9ZLrh9IZw62Fh3J5SNhHUdxxpvzHvujUYxBAVt3E5HeCaw9ClHTIqNmFNmyzxmRiMu4kJlGn68Czd6Ry81yyRyhbOmCwDD3UOHfwt0iWM6hl2p9xhH9hBCl_pB?width=1024&height=447&cropmode=none" width="800" />
 
 ### 五. 过滤内容
 
