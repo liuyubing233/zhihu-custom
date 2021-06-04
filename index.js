@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.5.4
+// @version      2.5.5
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://www.zhihu.com/*
@@ -505,23 +505,52 @@
     },
   }
 
+  // 首页两侧盒子固定
+  const stickyBetween = {
+    scroll: function () {
+      window.scrollY > 0 ? stickyBetween.fixed() : stickyBetween.inherit()
+    },
+    fixed: function () {
+      // 左侧盒子
+      if (pfConfig.stickyLeft && $('.pf-left-container')[0]) {
+        const { offsetWidth, offsetLeft, offsetTop } = $('.pf-left-container')[0]
+        $('.pf-left-container .Sticky').css({ position: 'fixed', width: offsetWidth, left: offsetLeft, top: offsetTop })
+      } else {
+        $('.pf-left-container .Sticky').removeAttr('style', '')
+      }
+      // 右侧盒子
+      if (pfConfig.stickyRight && $('.GlobalSideBar')[0]) {
+        const { offsetWidth, offsetRight, offsetTop } = $('.GlobalSideBar')[0]
+        $('.GlobalSideBar .Sticky').css({ position: 'fixed', width: offsetWidth, right: offsetRight, top: offsetTop })
+      } else {
+        $('.GlobalSideBar .Sticky').removeAttr('style', '')
+        $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
+      }
+    },
+    inherit: function () {
+      $('.pf-left-container .Sticky').removeAttr('style', '')
+      $('.GlobalSideBar .Sticky').removeAttr('style', '')
+      $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
+    }
+  }
+
   async function myChanger(ev, type) {
     const { name, value, checked } = ev
     const ob = {
-      'stickyLeft': stickyBetween,
-      'stickyRight': stickyBetween,
+      'stickyLeft': stickyBetween.scroll,
+      'stickyRight': stickyBetween.scroll,
       'suspensionHomeTab': () => {
         versionCSS.init()
         changeSuspensionTab()
       },
       'isUseThemeDark': () => {
         versionCSS.init()
+        backgroundCSS.init()
         doUseThemeDark(checked)
-        initCSSBackground()
         followingListChanger(true)
       },
       'colorBackground': () => {
-        initCSSBackground()
+        backgroundCSS.init()
         followingListChanger(true)
       },
       'suspensionFind': cacheHeader,
@@ -1202,29 +1231,31 @@
     }
   }
 
-  const myBG = {
-    init: function (bg) {
+  // 修改页面背景的css
+  const backgroundCSS = {
+    init: function () {
+      $('#pf-css-background') && $('#pf-css-background').remove()
+      $('head').append(`<style type="text/css" id="pf-css-background">${this.chooseBG(pfConfig.colorBackground)}</style>`)
+    },
+    chooseBG: function (bg) {
       return pfConfig.isUseThemeDark
         ? this.dark()
-        : pfConfig.colorBackground !== '#ffffff' ? this.normal(bg) : ''
+        : bg !== '#ffffff' ? this.normal(bg) : ''
     },
     dark: () => {
+      // 夜间模式
       const b12 = `.css-ul9l2m,.css-mq2czy,.css-1da4iq8,.css-oqge09,.css-lpo24q,.css-16zrry9,.css-u8y4hj`
         + `,.css-1yq3jl6,.css-mzh2tk,.css-6mdg56,.CreatorRecruitFooter--fix,body .Recruit-buttonFix-placeholder`
         + `,.css-ovbogu,.css-1v840mj,.css-huwkhm,.css-akuk2k,.css-ygii7h,.css-1h84h63,.css-1bwzp6r,.css-w215gm`
         + `,.css-1117lk0:hover,.zhi,.Modal-modal-wf58`
         + `{background: #121212!important;}`
-
       const b3 = `.pf-button,.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd)`
         + `,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0,.css-ssvpr2,.css-m9gn5f,.FeedbackForm-inputBox-15yJ`
         + `,.FeedbackForm-canvasContainer-mrde,._Invite_container_30SP,.utils-frostedGlassEffect-2unM`
         + `,.Card-card-2K6v,.UserLivesPage-page-GSje,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448`
         + `,.PubIndex-CategoriesHeader,.AppHeader,.css-r9mkgf,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z`
         + `{background:#333333!important;}`
-
-      const bTran = `.Community-ContentLayout,._AccountSettings_accountLine_3HJS`
-        + `{background: transparent!important;}`
-
+      const bTran = `.Community-ContentLayout,._AccountSettings_accountLine_3HJS{background: transparent!important;}`
       const cF = `.pf-left li a,.css-1204lgo,.css-1ng3oge,.css-5abu0r,.css-p52k8h,.css-1dpmqsl,.css-1myqwel`
         + `,html[data-theme=dark] .TopNavBar-inner-baxks .TopNavBar-tab-hBAaU a,.pf-op,.pf-modal,.css-1ykn8va`
         + `,html[data-theme=dark] .TopNavBar-logoContainer-vDhU2 .TopNavBar-zhihuLogo-jzM1f,.css-11nn00q`
@@ -1236,18 +1267,16 @@
         + `,.GlobalSidebar-appDownloadTip-33iw,.css-pgcb4h,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z,.css-jwse5c,.css-hd7egx`
         + `,.css-1zcaix,.css-4a3k6y,.css-eonief`
         + `{color: #fff!important}`
-
       const c3 = `.pf-b-close:hover,css-1x3upj1{color: #333!important}`
-
       return '.pf-modal{background: #121212!important;border: 1px solid #eee}.pf-other-bg{background:initial!important}'
         + '.pf-button:hover{background: #444!important;}'
         + b12 + cF + c3 + b3 + bTran
     },
     normal: (bg) => {
+      // 普通背景色
       const normalBG = `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar`
         + `,.position-suspensionSearch.focus,.Modal-modal-wf58,.Community-ContentLayout`
         + `{background-color: ${bg}!important;}`
-
       const opacityBG = `.QuestionHeader,.Card,.HotItem,.GlobalSideBar-navList,.Recommendations-Main`
         + `,.CommentsV2-withPagination,.QuestionHeader-footer,.HoverCard,.ContentItem-actions`
         + `,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton`
@@ -1266,19 +1295,10 @@
         + `,.PubIndex-CategoriesHeader,.css-r9mkgf,.CornerButton,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z`
         + `,.WikiLandingHeader,.WikiLanding,.WikiLandingItemCard,.WikiLandingEntryCard`
         + `{background-color:${myLocalC.backgroundOpacity[bg]}!important;background:${myLocalC.backgroundOpacity[bg]}!important;}`
-
       const transparentBG = `.zhuanlan .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
         + `{background-color: transparent!important;}`
-
       return normalBG + opacityBG + transparentBG
     },
-  }
-
-  // 修改页面背景的css
-  function initCSSBackground() {
-    const cssColor = `<style type="text/css" id="pf-css-background">${myBG.init(pfConfig.colorBackground)}</style>`
-    $('#pf-css-background') && $('#pf-css-background').remove()
-    $('head').append(cssColor)
   }
 
   // 第一次触发也要在timeout之后
@@ -1292,41 +1312,6 @@
         canRun = true
       }, timeout)
     }
-  }
-
-  function stickyBetween() {
-    window.scrollY > 0 ? fixedPosition() : inheritPosition()
-  }
-
-  function fixedPosition() {
-    if (pfConfig.stickyLeft && $('.pf-left-container')[0]) {
-      $('.pf-left-container .Sticky').css({
-        position: 'fixed',
-        width: $('.pf-left-container')[0].offsetWidth,
-        left: $('.pf-left-container')[0].offsetLeft,
-        top: $('.pf-left-container')[0].offsetTop,
-      })
-    } else {
-      $('.pf-left-container .Sticky').removeAttr('style', '')
-    }
-
-    if (pfConfig.stickyRight && $('.GlobalSideBar')[0]) {
-      $('.GlobalSideBar .Sticky').css({
-        position: 'fixed',
-        width: $('.GlobalSideBar')[0].offsetWidth,
-        right: $('.GlobalSideBar')[0].offsetRight,
-        top: $('.GlobalSideBar')[0].offsetTop,
-      })
-    } else {
-      $('.GlobalSideBar .Sticky').removeAttr('style', '')
-      $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
-    }
-  }
-
-  function inheritPosition() {
-    $('.pf-left-container .Sticky').removeAttr('style', '')
-    $('.GlobalSideBar .Sticky').removeAttr('style', '')
-    $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
   }
 
   // 知乎外链直接打开(修改外链内容，去除知乎重定向)
@@ -1618,7 +1603,6 @@
   }
 
   // 关键词过滤列表内容
-  // ContentItem-title
   let filterIndex = 0
   let filterKeywordText = ''
   function filterItemByKeyword() {
@@ -2021,7 +2005,7 @@
   function onDocumentStart() {
     if (addHTMLHosts.includes(location.hostname)) {
       versionCSS.init()
-      initCSSBackground()
+      backgroundCSS.init()
       changeCustomCSS()
       findTheme()
     }
@@ -2178,7 +2162,7 @@
   }
 
   window.onscroll = throttle(() => {
-    stickyBetween()
+    stickyBetween.scroll()
     if (pfConfig.suspensionPickUp) {
       SuspensionPackUp($('.List-item'))
       SuspensionPackUp($('.TopstoryItem'))
