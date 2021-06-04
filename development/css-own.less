@@ -5,13 +5,10 @@ body {
   box-sizing: border-box;
 }
 @font-face {
-  font-family: 'own-iconfont'; /* Project id 2324733 */
-  src: url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.woff2?t=1621842905739')
-      format('woff2'),
-    url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.woff?t=1621842905739')
-      format('woff'),
-    url('//at.alicdn.com/t/font_2324733_eiqgli8xaxa.ttf?t=1621842905739')
-      format('truetype');
+  font-family: 'own-iconfont';  /* Project id 2324733 */
+  src: url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.woff2?t=1622733272249') format('woff2'),
+       url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.woff?t=1622733272249') format('woff'),
+       url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.ttf?t=1622733272249') format('truetype');
 }
 
 .iconfont {
@@ -66,6 +63,7 @@ body {
 }
 
 .pf-preview,
+.pf-dialog-pdf,
 .pf-mark {
   box-sizing: border-box;
   position: fixed;
@@ -77,8 +75,12 @@ body {
   z-index: 200;
   background-color: rgba(18, 18, 18, 0.4);
   textarea,
-  input {
+  input,
+  select {
     box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
   }
 }
 
@@ -224,6 +226,7 @@ body {
   padding: 0;
   li {
     padding: 4px 0;
+    border-right: 5px solid transparent;
     a {
       text-decoration: none;
       color: #111f2c;
@@ -381,15 +384,65 @@ body {
   }
 }
 
+.pf-pdf-dialog-title {
+  margin: 0 0 1.4em;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.pf-pdf-box-content {
+  width: 100%;
+  background: #ffffff;
+}
+
+.pf-pdf-view {
+  width: 100%;
+  background: #ffffff;
+  word-break: break-all;
+  white-space: pre-wrap;
+  font-size: 14px;
+  overflow-x: hidden;
+  a {
+    color: #0066ff;
+  }
+  img {
+    max-width: 100%;
+  }
+  p {
+    margin: 1.4em 0;
+  }
+}
+
+.pf-pdf-dialog-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  margin: 12px;
+  background: #ffffff;
+}
+
 .pf-hidden-labels {
   padding-bottom: 6px;
   border-bottom: 1px solid #dddddd;
   margin-bottom: 6px;
 }
+
 .pf-home-tab-is-suspension {
   border-bottom: 1px solid #eeeeee;
   & > div {
     padding-bottom: 8px;
+  }
+}
+
+.pf-export-collection-box {
+  float: right;
+  text-align: right;
+  button {
+    font-size: 16px;
+  }
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0;
   }
 }
 
@@ -591,15 +644,16 @@ body {
 .Question-main .Question-mainColumn,
 .ListShortcut {
   flex: 1;
-  width: 100%;
+  width: initial;
 }
 
 .Question-sideColumn {
   margin-left: 12px;
+  width: 296px !important;
 }
 
-.AnswerAuthor {
-  margin-left: 12px;
+.Question-mainColumnLoginRightButton {
+  margin: 20px 22px 18px !important;
 }
 
 .ModalWrap .ModalExp-content {
@@ -656,7 +710,6 @@ body {
 }
 
 .ContentItem-actions {
-  padding-top: 0 !important;
   padding-bottom: 0 !important;
   & > button,
   & > div {
@@ -725,6 +778,15 @@ body {
   }
 }
 
+
+.pf-left-container,
+.GlobalSideBar {
+  max-width: 250px;
+}
+
+.zu-main {
+  padding: 24px 12px!important;
+}
 
 /*----------------- 页面内容排版 ---------------------end*/
 
@@ -901,7 +963,7 @@ body {
 .pf-loading {
   animation: loading 2s;
   animation-iteration-count: infinite;
-  cursor: default!important;
+  cursor: default !important;
 }
 
 @keyframes loading {

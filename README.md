@@ -1,49 +1,55 @@
-# 知乎修改器 ✈ 持续更新 ✈ 努力实现功能最全的知乎配置插件
+<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/development/changelog.md" target="_blank">更新日志</a>
 
-<p><a href="https://github.com/superPufferfish/custom-zhihu/blob/main/development/changelog.md" target="_blank">更新日志</a></p>
-<p><a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a></p>
-<p><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">Greasyfork</a></p>
+<a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a>
+
+<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">Greasyfork</a>
 
 发现 bug 和想要添加的内容请反馈给我，感谢！！！
 
+插件目录跳转失效请移步<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/README.md" target="_blank">这里查看</a>
+
 ## 插件目录
 
-- [一. 唤起方式](#一-唤起方式)
-- [二. 基础设置](#二-基础设置)
-  - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
-  - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
-  - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
-  - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
-  - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
-  - [6. 页面悬浮模块](#6-页面悬浮模块)
-- [三. 首页设置](#三-首页设置)
-- [四. 过滤回答](#四-过滤回答)
-  - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
-  - [2. 过滤列表类别](#2-过滤列表类别)
-  - [3. 关键词过滤](#3-关键词过滤)
-- [五. 回答设置](#五-回答设置)
-  - [1. 自动展开所有回答](#1-自动展开所有回答)
-  - [2. 默认收起所有长回答](#2-默认收起所有长回答)
-  - [3. 回答【收起】按钮悬浮](#3-回答收起按钮悬浮)
-- [六. 隐藏模块](#六-隐藏模块)
-  - [1. 购物链接显示设置](#1-购物链接显示设置)
-  - [2. 广告过滤](#2-广告过滤)
-  - [3. 顶部模块隐藏](#3-顶部模块隐藏)
-  - [4. 列表内容隐藏](#4-列表内容隐藏)
-  - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
-  - [6. 搜索内容隐藏](#6-搜索内容隐藏)
-  - [7. 专栏内容隐藏](#7-专栏内容隐藏)
-- [七. 颜色设置](#七-颜色设置)
-  - [1. 修改背景色](#1-修改背景色)
-  - [2. 夜间模式](#2-夜间模式)
-- [八. 配置导出导入](#八-配置导出导入)
-  - [1. 自定义 css](#1-自定义-css)
-- [九. 默认功能](#九-默认功能)
-  - [1. 外链直接打开](#1-外链直接打开)
-  - [2. 视频下载](#2-视频下载)
-  - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
-  - [4. 移除登录弹窗](#4-移除登录弹窗)
-- [更多功能请在修改其中体验](#更多功能请在修改其中体验)
+- [插件目录](#插件目录)
+  - [一. 唤起方式](#一-唤起方式)
+  - [二. 默认功能](#二-默认功能)
+    - [1. 外链直接打开](#1-外链直接打开)
+    - [2. 视频下载](#2-视频下载)
+    - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
+    - [4. 移除登录弹窗](#4-移除登录弹窗)
+    - [5. 收藏夹内容导出为 PDF](#5-收藏夹内容导出为-pdf)
+  - [三. 基础设置](#三-基础设置)
+    - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
+    - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
+    - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
+    - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
+    - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
+    - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
+    - [7. 页面悬浮模块](#7-页面悬浮模块)
+  - [四. 首页设置](#四-首页设置)
+  - [五. 过滤内容](#五-过滤内容)
+    - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
+    - [2. 过滤列表类别](#2-过滤列表类别)
+    - [3. 关键词过滤](#3-关键词过滤)
+    - [4. 关注列表过滤](#4-关注列表过滤)
+  - [六. 回答设置](#六-回答设置)
+    - [1. 自动展开所有回答](#1-自动展开所有回答)
+    - [2. 默认收起所有长回答](#2-默认收起所有长回答)
+    - [3. 回答【收起】按钮悬浮](#3-回答收起按钮悬浮)
+  - [七. 隐藏模块](#七-隐藏模块)
+    - [1. 购物链接显示设置](#1-购物链接显示设置)
+    - [2. 广告过滤](#2-广告过滤)
+    - [3. 顶部模块隐藏](#3-顶部模块隐藏)
+    - [4. 列表内容隐藏](#4-列表内容隐藏)
+    - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
+    - [6. 搜索内容隐藏](#6-搜索内容隐藏)
+    - [7. 专栏内容隐藏](#7-专栏内容隐藏)
+    - [8. 回答列表中的视频显示方式](#8-回答列表中的视频显示方式)
+  - [八. 颜色设置](#八-颜色设置)
+    - [1. 修改背景色](#1-修改背景色)
+    - [2. 夜间模式](#2-夜间模式)
+  - [九. 配置导出导入](#九-配置导出导入)
+    - [1. 自定义 css](#1-自定义-css)
 
 ### 一. 唤起方式
 
@@ -53,7 +59,45 @@
 
 <img src="https://by3302files.storage.live.com/y4md44Udu1ToWvEweYp159wttkOXFcuV1EarS9ZEZIFSuwrYXsPmGibCqpIzMxp2bgDKvTNq4R8tDpS2T5MqID-Y756FzIj-MhZs6kRYlvauimr6h6If90aS0O64LbjJdx2_Kra4e5dShX0EE9_-t_IP3bC__flBIUfx_EHcGsSj7p_jGhWHUbF313g6M1TKrUN?width=1024&height=602&cropmode=none" width="800" />
 
-### 二. 基础设置
+### 二. 默认功能
+
+#### 1. 外链直接打开
+
+将知乎里所有外部链接的重定向去除，可以直接访问。
+
+#### 2. 视频下载
+
+知乎视频现在在左上角会生成一个下载按钮，点击即可下载视频。
+
+<img src="https://by3302files.storage.live.com/y4mAMNtMnqmvplhJhaX2R7miQ-wv75-zAYeGahGlfybYFESgcpKv696Zcwok-YLpv-PNJzGoBzUzARWdwZgC025DfdVrE6LAG5Tioj_aiuHvL4FyM29vd1qS4ya2hv5FNEFyEYv38fUstYqOMOYaZlTKjLTplk0FEcIH7w6_WwnVMzuDGTM8KaxihNVSHvQZi8E?width=1024&height=702&cropmode=none" width="800" />
+
+#### 3. 屏蔽设置页面添加一键移除所有屏蔽选项
+
+因为知乎屏蔽 TAG 每次只显示部分，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽 TAG。
+
+<img src="https://by3302files.storage.live.com/y4mgpz5fP0fXYeq33PZ-6_CEqTmQHArhcPnngb_YYCurPpRg0wjbibzbaA-tz80g7RtYbDt5aVIWvm-wqJkN59zthOOXg5XHHCz-8ejrrXxTYd8hjYZPj-i2y-xoO9Uwz6g-pvfnvK7ezz8jmfSt_J04l0lN88omVzpKVEP7GbUnrekgekDTGwx8PRrAUURTFe1?width=1024&height=443&cropmode=none" width="800" />
+
+#### 4. 移除登录弹窗
+
+未登录状态下问答和专栏移除登录弹窗
+
+#### 5. 收藏夹内容导出为 PDF
+
+在收藏夹名称上方显示【生成 PDF】按钮，
+
+点击导出当前页码的收藏夹详细内容。
+
+<img src="https://by3302files.storage.live.com/y4mBAd7pcfJLDGO6eTp9QMr4BpIv9uJFOJp36mqHJ8TZZ8zxRIIBaeReR6BukraUXU7m_ixVKdcx52jlzfZBKy017Rqlc-ISArd3RgfBBQojfpSNrDO5J6WPvb54BueAT1y3ok2q7IOvx_9TOg3zPEEPH6q2igjIBavlSgyf3Fisvn-d2V1mYDQbJnLggz9otTR?width=1024&height=418&cropmode=none" width="800" />
+
+调用浏览器打印方法，等待一段时间后生成 PDF：
+
+<img src="https://by3302files.storage.live.com/y4mh3hbhNlSEi28HSbRZAPJwwWymCrShD162KSkjBZqpPfmGSgn-nY8d7lh1aVOv83cAm5SN7_bzHNIH9ofUNrgZGslH7z8frjgeuZkYsH7r0QRawYD3yXC9M6cu6MEitWi4TX9imcayzg3pAnHsmkPULR8LW0kQ6psKwCDG_2cStbpNNJg-Q96PTM4x9VOz83N?width=1024&height=466&cropmode=none" width="800" />
+
+下载的 PDF 预览
+
+<img src="https://by3302files.storage.live.com/y4mVvDZC3X45KzJUxF4m4_aMPdeiInIyOKzXz8klEtw5Rs3_Ih0Cr_jZ2MN9QwZ0culgSkx7qqwrL2V--0ApvuO_F7TuIi9NPF2E8lnfZgYNSSGgStBYTyXavxCLfG1YNTc6yG2yQr-fQAe0PgfpwT8vEOscrtDSioFiVi1XSDDisDAEwZ0xz5XUj6dI6l6P9lx?width=1024&height=430&cropmode=none" width="800" />
+
+### 三. 基础设置
 
 [返回目录](#插件目录)
 
@@ -86,7 +130,15 @@
 
 <img src="https://by3302files.storage.live.com/y4muxyVssoNjJGR6jPVBwSrmqZQGvJAGYJf05588XA3BIZnqPpZgCSJ0dtLzVnCMjrG8FkEVIa3rJlV97WoDbppQZZ-wdY0lYs1eJZ-XPa2ohnJad6BFmnlsNMUirMouOXMLG6R_rls8xLVpVnVzKKBGpZ3H0kkODptXPGUPOAxboof01gU90NqxKW9IxOvCque?width=1024&height=351&cropmode=none" width="800" />
 
-#### 6. 页面悬浮模块
+#### 6. 关注列表高亮原创内容
+
+选择此项后关注列表里原创内容【发表回答】【发表文章】【提出问题】后将高亮显示，在所有颜色设置下生效
+
+<img src="https://by3302files.storage.live.com/y4m19EHE0XCoYwlBwhNfzOV1mvcpDDKJTmkYH616fSe5RCx5Gfd42ul8weBHLVcMKt3FyWBo2vzZKtUjNXP-5qPgEJN3P1Qa_VBin_TpLuY0yucgy8gYEXdC1MvwFE0G0V1U4yiz01oiClKM9o1Aryuiul3_IMxleO8Zzh4dNc5-rX19RLXJmF7V5QYtUnQ4uVJ?width=587&height=496&cropmode=none" width="587" />
+
+<img src="https://by3302files.storage.live.com/y4movgDT2h4PN6dyYuCvEcmgp4MoWThn4hmsHcuBcMCY_E8-ZfM4O5AvoyD26_WVx5bbqFZD8apMJVULc9vmJDRWfb_AEAk1a-KpuBamZ4isWwLRnpWBBYPNz494X0zc3EfTs9oa_J-Sa-St6UsAlmD6NBQVM5XO8vF_rGukUaJwZ9LOyq79e_TxUsperLfGscT?width=1024&height=758&cropmode=none" width="800" />
+
+#### 7. 页面悬浮模块
 
 模块可配置是否悬浮显示，其中问题列表切换模块可设置是否隐藏。
 
@@ -94,7 +146,7 @@
 
 <img src="https://by3302files.storage.live.com/y4mXdEW-aTkkazcsDRSYStdnJRCoEHvcpPQSvOP0Vucnb1wtFwDqdLYiG8Tf1m2XCmFPuwd9oEVsl9iANPoIy3RZSwKmAAPjUKwP4XasBeDbxFIft9-l7NTBXMJXBxwwinpl0MrtNaBijAGplZEM6TWrh20ogxBDbfk1TUePAUUuImDxILtCfewdY5Q2fxuBDje?width=1024&height=508&cropmode=none" width="800" />
 
-### 三. 首页设置
+### 四. 首页设置
 
 [返回目录](#插件目录)
 
@@ -106,7 +158,7 @@
 
 <img src="https://by3302files.storage.live.com/y4mBQ5JJN6ET0jMbCzXx5CDDHnJ0VNB19k5rQvLVIylYhHu7BrXQvjU1jXVtkMlZ01zexqE-1Ak7d-rhAIatydoc6HG0KOYxbDIwxXJhjIjismqrALZWX0_SJOrJR9HNYMBdjtfA_4o_wFmX6jqaz-t4x-gW01hP8D2Jm5Wdta675Cbc9mmbYhItvhGCIgkIhS3?width=1024&height=534&cropmode=none" width="800" />
 
-### 四. 过滤回答
+### 五. 过滤内容
 
 #### 1. 过滤知乎官方账号
 
@@ -138,7 +190,11 @@
 
 <img src="https://by3302files.storage.live.com/y4mSE-0VR0yzJI3WaR-1a3yfaeqo9D-RiomOTZ1t5-t0f5821DFQPXLnfcBUjMglJSzlYbB4k7pmx3tifr4-xGAFBVyTjTUGW4Tz7LAzHJS-F5CAnTN-6qPEaNXemOj8qV84Uy96XbgdyNoM_AMu086pZOzeYMRcp7TN7NZ-CG9QTmMU5hiHUKoWem4kCjZ7-xX?width=1024&height=536&cropmode=none" width="800" />
 
-### 五. 回答设置
+#### 4. 关注列表过滤
+
+可以设置过滤关注列表的【关注人赞同回答】【关注人赞同文章】【关注人关注问题】内容
+
+### 六. 回答设置
 
 [返回目录](#插件目录)
 
@@ -156,7 +212,7 @@
 
 <img src="https://by3302files.storage.live.com/y4mXC-x6WlfP9sb0GrdPGZ_QnwQYssK7fZAwkNHxNsFoxWZdlU6jSFV1FxskWtrN_nLcVVqDr4c59d-LyzGKjbByb1hdfhv3pyGq1tWt7L-ap6IRpWPvsBPfqvWMNGa2UZ_GFjVU4OK6t-BUnuw4wu0yCoRK0qO1SVhl6P-_lYzLjduPvK1lQ_l4sNCZmoFAIO-?width=1024&height=446&cropmode=none" width="800" />
 
-### 六. 隐藏模块
+### 七. 隐藏模块
 
 [返回目录](#插件目录)
 
@@ -189,6 +245,7 @@
 #### 4. 列表内容隐藏
 
 如图所示，框选的内容均可配置隐藏。
+
 <img src="https://by3302files.storage.live.com/y4muFoyRI395-yfqXW05GhgrR2n9OMyDCr7hwcM0F9FI-pnI-jfFI_GaWXg-XDQnVcGouUOqWXn6AquROyaWnxmk6jTu2zQNnPQhY-RgY4jY_9OC76OD4i3MOiRE_WMIes14adsP8f0aUBpT8gJXd4XTeuEM9Bl7hl8p2_zrWKS7I_ta3n4yZ9qFbnZ-gLBcVlI?width=1024&height=506&cropmode=none" width="800" />
 
 <img src="https://by3302files.storage.live.com/y4m1H0sTO6g2eIoTrGlCxGPabm7_aK3pGk-mMuEgjryTN4T0XtOSbMX7ARoZLQ7CIEE1k3L3hukkhtyNMi87Izc88JRRfUcH8STC5AubTi0fZ2ovLNaUmb6IpuNN1m2yPXXHBhFIfaydpHrpAjM-5XyvVItz1mVmYwimSlVrBiZVv4jemYdjUA4V2u0_4jOVLCX?width=1024&height=505&cropmode=none" width="800" />
@@ -215,7 +272,17 @@
 
 <img src="https://by3302files.storage.live.com/y4mu7BOFA15oSmt4crDMDWXXPr-LJuQzsP5M-ZFqqN6J16ZJ5-tDfVhr8mUVjJa8NZ0na30uNusubPvUXOC5FPIAYJvZHmx7UoM3GZe3ckXo9vjFscgsAzVVxF8w7NYAqf75orVwRvlOff6ax7OSEr53uWfFDngzoQRGFmNA7efEbDzbwoV_65_0BumZJcp6ntl?width=1024&height=462&cropmode=none" width="800" />
 
-### 七. 颜色设置
+#### 8. 回答列表中的视频显示方式
+
+可以设置是仅显示链接还是隐藏了，优化浏览体验
+
+<img src="https://by3302files.storage.live.com/y4mac46UjdolK1otk-NzbPMmxvzXP9hi41B6RDSJ6t-4wjBsEzfMdsZ7PNT_ojm3bhrX8WSbeegttwJQhzp94bOFc7xg3losXIdjmKVKLEX_JSScGdGX-3P3q7LmtQnAHHT9toI124h0IkDeSuswHDt15EWLaqGp91RsbYp6lskrnh8225cttrVc7tnccz-234A?width=1024&height=467&cropmode=none" width="800" />
+
+<img src="https://by3302files.storage.live.com/y4mJrwlO4PgJjlWTTd1iYOxKg26e6vQRMiNYmwMArAYRFnpcB_NCD43FSPpwUY-8gIGTq7K6sMx_cfalcmy2devMEWf9xNbTWtBk6Fc85gKo94l6uhdEcSAVX6c1qmY8sVWLyNdw-DEU5__yfrR-FAFaZItvqCy7uzrkvncz0S-uUytS8JVaQBIiMRVr7O3TYQR?width=1024&height=560&cropmode=none" width="800" />
+
+<img src="https://by3302files.storage.live.com/y4miv_QmrUpxq69Kyl5q5RA4P-EBl_1SZsw9R9lZYy25e39oIvbREktKRk2ltc0-jrsoLR1RhBXWWU-KRgVaG0wO3B0N3Snc4fCE4vdq1wgGtZ75kT15x-zUEbYJHZFqFjEAXT8yA0mWW3do6KHPg7GmTw9rLrT9Ms-02L2ZtLtaSTF8Rx1XZI7eV95bvRutUQH?width=1024&height=473&cropmode=none" width="800" />
+
+### 八. 颜色设置
 
 [返回目录](#插件目录)
 
@@ -229,7 +296,7 @@
 
 <img src="https://by3302files.storage.live.com/y4mdFDF3kSXpwxFio5W8ZaorG1A90k49OJPlA0VRIXPsQtYP8WzDs6R8NcpYwkEsK0-VQNafQ74OR8gbMhVJ3HQbg2X0FWHq3Cy-XQvzIsQC-wAQ9-YAaqxmqkTuLZfiAQsL8VRIa7dy-sMPQ4OS5FyNnmnyekK966qYabDbnb85zllWJRldtlrZzaE00JFd1km?width=1024&height=508&cropmode=none" width="800" />
 
-### 八. 配置导出导入
+### 九. 配置导出导入
 
 [返回目录](#插件目录)
 
@@ -239,28 +306,6 @@
 
 此部分将自己定义的 css 样式写入即可生效
 
-### 九. 默认功能
-
-#### 1. 外链直接打开
-
-将知乎里所有外部链接的重定向去除，可以直接访问。
-
-#### 2. 视频下载
-
-知乎视频现在在左上角会生成一个下载按钮，点击即可下载视频。
-
-<img src="https://by3302files.storage.live.com/y4mAMNtMnqmvplhJhaX2R7miQ-wv75-zAYeGahGlfybYFESgcpKv696Zcwok-YLpv-PNJzGoBzUzARWdwZgC025DfdVrE6LAG5Tioj_aiuHvL4FyM29vd1qS4ya2hv5FNEFyEYv38fUstYqOMOYaZlTKjLTplk0FEcIH7w6_WwnVMzuDGTM8KaxihNVSHvQZi8E?width=1024&height=702&cropmode=none" width="800" />
-
-#### 3. 屏蔽设置页面添加一键移除所有屏蔽选项
-
-因为知乎屏蔽 TAG 每次只显示部分，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽 TAG。
-
-<img src="https://by3302files.storage.live.com/y4mgpz5fP0fXYeq33PZ-6_CEqTmQHArhcPnngb_YYCurPpRg0wjbibzbaA-tz80g7RtYbDt5aVIWvm-wqJkN59zthOOXg5XHHCz-8ejrrXxTYd8hjYZPj-i2y-xoO9Uwz6g-pvfnvK7ezz8jmfSt_J04l0lN88omVzpKVEP7GbUnrekgekDTGwx8PRrAUURTFe1?width=1024&height=443&cropmode=none" width="800" />
-
-#### 4. 移除登录弹窗
-
-未登录状态下问答和专栏移除登录弹窗
-
-### 更多功能请在修改其中体验
+更多功能请在修改器中体验
 
 [返回目录](#插件目录)

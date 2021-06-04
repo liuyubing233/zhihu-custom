@@ -13,7 +13,7 @@
         <ul class="pf-left">
           <li><a href="#pf-set-basis">基础设置</a></li>
           <li><a href="#pf-set-home">首页设置</a></li>
-          <li><a href="#pf-set-remove-answer">过滤回答</a></li>
+          <li><a href="#pf-set-remove-answer">过滤内容</a></li>
           <li><a href="#pf-set-answer">回答设置</a></li>
           <li><a href="#pf-set-hidden">隐藏模块</a></li>
           <li><a href="#pf-set-color">颜色设置</a></li>
@@ -96,6 +96,12 @@
               <label>
                 <span class="pf-label">问题显示创建和最后修改时间</span>
                 <input class="pf-input" name="questionCreatedAndModifiedTime" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">关注列表高亮原创内容</span>
+                <input class="pf-input" name="highlightOriginal" type="checkbox" value="on" />
               </label>
             </div>
             <div class="pf-other-bg">
@@ -237,11 +243,11 @@
           </div>
           <div id="pf-set-remove-answer" class="pf-other-bg">
             <h3>
-              过滤回答
+              过滤内容
               <span class="pf-commit pf-title-commit">此部分更改后请重新刷新页面</span>
             </h3>
             <div class="pf-hidden-labels">
-              <label><input class="pf-input" name="removeZhihuOfficial" type="checkbox" value="on" />知乎官方账号</label>
+              <label><input class="pf-input" name="removeZhihuOfficial" type="checkbox" value="on" />知乎官方账号回答</label>
               <div class="pf-commit">此选项会过滤所有官方账号回答，请酌情选择</div>
             </div>
             <div class="pf-hidden-labels">
@@ -259,7 +265,7 @@
             </div>
             <div class="pf-hidden-labels">
               <label>
-                <div class="pf-label">屏蔽关键词，[推荐页]将屏蔽包含关键词的内容</div>
+                <div class="pf-label">列表屏蔽关键词，[推荐页]将屏蔽包含关键词的内容</div>
                 <div class="pf-checkbox-div">
                   <label>
                     <span class="pf-label">屏蔽内容后显示通知提醒框</span>
@@ -269,6 +275,12 @@
                 <input name="filterKeyword" type="text" class="h-25 w-300" placeholder="输入后回车或失去焦点即可" />
               </label>
               <div class="pf-filter-keywords"></div>
+            </div>
+            <div class="pf-hidden-labels">
+              <div class="pf-label">关注列表过滤</div>
+              <label><input class="pf-input" name="removeFollowVoteAnswer" type="checkbox" value="on" />关注人赞同回答</label>
+              <label><input class="pf-input" name="removeFollowVoteArticle" type="checkbox" value="on" />关注人赞同文章</label>
+              <label><input class="pf-input" name="removeFollowFQuestion" type="checkbox" value="on" />关注人关注问题</label>
             </div>
           </div>
           <div id="pf-set-answer">
@@ -303,6 +315,12 @@
               <label><input class="pf-input" name="shoppingLink" type="radio" value="justText" />仅文字</label>
               <label><input class="pf-input" name="shoppingLink" type="radio" value="hidden" />隐藏</label>
             </div>
+            <div class="pf-hidden-labels pf-other-bg">
+              <span class="pf-label">回答视频显示设置</span>
+              <label><input class="pf-input" name="answerVideoLink" type="radio" value="default" />默认</label>
+              <label><input class="pf-input" name="answerVideoLink" type="radio" value="justText" />仅链接</label>
+              <label><input class="pf-input" name="answerVideoLink" type="radio" value="hidden" />隐藏</label>
+            </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenAD" type="checkbox" value="on" />广告</label>
             </div>
@@ -331,6 +349,10 @@
               <label><input class="pf-input" name="hiddenCollegeEntranceExamination" type="checkbox" value="on" />列表知乎高考推荐（临时补充）</label>
             </div>
             <div class="pf-hidden-labels">
+              <label><input class="pf-input" name="hiddenFollowAction" type="checkbox" value="on" />关注列表关注人操作栏</label>
+              <label><input class="pf-input" name="hiddenFollowChooseUser" type="checkbox" value="on" />关注列表用户信息</label>
+            </div>
+            <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenAnswerRights" type="checkbox" value="on" />收藏喜欢举报</label>
               <label><input class="pf-input" name="hiddenAnswerRightsText" type="checkbox" value="on" />收藏喜欢举报文字</label>
             </div>
@@ -341,7 +363,6 @@
               <br>
               <label><input class="pf-input" name="hiddenDetailVoters" type="checkbox" value="on" />详情回答人下赞同数</label>
               <label><input class="pf-input" name="hiddenReward" type="checkbox" value="on" />赞赏按钮</label>
-              <label><input class="pf-input" name="hiddenAnswerRightFooter" type="checkbox" value="on" />详情右侧信息栏</label>
               <br>
               <label><input class="pf-input" name="hiddenQuestionSide" type="checkbox" value="on" />问题关注和被浏览数</label>
               <label><input class="pf-input" name="hiddenFixedActions" type="checkbox" value="on" />回答悬浮操作条</label>
@@ -352,12 +373,21 @@
               <label><input class="pf-input" name="hiddenQuestionFollowing" type="checkbox" value="on" />关注问题按钮</label>
               <label><input class="pf-input" name="hiddenQuestionAnswer" type="checkbox" value="on" />回答按钮</label>
               <label><input class="pf-input" name="hiddenQuestionInvite" type="checkbox" value="on" />邀请回答按钮</label>
+              <br>
+              <label><input class="pf-input" name="hidden618HongBao" type="checkbox" value="on" />618红包链接（临时补充）</label>
             </div>
             <div class="pf-hidden-labels">
-              <label><input class="pf-input" name="hiddenSearchBoxTopSearch" type="checkbox"
-                  value="on" />搜索栏知乎热搜</label>
-              <label><input class="pf-input" name="hiddenSearchPageTopSearch" type="checkbox"
-                  value="on" />搜索页知乎热搜</label>
+              <label><input class="pf-input" name="hiddenAnswerRightFooter" type="checkbox" value="on" />详情右侧信息栏</label>
+              <label><input class="pf-input" name="hiddenAnswerRightFooterAnswerAuthor" type="checkbox" value="on" />信息栏关于作者</label>
+              <label><input class="pf-input" name="hiddenAnswerRightFooterFavorites" type="checkbox" value="on" />信息栏被收藏次数</label>
+              <br>
+              <label><input class="pf-input" name="hiddenAnswerRightFooterRelatedQuestions" type="checkbox" value="on" />信息栏相关问题</label>
+              <label><input class="pf-input" name="hiddenAnswerRightFooterContentList" type="checkbox" value="on" />信息栏相关推荐</label>
+              <label><input class="pf-input" name="hiddenAnswerRightFooterFooter" type="checkbox" value="on" />信息栏知乎指南</label>
+            </div>
+            <div class="pf-hidden-labels">
+              <label><input class="pf-input" name="hiddenSearchBoxTopSearch" type="checkbox" value="on" />搜索栏知乎热搜</label>
+              <label><input class="pf-input" name="hiddenSearchPageTopSearch" type="checkbox" value="on" />搜索页知乎热搜</label>
               <label><input class="pf-input" name="hiddenSearchPageFooter" type="checkbox" value="on" />搜索页知乎指南</label>
               <br>
               <label><input class="pf-input" name="hiddenSearchPageListAD" type="checkbox" value="on" />搜索页商业推广</label>
@@ -438,3 +468,5 @@
 <a href="https://www.zhihu.com" target="_self" class="pf-to-home" title="返回首页">
   <i class="iconfont">&#xe606;</i>
 </a>
+
+<iframe class="pf-pdf-box-content" style="display: none;"></iframe>
