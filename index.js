@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.5.5
+// @version      2.5.6
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://www.zhihu.com/*
@@ -1582,7 +1582,10 @@
       headers: new Headers({
         ...myLocalC.fetchHeaders
       })
-    })
+    }).then((res) => res.json())
+      .then(() => {
+        GM_log(`[customize]已调用过滤接口`)
+      })
   }
 
   // 推荐列表最外层绑定事件
@@ -1597,7 +1600,6 @@
         const { itemId = '', type = '' } = dataZop
         doFetchUninterestv2(itemId, type)
         $(event.target).parents('.TopstoryItem').remove()
-        GM_log(`[customize]移除一条内容，已调用过滤接口`)
       }
     })
   }
@@ -1640,11 +1642,10 @@
 
       if (isFindTitle) {
         // 过滤了之后调用“不感兴趣”接口
+        GM_log(`[customize]关键词过滤，内容标题：${title}\n关键词：${filterKeywordText}\n${routeURL}`)
         doFetchUninterestv2(type, itemId)
         lessNum++
         $(events[i]).parents('.TopstoryItem').remove()
-        GM_log(`[customize]关键词过滤，内容标题：${title}\n关键词：${filterKeywordText}\n${routeURL}`)
-        GM_log(`[customize]已调用过滤接口`)
         if (pfConfig.notificationAboutFilter) {
           addNotification({
             title: `过滤内容：<a href="${routeURL}" target="_blank" style="color: #06f;">${title}</a>`
