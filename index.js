@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.5.9
+// @version      2.5.10
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://www.zhihu.com/*
@@ -168,6 +168,7 @@
     bodySize: 0,
     bodySizePrev: 0,
     fetchHeaders: {}, // fetch的headers内容，获取下来以供使用
+    xZst81: '',
   }
 
   let answerSortBy = 'default' // 列表内容排序方式
@@ -969,7 +970,7 @@
           ? '.ContentItem-action,.ContentItem-actions .Button--plain,.Post-SideActions-icon,.Post-SideActions button.like,.VoteButton{font-size:12px!important;}'
           : '.VoteButton-TriangleUp,.Zi--TriangleDown {width: 14px;height: 14px;}')
         + (pfConfig.listOutPutNotInterested
-          ? `.Topstory-recommend .ContentItem-title::after{content: '不感兴趣';color: #999;font-size: 12px;cursor: pointer;display: inline-block;border: 1px solid #999;border-radius: 4px;padding: 0 4px;pointer-events:auto;}`
+          ? `.Topstory-recommend .ContentItem-title::after{content: '不感兴趣';color: #999;font-size: 12px;cursor: pointer;display: inline-block;margin-left:6px;border: 1px solid #999;border-radius: 4px;padding: 0 4px;pointer-events:auto;}`
           + `.ContentItem-title{pointer-events:none;}.ContentItem-title>div,.ContentItem-title>a{pointer-events:auto;}`
           : '')
         + '</style>'
@@ -1580,7 +1581,9 @@
       body: data,
       method: 'POST',
       headers: new Headers({
-        ...myLocalC.fetchHeaders
+        ...myLocalC.fetchHeaders,
+        'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)\w+(?=;)/)[0],
+        'x-zst-81': myLocalC.xZst81
       })
     }).then((res) => res.json())
       .then(() => {
@@ -1960,15 +1963,17 @@
       // 拦截fetch方法 获取option中的值
       const originFetch = fetch
       unsafeWindow.fetch = (url, opt) => {
-        // 如果是自定义排序则知乎回答页码增加到20条
         if (/\/answers\?/.test(url) && (answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
+          // 如果是自定义排序则知乎回答页码增加到20条
           url = url.replace(/(?<=limit=)\d+(?=&)/, '20')
         }
+        if (!myLocalC.fetchHeaders['x-ab-param'] && opt && opt.headers) {
+          myLocalC.fetchHeaders = opt.headers
+        }
 
-        if (!myLocalC.fetchHeaders['x-ab-param']) {
-          if (opt && opt.headers) {
-            myLocalC.fetchHeaders = opt.headers
-          }
+        if (opt && opt.headers && opt.headers['x-zst-81']) {
+          // 存储x-zst-81供不感兴趣接口使用
+          myLocalC.xZst81 = opt.headers['x-zst-81']
         }
         return originFetch(url, opt)
       }
