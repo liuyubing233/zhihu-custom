@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.5.13
+// @version      2.5.15
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://www.zhihu.com/*
@@ -246,9 +246,15 @@
   }
 
   const myDialog = {
-    open: () => {
+    open: async () => {
       $('.pf-mark')[0].style.display = 'block'
       $('.pf-modal').addClass('pf-modal-show')
+      const newConfig = await myStorage.get('pfConfig')
+      const c = newConfig ? JSON.parse(newConfig) : {}
+      if (newConfig !== JSON.stringify(pfConfig)) {
+        pfConfig = { ...pfConfig, ...c }
+        echoData()
+      }
       initScrollModal()
       myScroll.stop()
     },
@@ -679,8 +685,8 @@
     }
   }
 
-  function initData() {
-    myLocalC.cacheTitle = document.title
+  // 仅回填数据，供每次打开使用
+  function echoData() {
     const echo = {
       'radio': (even) => pfConfig[even.name] && even.value === pfConfig[even.name] && (even.checked = true),
       'checkbox': (even) => even.checked = pfConfig[even.name] || false,
@@ -706,7 +712,11 @@
     document.querySelectorAll('.pf-input').forEach((item) => {
       echo[item.type] && echo[item.type](item)
     })
+  }
 
+  function initData() {
+    myLocalC.cacheTitle = document.title
+    echoData()
     $('.pf-modal-content')[0].onchange = (even) => {
       if ($(even.target).hasClass('pf-input')) {
         return myChanger(even.target, even.target.type)
@@ -1306,7 +1316,8 @@
         + `,.PubIndex-CategoriesHeader,.css-r9mkgf,.CornerButton,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z`
         + `,.WikiLandingHeader,.WikiLanding,.WikiLandingItemCard,.WikiLandingEntryCard,.SideNavs-navContainer-6VkAT`
         + `,.App-root-cPFwn,.TopNavs-root-rwAr7,.App-root-qzkuH,.App-actionTrigger-cCyD7,.ProductTrigger-root-amaSi`
-        + `,.App-infiniteContainer-nrxGj,.ActionTrigger-content-dPn6H,.App-card-pkbhv`
+        + `,.App-infiniteContainer-nrxGj,.ActionTrigger-content-dPn6H,.App-card-pkbhv,.css-zvnmar,.Login-options`
+        + `,.SignFlowInput-errorMask`
         + `{background-color:${myLocalC.backgroundOpacity[bg]}!important;background:${myLocalC.backgroundOpacity[bg]}!important;}`
       const transparentBG = `.zhuanlan .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
         + `{background-color: transparent!important;}`
