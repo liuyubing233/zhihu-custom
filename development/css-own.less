@@ -696,7 +696,7 @@ body {
 
 .Post-Main .RichContent-actions {
   left: 50% !important;
-  .ContentItem-actions {
+  &.is-fixed .ContentItem-actions {
     transform: translateX(-50%) !important;
   }
 }
@@ -758,28 +758,30 @@ body {
   flex-wrap: wrap;
 }
 
-.zhuanlan {
-  padding: 0 24px;
-}
-
 .zu-top-search-form {
   width: auto !important;
 }
 
-.zhuanlan .Recommendations-List {
-  position: relative;
-  .PagingButton {
-    position: absolute;
-    z-index: 10;
-    border: 1px solid #999;
+.zhuanlan {
+  .Recommendations-List {
+    position: relative;
+    .PagingButton {
+      position: absolute;
+      z-index: 10;
+      border: 1px solid #999;
+    }
+    .PagingButton-Previous {
+      left: 12px;
+    }
+    .PagingButton-Next {
+      right: 12px;
+    }
   }
-  .PagingButton-Previous {
-    left: 12px;
-  }
-  .PagingButton-Next {
-    right: 12px;
+  .css-10l2ro8 {
+    width: 100%!important;
   }
 }
+
 .Select-option {
   &:hover {
     background: #f6f6f6;

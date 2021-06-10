@@ -35,7 +35,7 @@
               </select>
             </div>
             <div class="pf-raido-divoom-answer-image">
-              <span class="pf-label">回答和专栏图片缩放</span>
+              <span class="pf-label">回答和文章图片缩放</span>
               <div class="pf-content">
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="100px" />极小(100px)</label>
                 <label><input class="pf-input" name="zoomAnswerImage" type="radio" value="200px" />小(200px)</label>
@@ -100,6 +100,18 @@
             </div>
             <div class="pf-checkbox-div">
               <label>
+                <span class="pf-label">首页列表显示创建与最后修改时间</span>
+                <input class="pf-input" name="listItemCreatedAndModifiedTime" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">回答列表显示创建与最后修改时间（更改后请刷新页面）</span>
+                <input class="pf-input" name="answerItemCreatedAndModifiedTime" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
                 <span class="pf-label">关注列表高亮原创内容</span>
                 <input class="pf-input" name="highlightOriginal" type="checkbox" value="on" />
               </label>
@@ -108,6 +120,12 @@
               <label>
                 <span class="pf-label">列表内容点击高亮边框</span>
                 <input class="pf-input" name="highlightListItem" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">文章发布时间置顶</span>
+                <input class="pf-input" name="articleCreateTimeToTop" type="checkbox" value="on" />
               </label>
             </div>
             <div class="pf-other-bg">
@@ -405,12 +423,18 @@
               <label><input class="pf-input" name="hiddenSearchPageListAD" type="checkbox" value="on" />搜索页商业推广</label>
             </div>
             <div class="pf-hidden-labels">
-              <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />专栏关联话题</label>
-              <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />专栏操作条</label>
-              <label><input class="pf-input" name="hiddenZhuanlanTitleImage" type="checkbox" value="on" />专栏标题图片</label>
+              <label><input class="pf-input" name="hiddenZhuanlanTag" type="checkbox" value="on" />文章关联话题</label>
+              <label><input class="pf-input" name="hiddenZhuanlanActions" type="checkbox" value="on" />文章操作条</label>
+              <label><input class="pf-input" name="hiddenZhuanlanTitleImage" type="checkbox" value="on" />文章标题图片</label>
               <br>
-              <label><input class="pf-input" name="hiddenZhuanlanShare" type="checkbox" value="on" />专栏悬浮分享按钮</label>
-              <label><input class="pf-input" name="hiddenZhuanlanVoters" type="checkbox" value="on" />专栏悬浮赞同按钮</label>
+              <label><input class="pf-input" name="hiddenZhuanlanShare" type="checkbox" value="on" />文章悬浮分享按钮</label>
+              <label><input class="pf-input" name="hiddenZhuanlanVoters" type="checkbox" value="on" />文章悬浮赞同按钮</label>
+              <br>
+              <label><input class="pf-input" name="hiddenZhuanlanAvatarWrapper" type="checkbox" value="on" />文章作者头像</label>
+              <label><input class="pf-input" name="hiddenZhuanlanAuthorInfoHead" type="checkbox" value="on" />文章作者姓名</label>
+              <label><input class="pf-input" name="hiddenZhuanlanAuthorInfoDetail" type="checkbox" value="on" />文章作者简介</label>
+              <br>
+              <label><input class="pf-input" name="hiddenZhuanlanFollowButton" type="checkbox" value="on" />文章作者关注按钮</label>
             </div>
           </div>
           <div id="pf-set-color">
@@ -485,5 +509,4 @@
 <a href="https://www.zhihu.com" target="_self" class="pf-to-home" title="返回首页">
   <i class="iconfont">&#xe606;</i>
 </a>
-
 <iframe class="pf-pdf-box-content" style="display: none;"></iframe>

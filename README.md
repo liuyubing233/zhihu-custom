@@ -26,6 +26,10 @@
   - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
   - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
   - [7. 页面悬浮模块](#7-页面悬浮模块)
+  - [7. 列表内容高亮点击高亮边框](#7-列表内容高亮点击高亮边框)
+  - [8. 文章发布时间置顶](#8-文章发布时间置顶)
+  - [9. 首页列表显示创建与最后修改时间](#9-首页列表显示创建与最后修改时间)
+  - [10. 回答列表显示创建与最后修改时间](#10-回答列表显示创建与最后修改时间)
 - [四. 首页设置](#四-首页设置)
   - [1. 首页五个模块位置自定义](#1-首页五个模块位置自定义)
   - [2. 内容标题添加类别标签](#2-内容标题添加类别标签)
@@ -160,6 +164,22 @@
 <img src="https://by3302files.storage.live.com/y4mdxyLs_3HIkxZ6dknGySUHvyiuBKo6FQ8RTU18JVsvMtGefDCZgHZ41Hca5XMOGsR18xTNJb056yqP-J6ccGnl2JRt6c6aQTNTS_-FuNMsARrsbieqr7Nhd0RLE2xOCDe7FypC0_VKWKHOwxMV7VTdPt468tHL6te6OYTdL9NbL4sISVw17lyN_9AiEQNZge5?width=1024&height=284&cropmode=none" width="800" />
 
 <img src="https://by3302files.storage.live.com/y4mXdEW-aTkkazcsDRSYStdnJRCoEHvcpPQSvOP0Vucnb1wtFwDqdLYiG8Tf1m2XCmFPuwd9oEVsl9iANPoIy3RZSwKmAAPjUKwP4XasBeDbxFIft9-l7NTBXMJXBxwwinpl0MrtNaBijAGplZEM6TWrh20ogxBDbfk1TUePAUUuImDxILtCfewdY5Q2fxuBDje?width=1024&height=508&cropmode=none" width="800" />
+
+#### 7. 列表内容高亮点击高亮边框
+
+设置此项后首页和回答详情列表在点击时边框高亮，同知乎原生快捷键S键
+
+#### 8. 文章发布时间置顶
+
+<img src="https://by3302files.storage.live.com/y4mrllfKDnCo_M2nEB2KYC3stVQQLhxe-AWbfcKRdCWSHh0NXs6Lh7yFVXZldLe1mQqLQrnfOIfQuAeH2ygsktczYa0jm-gjbF709JRoZfuY1Zh4Z08dF1BU9o--sdV7ROe3Bw4Dov_abzCqPprrtCJB5ycRhZn0xsOWPJOrrT0qtti4C7UWzReO4Ig9Dd2BN98?width=1024&height=504&cropmode=none" width="800" />
+
+#### 9. 首页列表显示创建与最后修改时间
+
+<img src="https://by3302files.storage.live.com/y4m05GjqvaVsLL9bKkY9TIFywr9x8EUmjao7eAe6Wg6bRtPTjva18t2IICu3fhp0xWqVnM-Y88lFpP11Rey2EMaJTR4JY4TMW1iLEPbyydgcmQSQxCcxntLhfNl0eGPKm7i2mMbMswBMBR6zYQ2ncU0FCXTpgDXkv4Nc-RtEWpgoluHO1gObtIdPtkxahc33F8j?width=1024&height=509&cropmode=none" width="800" />
+
+#### 10. 回答列表显示创建与最后修改时间
+
+<img src="https://by3302files.storage.live.com/y4m8d2x1gf2Ldvmpo3ukUjLrJkW_ocN_MX_0nFnl63X2rWrVjss6B3smdBYoApyqIqiPzBdBNW3BwjVEgqGftuT1xb0E1IgYqdFv31FYPWxeO-c8ch-CAhU1p6Yg_YXoer0-q2f6LudBTOFDlrPgO11WZSY7EkluhMjGaS735I1HGt_I0lBBQOf5iF4qECLNQac?width=1024&height=509&cropmode=none" width="800" />
 
 ### 四. 首页设置
 
