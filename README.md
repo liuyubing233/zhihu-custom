@@ -8,6 +8,12 @@
 
 插件目录跳转失效请移步<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/README.md" target="_blank">这里查看</a>
 
+Safari浏览器下在[知乎](www.zhihu.com)使用Tampermonkey会报错，导致插件无法使用，暂时没有解决头绪...
+```
+Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does not appear in the script-src directive of the Content Security Policy.
+```
+<img src="https://by3302files.storage.live.com/y4mVi9J2xNNGWP4VYxRPRquLOGPzu69BSk6kyzN8dkYI2621zoUYuQbkIaq9HaS2RgMa-LJH8azYF-Akh4fxJUhWj3ydhKGV3PjU1974qhiKMElT8wzaW0ygkuV1UmMhOTQ6TkwcT_-wBV0o9N9NoNpe_5xHZwy9p9vfrHYp68eWM71Z6Oh2UTIfNR2sFU2CipM?width=1024&height=58&cropmode=none" width="1024" height="58" />
+
 ## 插件目录
 
 - [一. 唤起方式](#一-唤起方式)
