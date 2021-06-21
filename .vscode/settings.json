@@ -10,11 +10,7 @@
   },
   // vscode默认启用了根据文件类型自动设置tabsize的选项
   "editor.detectIndentation": false,
-  "editor.fontFamily": "Consolas,'Courier New', monospace",
   "terminal.integrated.fontFamily": "Lucida Console",
-  "[css]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
-  },
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -38,7 +34,7 @@
     "vuex"
   ],
   "files.autoSave": "off",
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 2,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "git.confirmSync": false,
   "editor.minimap.enabled": true,
@@ -62,14 +58,8 @@
   "javascript.format.semicolons": "remove",
   // 在函数名后面加上括号，类似这种形式 foo () {}
   "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
-  "[vue]": {
-    "editor.defaultFormatter": "octref.vetur"
-  },
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
   },
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
@@ -159,9 +149,6 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "gitlens.advanced.blame.customArguments": [],
-  "[scss]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
-  },
   "liveServer.settings.donotVerifyTags": true,
   "liveServer.settings.donotShowInfoMsg": true,
   "less.compile": {
