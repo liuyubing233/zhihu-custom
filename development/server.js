@@ -15,7 +15,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_download
 // @run-at       document-start
-// @require      https://code.jquery.com/jquery-3.1.1.min.js
+// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
 // @connect      127.0.0.1
 // ==/UserScript==
 // 使用live server 启动

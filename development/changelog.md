@@ -1,5 +1,9 @@
 ### 更新日志
 
+#### v2.5.23
+
+替换 jquery 资源为国内镜像 https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
+
 #### v2.5.20
 
 添加配置项：首页列表显示创建与最后修改时间、回答列表显示创建与最后修改时间、文章发布时间置顶
