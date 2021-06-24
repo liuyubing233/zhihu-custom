@@ -81,6 +81,12 @@
               <span class="pf-label">更改网页标题</span>
               <input class="pf-input h-25 w-300" name="title" type="text" />
             </div>
+            <div class="pf-radio-div">
+              <span class="pf-label">首页重定向</span>
+              <label><input class="pf-input" name="indexPathnameRedirect" type="radio" value="n" />默认</label>
+              <label><input class="pf-input" name="indexPathnameRedirect" type="radio" value="follow" />关注</label>
+              <label><input class="pf-input" name="indexPathnameRedirect" type="radio" value="hot" />热榜</label>
+            </div>
             <div class="pf-raido-divoom-answer-image">
               <label>
                 <span class="pf-label">页面右下停靠返回主页按钮</span>
@@ -376,7 +382,8 @@
               <label><input class="pf-input" name="hiddenListImg" type="checkbox" value="on" />列表图片</label>
               <label><input class="pf-input" name="hiddenReadMoreText" type="checkbox" value="on" />问题列表阅读全文文字</label>
               <br>
-              <label><input class="pf-input" name="hiddenCollegeEntranceExamination" type="checkbox" value="on" />列表知乎高考推荐（临时补充）</label>
+              <label><input class="pf-input" name="hiddenCollegeEntranceExamination" type="checkbox" value="on" />列表顶部活动推荐</label>
+              <label><input class="pf-input" name="hiddenListAnswerInPerson" type="checkbox" value="on" />列表[亲自答]标签</label>
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-input" name="hiddenFollowAction" type="checkbox" value="on" />关注列表关注人操作栏</label>

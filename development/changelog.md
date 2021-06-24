@@ -1,5 +1,11 @@
 ### 更新日志
 
+#### v2.5.24
+
+添加首页重定向方法
+
+列表顶部活动模块，列表“亲自答”可隐藏
+
 #### v2.5.23
 
 替换 jquery 资源为国内镜像 https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
