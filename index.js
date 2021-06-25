@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.5.25
+// @version      2.5.26
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://*.zhihu.com/*
@@ -22,7 +22,36 @@
   const INNER_CSS =
     `body{width:100%}*{box-sizing:border-box}@font-face{font-family:'own-iconfont';src:url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.woff2?t=1622733272249') format('woff2'),url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.woff?t=1622733272249') format('woff'),url('//at.alicdn.com/t/font_2324733_3kvi5yxxis5.ttf?t=1622733272249') format('truetype')}.iconfont{font-family:'own-iconfont' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.pf-op{position:fixed;width:50px;height:40px;line-height:40px;text-align:center;border-radius:0 12px 12px 0;top:100px;left:0;background:rgba(0,0,0,0.2);z-index:200;cursor:pointer;user-select:none;transform:translate(-30px);transition:transform .5s}.pf-op:hover{transform:translate(0)}.pf-to-home{position:fixed;user-select:none;bottom:50px;right:0;height:40px;width:40px;text-align:center;line-height:40px;border-radius:50%;background:#0066ff;color:#fff;transform:translate(30px);transition:transform .5s}.pf-to-home:hover{transform:translate(0)}.pf-to-home i{font-size:24px}.pf-preview,.pf-dialog-pdf,.pf-mark{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;overflow-y:auto;z-index:200;background-color:rgba(18,18,18,0.4)}.pf-preview textarea,.pf-dialog-pdf textarea,.pf-mark textarea,.pf-preview input,.pf-dialog-pdf input,.pf-mark input,.pf-preview select,.pf-dialog-pdf select,.pf-mark select{box-sizing:border-box;border:2px solid #ccc;border-radius:4px;padding:4px}.pf-modal-bg{min-height:100%;width:100%;display:flex;justify-content:center;align-items:center}.pf-modal-bg img{cursor:zoom-out;user-select:none}.pf-modal-parent{position:relative;height:100%;min-height:500px;width:100%}.pf-checkbox-div{padding:2px 0}.pf-commit{color:#999;font-size:12px;padding:2px 0}.pf-commit i{margin-left:6px}.pf-other-bg{background:#efefef;padding:12px !important;margin:0 -12px 12px}.pf-other-bg .pf-title-commit{color:red;margin-left:4px}.pf-modal{position:absolute;top:50%;left:50%;width:600px;height:500px;background:#fff;z-index:200;padding:12px 6px 0 12px;border-radius:6px;display:flex;flex-direction:column}.pf-modal ::-webkit-scrollbar{width:.25rem;height:.25rem;background:#eee}.pf-modal ::-webkit-scrollbar-track{border-radius:0}.pf-modal ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:.25rem}.pf-modal ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.pf-modal-show{animation:showModal .5s;animation-fill-mode:forwards}@keyframes showModal{0%{transform:translate(-50%, -35%);opacity:0}100%{transform:translate(-50%, -50%);opacity:1}}.pf-modal-header{padding-bottom:12px;height:36px}.pf-modal-header-title{font-size:20px}.pf-modal-header-title span{margin-left:4px;font-size:12px}.pf-b-close{font-size:16px;width:18px;height:18px;float:right;color:#999;cursor:pointer}.pf-b-close:hover{color:#111f2c}.pf-modal-footer{padding:8px 0}.pf-modal-footer a{margin-right:6px}.pf-modal-footer a:hover{color:#005ce6}.pf-modal-content{display:flex;flex:1;width:100%;font-size:14px;overflow:hidden}.pf-left{width:120px;border-right:1px solid #ddd;list-style:none;margin:0;padding:0}.pf-left li{padding:4px 0;border-right:5px solid transparent}.pf-left li a{text-decoration:none;color:#111f2c}.pf-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 12px 100px}.pf-right>div{padding-bottom:24px}.pf-right h3{margin:4px 0 8px 0;font-size:18px;font-weight:bold}.pf-zoom-answer-image{display:flex}.pf-zoom-answer-image .pf-content{flex:1}.pf-zoom-answer-image .pf-content label{display:block}.pf-simple-button{margin-bottom:12px}#pf-set-hidden .pf-title-commit{margin-left:6px}#pf-set-home>div,#pf-set-basis>div{border-bottom:1px solid #eee;padding:4px 0}#pf-set-home>div label,#pf-set-basis>div label{padding-right:4px}.pf-label{padding:4px 0}.pf-label::after{content:'：'}.pf-radio-img-select{display:inline-block;text-align:center}.pf-radio-img-select .pf-radio-img{width:32px;height:32px}.pf-radio-img-select input{margin:0;display:none}.pf-radio-img-select input:checked+.pf-radio-img{border:2px solid #4286f4}[name='colorsBackground'] .pf-color-choose-label{display:inline-block;width:100px;height:50px;position:relative;margin-right:6px;margin-bottom:6px}[name='colorsBackground'] .pf-color-choose-label input,[name='colorsBackground'] .pf-color-choose-label span{position:absolute;top:50%;transform:translateY(-50%);z-index:1}[name='colorsBackground'] .pf-color-choose-label input{left:12px}[name='colorsBackground'] .pf-color-choose-label input:checked+.pf-color-radio-item{border:2px solid #4286f4}[name='colorsBackground'] .pf-color-choose-label span{right:20px}[name='colorsBackground'] .pf-color-choose-label .pf-color-radio-item{width:100%;height:100%;border:2px solid transparent;border-radius:12px}#pf-set-color .pf-content{padding:4px}.pf-restore-config{margin-left:12px}.pf-import-dom,.pf-customize-css .pf-content{padding-top:8px;display:flex;align-items:center}.pf-import-dom .pf-textarea,.pf-customize-css .pf-content .pf-textarea{width:70%;height:50px}.pf-import-dom button,.pf-customize-css .pf-content button{height:50px;line-height:50px;width:25%;margin-left:5%;padding:0 !important}.pf-button{padding:4px 8px;border-radius:4px;background:#ddd;position:relative;border:1px solid #bbb}.pf-button:hover{background:#eee}.pf-button:active::after{content:'';position:absolute;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,0.2)}.pf-button:focus{outline:none}.pf-pdf-dialog-title{margin:0 0 1.4em;font-size:20px;font-weight:bold}.pf-pdf-box-content{width:100%;background:#ffffff}.pf-pdf-view{width:100%;background:#ffffff;word-break:break-all;white-space:pre-wrap;font-size:14px;overflow-x:hidden}.pf-pdf-view a{color:#0066ff}.pf-pdf-view img{max-width:100%}.pf-pdf-view p{margin:1.4em 0}.pf-pdf-dialog-item{padding:12px;border-bottom:1px solid #eee;margin:12px;background:#ffffff}.pf-hidden-labels{padding-bottom:6px;border-bottom:1px solid #dddddd;margin-bottom:6px}.pf-home-tab-is-suspension{border-bottom:1px solid #eeeeee}.pf-home-tab-is-suspension>div{padding-bottom:8px}.pf-export-collection-box{float:right;text-align:right}.pf-export-collection-box button{font-size:16px}.pf-export-collection-box p{font-size:14px;color:#666;margin:4px 0}.pf-label-tag-Answer{background:#ec7259}.pf-label-tag-ZVideo{background:#12c2e9}.pf-label-tag-Article{background:#00965e}.pf-label-tag{margin:0 3px;font-weight:normal;display:inline-block;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}.pf-filter-keywords-item{display:inline-block;background:#999;color:#fff;border-radius:4px;padding:2px 4px;margin:4px 4px 0 0}.pf-filter-keywords-item-text{margin-right:4px}.pf-filter-keywords-item-delete{cursor:pointer}.pf-filter-keywords-item-delete:hover{color:#444}.stopScroll{height:100% !important;overflow:hidden !important}.my-unlock,.my-lock,.my-lock-mask{display:none;color:#999;cursor:pointer}.my-unlock,.my-lock{margin:4px}.my-lock-mask{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:198}.key-shadow{border:1px solid #eee;border-radius:4px;box-shadow:rgba(0,0,0,0.06) 0 1px 1px 0;font-weight:600;min-width:26px;height:26px;padding:0px 6px;text-align:center}.pf-zhihu-key a{color:#06f}.pf-zhihu-key a:hover{color:#3f51b5}.position-suspensionSearch,.position-suspensionFind,.position-suspensionUser{position:fixed;z-index:100}.position-suspensionSearch:hover .my-unlock,.position-suspensionFind:hover .my-unlock,.position-suspensionUser:hover .my-unlock,.Topstory-container .TopstoryTabs:hover .my-unlock{display:block}.position-suspensionSearch.my-move-this .my-unlock,.position-suspensionFind.my-move-this .my-unlock,.position-suspensionUser.my-move-this .my-unlock,.Topstory-container .TopstoryTabs.my-move-this .my-unlock{display:none !important}.position-suspensionSearch.my-move-this .my-lock,.position-suspensionFind.my-move-this .my-lock,.position-suspensionUser.my-move-this .my-lock,.Topstory-container .TopstoryTabs.my-move-this .my-lock,.position-suspensionSearch.my-move-this .my-lock-mask,.position-suspensionFind.my-move-this .my-lock-mask,.position-suspensionUser.my-move-this .my-lock-mask,.Topstory-container .TopstoryTabs.my-move-this .my-lock-mask{display:block}.position-suspensionSearch.my-move-this .my-lock,.position-suspensionFind.my-move-this .my-lock,.position-suspensionUser.my-move-this .my-lock,.Topstory-container .TopstoryTabs.my-move-this .my-lock{z-index:199;color:#cccccc}.position-suspensionFind{display:flex;flex-direction:column;margin:0 !important}.position-suspensionFind .Tabs-item{padding:0 !important;margin-bottom:4px}.position-suspensionFind .Tabs-item .Tabs-link{padding:8px !important;border-radius:4px}.position-suspensionFind .Tabs-item .Tabs-link::after{content:'' !important;display:none !important}.position-suspensionUser{width:fit-content !important;margin:0 !important;display:flex;flex-direction:column}.position-suspensionUser .AppHeader-messages,.position-suspensionUser .AppHeader-notifications{margin-right:0 !important;margin-bottom:12px}.position-suspensionUser .AppHeader-login,.position-suspensionUser .AppHeader-login~button{display:none}.AppHeader-SearchBar{flex:1}.position-suspensionSearch{line-height:30px;border-radius:16px;width:20px;transition:width .5s}.position-suspensionSearch.focus{width:300px}.position-suspensionSearch.focus>form,.position-suspensionSearch.focus>button,.position-suspensionSearch.focus .my-search-pick-up{display:block}.position-suspensionSearch.focus .my-search-icon{display:none}.position-suspensionSearch.focus:hover{width:324px}.position-suspensionSearch .my-search-icon,.position-suspensionSearch .my-search-pick-up{cursor:pointer;color:#0066ff}.position-suspensionSearch .my-search-icon:hover,.position-suspensionSearch .my-search-pick-up:hover{color:#005ce6}.position-suspensionSearch .my-search-pick-up{font-size:24px;margin-left:4px}.position-suspensionSearch>form,.position-suspensionSearch>button,.position-suspensionSearch .my-search-pick-up{display:none}.position-suspensionSearch .my-search-icon{display:block}.GlobalSideBar-navList{margin-bottom:10px;overflow:hidden;border-radius:2px;box-shadow:0 1px 3px rgba(18,18,18,0.1);box-sizing:border-box}.Question-main .Question-mainColumn,.ListShortcut{flex:1;width:initial}.Question-sideColumn{margin-left:12px;width:296px !important}.Question-mainColumnLoginRightButton{margin:20px 22px 18px !important}.ModalWrap .ModalExp-content{height:0 !important;overflow:hidden}.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard{width:48% !important}.GlobalWrite-navTop{display:flex !important;justify-content:space-between !important;flex-wrap:wrap !important}.GlobalWrite-navTop .GlobalWrite-topItem{margin-right:0 !important;margin-bottom:12px !important}.Profile-mainColumn{margin-right:12px}.QuestionHeader,.Post-content{min-width:0 !important}.Post-Main .RichContent-actions{left:50% !important}.Post-Main .RichContent-actions.is-fixed .ContentItem-actions{transform:translateX(-50%) !important}.css-1xy3kyp,.css-1kjxdzv,.css-qqgmyv{max-width:none !important}.SearchTopicReview{width:100px !important}.Topstory-mainColumn{flex:1 !important;min-width:694px !important}.ContentItem-actions{padding-bottom:0 !important}.ContentItem-actions>button,.ContentItem-actions>div{margin-left:8px}.RichContent-inner{margin-top:8px !important}.Post-SideActions-icon,.Post-SideActions button.like,.VoteButton{background:none !important;color:#8590a6 !important;padding:0 !important}.Post-SideActions button.like.active .Post-SideActions-icon,.Post-SideActions button.like.active .likeCount-inner,.VoteButton.is-active{color:#0066ff !important}.SearchMain{flex:1}.SearchSideBar{width:260px !important;flex:initial}.css-1acwmmj{display:none !important}.ProfileMain-tabs{flex-wrap:wrap}.zu-top-search-form{width:auto !important}.zhuanlan .Recommendations-List{position:relative}.zhuanlan .Recommendations-List .PagingButton{position:absolute;z-index:10;border:1px solid #999}.zhuanlan .Recommendations-List .PagingButton-Previous{left:12px}.zhuanlan .Recommendations-List .PagingButton-Next{right:12px}.zhuanlan .css-10l2ro8{width:100%!important}.Select-option:hover{background:#f6f6f6}.pf-left-container,.GlobalSideBar{max-width:250px}.zu-main{padding:24px 12px !important}.fw-bold{font-weight:bold}.w-200{width:200px}.w-300{width:300px}.h-25{height:25px}.p-t-8{padding-top:8px}.border-none{border:none !important}.pf-use-theme-dark{display:flex}.pf-switch{position:relative;width:64px;margin:0;scroll-behavior:smooth}.pf-switch-checkbox{display:none}.pf-switch-label{display:block;overflow:hidden;cursor:pointer;border-radius:20px}.pf-switch-inner{display:block;width:200%;margin-left:-100%;transition:margin .3s ease-in 0s}.pf-switch-inner::before,.pf-switch-inner::after{display:block;float:right;width:50%;height:25px;padding:0;line-height:25px;font-size:14px;color:white;font-family:Trebuchet,Arial,sans-serif;font-weight:bold;box-sizing:border-box}.pf-switch-inner::after{content:attr(data-on);padding-left:10px;background-color:#0066ff;color:#ffffff}.pf-switch-inner::before{content:attr(data-off);padding-right:10px;background-color:#eeeeee;color:#999999;text-align:right}.pf-switch-switch{position:absolute;display:block;width:20px;height:20px;margin:2px;background:#ffffff;top:0;bottom:0;right:40px;border:2px solid #999999;border-radius:20px;transition:all .3s ease-in 0s}.pf-switch-checkbox:checked+.pf-switch-label .pf-switch-inner{margin-left:0}.pf-switch-checkbox:checked+.pf-switch-label .pf-switch-switch{right:0px}.pf-notification{position:fixed;top:24px;right:0;z-index:100}.pf-notification-item{position:relative;padding:16px 24px;overflow:hidden;line-height:1.5;border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,0.15);background:#fff;font-size:14px;margin:0 24px 24px 0;width:300px;animation:openNotification .2s;animation-fill-mode:forwards}.pf-notification-title{white-space:pre-wrap}.pf-close-notification{position:absolute;top:8px;right:8px;font-size:12px;color:#999;cursor:pointer}@keyframes openNotification{0%{transform:translate(300px);opacity:0}100%{transform:translate(0);opacity:1}}.pf-question-time{color:#999 !important;font-size:14px !important;font-weight:normal !important;line-height:24px}.pf-video-download,.pf-loading{position:absolute;top:20px;left:20px;font-size:24px;color:rgba(255,255,255,0.9);cursor:pointer}.pf-loading{animation:loading 2s;animation-iteration-count:infinite;cursor:default !important}@keyframes loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}`
 
-  const addHTMLHosts = ['www.zhihu.com', 'zhuanlan.zhihu.com']
+  const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com']
+
+  // 根据名称删除的官方回答
+  const REMOVE_ANSWER_BY_NAME = [
+    { id: 'removeStoryAnswer', name: '故事档案局' },
+    { id: 'removeYanxuanAnswer', name: '盐选科普' },
+    { id: 'removeYanxuanRecommend', name: '盐选推荐' },
+  ]
+
+  const C_STICKY_LEFT = '.pf-left-container .Sticky'
+  const C_STICKY_LEFT_DAD = '.pf-left-container'
+  const C_STICKY_RIGHT = '.GlobalSideBar .Sticky'
+  const C_STICKY_RIGHT_DAD = '.GlobalSideBar'
+
+  const BACKGROUND_CONFIG = {
+    '#ffffff': { name: '默认', opacity: '' },
+    'bisque': { name: '护眼红', opacity: '#fff4e7' },
+    '#FAF9DE': { name: '杏仁黄', opacity: '#fdfdf2' },
+    '#cce8cf': { name: '青草绿', opacity: '#e5f1e7' },
+    '#EAEAEF': { name: '极光灰', opacity: '#f3f3f5' },
+    '#E9EBFE': { name: '葛巾紫', opacity: '#f2f3fb' },
+  }
+
+  const ICO = {
+    github: '<link rel="icon" class="js-site-favicon" id="pf-ico" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">',
+    csdn: '<link href="https://g.csdnimg.cn/static/logo/favicon32.ico" id="pf-ico" rel="shortcut icon" type="image/x-icon">',
+    juejin: '<link data-n-head="ssr" rel="shortcut icon" id="pf-ico" href="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico">',
+    zhihu: '<link rel="shortcut icon" type="image/x-icon" id="pf-ico" href="https://static.zhihu.com/heifetz/favicon.ico">',
+  }
+
   let pfConfig = {
     versionHeart: '1200', // 版心宽度
     positionAnswer: 'left',
@@ -152,26 +181,9 @@
     // 删除内容模块 end --------
   }
 
-  // 脚本内配置
+  // 脚本内配置缓存
   const myLocalC = {
     cachePfConfig: {}, // 缓存初始配置
-    backgrounds: ['#ffffff', 'bisque', '#FAF9DE', '#cce8cf', '#EAEAEF', '#E9EBFE'],
-    // 背景色对应名称
-    backgroundName: {
-      '#ffffff': '默认',
-      'bisque': '护眼红',
-      '#FAF9DE': '杏仁黄',
-      '#cce8cf': '青草绿',
-      '#EAEAEF': '极光灰',
-      '#E9EBFE': '葛巾紫',
-    },
-    backgroundOpacity: {
-      '#FAF9DE': '#fdfdf2',
-      'bisque': '#fff4e7',
-      '#cce8cf': '#e5f1e7',
-      '#EAEAEF': '#f3f3f5',
-      '#E9EBFE': '#f2f3fb',
-    },
     cacheTitle: '', // 缓存页面原标题
     bodySize: 0,
     bodySizePrev: 0,
@@ -182,13 +194,6 @@
   let answerSortBy = 'default' // 列表内容排序方式
   let isLoading = true
   let timeStart = 0
-
-  // 根据名称删除的官方回答
-  const removeAnswerByAuthorName = [
-    { id: 'removeStoryAnswer', name: '故事档案局' },
-    { id: 'removeYanxuanAnswer', name: '盐选科普' },
-    { id: 'removeYanxuanRecommend', name: '盐选推荐' },
-  ]
 
   // 缓存的doms
   const domCache = {
@@ -236,16 +241,11 @@
         // 如果是pfConfig则通过时间戳t来获取最新配置
         const cParse = config ? JSON.parse(config) : null
         const cLParse = configLocal ? JSON.parse(configLocal) : null
-        c = !cParse && !cLParse
-          ? ''
-          : !cParse
-            ? configLocal
-            : !cLParse
-              ? config
-              : cParse.t < cLParse.t
-                ? configLocal
-                : config
-
+        if (!cParse && !cLParse) return ''
+        if (!cParse) return configLocal
+        if (!cLParse) return config
+        if (cParse.t < cLParse.t) return configLocal
+        return config
       }
       return c
     }
@@ -268,7 +268,7 @@
       $('.pf-mark')[0].style.display = 'none'
       $('.pf-modal').removeClass('pf-modal-show')
       myScroll.on()
-    }
+    },
   }
 
   const myConfig = {
@@ -519,40 +519,72 @@
     },
   }
 
+  const myLock = {
+    append: (e, name) => {
+      // 悬浮模块是否固定改为鼠标放置到模块上显示开锁图标 点击即可移动模块
+      if (!e[0]) return
+      !e.children('.my-unlock')[0] && e.append('<i class="iconfont my-unlock">&#xe688;</i>')
+      !e.children('.my-lock')[0] && e.append('<i class="iconfont my-lock">&#xe700;</i>')
+      !e.children('.my-lock-mask')[0] && e.append('<div class="my-lock-mask"></div>')
+      e.children('.my-unlock')[0].onclick = async () => {
+        pfConfig[name + 'Fixed'] = false
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig))
+        e.addClass('my-move-this')
+      }
+
+      e.children('.my-lock')[0].onclick = async () => {
+        pfConfig[name + 'Fixed'] = true
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig))
+        e.removeClass('my-move-this')
+      }
+
+      // 如果进入页面的时候该项的FIXED为false则添加class
+      if (pfConfig[name + 'Fixed'] === false) {
+        e.addClass('my-move-this')
+      }
+    },
+    remove: (e) => {
+      if (!e[0]) return
+      e.children('.my-unlock')[0] && e.children('.my-unlock').remove()
+      e.children('.my-lock')[0] && e.children('.my-lock').remove()
+      e.children('.my-lock-mask')[0] && e.children('.my-lock-mask').remove()
+    }
+  }
+
   // 首页两侧盒子固定
-  const stickyBetween = {
+  const stickyB = {
     scroll: function () {
-      window.scrollY > 0 ? stickyBetween.fixed() : stickyBetween.inherit()
+      window.scrollY > 0 ? stickyB.fixed() : stickyB.inherit()
     },
     fixed: function () {
       // 左侧盒子
-      if (pfConfig.stickyLeft && $('.pf-left-container')[0]) {
-        const { offsetWidth, offsetLeft, offsetTop } = $('.pf-left-container')[0]
-        $('.pf-left-container .Sticky').css({ position: 'fixed', width: offsetWidth, left: offsetLeft, top: offsetTop })
+      if (pfConfig.stickyLeft && $(C_STICKY_LEFT_DAD)[0]) {
+        const { offsetWidth, offsetLeft, offsetTop } = $(C_STICKY_LEFT_DAD)[0]
+        $(C_STICKY_LEFT).css({ position: 'fixed', width: offsetWidth, left: offsetLeft, top: offsetTop })
       } else {
-        $('.pf-left-container .Sticky').removeAttr('style', '')
+        $(C_STICKY_LEFT).removeAttr('style', '')
       }
       // 右侧盒子
-      if (pfConfig.stickyRight && $('.GlobalSideBar')[0]) {
-        const { offsetWidth, offsetRight, offsetTop } = $('.GlobalSideBar')[0]
-        $('.GlobalSideBar .Sticky').css({ position: 'fixed', width: offsetWidth, right: offsetRight, top: offsetTop })
+      if (pfConfig.stickyRight && $(C_STICKY_RIGHT_DAD)[0]) {
+        const { offsetWidth, offsetRight, offsetTop } = $(C_STICKY_RIGHT_DAD)[0]
+        $(C_STICKY_RIGHT).css({ position: 'fixed', width: offsetWidth, right: offsetRight, top: offsetTop })
       } else {
-        $('.GlobalSideBar .Sticky').removeAttr('style', '')
-        $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
+        $(C_STICKY_RIGHT).removeAttr('style', '')
+        $(C_STICKY_RIGHT)[0] && ($(C_STICKY_RIGHT)[0].style = 'position: inherit!important')
       }
     },
     inherit: function () {
-      $('.pf-left-container .Sticky').removeAttr('style', '')
-      $('.GlobalSideBar .Sticky').removeAttr('style', '')
-      $('.GlobalSideBar .Sticky')[0] && ($('.GlobalSideBar .Sticky')[0].style = 'position: inherit!important')
-    }
+      $(C_STICKY_LEFT).removeAttr('style', '')
+      $(C_STICKY_RIGHT).removeAttr('style', '')
+      $(C_STICKY_RIGHT)[0] && ($(C_STICKY_RIGHT)[0].style = 'position: inherit!important')
+    },
   }
 
   async function myChanger(ev, type) {
     const { name, value, checked } = ev
     const ob = {
-      'stickyLeft': stickyBetween.scroll,
-      'stickyRight': stickyBetween.scroll,
+      'stickyLeft': stickyB.scroll,
+      'stickyRight': stickyB.scroll,
       'suspensionHomeTab': () => {
         versionCSS.init()
         changeSuspensionTab()
@@ -747,7 +779,7 @@
   function onToHomeHref() {
     if (location.host === 'zhuanlan.zhihu.com' && pfConfig.toHomeButtonZhuanlan === 'zhuanlan') {
       $('.pf-to-home')[0].href = 'https://zhuanlan.zhihu.com'
-    } else if (pfConfig.indexPathnameRedirect && pfConfig.indexPathnameRedirect !== 'n' ) {
+    } else if (pfConfig.indexPathnameRedirect && pfConfig.indexPathnameRedirect !== 'n') {
       $('.pf-to-home')[0].href = `https://www.zhihu.com/${pfConfig.indexPathnameRedirect}`
     }
   }
@@ -757,9 +789,10 @@
     const name = 'suspensionHomeTab'
     cSuspensionStyle(name)
     const even = $('.Topstory-container .TopstoryTabs')
-    pfConfig[name] ? appendLock(even, name) : removeLock(even, name)
+    pfConfig[name] ? myLock.append(even, name) : myLock.remove(even, name)
   }
 
+  const HEADER_EVENT_NAMES = ['suspensionFind', 'suspensionSearch', 'suspensionUser']
   function cacheHeader() {
     if (!findEvent.header.isFind) {
       findEvent.header.fun && clearTimeout(findEvent.header.fun)
@@ -780,28 +813,29 @@
       }, 100)
       return
     }
-    // 直接使用eventName中的顺序，减少一次循环排序
-    const eventNames = ['suspensionFind', 'suspensionSearch', 'suspensionUser']
-    eventNames.forEach((name) => {
+    const C_ICON = '.my-search-icon'
+    const C_PICK = '.my-search-pick-up'
+    const N_FOCUS = 'focus'
+    HEADER_EVENT_NAMES.forEach((name) => {
       const { even } = domCache.headerDoms[name]
       if (pfConfig[name]) {
         // 如果是suspensionSearch则添加展开和收起按钮
         if (name === 'suspensionSearch') {
-          !$('.my-search-icon')[0] && even.prepend('<i class="iconfont my-search-icon">&#xe600;</i>')
-          !$('.my-search-pick-up')[0] && even.append('<i class="iconfont my-search-pick-up">&#xe601;</i>')
-          $('.my-search-icon')[0] && ($('.my-search-icon')[0].onclick = () => even.addClass('focus'))
-          $('.my-search-pick-up')[0] && ($('.my-search-pick-up')[0].onclick = () => even.removeClass('focus'))
+          !$(C_ICON)[0] && even.prepend('<i class="iconfont my-search-icon">&#xe600;</i>')
+          !$(C_PICK)[0] && even.append('<i class="iconfont my-search-pick-up">&#xe601;</i>')
+          $(C_ICON)[0] && ($(C_ICON)[0].onclick = () => even.addClass(N_FOCUS))
+          $(C_PICK)[0] && ($(C_PICK)[0].onclick = () => even.removeClass(N_FOCUS))
         }
-        appendLock(even, name)
+        myLock.append(even, name)
         even.addClass(`position-${name}`)
         $('body').append(even)
       } else {
         if (name === 'suspensionSearch') {
-          $('.my-search-icon')[0] && $('.my-search-icon').remove()
-          $('.my-search-pick-up')[0] && $('.my-search-pick-up').remove()
-          even.hasClass('focus') && even.removeClass(`focus`)
+          $(C_ICON)[0] && $(C_ICON).remove()
+          $(C_PICK)[0] && $(C_PICK).remove()
+          even.hasClass(N_FOCUS) && even.removeClass(N_FOCUS)
         }
-        removeLock(even, name)
+        myLock.remove(even, name)
         even.removeClass(`position-${name}`)
         even.removeAttr('style', '')
         $('.AppHeader-inner').append(even)
@@ -809,39 +843,6 @@
       cSuspensionStyle(name)
     })
     versionCSS.init()
-  }
-
-  // 悬浮模块是否固定改为鼠标放置到模块上显示开锁图标 点击即可移动模块
-  function appendLock(even, name) {
-    if (even[0]) {
-      !even.children('.my-unlock')[0] && even.append('<i class="iconfont my-unlock">&#xe688;</i>')
-      !even.children('.my-lock')[0] && even.append('<i class="iconfont my-lock">&#xe700;</i>')
-      !even.children('.my-lock-mask')[0] && even.append('<div class="my-lock-mask"></div>')
-      even.children('.my-unlock')[0].onclick = async () => {
-        pfConfig[name + 'Fixed'] = false
-        await myStorage.set('pfConfig', JSON.stringify(pfConfig))
-        even.addClass('my-move-this')
-      }
-
-      even.children('.my-lock')[0].onclick = async () => {
-        pfConfig[name + 'Fixed'] = true
-        await myStorage.set('pfConfig', JSON.stringify(pfConfig))
-        even.removeClass('my-move-this')
-      }
-
-      // 如果进入页面的时候该项的FIXED为false则添加class
-      if (pfConfig[name + 'Fixed'] === false) {
-        even.addClass('my-move-this')
-      }
-    }
-  }
-
-  function removeLock(even, name) {
-    if (even[0]) {
-      even.children('.my-unlock')[0] && even.children('.my-unlock').remove()
-      even.children('.my-lock')[0] && even.children('.my-lock').remove()
-      even.children('.my-lock-mask')[0] && even.children('.my-lock-mask').remove()
-    }
   }
 
   // 加载两侧数据
@@ -870,8 +871,8 @@
       return
     }
     // 清除两侧盒子内容
-    $('.pf-left-container .Sticky').empty()
-    $('.GlobalSideBar .Sticky').empty()
+    $(C_STICKY_LEFT).empty()
+    $(C_STICKY_RIGHT).empty()
     const leftDom = []
     const rightDom = []
     // 添加dom
@@ -885,11 +886,11 @@
     })
     leftDom.sort((a, b) => a.index - b.index)
     rightDom.sort((a, b) => a.index - b.index)
-    leftDom.forEach(({ even }) => { $('.pf-left-container .Sticky').append(even) })
-    rightDom.forEach(({ even }) => { $('.GlobalSideBar .Sticky').append(even) })
+    leftDom.forEach(({ even }) => $(C_STICKY_LEFT).append(even))
+    rightDom.forEach(({ even }) => $(C_STICKY_RIGHT).append(even))
     // 两侧盒子不存在子元素则隐藏
-    $('.pf-left-container')[0] && ($('.pf-left-container')[0].style.display = $('.pf-left-container .Sticky').children().length > 0 ? 'block' : 'none')
-    $('.GlobalSideBar')[0] && ($('.GlobalSideBar')[0].style.display = $('.GlobalSideBar .Sticky').children().length > 0 ? 'block' : 'none')
+    $(C_STICKY_LEFT_DAD)[0] && ($(C_STICKY_LEFT_DAD)[0].style.display = $(C_STICKY_LEFT).children().length > 0 ? 'block' : 'none')
+    $(C_STICKY_RIGHT_DAD)[0] && ($(C_STICKY_RIGHT_DAD)[0].style.display = $(C_STICKY_RIGHT).children().length > 0 ? 'block' : 'none')
     doResizePage()
   }
 
@@ -937,16 +938,10 @@
 
   // 修改页面标题ico
   function changeTitleIco() {
-    const ico = {
-      github: '<link rel="icon" class="js-site-favicon" id="pf-ico" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">',
-      csdn: '<link href="https://g.csdnimg.cn/static/logo/favicon32.ico" id="pf-ico" rel="shortcut icon" type="image/x-icon">',
-      juejin: '<link data-n-head="ssr" rel="shortcut icon" id="pf-ico" href="https://b-gold-cdn.xitu.io/favicons/v2/favicon.ico">',
-      zhihu: '<link rel="shortcut icon" type="image/x-icon" id="pf-ico" href="https://static.zhihu.com/heifetz/favicon.ico">',
-    }
-    if (ico[pfConfig.titleIco]) {
+    if (ICO[pfConfig.titleIco]) {
       $('[type="image/x-icon"]')[0] && $('[type="image/x-icon"]').remove()
       $('#pf-ico')[0] && $('#pf-ico').remove()
-      ico[pfConfig.titleIco] && $('head').append(ico[pfConfig.titleIco])
+      ICO[pfConfig.titleIco] && $('head').append(ICO[pfConfig.titleIco])
     }
   }
 
@@ -1065,7 +1060,7 @@
     },
     vSusColor: function (value) {
       // 悬浮模块颜色填充 跟页面背景颜色同步
-      const bg = myLocalC.backgroundOpacity[pfConfig.colorBackground] || '#ffffff'
+      const bg = BACKGROUND_CONFIG[pfConfig.colorBackground].opacity || '#ffffff'
       const normal = {
         'transparent': 'border:1px solid #999999;color:#999999;',
         'filling': `border:1px solid #999999;color:#999999;background:${bg};`,
@@ -1337,7 +1332,7 @@
         + `,.App-root-cPFwn,.TopNavs-root-rwAr7,.App-root-qzkuH,.App-actionTrigger-cCyD7,.ProductTrigger-root-amaSi`
         + `,.App-infiniteContainer-nrxGj,.ActionTrigger-content-dPn6H,.App-card-pkbhv,.css-zvnmar,.Login-options`
         + `,.SignFlowInput-errorMask,.ColumnHomeColumnCard`
-        + `{background-color:${myLocalC.backgroundOpacity[bg]}!important;background:${myLocalC.backgroundOpacity[bg]}!important;}`
+        + `{background-color:${BACKGROUND_CONFIG[bg].opacity}!important;background:${BACKGROUND_CONFIG[bg].opacity}!important;}`
       const transparentBG = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
         + `{background-color: transparent!important;}`
       const bcNormal = `.MenuBar-root-rQeFm{border-color: ${bg}!important;}`
@@ -1522,13 +1517,13 @@
       const d = `<label class="pf-color-choose-label">`
         + `<input class="pf-input" name="colorBackground" type="radio" value="${item}"/>`
         + `<div class="pf-color-radio-item" style="background: ${item};">`
-        + `<span style="color: #111f2c">${myLocalC.backgroundName[item]}</span>`
+        + `<span style="color: #111f2c">${BACKGROUND_CONFIG[item].name}</span>`
         + `</div>`
         + `</label>`
       return $(d)
     }
     const domParent = $('<block></block>')
-    myLocalC.backgrounds.forEach((item) => domParent.append(dom(item)))
+    Object.keys(BACKGROUND_CONFIG).forEach((item) => domParent.append(dom(item)))
     $(`[name="colorsBackground"]`).empty()
     $(`[name="colorsBackground"]`)[0] && $(`[name="colorsBackground"]`).append(domParent)
   }
@@ -1540,7 +1535,7 @@
     $('.QuestionAnswer-content')[0] && pfConfig.answerItemCreatedAndModifiedTime && addTimes($('.QuestionAnswer-content'))
     const isTrue = (() => {
       let isHaveName = false
-      removeAnswerByAuthorName.forEach((item) => {
+      REMOVE_ANSWER_BY_NAME.forEach((item) => {
         pfConfig[item.id] && (isHaveName = true)
       })
       return isHaveName || pfConfig.removeFromYanxuan || pfConfig.removeZhihuOfficial
@@ -1564,7 +1559,7 @@
             }
           } else {
             const dataZop = $(that).children('.AnswerItem').attr('data-zop')
-            removeAnswerByAuthorName.forEach((item) => {
+            REMOVE_ANSWER_BY_NAME.forEach((item) => {
               const reg = new RegExp(`['"]authorName['":]*` + item.name)
               if (pfConfig[item.id] && reg.test(dataZop)) {
                 $(that).remove()
@@ -1807,13 +1802,13 @@
   }
 
   // 监听问题详情里的.Select-button按钮
-  const answerSortIds = {
+  const ANSWER_SORD_IDS = {
     'Select1-0': { key: 'default', name: '默认排序' },
     'Select1-1': { key: 'update', name: '按时间排序' },
     'Select1-2': { key: 'vote', name: '点赞数排序' },
     'Select1-3': { key: 'comment', name: '评论数排序' },
   }
-  const sortKeys = {
+  const SORT_KEYS = {
     vote: '点赞数排序',
     comment: '评论数排序'
   }
@@ -1821,16 +1816,16 @@
   let buObserver = null
   function listenSelectButton() {
     if (answerSortBy === 'vote' || answerSortBy === 'comment') {
-      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, sortKeys[answerSortBy])
+      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, SORT_KEYS[answerSortBy])
     }
 
     const clickSort = (id) => {
       eachIndex = 0
-      answerSortBy = answerSortIds[id].key
-      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, answerSortIds[id].name)
-      if (answerSortIds[id].key === 'vote' || answerSortIds[id].key === 'comment') {
-        location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + answerSortIds[id].key
-      } else if (answerSortIds[id].key === 'default') {
+      answerSortBy = ANSWER_SORD_IDS[id].key
+      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, ANSWER_SORD_IDS[id].name)
+      if (ANSWER_SORD_IDS[id].key === 'vote' || ANSWER_SORD_IDS[id].key === 'comment') {
+        location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + ANSWER_SORD_IDS[id].key
+      } else if (ANSWER_SORD_IDS[id].key === 'default') {
         /\?sort=/.test(location.href) && (location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ''))
       }
     }
@@ -1886,7 +1881,7 @@
 
   // 关注人列表修改
   let followingIndex = 0
-  const removeFollows = [
+  const REMOVE_FOLLOWS = [
     { name: 'removeFollowVoteAnswer', rep: '赞同了回答' },
     { name: 'removeFollowVoteArticle', rep: '赞同了文章' },
     { name: 'removeFollowFQuestion', rep: '关注了问题' },
@@ -1917,7 +1912,7 @@
           }
 
           if (removeIsTrue) {
-            removeFollows.forEach(({ name, rep }) => {
+            REMOVE_FOLLOWS.forEach(({ name, rep }) => {
               const thisRep = new RegExp(rep)
               if (pfConfig[name] && thisRep.test($(event).find('.FeedSource-firstline')[0].innerText)) {
                 $(event).remove()
@@ -1934,7 +1929,7 @@
     }
   }
 
-  const collectionEvent = `<div class="pf-export-collection-box">`
+  const COLLECTION_EVENT = `<div class="pf-export-collection-box">`
     + `<button class="pf-button pf-export-collection">生成PDF</button>`
     + `<p>仅对当前页码收藏夹内容进行导出</p>`
     + `<p>如果点击没有生成PDF请刷新页面</p>`
@@ -1953,7 +1948,7 @@
   }
   // 收藏夹生成PDF 导出
   function collectionExport() {
-    const eventBox = $(collectionEvent)
+    const eventBox = $(COLLECTION_EVENT)
     $('.pf-export-collection-box')[0] && $('.pf-export-collection-box').remove()
     eventBox.find('.pf-export-collection')[0].onclick = function () {
       this.innerText = '加载中...'
@@ -2029,7 +2024,7 @@
   // 在启动时注入的内容
   ; (async function () {
     $('head').append(`<style type="text/css" id="pf-css-own">${INNER_CSS}</style>`)
-    if (addHTMLHosts.includes(location.hostname)) {
+    if (HTML_HOOTS.includes(location.hostname)) {
       timeStart = performance.now()
       myLocalC.cachePfConfig = pfConfig
       const config = await myStorage.get('pfConfig')
@@ -2107,7 +2102,7 @@
   }
 
   function onDocumentStart() {
-    if (addHTMLHosts.includes(location.hostname)) {
+    if (HTML_HOOTS.includes(location.hostname)) {
       versionCSS.init()
       backgroundCSS.init()
       changeCustomCSS()
@@ -2117,7 +2112,7 @@
 
   // 在页面加载完成时注入的内容
   window.onload = () => {
-    if (addHTMLHosts.includes(location.hostname)) {
+    if (HTML_HOOTS.includes(location.hostname)) {
       initHTML()
       initData()
       initLinkChanger()
@@ -2221,7 +2216,7 @@
   // 使用ResizeObserver监听body高度
   const resizeObserver = new ResizeObserver(throttle(resizeFun, 500))
   function resizeFun() {
-    if (addHTMLHosts.includes(location.hostname)) {
+    if (HTML_HOOTS.includes(location.hostname)) {
       // 页面高度发生改变
       if (myLocalC.bodySize === myLocalC.bodySizePrev) {
         // 重新赋值img预览
@@ -2271,7 +2266,7 @@
   }
 
   window.onscroll = throttle(() => {
-    stickyBetween.scroll()
+    stickyB.scroll()
     if (pfConfig.suspensionPickUp) {
       SuspensionPackUp($('.List-item'))
       SuspensionPackUp($('.TopstoryItem'))
@@ -2297,8 +2292,8 @@
             + `height: 40px!important;line-height:40px;padding: 0 12px!important;`
             + `background: ${pfConfig.isUseThemeDark
               ? 'transparent'
-              : myLocalC.backgroundOpacity[pfConfig.colorBackground]
-                ? myLocalC.backgroundOpacity[pfConfig.colorBackground]
+              : BACKGROUND_CONFIG[pfConfig.colorBackground].opacity
+                ? BACKGROUND_CONFIG[pfConfig.colorBackground].opacity
                 : pfConfig.colorBackground}`
         } else {
           evenButton.style = ''
