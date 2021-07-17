@@ -24,7 +24,14 @@
             <h3>基础设置</h3>
             <button class="pf-simple-button pf-button">启用极简模式</button>
             <button class="pf-restore-config pf-button">恢复默认配置</button>
-            <div class="pf-radio-div">
+            <div class="pf-radio-div d-flex">
+              <span class="pf-label">设置版心方式</span>
+              <div class="pf-content lh-28 flex-1">
+                <label><input class="pf-i" name="chooseHeart" type="radio" value="system" />使用预设</label>
+                <label><input class="pf-i" name="chooseHeart" type="radio" value="self" />自定义</label>
+              </div>
+            </div>
+            <div class="pf-radio-div pf-heart-system">
               <span class="pf-label">版心大小</span>
               <select name="versionHeart" class="pf-i w-200">
                 <option value="1000">1000px</option>
@@ -32,6 +39,13 @@
                 <option value="1500">1500px</option>
                 <option value="100%">拉满</option>
               </select>
+            </div>
+            <div class="pf-radio-div pf-heart-self" style="display: none;">
+              <span class="pf-label">版心大小</span>
+              <div class="flex-1">
+                <input name="versionHeartSelf" type="number" class="pf-i h-25 w-200">
+                <div class="pf-commit">输入值小于1000时按照1000来处理，避免不必要的错误</div>
+              </div>
             </div>
             <div class="pf-raido-divoom-answer-image">
               <span class="pf-label">回答和文章图片缩放</span>
@@ -381,7 +395,8 @@
               <label><input class="pf-i" name="hiddenListImg" type="checkbox" value="on" />列表图片</label>
               <label><input class="pf-i" name="hiddenReadMoreText" type="checkbox" value="on" />问题列表阅读全文文字</label>
               <br>
-              <label><input class="pf-i" name="hiddenCollegeEntranceExamination" type="checkbox" value="on" />列表顶部活动推荐</label>
+              <label><input class="pf-i" name="hiddenCollegeEntranceExamination" type="checkbox"
+                  value="on" />列表顶部活动推荐</label>
               <label><input class="pf-i" name="hiddenListAnswerInPerson" type="checkbox" value="on" />列表[亲自答]标签</label>
             </div>
             <div class="pf-hidden-labels">
@@ -417,12 +432,17 @@
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-i" name="hiddenAnswerRightFooter" type="checkbox" value="on" />详情右侧信息栏</label>
-              <label><input class="pf-i" name="hiddenAnswerRightFooterAnswerAuthor" type="checkbox" value="on" />信息栏关于作者</label>
-              <label><input class="pf-i" name="hiddenAnswerRightFooterFavorites" type="checkbox" value="on" />信息栏被收藏次数</label>
+              <label><input class="pf-i" name="hiddenAnswerRightFooterAnswerAuthor" type="checkbox"
+                  value="on" />信息栏关于作者</label>
+              <label><input class="pf-i" name="hiddenAnswerRightFooterFavorites" type="checkbox"
+                  value="on" />信息栏被收藏次数</label>
               <br>
-              <label><input class="pf-i" name="hiddenAnswerRightFooterRelatedQuestions" type="checkbox" value="on" />信息栏相关问题</label>
-              <label><input class="pf-i" name="hiddenAnswerRightFooterContentList" type="checkbox" value="on" />信息栏相关推荐</label>
-              <label><input class="pf-i" name="hiddenAnswerRightFooterFooter" type="checkbox" value="on" />信息栏知乎指南</label>
+              <label><input class="pf-i" name="hiddenAnswerRightFooterRelatedQuestions" type="checkbox"
+                  value="on" />信息栏相关问题</label>
+              <label><input class="pf-i" name="hiddenAnswerRightFooterContentList" type="checkbox"
+                  value="on" />信息栏相关推荐</label>
+              <label><input class="pf-i" name="hiddenAnswerRightFooterFooter" type="checkbox"
+                  value="on" />信息栏知乎指南</label>
             </div>
             <div class="pf-hidden-labels">
               <label><input class="pf-i" name="hiddenSearchBoxTopSearch" type="checkbox" value="on" />搜索栏知乎热搜</label>
@@ -441,7 +461,8 @@
               <br>
               <label><input class="pf-i" name="hiddenZhuanlanAvatarWrapper" type="checkbox" value="on" />文章作者头像</label>
               <label><input class="pf-i" name="hiddenZhuanlanAuthorInfoHead" type="checkbox" value="on" />文章作者姓名</label>
-              <label><input class="pf-i" name="hiddenZhuanlanAuthorInfoDetail" type="checkbox" value="on" />文章作者简介</label>
+              <label><input class="pf-i" name="hiddenZhuanlanAuthorInfoDetail" type="checkbox"
+                  value="on" />文章作者简介</label>
               <br>
               <label><input class="pf-i" name="hiddenZhuanlanFollowButton" type="checkbox" value="on" />文章作者关注按钮</label>
             </div>

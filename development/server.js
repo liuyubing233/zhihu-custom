@@ -67,7 +67,7 @@ async function loop () {
   }
 }
 
-setInterval(loop, 3000)
+setTimeout(loop, 500)
 
 const code = GM_getValue('code')
 

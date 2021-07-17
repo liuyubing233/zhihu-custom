@@ -2,13 +2,13 @@
 
 <a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a>
 
-<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">Greasyfork</a>
+<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
 
 发现 bug 和想要添加的内容请反馈给我，感谢！！！
 
 插件目录跳转失效请移步<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/README.md" target="_blank">这里查看</a>
 
-Safari浏览器下在[知乎](www.zhihu.com)使用Tampermonkey会报错，导致插件无法使用，暂时没有解决头绪...
+Safari浏览器下在[知乎](www.zhihu.com)使用TamperMonkey会报错，导致插件无法使用，暂时没有解决头绪...
 ```
 Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does not appear in the script-src directive of the Content Security Policy.
 ```
@@ -37,6 +37,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
     - [8. 文章发布时间置顶](#8-文章发布时间置顶)
     - [9. 首页列表显示创建与最后修改时间](#9-首页列表显示创建与最后修改时间)
     - [10. 回答列表显示创建与最后修改时间](#10-回答列表显示创建与最后修改时间)
+    - [11. 版心宽度自定义（20210717新增）](#11-版心宽度自定义20210717新增)
   - [四. 首页设置](#四-首页设置)
     - [1. 首页五个模块位置自定义](#1-首页五个模块位置自定义)
     - [2. 内容标题添加类别标签](#2-内容标题添加类别标签)
@@ -188,6 +189,14 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 #### 10. 回答列表显示创建与最后修改时间
 
 <img src="https://by3302files.storage.live.com/y4m8d2x1gf2Ldvmpo3ukUjLrJkW_ocN_MX_0nFnl63X2rWrVjss6B3smdBYoApyqIqiPzBdBNW3BwjVEgqGftuT1xb0E1IgYqdFv31FYPWxeO-c8ch-CAhU1p6Yg_YXoer0-q2f6LudBTOFDlrPgO11WZSY7EkluhMjGaS735I1HGt_I0lBBQOf5iF4qECLNQac?width=1024&height=509&cropmode=none" width="800" />
+
+#### 11. 版心宽度自定义（20210717新增）
+
+选择设定版心方式为【自定义】，可以手动输入数字来调整版心宽度，再也不用担心宽度被束缚了！
+注：默认1200，输入数字小于1000会按照1000来处理，以免因为版心过小导致排版错乱，暂时不设置上限。
+选择【使用预设】（默认）则是使用作者给出的1000，1200，1500和拉满四个选项。
+
+<img src="https://by3302files.storage.live.com/y4mjR0VN4GrWRtUjggsd4Kpt-4vCMTkIzcva5QYX1oAb3xOY32ktZTwG8vaFEHi5jJCM-0VU2w4awzMXKA7vm4w2EjSal-UpsMGezZJ_bUIA6vLcCdar7pGrWTPLN2s1gO6IrNFddZo4bwqZ0gILsJMpX0TYhzVaampGbzqiytvI8O9bWqaGuBc66wij3bhhF6h?width=660&height=194&cropmode=none" width="660" height="194" />
 
 ### 四. 首页设置
 
