@@ -38,6 +38,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [10. 回答列表显示创建与最后修改时间](#10-回答列表显示创建与最后修改时间)
   - [11. 版心宽度自定义（20210717新增）](#11-版心宽度自定义20210717新增)
   - [12. 「屏蔽用户」按钮外置（20210823新增）](#12-屏蔽用户按钮外置20210823新增)
+  - [13. 不再显示「已屏蔽」用户发布的内容](#13-不再显示已屏蔽用户发布的内容)
 - [四. 首页设置](#四-首页设置)
   - [1. 首页五个模块位置自定义](#1-首页五个模块位置自定义)
   - [2. 内容标题添加类别标签](#2-内容标题添加类别标签)
@@ -198,12 +199,21 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mjR0VN4GrWRtUjggsd4Kpt-4vCMTkIzcva5QYX1oAb3xOY32ktZTwG8vaFEHi5jJCM-0VU2w4awzMXKA7vm4w2EjSal-UpsMGezZJ_bUIA6vLcCdar7pGrWTPLN2s1gO6IrNFddZo4bwqZ0gILsJMpX0TYhzVaampGbzqiytvI8O9bWqaGuBc66wij3bhhF6h?width=660&height=194&cropmode=none" width="660" height="194" />
 
-#### 12. 「屏蔽用户」按钮外置（20210823新增）
+#### 12. 「屏蔽用户」按钮外置（20210824新增）
 
 点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
 
 <img src="https://by3302files.storage.live.com/y4mZ6PRLOQPrjjEq0IGYM0xYCGSm4uvgQn1F15czFg2ddbLdRUlPX8kiRj3-d_P-WxZYsrm22OWuo4LE1tu4VaLGocY5ptSjJtCyZVua_DZrmauJ3avDpvKdVjQ0BzFeCE7Mr5_x3PPe8NPCjYPcfHTBOYkg03zIBWFHK-JcYt9tOth2Hzpxrb3JFulFDVGMkh9?width=660&height=357&cropmode=none" width="660" height="357" />
 
+#### 13. 可设置不再显示「已屏蔽」用户发布的内容（20210824新增）
+
+在使用该功能前，请先点击「同步黑名单」按钮同步黑名单内容（黑名单内容仅为演示）
+
+开启该选项后，在问答详情中将会过滤该用户的回答内容
+
+<img src="https://by3302files.storage.live.com/y4mXQ8wJIV1lE_BoqRS7m1EyM0NC4UVPu0ZCTU1e-7MZuyuGMD0N7knigO3bnvNvMv41-pmv-Uz8-YjJqs_B8QXPqvAdknUXGa48pQrQbEFeE0kfxV2x-658uBPBs3tGpqm8IcVYv9m3Vs8VmrnOkQSqaA8isSD0ewMHBNELK46glj4KPEmeCKmZiIeQOIp2pfH?width=453&height=405&cropmode=none" width="453" height="405" />
+
+点击已屏蔽用户了列表后方的 x 可以进行移出黑名单操作，跟知乎移除黑名单操作一致，不过如果是在知乎设置页里进行了「移除屏蔽」操作，需要手动运行同步黑名单。
 
 ### 四. 首页设置
 

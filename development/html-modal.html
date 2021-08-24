@@ -83,7 +83,8 @@
               </label>
               <label class="pf-radio-img-select">
                 <input class="pf-i" name="titleIco" type="radio" value="juejin" />
-                <img src="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png" alt="juejin" class="pf-radio-img">
+                <img src="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png"
+                  alt="juejin" class="pf-radio-img">
               </label>
               <label class="pf-radio-img-select">
                 <input class="pf-i" name="titleIco" type="radio" value="zhihu" />
@@ -141,16 +142,10 @@
                 <input class="pf-i" name="highlightListItem" type="checkbox" value="on" />
               </label>
             </div>
-            <div class="pf-checkbox-div">
+            <div class="pf-checkbox-div ">
               <label>
                 <span class="pf-label">文章发布时间置顶</span>
                 <input class="pf-i" name="articleCreateTimeToTop" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div">
-              <label>
-                <span class="pf-label">列表用户名后显示「屏蔽用户」按钮</span>
-                <input class="pf-i" name="showBlockUser" type="checkbox" value="on" />
               </label>
             </div>
             <div class="pf-other-bg">
@@ -190,6 +185,24 @@
                   <input class="pf-i" name="suspensionSearch" type="checkbox" value="on" />
                 </label>
               </div>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">列表用户名后显示「屏蔽用户」按钮</span>
+                <input class="pf-i" name="showBlockUser" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="pf-checkbox-div">
+              <label>
+                <span class="pf-label">不再显示「已屏蔽」用户发布的内容</span>
+                <input class="pf-i" name="removeBlockUserContent" type="checkbox" value="on" />
+              </label>
+              <div>
+                开启前请同步黑名单：
+                <button id="PF-SYNC-BLOCK-LIST" class="pf-button">同步黑名单</button>
+              </div>
+              <div class="pf-label">「已屏蔽」用户列表</div>
+              <div id="PF-BLOCK-LIST"></div>
             </div>
           </div>
           <div id="pf-set-home">

@@ -920,7 +920,7 @@ body {
   position: fixed;
   top: 24px;
   right: 0;
-  z-index: 100;
+  z-index: 300;
 }
 
 .pf-notification-item {
@@ -981,7 +981,8 @@ body {
   cursor: pointer;
 }
 
-.pf-loading {
+.pf-loading,
+.pf-loading-in-button {
   animation: loading 2s;
   animation-iteration-count: infinite;
   cursor: default !important;
@@ -996,9 +997,48 @@ body {
   }
 }
 
-.pf-block-user {
+.pf-block-user,
+.pf-do-not-watch {
   margin-left: 12px;
   border-left: 1px solid #ccc;
   padding-left: 12px;
   font-size: 12px;
+}
+
+#PF-BLOCK-LIST {
+  padding: 4px 8px;
+  background: #eee;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pf-block-item {
+  height: 30px;
+  line-height: 30px;
+  box-sizing: content-box;
+  padding: 4px;
+  margin: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 4px;
+  img {
+    width: 30px;
+    height: 30px;
+    margin-right: 4px;
+  }
+  a:hover {
+    color: #06f;
+  }
+}
+
+#PF-SYNC-BLOCK-LIST {
+  position: relative;
+  min-height: 30px;
+  min-width: 88px;
+  .iconfont {
+    position: absolute;
+    top: 6px;
+    left: 34px;
+  }
 }
