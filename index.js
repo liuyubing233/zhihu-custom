@@ -1242,7 +1242,7 @@ const LEAST_HEART = '1000';
         + (pfConfig.hiddenAnswers
           ? `.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine`
           + `,.TopstoryQuestionAskItem .RichContent .RichContent-inner,.HotItem-content .HotItem-excerpt`
-          + `,.Topstory-recommend .ZVideoItem-video`
+          + `,.Topstory-recommend .ZVideoItem-video, .Topstory-recommend .VideoAnswerPlayer`
           + `{display: none;}`
           : '')
         + (pfConfig.hiddenHotListWrapper ? '.HotListNav-wrapper{display: none;}' : '')
