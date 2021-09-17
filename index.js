@@ -1641,7 +1641,7 @@ const LEAST_HEART = '1000';
       const blockList = [...pfConfig.removeBlockUserContentList]
       blockList.splice(itemIndex, 1)
       pfConfig.removeBlockUserContentList = blockList
-      $(`.pf-block-id-${info.id}`)[0] && $(`.pf-block-id-${info.id}`).remove()
+      $(`.pf-block-id-${info.id}`)[0] && ($(`.pf-block-id-${info.id}`)[0].style.display = 'none')
       myStorage.set('pfConfig', JSON.stringify(pfConfig))
     }
   }
@@ -1731,7 +1731,7 @@ const LEAST_HEART = '1000';
           // 知乎官方账号优先级最高
           const label = eventThat.find('.AuthorInfo-name .css-n99yhz').attr('aria-label')
           if (/知乎[\s]*官方帐号/.test(label)) {
-            eventThat.remove()
+            eventThat[0].style.display = 'none'
             lessNum++
             GM_log(`[customize]已删除一条知乎官方帐号的回答`)
           }
@@ -1740,7 +1740,7 @@ const LEAST_HEART = '1000';
           REMOVE_ANSWER_BY_NAME.forEach((item) => {
             const reg = new RegExp(`['"]authorName['":]*` + item.name)
             if (pfConfig[item.id] && reg.test(dataZop)) {
-              eventThat.remove()
+              eventThat[0].style.display = 'none'
               lessNum++
               GM_log(`[customize]已删除一条${item.name}的回答`)
             }
@@ -1753,7 +1753,7 @@ const LEAST_HEART = '1000';
           if (formYanxuan) {
             const formYanxuanText = formYanxuan ? formYanxuan.innerText : ''
             if (/盐选专栏/.test(formYanxuanText)) {
-              eventThat.remove()
+              eventThat[0].style.display = 'none'
               lessNum++
               GM_log(`[customize]已删除一条来自盐选专栏的回答`)
             }
@@ -1791,7 +1791,7 @@ const LEAST_HEART = '1000';
             : {}
           const userId = aContent.author_member_hash_id || ''
           if (pfConfig.removeBlockUserContentList.find(i => i.id === userId)) {
-            eventThat.remove()
+            eventThat[0].style.display = 'none'
             lessNum++
             GM_log(`[customize]已屏蔽一个用户的回答`)
           }
@@ -1845,7 +1845,7 @@ const LEAST_HEART = '1000';
         } catch { }
         const { itemId = '', type = '' } = dataZop
         doFetchUninterestv2({ id: itemId, type })
-        $(event.target).parents('.TopstoryItem').remove()
+        $(event.target).parents('.TopstoryItem')[0].style.display = 'none'
       }
 
       // 列表内容展示更多
@@ -1976,7 +1976,7 @@ const LEAST_HEART = '1000';
         GM_log(`[customize]关键词过滤，内容标题：${title}\n关键词：${filterKeywordText}\n${routeURL}`)
         doFetchUninterestv2({ id: itemId, type })
         lessNum++
-        $(events[i]).parents('.TopstoryItem').remove()
+        $(events[i]).parents('.TopstoryItem')[0].style.display = 'none'
         if (pfConfig.notificationAboutFilter) {
           addNotification({
             title: `过滤内容：<a href="${routeURL}" target="_blank" style="color: #06f;">${title}</a>\n关键词：${filterKeywordText}`,
@@ -1985,7 +1985,7 @@ const LEAST_HEART = '1000';
         }
         filterKeywordText = ''
       } else if (typeKey && pfConfig[typeKey]) {
-        $(events[i]).parents('.TopstoryItem').remove()
+        $(events[i]).parents('.TopstoryItem')[0].style.display = 'none'
         lessNum++
         GM_log('[customize]---列表种类过滤---')
       }
@@ -2011,7 +2011,7 @@ const LEAST_HEART = '1000';
         if (pfConfig.hiddenSearchPageListAD) {
           const PcCollegeCard = $(that).find('.KfeCollection-PcCollegeCard-root')
           if (PcCollegeCard && PcCollegeCard[0]) {
-            $(that).remove()
+            that.style.display = 'none'
             lessNum++
             GM_log(`[customize]已过滤一条商业推广`)
           }
@@ -2128,7 +2128,7 @@ const LEAST_HEART = '1000';
             REMOVE_FOLLOWS.forEach(({ name, rep }) => {
               const thisRep = new RegExp(rep)
               if (pfConfig[name] && thisRep.test($(event).find('.FeedSource-firstline')[0].innerText)) {
-                $(event).remove()
+                event.style.display = 'none'
                 lessNum++
               }
             })
