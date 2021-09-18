@@ -1019,18 +1019,6 @@ const LEAST_HEART = '1000';
     ICO[pfConfig.titleIco] && $('head').append(ICO[pfConfig.titleIco])
   }
 
-  function zoomVideos() {
-    if (pfConfig.answerVideoLink !== 'justText') return
-    const itemClick = (item) => {
-      item.onclick = () => {
-        const src = $(item).find('iframe').attr('src')
-        window.open(src)
-      }
-    }
-    domA('.VideoContributionAnswer-container').forEach(itemClick)
-    domA('.RichText-video').forEach(itemClick)
-  }
-
   /** 版心CSS方法 */
   const versionCSS = {
     init: function () {
@@ -1072,7 +1060,6 @@ const LEAST_HEART = '1000';
 
       pathnameHasFn({
         'question': () => {
-          zoomVideos()
           listenQuestionSideColumn()
         },
       })
@@ -1181,13 +1168,10 @@ const LEAST_HEART = '1000';
       // 回答内视频缩放CSS
       const cssObj = {
         default: '',
-        justText: `.ZVideoLinkCard-playerContainer, .VideoContributionAnswer-video,.css-ujtn9j`
-          + `,.ZVideoLinkCard-info,.RichText-video .VideoCard{display: none;}`
-          + `.ZVideoLinkCard::before,.VideoContributionAnswer-container::before,.RichText-video::before`
-          + `{content: '视频链接';color: #f77a2d;}`
-          + `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}`
-          + `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
-        hidden: '.RichText-ZVideoLinkCardContainer,.VideoContributionAnswer-container,.RichText-video{display: none;}'
+        justText: `.VideoAnswerPlayer-video{display: none;}`
+          + `.VideoAnswerPlayer .VideoAnswerPlayer-stateBar::before{content: '视频链接';color: #f77a2d;margin-right: 12px}`
+          + `.VideoAnswerPlayer:hover{opacity: 0.8}`,
+        hidden: '.VideoAnswerPlayer{display: none;}'
       }
       return cssObj[pfConfig.answerVideoLink || 'default']
     },
@@ -2452,7 +2436,6 @@ const LEAST_HEART = '1000';
         topStoryRecommendEvent()
         pathnameHasFn({
           'question': () => {
-            zoomVideos()
             storyHidden()
             listenSelectButton()
             listenQuestionSideColumn()
