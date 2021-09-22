@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.6.7
+// @version      2.6.8
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://*.zhihu.com/*
@@ -1022,6 +1022,23 @@ const LEAST_HEART = '1000';
     document.title = pfConfig.title || myLocalC.cacheTitle
   }
 
+  /** 视频跳转链接 */
+  function zoomVideos() {
+    if (pfConfig.answerVideoLink !== 'justText') return
+    const itemClick = (item) => {
+      item.onclick = () => {
+        const parentModule = $(item).attr('data-za-extra-module')
+        let videoId = ''
+        try {
+          videoId = JSON.parse(parentModule).card.content.video_id
+        } catch { }
+        videoId && window.open(`/video/${videoId}`)
+      }
+    }
+    domA('.VideoContributionAnswer-container').forEach(itemClick)
+    domA('.RichText-video').forEach(itemClick)
+  }
+
   /** 修改页面标题ico */
   function changeTitleIco() {
     if (!ICO[pfConfig.titleIco]) return
@@ -1071,6 +1088,7 @@ const LEAST_HEART = '1000';
 
       pathnameHasFn({
         'question': () => {
+          zoomVideos()
           listenQuestionSideColumn()
         },
       })
@@ -1181,7 +1199,13 @@ const LEAST_HEART = '1000';
         default: '',
         justText: `.VideoAnswerPlayer-video{display: none;}`
           + `.VideoAnswerPlayer .VideoAnswerPlayer-stateBar::before{content: '视频链接';color: #f77a2d;margin-right: 12px}`
-          + `.VideoAnswerPlayer:hover{opacity: 0.8}`,
+          + `.VideoAnswerPlayer:hover{opacity: 0.8}`
+          + `.ZVideoLinkCard-playerContainer, .VideoContributionAnswer-video,.css-ujtn9j`
+          + `,.ZVideoLinkCard-info,.RichText-video .VideoCard{display: none;}`
+          + `.ZVideoLinkCard::before,.VideoContributionAnswer-container::before,.RichText-video::before`
+          + `{content: '视频链接';color: #f77a2d;cursor:pointer;}`
+          + `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}`
+          + `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
         hidden: '.VideoAnswerPlayer{display: none;}'
       }
       return cssObj[pfConfig.answerVideoLink || 'default']
@@ -2070,6 +2094,7 @@ const LEAST_HEART = '1000';
         const bContent = $(b).find('.AnswerItem').attr('data-za-extra-module')
           ? JSON.parse($(b).find('.AnswerItem').attr('data-za-extra-module')).card.content
           : {}
+
         switch (answerSortBy) {
           case 'vote':
             return bContent.upvote_num - aContent.upvote_num
@@ -2142,16 +2167,12 @@ const LEAST_HEART = '1000';
     + `<p>如果点击没有生成PDF请刷新页面</p>`
     + `</div>`
   const typeSpan = (type) => {
-    switch (type) {
-      case 'zvideo':
-        return `<span class="pf-label-tag" style="color: #12c2e9;">视频</span>`
-      case 'answer':
-        return `<span class="pf-label-tag" style="color: #ec7259;">问答</span>`
-      case 'article':
-        return `<span class="pf-label-tag" style="color: #00965e;">文章</span>`
-      default:
-        return ``
+    const typeObj = {
+      zvideo: '<span class="pf-label-tag" style="color: #12c2e9;">视频</span>',
+      answer: '<span class="pf-label-tag" style="color: #ec7259;">问答</span>',
+      article: '<span class="pf-label-tag" style="color: #00965e;">文章</span>'
     }
+    return typeObj[type] || ''
   }
 
   /** 收藏夹生成PDF 导出 */
@@ -2445,6 +2466,7 @@ const LEAST_HEART = '1000';
         topStoryRecommendEvent()
         pathnameHasFn({
           'question': () => {
+            zoomVideos()
             storyHidden()
             listenSelectButton()
             listenQuestionSideColumn()
