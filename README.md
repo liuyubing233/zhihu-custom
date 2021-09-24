@@ -32,13 +32,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
   - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
   - [7. 页面悬浮模块](#7-页面悬浮模块)
-  - [7. 列表内容高亮点击高亮边框](#7-列表内容高亮点击高亮边框)
-  - [8. 文章发布时间置顶](#8-文章发布时间置顶)
-  - [9. 首页列表显示创建与最后修改时间](#9-首页列表显示创建与最后修改时间)
-  - [10. 回答列表显示创建与最后修改时间](#10-回答列表显示创建与最后修改时间)
-  - [11. 版心宽度自定义（20210717新增）](#11-版心宽度自定义20210717新增)
-  - [12. 「屏蔽用户」按钮外置（20210824新增）](#12-屏蔽用户按钮外置20210824新增)
-  - [13. 可设置不再显示「已屏蔽」用户发布的内容（20210824新增）](#13-可设置不再显示已屏蔽用户发布的内容20210824新增)
+  - [8. 列表内容高亮点击高亮边框](#8-列表内容高亮点击高亮边框)
+  - [9. 文章发布时间置顶](#9-文章发布时间置顶)
+  - [10. 首页列表显示创建与最后修改时间](#10-首页列表显示创建与最后修改时间)
+  - [11. 回答列表显示创建与最后修改时间](#11-回答列表显示创建与最后修改时间)
+  - [12. 版心宽度自定义（20210717新增）](#12-版心宽度自定义20210717新增)
+  - [13. 「屏蔽用户」按钮外置（20210824新增）](#13-屏蔽用户按钮外置20210824新增)
+  - [14. 可设置不再显示「已屏蔽」用户发布的内容（20210824新增）](#14-可设置不再显示已屏蔽用户发布的内容20210824新增)
 - [四. 首页设置](#四-首页设置)
   - [1. 首页五个模块位置自定义](#1-首页五个模块位置自定义)
   - [2. 内容标题添加类别标签](#2-内容标题添加类别标签)
@@ -48,6 +48,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [2. 过滤列表类别](#2-过滤列表类别)
   - [3. 关键词过滤](#3-关键词过滤)
   - [4. 关注列表过滤](#4-关注列表过滤)
+  - [5. 过滤包含虚构创作的回答（20210924新增）](#5-过滤包含虚构创作的回答20210924新增)
 - [六. 回答设置](#六-回答设置)
   - [1. 自动展开所有回答](#1-自动展开所有回答)
   - [2. 默认收起所有长回答](#2-默认收起所有长回答)
@@ -61,6 +62,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [6. 搜索内容隐藏](#6-搜索内容隐藏)
   - [7. 专栏内容隐藏](#7-专栏内容隐藏)
   - [8. 回答列表中的视频显示方式](#8-回答列表中的视频显示方式)
+  - [9. 知乎首页活动推广隐藏（20210924新增）](#9-知乎首页活动推广隐藏20210924新增)
 - [八. 颜色设置](#八-颜色设置)
   - [1. 修改背景色](#1-修改背景色)
   - [2. 夜间模式](#2-夜间模式)
@@ -175,23 +177,23 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mXdEW-aTkkazcsDRSYStdnJRCoEHvcpPQSvOP0Vucnb1wtFwDqdLYiG8Tf1m2XCmFPuwd9oEVsl9iANPoIy3RZSwKmAAPjUKwP4XasBeDbxFIft9-l7NTBXMJXBxwwinpl0MrtNaBijAGplZEM6TWrh20ogxBDbfk1TUePAUUuImDxILtCfewdY5Q2fxuBDje?width=1024&height=508&cropmode=none" width="800" />
 
-#### 7. 列表内容高亮点击高亮边框
+#### 8. 列表内容高亮点击高亮边框
 
 设置此项后首页和回答详情列表在点击时边框高亮，同知乎原生快捷键S键
 
-#### 8. 文章发布时间置顶
+#### 9. 文章发布时间置顶
 
 <img src="https://by3302files.storage.live.com/y4mrllfKDnCo_M2nEB2KYC3stVQQLhxe-AWbfcKRdCWSHh0NXs6Lh7yFVXZldLe1mQqLQrnfOIfQuAeH2ygsktczYa0jm-gjbF709JRoZfuY1Zh4Z08dF1BU9o--sdV7ROe3Bw4Dov_abzCqPprrtCJB5ycRhZn0xsOWPJOrrT0qtti4C7UWzReO4Ig9Dd2BN98?width=1024&height=504&cropmode=none" width="800" />
 
-#### 9. 首页列表显示创建与最后修改时间
+#### 10. 首页列表显示创建与最后修改时间
 
 <img src="https://by3302files.storage.live.com/y4m05GjqvaVsLL9bKkY9TIFywr9x8EUmjao7eAe6Wg6bRtPTjva18t2IICu3fhp0xWqVnM-Y88lFpP11Rey2EMaJTR4JY4TMW1iLEPbyydgcmQSQxCcxntLhfNl0eGPKm7i2mMbMswBMBR6zYQ2ncU0FCXTpgDXkv4Nc-RtEWpgoluHO1gObtIdPtkxahc33F8j?width=1024&height=509&cropmode=none" width="800" />
 
-#### 10. 回答列表显示创建与最后修改时间
+#### 11. 回答列表显示创建与最后修改时间
 
 <img src="https://by3302files.storage.live.com/y4m8d2x1gf2Ldvmpo3ukUjLrJkW_ocN_MX_0nFnl63X2rWrVjss6B3smdBYoApyqIqiPzBdBNW3BwjVEgqGftuT1xb0E1IgYqdFv31FYPWxeO-c8ch-CAhU1p6Yg_YXoer0-q2f6LudBTOFDlrPgO11WZSY7EkluhMjGaS735I1HGt_I0lBBQOf5iF4qECLNQac?width=1024&height=509&cropmode=none" width="800" />
 
-#### 11. 版心宽度自定义（20210717新增）
+#### 12. 版心宽度自定义（20210717新增）
 
 选择设定版心方式为【自定义】，可以手动输入数字来调整版心宽度，再也不用担心宽度被束缚了！
 注：默认1200，输入数字小于1000会按照1000来处理，以免因为版心过小导致排版错乱，暂时不设置上限。
@@ -199,13 +201,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mjR0VN4GrWRtUjggsd4Kpt-4vCMTkIzcva5QYX1oAb3xOY32ktZTwG8vaFEHi5jJCM-0VU2w4awzMXKA7vm4w2EjSal-UpsMGezZJ_bUIA6vLcCdar7pGrWTPLN2s1gO6IrNFddZo4bwqZ0gILsJMpX0TYhzVaampGbzqiytvI8O9bWqaGuBc66wij3bhhF6h?width=660&height=194&cropmode=none" width="660" height="194" />
 
-#### 12. 「屏蔽用户」按钮外置（20210824新增）
+#### 13. 「屏蔽用户」按钮外置（20210824新增）
 
 点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
 
 <img src="https://by3302files.storage.live.com/y4mZ6PRLOQPrjjEq0IGYM0xYCGSm4uvgQn1F15czFg2ddbLdRUlPX8kiRj3-d_P-WxZYsrm22OWuo4LE1tu4VaLGocY5ptSjJtCyZVua_DZrmauJ3avDpvKdVjQ0BzFeCE7Mr5_x3PPe8NPCjYPcfHTBOYkg03zIBWFHK-JcYt9tOth2Hzpxrb3JFulFDVGMkh9?width=660&height=357&cropmode=none" width="660" height="357" />
 
-#### 13. 可设置不再显示「已屏蔽」用户发布的内容（20210824新增）
+#### 14. 可设置不再显示「已屏蔽」用户发布的内容（20210824新增）
 
 在使用该功能前，请先点击「同步黑名单」按钮同步黑名单内容（黑名单内容仅为演示）
 
@@ -253,8 +255,6 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 通过列表类别过滤内容
 
-选择【问答】后推荐列表中将不会再出现提问回答内容，建议保留。
-
 选择【文章】后推荐列表将不会再出现专栏文章。
 
 选择【视频】后推荐列表中将不会再出现视频内容。
@@ -274,6 +274,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 #### 4. 关注列表过滤
 
 可以设置过滤关注列表的【关注人赞同回答】【关注人赞同文章】【关注人关注问题】内容
+
+#### 5. 过滤包含虚构创作的回答（20210924新增）
+
+设置「过滤包含虚构创作的回答」，回答中将不再显示该内容
+
+<img src="https://by3302files.storage.live.com/y4mmfsvMY3fNy4Eb6aR17-orFuVfWhNAmttZq5FPBYNMTnaE8__QXCfMC1hy483r292ZWrj_8IjRcNLd5epqxNkSedNvwSlsxXVfOyU0n6xHsJtz69A4oL9smHeRfA0RnchOJlYDiqTBKDe_scHOGMMclSPXcZ-c83hbiIfdhMnqnBMk6qHq0UGZixVEijBCEdl?width=589&height=485&cropmode=none" width="589" height="485" />
+
 
 ### 六. 回答设置
 
@@ -362,6 +369,14 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 <img src="https://by3302files.storage.live.com/y4mJrwlO4PgJjlWTTd1iYOxKg26e6vQRMiNYmwMArAYRFnpcB_NCD43FSPpwUY-8gIGTq7K6sMx_cfalcmy2devMEWf9xNbTWtBk6Fc85gKo94l6uhdEcSAVX6c1qmY8sVWLyNdw-DEU5__yfrR-FAFaZItvqCy7uzrkvncz0S-uUytS8JVaQBIiMRVr7O3TYQR?width=1024&height=560&cropmode=none" width="800" />
 
 <img src="https://by3302files.storage.live.com/y4miv_QmrUpxq69Kyl5q5RA4P-EBl_1SZsw9R9lZYy25e39oIvbREktKRk2ltc0-jrsoLR1RhBXWWU-KRgVaG0wO3B0N3Snc4fCE4vdq1wgGtZ75kT15x-zUEbYJHZFqFjEAXT8yA0mWW3do6KHPg7GmTw9rLrT9Ms-02L2ZtLtaSTF8Rx1XZI7eV95bvRutUQH?width=1024&height=473&cropmode=none" width="800" />
+
+#### 9. 知乎首页活动推广隐藏（20210924新增）
+
+<img src="https://by3302files.storage.live.com/y4mk3Tq4eHEFhiFiH02q6Ggs8V215zxzjxJ1owgpTeE1bZm38WrT4TRbejtDIxiz-pi3KKZk33FSJEupVy-_x8xchQWt9Sebq9yww8jjXWrst3s0voHT4_OtnRo_iwekaLonG_cceBm4ZFNXh0sv4dJf50zcduFxd_EK-xJTgHaHWneMWuHUGV-erv9nAco7rQC?width=591&height=494&cropmode=none" width="591" height="494" />
+
+勾选该选项，如下图的首页活动推广模块就不会再显示了
+
+<img src="https://by3302files.storage.live.com/y4m4cYhg3QbKhadgmPPemopTPtA7OmRSEWdLFUfTa9Oqc9fLFzk1D-0Lxkgz3VhKaRmUB8_ToMlnfhogm6O7r_mnx-kNoRjy5lSlSrzIxY1LAAwQFY3hn_FCtUmhSfCnLh-Pc87CP9iLuIkaKLDE2AuOSP3itpL63v-wim0GJirb-GyqqUSihHl0aYd7o1ssPd-?width=1024&height=238&cropmode=none" width="1024" height="238" />
 
 ### 八. 颜色设置
 
