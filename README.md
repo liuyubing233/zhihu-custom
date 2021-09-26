@@ -49,6 +49,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [3. 关键词过滤](#3-关键词过滤)
   - [4. 关注列表过滤](#4-关注列表过滤)
   - [5. 过滤包含虚构创作的回答（20210924新增）](#5-过滤包含虚构创作的回答20210924新增)
+  - [6. 搜索结果过滤（20210926新增）](#6-搜索结果过滤20210926新增)
 - [六. 回答设置](#六-回答设置)
   - [1. 自动展开所有回答](#1-自动展开所有回答)
   - [2. 默认收起所有长回答](#2-默认收起所有长回答)
@@ -280,6 +281,10 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 设置「过滤包含虚构创作的回答」，回答中将不再显示该内容
 
 <img src="https://by3302files.storage.live.com/y4mmfsvMY3fNy4Eb6aR17-orFuVfWhNAmttZq5FPBYNMTnaE8__QXCfMC1hy483r292ZWrj_8IjRcNLd5epqxNkSedNvwSlsxXVfOyU0n6xHsJtz69A4oL9smHeRfA0RnchOJlYDiqTBKDe_scHOGMMclSPXcZ-c83hbiIfdhMnqnBMk6qHq0UGZixVEijBCEdl?width=589&height=485&cropmode=none" width="589" height="485" />
+
+#### 6. 搜索结果过滤（20210926新增）
+
+<img src="https://by3302files.storage.live.com/y4mPvkTGzbeGdqXkFL00f9gXvnl4IT7MUzisFePISvoIUA2sH-RVoqvO_huC_qlEjZgfsE7QUdo6qJvihsb1frDQ51RzPvSvhCqiOBzdhKFG2v9PrLspmlRlvlmR03IZx4_TprP3suyGsPgZgOTJpiJzhLvL9RndmW2I0Cjw8mWK1y4158XDVOQm4gp-bEtG1fz?width=584&height=361&cropmode=none" width="584" height="361" />
 
 
 ### 六. 回答设置
