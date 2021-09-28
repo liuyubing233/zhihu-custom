@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.6.16
+// @version      2.6.17
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://*.zhihu.com/*
@@ -1465,12 +1465,14 @@ const HIDDEN_LIST = [
         + `,.css-1yq3jl6,.css-mzh2tk,.css-6mdg56,.CreatorRecruitFooter--fix,body .Recruit-buttonFix-placeholder`
         + `,.css-ovbogu,.css-1v840mj,.css-huwkhm,.css-akuk2k,.css-ygii7h,.css-1h84h63,.css-1bwzp6r,.css-w215gm`
         + `,.css-1117lk0:hover,.zhi,.Modal-modal-wf58,.css-1j5d3ll,.pf-block-item,.GlobalSideBar-navList`
+        + `,.css-iebf30,.css-1qjzmdv,.AnswerForm-footer,.css-g3xs10,.css-jlyj5p`
         + `{background: #121212!important;}`
       const b3 = `.pf-button,.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd)`
         + `,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0,.css-ssvpr2,.css-m9gn5f,.FeedbackForm-inputBox-15yJ`
         + `,.FeedbackForm-canvasContainer-mrde,._Invite_container_30SP,.utils-frostedGlassEffect-2unM`
         + `,.Card-card-2K6v,.UserLivesPage-page-GSje,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448`
         + `,.PubIndex-CategoriesHeader,.AppHeader,.css-r9mkgf,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z,.css-1gnqr8i,#PF-BLOCK-LIST`
+        + `,.css-16eulm`
         + `{background:#333333!important;}`
       const bTran = `.Community-ContentLayout,._AccountSettings_accountLine_3HJS,.css-1gfpqrv,.css-13dk2dh`
         + `,.css-u6lvao,.css-u6lvao:before,.css-u6lvao:after`
@@ -1485,7 +1487,8 @@ const HIDDEN_LIST = [
         + `,.Card-card-2K6v,.LiveItem-description-Tliw,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448`
         + `,.GlobalSidebar-appDownloadTip-33iw,.css-pgcb4h,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z,.css-jwse5c,.css-hd7egx`
         + `,.css-1zcaix,.css-4a3k6y,.css-eonief,.css-dy7bva,.css-sthon2,.css-teb1rp,.css-uq88u1,.css-nymych`
-        + `,.css-jt1vdv,.css-tfs9zi,.ZVideo-body .UserLink,.ZVideo-body .CommentRichText`
+        + `,.css-jt1vdv,.css-tfs9zi,.ZVideo-body .UserLink,.ZVideo-body .CommentRichText,.css-1m2h1o9,.css-16p5ii9`
+        + `,.css-kkim14,.css-1mx84bz`
         + `{color: #fff!important}`
       const bc12 = `.MenuBar-root-rQeFm{border-color: #121212!important;}`
       const c3 = `.pf-b-close:hover,css-1x3upj1{color: #333!important}`
@@ -1520,7 +1523,7 @@ const HIDDEN_LIST = [
         + `,.App-root-cPFwn,.TopNavs-root-rwAr7,.App-root-qzkuH,.App-actionTrigger-cCyD7,.ProductTrigger-root-amaSi`
         + `,.App-infiniteContainer-nrxGj,.ActionTrigger-content-dPn6H,.App-card-pkbhv,.css-zvnmar,.Login-options`
         + `,.SignFlowInput-errorMask,.ColumnHomeColumnCard,.KfeCollection-PcCollegeCard-root,.KfeCollection-PcCollegeCard-wrapper`
-        + `,.css-1j5d3ll`
+        + `,.css-1j5d3ll,.css-iebf30,.css-1qjzmdv,.AnswerForm-footer,.css-g3xs10,.css-jlyj5p`
         + `{background-color:${BACKGROUND_CONFIG[bg].opacity}!important;background:${BACKGROUND_CONFIG[bg].opacity}!important;}`
       const transparentBG = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper`
         + `{background-color: transparent!important;}`
@@ -1951,7 +1954,7 @@ const HIDDEN_LIST = [
         pfConfig.showBlockUser && addBlockUser(eventThat)
 
         if (i === events.length - 1) {
-          const les = i - lessNum - 1
+          const les = i - lessNum
           eachIndex = les || eachIndex
         }
       }
@@ -2104,11 +2107,13 @@ const HIDDEN_LIST = [
     let lessNum = 0
     for (let i = filterIndex, len = events.length; i < len; i++) {
       let dataZop = {}
+      const that = events[i]
+      const eventThat = $(that)
       try {
-        dataZop = JSON.parse($(events[i]).attr('data-zop'))
+        dataZop = JSON.parse(eventThat.attr('data-zop'))
       } catch { }
       const { itemId = '', title = '', type = '' } = dataZop
-      const routeURL = $(events[i]).find('[itemprop="url"]') && $(events[i]).find('[itemprop="url"]').attr('content')
+      const routeURL = eventThat.find('[itemprop="url"]') && eventThat.find('[itemprop="url"]').attr('content')
       let isFindTitle = false
       words.forEach((w) => {
         const rep = new RegExp(w.toLowerCase())
@@ -2119,17 +2124,18 @@ const HIDDEN_LIST = [
       })
       let typeKey = ''
       Object.keys(removeItemTypeNameToClass).forEach((key) => {
-        $(events[i]).hasClass(removeItemTypeNameToClass[key]) && (typeKey = key)
+        eventThat.hasClass(removeItemTypeNameToClass[key]) && (typeKey = key)
       })
 
-      const TopstoryItemEv = $(events[i]).parents('.TopstoryItem')[0]
+      // 需要隐藏的元素
+      const needHiddenItem = eventThat.parents('.TopstoryItem')[0]
 
-      if (isFindTitle) {
+      if (isFindTitle && needHiddenItem.offsetHeight) {
         // 过滤了之后调用“不感兴趣”接口
         doFetchUninterestv2({ id: itemId, type })
         lessNum = fnHiddenDom(
           lessNum,
-          TopstoryItemEv,
+          needHiddenItem,
           `关键词过滤：${title}\n关键词：${filterKeywordText}\n${routeURL}`
         )
         if (pfConfig.notificationAboutFilter) {
@@ -2140,11 +2146,11 @@ const HIDDEN_LIST = [
         }
         filterKeywordText = ''
       } else if (typeKey && pfConfig[typeKey]) {
-        lessNum = fnHiddenDom(lessNum, TopstoryItemEv, '---列表种类过滤---')
+        lessNum = fnHiddenDom(lessNum, needHiddenItem, '---列表种类过滤---')
       }
 
       if (i === len - 1) {
-        const les = i - lessNum - 1
+        const les = i - lessNum
         filterIndex = les || filterIndex
       }
     }
@@ -2187,7 +2193,7 @@ const HIDDEN_LIST = [
         }
 
         if (i === events.length - 1) {
-          const les = i - lessNum - 1
+          const les = i - lessNum
           searchEachIndex = les || searchEachIndex
         }
       }
@@ -2306,7 +2312,7 @@ const HIDDEN_LIST = [
         }
 
         if (i === events.length - 1) {
-          followingIndex = i - lessNum - 1
+          followingIndex = i - lessNum
         }
       }
     }
