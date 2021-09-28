@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.6.13
+// @version      2.6.14
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://*.zhihu.com/*
@@ -125,7 +125,6 @@ const HIDDEN_LIST = [
   { value: 'hiddenQuestionInvite', label: '邀请回答按钮' },
   { value: 'is-br' },
   { value: 'hiddenQuestionSpecial', label: '详情顶部专题收录标签' },
-  { value: 'hiddenQuestionTopic', label: '详情顶部主题' },
   { value: 'hidden618HongBao', label: '618红包链接' },
   { value: 'is-line' },
   { value: 'hiddenAnswerRightFooter', label: '详情右侧信息栏' },
@@ -273,7 +272,6 @@ const HIDDEN_LIST = [
     hiddenZhuanlanAvatarWrapper: false, // 文章作者头像
     hiddenZhuanlanAuthorInfoHead: false, // 文章作者姓名
     hiddenZhuanlanAuthorInfoDetail: false, // 文章作者简介
-    hiddenQuestionTopic: false, // 详情顶部主题
     hiddenQuestionSpecial: false, // 详情顶部专题收录标签
     hiddenHomeTopAD: true, // 知乎首页顶部活动推广
     hiddenListVideoContent: false, // 列表视频回答的内容
@@ -1402,7 +1400,6 @@ const HIDDEN_LIST = [
         + (pfConfig.hiddenZhuanlanAuthorInfoDetail ? '.zhuanlan .AuthorInfo-detail{display: none;}' : '')
         + (pfConfig.hiddenListAnswerInPerson ? '.Topstory-mainColumn .LabelContainer{display: none;}' : '')
         + (pfConfig.hiddenQuestionSpecial ? '.QuestionHeader .LabelContainer-wrapper{display: none;}' : '')
-        + (pfConfig.hiddenQuestionTopic ? '[data-za-detail-view-path-module="TopicItem"]{display: none;}' : '')
         + (pfConfig.hiddenHomeTopAD ? '.Topstory>div{display: none;}.Topstory .Topstory-container{display: flex!important}' : '')
     },
   }
@@ -1655,7 +1652,6 @@ const HIDDEN_LIST = [
       listItemCreatedAndModifiedTime: false, // 列表内容显示发布与最后修改时间
       answerItemCreatedAndModifiedTime: false, // 回答列表显示创建与最后修改时间
       hiddenListAnswerInPerson: true,
-      hiddenQuestionTopic: true, // 详情顶部主题
       hiddenQuestionSpecial: true, // 详情顶部专题收录标签
     }
     pfConfig = {
