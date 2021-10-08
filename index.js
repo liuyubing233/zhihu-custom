@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.6.18
+// @version      2.6.19
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://*.zhihu.com/*
@@ -1550,6 +1550,7 @@ const HIDDEN_LIST = [
   function initLinkChanger() {
     const esName = ['a.external', 'a.LinkCard']
     const hrefChanger = (item) => {
+      console.log('item', item)
       const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, '') || ''
       let href = ''
       // 解决hrefFormat格式已经是decode后的格式
@@ -1559,11 +1560,12 @@ const HIDDEN_LIST = [
         href = hrefFormat
       }
       item.href = href
+      $(item).addClass('is-link-changed')
+      GM_log('[customize]外链重定向 once')
     }
     esName.forEach((name) => {
-      domA(name).forEach(hrefChanger)
+      domA(`${name}:not(.is-link-changed)`).forEach(hrefChanger)
     })
-    GM_log('[customize]外链重定向完毕')
   }
 
   const useSimple = async () => {
