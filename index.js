@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.6.19
+// @version      2.6.20
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @author       super pufferfish
 // @match        *://*.zhihu.com/*
@@ -329,9 +329,8 @@ const HIDDEN_LIST = [
     if (cacheTime === 0 || cacheTime + t < now) {
       canOperationTimer[name] = now
       return true
-    } else {
-      return false
     }
+    return false
   }
 
   /**
@@ -766,8 +765,6 @@ const HIDDEN_LIST = [
       initPositionPage()
     } else if (/^hidden/.test(name) || DO_CSS_VERSION.includes(name)) {
       versionCSS.init()
-    } else if (/^removeItemAbout/.test(name)) {
-      removeItemAboutChanger(ev)
     } else {
       ob[name] && ob[name]()
     }
@@ -819,20 +816,6 @@ const HIDDEN_LIST = [
       $(`[name="${r}"]`)[0].checked = false
       pfConfig[r] = false
       myStorage.set('pfConfig', JSON.stringify(pfConfig))
-    }
-  }
-
-  function removeItemAboutChanger(ev) {
-    const names = ['removeItemAboutArticle', 'removeItemAboutVideo']
-    let checkedNum = 3
-    names.forEach((item) => {
-      $(`[name="${item}"]`)[0].checked && checkedNum--
-    })
-    if (!checkedNum) {
-      ev.checked = false
-      pfConfig[ev.name] = false
-      myStorage.set('pfConfig', JSON.stringify(pfConfig))
-      alert('至少保留问答、视频、文章中的一项')
     }
   }
 
@@ -1550,7 +1533,6 @@ const HIDDEN_LIST = [
   function initLinkChanger() {
     const esName = ['a.external', 'a.LinkCard']
     const hrefChanger = (item) => {
-      console.log('item', item)
       const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, '') || ''
       let href = ''
       // 解决hrefFormat格式已经是decode后的格式
@@ -1843,6 +1825,7 @@ const HIDDEN_LIST = [
   }
 
   let eachIndex = 0
+  const REP_UNREAL  = /内容包含虚构创作/
   /** 删除回答 */
   function storyHidden() {
     sortAnswer()
@@ -1851,7 +1834,7 @@ const HIDDEN_LIST = [
       pfConfig.showBlockUser && addBlockUser($('.QuestionAnswer-content'))
     }
 
-    const isTrue = (() => {
+    const fnTrue = () => {
       let isHaveName = false
       REMOVE_ANSWER_BY_NAME.forEach((item) => {
         pfConfig[item.id] && (isHaveName = true)
@@ -1859,9 +1842,9 @@ const HIDDEN_LIST = [
       return isHaveName || pfConfig.removeFromYanxuan || pfConfig.removeZhihuOfficial
         || pfConfig.answerUnfold || pfConfig.answerFoldStart || pfConfig.answerItemCreatedAndModifiedTime
         || pfConfig.showBlockUser || pfConfig.removeUnrealAnswer
-    })()
+    }
 
-    if (!isTrue) return
+    if (!fnTrue()) return
     const events = $('.List-item')
     let lessNum = 0 // 每次减去的列表内容数量
     // 使用此循环方式是为了新的元素添加后从后面开始循环，减少遍历数量
@@ -1906,9 +1889,7 @@ const HIDDEN_LIST = [
         if (pfConfig.removeUnrealAnswer && !isRemoved) {
           const aTag = eventThat.find('.KfeCollection-FabledStatement')[0]
           const aTag2 = eventThat.find('.css-140fcia')[0]
-          const isUnreal = aTag ? /内容包含虚构创作/.test(aTag.innerText) : false
-          const isUnreal2 = aTag2 ? /内容包含虚构创作/.test(aTag2.innerText) : false
-          if (isUnreal || isUnreal2) {
+          if ( REP_UNREAL.test(aTag ? aTag.innerText : '') || REP_UNREAL.test(aTag2 ? aTag2.innerText : '')) {
             lessNum = fnHiddenDom(lessNum, that, `已删除一条内容包含虚构创作的回答`)
             isRemoved = true
           }
@@ -1978,7 +1959,7 @@ const HIDDEN_LIST = [
       })
     }).then((res) => res.json())
       .then(() => {
-        GM_log(`[customize]已调用过滤接口`)
+        GM_log(`[customize]已调用「不感兴趣」接口`)
       })
   }
 
@@ -2097,59 +2078,56 @@ const HIDDEN_LIST = [
   }
 
   let filterIndex = 0
-  /** 关键词过滤列表内容 */
+  /** 过滤列表内容 */
   function filterItemByKeyword() {
-    let filterKeywordText = ''
     const events = $('.TopstoryItem .ContentItem')
-    const removeItemTypeNameToClass = {
-      'removeItemAboutArticle': 'ArticleItem',
-      'removeItemAboutVideo': 'ZVideoItem',
-      'removeItemAboutAsk': 'TopstoryQuestionAskItem',
-    }
+    const isRemoveVideo = pfConfig.removeItemAboutVideo
+    const isRemoveArticle = pfConfig.removeItemAboutArticle
     const words = pfConfig.filterKeywords
+
     let lessNum = 0
     for (let i = filterIndex, len = events.length; i < len; i++) {
       let dataZop = {}
-      const that = events[i]
-      const eventThat = $(that)
-      try {
-        dataZop = JSON.parse(eventThat.attr('data-zop'))
-      } catch { }
-      const { itemId = '', title = '', type = '' } = dataZop
-      const routeURL = eventThat.find('[itemprop="url"]') && eventThat.find('[itemprop="url"]').attr('content')
-      let isFindTitle = false
-      words.forEach((w) => {
-        const rep = new RegExp(w.toLowerCase())
-        if (rep.test(title.toLowerCase())) {
-          isFindTitle = true
-          filterKeywordText += `【${w}】`
-        }
-      })
-      let typeKey = ''
-      Object.keys(removeItemTypeNameToClass).forEach((key) => {
-        eventThat.hasClass(removeItemTypeNameToClass[key]) && (typeKey = key)
-      })
-
+      const eventThat = $(events[i])
       // 需要隐藏的元素
       const needHiddenItem = eventThat.parents('.TopstoryItem')[0]
+      if (needHiddenItem.offsetHeight) {
+        try {
+          dataZop = JSON.parse(eventThat.attr('data-zop'))
+        } catch { }
+        const { itemId = '', title = '', type = '' } = dataZop
+        let isFindTitle = false
+        let filterKeywords = ''
+        words.forEach((w) => {
+          const rep = new RegExp(w.toLowerCase())
+          if (rep.test(title.toLowerCase())) {
+            isFindTitle = true
+            filterKeywords += `【${w}】`
+          }
+        })
 
-      if (isFindTitle && needHiddenItem.offsetHeight) {
-        // 过滤了之后调用“不感兴趣”接口
-        doFetchUninterestv2({ id: itemId, type })
-        lessNum = fnHiddenDom(
-          lessNum,
-          needHiddenItem,
-          `关键词过滤：${title}\n关键词：${filterKeywordText}\n${routeURL}`
-        )
-        if (pfConfig.notificationAboutFilter) {
-          addNotification({
-            title: `过滤内容：<a href="${routeURL}" target="_blank" style="color: #06f;">${title}</a>\n关键词：${filterKeywordText}`,
-            content: `已调用过滤接口`
-          })
+        if (isFindTitle) {
+          // 关键词过滤
+          // 过滤了之后调用“不感兴趣”接口
+          const routeURL = eventThat.find('[itemprop="url"]') && eventThat.find('[itemprop="url"]').attr('content')
+          lessNum = fnHiddenDom(
+            lessNum,
+            needHiddenItem,
+            `关键词过滤：${title}\n关键词：${filterKeywords}\n${routeURL}`
+          )
+          doFetchUninterestv2({ id: itemId, type })
+          if (pfConfig.notificationAboutFilter) {
+            addNotification({
+              title: `过滤内容：<a href="${routeURL}" target="_blank" style="color: #06f;">${title}</a>\n关键词：${filterKeywordText}`,
+              content: `已调用「不感兴趣」接口`
+            })
+          }
+        } else if (
+          (eventThat.hasClass('ZVideoItem') && isRemoveVideo)
+          || (eventThat.hasClass('ArticleItem') && isRemoveArticle)
+        ) {
+          lessNum = fnHiddenDom(lessNum, needHiddenItem, '列表种类过滤')
         }
-        filterKeywordText = ''
-      } else if (typeKey && pfConfig[typeKey]) {
-        lessNum = fnHiddenDom(lessNum, needHiddenItem, '---列表种类过滤---')
       }
 
       if (i === len - 1) {
@@ -2162,9 +2140,7 @@ const HIDDEN_LIST = [
   let searchEachIndex = 0
   /** 搜索列表过滤 */
   function searchPageHidden() {
-    const isTrue = (() => {
-      return pfConfig.removeSearchListAD || pfConfig.removeSearchListArticle || pfConfig.removeSearchListVideo
-    })()
+    const isTrue = pfConfig.removeSearchListAD || pfConfig.removeSearchListArticle || pfConfig.removeSearchListVideo
     if (!isTrue) return
     const events = $('[role="listitem"]')
     let lessNum = 0
