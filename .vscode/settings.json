@@ -143,4 +143,7 @@
     "compress": true, //是否压缩
   },
   "editor.wordWrap": "off",
+  "cSpell.words": [
+    "Zhuanlan"
+  ],
 }

@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="pf-radio-div pf-heart-system">
-              <span class="pf-label">版心大小</span>
+              <span class="pf-label">版心宽度</span>
               <select name="versionHeart" class="pf-i w-200">
                 <option value="1000">1000px</option>
                 <option value="1200">1200px</option>
@@ -41,10 +41,17 @@
               </select>
             </div>
             <div class="pf-radio-div pf-heart-self" style="display: none;">
-              <span class="pf-label">版心大小</span>
+              <span class="pf-label">通用版心宽度</span>
               <div class="flex-1">
                 <input name="versionHeartSelf" type="number" class="pf-i h-25 w-200">
                 <div class="pf-commit">输入值小于1000时按照1000来处理，避免不必要的错误</div>
+              </div>
+            </div>
+            <div class="pf-radio-div pf-heart-self" style="display: flex;">
+              <span class="pf-label">专栏/文章版心宽度</span>
+              <div class="flex-1">
+                <input name="versionHeartZhuanlan" type="number" class="pf-i h-25 w-200">
+                <div class="pf-commit">输入值小于600时按照600来处理，避免不必要的错误</div>
               </div>
             </div>
             <div class="pf-raido-divoom-answer-image">
