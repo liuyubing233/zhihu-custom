@@ -28,7 +28,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [6. 回答内容按照点赞数和评论数排序](#6-回答内容按照点赞数和评论数排序)
 - [三. 基础设置](#三-基础设置)
   - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
-  - [2. 回答和专栏图片缩放](#2-回答和专栏图片缩放)
+  - [2. 回答和专栏图片缩放（20220121 修改为拖动条）](#2-回答和专栏图片缩放20220121-修改为拖动条)
   - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
   - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
   - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
@@ -38,9 +38,10 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [9. 文章发布时间置顶](#9-文章发布时间置顶)
   - [10. 首页列表显示创建与最后修改时间](#10-首页列表显示创建与最后修改时间)
   - [11. 回答列表显示创建与最后修改时间](#11-回答列表显示创建与最后修改时间)
-  - [12. 版心宽度自定义（20210717 新增）](#12-版心宽度自定义20210717-新增)
-  - [13. 「屏蔽用户」按钮外置（20210824 新增）](#13-屏蔽用户按钮外置20210824-新增)
-  - [14. 可设置不再显示「已屏蔽」用户发布的内容（20210824 新增）](#14-可设置不再显示已屏蔽用户发布的内容20210824-新增)
+  - [12. 版心宽度自定义（20210717）](#12-版心宽度自定义20210717)
+  - [13. 「屏蔽用户」按钮外置（20210824）](#13-屏蔽用户按钮外置20210824)
+  - [14. 可设置不再显示「已屏蔽」用户发布的内容（20210824）](#14-可设置不再显示已屏蔽用户发布的内容20210824)
+  - [15. 文章&专栏宽度独立修改（20220120）](#15-文章专栏宽度独立修改20220120)
 - [四. 首页设置](#四-首页设置)
   - [1. 首页五个模块位置自定义](#1-首页五个模块位置自定义)
   - [2. 内容标题添加类别标签](#2-内容标题添加类别标签)
@@ -50,9 +51,9 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [2. 过滤列表类别](#2-过滤列表类别)
   - [3. 关键词过滤](#3-关键词过滤)
   - [4. 关注列表过滤](#4-关注列表过滤)
-  - [5. 过滤包含虚构创作的回答（20210924 新增）](#5-过滤包含虚构创作的回答20210924-新增)
-  - [6. 搜索结果过滤（20210926 新增）](#6-搜索结果过滤20210926-新增)
-  - [7.自定义设置过滤低赞内容（20211228）](#7自定义设置过滤低赞内容20211228)
+  - [5. 过滤包含虚构创作的回答（20210924）](#5-过滤包含虚构创作的回答20210924)
+  - [6. 搜索结果过滤（20210926）](#6-搜索结果过滤20210926)
+  - [7. 自定义设置过滤低赞内容（20211228）](#7-自定义设置过滤低赞内容20211228)
 - [六. 回答设置](#六-回答设置)
   - [1. 自动展开所有回答](#1-自动展开所有回答)
   - [2. 默认收起所有长回答](#2-默认收起所有长回答)
@@ -66,7 +67,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [6. 搜索内容隐藏](#6-搜索内容隐藏)
   - [7. 专栏内容隐藏](#7-专栏内容隐藏)
   - [8. 回答列表中的视频显示方式](#8-回答列表中的视频显示方式)
-  - [9. 知乎首页活动推广隐藏（20210924 新增）](#9-知乎首页活动推广隐藏20210924-新增)
+  - [9. 知乎首页活动推广隐藏（20210924）](#9-知乎首页活动推广隐藏20210924)
 - [八. 颜色设置](#八-颜色设置)
   - [1. 修改背景色](#1-修改背景色)
   - [2. 夜间模式](#2-夜间模式)
@@ -145,11 +146,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mSqmevK_F5UP654n4eKDHlgu6xtxqTjmRWEs8flN-zT1WNBRlD48kmq0LNN6zTfbuCvSs9tZrYwy-BJWj1KtIHgVzxuAmRyz-lAp2lXw1NCbDmCu0Ygstn12-XCiwDyhEBH9BivHojeYZbe3qg1o8_cCW5aDlQKOw11VCOJQV9ab7-Oiy6y3na0dOkSZAzUNW?width=660&height=327&cropmode=none" width="800" />
 
-#### 2. 回答和专栏图片缩放
+#### 2. 回答和专栏图片缩放（20220121 修改为拖动条）
 
 设置此项可以将回答和专栏内图片按照所设置的大小进行缩放，并且在缩放模式下添加了所有的图片弹窗预览。
 
 【动图弹窗显示】在图片缩放模式下极为好用
+
+<img src="https://by3302files.storage.live.com/y4mVs0wgi5BiHQHQ0y2Ueysz7j7ts7SqVjZAUDNjqtIhydaYz0uVOvQnSou1unSKYBSsKRgokGfZBhGYdV_bkvR89l9VIe8ciDVfvFw4fYqDjqGGdtI9DAiMQeQbGERUkMp-3MewdQYz5m5B6VEOnna-er-qxYe-g4vr2aqiitOUS-sIGRwhhsnkxm9VLAaJOC_?width=596&height=496&cropmode=none" width="596" height="496" />
 
 #### 3. 更改网页标题和标题图片
 
@@ -197,7 +200,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4m8d2x1gf2Ldvmpo3ukUjLrJkW_ocN_MX_0nFnl63X2rWrVjss6B3smdBYoApyqIqiPzBdBNW3BwjVEgqGftuT1xb0E1IgYqdFv31FYPWxeO-c8ch-CAhU1p6Yg_YXoer0-q2f6LudBTOFDlrPgO11WZSY7EkluhMjGaS735I1HGt_I0lBBQOf5iF4qECLNQac?width=1024&height=509&cropmode=none" width="800" />
 
-#### 12. 版心宽度自定义（20210717 新增）
+#### 12. 版心宽度自定义（20210717）
 
 选择设定版心方式为【自定义】，可以手动输入数字来调整版心宽度，再也不用担心宽度被束缚了！
 注：默认 1200，输入数字小于 1000 会按照 1000 来处理，以免因为版心过小导致排版错乱，暂时不设置上限。
@@ -205,13 +208,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mjR0VN4GrWRtUjggsd4Kpt-4vCMTkIzcva5QYX1oAb3xOY32ktZTwG8vaFEHi5jJCM-0VU2w4awzMXKA7vm4w2EjSal-UpsMGezZJ_bUIA6vLcCdar7pGrWTPLN2s1gO6IrNFddZo4bwqZ0gILsJMpX0TYhzVaampGbzqiytvI8O9bWqaGuBc66wij3bhhF6h?width=660&height=194&cropmode=none" width="660" height="194" />
 
-#### 13. 「屏蔽用户」按钮外置（20210824 新增）
+#### 13. 「屏蔽用户」按钮外置（20210824）
 
 点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
 
 <img src="https://by3302files.storage.live.com/y4mZ6PRLOQPrjjEq0IGYM0xYCGSm4uvgQn1F15czFg2ddbLdRUlPX8kiRj3-d_P-WxZYsrm22OWuo4LE1tu4VaLGocY5ptSjJtCyZVua_DZrmauJ3avDpvKdVjQ0BzFeCE7Mr5_x3PPe8NPCjYPcfHTBOYkg03zIBWFHK-JcYt9tOth2Hzpxrb3JFulFDVGMkh9?width=660&height=357&cropmode=none" width="660" height="357" />
 
-#### 14. 可设置不再显示「已屏蔽」用户发布的内容（20210824 新增）
+#### 14. 可设置不再显示「已屏蔽」用户发布的内容（20210824）
 
 在使用该功能前，请先点击「同步黑名单」按钮同步黑名单内容（黑名单内容仅为演示）
 
@@ -220,6 +223,10 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 <img src="https://by3302files.storage.live.com/y4mXQ8wJIV1lE_BoqRS7m1EyM0NC4UVPu0ZCTU1e-7MZuyuGMD0N7knigO3bnvNvMv41-pmv-Uz8-YjJqs_B8QXPqvAdknUXGa48pQrQbEFeE0kfxV2x-658uBPBs3tGpqm8IcVYv9m3Vs8VmrnOkQSqaA8isSD0ewMHBNELK46glj4KPEmeCKmZiIeQOIp2pfH?width=453&height=405&cropmode=none" width="453" height="405" />
 
 点击已屏蔽用户了列表后方的 x 可以进行移出黑名单操作，跟知乎移除黑名单操作一致，不过如果是在知乎设置页里进行了「移除屏蔽」操作，需要手动运行同步黑名单。
+
+#### 15. 文章&专栏宽度独立修改（20220120）
+
+<img src="https://by3302files.storage.live.com/y4mfVNTDT1s4tH0MQ90m8BiMFjiu25BImp5dYMsms-ctKIs586JeYXq0ns6JkT7eqjlaiJ8cYcV9W7Eh6j4Jxhn0gT95i59GsnT1gvHvjtzoS2MzWHV0-Bgo61jkdg0VrXPc9ItHrP7GByLGu1SH_NfpSgZ8p4rCaFTNDgh96Oky5Ph918VsknbSAFVhkqoaxOq?width=588&height=486&cropmode=none" width="588" height="486" />
 
 ### 四. 首页设置
 
@@ -279,17 +286,17 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 可以设置过滤关注列表的【关注人赞同回答】【关注人赞同文章】【关注人关注问题】内容
 
-#### 5. 过滤包含虚构创作的回答（20210924 新增）
+#### 5. 过滤包含虚构创作的回答（20210924）
 
 设置「过滤包含虚构创作的回答」，回答中将不再显示该内容
 
 <img src="https://by3302files.storage.live.com/y4mmfsvMY3fNy4Eb6aR17-orFuVfWhNAmttZq5FPBYNMTnaE8__QXCfMC1hy483r292ZWrj_8IjRcNLd5epqxNkSedNvwSlsxXVfOyU0n6xHsJtz69A4oL9smHeRfA0RnchOJlYDiqTBKDe_scHOGMMclSPXcZ-c83hbiIfdhMnqnBMk6qHq0UGZixVEijBCEdl?width=589&height=485&cropmode=none" width="589" height="485" />
 
-#### 6. 搜索结果过滤（20210926 新增）
+#### 6. 搜索结果过滤（20210926）
 
 <img src="https://by3302files.storage.live.com/y4mPvkTGzbeGdqXkFL00f9gXvnl4IT7MUzisFePISvoIUA2sH-RVoqvO_huC_qlEjZgfsE7QUdo6qJvihsb1frDQ51RzPvSvhCqiOBzdhKFG2v9PrLspmlRlvlmR03IZx4_TprP3suyGsPgZgOTJpiJzhLvL9RndmW2I0Cjw8mWK1y4158XDVOQm4gp-bEtG1fz?width=584&height=361&cropmode=none" width="584" height="361" />
 
-#### 7.自定义设置过滤低赞内容（20211228）
+#### 7. 自定义设置过滤低赞内容（20211228）
 
 <img src="https://by3302files.storage.live.com/y4mzMRlvGJlFOnfFaGXJdcrdhMm8FR56Ma12MGwo58CyzLARlT6-GphsHbyPm4eYbPQnJjldKbXf2FqlphEgvgAuVaUzjCGFSHsyUi_HFaJr7P8L2mk8543HhL4G4448iPkOHbUwv-kVZl6KVG0Dcr7jnaBeJcuE_Gk7OKZgfGjbugte0h1XFgFt0Sk10KnGikL?width=660&height=550&cropmode=none" width="660" height="550" />
 
@@ -383,7 +390,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4miv_QmrUpxq69Kyl5q5RA4P-EBl_1SZsw9R9lZYy25e39oIvbREktKRk2ltc0-jrsoLR1RhBXWWU-KRgVaG0wO3B0N3Snc4fCE4vdq1wgGtZ75kT15x-zUEbYJHZFqFjEAXT8yA0mWW3do6KHPg7GmTw9rLrT9Ms-02L2ZtLtaSTF8Rx1XZI7eV95bvRutUQH?width=1024&height=473&cropmode=none" width="800" />
 
-#### 9. 知乎首页活动推广隐藏（20210924 新增）
+#### 9. 知乎首页活动推广隐藏（20210924）
 
 <img src="https://by3302files.storage.live.com/y4mk3Tq4eHEFhiFiH02q6Ggs8V215zxzjxJ1owgpTeE1bZm38WrT4TRbejtDIxiz-pi3KKZk33FSJEupVy-_x8xchQWt9Sebq9yww8jjXWrst3s0voHT4_OtnRo_iwekaLonG_cceBm4ZFNXh0sv4dJf50zcduFxd_EK-xJTgHaHWneMWuHUGV-erv9nAco7rQC?width=591&height=494&cropmode=none" width="591" height="494" />
 

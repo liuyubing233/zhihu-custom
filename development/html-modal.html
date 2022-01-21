@@ -55,14 +55,15 @@
               </div>
             </div>
             <div class="pf-raido-divoom-answer-image">
-              <span class="pf-label">回答和文章图片缩放</span>
+              <span class="pf-label">回答和文章图片大小</span>
               <div class="pf-content">
-                <label><input class="pf-i" name="zoomAnswerImage" type="radio" value="100px" />极小(100px)</label>
-                <label><input class="pf-i" name="zoomAnswerImage" type="radio" value="200px" />小(200px)</label>
-                <label><input class="pf-i" name="zoomAnswerImage" type="radio" value="400px" />中(400px)</label>
-                <br>
+                <div style="display: flex;align-items: center;">
+                  <input class="pf-i-input" type="range" min="0" max="1000" name="zoomAnswerImage"
+                    style="width: 300px" />
+                  <span id="IMAGE_SIZE" style="margin-left: 8px;">0</span>
+                </div>
+                <div class="pf-commit">滑动条范围在 0 ~ 1000</div>
                 <label><input class="pf-i" name="zoomAnswerImage" type="radio" value="default" />默认</label>
-                <label><input class="pf-i" name="zoomAnswerImage" type="radio" value="hidden" />隐藏</label>
                 <label><input class="pf-i" name="zoomAnswerImage" type="radio" value="original" />原图</label>
               </div>
             </div>
@@ -119,42 +120,7 @@
                 <label><input class="pf-i" name="toHomeButtonZhuanlan" type="radio" value="zhuanlan" />专栏首页</label>
               </div>
             </div>
-            <div class="pf-hidden-labels">
-              <label>
-                <span class="pf-label">问题显示创建和最后修改时间</span>
-                <input class="pf-i" name="questionCreatedAndModifiedTime" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div">
-              <label>
-                <span class="pf-label">首页列表显示创建与最后修改时间</span>
-                <input class="pf-i" name="listItemCreatedAndModifiedTime" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div">
-              <label>
-                <span class="pf-label">回答列表显示创建与最后修改时间（更改后请刷新页面）</span>
-                <input class="pf-i" name="answerItemCreatedAndModifiedTime" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div">
-              <label>
-                <span class="pf-label">关注列表高亮原创内容</span>
-                <input class="pf-i" name="highlightOriginal" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div">
-              <label>
-                <span class="pf-label">列表内容点击高亮边框</span>
-                <input class="pf-i" name="highlightListItem" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="pf-checkbox-div ">
-              <label>
-                <span class="pf-label">文章发布时间置顶</span>
-                <input class="pf-i" name="articleCreateTimeToTop" type="checkbox" value="on" />
-              </label>
-            </div>
+            <div id="BASIS_CHECKBOX_LIST"></div>
             <div class="pf-other-bg">
               <div class="pf-label fw-bold border-none">悬浮模块</div>
               <div class="pf-commit border-none">拖动悬浮模块定位位置</div>
@@ -305,9 +271,10 @@
               <span class="pf-commit pf-title-commit">此部分更改后请重新刷新页面</span>
             </h3>
             <div class="pf-hidden-labels">
-              <label><input class="pf-i" name="removeZhihuOfficial" type="checkbox" value="on" />知乎官方账号回答</label>
+              <label><input class="pf-i" name="removeZhihuOfficial" type="checkbox" value="on" />详情页过滤知乎官方账号回答</label>
               <div class="pf-commit">此选项会过滤所有官方账号回答，请酌情选择</div>
             </div>
+            <div>详情页过滤内容：</div>
             <div class="pf-hidden-labels">
               <label><input class="pf-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label>
               <label><input class="pf-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label>
@@ -318,12 +285,12 @@
               <label><input class="pf-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构内容的回答</label>
             </div>
             <div class="pf-hidden-labels">
-              <span class="pf-label">过滤列表类别</span>
+              <span class="pf-label">列表类别过滤</span>
               <label><input class="pf-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label>
               <label><input class="pf-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label>
             </div>
             <div class="pf-hidden-labels">
-              <span class="pf-label">过滤搜索结果</span>
+              <span class="pf-label">列表搜索结果过滤</span>
               <label><input class="pf-i" name="removeSearchListAD" type="checkbox" value="on" />商业推广</label>
               <label><input class="pf-i" name="removeSearchListArticle" type="checkbox" value="on" />文章</label>
               <label><input class="pf-i" name="removeSearchListVideo" type="checkbox" value="on" />视频</label>
