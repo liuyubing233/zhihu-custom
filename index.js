@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.7.2
+// @version      2.7.3
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -1289,21 +1289,29 @@ const BASIS_CHECKBOX_LIST = [
       const cssObj = {
         default: '',
         justText: '.MCNLinkCard-imageContainer,.MCNLinkCard-button,.MCNLinkCard-source'
-          + ',.ecommerce-ad-commodity-img,.ecommerce-ad-commodity-box-icon'
+          + ',.ecommerce-ad-commodity-img,.ecommerce-ad-commodity-box-icon,.RichText-MCNLinkCardContainer .BottomInfo'
+          + ',.CPSCommonCard-imageBox,.RedPacketCard-imageBox,.CPSCommonCard-tool,.CPSCommonCard-subtitle'
+          + ',.RedPacketCard-subtitle,.RedPacketCard-tool'
           + '{display: none!important;}'
           + '.MCNLinkCard,.MCNLinkCard-card,.ecommerce-ad-commodity'
+          + ',.RichText-MCNLinkCardContainer .GoodsRecommendCard,.CPSCommonCard,.RedPacketCard-info,.RedPacketCard'
           + '{min-height: 0!important;background: transparent!important;width:100%!important;max-width:100%!important;}'
-          + '.MCNLinkCard-cardContainer,.ecommerce-ad-commodity,.ecommerce-ad-commodity-main{padding: 0!important;}'
+          + '.MCNLinkCard-cardContainer,.ecommerce-ad-commodity,.ecommerce-ad-commodity-main,.RedPacketCard,.CPSCommonCard'
+          + '{padding: 0!important;}'
           + '.MCNLinkCard,.MCNLinkCard-info{margin: 0!important;}'
           + '.MCNLinkCard-info,.ecommerce-ad-commodity-main{flex-direction: row!important;}'
           + '.MCNLinkCard-price{padding-left: 12px;}'
           + '.ecommerce-ad-commodity-box .ecommerce-ad-commodity{height: auto!important;}'
           + '.ecommerce-ad-commodity-box-main-second{width: auto!important;}'
-          + '.MCNLinkCard-titleContainer,.ecommerce-ad-commodity-main-content-des span'
+          + '.MCNLinkCard-titleContainer,.ecommerce-ad-commodity-main-content-des span,.CPSCommonCard-title,.RedPacketCard-title'
           + '{color: #fd8d55!important;justify-content: start!important;}'
-          + '.MCNLinkCard-titleContainer::before,.ecommerce-ad-commodity-main-content-des span::before{content: "购物链接："}'
+          + '.MCNLinkCard-titleContainer::before,.ecommerce-ad-commodity-main-content-des span::before'
+          + ',.CPSCommonCard-title::before,.RedPacketCard-title::before'
+          + '{content: "购物链接："}'
           + '.MCNLinkCard-title{color: #fd8d55!important;}',
-        hidden: 'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box{display: none!important;}'
+        hidden: 'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box'
+          + ',.RichText-MCNLinkCardContainer'
+          + '{display: none!important;}'
       }
       return cssObj[pfConfig.shoppingLink || 'default']
     },
@@ -1320,7 +1328,7 @@ const BASIS_CHECKBOX_LIST = [
           + `{content: '视频链接';color: #f77a2d;cursor:pointer;}`
           + `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}`
           + `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
-        hidden: '.VideoAnswerPlayer{display: none;}'
+        hidden: '.VideoAnswerPlayer,.RichText-video{display: none;}'
       }
       return cssObj[pfConfig.answerVideoLink || 'default']
     },
