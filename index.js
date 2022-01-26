@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.7.3
+// @version      2.7.4
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -1185,7 +1185,7 @@ const BASIS_CHECKBOX_LIST = [
           : '.VoteButton-TriangleUp,.Zi--TriangleDown {width: 14px;height: 14px;}')
         + (pfConfig.listOutPutNotInterested
           ? `.Topstory-recommend .ContentItem-title::after{content: '不感兴趣';color: #999;font-size: 12px;cursor: pointer;display: inline-block;margin-left:6px;border: 1px solid #999;border-radius: 4px;padding: 0 4px;pointer-events:auto;}`
-          + `.ContentItem-title{pointer-events:none;}.ContentItem-title>div,.ContentItem-title>a{pointer-events:auto;}`
+          + `.ContentItem-title>div,.ContentItem-title>a{pointer-events:auto;}`
           : '')
         + (pfConfig.highlightListItem
           ? `.List-item:focus,.TopstoryItem:focus,.HotItem:focus`
