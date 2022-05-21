@@ -18,7 +18,7 @@
 // @grant        GM_log
 // @grant        GM_download
 // @run-at       document-start
-// @require     https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
+// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
 // ==/UserScript==
 
 const domA = (n) => document.querySelectorAll(n)
@@ -2258,6 +2258,16 @@ const BASIS_CHECKBOX_LIST = [
         if (pfConfig.removeSearchListVideo && eventThat.find('.ZvideoItem')[0] && !isRemoved) {
           lessNum = fnHiddenDom(lessNum, that, '过滤搜索页视频')
           isRemoved = true
+        }
+
+        if (pfConfig.removeLessVote && !isRemoved) {
+          const upvoteEvent = eventThat.find('.ContentItem-actions .VoteButton--up')
+          const upvoteText = upvoteEvent ? upvoteEvent.attr('aria-label') : ''
+          const upvote = upvoteText ? upvoteText.trim().replace(/\W+/, '') : -1
+          if (upvote > -1 && upvote < pfConfig.lessVoteNumber) {
+            lessNum = fnHiddenDom(lessNum, that, `过滤低与${pfConfig.lessVoteNumber}赞内容`)
+            isRemoved = true
+          }
         }
 
         if (i === events.length - 1) {
