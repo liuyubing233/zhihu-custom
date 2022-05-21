@@ -2233,6 +2233,7 @@ const BASIS_CHECKBOX_LIST = [
     if (!isTrue) return
     const events = $('[role="listitem"]')
     let lessNum = 0
+    const words = pfConfig.filterKeywords
     for (let i = searchEachIndex, len = events.length; i < len; i++) {
       const that = events[i]
       let isRemoved = false
@@ -2260,6 +2261,7 @@ const BASIS_CHECKBOX_LIST = [
           isRemoved = true
         }
 
+        // 低赞内容过滤
         if (pfConfig.removeLessVote && !isRemoved) {
           const upvoteEvent = eventThat.find('.ContentItem-actions .VoteButton--up')
           const upvoteText = upvoteEvent ? upvoteEvent.attr('aria-label') : ''
@@ -2267,6 +2269,27 @@ const BASIS_CHECKBOX_LIST = [
           if (upvote > -1 && upvote < pfConfig.lessVoteNumber) {
             lessNum = fnHiddenDom(lessNum, that, `过滤低与${pfConfig.lessVoteNumber}赞内容`)
             isRemoved = true
+          }
+        }
+
+        // 关键词过滤
+        if (!isRemoved && words.length) {
+          const titleEvent = eventThat.find('.ContentItem-title [itemprop="name"]')
+          if (titleEvent) {
+            let isFindTitle = false
+            let filterKeywords = ''
+            const title = titleEvent.attr('content') || ''
+            words.forEach((w) => {
+              const rep = new RegExp(w.toLowerCase())
+              if (rep.test(title.toLowerCase())) {
+                isFindTitle = true
+                filterKeywords += `【${w}】`
+              }
+            })
+            if (isFindTitle) {
+              lessNum = fnHiddenDom(lessNum, that, `关键词过滤内容: ${filterKeywords}`)
+              isRemoved = true
+            }
           }
         }
 
