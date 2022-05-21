@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      2.7.6
+// @version      2.8.0
 // @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -18,7 +18,7 @@
 // @grant        GM_log
 // @grant        GM_download
 // @run-at       document-start
-// @require      https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js
+// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
 // ==/UserScript==
 
 const domA = (n) => document.querySelectorAll(n)
@@ -1264,7 +1264,7 @@ const BASIS_CHECKBOX_LIST = [
         'original': ' ',
       }
       const imgC = styleObj[pfConfig.zoomAnswerImage] ||
-        'width:' + pfConfig.zoomAnswerImage + 'px!important;cursor: zoom-in!important;max-width: initial!important;'
+        'width:' + pfConfig.zoomAnswerImage + 'px!important;cursor: zoom-in!important;max-width: 100%!important;'
       return `.GifPlayer.isPlaying img {cursor:pointer!important;}`
         + `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage {${imgC}}`
     },
@@ -2233,6 +2233,7 @@ const BASIS_CHECKBOX_LIST = [
     if (!isTrue) return
     const events = $('[role="listitem"]')
     let lessNum = 0
+    const words = pfConfig.filterKeywords
     for (let i = searchEachIndex, len = events.length; i < len; i++) {
       const that = events[i]
       let isRemoved = false
@@ -2258,6 +2259,38 @@ const BASIS_CHECKBOX_LIST = [
         if (pfConfig.removeSearchListVideo && eventThat.find('.ZvideoItem')[0] && !isRemoved) {
           lessNum = fnHiddenDom(lessNum, that, '过滤搜索页视频')
           isRemoved = true
+        }
+
+        // 低赞内容过滤
+        if (pfConfig.removeLessVote && !isRemoved) {
+          const upvoteEvent = eventThat.find('.ContentItem-actions .VoteButton--up')
+          const upvoteText = upvoteEvent ? upvoteEvent.attr('aria-label') : ''
+          const upvote = upvoteText ? upvoteText.trim().replace(/\W+/, '') : -1
+          if (upvote > -1 && upvote < pfConfig.lessVoteNumber) {
+            lessNum = fnHiddenDom(lessNum, that, `过滤低与${pfConfig.lessVoteNumber}赞内容`)
+            isRemoved = true
+          }
+        }
+
+        // 关键词过滤
+        if (!isRemoved && words.length) {
+          const titleEvent = eventThat.find('.ContentItem-title [itemprop="name"]')
+          if (titleEvent) {
+            let isFindTitle = false
+            let filterKeywords = ''
+            const title = titleEvent.attr('content') || ''
+            words.forEach((w) => {
+              const rep = new RegExp(w.toLowerCase())
+              if (rep.test(title.toLowerCase())) {
+                isFindTitle = true
+                filterKeywords += `【${w}】`
+              }
+            })
+            if (isFindTitle) {
+              lessNum = fnHiddenDom(lessNum, that, `关键词过滤内容: ${filterKeywords}`)
+              isRemoved = true
+            }
+          }
         }
 
         if (i === events.length - 1) {
