@@ -18,7 +18,7 @@
 // @grant        GM_log
 // @grant        GM_download
 // @run-at       document-start
-// @require      https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js
+// @require     https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
 // ==/UserScript==
 
 const domA = (n) => document.querySelectorAll(n)
