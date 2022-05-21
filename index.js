@@ -1264,7 +1264,7 @@ const BASIS_CHECKBOX_LIST = [
         'original': ' ',
       }
       const imgC = styleObj[pfConfig.zoomAnswerImage] ||
-        'width:' + pfConfig.zoomAnswerImage + 'px!important;cursor: zoom-in!important;max-width: initial!important;'
+        'width:' + pfConfig.zoomAnswerImage + 'px!important;cursor: zoom-in!important;max-width: 100%!important;'
       return `.GifPlayer.isPlaying img {cursor:pointer!important;}`
         + `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage {${imgC}}`
     },
