@@ -1,148 +1,14 @@
 {
   "editor.tabSize": 2,
-  "editor.fontLigatures": true,
   "files.trimTrailingWhitespace": true,
-  "eslint.options": {
-    "plugins": [
-      "html"
-    ]
-  },
   // vscode默认启用了根据文件类型自动设置tabsize的选项
-  "editor.detectIndentation": false,
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "cSpell.userWords": [
-    "Antd",
-    "Semibold",
-    "Unmount",
-    "acss",
-    "alicdn",
-    "cspace",
-    "datetimepicker",
-    "dingdo",
-    "dingtalk",
-    "iconfont",
-    "iphone",
-    "jsapi",
-    "mixins",
-    "ndwb",
-    "readed",
-    "vconsole",
-    "vuex"
-  ],
-  "files.autoSave": "off",
-  "window.zoomLevel": 2,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "git.confirmSync": false,
-  "editor.minimap.enabled": true,
-  "workbench.startupEditor": "newUntitledFile",
-  "git.autofetch": true,
-  "editor.codeActionsOnSave": {
-    // #每次保存的时候将代码按eslint格式进行修复
-    "source.fixAll.eslint": false,
-    // "eslint.formatOnSave": true,
-  },
-  // 移除js语句的分号
-  "javascript.format.semicolons": "remove",
-  // 在函数名后面加上括号，类似这种形式 foo () {}
-  "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "vetur.validation.template": true,
-  "vetur.format.enable": true,
   "prettier.singleQuote": true,
-  "prettier.semi": false,
+  "prettier.semi": true,
   "search.followSymlinks": false,
-  "files.associations": {
-    "*.axml": "axml",
-    "*.cjson": "jsonc",
-    "*.wxss": "css",
-    "*.wxs": "javascript",
-    "*.vue": "vue",
-    "*.html": "html"
-  },
   "emmet.triggerExpansionOnTab": true,
-  "emmet.includeLanguages": {
-    "axml": "html",
-    "html": "axml",
-    "wxml": "html"
-  },
-  "workbench.colorTheme": "Monokai",
-  "minapp-vscode.disableAutoConfig": true,
-  "auto-rename-tag.activationOnLanguage": [
-    "*"
-  ],
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "better-comments.tags": [
-    {
-      "tag": "!",
-      "color": "#FF2D00",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "transparent",
-      "bold": false,
-      "italic": false
-    },
-    {
-      "tag": "?",
-      "color": "#3498DB",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "transparent",
-      "bold": false,
-      "italic": false
-    },
-    {
-      "tag": "//",
-      "color": "#474747",
-      "strikethrough": true,
-      "underline": false,
-      "backgroundColor": "transparent",
-      "bold": false,
-      "italic": false
-    },
-    {
-      "tag": "todo",
-      "color": "#FF8C00",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "transparent",
-      "bold": false,
-      "italic": false
-    },
-    {
-      "tag": "*",
-      "color": "#98C379",
-      "strikethrough": false,
-      "underline": false,
-      "backgroundColor": "transparent",
-      "bold": false,
-      "italic": false
-    }
-  ],
-  "[less]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "gitlens.advanced.blame.customArguments": [],
-  "liveServer.settings.donotVerifyTags": true,
-  "liveServer.settings.donotShowInfoMsg": true,
   "less.compile": {
     "compress": true, //是否压缩
   },
-  "editor.wordWrap": "off",
   "cSpell.words": [
     "Zhihu",
     "Zhuanlan"
