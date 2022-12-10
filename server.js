@@ -8,11 +8,8 @@
 // @grant        unsafeWindow
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @grant        GM_log
 // @grant        GM_xmlhttpRequest
-// @grant        GM_download
 // @run-at       document-start
-// @require      https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js
 // @connect      127.0.0.1
 // ==/UserScript==
 // 使用live server 启动
