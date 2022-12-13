@@ -37,7 +37,7 @@
   height: 28px;
   line-height: 28px;
   text-align: center;
-  width: 36px;
+  width: 48px;
   border-radius: 0 8px 8px 0;
   background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
@@ -63,8 +63,6 @@
   z-index: 201;
   display: flex;
   flex-direction: column;
-  color: @text;
-  box-sizing: border-box;
   .ctz-header {
     height: 38px;
     line-height: 38px;
@@ -105,35 +103,45 @@
     ::-webkit-scrollbar-thumb:hover {
       background-color: rgba(95, 95, 95, 0.7);
     }
+  }
 
-    .ctz-content-left {
-      width: 100px;
-      border-right: @border;
-      a {
-        padding: 0 8px;
-        height: 32px;
-        line-height: 32px;
-        display: flex;
-        font-size: 14px;
-        &:hover {
-          background: #ededed;
-        }
+  .ctz-content-left {
+    width: 100px;
+    border-right: @border;
+    a {
+      padding: 0 8px;
+      height: 32px;
+      line-height: 32px;
+      display: flex;
+      font-size: 14px;
+      &:hover {
+        background: #ededed;
       }
     }
-    .ctz-content-right {
-      flex: 1;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-      .ctz-set-title {
-        padding: 0 8px;
-        font-weight: bold;
-        height: 32px;
-        line-height: 32px;
-      }
+  }
+  .ctz-content-right {
+    flex: 1;
+    overflow-y: auto;
+    scroll-behavior: smooth;
 
-      .ctz-set-content {
-        // TODO: text height
-        min-height: 500px;
+    .ctz-set-title {
+      padding: 0 8px;
+      font-weight: bold;
+      height: 32px;
+      line-height: 32px;
+    }
+
+    .ctz-label {
+      padding: 0 8px;
+      line-height: 28px;
+    }
+
+    .ctz-set-content {
+      // TODO: text height
+      min-height: 500px;
+
+      & > div {
+        padding-bottom: 24px;
       }
     }
   }
@@ -149,5 +157,123 @@
       margin-right: 16px;
       .hover-style();
     }
+  }
+
+  #CTZ_BACKGROUND {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 8px;
+    margin: 0 8px;
+    label {
+      position: relative;
+      input {
+        position: absolute;
+        left: 10px;
+        top: 18px;
+        &:checked + div {
+          border-color: @hover!important;
+        }
+      }
+      div {
+        font-size: 14px;
+        border-radius: 8px;
+        text-align: center;
+        line-height: 50px;
+      }
+    }
+  }
+
+  .ctz-label {
+    font-size: 14px;
+    &::after {
+      content: '：';
+    }
+  }
+
+  .ctz-dark {
+    display: flex;
+    height: 28px;
+    align-items: center;
+  }
+}
+
+.ctz-stop-scroll {
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+// 开关
+.ctz-switch {
+  position: relative;
+  width: 80px;
+  scroll-behavior: smooth;
+
+  .ctz-switch-checkbox {
+    display: none;
+  }
+
+  .ctz-switch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .ctz-switch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+  }
+
+  .ctz-switch-inner::before,
+  .ctz-switch-inner::after {
+    display: block;
+    float: right;
+    width: 50%;
+    height: 24px;
+    padding: 0;
+    line-height: 24px;
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+    box-sizing: border-box;
+  }
+
+  .ctz-switch-inner::after {
+    content: attr(data-on);
+    padding-left: 10px;
+    background-color: #0066ff;
+    color: #ffffff;
+  }
+
+  .ctz-switch-inner::before {
+    content: attr(data-off);
+    padding-right: 10px;
+    background-color: #eeeeee;
+    color: #999999;
+    text-align: right;
+  }
+
+  .ctz-switch-switch {
+    position: absolute;
+    display: block;
+    width: 36px;
+    height: 20px;
+    background: #ffffff;
+    top: 0px;
+    bottom: 0;
+    right: 40px;
+    border: 2px solid #999999;
+    border-radius: 4px;
+    transition: all 0.3s ease-in 0s;
+  }
+
+  .ctz-switch-checkbox:checked + .ctz-switch-label .ctz-switch-inner {
+    margin-left: 0;
+  }
+
+  .ctz-switch-checkbox:checked + .ctz-switch-label .ctz-switch-switch {
+    right: 0;
   }
 }
