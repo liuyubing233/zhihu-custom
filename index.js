@@ -54,6 +54,8 @@ const ID_MAIN = 'CTZ_MAIN';
 const ID_STYLE = 'CTZ_STYLE';
 /** 背景色 style id */
 const ID_STYLE_BG = 'CTZ_STYLE_BACKGROUND';
+/** 自定义样式 style id */
+const ID_STYLE_CUSTOM = 'CTZ_STYLE_CUSTOM';
 /** 弹窗关闭按钮 id */
 const ID_CLOSE = 'CTZ_CLOSE_DIALOG';
 /** 背景色元素 id */
@@ -61,9 +63,11 @@ const ID_BG = 'CTZ_BACKGROUND';
 
 /** INPUT 元素类名 */
 const CLASS_INPUT = 'ctz-i';
+/** BUTTON 元素类名 */
+const CLASS_BUTTON = 'ctz-button';
 
 /** 底部跳转链接 */
-const HERF_LIST = [
+const HREF_LIST = [
   {
     name: 'Github 您的star⭐是我更新的动力',
     href: 'https://github.com/superPufferfish/custom-zhihu',
@@ -249,7 +253,7 @@ const HERF_LIST = [
   };
 
   /** 修改页面背景的css */
-  const cssBackground = {
+  const myBackground = {
     init: function () {
       domById(ID_STYLE_BG) && domById(ID_STYLE_BG).remove();
       document.head.appendChild(
@@ -320,15 +324,7 @@ const HERF_LIST = [
 
       const cssDarkStr =
         '#CTZ_DIALOG_MAIN{background: #121212!important;border: 1px solid #eee}' +
-        addPrefix(
-          background121212 +
-            colorWhite +
-            color333 +
-            color999 +
-            background333 +
-            backgroundTransparent +
-            borderColor121212
-        );
+        addPrefix(background121212 + colorWhite + color333 + color999 + background333 + backgroundTransparent + borderColor121212);
 
       // 缓存黑暗模式数据
       storageConfig.cssDark = cssDarkStr;
@@ -353,7 +349,7 @@ const HERF_LIST = [
         `,.ExploreColumnCard,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types` +
         `,.AutoInviteItem-wrapper--desktop,.Popover-content,.Notifications-footer,.SettingsFAQ` +
         `,.Popover-arrow:after,.Messages-footer,.Modal-inner,.RichContent-actions,.KfeCollection-FeedBlockSetting` +
-        `,.CommentListV2-header-divider,.Input-wrapper,.TopstoryItem .ZVideoToolbar,.SearchTabs,.Topic-bar` +
+        `,.CommentListV2-header-divider,.Input-wrapper:not(.Input-wrapper--grey),.TopstoryItem .ZVideoToolbar,.SearchTabs,.Topic-bar` +
         `,.VotableTopicCard,textarea.FeedbackForm-inputBox-15yJ,.FeedbackForm-canvasContainer-mrde` +
         `,.css-mq2czy,.css-lpo24q,.css-16zrry9,.css-1v840mj,.css-ovbogu,.css-1h84h63,.css-u8y4hj` +
         `,.css-1bwzp6r,.css-w215gm,.InputLike,.AnswerForm-footer,.Editable-toolbar,.Chat,.css-ul9l2m` +
@@ -374,9 +370,7 @@ const HERF_LIST = [
         `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper` +
         `{background-color: transparent!important;}`;
       const borderColor = `.MenuBar-root-rQeFm{border-color: ${bg}!important;}`;
-      return (
-        background + backgroundOpacity + backgroundTransparent + borderColor
-      );
+      return background + backgroundOpacity + backgroundTransparent + borderColor;
     },
   };
 
@@ -387,15 +381,10 @@ const HERF_LIST = [
       customizeCss: (e) => (e.value = pfConfig['customizeCss']),
     };
     const echoText = (even) => {
-      textSameName[even.name]
-        ? textSameName[even.name](even)
-        : (even.value = pfConfig[even.name]);
+      textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name]);
     };
     const echo = {
-      radio: (even) =>
-        pfConfig[even.name] &&
-        even.value === pfConfig[even.name] &&
-        (even.checked = true),
+      radio: (even) => pfConfig[even.name] && even.value === pfConfig[even.name] && (even.checked = true),
       checkbox: (even) => (even.checked = pfConfig[even.name] || false),
       'select-one': (even) => {
         if (pfConfig[even.name]) {
@@ -437,7 +426,7 @@ const HERF_LIST = [
   };
 
   /** 更改编辑器方法 */
-  const myChanger = async (ev, type) => {
+  const fnChanger = async (ev) => {
     // onchange 时只调用 cssVersion 的 name
     const doCssVersion = [
       'versionHeart',
@@ -454,7 +443,7 @@ const HERF_LIST = [
       'listOutPutNotInterested',
       'highlightListItem',
     ];
-    const { name, value, checked } = ev;
+    const { name, value, checked, type } = ev;
     const ob = {
       chooseHeart: () => {
         // onChooseHeart();
@@ -468,12 +457,12 @@ const HERF_LIST = [
       },
       isUseThemeDark: () => {
         // versionCSS.init();
-        cssBackground.init();
+        myBackground.init();
         onUseThemeDark(checked);
         // followingListChanger(true);
       },
       colorBackground: () => {
-        cssBackground.init();
+        myBackground.init();
         // followingListChanger(true);
       },
       // suspensionFind: cacheHeader,
@@ -513,6 +502,75 @@ const HERF_LIST = [
     }
   };
 
+  /** 在重置数据时调用 */
+  const resetData = () => {
+    onInitStyleExtra();
+    initData();
+    onUseThemeDark(pfConfig.isUseThemeDark);
+  };
+
+  /** 自定义样式方法 */
+  const myCustomStyle = {
+    init: function () {
+      const { customizeCss = '' } = pfConfig;
+      dom('[name="textStyleCustom"]').value = customizeCss;
+      this.change();
+    },
+    change: () => {
+      domById(ID_STYLE_CUSTOM) && domById(ID_STYLE_CUSTOM).remove();
+      const innerHTML = pfConfig.customizeCss;
+      if (!innerHTML) return;
+      const elementStyle = domC('style', {
+        type: 'text/css',
+        id: ID_STYLE_CUSTOM,
+        innerHTML,
+      });
+      dom('head').appendChild(elementStyle);
+    },
+  };
+
+  /** 编辑器按钮点击事件集合 */
+  const myButtonOperation = {
+    configExport: async () => {
+      // 导出配置
+      const config = await myStorage.get('pfConfig');
+      const link = domC('a', {
+        href: 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config),
+        download: `知乎编辑器配置-${+new Date()}.txt`,
+      });
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+    configImport: async () => {
+      // 导入配置
+      const configImport = dom('[name=textConfigImport]').value;
+      pfConfig = JSON.parse(configImport);
+      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      resetData();
+    },
+    configReset: async () => {
+      const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
+      if (isUse) {
+        const { filterKeywords = [], removeBlockUserContentList = [] } = pfConfig;
+        pfConfig = {
+          ...storageConfig.cachePfConfig,
+          filterKeywords,
+          removeBlockUserContentList,
+        };
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+        resetData();
+      }
+    },
+    styleCustom: async () => {
+      // 自定义样式
+      const value = dom('[name="textStyleCustom"]').value || '';
+      pfConfig.customizeCss = value;
+      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      myCustomStyle.change()
+    },
+  };
+
   /** 存储使用油猴自己的GM存储，解决数据不共通的问题，添加localStorage与GM判断，获取最新存储 */
   const myStorage = {
     set: async (name, value) => {
@@ -550,6 +608,7 @@ const HERF_LIST = [
     on: () => dom('body').classList.remove('ctz-stop-scroll'),
   };
 
+  /** 编辑器弹窗打开关闭方法 */
   const myDialog = {
     open: async () => {
       domById(ID_DIALOG).style.display = 'flex';
@@ -559,14 +618,10 @@ const HERF_LIST = [
         pfConfig = { ...pfConfig, ...c };
         echoData();
       }
-      // initScrollModal();
       myScroll.stop();
     },
     hide: () => {
       domById(ID_DIALOG).style.display = 'none';
-
-      // $('.pf-mark')[0].style.display = 'none';
-      // $('.pf-modal').removeClass('pf-modal-show');
       myScroll.on();
     },
   };
@@ -588,7 +643,7 @@ const HERF_LIST = [
 
     /** 添加弹窗底部信息 */
     const appendFooter = () => {
-      HERF_LIST.forEach(({ name, href }) => {
+      HREF_LIST.forEach(({ name, href }) => {
         const tagA = domC('a', {
           href,
           target: '_blank',
@@ -620,18 +675,26 @@ const HERF_LIST = [
     } catch {}
   };
 
+  /** 编辑器操作集合 */
+  const myOperation = {
+    [CLASS_INPUT]: fnChanger,
+    [CLASS_BUTTON]: ({ name }) => myButtonOperation[name](),
+  };
+
   /** 加载绑定方法 */
   const initChanger = () => {
     dom('.ctz-content').onclick = (even) => {
-      if (even.target.classList.contains(CLASS_INPUT)) {
-        myChanger(even.target, even.target.type);
-      }
+      Object.keys(myOperation).forEach((key) => {
+        if (even.target.classList.contains(key)) {
+          myOperation[key](even.target);
+        }
+      });
     };
   };
 
   /** 加载数据 */
   const initData = () => {
-    // myLocalC.cacheTitle = document.title;
+    // storageConfig.cacheTitle = document.title;
     echoData();
     // $('.pf-modal-content')[0].onchange = (even) => {
     //   if ($(even.target).hasClass('pf-i')) {
@@ -668,10 +731,7 @@ const HERF_LIST = [
     const muCallback = function () {
       const { isUseThemeDark } = pfConfig;
       const themeName = elementHTML.getAttribute('data-theme');
-      if (
-        (themeName === 'dark' && !isUseThemeDark) ||
-        (themeName === 'light' && isUseThemeDark)
-      ) {
+      if ((themeName === 'dark' && !isUseThemeDark) || (themeName === 'light' && isUseThemeDark)) {
         onUseThemeDark(isUseThemeDark);
       }
     };
@@ -683,8 +743,7 @@ const HERF_LIST = [
   const onInitStyleExtra = () => {
     // if (HTML_HOOTS.includes(location.hostname)) {
     // versionCSS.init();
-    cssBackground.init();
-    // changeCustomCSS();
+    myBackground.init();
     findTheme();
     // }
   };
@@ -693,9 +752,8 @@ const HERF_LIST = [
   async function onDocumentStart() {
     initStyle();
     if (!HTML_HOOTS.includes(location.hostname) || window.frameElement) return;
-    // if (HTML_HOOTS.includes(location.hostname)) {
     // timeStart = performance.now();
-    // myLocalC.cachePfConfig = pfConfig;
+    storageConfig.cachePfConfig = pfConfig;
     const config = await myStorage.get('pfConfig');
     const c = config ? JSON.parse(config) : {};
     pfConfig = { ...pfConfig, ...c };
@@ -730,13 +788,13 @@ const HERF_LIST = [
     //     // 如果是自定义排序则知乎回答页码增加到20条
     //     url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
     //   }
-    //   if (!myLocalC.fetchHeaders['x-ab-param'] && opt && opt.headers) {
-    //     myLocalC.fetchHeaders = opt.headers;
+    //   if (!storageConfig.fetchHeaders['x-ab-param'] && opt && opt.headers) {
+    //     storageConfig.fetchHeaders = opt.headers;
     //   }
 
     //   if (opt && opt.headers && opt.headers['x-zst-81']) {
     //     // 存储x-zst-81供不感兴趣接口使用
-    //     myLocalC.xZst81 = opt.headers['x-zst-81'];
+    //     storageConfig.xZst81 = opt.headers['x-zst-81'];
     //   }
     //   return originFetch(url, opt);
     // };
@@ -746,7 +804,6 @@ const HERF_LIST = [
     //   location.search.match(/(?<=sort=)\w+/)
     // ) {
     //   answerSortBy = location.search.match(/(?<=sort=)\w+/)[0];
-    // }
     // }
   }
   onDocumentStart();
@@ -759,6 +816,7 @@ const HERF_LIST = [
     initChanger();
     initData();
 
+    myCustomStyle.init();
     myLog('加载完毕');
   };
 })();

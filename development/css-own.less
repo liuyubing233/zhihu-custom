@@ -123,25 +123,21 @@
     flex: 1;
     overflow-y: auto;
     scroll-behavior: smooth;
+    padding: 0 8px;
 
     .ctz-set-title {
-      padding: 0 8px;
       font-weight: bold;
       height: 32px;
       line-height: 32px;
     }
 
     .ctz-label {
-      padding: 0 8px;
       line-height: 28px;
     }
 
     .ctz-set-content {
-      // TODO: text height
-      min-height: 500px;
-
       & > div {
-        padding-bottom: 24px;
+        padding-bottom: 18px;
       }
     }
   }
@@ -159,30 +155,6 @@
     }
   }
 
-  #CTZ_BACKGROUND {
-    display: grid;
-    grid-template-columns: 30% 30% 30%;
-    gap: 8px;
-    margin: 0 8px;
-    label {
-      position: relative;
-      input {
-        position: absolute;
-        left: 10px;
-        top: 18px;
-        &:checked + div {
-          border-color: @hover!important;
-        }
-      }
-      div {
-        font-size: 14px;
-        border-radius: 8px;
-        text-align: center;
-        line-height: 50px;
-      }
-    }
-  }
-
   .ctz-label {
     font-size: 14px;
     &::after {
@@ -194,6 +166,60 @@
     display: flex;
     height: 28px;
     align-items: center;
+  }
+}
+
+#CTZ_BACKGROUND {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  gap: 8px;
+  label {
+    position: relative;
+    input {
+      position: absolute;
+      left: 10px;
+      top: 18px;
+      &:checked + div {
+        border-color: @hover!important;
+      }
+    }
+    div {
+      font-size: 14px;
+      border-radius: 8px;
+      text-align: center;
+      line-height: 50px;
+    }
+  }
+}
+
+#CTZ_SET_CONFIG {
+  .ctz-config-buttons {
+    width: 80%;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 8px;
+  }
+  .ctz-content {
+    width: 80%;
+    textarea {
+      flex: 1;
+      margin-right: 8px;
+      border-radius: 4px;
+    }
+  }
+}
+
+// 按钮样式
+.ctz-button {
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 2px;
+  background: #ddd;
+  border: @border;
+  text-align: center;
+  &:hover {
+    background: #eee;
   }
 }
 

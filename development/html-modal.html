@@ -12,7 +12,7 @@
       <a href="#CTZ_SET_FILTER">过滤内容</a>
       <a href="#CTZ_SET_HIDDEN">隐藏模块</a>
       <a href="#CTZ_SET_COLOR">颜色设置</a>
-      <a href="#CTZ_SET_CONFIG">配置导出导入</a>
+      <a href="#CTZ_SET_CONFIG">配置操作</a>
     </div>
     <div class="ctz-content-right">
       <div id="CTZ_SET_BASIS">
@@ -35,6 +35,7 @@
         <div class="ctz-set-title">隐藏模块</div>
         <div class="ctz-set-content"></div>
       </div>
+
       <div id="CTZ_SET_COLOR">
         <div class="ctz-set-title">颜色设置</div>
         <div class="ctz-set-content">
@@ -45,7 +46,7 @@
           <div class="ctz-dark">
             <span class="ctz-label">启用夜间模式</span>
             <div class="ctz-switch">
-              <input class="ctz-switch-checkbox ctz-i" id="CTZ_THEME_DARK" name="isUseThemeDark" type="checkbox">
+              <input class="ctz-switch-checkbox ctz-i" id="CTZ_THEME_DARK" name="isUseThemeDark" type="checkbox" />
               <label class="ctz-switch-label" for="CTZ_THEME_DARK">
                 <span class="ctz-switch-inner" data-on="打开" data-off="关闭"></span>
                 <span class="ctz-switch-switch"></span>
@@ -54,9 +55,30 @@
           </div>
         </div>
       </div>
+
       <div id="CTZ_SET_CONFIG">
-        <div class="ctz-set-title">配置导出导入</div>
-        <div class="ctz-set-content"></div>
+        <div class="ctz-set-title">配置操作</div>
+        <div class="ctz-set-content">
+          <div class="ctz-config-import-export">
+            <div class="ctz-label">配置导出导入</div>
+            <div class="ctz-config-buttons">
+              <button class="ctz-button" name="configExport">导出配置</button>
+              <button class="ctz-button" name="configReset">恢复默认配置</button>
+            </div>
+            <div class="ctz-content">
+              <textarea class="ctz-textarea" name="textConfigImport" placeholder="配置可参考导出格式"></textarea>
+              <button class="ctz-button" name="configImport">导 入</button>
+            </div>
+          </div>
+
+          <div class="ctz-customize-css">
+            <div class="ctz-label">自定义样式</div>
+            <div class="ctz-content">
+              <textarea class="ctz-textarea" name="textStyleCustom" placeholder="格式为CSS"></textarea>
+              <button class="ctz-button" name="styleCustom">确 定</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
