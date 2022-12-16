@@ -512,7 +512,7 @@ const CONFIG_FILTER_DEFAULT = {
             `,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint` +
             `{visibility:hidden!important;height:0!important;padding:0!important;}` +
             `.TopstoryQuestionAskItem-hint{margin: 0!important;}` +
-            `.ContentItem-actions{padding-top: 0 !important;}`+
+            `.ContentItem-actions{padding-top: 0 !important;}` +
             `.SearchResult-Card .ContentItem-actions{display: none;}`
           : '') +
         (pfConfig.hiddenAnswerText
@@ -523,7 +523,7 @@ const CONFIG_FILTER_DEFAULT = {
             `.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}` +
             `.VoteButton{color: #8590a6!important; }` +
             `.VoteButton.is-active{color: #0066ff!important;}` +
-            `.ContentItem-action{margin-left:8px!important;}`+
+            `.ContentItem-action{margin-left:8px!important;}` +
             `.Search-questionFollowButton{display: none}`
           : '') +
         (pfConfig.hiddenQuestionTag ? '.QuestionHeader-tags{display: none!important;}' : '') +
@@ -958,7 +958,7 @@ const CONFIG_FILTER_DEFAULT = {
         (i) =>
           `${i
             .map(({ label, value }) => `<label><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`)
-            .join('')}` + `<span style="width: 100%; margin: 6px 0; background: #ddd; height: 1px; display:block"></span>`
+            .join('')}` + `<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
       ).join('');
     };
 
@@ -970,7 +970,7 @@ const CONFIG_FILTER_DEFAULT = {
     } catch {}
   };
 
-  /** 加载绑定方法 */
+  /** 加载设置弹窗绑定方法 */
   const initOperate = () => {
     const myOperation = {
       [CLASS_INPUT]: fnChanger,
@@ -1130,14 +1130,15 @@ const CONFIG_FILTER_DEFAULT = {
       });
   };
 
-  /** 监听列表内容 - 过滤 */
-  const vListenListItem = (() => {
-    let index = 0; // 过滤列表的起始位置
-    return function () {
+  /** 监听列表内容 - 过滤  */
+  const myListenListItem = {
+    index: 0,
+    init: function () {
       const elements = domA('.TopstoryItem .ContentItem');
-      const { filterKeywords = [], removeItemAboutVideo, removeItemAboutArticle } = pfConfig;
+      const { filterKeywords = [], removeItemAboutVideo, removeItemAboutArticle, removeLessVote, lessVoteNumber } = pfConfig;
       let lessNum = 0;
-      for (let i = index, len = elements.length; i < len; i++) {
+      console.log('this.index', this.index);
+      for (let i = this.index, len = elements.length; i < len; i++) {
         let message = ''; // 屏蔽信息
         let dataZop = {};
         let cardContent = {};
@@ -1149,7 +1150,6 @@ const CONFIG_FILTER_DEFAULT = {
           cardContent = JSON.parse(elementThis.getAttribute('data-za-extra-module')).card.content;
         } catch {}
         const { itemId = '', title = '', type = '' } = dataZop || {};
-
         let matchedWord = ''; // 匹配到的内容, 仅匹配第一个
         for (let itemWord of filterKeywords) {
           const rep = new RegExp(itemWord.toLowerCase());
@@ -1169,48 +1169,65 @@ const CONFIG_FILTER_DEFAULT = {
         }
 
         // 列表种类过滤
-        const haveRemoveVideo = elementThis.classList.contains('ZVideoItem') && removeItemAboutVideo;
-        const haveRemoveArticle = elementThis.classList.contains('ArticleItem') && removeItemAboutArticle;
-        ((haveRemoveVideo || haveRemoveArticle) && !message) && (message = '列表种类屏蔽');
+        const haveVideo = elementThis.classList.contains('ZVideoItem') && removeItemAboutVideo;
+        const haveArticle = elementThis.classList.contains('ArticleItem') && removeItemAboutArticle;
+        (haveVideo || haveArticle) && !message && (message = '列表种类屏蔽');
 
+        // 屏蔽低赞内容
+        if (removeLessVote && !message) {
+          cardContent['upvote_num'] < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num']}`);
+        }
+
+        // 最后信息 & 起点位置处理
         message && (lessNum = fnHiddenDom(lessNum, elementNeedHidden, message));
-        index = fnIndexMath(index, i, len, lessNum);
-
-        // if (pfConfig.removeLessVote && cardContent['upvote_num'] < pfConfig.lessVoteNumber && !elementNeedHidden.style.display) {
-        //   lessNum = fnHiddenDom(lessNum, elementNeedHidden, `低赞内容过滤: ${title}, ${cardContent['upvote_num']}`);
-        // }
+        this.index = fnIndexMath(this.index, i, len, lessNum);
       }
-    };
-  })();
+    },
+    reset: function () {
+      // 重置起点
+      this.index = 0;
+    },
+  };
 
   /** 监听搜索列表 - 过滤  */
-  const vListenSearchListItem = (() => {
-    let index = 0;
-    return function () {
+  const myListenSearchListItem = {
+    index: 0,
+    init: function () {
       const elements = domA('.SearchResult-Card[role="listitem"]');
-      const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD } = pfConfig;
+      const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber } = pfConfig;
       let lessNum = 0;
-      let message = ''; // 屏蔽信息
-      for (let i = index, len = elements.length; i < len; i++) {
+      for (let i = this.index, len = elements.length; i < len; i++) {
+        let message = ''; // 屏蔽信息
         const elementThis = elements[i];
         if (!elementThis) continue;
 
+        // FIRST
+        // 列表种类屏蔽
         const haveAD = removeItemAboutAD && elementThis.querySelector('.KfeCollection-PcCollegeCard-root');
         const haveArticle = removeItemAboutArticle && elementThis.querySelector('.ArticleItem');
         const haveVideo = removeItemAboutVideo && elementThis.querySelector('.ZvideoItem');
-        // FIRST
-        // 列表种类屏蔽
-        (haveAD || haveArticle|| haveVideo) && (message = '列表种类屏蔽');
+        (haveAD || haveArticle || haveVideo) && (message = '列表种类屏蔽');
 
+        // 低赞内容过滤
+        if (removeLessVote && !message) {
+          const elementUpvote = elementThis.querySelector('.ContentItem-actions .VoteButton--up');
+          const ariaLabel = elementUpvote ? elementUpvote.getAttribute('aria-label') : '';
+          const upvoteText = ariaLabel ? ariaLabel.trim().replace(/\W+/, '') : '0';
+          const upvote = upvoteText.includes('万') ? upvoteText.replace('万', '').trim() * 10000 : +upvoteText;
+          if (upvote > -1 && upvote < pfConfig.lessVoteNumber) {
+            message = `屏蔽低赞内容: ${upvote}赞`;
+          }
+        }
+
+        // 最后信息 & 起点位置处理
         message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
-        index = fnIndexMath(index, i, len, lessNum);
-
-        // if (pfConfig.removeLessVote && cardContent['upvote_num'] < pfConfig.lessVoteNumber && !elementNeedHidden.style.display) {
-        //   lessNum = fnHiddenDom(lessNum, elementNeedHidden, `低赞内容过滤: ${title}, ${cardContent['upvote_num']}`);
-        // }
+        this.index = fnIndexMath(this.index, i, len, lessNum);
       }
-    };
-  })();
+    },
+    reset: function () {
+      this.index = 0;
+    },
+  };
 
   /** 节流, 使用时 fn 需要为 function () {} */
   function throttle(fn, time = 300) {
@@ -1235,14 +1252,6 @@ const CONFIG_FILTER_DEFAULT = {
   function resizeFun() {
     if (!HTML_HOOTS.includes(location.hostname)) return;
 
-    // console.log('this', this, arguments);
-
-    // if (myLocalC.bodySize === myLocalC.bodySizePrev) {
-
-    // } else {
-    //   myLocalC.bodySizePrev = myLocalC.bodySize;
-    // }
-
     //   // 页面高度发生改变
     //   if (myLocalC.bodySize === myLocalC.bodySizePrev) {
     //     // 重新赋值img预览
@@ -1250,8 +1259,8 @@ const CONFIG_FILTER_DEFAULT = {
     //     previewGIF();
     //     // 外链直接打开
     //     initLinkChanger();
-    vListenListItem();
-    vListenSearchListItem();
+    myListenListItem.init();
+    myListenSearchListItem.init();
     //     // 关注人列表修改
     //     followingListChanger();
     //     topStoryRecommendEvent();
@@ -1304,4 +1313,16 @@ const CONFIG_FILTER_DEFAULT = {
     resizeObserver.observe(document.body);
     fnLog('加载完毕');
   };
+
+  /** 页面路由变化, 部分操作方法 */
+  const changeHistory = () => {
+    // 重置列表监听起点
+    myListenListItem.reset();
+    // 重置搜索列表监听起点
+    myListenSearchListItem.reset();
+  };
+
+  /** history 变化 */
+  window.addEventListener('popstate', changeHistory);
+  window.addEventListener('pushState', changeHistory);
 })();

@@ -42,11 +42,23 @@
         <div class="ctz-set-content">
           <div class="ctz-filter-type">
             <div class="ctz-label">列表类别屏蔽</div>
-            <div class="ctz-desc" style="line-height: 18px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div>
+            <div class="ctz-desc" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div>
             <div class="ctz-filter-type-content">
-              <label><input class="pf-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label>
-              <label><input class="pf-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label>
-              <label><input class="pf-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label>
+              <label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label>
+              <label><input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label>
+              <label><input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label>
+            </div>
+          </div>
+
+          <div class="ctz-filter-list-vote">
+            <label style="display: flex; align-items: center">
+              <span class="ctz-label">列表低赞内容屏蔽</span>
+              <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
+            </label>
+            <div style="font-size: 12px; color: #999; line-height: 22px">
+              勾选后「关注、推荐、搜索」列表将屏蔽
+              <input name="lessVoteNumber" class="ctz-i" type="number" style="width: 50px; border-radius: 4px" />
+              以下赞的内容
             </div>
           </div>
 
