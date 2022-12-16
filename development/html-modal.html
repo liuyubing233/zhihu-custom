@@ -8,34 +8,70 @@
     <div class="ctz-content-left">
       <a href="#CTZ_SET_BASIS">基础设置</a>
       <a href="#CTZ_SET_HOME">首页设置</a>
-      <a href="#CTZ_SET_ANSWER">回答设置</a>
-      <a href="#CTZ_SET_FILTER">过滤内容</a>
+      <!-- <a href="#CTZ_SET_ANSWER">回答设置</a> -->
+      <a href="#CTZ_SET_FILTER">屏蔽内容</a>
       <a href="#CTZ_SET_HIDDEN">隐藏模块</a>
       <a href="#CTZ_SET_COLOR">颜色设置</a>
       <a href="#CTZ_SET_CONFIG">配置操作</a>
     </div>
     <div class="ctz-content-right">
+      <!-- 基础设置 -->
       <div id="CTZ_SET_BASIS">
         <div class="ctz-set-title">基础设置</div>
         <div class="ctz-set-content"></div>
       </div>
+
+      <!-- 首页设置 -->
       <div id="CTZ_SET_HOME">
         <div class="ctz-set-title">首页设置</div>
         <div class="ctz-set-content"></div>
       </div>
-      <div id="CTZ_SET_ANSWER">
+
+      <!-- 回答设置 -->
+      <!-- <div id="CTZ_SET_ANSWER">
         <div class="ctz-set-title">回答设置</div>
         <div class="ctz-set-content"></div>
-      </div>
+      </div> -->
+
+      <!-- 屏蔽内容 -->
       <div id="CTZ_SET_FILTER">
-        <div class="ctz-set-title">过滤内容</div>
-        <div class="ctz-set-content"></div>
+        <div class="ctz-set-title">
+          屏蔽内容
+          <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span>
+        </div>
+        <div class="ctz-set-content">
+          <div class="ctz-filter-type">
+            <div class="ctz-label">列表类别屏蔽</div>
+            <div class="ctz-desc" style="line-height: 18px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div>
+            <div class="ctz-filter-type-content">
+              <label><input class="pf-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label>
+              <label><input class="pf-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label>
+              <label><input class="pf-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label>
+            </div>
+          </div>
+
+          <div class="ctz-filter-word">
+            <div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div>
+            <!-- <label>
+              <span class="ctz-label">屏蔽内容后显示提醒框</span>
+              <input class="ctz-i" name="notificationAboutFilter" type="checkbox" value="on" />
+            </label> -->
+            <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
+            <div id="CTZ_FILTER_WORDS"></div>
+          </div>
+        </div>
       </div>
+
+      <!-- 隐藏模块 -->
       <div id="CTZ_SET_HIDDEN">
-        <div class="ctz-set-title">隐藏模块</div>
+        <div class="ctz-set-title">
+          隐藏模块
+          <span class="ctz-desc">勾选隐藏相应模块内容</span>
+        </div>
         <div class="ctz-set-content"></div>
       </div>
 
+      <!-- 颜色设置 -->
       <div id="CTZ_SET_COLOR">
         <div class="ctz-set-title">颜色设置</div>
         <div class="ctz-set-content">
@@ -56,6 +92,7 @@
         </div>
       </div>
 
+      <!-- 配置操作 -->
       <div id="CTZ_SET_CONFIG">
         <div class="ctz-set-title">配置操作</div>
         <div class="ctz-set-content">
@@ -66,7 +103,7 @@
               <button class="ctz-button" name="configReset">恢复默认配置</button>
             </div>
             <div class="ctz-content">
-              <textarea class="ctz-textarea" name="textConfigImport" placeholder="配置可参考导出格式"></textarea>
+              <textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea>
               <button class="ctz-button" name="configImport">导 入</button>
             </div>
           </div>
@@ -74,7 +111,7 @@
           <div class="ctz-customize-css">
             <div class="ctz-label">自定义样式</div>
             <div class="ctz-content">
-              <textarea class="ctz-textarea" name="textStyleCustom" placeholder="格式为CSS"></textarea>
+              <textarea name="textStyleCustom" placeholder="格式为CSS"></textarea>
               <button class="ctz-button" name="styleCustom">确 定</button>
             </div>
           </div>
