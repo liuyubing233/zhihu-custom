@@ -246,22 +246,22 @@ const CONFIG_FILTER_DEFAULT = {
   removeFromYanxuan: true, // 选自盐选专栏的回答
   removeZhihuOfficial: false, // 知乎官方账号回答
 
-  removeItemAboutAD: false, // 商业推广
-  removeItemAboutArticle: false, // 文章
-  removeItemAboutVideo: false, // 视频
-
   // removeItemAboutAsk: true, // 提问
   removeFollowVoteAnswer: false, // 关注人赞同回答
   removeFollowVoteArticle: false, // 关注人赞同文章
   removeFollowFQuestion: false, // 关注人关注问题
   removeBlockUserContent: true, // 不再显示「已屏蔽」用户发布的内容
   removeUnrealAnswer: false, // 带有虚构内容的回答
-  // removeSearchListAD: false, // 搜索页商业推广
-  // removeSearchListArticle: false, // 搜索页文章
-  // removeSearchListVideo: false, // 搜索页视频
-  removeLessVote: false, // 关注列表过滤低于以下赞的内容
+
   removeBlockUserContentList: [], // 已屏蔽用户列表
+
+  removeItemAboutAD: false, // 商业推广
+  removeItemAboutArticle: false, // 文章
+  removeItemAboutVideo: false, // 视频
+  removeLessVote: false, // 关注列表过滤低于以下赞的内容
   lessVoteNumber: 100, // 关注列表过滤低于以下赞的内容
+  removeLessVoteDetail: false, // 回答低赞内容屏蔽
+  lessVoteNumberDetail: 100, // 回答详情屏蔽以下赞的内容
 };
 
 (function () {
@@ -1108,7 +1108,7 @@ const CONFIG_FILTER_DEFAULT = {
 
   /** 计算过滤起始位置 */
   const fnIndexMath = (index, i, len, lessNum) => {
-    return i === len - 1 ? i - lessNum : index;
+    return i + 1 === len ? i + 1 - lessNum : index;
   };
 
   /** 调用「不感兴趣」接口 */
@@ -1134,10 +1134,10 @@ const CONFIG_FILTER_DEFAULT = {
   const myListenListItem = {
     index: 0,
     init: function () {
-      const elements = domA('.TopstoryItem .ContentItem');
       const { filterKeywords = [], removeItemAboutVideo, removeItemAboutArticle, removeLessVote, lessVoteNumber } = pfConfig;
+      if (!filterKeywords.length && !removeItemAboutVideo && !removeItemAboutArticle && !removeLessVote) return;
+      const elements = domA('.TopstoryItem .ContentItem');
       let lessNum = 0;
-      console.log('this.index', this.index);
       for (let i = this.index, len = elements.length; i < len; i++) {
         let message = ''; // 屏蔽信息
         let dataZop = {};
@@ -1193,8 +1193,9 @@ const CONFIG_FILTER_DEFAULT = {
   const myListenSearchListItem = {
     index: 0,
     init: function () {
-      const elements = domA('.SearchResult-Card[role="listitem"]');
       const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber } = pfConfig;
+      if (!removeItemAboutVideo && !removeItemAboutArticle && !removeItemAboutAD && !removeLessVote) return;
+      const elements = domA('.SearchResult-Card[role="listitem"]');
       let lessNum = 0;
       for (let i = this.index, len = elements.length; i < len; i++) {
         let message = ''; // 屏蔽信息
@@ -1214,10 +1215,134 @@ const CONFIG_FILTER_DEFAULT = {
           const ariaLabel = elementUpvote ? elementUpvote.getAttribute('aria-label') : '';
           const upvoteText = ariaLabel ? ariaLabel.trim().replace(/\W+/, '') : '0';
           const upvote = upvoteText.includes('万') ? upvoteText.replace('万', '').trim() * 10000 : +upvoteText;
-          if (upvote > -1 && upvote < pfConfig.lessVoteNumber) {
+          if (upvote > -1 && upvote < lessVoteNumber) {
             message = `屏蔽低赞内容: ${upvote}赞`;
           }
         }
+
+        // 最后信息 & 起点位置处理
+        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
+        this.index = fnIndexMath(this.index, i, len, lessNum);
+      }
+    },
+    reset: function () {
+      this.index = 0;
+    },
+  };
+
+  /** 监听详情回答 - 过滤 */
+  const myListenAnswerItem = {
+    index: 0,
+    init: function () {
+      //sortAnswer()
+      //   if ($('.QuestionAnswer-content')[0]) {
+      //     pfConfig.answerItemCreatedAndModifiedTime && addTimes($('.QuestionAnswer-content'));
+      //     pfConfig.showBlockUser && addBlockUser($('.QuestionAnswer-content'));
+      //   }
+
+      const { removeLessVoteDetail, lessVoteNumberDetail } = pfConfig;
+      if (!removeLessVoteDetail) return;
+      const elements = domA('.AnswersNavWrapper .List-item');
+      let lessNum = 0;
+      for (let i = this.index, len = elements.length; i < len; i++) {
+        let message = '';
+        const elementThis = elements[i];
+        console.log(i, len, elementThis);
+        const elementInfo = elementThis.querySelector('.ContentItem');
+        let dataZop = {};
+        let dataCardContent = {}; // 回答扩展信息
+        try {
+          dataZop = JSON.parse(elementInfo.getAttribute('data-zop'));
+          dataCardContent = JSON.parse(elementInfo.getAttribute('data-za-extra-module')).card.content;
+        } catch {}
+
+        console.log(dataZop, dataCardContent);
+        // FIRST
+        // 低赞回答过滤
+        dataCardContent['upvote_num'] < lessVoteNumberDetail &&
+          removeLessVoteDetail &&
+          (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
+
+        // data-za-extra-module
+        //     const that = events[i];
+        //     if (that) {
+        //       const eventThat = $(that);
+        //       if (pfConfig.removeZhihuOfficial) {
+        //         // 知乎官方账号优先级最高
+        //         const label = eventThat.find('.AuthorInfo-name .css-n99yhz').attr('aria-label');
+        //         if (/知乎[\s]*官方帐号/.test(label)) {
+        //           lessNum = fnHiddenDom(lessNum, that, '已删除一条知乎官方帐号的回答');
+        //           isRemoved = true;
+        //         }
+        //       } else {
+        //         const dataZop = eventThat.children('.AnswerItem').attr('data-zop');
+        //         REMOVE_ANSWER_BY_NAME.forEach((item) => {
+        //           const reg = new RegExp(`['"]authorName['":]*` + item.name);
+        //           if (pfConfig[item.id] && reg.test(dataZop)) {
+        //             lessNum = fnHiddenDom(lessNum, that, `已删除一条${item.name}的回答`);
+        //             isRemoved = true;
+        //           }
+        //         });
+        //       }
+        //       // 删除选自盐选专栏的回答
+        //       if (pfConfig.removeFromYanxuan && !isRemoved) {
+        //         const formYanxuan =
+        //           eventThat.find('.KfeCollection-OrdinaryLabel-content')[0] || eventThat.find('.KfeCollection-IntroCard p:first-of-type')[0];
+        //         if (formYanxuan) {
+        //           const formYanxuanText = formYanxuan ? formYanxuan.innerText : '';
+        //           if (/盐选专栏/.test(formYanxuanText)) {
+        //             lessNum = fnHiddenDom(lessNum, that, `已删除一条来自盐选专栏的回答`);
+        //             isRemoved = true;
+        //           }
+        //         }
+        //       }
+        //       // 隐藏「含有虚构内容」的回答
+        //       if (pfConfig.removeUnrealAnswer && !isRemoved) {
+        //         const aTag = eventThat.find('.KfeCollection-FabledStatement')[0];
+        //         const aTag2 = eventThat.find('.css-140fcia')[0];
+        //         if (REP_UNREAL.test(aTag ? aTag.innerText : '') || REP_UNREAL.test(aTag2 ? aTag2.innerText : '')) {
+        //           lessNum = fnHiddenDom(lessNum, that, `已删除一条内容包含虚构创作的回答`);
+        //           isRemoved = true;
+        //         }
+        //       }
+        //       // 自动展开所有回答
+        //       if (pfConfig.answerUnfold && !isRemoved) {
+        //         const unFoldButton = eventThat.find('.ContentItem-expandButton');
+        //         if (unFoldButton && unFoldButton[0] && !eventThat.hasClass('is-unfold')) {
+        //           unFoldButton[0].click();
+        //           eventThat.addClass('is-unfold');
+        //           isRemoved = true;
+        //           lessNum++;
+        //         }
+        //       }
+        //       // 默认收起所有长回答
+        //       if (pfConfig.answerFoldStart && !isRemoved) {
+        //         const foldButton = eventThat.find('.RichContent-collapsedText');
+        //         const unFoldButton = eventThat.find('.ContentItem-expandButton');
+        //         if (foldButton && foldButton[0] && !eventThat.hasClass('is-fold') && that.offsetHeight > 939) {
+        //           foldButton[0].click();
+        //           eventThat.addClass('is-fold');
+        //           lessNum++;
+        //           isRemoved = true;
+        //         } else if (unFoldButton && unFoldButton[0] && !eventThat.hasClass('is-fold')) {
+        //           eventThat.addClass('is-fold');
+        //           lessNum++;
+        //           isRemoved = true;
+        //         }
+        //       }
+        //       // 如果 不再显示「已屏蔽」用户发布的内容 为 true 并且列表不为 0
+        //       if (pfConfig.removeBlockUserContent && pfConfig.removeBlockUserContentList.length && !isRemoved) {
+        //         const aContent = eventThat.find('.AnswerItem').attr('data-za-extra-module')
+        //           ? JSON.parse(eventThat.find('.AnswerItem').attr('data-za-extra-module')).card.content
+        //           : {};
+        //         const userId = aContent.author_member_hash_id || '';
+        //         if (pfConfig.removeBlockUserContentList.find((i) => i.id === userId)) {
+        //           lessNum = fnHiddenDom(lessNum, that, `已屏蔽一个用户的回答`);
+        //           isRemoved = true;
+        //         }
+        //       }
+        //       pfConfig.answerItemCreatedAndModifiedTime && addTimes(eventThat);
+        //       pfConfig.showBlockUser && addBlockUser(eventThat);
 
         // 最后信息 & 起点位置处理
         message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
@@ -1261,6 +1386,7 @@ const CONFIG_FILTER_DEFAULT = {
     //     initLinkChanger();
     myListenListItem.init();
     myListenSearchListItem.init();
+    myListenAnswerItem.init();
     //     // 关注人列表修改
     //     followingListChanger();
     //     topStoryRecommendEvent();
@@ -1316,10 +1442,10 @@ const CONFIG_FILTER_DEFAULT = {
 
   /** 页面路由变化, 部分操作方法 */
   const changeHistory = () => {
-    // 重置列表监听起点
+    // 重置监听起点
     myListenListItem.reset();
-    // 重置搜索列表监听起点
     myListenSearchListItem.reset();
+    myListenAnswerItem.reset();
   };
 
   /** history 变化 */
