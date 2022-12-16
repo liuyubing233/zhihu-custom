@@ -53,8 +53,7 @@ const ICO = {
   csdn: '<link href="https://g.csdnimg.cn/static/logo/favicon32.ico" id="pf-ico" rel="shortcut icon" type="image/x-icon">',
   juejin:
     '<link data-n-head="ssr" rel="shortcut icon" id="pf-ico" href="https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png">',
-  zhihu:
-    '<link rel="shortcut icon" type="image/x-icon" id="pf-ico" href="https://static.zhihu.com/heifetz/favicon.ico">',
+  zhihu: '<link rel="shortcut icon" type="image/x-icon" id="pf-ico" href="https://static.zhihu.com/heifetz/favicon.ico">',
 };
 
 const ANSWER_SORT_IDS = {
@@ -405,8 +404,7 @@ const BASIS_CHECKBOX_LIST = [
     export: async () => {
       const config = await myStorage.get('pfConfig');
       let link = document.createElement('a');
-      link.href =
-        'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config);
+      link.href = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config);
       link.download = '配置.txt';
       document.body.appendChild(link);
       link.click();
@@ -423,12 +421,9 @@ const BASIS_CHECKBOX_LIST = [
     },
     // 恢复默认配置
     restore: async () => {
-      const isUse = confirm(
-        '是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存'
-      );
+      const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
       if (isUse) {
-        const { filterKeywords = [], removeBlockUserContentList = [] } =
-          pfConfig;
+        const { filterKeywords = [], removeBlockUserContentList = [] } = pfConfig;
         pfConfig = {
           ...myLocalC.cachePfConfig,
           filterKeywords,
@@ -516,27 +511,22 @@ const BASIS_CHECKBOX_LIST = [
             if (isR) {
               // 用body替代window获取宽度来解决右侧滚动条宽度不一致问题
               const right = bodyW - evNX - rx;
-              evenRight =
-                right <= 0 ? 0 : right >= bodyW - eW ? bodyW - eW : right;
+              evenRight = right <= 0 ? 0 : right >= bodyW - eW ? bodyW - eW : right;
               e.style.right = evenRight + 'px';
             } else {
               const left = evNX - dx;
-              evenLeft =
-                left <= 0 ? 0 : left >= windowW - eW ? windowW - eW : left;
+              evenLeft = left <= 0 ? 0 : left >= windowW - eW ? windowW - eW : left;
               e.style.left = evenLeft + 'px';
             }
             const top = eventN.clientY - dy;
-            const evenTop =
-              top <= 0 ? 0 : top >= windowH - eH ? windowH - eH : top;
+            const evenTop = top <= 0 ? 0 : top >= windowH - eH ? windowH - eH : top;
             // 元素不能超过页面宽高
             e.style.top = evenTop + 'px';
             this.isMove = true;
             this.timer[configName] && clearTimeout(this.timer[configName]);
             this.timer[configName] = setTimeout(async () => {
               clearTimeout(this.timer[configName]);
-              pfConfig[configName] = `${
-                isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`
-              }top: ${evenTop}px;`;
+              pfConfig[configName] = `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`;
               await myStorage.set('pfConfig', JSON.stringify(pfConfig));
             }, 500);
           };
@@ -643,17 +633,10 @@ const BASIS_CHECKBOX_LIST = [
           if ($('#player video').length) {
             this.finderI = 0;
             domA('#player>div').forEach((even) => {
-              const downloadButton = $(
-                '<i class="iconfont pf-video-download">&#xe608;</i>'
-              );
-              const evenLoading = $(
-                '<i class="iconfont pf-loading">&#xe605;</i>'
-              );
+              const downloadButton = $('<i class="iconfont pf-video-download">&#xe608;</i>');
+              const evenLoading = $('<i class="iconfont pf-loading">&#xe605;</i>');
               downloadButton[0].onclick = () => {
-                const url = downloadButton
-                  .parent()
-                  .parent()
-                  .find('video')[0].src;
+                const url = downloadButton.parent().parent().find('video')[0].src;
                 if (url) {
                   downloadButton[0].style.display = 'none';
                   $(even).append(evenLoading);
@@ -671,8 +654,7 @@ const BASIS_CHECKBOX_LIST = [
                   });
                 }
               };
-              $(even).find('.pf-video-download') &&
-                $(even).find('.pf-video-download').remove();
+              $(even).find('.pf-video-download') && $(even).find('.pf-video-download').remove();
               $(even).append(downloadButton);
             });
           } else {
@@ -688,12 +670,9 @@ const BASIS_CHECKBOX_LIST = [
     append: (e, name) => {
       // 悬浮模块是否固定改为鼠标放置到模块上显示开锁图标 点击即可移动模块
       if (!e[0]) return;
-      !e.children('.my-unlock')[0] &&
-        e.append('<i class="iconfont my-unlock">&#xe688;</i>');
-      !e.children('.my-lock')[0] &&
-        e.append('<i class="iconfont my-lock">&#xe700;</i>');
-      !e.children('.my-lock-mask')[0] &&
-        e.append('<div class="my-lock-mask"></div>');
+      !e.children('.my-unlock')[0] && e.append('<i class="iconfont my-unlock">&#xe688;</i>');
+      !e.children('.my-lock')[0] && e.append('<i class="iconfont my-lock">&#xe700;</i>');
+      !e.children('.my-lock-mask')[0] && e.append('<div class="my-lock-mask"></div>');
       e.children('.my-unlock')[0].onclick = async () => {
         pfConfig[name + 'Fixed'] = false;
         await myStorage.set('pfConfig', JSON.stringify(pfConfig));
@@ -743,8 +722,7 @@ const BASIS_CHECKBOX_LIST = [
       }
       // 右侧盒子
       if (pfConfig.stickyRight && $(C_STICKY_RIGHT_DAD)[0]) {
-        const { offsetWidth, offsetRight, offsetTop } =
-          $(C_STICKY_RIGHT_DAD)[0];
+        const { offsetWidth, offsetRight, offsetTop } = $(C_STICKY_RIGHT_DAD)[0];
         $(C_STICKY_RIGHT).css({
           position: 'fixed',
           width: offsetWidth,
@@ -753,15 +731,13 @@ const BASIS_CHECKBOX_LIST = [
         });
       } else {
         $(C_STICKY_RIGHT).removeAttr('style', '');
-        $(C_STICKY_RIGHT)[0] &&
-          ($(C_STICKY_RIGHT)[0].style = 'position: inherit!important');
+        $(C_STICKY_RIGHT)[0] && ($(C_STICKY_RIGHT)[0].style = 'position: inherit!important');
       }
     },
     inherit: function () {
       $(C_STICKY_LEFT).removeAttr('style', '');
       $(C_STICKY_RIGHT).removeAttr('style', '');
-      $(C_STICKY_RIGHT)[0] &&
-        ($(C_STICKY_RIGHT)[0].style = 'position: inherit!important');
+      $(C_STICKY_RIGHT)[0] && ($(C_STICKY_RIGHT)[0].style = 'position: inherit!important');
     },
   };
 
@@ -820,11 +796,7 @@ const BASIS_CHECKBOX_LIST = [
       highlightOriginal: () => followingListChanger(true),
       articleCreateTimeToTop: addArticleCreateTimeToTop,
       zoomAnswerImage: () => {
-        const nValue = isNaN(+ev.value)
-          ? ZOOM_DEFAULT_OBJ[ev.value]
-            ? ZOOM_DEFAULT_OBJ[ev.value]
-            : ''
-          : ev.value;
+        const nValue = isNaN(+ev.value) ? (ZOOM_DEFAULT_OBJ[ev.value] ? ZOOM_DEFAULT_OBJ[ev.value] : '') : ev.value;
         $('#IMAGE_SIZE')[0].innerText = nValue;
         versionCSS.init();
       },
@@ -953,15 +925,10 @@ const BASIS_CHECKBOX_LIST = [
       customizeCss: (e) => (e.value = pfConfig['customizeCss']),
     };
     const echoText = (even) => {
-      textSameName[even.name]
-        ? textSameName[even.name](even)
-        : (even.value = pfConfig[even.name]);
+      textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name]);
     };
     const echo = {
-      radio: (even) =>
-        pfConfig[even.name] &&
-        even.value === pfConfig[even.name] &&
-        (even.checked = true),
+      radio: (even) => pfConfig[even.name] && even.value === pfConfig[even.name] && (even.checked = true),
       checkbox: (even) => (even.checked = pfConfig[even.name] || false),
       'select-one': (even) => {
         if (pfConfig[even.name]) {
@@ -994,11 +961,7 @@ const BASIS_CHECKBOX_LIST = [
     });
 
     const zoomV = pfConfig.zoomAnswerImage;
-    const nValue = isNaN(+zoomV)
-      ? ZOOM_DEFAULT_OBJ[zoomV]
-        ? ZOOM_DEFAULT_OBJ[zoomV]
-        : ''
-      : zoomV;
+    const nValue = isNaN(+zoomV) ? (ZOOM_DEFAULT_OBJ[zoomV] ? ZOOM_DEFAULT_OBJ[zoomV] : '') : zoomV;
     $('#IMAGE_SIZE')[0].innerText = nValue;
   }
 
@@ -1025,27 +988,15 @@ const BASIS_CHECKBOX_LIST = [
 
     if (isLoading) {
       isLoading = false;
-      GM_log(
-        '[customize]修改器加载完毕，加载时间：' +
-          (performance.now() - timeStart).toFixed(2) +
-          'ms'
-      );
+      GM_log('[customize]修改器加载完毕，加载时间：' + (performance.now() - timeStart).toFixed(2) + 'ms');
     }
   }
 
   function onToHomeHref() {
-    if (
-      location.host === 'zhuanlan.zhihu.com' &&
-      pfConfig.toHomeButtonZhuanlan === 'zhuanlan'
-    ) {
+    if (location.host === 'zhuanlan.zhihu.com' && pfConfig.toHomeButtonZhuanlan === 'zhuanlan') {
       $('.pf-to-home')[0].href = 'https://zhuanlan.zhihu.com';
-    } else if (
-      pfConfig.indexPathnameRedirect &&
-      pfConfig.indexPathnameRedirect !== 'n'
-    ) {
-      $(
-        '.pf-to-home'
-      )[0].href = `https://www.zhihu.com/${pfConfig.indexPathnameRedirect}`;
+    } else if (pfConfig.indexPathnameRedirect && pfConfig.indexPathnameRedirect !== 'n') {
+      $('.pf-to-home')[0].href = `https://www.zhihu.com/${pfConfig.indexPathnameRedirect}`;
     }
   }
 
@@ -1057,11 +1008,7 @@ const BASIS_CHECKBOX_LIST = [
     pfConfig[name] ? myLock.append(even, name) : myLock.remove(even, name);
   }
 
-  const HEADER_EVENT_NAMES = [
-    'suspensionFind',
-    'suspensionSearch',
-    'suspensionUser',
-  ];
+  const HEADER_EVENT_NAMES = ['suspensionFind', 'suspensionSearch', 'suspensionUser'];
   function cacheHeader() {
     if (!findEvent.header.isFind) {
       findEvent.header.fun && clearTimeout(findEvent.header.fun);
@@ -1102,13 +1049,10 @@ const BASIS_CHECKBOX_LIST = [
       if (pfConfig[name]) {
         // 如果是suspensionSearch则添加展开和收起按钮
         if (name === 'suspensionSearch') {
-          !$(C_ICON)[0] &&
-            even.prepend('<i class="iconfont my-search-icon">&#xe600;</i>');
-          !$(C_PICK)[0] &&
-            even.append('<i class="iconfont my-search-pick-up">&#xe601;</i>');
+          !$(C_ICON)[0] && even.prepend('<i class="iconfont my-search-icon">&#xe600;</i>');
+          !$(C_PICK)[0] && even.append('<i class="iconfont my-search-pick-up">&#xe601;</i>');
           $(C_ICON)[0] && ($(C_ICON)[0].onclick = () => even.addClass(N_FOCUS));
-          $(C_PICK)[0] &&
-            ($(C_PICK)[0].onclick = () => even.removeClass(N_FOCUS));
+          $(C_PICK)[0] && ($(C_PICK)[0].onclick = () => even.removeClass(N_FOCUS));
         }
         myLock.append(even, name);
         even.addClass(`position-${name}`);
@@ -1184,24 +1128,15 @@ const BASIS_CHECKBOX_LIST = [
     leftDom.forEach(({ even }) => $(C_STICKY_LEFT).append(even));
     rightDom.forEach(({ even }) => $(C_STICKY_RIGHT).append(even));
     // 两侧盒子不存在子元素则隐藏
-    $(C_STICKY_LEFT_DAD)[0] &&
-      ($(C_STICKY_LEFT_DAD)[0].style.display =
-        $(C_STICKY_LEFT).children().length > 0 ? 'block' : 'none');
-    $(C_STICKY_RIGHT_DAD)[0] &&
-      ($(C_STICKY_RIGHT_DAD)[0].style.display =
-        $(C_STICKY_RIGHT).children().length > 0 ? 'block' : 'none');
+    $(C_STICKY_LEFT_DAD)[0] && ($(C_STICKY_LEFT_DAD)[0].style.display = $(C_STICKY_LEFT).children().length > 0 ? 'block' : 'none');
+    $(C_STICKY_RIGHT_DAD)[0] && ($(C_STICKY_RIGHT_DAD)[0].style.display = $(C_STICKY_RIGHT).children().length > 0 ? 'block' : 'none');
     doResizePage();
   }
 
   /** 点击删除知乎官方账号回答 */
   function onChangeOfficialRemove(checked) {
     if (checked) {
-      const names = [
-        'removeStoryAnswer',
-        'removeYanxuanAnswer',
-        'removeYanxuanRecommend',
-        'removeYanxuanCPRecommend',
-      ];
+      const names = ['removeStoryAnswer', 'removeYanxuanAnswer', 'removeYanxuanRecommend', 'removeYanxuanCPRecommend'];
       names.forEach((n) => {
         $(`[name="${n}"]`)[0].checked = checked;
       });
@@ -1218,16 +1153,12 @@ const BASIS_CHECKBOX_LIST = [
     };
 
     if ($(`.pf-${name}`)[0]) {
-      $(`.pf-${name}`)[0].style = pfConfig[name]
-        ? 'display: inline-block;'
-        : 'display: none;';
+      $(`.pf-${name}`)[0].style = pfConfig[name] ? 'display: inline-block;' : 'display: none;';
     }
 
     // 如果取消悬浮，则注销掉挂载的move方法
     if (cssObj[name]) {
-      pfConfig[name]
-        ? myMove.init(cssObj[name], `${name}Po`, name)
-        : myMove.destroy(cssObj[name]);
+      pfConfig[name] ? myMove.init(cssObj[name], `${name}Po`, name) : myMove.destroy(cssObj[name]);
     }
   }
 
@@ -1284,19 +1215,13 @@ const BASIS_CHECKBOX_LIST = [
         `.position-suspensionFind{${pfConfig.suspensionFindPo}}` +
         `.position-suspensionUser{${pfConfig.suspensionUserPo}}` +
         `.position-suspensionSearch{${pfConfig.suspensionSearchPo}}` +
-        `.position-suspensionFind .Tabs-link{${
-          this.vSusColor(pfConfig.suspensionFindStyle).normal
-        }}` +
-        `.position-suspensionFind .Tabs-link.is-active{${
-          this.vSusColor(pfConfig.suspensionFindStyle).active
-        }}` +
+        `.position-suspensionFind .Tabs-link{${this.vSusColor(pfConfig.suspensionFindStyle).normal}}` +
+        `.position-suspensionFind .Tabs-link.is-active{${this.vSusColor(pfConfig.suspensionFindStyle).active}}` +
         (pfConfig.fixedListItemMore
           ? `.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action` +
             `{visibility: visible!important;position: absolute;top: 20px;right: 10px;}`
           : '') +
-        (pfConfig.toHomeButton
-          ? '.pf-to-home{display:block;}'
-          : '.pf-to-home{display:none;}') +
+        (pfConfig.toHomeButton ? '.pf-to-home{display:block;}' : '.pf-to-home{display:none;}') +
         (pfConfig.positionCreation === 'hidden' &&
         pfConfig.positionTable === 'hidden' &&
         pfConfig.positionFavorites === 'hidden' &&
@@ -1377,15 +1302,10 @@ const BASIS_CHECKBOX_LIST = [
         `,.css-1xy3kyp,.css-1voxft1,.WriteIndexLayout-main,.css-ny4o71` +
         `{width:calc(${v} - 296px)!important;}`;
 
-      return (
-        heart + heartC + `.Post-SideActions{left: calc(40vw - (${v} / 2))}`
-      );
+      return heart + heartC + `.Post-SideActions{left: calc(40vw - (${v} / 2))}`;
     },
     vHeartZhuanlan: function () {
-      const v =
-        +pfConfig.versionHeartZhuanlan < 600
-          ? 600
-          : pfConfig.versionHeartZhuanlan;
+      const v = +pfConfig.versionHeartZhuanlan < 600 ? 600 : pfConfig.versionHeartZhuanlan;
       const heart =
         `.zhuanlan .Post-RichTextContainer,.zhuanlan .Post-NormalMain>div` +
         `,.zhuanlan .Post-content .RichContent-actions,.zhuanlan .css-1voxft1,.zhuanlan .css-8txec3` +
@@ -1401,9 +1321,7 @@ const BASIS_CHECKBOX_LIST = [
       };
       const imgC =
         styleObj[pfConfig.zoomAnswerImage] ||
-        'width:' +
-          pfConfig.zoomAnswerImage +
-          'px!important;cursor: zoom-in!important;max-width: 100%!important;';
+        'width:' + pfConfig.zoomAnswerImage + 'px!important;cursor: zoom-in!important;max-width: 100%!important;';
       return (
         `.GifPlayer.isPlaying img {cursor:pointer!important;}` +
         `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage {${imgC}}`
@@ -1411,16 +1329,14 @@ const BASIS_CHECKBOX_LIST = [
     },
     vSusColor: function (value) {
       // 悬浮模块颜色填充 跟页面背景颜色同步
-      const bg =
-        BACKGROUND_CONFIG[pfConfig.colorBackground].opacity || '#ffffff';
+      const bg = BACKGROUND_CONFIG[pfConfig.colorBackground].opacity || '#ffffff';
       const normal = {
         transparent: 'border:1px solid #999999;color:#999999;',
         filling: `border:1px solid #999999;color:#999999;background:${bg};`,
       };
       const active = {
         transparent: 'color:#0066ff!important;border-color:#0066ff!important;',
-        filling:
-          'color:#ffffff!important;border-color:#0066ff!important;background:#0066ff!important;',
+        filling: 'color:#ffffff!important;border-color:#0066ff!important;background:#0066ff!important;',
       };
       return {
         normal: normal[value],
@@ -1489,9 +1405,7 @@ const BASIS_CHECKBOX_LIST = [
         (pfConfig.hiddenHeader
           ? `.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}.PubIndex-CategoriesHeader{top: 0!important;}`
           : '') +
-        (pfConfig.hiddenHeaderScroll
-          ? `.AppHeader.is-fixed{display:none!important;}`
-          : '') +
+        (pfConfig.hiddenHeaderScroll ? `.AppHeader.is-fixed{display:none!important;}` : '') +
         (pfConfig.hiddenItemActions
           ? `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button` +
             `,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a` +
@@ -1510,29 +1424,16 @@ const BASIS_CHECKBOX_LIST = [
             `.VoteButton.is-active{color: #0066ff!important;}` +
             `.ContentItem-action{margin-left:8px!important;}`
           : '') +
-        (pfConfig.hiddenQuestionTag
-          ? '.QuestionHeader-tags{display: none!important;}'
-          : '') +
-        (pfConfig.hiddenQuestionShare
-          ? '.zhihu .Popover.ShareMenu{display: none!important;}'
-          : '') +
-        (pfConfig.hiddenQuestionActions
-          ? '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}'
-          : '') +
+        (pfConfig.hiddenQuestionTag ? '.QuestionHeader-tags{display: none!important;}' : '') +
+        (pfConfig.hiddenQuestionShare ? '.zhihu .Popover.ShareMenu{display: none!important;}' : '') +
+        (pfConfig.hiddenQuestionActions ? '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}' : '') +
         (pfConfig.hiddenReward ? '.Reward{display: none!important;}' : '') +
-        (pfConfig.hiddenZhuanlanTag
-          ? '.Post-topicsAndReviewer{display: none!important;}'
-          : '') +
+        (pfConfig.hiddenZhuanlanTag ? '.Post-topicsAndReviewer{display: none!important;}' : '') +
         (pfConfig.hiddenListImg
-          ? `.RichContent-cover,.HotItem-img{display:none!important;}` +
-            `.HotItem-metrics--bottom{position: initial!important;}`
+          ? `.RichContent-cover,.HotItem-img{display:none!important;}` + `.HotItem-metrics--bottom{position: initial!important;}`
           : '') +
-        (pfConfig.hiddenReadMoreText
-          ? '.ContentItem-more{font-size:0!important;}'
-          : '') +
-        (pfConfig.hiddenAD
-          ? '.TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}'
-          : '') +
+        (pfConfig.hiddenReadMoreText ? '.ContentItem-more{font-size:0!important;}' : '') +
+        (pfConfig.hiddenAD ? '.TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}' : '') +
         (pfConfig.hiddenAnswerRights
           ? `.ContentItem-actions .ShareMenu ~ button.ContentItem-action{display: none;}` +
             `.ContentItem-rightButton{display:block!important;}`
@@ -1552,123 +1453,58 @@ const BASIS_CHECKBOX_LIST = [
             `,.Topstory-recommend .ZVideoItem .RichContent` +
             `{display: none;}`
           : '') +
-        (pfConfig.hiddenHotListWrapper
-          ? '.HotListNav-wrapper{display: none;}'
-          : '') +
-        (pfConfig.hiddenZhuanlanActions
-          ? '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}'
-          : '') +
-        (pfConfig.hiddenZhuanlanTitleImage
-          ? '.TitleImage{display: none;!important}'
-          : '') +
+        (pfConfig.hiddenHotListWrapper ? '.HotListNav-wrapper{display: none;}' : '') +
+        (pfConfig.hiddenZhuanlanActions ? '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}' : '') +
+        (pfConfig.hiddenZhuanlanTitleImage ? '.TitleImage{display: none;!important}' : '') +
         (pfConfig.hiddenFixedActions
-          ? `.ContentItem .RichContent-actions.is-fixed, .List-item .RichContent-actions.is-fixed` +
-            `{visibility: hidden!important;}`
+          ? `.ContentItem .RichContent-actions.is-fixed, .List-item .RichContent-actions.is-fixed` + `{visibility: hidden!important;}`
           : '') +
-        (pfConfig.hiddenHotItemMetrics
-          ? '.HotItem-content .HotItem-metrics{display: none;}'
-          : '.HotItem-content {padding-bottom: 24px;}') +
-        (pfConfig.hiddenHotItemIndex
-          ? '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}'
-          : '') +
+        (pfConfig.hiddenHotItemMetrics ? '.HotItem-content .HotItem-metrics{display: none;}' : '.HotItem-content {padding-bottom: 24px;}') +
+        (pfConfig.hiddenHotItemIndex ? '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}' : '') +
         (pfConfig.hiddenHotItemLabel ? '.HotItem-label{display: none;}' : '') +
         (pfConfig.hiddenDetailAvatar
           ? '.AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}' +
             '.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}'
           : '') +
-        (pfConfig.hiddenDetailBadge
-          ? '.AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}'
-          : '') +
-        (pfConfig.hiddenDetailVoters
-          ? '.AnswerItem .Voters button{display: none;}'
-          : '') +
-        (pfConfig.hiddenDetailName
-          ? '.AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}'
-          : '') +
-        (pfConfig.hiddenHomeTab
-          ? '.Topstory-container .TopstoryTabs{display: none!important;}'
-          : '') +
-        (pfConfig.hiddenQuestionSide
-          ? '.QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}'
-          : '') +
-        (pfConfig.hiddenQuestionFollowing
-          ? '.QuestionHeader .FollowButton{display: none;}'
-          : '') +
-        (pfConfig.hiddenQuestionAnswer
-          ? '.QuestionHeader .FollowButton ~ button{display: none;}'
-          : '') +
-        (pfConfig.hiddenQuestionInvite
-          ? '.QuestionHeader .QuestionHeaderActions>button:first-child{display: none;}'
-          : '') +
-        (pfConfig.hiddenSearchPageTopSearch
-          ? '.SearchSideBar .TopSearch{display: none;}'
-          : '') +
-        (pfConfig.hiddenSearchPageFooter
-          ? '.SearchSideBar .Footer{display: none;}'
-          : '') +
-        (pfConfig.hiddenSearchPageTopSearch && pfConfig.hiddenSearchPageFooter
-          ? '.SearchSideBar{display: none}'
-          : '') +
-        (pfConfig.hiddenSearchBoxTopSearch
-          ? '.SearchBar-noValueMenu .AutoComplete-group:first-child{display:none;}'
-          : '') +
-        (pfConfig.hiddenZhuanlanShare
-          ? '.zhuanlan .Post-SideActions .Popover.ShareMenu{display: none!important;}'
-          : '') +
-        (pfConfig.hiddenZhuanlanVoters
-          ? '.zhuanlan .Post-SideActions .like{display: none!important;}'
-          : '') +
-        (pfConfig.hiddenCollegeEntranceExamination
-          ? '.Topstory-mainColumn .css-8z7gkt{display: none!important;}'
-          : '') +
-        (pfConfig.hiddenFollowAction
-          ? '.TopstoryItem-isFollow .FeedSource-firstline{display: none;}'
-          : '') +
-        (pfConfig.hiddenFollowChooseUser
-          ? '.TopstoryItem-isFollow .AuthorInfo{display: none;}'
-          : '') +
+        (pfConfig.hiddenDetailBadge ? '.AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}' : '') +
+        (pfConfig.hiddenDetailVoters ? '.AnswerItem .Voters button{display: none;}' : '') +
+        (pfConfig.hiddenDetailName ? '.AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}' : '') +
+        (pfConfig.hiddenHomeTab ? '.Topstory-container .TopstoryTabs{display: none!important;}' : '') +
+        (pfConfig.hiddenQuestionSide ? '.QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}' : '') +
+        (pfConfig.hiddenQuestionFollowing ? '.QuestionHeader .FollowButton{display: none;}' : '') +
+        (pfConfig.hiddenQuestionAnswer ? '.QuestionHeader .FollowButton ~ button{display: none;}' : '') +
+        (pfConfig.hiddenQuestionInvite ? '.QuestionHeader .QuestionHeaderActions>button:first-child{display: none;}' : '') +
+        (pfConfig.hiddenSearchPageTopSearch ? '.SearchSideBar .TopSearch{display: none;}' : '') +
+        (pfConfig.hiddenSearchPageFooter ? '.SearchSideBar .Footer{display: none;}' : '') +
+        (pfConfig.hiddenSearchPageTopSearch && pfConfig.hiddenSearchPageFooter ? '.SearchSideBar{display: none}' : '') +
+        (pfConfig.hiddenSearchBoxTopSearch ? '.SearchBar-noValueMenu .AutoComplete-group:first-child{display:none;}' : '') +
+        (pfConfig.hiddenZhuanlanShare ? '.zhuanlan .Post-SideActions .Popover.ShareMenu{display: none!important;}' : '') +
+        (pfConfig.hiddenZhuanlanVoters ? '.zhuanlan .Post-SideActions .like{display: none!important;}' : '') +
+        (pfConfig.hiddenCollegeEntranceExamination ? '.Topstory-mainColumn .css-8z7gkt{display: none!important;}' : '') +
+        (pfConfig.hiddenFollowAction ? '.TopstoryItem-isFollow .FeedSource-firstline{display: none;}' : '') +
+        (pfConfig.hiddenFollowChooseUser ? '.TopstoryItem-isFollow .AuthorInfo{display: none;}' : '') +
         (pfConfig.hiddenAnswerRightFooter
           ? '.Question-sideColumn{display: none!important;}.Question-main .Question-mainColumn,.ListShortcut{width: inherit;}'
           : '') +
-        (pfConfig.hiddenAnswerRightFooterAnswerAuthor
-          ? '.Question-sideColumn .Sticky .AnswerAuthor{display: none;}'
-          : '') +
-        (pfConfig.hiddenAnswerRightFooterFavorites
-          ? '.Question-sideColumn .Sticky .AnswerAuthor + .Card{display: none;}'
-          : '') +
+        (pfConfig.hiddenAnswerRightFooterAnswerAuthor ? '.Question-sideColumn .Sticky .AnswerAuthor{display: none;}' : '') +
+        (pfConfig.hiddenAnswerRightFooterFavorites ? '.Question-sideColumn .Sticky .AnswerAuthor + .Card{display: none;}' : '') +
         (pfConfig.hiddenAnswerRightFooterRelatedQuestions
           ? '.Question-sideColumn .Sticky [data-za-detail-view-path-module="RelatedQuestions"]{display: none;}'
           : '') +
         (pfConfig.hiddenAnswerRightFooterContentList
           ? '.Question-sideColumn .Sticky [data-za-detail-view-path-module="ContentList"]{display: none;}'
           : '') +
-        (pfConfig.hiddenAnswerRightFooterFooter
-          ? '.Question-sideColumn .Sticky .Footer{display: none;}'
-          : '') +
+        (pfConfig.hiddenAnswerRightFooterFooter ? '.Question-sideColumn .Sticky .Footer{display: none;}' : '') +
         (pfConfig.hidden618HongBao
           ? '.MCNLinkCard[data-mcn-source="淘宝"],.MCNLinkCard[data-mcn-source="京东"],.MCNLinkCard[data-mcn-source="知乎"]{display:none;}'
           : '') +
-        (pfConfig.hiddenZhuanlanFollowButton
-          ? '.zhuanlan .FollowButton{display: none;}'
-          : '') +
-        (pfConfig.hiddenZhuanlanAvatarWrapper
-          ? '.zhuanlan .AuthorInfo-avatarWrapper{display: none;}'
-          : '') +
-        (pfConfig.hiddenZhuanlanAuthorInfoHead
-          ? '.zhuanlan .AuthorInfo-head{display: none;}'
-          : '') +
-        (pfConfig.hiddenZhuanlanAuthorInfoDetail
-          ? '.zhuanlan .AuthorInfo-detail{display: none;}'
-          : '') +
-        (pfConfig.hiddenListAnswerInPerson
-          ? '.Topstory-mainColumn .LabelContainer{display: none;}'
-          : '') +
-        (pfConfig.hiddenQuestionSpecial
-          ? '.QuestionHeader .LabelContainer-wrapper{display: none;}'
-          : '') +
-        (pfConfig.hiddenHomeTopAD
-          ? '.Topstory>div{display: none;}.Topstory .Topstory-container{display: flex!important}'
-          : '')
+        (pfConfig.hiddenZhuanlanFollowButton ? '.zhuanlan .FollowButton{display: none;}' : '') +
+        (pfConfig.hiddenZhuanlanAvatarWrapper ? '.zhuanlan .AuthorInfo-avatarWrapper{display: none;}' : '') +
+        (pfConfig.hiddenZhuanlanAuthorInfoHead ? '.zhuanlan .AuthorInfo-head{display: none;}' : '') +
+        (pfConfig.hiddenZhuanlanAuthorInfoDetail ? '.zhuanlan .AuthorInfo-detail{display: none;}' : '') +
+        (pfConfig.hiddenListAnswerInPerson ? '.Topstory-mainColumn .LabelContainer{display: none;}' : '') +
+        (pfConfig.hiddenQuestionSpecial ? '.QuestionHeader .LabelContainer-wrapper{display: none;}' : '') +
+        (pfConfig.hiddenHomeTopAD ? '.Topstory>div{display: none;}.Topstory .Topstory-container{display: flex!important}' : '')
       );
     },
   };
@@ -1676,24 +1512,15 @@ const BASIS_CHECKBOX_LIST = [
   const callbackGIF = (mutationsList) => {
     const e = mutationsList[0].target;
     if (!(/\bisPlaying\b/.test(e.className) && pfConfig.previewOpenGIF)) return;
-    e.querySelector('video')
-      ? myPreview.open(e.querySelector('video').src, e, true)
-      : myPreview.open(e.querySelector('img').src, e);
+    e.querySelector('video') ? myPreview.open(e.querySelector('video').src, e, true) : myPreview.open(e.querySelector('img').src, e);
   };
   const observerGIF = new MutationObserver(callbackGIF);
   // 加载预览图片方法，解决部分图片无法点击预览的问题
   function initPreviewImg() {
-    const images = [
-      domA('.TitleImage'),
-      domA('.ArticleItem-image'),
-      domA('.ztext figure .content_image'),
-    ];
+    const images = [domA('.TitleImage'), domA('.ArticleItem-image'), domA('.ztext figure .content_image')];
     images.forEach((events) => {
       events.forEach((e) => {
-        const src =
-          e.src ||
-          (e.style.backgroundImage &&
-            e.style.backgroundImage.split('("')[1].split('")')[0]);
+        const src = e.src || (e.style.backgroundImage && e.style.backgroundImage.split('("')[1].split('")')[0]);
         e.onclick = () => myPreview.open(src);
       });
     });
@@ -1724,18 +1551,10 @@ const BASIS_CHECKBOX_LIST = [
   const backgroundCSS = {
     init: function () {
       $('#pf-css-background') && $('#pf-css-background').remove();
-      $('head').append(
-        `<style type="text/css" id="pf-css-background">${this.chooseBG(
-          pfConfig.colorBackground
-        )}</style>`
-      );
+      $('head').append(`<style type="text/css" id="pf-css-background">${this.chooseBG(pfConfig.colorBackground)}</style>`);
     },
     chooseBG: function (bg) {
-      return pfConfig.isUseThemeDark
-        ? this.dark()
-        : bg !== '#ffffff'
-        ? this.normal(bg)
-        : '.GlobalSideBar-navList{background: #fff}';
+      return pfConfig.isUseThemeDark ? this.dark() : bg !== '#ffffff' ? this.normal(bg) : '.GlobalSideBar-navList{background: #fff}';
     },
     dark: () => {
       // 夜间模式
@@ -1844,11 +1663,7 @@ const BASIS_CHECKBOX_LIST = [
   function initLinkChanger() {
     const esName = ['a.external', 'a.LinkCard'];
     const hrefChanger = (item) => {
-      const hrefFormat =
-        item.href.replace(
-          /^(https|http):\/\/link\.zhihu\.com\/\?target\=/,
-          ''
-        ) || '';
+      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, '') || '';
       let href = '';
       // 解决hrefFormat格式已经是decode后的格式
       try {
@@ -1866,9 +1681,7 @@ const BASIS_CHECKBOX_LIST = [
   }
 
   const useSimple = async () => {
-    const isUse = confirm(
-      '是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存'
-    );
+    const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
     const c = {
       positionCreation: 'hidden',
@@ -1971,8 +1784,7 @@ const BASIS_CHECKBOX_LIST = [
   /** 注入弹窗元素和默认css */
   function initHTML() {
     const htmlModal = $(INNER_HTML);
-    const openButton =
-      '<div class="pf-op"><i class="pf-open-modal iconfont">&#xe603;</i></div>';
+    const openButton = '<div class="pf-op"><i class="pf-open-modal iconfont">&#xe603;</i></div>';
     $('body').append(openButton);
     $('body').append(htmlModal);
     // 在首页加入左侧模块 用于调整创作中心 收藏夹等模块元素
@@ -1989,8 +1801,7 @@ const BASIS_CHECKBOX_LIST = [
     $('.pf-export-config')[0].onclick = myConfig.export;
     $('.pf-import-config')[0].onclick = myConfig.import;
     $('.pf-restore-config')[0].onclick = myConfig.restore;
-    $('.pf-customize-css-button')[0].onclick = () =>
-      myChanger($('[name="customizeCss"]')[0]);
+    $('.pf-customize-css-button')[0].onclick = () => myChanger($('[name="customizeCss"]')[0]);
     $('.pf-simple-button')[0].onclick = useSimple;
     $('#PF-SYNC-BLOCK-LIST')[0].onclick = () => syncBlockList(0);
 
@@ -2014,9 +1825,7 @@ const BASIS_CHECKBOX_LIST = [
   const eventBlockHTML = (info) => {
     const { id, name, avatar } = info;
     return (
-      `<div class="pf-block-item pf-block-id-${id}" data-info='${JSON.stringify(
-        info
-      )}'>` +
+      `<div class="pf-block-item pf-block-id-${id}" data-info='${JSON.stringify(info)}'>` +
       `<img src="${avatar}" />` +
       `<a href="/people/${id}" target="_blank">${name}</a>` +
       `<i class="iconfont pf-remove-block" style="margin-left: 4px; cursor: pointer;">&#xe607;</i>` +
@@ -2036,12 +1845,8 @@ const BASIS_CHECKBOX_LIST = [
     $('#PF-BLOCK-LIST')[0].onclick = function (event) {
       if (/pf-remove-block/.test(event.target.className)) {
         const item = $(event.target).parent();
-        const info = item[0].dataset.info
-          ? JSON.parse(item[0].dataset.info)
-          : {};
-        const isUse = confirm(
-          '取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。'
-        );
+        const info = item[0].dataset.info ? JSON.parse(item[0].dataset.info) : {};
+        const isUse = confirm('取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。');
         isUse && deleteFetchActionsBlock(info);
       }
     };
@@ -2051,12 +1856,9 @@ const BASIS_CHECKBOX_LIST = [
   const eventHiddenItemHTML = ({ value, label }) => {
     const valObj = {
       'is-br': '<br/>',
-      'is-line':
-        '<div style="width: 100%; margin: 6px 0; background: #ddd; height: 1px;"></div>',
+      'is-line': '<div style="width: 100%; margin: 6px 0; background: #ddd; height: 1px;"></div>',
     };
-    return valObj[value]
-      ? valObj[value]
-      : `<label><input class="pf-i" name="${value}" type="checkbox" value="on" />${label}</label>`;
+    return valObj[value] ? valObj[value] : `<label><input class="pf-i" name="${value}" type="checkbox" value="on" />${label}</label>`;
   };
 
   /** 初始化隐藏内容列表 */
@@ -2097,15 +1899,12 @@ const BASIS_CHECKBOX_LIST = [
 
   /** 移除屏蔽用户 */
   function removeBlockItem(info) {
-    const itemIndex = pfConfig.removeBlockUserContentList.findIndex(
-      (i) => i.id === info.id
-    );
+    const itemIndex = pfConfig.removeBlockUserContentList.findIndex((i) => i.id === info.id);
     if (itemIndex >= 0) {
       const blockList = [...pfConfig.removeBlockUserContentList];
       blockList.splice(itemIndex, 1);
       pfConfig.removeBlockUserContentList = blockList;
-      $(`.pf-block-id-${info.id}`)[0] &&
-        ($(`.pf-block-id-${info.id}`)[0].style.display = 'none');
+      $(`.pf-block-id-${info.id}`)[0] && ($(`.pf-block-id-${info.id}`)[0].style.display = 'none');
       myStorage.set('pfConfig', JSON.stringify(pfConfig));
     }
   }
@@ -2113,8 +1912,7 @@ const BASIS_CHECKBOX_LIST = [
   /** 同步黑名单列表 */
   function syncBlockList(offset = 0, l = []) {
     !l.length && $('#PF-BLOCK-LIST').empty();
-    $('#PF-SYNC-BLOCK-LIST')[0].innerHTML =
-      '<i class="iconfont pf-loading-in-button">&#xe605;</i>';
+    $('#PF-SYNC-BLOCK-LIST')[0].innerHTML = '<i class="iconfont pf-loading-in-button">&#xe605;</i>';
     $('#PF-SYNC-BLOCK-LIST')[0].disabled = true;
     const limit = 20;
     fetch(`/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
@@ -2163,12 +1961,9 @@ const BASIS_CHECKBOX_LIST = [
       return $(d);
     };
     const domParent = $('<block></block>');
-    Object.keys(BACKGROUND_CONFIG).forEach((item) =>
-      domParent.append(dom(item))
-    );
+    Object.keys(BACKGROUND_CONFIG).forEach((item) => domParent.append(dom(item)));
     $(`[name="colorsBackground"]`).empty();
-    $(`[name="colorsBackground"]`)[0] &&
-      $(`[name="colorsBackground"]`).append(domParent);
+    $(`[name="colorsBackground"]`)[0] && $(`[name="colorsBackground"]`).append(domParent);
   }
 
   /**
@@ -2190,8 +1985,7 @@ const BASIS_CHECKBOX_LIST = [
   function storyHidden() {
     sortAnswer();
     if ($('.QuestionAnswer-content')[0]) {
-      pfConfig.answerItemCreatedAndModifiedTime &&
-        addTimes($('.QuestionAnswer-content'));
+      pfConfig.answerItemCreatedAndModifiedTime && addTimes($('.QuestionAnswer-content'));
       pfConfig.showBlockUser && addBlockUser($('.QuestionAnswer-content'));
     }
 
@@ -2225,15 +2019,9 @@ const BASIS_CHECKBOX_LIST = [
         const eventThat = $(that);
         if (pfConfig.removeZhihuOfficial) {
           // 知乎官方账号优先级最高
-          const label = eventThat
-            .find('.AuthorInfo-name .css-n99yhz')
-            .attr('aria-label');
+          const label = eventThat.find('.AuthorInfo-name .css-n99yhz').attr('aria-label');
           if (/知乎[\s]*官方帐号/.test(label)) {
-            lessNum = fnHiddenDom(
-              lessNum,
-              that,
-              '已删除一条知乎官方帐号的回答'
-            );
+            lessNum = fnHiddenDom(lessNum, that, '已删除一条知乎官方帐号的回答');
             isRemoved = true;
           }
         } else {
@@ -2241,11 +2029,7 @@ const BASIS_CHECKBOX_LIST = [
           REMOVE_ANSWER_BY_NAME.forEach((item) => {
             const reg = new RegExp(`['"]authorName['":]*` + item.name);
             if (pfConfig[item.id] && reg.test(dataZop)) {
-              lessNum = fnHiddenDom(
-                lessNum,
-                that,
-                `已删除一条${item.name}的回答`
-              );
+              lessNum = fnHiddenDom(lessNum, that, `已删除一条${item.name}的回答`);
               isRemoved = true;
             }
           });
@@ -2254,16 +2038,11 @@ const BASIS_CHECKBOX_LIST = [
         // 删除选自盐选专栏的回答
         if (pfConfig.removeFromYanxuan && !isRemoved) {
           const formYanxuan =
-            eventThat.find('.KfeCollection-OrdinaryLabel-content')[0] ||
-            eventThat.find('.KfeCollection-IntroCard p:first-of-type')[0];
+            eventThat.find('.KfeCollection-OrdinaryLabel-content')[0] || eventThat.find('.KfeCollection-IntroCard p:first-of-type')[0];
           if (formYanxuan) {
             const formYanxuanText = formYanxuan ? formYanxuan.innerText : '';
             if (/盐选专栏/.test(formYanxuanText)) {
-              lessNum = fnHiddenDom(
-                lessNum,
-                that,
-                `已删除一条来自盐选专栏的回答`
-              );
+              lessNum = fnHiddenDom(lessNum, that, `已删除一条来自盐选专栏的回答`);
               isRemoved = true;
             }
           }
@@ -2273,15 +2052,8 @@ const BASIS_CHECKBOX_LIST = [
         if (pfConfig.removeUnrealAnswer && !isRemoved) {
           const aTag = eventThat.find('.KfeCollection-FabledStatement')[0];
           const aTag2 = eventThat.find('.css-140fcia')[0];
-          if (
-            REP_UNREAL.test(aTag ? aTag.innerText : '') ||
-            REP_UNREAL.test(aTag2 ? aTag2.innerText : '')
-          ) {
-            lessNum = fnHiddenDom(
-              lessNum,
-              that,
-              `已删除一条内容包含虚构创作的回答`
-            );
+          if (REP_UNREAL.test(aTag ? aTag.innerText : '') || REP_UNREAL.test(aTag2 ? aTag2.innerText : '')) {
+            lessNum = fnHiddenDom(lessNum, that, `已删除一条内容包含虚构创作的回答`);
             isRemoved = true;
           }
         }
@@ -2289,11 +2061,7 @@ const BASIS_CHECKBOX_LIST = [
         // 自动展开所有回答
         if (pfConfig.answerUnfold && !isRemoved) {
           const unFoldButton = eventThat.find('.ContentItem-expandButton');
-          if (
-            unFoldButton &&
-            unFoldButton[0] &&
-            !eventThat.hasClass('is-unfold')
-          ) {
+          if (unFoldButton && unFoldButton[0] && !eventThat.hasClass('is-unfold')) {
             unFoldButton[0].click();
             eventThat.addClass('is-unfold');
             isRemoved = true;
@@ -2305,21 +2073,12 @@ const BASIS_CHECKBOX_LIST = [
         if (pfConfig.answerFoldStart && !isRemoved) {
           const foldButton = eventThat.find('.RichContent-collapsedText');
           const unFoldButton = eventThat.find('.ContentItem-expandButton');
-          if (
-            foldButton &&
-            foldButton[0] &&
-            !eventThat.hasClass('is-fold') &&
-            that.offsetHeight > 939
-          ) {
+          if (foldButton && foldButton[0] && !eventThat.hasClass('is-fold') && that.offsetHeight > 939) {
             foldButton[0].click();
             eventThat.addClass('is-fold');
             lessNum++;
             isRemoved = true;
-          } else if (
-            unFoldButton &&
-            unFoldButton[0] &&
-            !eventThat.hasClass('is-fold')
-          ) {
+          } else if (unFoldButton && unFoldButton[0] && !eventThat.hasClass('is-fold')) {
             eventThat.addClass('is-fold');
             lessNum++;
             isRemoved = true;
@@ -2327,22 +2086,12 @@ const BASIS_CHECKBOX_LIST = [
         }
 
         // 如果 不再显示「已屏蔽」用户发布的内容 为 true 并且列表不为 0
-        if (
-          pfConfig.removeBlockUserContent &&
-          pfConfig.removeBlockUserContentList.length &&
-          !isRemoved
-        ) {
-          const aContent = eventThat
-            .find('.AnswerItem')
-            .attr('data-za-extra-module')
-            ? JSON.parse(
-                eventThat.find('.AnswerItem').attr('data-za-extra-module')
-              ).card.content
+        if (pfConfig.removeBlockUserContent && pfConfig.removeBlockUserContentList.length && !isRemoved) {
+          const aContent = eventThat.find('.AnswerItem').attr('data-za-extra-module')
+            ? JSON.parse(eventThat.find('.AnswerItem').attr('data-za-extra-module')).card.content
             : {};
           const userId = aContent.author_member_hash_id || '';
-          if (
-            pfConfig.removeBlockUserContentList.find((i) => i.id === userId)
-          ) {
+          if (pfConfig.removeBlockUserContentList.find((i) => i.id === userId)) {
             lessNum = fnHiddenDom(lessNum, that, `已屏蔽一个用户的回答`);
             isRemoved = true;
           }
@@ -2362,10 +2111,7 @@ const BASIS_CHECKBOX_LIST = [
   /** 调用[不感兴趣]接口 */
   function doFetchUninterestv2({ id, type }) {
     const data = new FormData();
-    data.append(
-      'item_brief',
-      JSON.stringify({ source: 'TS', type: type, id: id })
-    );
+    data.append('item_brief', JSON.stringify({ source: 'TS', type: type, id: id }));
     fetch('/api/v3/feed/topstory/uninterestv2', {
       body: data,
       method: 'POST',
@@ -2383,12 +2129,7 @@ const BASIS_CHECKBOX_LIST = [
 
   /** 推荐列表最外层绑定事件 */
   function topStoryRecommendEvent() {
-    const listTargetClass = [
-      'RichContent-cover',
-      'RichContent-inner',
-      'ContentItem-more',
-      'ContentItem-arrowIcon',
-    ];
+    const listTargetClass = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
     const canFindTargeted = (e) => {
       let finded = false;
       listTargetClass.forEach((item) => {
@@ -2399,16 +2140,11 @@ const BASIS_CHECKBOX_LIST = [
     $('.Topstory-recommend')[0] &&
       ($('.Topstory-recommend')[0].onclick = function (event) {
         // 点击外置[不感兴趣]按钮
-        if (
-          pfConfig.listOutPutNotInterested &&
-          event.target.className === 'ContentItem-title'
-        ) {
+        if (pfConfig.listOutPutNotInterested && event.target.className === 'ContentItem-title') {
           // 使用pointer-events: none 和伪元素、子元素使用pointer-events:auto来获取点击
           let dataZop = {};
           try {
-            dataZop = JSON.parse(
-              $(event.target).parents('.ContentItem').attr('data-zop')
-            );
+            dataZop = JSON.parse($(event.target).parents('.ContentItem').attr('data-zop'));
           } catch {}
           const { itemId = '', type = '' } = dataZop;
           doFetchUninterestv2({ id: itemId, type });
@@ -2428,17 +2164,10 @@ const BASIS_CHECKBOX_LIST = [
 
   /** 问题添加时间 */
   function addTimes(event) {
-    event.find('.pf-list-item-time')[0] &&
-      event.find('.pf-list-item-time').remove();
-    const crTime = event.find('[itemprop="dateCreated"]')[0]
-      ? event.find('[itemprop="dateCreated"]')[0].content
-      : '';
-    const puTime = event.find('[itemprop="datePublished"]')[0]
-      ? event.find('[itemprop="datePublished"]')[0].content
-      : '';
-    const muTime = event.find('[itemprop="dateModified"]')[0]
-      ? event.find('[itemprop="dateModified"]')[0].content
-      : '';
+    event.find('.pf-list-item-time')[0] && event.find('.pf-list-item-time').remove();
+    const crTime = event.find('[itemprop="dateCreated"]')[0] ? event.find('[itemprop="dateCreated"]')[0].content : '';
+    const puTime = event.find('[itemprop="datePublished"]')[0] ? event.find('[itemprop="datePublished"]')[0].content : '';
+    const muTime = event.find('[itemprop="dateModified"]')[0] ? event.find('[itemprop="dateModified"]')[0].content : '';
     const created = Util.formatDate(crTime || puTime);
     const modified = Util.formatDate(muTime);
     if (!created) return;
@@ -2453,24 +2182,15 @@ const BASIS_CHECKBOX_LIST = [
   function addBlockUser(event) {
     event.find('.pf-block-user')[0] && event.find('.pf-block-user').remove();
     try {
-      const userUrl = event.find(
-        '.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="url"]'
-      )[0].content;
-      const userName = event.find(
-        '.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="name"]'
-      )[0].content;
-      const avatar = event.find(
-        '.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="image"]'
-      )[0].content;
+      const userUrl = event.find('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="url"]')[0].content;
+      const userName = event.find('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="name"]')[0].content;
+      const avatar = event.find('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="image"]')[0].content;
       const aContent = event.find('.AnswerItem').attr('data-za-extra-module')
-        ? JSON.parse(event.find('.AnswerItem').attr('data-za-extra-module'))
-            .card.content
+        ? JSON.parse(event.find('.AnswerItem').attr('data-za-extra-module')).card.content
         : {};
       const userId = aContent.author_member_hash_id || '';
       if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;
-      const buttonBlockUser = $(
-        '<button class="pf-block-user">屏蔽用户</button>'
-      );
+      const buttonBlockUser = $('<button class="pf-block-user">屏蔽用户</button>');
       buttonBlockUser[0].onclick = function () {
         const isUse = confirm(
           `是否要屏蔽${userName}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。\n如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`
@@ -2543,8 +2263,7 @@ const BASIS_CHECKBOX_LIST = [
       if (needHiddenItem.offsetHeight) {
         try {
           dataZop = JSON.parse(eventThat.attr('data-zop'));
-          cardContent = JSON.parse(eventThat.attr('data-za-extra-module')).card
-            .content;
+          cardContent = JSON.parse(eventThat.attr('data-za-extra-module')).card.content;
         } catch {}
         const { itemId = '', title = '', type = '' } = dataZop;
         let isFindTitle = false;
@@ -2560,14 +2279,8 @@ const BASIS_CHECKBOX_LIST = [
         if (isFindTitle) {
           // 关键词过滤
           // 过滤了之后调用“不感兴趣”接口
-          const routeURL =
-            eventThat.find('[itemprop="url"]') &&
-            eventThat.find('[itemprop="url"]').attr('content');
-          lessNum = fnHiddenDom(
-            lessNum,
-            needHiddenItem,
-            `关键词过滤：${title}\n关键词：${filterKeywords}\n${routeURL}`
-          );
+          const routeURL = eventThat.find('[itemprop="url"]') && eventThat.find('[itemprop="url"]').attr('content');
+          lessNum = fnHiddenDom(lessNum, needHiddenItem, `关键词过滤：${title}\n关键词：${filterKeywords}\n${routeURL}`);
           doFetchUninterestv2({ id: itemId, type });
           if (pfConfig.notificationAboutFilter) {
             addNotification({
@@ -2575,23 +2288,12 @@ const BASIS_CHECKBOX_LIST = [
               content: `已调用「不感兴趣」接口`,
             });
           }
-        } else if (
-          (eventThat.hasClass('ZVideoItem') && isRemoveVideo) ||
-          (eventThat.hasClass('ArticleItem') && isRemoveArticle)
-        ) {
+        } else if ((eventThat.hasClass('ZVideoItem') && isRemoveVideo) || (eventThat.hasClass('ArticleItem') && isRemoveArticle)) {
           lessNum = fnHiddenDom(lessNum, needHiddenItem, '列表种类过滤');
         }
 
-        if (
-          pfConfig.removeLessVote &&
-          cardContent['upvote_num'] < pfConfig.lessVoteNumber &&
-          !needHiddenItem.style.display
-        ) {
-          lessNum = fnHiddenDom(
-            lessNum,
-            needHiddenItem,
-            `低赞内容过滤: ${title}, ${cardContent['upvote_num']}`
-          );
+        if (pfConfig.removeLessVote && cardContent['upvote_num'] < pfConfig.lessVoteNumber && !needHiddenItem.style.display) {
+          lessNum = fnHiddenDom(lessNum, needHiddenItem, `低赞内容过滤: ${title}, ${cardContent['upvote_num']}`);
         }
       }
 
@@ -2605,10 +2307,7 @@ const BASIS_CHECKBOX_LIST = [
   let searchEachIndex = 0;
   /** 搜索列表过滤 */
   function searchPageHidden() {
-    const isTrue =
-      pfConfig.removeSearchListAD ||
-      pfConfig.removeSearchListArticle ||
-      pfConfig.removeSearchListVideo;
+    const isTrue = pfConfig.removeSearchListAD || pfConfig.removeSearchListArticle || pfConfig.removeSearchListVideo;
     if (!isTrue) return;
     const events = $('[role="listitem"]');
     let lessNum = 0;
@@ -2621,9 +2320,7 @@ const BASIS_CHECKBOX_LIST = [
 
         // 过滤搜索页商业推广
         if (pfConfig.removeSearchListAD) {
-          const PcCollegeCard = eventThat.find(
-            '.KfeCollection-PcCollegeCard-root'
-          );
+          const PcCollegeCard = eventThat.find('.KfeCollection-PcCollegeCard-root');
           if (PcCollegeCard && PcCollegeCard[0]) {
             lessNum = fnHiddenDom(lessNum, that, '已过滤一条商业推广');
             isRemoved = true;
@@ -2631,47 +2328,31 @@ const BASIS_CHECKBOX_LIST = [
         }
 
         // 过滤搜索页文章
-        if (
-          pfConfig.removeSearchListArticle &&
-          eventThat.find('.ArticleItem')[0] &&
-          !isRemoved
-        ) {
+        if (pfConfig.removeSearchListArticle && eventThat.find('.ArticleItem')[0] && !isRemoved) {
           lessNum = fnHiddenDom(lessNum, that, '过滤搜索页文章');
           isRemoved = true;
         }
 
         // 过滤搜索页视频
-        if (
-          pfConfig.removeSearchListVideo &&
-          eventThat.find('.ZvideoItem')[0] &&
-          !isRemoved
-        ) {
+        if (pfConfig.removeSearchListVideo && eventThat.find('.ZvideoItem')[0] && !isRemoved) {
           lessNum = fnHiddenDom(lessNum, that, '过滤搜索页视频');
           isRemoved = true;
         }
 
         // 低赞内容过滤
         if (pfConfig.removeLessVote && !isRemoved) {
-          const upvoteEvent = eventThat.find(
-            '.ContentItem-actions .VoteButton--up'
-          );
+          const upvoteEvent = eventThat.find('.ContentItem-actions .VoteButton--up');
           const upvoteText = upvoteEvent ? upvoteEvent.attr('aria-label') : '';
           const upvote = upvoteText ? upvoteText.trim().replace(/\W+/, '') : -1;
           if (upvote > -1 && upvote < pfConfig.lessVoteNumber) {
-            lessNum = fnHiddenDom(
-              lessNum,
-              that,
-              `过滤低与${pfConfig.lessVoteNumber}赞内容`
-            );
+            lessNum = fnHiddenDom(lessNum, that, `过滤低与${pfConfig.lessVoteNumber}赞内容`);
             isRemoved = true;
           }
         }
 
         // 关键词过滤
         if (!isRemoved && words.length) {
-          const titleEvent = eventThat.find(
-            '.ContentItem-title [itemprop="name"]'
-          );
+          const titleEvent = eventThat.find('.ContentItem-title [itemprop="name"]');
           if (titleEvent) {
             let isFindTitle = false;
             let filterKeywords = '';
@@ -2684,11 +2365,7 @@ const BASIS_CHECKBOX_LIST = [
               }
             });
             if (isFindTitle) {
-              lessNum = fnHiddenDom(
-                lessNum,
-                that,
-                `关键词过滤内容: ${filterKeywords}`
-              );
+              lessNum = fnHiddenDom(lessNum, that, `关键词过滤内容: ${filterKeywords}`);
               isRemoved = true;
             }
           }
@@ -2707,37 +2384,17 @@ const BASIS_CHECKBOX_LIST = [
   /** 监听问题详情里的.Select-button按钮 */
   function listenSelectButton() {
     if (answerSortBy === 'vote' || answerSortBy === 'comment') {
-      $('.Select-button')[0].innerHTML = $(
-        '.Select-button'
-      )[0].innerHTML.replace(
-        /[\u4e00-\u9fa5]+(?=<svg)/,
-        SORT_KEYS[answerSortBy]
-      );
+      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, SORT_KEYS[answerSortBy]);
     }
 
     const clickSort = (id) => {
       eachIndex = 0;
       answerSortBy = ANSWER_SORT_IDS[id].key;
-      $('.Select-button')[0].innerHTML = $(
-        '.Select-button'
-      )[0].innerHTML.replace(
-        /[\u4e00-\u9fa5]+(?=<svg)/,
-        ANSWER_SORT_IDS[id].name
-      );
-      if (
-        ANSWER_SORT_IDS[id].key === 'vote' ||
-        ANSWER_SORT_IDS[id].key === 'comment'
-      ) {
-        location.href =
-          location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') +
-          '?sort=' +
-          ANSWER_SORT_IDS[id].key;
+      $('.Select-button')[0].innerHTML = $('.Select-button')[0].innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, ANSWER_SORT_IDS[id].name);
+      if (ANSWER_SORT_IDS[id].key === 'vote' || ANSWER_SORT_IDS[id].key === 'comment') {
+        location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + ANSWER_SORT_IDS[id].key;
       } else if (ANSWER_SORT_IDS[id].key === 'default') {
-        /\?sort=/.test(location.href) &&
-          (location.href = location.href.replace(
-            /(?<=question\/\d+)[?\/][\w\W]*/,
-            ''
-          ));
+        /\?sort=/.test(location.href) && (location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ''));
       }
     };
 
@@ -2748,12 +2405,8 @@ const BASIS_CHECKBOX_LIST = [
       const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] };
       buObserver = new MutationObserver(() => {
         if ($('.Select-button').attr('aria-expanded') === 'true') {
-          const evenSortByVote = $(
-            '<button class="Select-option" tabindex="-1" role="option" id="Select1-2">点赞数排序</button>'
-          );
-          const evenSortByComment = $(
-            '<button class="Select-option" tabindex="-1" role="option" id="Select1-3">评论数排序</button>'
-          );
+          const evenSortByVote = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-2">点赞数排序</button>');
+          const evenSortByComment = $('<button class="Select-option" tabindex="-1" role="option" id="Select1-3">评论数排序</button>');
           $('.Answers-select').append(evenSortByVote).append(evenSortByComment);
           domA('.Select-option').forEach((ev) => {
             ev.onclick = () => clickSort(ev.id);
@@ -2770,32 +2423,25 @@ const BASIS_CHECKBOX_LIST = [
    * 为了防止页面错乱 只对前20条进行排序
    */
   function sortAnswer() {
-    if (
-      (answerSortBy === 'vote' || answerSortBy === 'comment') &&
-      isFirstToSort
-    ) {
+    if ((answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
       const event = $('.List>div:nth-child(2)>div');
-      const listSorted = event
-        .find('.List-item:not(.PlaceHolder)')
-        .sort((a, b) => {
-          const aContent = $(a).find('.AnswerItem').attr('data-za-extra-module')
-            ? JSON.parse($(a).find('.AnswerItem').attr('data-za-extra-module'))
-                .card.content
-            : {};
-          const bContent = $(b).find('.AnswerItem').attr('data-za-extra-module')
-            ? JSON.parse($(b).find('.AnswerItem').attr('data-za-extra-module'))
-                .card.content
-            : {};
+      const listSorted = event.find('.List-item:not(.PlaceHolder)').sort((a, b) => {
+        const aContent = $(a).find('.AnswerItem').attr('data-za-extra-module')
+          ? JSON.parse($(a).find('.AnswerItem').attr('data-za-extra-module')).card.content
+          : {};
+        const bContent = $(b).find('.AnswerItem').attr('data-za-extra-module')
+          ? JSON.parse($(b).find('.AnswerItem').attr('data-za-extra-module')).card.content
+          : {};
 
-          switch (answerSortBy) {
-            case 'vote':
-              return bContent.upvote_num - aContent.upvote_num;
-            case 'comment':
-              return bContent.comment_num - aContent.comment_num;
-            default:
-              return true;
-          }
-        });
+        switch (answerSortBy) {
+          case 'vote':
+            return bContent.upvote_num - aContent.upvote_num;
+          case 'comment':
+            return bContent.comment_num - aContent.comment_num;
+          default:
+            return true;
+        }
+      });
       event.find('.List-item:not(.PlaceHolder)').remove();
       event.prepend(listSorted);
       isFirstToSort = false;
@@ -2812,24 +2458,17 @@ const BASIS_CHECKBOX_LIST = [
   function followingListChanger(isReFind) {
     isReFind && (followingIndex = 0);
     const events = $('.TopstoryItem-isFollow');
-    const removeIsTrue =
-      pfConfig.removeFollowVoteAnswer ||
-      pfConfig.removeFollowVoteArticle ||
-      pfConfig.removeFollowFQuestion;
+    const removeIsTrue = pfConfig.removeFollowVoteAnswer || pfConfig.removeFollowVoteArticle || pfConfig.removeFollowFQuestion;
     if (events.length) {
       let lessNum = 0;
       for (let i = followingIndex, len = events.length; i < len; i++) {
         const event = events[i];
         // 用户操作
         if (event && $(event).find('.FeedSource-firstline')[0]) {
-          const userName = $(event).find(
-            '.FeedSource-firstline .UserLink-link'
-          )[0].innerText;
+          const userName = $(event).find('.FeedSource-firstline .UserLink-link')[0].innerText;
           let dataZop = {};
           try {
-            dataZop = JSON.parse(
-              $(event).find('.ContentItem').attr('data-zop')
-            );
+            dataZop = JSON.parse($(event).find('.ContentItem').attr('data-zop'));
           } catch {}
 
           // 高亮原创
@@ -2848,12 +2487,7 @@ const BASIS_CHECKBOX_LIST = [
           if (removeIsTrue) {
             REMOVE_FOLLOWS.forEach(({ name, rep }) => {
               const thisRep = new RegExp(rep);
-              if (
-                pfConfig[name] &&
-                thisRep.test(
-                  $(event).find('.FeedSource-firstline')[0].innerText
-                )
-              ) {
+              if (pfConfig[name] && thisRep.test($(event).find('.FeedSource-firstline')[0].innerText)) {
                 lessNum = fnHiddenDom(lessNum, event);
               }
             });
@@ -2886,17 +2520,13 @@ const BASIS_CHECKBOX_LIST = [
   /** 收藏夹生成PDF 导出 */
   function collectionExport() {
     const eventBox = $(COLLECTION_EVENT);
-    $('.pf-export-collection-box')[0] &&
-      $('.pf-export-collection-box').remove();
+    $('.pf-export-collection-box')[0] && $('.pf-export-collection-box').remove();
     eventBox.find('.pf-export-collection')[0].onclick = function () {
       this.innerText = '加载中...';
       this.disabled = true;
       const id = location.pathname.match(/(?<=\/collection\/)\d+/)[0];
       const offset =
-        20 *
-        ($('.Pagination .PaginationButton--current')[0]
-          ? Number($('.Pagination .PaginationButton--current')[0].innerText) - 1
-          : 0);
+        20 * ($('.Pagination .PaginationButton--current')[0] ? Number($('.Pagination .PaginationButton--current')[0].innerText) - 1 : 0);
       fetch(`/api/v4/collections/${id}/items?offset=${offset}&limit=20`, {
         method: 'GET',
         headers: new Headers({
@@ -2913,9 +2543,7 @@ const BASIS_CHECKBOX_LIST = [
               case 'zvideo':
                 return (
                   `<div class="pf-pdf-dialog-item">` +
-                  `<div class="pf-pdf-dialog-title">${typeSpan(
-                    type
-                  )}${title}</div>` +
+                  `<div class="pf-pdf-dialog-title">${typeSpan(type)}${title}</div>` +
                   `<div>视频链接：<a href="${url}" target="_blank">${url}</a></div>` +
                   `</div>`
                 );
@@ -2924,9 +2552,7 @@ const BASIS_CHECKBOX_LIST = [
               default:
                 return (
                   `<div class="pf-pdf-dialog-item">` +
-                  `<div class="pf-pdf-dialog-title">${typeSpan(type)}${
-                    title || question.title
-                  }</div>` +
+                  `<div class="pf-pdf-dialog-title">${typeSpan(type)}${title || question.title}</div>` +
                   `<div>内容链接：<a href="${url}" target="_blank">${url}</a></div>` +
                   `<div>${content}</div>` +
                   `</div>`
@@ -2939,9 +2565,7 @@ const BASIS_CHECKBOX_LIST = [
           const doc = iframe.contentWindow.document;
           doc.body.innerHTML = '';
           if (!doc.head.querySelector('style')) {
-            doc.write(
-              `<style type="text/css" id="pf-css-own">${INNER_CSS}</style>`
-            );
+            doc.write(`<style type="text/css" id="pf-css-own">${INNER_CSS}</style>`);
           }
           doc.write(`<div class="pf-pdf-view">${collectionsHTML}</div>`);
 
@@ -2981,9 +2605,7 @@ const BASIS_CHECKBOX_LIST = [
   /** 在启动时注入的内容 */
   async function startInit() {
     if (!$) return;
-    $('head').append(
-      `<style type="text/css" id="pf-css-own">${INNER_CSS}</style>`
-    );
+    $('head').append(`<style type="text/css" id="pf-css-own">${INNER_CSS}</style>`);
     if (HTML_HOOTS.includes(location.hostname)) {
       timeStart = performance.now();
       myLocalC.cachePfConfig = pfConfig;
@@ -3011,11 +2633,7 @@ const BASIS_CHECKBOX_LIST = [
       // 拦截fetch方法 获取option中的值
       const originFetch = fetch;
       unsafeWindow.fetch = (url, opt) => {
-        if (
-          /\/answers\?/.test(url) &&
-          (answerSortBy === 'vote' || answerSortBy === 'comment') &&
-          isFirstToSort
-        ) {
+        if (/\/answers\?/.test(url) && (answerSortBy === 'vote' || answerSortBy === 'comment') && isFirstToSort) {
           // 如果是自定义排序则知乎回答页码增加到20条
           url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
         }
@@ -3030,10 +2648,7 @@ const BASIS_CHECKBOX_LIST = [
         return originFetch(url, opt);
       };
 
-      if (
-        /\/question/.test(location.pathname) &&
-        location.search.match(/(?<=sort=)\w+/)
-      ) {
+      if (/\/question/.test(location.pathname) && location.search.match(/(?<=sort=)\w+/)) {
         answerSortBy = location.search.match(/(?<=sort=)\w+/)[0];
       }
     }
@@ -3059,13 +2674,7 @@ const BASIS_CHECKBOX_LIST = [
 
   function addQuestionCreatedAndModifiedTime() {
     $('.pf-question-time')[0] && $('.pf-question-time').remove();
-    if (
-      !(
-        pfConfig.questionCreatedAndModifiedTime &&
-        $('[itemprop="dateCreated"]')[0]
-      )
-    )
-      return;
+    if (!(pfConfig.questionCreatedAndModifiedTime && $('[itemprop="dateCreated"]')[0])) return;
     const created = Util.formatDate($('[itemprop="dateCreated"]')[0].content);
     const modified = Util.formatDate($('[itemprop="dateModified"]')[0].content);
     const eventTime = `<div class="pf-question-time"><div>创建时间：${created}</div><div>最后修改时间：${modified}</div></div>`;
@@ -3077,9 +2686,7 @@ const BASIS_CHECKBOX_LIST = [
     $('.pf-article-create-time')[0] && $('.pf-article-create-time').remove();
     if (!(pfConfig.articleCreateTimeToTop && $('.ContentItem-time')[0])) return;
     const createTime = $('.ContentItem-time')[0].innerText || '';
-    $('.Post-Header').append(
-      `<span class="pf-article-create-time" style="color: #8590a6;line-height: 30px;">${createTime}</span>`
-    );
+    $('.Post-Header').append(`<span class="pf-article-create-time" style="color: #8590a6;line-height: 30px;">${createTime}</span>`);
   }
 
   function onDocumentStart() {
@@ -3185,9 +2792,7 @@ const BASIS_CHECKBOX_LIST = [
 
   /** 屏蔽页面设置 */
   function filterPageSetting() {
-    const removeFilterButton = $(
-      '<button class="pf-button" style="margin-left: 12px;">移除当前页所有屏蔽话题</button>'
-    );
+    const removeFilterButton = $('<button class="pf-button" style="margin-left: 12px;">移除当前页所有屏蔽话题</button>');
     removeFilterButton[0].onclick = () => {
       domA('.Tag-remove').forEach((item) => item.click());
     };
@@ -3230,12 +2835,8 @@ const BASIS_CHECKBOX_LIST = [
 
       // body高度变更后比较推荐模块内容高度与网页高度
       // 如果模块高度小于网页高度则手动触发resize使其加载数据
-      const recommendHeightLess =
-        $('.Topstory-recommend')[0] &&
-        $('.Topstory-recommend')[0].offsetHeight < window.innerHeight;
-      const contentHeightLess =
-        $('.Topstory-content')[0] &&
-        $('.Topstory-content')[0].offsetHeight < window.innerHeight;
+      const recommendHeightLess = $('.Topstory-recommend')[0] && $('.Topstory-recommend')[0].offsetHeight < window.innerHeight;
+      const contentHeightLess = $('.Topstory-content')[0] && $('.Topstory-content')[0].offsetHeight < window.innerHeight;
       if (recommendHeightLess || contentHeightLess) {
         doResizePage();
       }
@@ -3269,14 +2870,10 @@ const BASIS_CHECKBOX_LIST = [
       const even = eventList[i];
       const evenPrev = i > 0 ? eventList[i - 1] : null;
       const evenBottom = even.offsetTop + even.offsetHeight;
-      const evenPrevBottom = evenPrev
-        ? evenPrev.offsetTop + evenPrev.offsetHeight
-        : 0;
+      const evenPrevBottom = evenPrev ? evenPrev.offsetTop + evenPrev.offsetHeight : 0;
       const hST = $('html')[0].scrollTop;
       // 收起按钮
-      const evenButton = even.querySelector(
-        '.ContentItem-actions .ContentItem-rightButton'
-      );
+      const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton');
       if (evenButton) {
         if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
           evenButton.style =
@@ -3313,10 +2910,7 @@ const BASIS_CHECKBOX_LIST = [
     const scrollM = () => {
       const scHere = eHeight / 2 + e.scrollTop;
       const id = hrefArr.find(
-        (item, index) =>
-          item.offsetTop <= scHere &&
-          ((hrefArr[index + 1] && hrefArr[index + 1].offsetTop > scHere) ||
-            !hrefArr[index + 1])
+        (item, index) => item.offsetTop <= scHere && ((hrefArr[index + 1] && hrefArr[index + 1].offsetTop > scHere) || !hrefArr[index + 1])
       ).id;
       domA('.pf-left a').forEach((i) => {
         // 使用判断减少赋值次数 优化性能
