@@ -246,7 +246,6 @@ const CONFIG_FILTER_DEFAULT = {
   removeFromYanxuan: true, // 选自盐选专栏的回答
   removeZhihuOfficial: false, // 知乎官方账号回答
 
-  // removeItemAboutAsk: true, // 提问
   removeFollowVoteAnswer: false, // 关注人赞同回答
   removeFollowVoteArticle: false, // 关注人赞同文章
   removeFollowFQuestion: false, // 关注人关注问题
@@ -258,11 +257,19 @@ const CONFIG_FILTER_DEFAULT = {
   removeItemAboutAD: false, // 商业推广
   removeItemAboutArticle: false, // 文章
   removeItemAboutVideo: false, // 视频
+  removeItemQuestionAsk: false, // 列表提问
   removeLessVote: false, // 关注列表过滤低于以下赞的内容
   lessVoteNumber: 100, // 关注列表过滤低于以下赞的内容
   removeLessVoteDetail: false, // 回答低赞内容屏蔽
   lessVoteNumberDetail: 100, // 回答详情屏蔽以下赞的内容
 };
+
+/** 屏蔽关注列表关注人操作 */
+const FILTER_FOLLOWER_OPERATE = [
+  { key: 'removeFollowVoteAnswer', rep: '赞同了回答' },
+  { key: 'removeFollowVoteArticle', rep: '赞同了文章' },
+  { key: 'removeFollowFQuestion', rep: '关注了问题' },
+];
 
 (function () {
   'use strict';
@@ -469,7 +476,7 @@ const CONFIG_FILTER_DEFAULT = {
         `,.css-1j5d3ll,.css-iebf30,.css-1qjzmdv,.AnswerForm-footer,.css-g3xs10,.css-jlyj5p,.CommentEditorV2-inputUpload` +
         `,.css-805ti0,.css-10fqe38,.css-n9os37,.css-sdgtgb,.css-f955pw,.css-6tr06j,.css-pslzz3,.css-10rrwst` +
         `,.css-mjg7l1,.css-1ulkprw,.css-1k8sxfm,.css-a9sbyu,.CreatorIndex-BottomBox-Item,.css-1r9j229,.css-wgpue5` +
-        `,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g,.css-c29erj` +
+        `,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g,.css-c29erj,.css-tpyajk` +
         `{background-color:${BACKGROUND_CONFIG[bg].opacity}!important;background:${BACKGROUND_CONFIG[bg].opacity}!important;}`;
       const backgroundTransparent =
         `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper` +
@@ -1134,20 +1141,31 @@ const CONFIG_FILTER_DEFAULT = {
   const myListenListItem = {
     index: 0,
     init: function () {
-      const { filterKeywords = [], removeItemAboutVideo, removeItemAboutArticle, removeLessVote, lessVoteNumber } = pfConfig;
-      if (!filterKeywords.length && !removeItemAboutVideo && !removeItemAboutArticle && !removeLessVote) return;
-      const elements = domA('.TopstoryItem .ContentItem');
+      const {
+        filterKeywords = [],
+        removeItemAboutVideo,
+        removeItemAboutArticle,
+        removeLessVote,
+        lessVoteNumber,
+        removeItemQuestionAsk,
+        removeFollowVoteAnswer,
+        removeFollowVoteArticle,
+        removeFollowFQuestion,
+      } = pfConfig;
+      if (!filterKeywords.length && !removeItemAboutVideo && !removeItemAboutArticle && !removeLessVote && !removeItemQuestionAsk) return;
+      const elements = domA('.TopstoryItem');
       let lessNum = 0;
       for (let i = this.index, len = elements.length; i < len; i++) {
         let message = ''; // 屏蔽信息
         let dataZop = {};
         let cardContent = {};
         const elementThis = elements[i];
-        const elementNeedHidden = domP(elementThis, 'class', 'TopstoryItem'); // 需要隐藏的元素
-        if (!elementNeedHidden.offsetHeight) continue;
+        const elementContent = elementThis.querySelector('.ContentItem');
+
+        if (!elementThis.scrollHeight || !elementContent) continue;
         try {
-          dataZop = JSON.parse(elementThis.getAttribute('data-zop'));
-          cardContent = JSON.parse(elementThis.getAttribute('data-za-extra-module')).card.content;
+          dataZop = JSON.parse(elementContent.getAttribute('data-zop'));
+          cardContent = JSON.parse(elementContent.getAttribute('data-za-extra-module')).card.content;
         } catch {}
         const { itemId = '', title = '', type = '' } = dataZop || {};
         let matchedWord = ''; // 匹配到的内容, 仅匹配第一个
@@ -1162,15 +1180,15 @@ const CONFIG_FILTER_DEFAULT = {
         // FIRST
         // 匹配到屏蔽词, 屏蔽词过滤
         if (matchedWord) {
-          const elementItemProp = elementThis.querySelector('[itemprop="url"]');
+          const elementItemProp = elementContent.querySelector('[itemprop="url"]');
           const routeURL = elementItemProp && elementItemProp.getAttribute('content');
           doFetchNotInterested({ id: itemId, type });
           message = `屏蔽列表内容: ${title},匹配屏蔽词：${matchedWord}, 链接：${routeURL}`;
         }
 
         // 列表种类过滤
-        const haveVideo = elementThis.classList.contains('ZVideoItem') && removeItemAboutVideo;
-        const haveArticle = elementThis.classList.contains('ArticleItem') && removeItemAboutArticle;
+        const haveVideo = elementContent.classList.contains('ZVideoItem') && removeItemAboutVideo;
+        const haveArticle = elementContent.classList.contains('ArticleItem') && removeItemAboutArticle;
         (haveVideo || haveArticle) && !message && (message = '列表种类屏蔽');
 
         // 屏蔽低赞内容
@@ -1178,8 +1196,27 @@ const CONFIG_FILTER_DEFAULT = {
           cardContent['upvote_num'] < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num']}`);
         }
 
+        // 屏蔽邀请回答
+        const elementQuestionAsk = elementThis.querySelector('.TopstoryQuestionAskItem');
+        if (removeItemQuestionAsk && elementQuestionAsk && !message) {
+          message = '屏蔽邀请回答';
+        }
+
+        // 关注列表屏蔽关注人操作
+        const isFilterFollowerOperate = removeFollowVoteAnswer || removeFollowVoteArticle || removeFollowFQuestion;
+        if (isFilterFollowerOperate && !message && elementThis.classList.contains('TopstoryItem-isFollow')) {
+          const textFollowerOperate = elementThis.querySelector('.FeedSource-firstline').innerText;
+          for (let itemOperate of FILTER_FOLLOWER_OPERATE) {
+            const thisRep = new RegExp(itemOperate.rep);
+            if (pfConfig[itemOperate.key] && thisRep.test(textFollowerOperate)) {
+              message = `屏蔽关注人操作: ${textFollowerOperate}`;
+              break;
+            }
+          }
+        }
+
         // 最后信息 & 起点位置处理
-        message && (lessNum = fnHiddenDom(lessNum, elementNeedHidden, message));
+        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
         this.index = fnIndexMath(this.index, i, len, lessNum);
       }
     },
@@ -1247,7 +1284,6 @@ const CONFIG_FILTER_DEFAULT = {
       for (let i = this.index, len = elements.length; i < len; i++) {
         let message = '';
         const elementThis = elements[i];
-        console.log(i, len, elementThis);
         const elementInfo = elementThis.querySelector('.ContentItem');
         let dataZop = {};
         let dataCardContent = {}; // 回答扩展信息
@@ -1256,7 +1292,6 @@ const CONFIG_FILTER_DEFAULT = {
           dataCardContent = JSON.parse(elementInfo.getAttribute('data-za-extra-module')).card.content;
         } catch {}
 
-        console.log(dataZop, dataCardContent);
         // FIRST
         // 低赞回答过滤
         dataCardContent['upvote_num'] < lessVoteNumberDetail &&
