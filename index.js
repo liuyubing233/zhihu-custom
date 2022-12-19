@@ -107,78 +107,7 @@ const HREF_LIST = [
 ];
 
 /** 隐藏内容列表 */
-const HIDDEN_LIST = [
-  [{ value: 'hiddenAD', label: '广告' }],
-  [
-    { value: 'hiddenLogo', label: 'logo' },
-    { value: 'hiddenHeader', label: '顶部悬浮模块' },
-    { value: 'hiddenHeaderScroll', label: '滚动顶部悬浮模块/问题名称' },
-  ],
-  [
-    { value: 'hiddenHotItemIndex', label: '热门排序编号' },
-    { value: 'hiddenHotItemLabel', label: '热门"新"元素' },
-    { value: 'hiddenHotItemMetrics', label: '热门热度值' },
-  ],
-  [
-    { value: 'hiddenAnswers', label: '列表回答内容' },
-    { value: 'hiddenListVideoContent', label: '列表视频回答的内容' },
-    { value: 'hiddenItemActions', label: '列表回答操作' },
-    { value: 'hiddenAnswerText', label: '回答操作文字' },
-    { value: 'hiddenListImg', label: '列表图片' },
-    { value: 'hiddenReadMoreText', label: '问题列表阅读全文文字' },
-    { value: 'hiddenListAnswerInPerson', label: '列表「亲自答」标签' },
-  ],
-  [
-    { value: 'hiddenFollowAction', label: '关注列表关注人操作栏' },
-    { value: 'hiddenFollowChooseUser', label: '关注列表用户信息' },
-  ],
-  [
-    { value: 'hiddenAnswerRights', label: '收藏喜欢举报' },
-    { value: 'hiddenAnswerRightsText', label: '收藏喜欢举报文字' },
-  ],
-  [
-    { value: 'hiddenDetailAvatar', label: '详情回答人头像' },
-    { value: 'hiddenDetailName', label: '详情回答人姓名' },
-    { value: 'hiddenDetailBadge', label: '详情回答人简介' },
-    { value: 'hiddenDetailFollow', label: '详情回答人关注按钮' },
-    { value: 'hiddenDetailVoters', label: '详情回答人下赞同数' },
-    { value: 'hiddenReward', label: '赞赏按钮' },
-    { value: 'hiddenQuestionSide', label: '问题关注和被浏览数' },
-    { value: 'hiddenFixedActions', label: '回答悬浮操作条' },
-    { value: 'hiddenQuestionTag', label: '问题话题' },
-    { value: 'hiddenQuestionShare', label: '问题分享' },
-    { value: 'hiddenQuestionActions', label: '问题详情操作栏' },
-    { value: 'hiddenQuestionFollowing', label: '关注问题按钮' },
-    { value: 'hiddenQuestionAnswer', label: '写回答按钮' },
-    { value: 'hiddenQuestionInvite', label: '邀请回答按钮' },
-    { value: 'hiddenQuestionSpecial', label: '详情顶部专题收录标签' },
-    { value: 'hidden618HongBao', label: '618红包链接' },
-  ],
-  [
-    { value: 'hiddenAnswerRightFooter', label: '详情右侧信息栏' },
-    { value: 'hiddenAnswerRightFooterAnswerAuthor', label: '信息栏关于作者' },
-    { value: 'hiddenAnswerRightFooterFavorites', label: '信息栏被收藏次数' },
-    { value: 'hiddenAnswerRightFooterRelatedQuestions', label: '信息栏相关问题' },
-    { value: 'hiddenAnswerRightFooterContentList', label: '信息栏相关推荐' },
-    { value: 'hiddenAnswerRightFooterFooter', label: '信息栏知乎指南' },
-  ],
-  [
-    { value: 'hiddenSearchBoxTopSearch', label: '搜索栏知乎热搜' },
-    { value: 'hiddenSearchPageTopSearch', label: '搜索页知乎热搜' },
-    { value: 'hiddenSearchPageFooter', label: '搜索页知乎指南' },
-  ],
-  [
-    { value: 'hiddenZhuanlanTag', label: '文章关联话题' },
-    { value: 'hiddenZhuanlanActions', label: '文章操作条' },
-    { value: 'hiddenZhuanlanTitleImage', label: '文章标题图片' },
-    { value: 'hiddenZhuanlanShare', label: '文章悬浮分享按钮' },
-    { value: 'hiddenZhuanlanVoters', label: '文章悬浮赞同按钮' },
-    { value: 'hiddenZhuanlanAvatarWrapper', label: '文章作者头像' },
-    { value: 'hiddenZhuanlanAuthorInfoHead', label: '文章作者姓名' },
-    { value: 'hiddenZhuanlanAuthorInfoDetail', label: '文章作者简介' },
-    { value: 'hiddenZhuanlanFollowButton', label: '文章作者关注按钮' },
-  ],
-];
+const HIDDEN_LIST = [];
 
 /** 隐藏内容模块默认配置 */
 const CONFIG_HIDDEN_DEFAULT = {
@@ -270,6 +199,107 @@ const FILTER_FOLLOWER_OPERATE = [
   { key: 'removeFollowVoteArticle', rep: '赞同了文章' },
   { key: 'removeFollowFQuestion', rep: '关注了问题' },
 ];
+
+/** 顶部菜单哈希 */
+const MENU_IDS = ['#CTZ_SET_BASIS', '#CTZ_SET_LIST', '#CTZ_SET_ANSWER', '#CTZ_SET_ARTICLE'];
+
+/** 设置指向 */
+const SET_DIRECTION = {
+  /** 基础设置 */
+  CTZ_SET_BASIS: {
+    /** 通用模块隐藏 */
+    _HIDDEN: [
+      [{ value: 'hiddenAD', label: '广告' }],
+      [
+        { value: 'hiddenLogo', label: 'logo' },
+        { value: 'hiddenHeader', label: '顶部悬浮模块' },
+        { value: 'hiddenHeaderScroll', label: '滚动顶部悬浮模块/问题名称' },
+      ],
+      [
+        { value: 'hiddenAnswerRights', label: '收藏/喜欢/举报' },
+        { value: 'hiddenAnswerRightsText', label: '收藏/喜欢/举报 文字' },
+      ],
+      [
+        { value: 'hiddenSearchBoxTopSearch', label: '搜索栏知乎热搜' },
+        { value: 'hiddenSearchPageTopSearch', label: '搜索页知乎热搜' },
+        { value: 'hiddenSearchPageFooter', label: '搜索页知乎指南' },
+      ],
+    ],
+  },
+  /** 首页列表设置 */
+  CTZ_SET_LIST: {
+    /** 首页列表设置 - 隐藏模块 */
+    _HIDDEN: [
+      [
+        { value: 'hiddenHotItemIndex', label: '热门排序编号' },
+        { value: 'hiddenHotItemLabel', label: '热门"新"元素' },
+        { value: 'hiddenHotItemMetrics', label: '热门热度值' },
+      ],
+      [
+        { value: 'hiddenAnswers', label: '列表回答内容' },
+        { value: 'hiddenListVideoContent', label: '列表视频回答的内容' },
+        { value: 'hiddenItemActions', label: '列表回答操作' },
+        { value: 'hiddenAnswerText', label: '回答操作文字' },
+        { value: 'hiddenListImg', label: '列表图片' },
+        { value: 'hiddenReadMoreText', label: '问题列表阅读全文文字' },
+        { value: 'hiddenListAnswerInPerson', label: '列表「亲自答」标签' },
+      ],
+      [
+        { value: 'hiddenFollowAction', label: '关注列表关注人操作栏' },
+        { value: 'hiddenFollowChooseUser', label: '关注列表用户信息' },
+      ],
+    ],
+  },
+  /** 回答详情设置 */
+  CTZ_SET_ANSWER: {
+    /** 回答详情设置 - 隐藏模块 */
+    _HIDDEN: [
+      [
+        { value: 'hiddenDetailAvatar', label: '详情回答人头像' },
+        { value: 'hiddenDetailName', label: '详情回答人姓名' },
+        { value: 'hiddenDetailBadge', label: '详情回答人简介' },
+        { value: 'hiddenDetailFollow', label: '详情回答人关注按钮' },
+        { value: 'hiddenDetailVoters', label: '详情回答人下赞同数' },
+        { value: 'hiddenReward', label: '赞赏按钮' },
+        { value: 'hiddenQuestionSide', label: '问题关注和被浏览数' },
+        { value: 'hiddenFixedActions', label: '回答悬浮操作条' },
+        { value: 'hiddenQuestionTag', label: '问题话题' },
+        { value: 'hiddenQuestionShare', label: '问题分享' },
+        { value: 'hiddenQuestionActions', label: '问题详情操作栏' },
+        { value: 'hiddenQuestionFollowing', label: '关注问题按钮' },
+        { value: 'hiddenQuestionAnswer', label: '写回答按钮' },
+        { value: 'hiddenQuestionInvite', label: '邀请回答按钮' },
+        { value: 'hiddenQuestionSpecial', label: '详情顶部专题收录标签' },
+        { value: 'hidden618HongBao', label: '618红包链接' },
+      ],
+      [
+        { value: 'hiddenAnswerRightFooter', label: '详情右侧信息栏' },
+        { value: 'hiddenAnswerRightFooterAnswerAuthor', label: '信息栏关于作者' },
+        { value: 'hiddenAnswerRightFooterFavorites', label: '信息栏被收藏次数' },
+        { value: 'hiddenAnswerRightFooterRelatedQuestions', label: '信息栏相关问题' },
+        { value: 'hiddenAnswerRightFooterContentList', label: '信息栏相关推荐' },
+        { value: 'hiddenAnswerRightFooterFooter', label: '信息栏知乎指南' },
+      ],
+    ],
+  },
+  /** 文章专栏设置 */
+  CTZ_SET_ARTICLE: {
+    /** 文章专栏设置 - 隐藏模块 */
+    _HIDDEN: [
+      [
+        { value: 'hiddenZhuanlanTag', label: '文章关联话题' },
+        { value: 'hiddenZhuanlanActions', label: '文章操作条' },
+        { value: 'hiddenZhuanlanTitleImage', label: '文章标题图片' },
+        { value: 'hiddenZhuanlanShare', label: '文章悬浮分享按钮' },
+        { value: 'hiddenZhuanlanVoters', label: '文章悬浮赞同按钮' },
+        { value: 'hiddenZhuanlanAvatarWrapper', label: '文章作者头像' },
+        { value: 'hiddenZhuanlanAuthorInfoHead', label: '文章作者姓名' },
+        { value: 'hiddenZhuanlanAuthorInfoDetail', label: '文章作者简介' },
+        { value: 'hiddenZhuanlanFollowButton', label: '文章作者关注按钮' },
+      ],
+    ],
+  },
+};
 
 (function () {
   'use strict';
@@ -446,14 +476,14 @@ const FILTER_FOLLOWER_OPERATE = [
     normal: (bg) => {
       // 普通背景色
       const background =
-        `#${ID_DIALOG}` +
-        `,body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar` +
+        `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar` +
         `,.position-suspensionSearch.focus,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N` +
         `,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z` +
         `,.zhuanlan .Post-content .ContentItem-actions,.zhuanlan .ContentItem-actions` +
         `{background-color: ${bg}!important;}`;
       const backgroundOpacity =
-        `#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#${ID_BLOCK_FILTER}` +
+        `#${ID_DIALOG}` +
+        `,#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#${ID_BLOCK_FILTER}` +
         `,.QuestionHeader,.Card,.HotItem,.Recommendations-Main,.GlobalSideBar-navList` +
         `,.CommentsV2-withPagination,.QuestionHeader-footer,.HoverCard,.ContentItem-actions` +
         `,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton` +
@@ -918,6 +948,32 @@ const FILTER_FOLLOWER_OPERATE = [
     },
   };
 
+  /** 设置菜单方法 */
+  const myMenu = {
+    init: function () {
+      // 匹配顶部菜单项或者匹配菜单子项
+      const { hash } = window.location;
+      const chooseId = MENU_IDS.find((i) => i === hash || hash.replace(i) !== hash);
+      if (chooseId) {
+        this.click({ target: dom(`a[href="${chooseId}"]`) });
+        return;
+      }
+      this.click({ target: dom('a[href="#CTZ_SET_BASIS"]') });
+    },
+    click: function ({ target }) {
+      if (!(target.hash && target.tagName === 'A')) return;
+      const isThis = target.hash.replace(/#/, '');
+      if (!isThis) return;
+      domA('.ctz-menu-top>a').forEach((itemA) => {
+        itemA.style = '';
+      });
+      target.style = 'border-bottom: 4px solid #2e2e2e;color: #2e2e2e;';
+      domA('.ctz-content>div').forEach((item) => {
+        item.style.display = isThis === item.id ? 'flex' : 'none';
+      });
+    },
+  };
+
   /** 加载基础元素及绑定方法 */
   const initHTML = () => {
     document.body.appendChild(
@@ -960,16 +1016,23 @@ const FILTER_FOLLOWER_OPERATE = [
 
     /** 添加隐藏元素 */
     const appendHidden = () => {
-      const element = dom(`#${ID_BLOCK_HIDDEN}>.ctz-set-content`);
-      element.innerHTML = HIDDEN_LIST.map(
-        (i) =>
-          `${i
-            .map(({ label, value }) => `<label><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`)
-            .join('')}` + `<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
-      ).join('');
+      Object.keys(SET_DIRECTION).forEach((key) => {
+        const elementItem = dom(`#${key}_HIDDEN>.ctz-set-content`);
+        const arrHidden = SET_DIRECTION[key]['_HIDDEN'];
+        if (!arrHidden || !arrHidden.length) return;
+        elementItem.innerHTML = arrHidden
+          .map(
+            (i) =>
+              `${i
+                .map(({ label, value }) => `<label><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`)
+                .join('')}` + `<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
+          )
+          .join('');
+      });
     };
 
     try {
+      myMenu.init();
       dom('.ctz-version').innerText = `version: ${GM_info.script.version}`;
       appendFooter();
       appendBackground();
@@ -991,6 +1054,8 @@ const FILTER_FOLLOWER_OPERATE = [
         }
       });
     };
+    // 绑定菜单事件
+    dom('.ctz-menu-top').onclick = myMenu.click;
   };
 
   /** 加载数据 */

@@ -2,7 +2,7 @@
 @text65: rgba(0, 0, 0, 0.65);
 @text45: rgba(0, 0, 0, 0.45);
 @hover: #0066ff;
-@border: 1px solid #ededed;
+@border: 1px solid #bbb;
 
 @font-face {
   font-family: 'tp-icon';
@@ -68,7 +68,6 @@
   .ctz-header {
     height: 38px;
     line-height: 38px;
-    border-bottom: @border;
     padding: 0 16px;
     font-size: 18px;
     text-align: center;
@@ -83,10 +82,29 @@
     }
   }
 
+  .ctz-menu-top {
+    height: 28px;
+    border-bottom: @border;
+    display: flex;
+    a {
+      flex: 1;
+      line-height: 28px;
+      text-align: center;
+      &:hover {
+        border-bottom: 4px solid #bbb;
+        color: #bbb;
+      }
+    }
+  }
+
   .ctz-content {
     flex: 1;
     display: flex;
     overflow: hidden;
+    & > div {
+      width: 100%;
+    }
+
     ::-webkit-scrollbar {
       width: 8px;
       height: 24px;
@@ -174,6 +192,7 @@
   .ctz-desc {
     color: #999;
     font-size: 12px;
+    padding-left: 4px;
   }
 }
 
@@ -202,7 +221,7 @@
 }
 
 // 配置操作
-#CTZ_SET_CONFIG {
+#CTZ_SET_BASIS_CONFIG {
   .ctz-config-buttons {
     width: 80%;
     margin-bottom: 8px;
@@ -220,19 +239,8 @@
   }
 }
 
-// 隐藏模块
-#CTZ_SET_HIDDEN {
-  .ctz-set-content {
-    display: flex;
-    flex-wrap: wrap;
-    label {
-      margin-right: 4px;
-    }
-  }
-}
-
 // 屏蔽内容
-#CTZ_SET_FILTER {
+.ctz-filter-block {
   background: #efefef;
   padding: 0 8px;
   margin: 0 -8px;
