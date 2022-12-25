@@ -91,6 +91,12 @@ const CLASS_INPUT = 'ctz-i';
 /** BUTTON 元素类名 */
 const CLASS_BUTTON = 'ctz-button';
 
+/** 回答收起展开插入的类名 */
+const OB_CLASS_FOLD = {
+  on: 'ctz-fold-open',
+  off: 'ctz-fold-close',
+};
+
 /** 不感兴趣接口 */
 const API_NOT_INTERESTED = '/api/v3/feed/topstory/uninterestv2';
 
@@ -309,6 +315,8 @@ const SET_DIRECTION = {
   let pfConfig = {
     ...CONFIG_HIDDEN_DEFAULT,
     ...CONFIG_FILTER_DEFAULT,
+    answerOpen: '', // 知乎默认 | 自动展开所有回答 | 默认收起所有长回答
+
     chooseHeart: 'system', // 设置版心的方式
     versionHeart: '1200', // 版心宽度
     versionHeartSelf: '1200', // 自定义版心宽度
@@ -338,8 +346,6 @@ const SET_DIRECTION = {
     isUseThemeDark: false, // 是否开启夜间模式
     notificationAboutFilter: false, // 屏蔽内容后显示通知提醒框
     questionCreatedAndModifiedTime: true, // 问题显示创建和最后修改时间
-    answerUnfold: false, // 自动展开所有回答
-    answerFoldStart: true, // 默认收起所有长回答
     highlightOriginal: true, // 关注列表高亮原创内容
     listOutPutNotInterested: false, // 推荐列表外置[不感兴趣]按钮
     highlightListItem: false, // 列表内容点击高亮边框
@@ -348,6 +354,7 @@ const SET_DIRECTION = {
     answerItemCreatedAndModifiedTime: true, // 回答列表显示创建与最后修改时间
     indexPathnameRedirect: 'n', // 首页重定向 follow 关注, hot 热榜
     showBlockUser: true, // 列表用户名后显示「屏蔽用户」按钮
+
     // 悬浮模块 start ----------------
     suspensionHomeTab: false, // 问题列表切换
     suspensionHomeTabPo: 'left: 20px; top: 100px;', // 定位
@@ -657,7 +664,7 @@ const SET_DIRECTION = {
       textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name]);
     };
     const echo = {
-      radio: (even) => pfConfig[even.name] && even.value === pfConfig[even.name] && (even.checked = true),
+      radio: (even) => pfConfig.hasOwnProperty(even.name) && even.value === pfConfig[even.name] && (even.checked = true),
       checkbox: (even) => (even.checked = pfConfig[even.name] || false),
       'select-one': (even) => {
         if (pfConfig[even.name]) {
@@ -1342,8 +1349,8 @@ const SET_DIRECTION = {
       //     pfConfig.showBlockUser && addBlockUser($('.QuestionAnswer-content'));
       //   }
 
-      const { removeLessVoteDetail, lessVoteNumberDetail } = pfConfig;
-      if (!removeLessVoteDetail) return;
+      const { removeLessVoteDetail, lessVoteNumberDetail, answerOpen } = pfConfig;
+      if (!removeLessVoteDetail && !answerOpen) return;
       const elements = domA('.AnswersNavWrapper .List-item');
       let lessNum = 0;
       for (let i = this.index, len = elements.length; i < len; i++) {
@@ -1405,31 +1412,6 @@ const SET_DIRECTION = {
         //           isRemoved = true;
         //         }
         //       }
-        //       // 自动展开所有回答
-        //       if (pfConfig.answerUnfold && !isRemoved) {
-        //         const unFoldButton = eventThat.find('.ContentItem-expandButton');
-        //         if (unFoldButton && unFoldButton[0] && !eventThat.hasClass('is-unfold')) {
-        //           unFoldButton[0].click();
-        //           eventThat.addClass('is-unfold');
-        //           isRemoved = true;
-        //           lessNum++;
-        //         }
-        //       }
-        //       // 默认收起所有长回答
-        //       if (pfConfig.answerFoldStart && !isRemoved) {
-        //         const foldButton = eventThat.find('.RichContent-collapsedText');
-        //         const unFoldButton = eventThat.find('.ContentItem-expandButton');
-        //         if (foldButton && foldButton[0] && !eventThat.hasClass('is-fold') && that.offsetHeight > 939) {
-        //           foldButton[0].click();
-        //           eventThat.addClass('is-fold');
-        //           lessNum++;
-        //           isRemoved = true;
-        //         } else if (unFoldButton && unFoldButton[0] && !eventThat.hasClass('is-fold')) {
-        //           eventThat.addClass('is-fold');
-        //           lessNum++;
-        //           isRemoved = true;
-        //         }
-        //       }
         //       // 如果 不再显示「已屏蔽」用户发布的内容 为 true 并且列表不为 0
         //       if (pfConfig.removeBlockUserContent && pfConfig.removeBlockUserContentList.length && !isRemoved) {
         //         const aContent = eventThat.find('.AnswerItem').attr('data-za-extra-module')
@@ -1443,6 +1425,27 @@ const SET_DIRECTION = {
         //       }
         //       pfConfig.answerItemCreatedAndModifiedTime && addTimes(eventThat);
         //       pfConfig.showBlockUser && addBlockUser(eventThat);
+
+        // 自动展开回答 和 默认收起长回答
+        if (!message && answerOpen) {
+          const unFoldButton = elementThis.querySelector('.ContentItem-expandButton');
+          const foldButton = elementThis.querySelector('.RichContent-collapsedText');
+          const isNotOpen = !elementThis.classList.contains(OB_CLASS_FOLD.on);
+          const isNotClose = !elementThis.classList.contains(OB_CLASS_FOLD.off);
+          if (answerOpen === 'on' && isNotOpen) {
+            unFoldButton.click();
+            elementThis.classList.add(OB_CLASS_FOLD.on);
+            lessNum++;
+          }
+
+          const isF = foldButton && elementThis.offsetHeight > 939;
+          const isFC = unFoldButton; // 已经收起的回答
+          if (answerOpen === 'off' && isNotClose && (isF || isFC)) {
+            elementThis.classList.add(OB_CLASS_FOLD.off);
+            isF && foldButton.click();
+            lessNum++;
+          }
+        }
 
         // 最后信息 & 起点位置处理
         message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
