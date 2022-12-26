@@ -1,7 +1,7 @@
 @text: rgba(0, 0, 0, 0.85);
 @text65: rgba(0, 0, 0, 0.65);
 @text45: rgba(0, 0, 0, 0.45);
-@hover: #0066ff;
+@hover: #056de8;
 @border: 1px solid #bbb;
 
 @font-face {
@@ -279,7 +279,7 @@
     margin-right: 4px;
     display: flex;
     align-items: center;
-    input[type="radio"] {
+    input[type='radio'] {
       margin: 0 4px 0 0;
     }
   }
@@ -295,6 +295,60 @@
   text-align: center;
   &:hover {
     background: #eee;
+  }
+}
+
+.ctz-loading {
+  animation: loadingAnimation 2s infinite;
+}
+
+@keyframes loadingAnimation {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#CTZ-BLOCK-LIST {
+  display: flex;
+  flex-wrap: wrap;
+  background: #eee;
+  margin: 0 -8px;
+  padding: 8px;
+  .ctz-black-item {
+    height: 30px;
+    line-height: 30px;
+    box-sizing: content-box;
+    padding: 4px;
+    margin: 0 8px 8px 0;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 4px;
+    img {
+      width: 30px;
+      height: 30px;
+      margin-right: 4px;
+    }
+    .ctz-remove-block,
+    a {
+      &:hover {
+        color: @hover;
+      }
+    }
+  }
+}
+
+.ctz-block-user {
+  padding: 6px 12px;
+  background: @hover;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  &:hover {
+    background-color: #0461cf;
   }
 }
 
@@ -345,7 +399,7 @@
   .ctz-switch-inner::after {
     content: attr(data-on);
     padding-left: 10px;
-    background-color: #0066ff;
+    background-color: #056de8;
     color: #ffffff;
   }
 

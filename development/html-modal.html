@@ -15,6 +15,8 @@
     <div id="CTZ_SET_BASIS" style="display: none">
       <div class="ctz-content-left">
         <a href="#CTZ_SET_BASIS_DEFAULT">基本设置</a>
+        <a href="#CTZ_SET_BASIS_FLOAT">悬浮模块</a>
+        <a href="#CTZ_SET_BASIS_BLOCK">黑名单设置</a>
         <a href="#CTZ_SET_BASIS_HIDDEN">通用模块隐藏</a>
         <a href="#CTZ_SET_BASIS_COLOR">颜色设置</a>
         <a href="#CTZ_SET_BASIS_CONFIG">配置操作</a>
@@ -23,6 +25,41 @@
         <div id="CTZ_SET_BASIS_DEFAULT">
           <div class="ctz-set-title">基本设置</div>
           <div class="ctz-set-content"></div>
+        </div>
+
+        <div id="CTZ_SET_BASIS_FLOAT">
+          <div class="ctz-set-title">悬浮模块</div>
+          <div class="ctz-set-content">
+            <div class="ctz-flex-wrap">
+              <label>
+                <input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" />
+                回答「收起」按钮
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div id="CTZ_SET_BASIS_BLOCK">
+          <div class="ctz-set-title">黑名单设置</div>
+          <div class="ctz-set-content">
+            <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
+            <div class="ctz-flex-wrap">
+              <label>
+                <span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span>
+                <input class="ctz-i" name="showBlockUser" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="ctz-flex-wrap">
+              <label>
+                <span class="ctz-label">屏蔽黑名单用户发布的内容</span>
+                <input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div>
+              <div class="ctz-label">黑名单列表</div>
+              <div id="CTZ-BLOCK-LIST"></div>
+            </div>
+          </div>
         </div>
 
         <div id="CTZ_SET_BASIS_HIDDEN">
@@ -147,8 +184,30 @@
       </div>
       <div class="ctz-content-right">
         <div id="CTZ_SET_ANSWER_FILTER" class="ctz-filter-block">
-          <div class="ctz-set-title">屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></div>
+          <div class="ctz-set-title">
+            屏蔽内容
+            <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span>
+          </div>
           <div class="ctz-set-content">
+            <div class="ctz-filter-defail-who">
+              <div class="ctz-label">屏蔽以下官方账号的回答</div>
+              <div class="ctz-flex-wrap">
+                <label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />知乎官方账号（所有知乎官方账号）</label>
+                <label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label>
+                <label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label>
+                <label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label>
+                <label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label>
+              </div>
+            </div>
+
+            <div class="ctz-filter-defail-tag">
+              <div class="ctz-label">屏蔽带有以下标签的回答</div>
+              <div class="ctz-flex-wrap">
+                <label><input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏</label>
+                <label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label>
+              </div>
+            </div>
+
             <div class="ctz-filter-detail-vote">
               <label style="display: flex; align-items: center">
                 <span class="ctz-label">详情低赞回答屏蔽</span>

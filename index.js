@@ -85,11 +85,17 @@ const ID_BLOCK_HIDDEN = 'CTZ_SET_HIDDEN';
 const ID_BLOCK_FILTER = 'CTZ_SET_FILTER';
 /** 屏蔽词 ID */
 const ID_FILTER_WORDS = 'CTZ_FILTER_WORDS';
+/** 黑名单列表 ID */
+const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
+/** 同步黑名单 按钮 ID */
+const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
 
 /** INPUT 元素类名 */
 const CLASS_INPUT = 'ctz-i';
 /** BUTTON 元素类名 */
 const CLASS_BUTTON = 'ctz-button';
+/** 黑名单元素删除按钮类名 */
+const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 
 /** 回答收起展开插入的类名 */
 const OB_CLASS_FOLD = {
@@ -174,19 +180,20 @@ const CONFIG_HIDDEN_DEFAULT = {
 
 /** 屏蔽内容模块默认配置 */
 const CONFIG_FILTER_DEFAULT = {
+  removeZhihuOfficial: false, // 知乎官方账号回答
   removeStoryAnswer: true, // 故事档案局回答
   removeYanxuanAnswer: true, // 盐选科普回答
   removeYanxuanRecommend: true, // 盐选推荐
   removeYanxuanCPRecommend: true, // 盐选测评室
+
   removeFromYanxuan: true, // 选自盐选专栏的回答
-  removeZhihuOfficial: false, // 知乎官方账号回答
+  removeUnrealAnswer: false, // 带有虚构内容的回答
 
   removeFollowVoteAnswer: false, // 关注人赞同回答
   removeFollowVoteArticle: false, // 关注人赞同文章
   removeFollowFQuestion: false, // 关注人关注问题
-  removeBlockUserContent: true, // 不再显示「已屏蔽」用户发布的内容
-  removeUnrealAnswer: false, // 带有虚构内容的回答
 
+  removeBlockUserContent: true, // 不再显示黑名单用户发布的内容
   removeBlockUserContentList: [], // 已屏蔽用户列表
 
   removeItemAboutAD: false, // 商业推广
@@ -305,6 +312,20 @@ const SET_DIRECTION = {
       ],
     ],
   },
+};
+
+/** 屏蔽带有标签的回答 */
+const HIDDEN_ANSWER_TAG = {
+  removeFromYanxuan: '盐选专栏',
+  removeUnrealAnswer: '虚构创作',
+};
+
+/** 屏蔽账号回答 */
+const HIDDEN_ANSWER_ACCOUNT = {
+  removeStoryAnswer: '故事档案局',
+  removeYanxuanAnswer: '盐选科普',
+  removeYanxuanRecommend: '盐选推荐',
+  removeYanxuanCPRecommend: '盐选测评室',
 };
 
 (function () {
@@ -483,7 +504,8 @@ const SET_DIRECTION = {
     normal: (bg) => {
       // 普通背景色
       const background =
-        `body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar` +
+        `.ctz-filter-block,#CTZ-BLOCK-LIST` +
+        `,body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar` +
         `,.position-suspensionSearch.focus,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N` +
         `,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z` +
         `,.zhuanlan .Post-content .ContentItem-actions,.zhuanlan .ContentItem-actions` +
@@ -566,7 +588,7 @@ const SET_DIRECTION = {
             `.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}` +
             `.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}` +
             `.VoteButton{color: #8590a6!important; }` +
-            `.VoteButton.is-active{color: #0066ff!important;}` +
+            `.VoteButton.is-active{color: #056de8!important;}` +
             `.ContentItem-action{margin-left:8px!important;}` +
             `.Search-questionFollowButton{display: none}`
           : '') +
@@ -748,7 +770,6 @@ const SET_DIRECTION = {
       // suspensionFind: cacheHeader,
       // suspensionSearch: cacheHeader,
       // suspensionUser: cacheHeader,
-      // removeZhihuOfficial: onChangeOfficialRemove,
       // titleIco: changeTitleIco,
       // title: changeTitle,
       // customizeCss: changeCustomCSS,
@@ -847,6 +868,7 @@ const SET_DIRECTION = {
       await myStorage.set('pfConfig', JSON.stringify(pfConfig));
       myCustomStyle.change();
     },
+    syncBlack: () => myBlack.sync(0),
   };
 
   /** 存储使用油猴自己的GM存储，解决数据不共通的问题，添加localStorage与GM判断，获取最新存储 */
@@ -979,119 +1001,6 @@ const SET_DIRECTION = {
         item.style.display = isThis === item.id ? 'flex' : 'none';
       });
     },
-  };
-
-  /** 加载基础元素及绑定方法 */
-  const initHTML = () => {
-    document.body.appendChild(
-      domC('div', {
-        id: ID_MAIN,
-        innerHTML: INNER_HTML,
-      })
-    );
-
-    // 绑定元素事件
-    domById(ID_OPEN_BUTTON).onclick = myDialog.open;
-    domById(ID_CLOSE).onclick = myDialog.hide;
-
-    /** 添加弹窗底部信息 */
-    const appendFooter = () => {
-      HREF_LIST.forEach(({ name, href }) => {
-        const tagA = domC('a', {
-          href,
-          target: '_blank',
-          innerText: name,
-        });
-        dom('.ctz-footer').appendChild(tagA);
-      });
-    };
-
-    /** 添加背景色选择 */
-    const appendBackground = () => {
-      domById(ID_BG).innerHTML = '';
-      Object.keys(BACKGROUND_CONFIG).forEach((key) => {
-        domById(ID_BG).appendChild(
-          domC('label', {
-            className: 'ctz-bg-choose-label',
-            innerHTML:
-              `<input class="${CLASS_INPUT}" name="colorBackground" type="radio" value="${key}"/>` +
-              `<div style="background: ${key}; border: 2px solid ${key}">${BACKGROUND_CONFIG[key].name}</div>`,
-          })
-        );
-      });
-    };
-
-    /** 添加隐藏元素 */
-    const appendHidden = () => {
-      Object.keys(SET_DIRECTION).forEach((key) => {
-        const elementItem = dom(`#${key}_HIDDEN>.ctz-set-content`);
-        const arrHidden = SET_DIRECTION[key]['_HIDDEN'];
-        if (!arrHidden || !arrHidden.length) return;
-        elementItem.innerHTML = arrHidden
-          .map(
-            (i) =>
-              `${i
-                .map(({ label, value }) => `<label><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`)
-                .join('')}` + `<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
-          )
-          .join('');
-      });
-    };
-
-    try {
-      myMenu.init();
-      dom('.ctz-version').innerText = `version: ${GM_info.script.version}`;
-      appendFooter();
-      appendBackground();
-      appendHidden();
-    } catch {}
-  };
-
-  /** 加载设置弹窗绑定方法 */
-  const initOperate = () => {
-    const myOperation = {
-      [CLASS_INPUT]: fnChanger,
-      [CLASS_BUTTON]: (even) => myButtonOperation[even.name](),
-    };
-    // 绑定点击事件
-    dom('.ctz-content').onclick = (even) => {
-      Object.keys(myOperation).forEach((key) => {
-        if (even.target.classList.contains(key)) {
-          myOperation[key](even.target);
-        }
-      });
-    };
-    // 绑定菜单事件
-    dom('.ctz-menu-top').onclick = myMenu.click;
-  };
-
-  /** 加载数据 */
-  const initData = () => {
-    // storageConfig.cacheTitle = document.title;
-    echoData();
-    // $('.pf-modal-content')[0].onchange = (even) => {
-    //   if ($(even.target).hasClass('pf-i')) {
-    //     return myChanger(even.target, even.target.type);
-    //   }
-    // };
-    // $('.pf-i-input')[0].oninput = (even) => {
-    //   return myChanger(even.target, even.target.type);
-    // };
-    // initPositionPage();
-    // onChooseHeart();
-    // cacheHeader();
-    // changeTitleIco();
-    // changeTitle();
-    // changeSuspensionTab();
-    // onToHomeHref();
-    // if (isLoading) {
-    //   isLoading = false;
-    //   GM_log(
-    //     '[customize]修改器加载完毕，加载时间：' +
-    //       (performance.now() - timeStart).toFixed(2) +
-    //       'ms'
-    //   );
-    // }
   };
 
   /** 查找是否使用主题 */
@@ -1344,13 +1253,30 @@ const SET_DIRECTION = {
     index: 0,
     init: function () {
       //sortAnswer()
-      //   if ($('.QuestionAnswer-content')[0]) {
-      //     pfConfig.answerItemCreatedAndModifiedTime && addTimes($('.QuestionAnswer-content'));
-      //     pfConfig.showBlockUser && addBlockUser($('.QuestionAnswer-content'));
-      //   }
+      const {
+        removeLessVoteDetail,
+        lessVoteNumberDetail,
+        answerOpen,
+        removeZhihuOfficial,
+        removeBlockUserContent,
+        removeBlockUserContentList,
+        showBlockUser,
+      } = pfConfig;
 
-      const { removeLessVoteDetail, lessVoteNumberDetail, answerOpen } = pfConfig;
-      if (!removeLessVoteDetail && !answerOpen) return;
+      if (dom('.QuestionAnswer-content')) {
+        // pfConfig.answerItemCreatedAndModifiedTime && addTimes($('.QuestionAnswer-content'));
+        showBlockUser && myBlack.addButton(dom('.QuestionAnswer-content'));
+      }
+      const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
+      // 屏蔽用户名称列表
+      let hiddenUsers = [];
+      Object.keys(HIDDEN_ANSWER_ACCOUNT).forEach((i) => pfConfig[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]));
+      if (removeBlockUserContent) {
+        const blockNames = removeBlockUserContentList.map((i) => i.name);
+        hiddenUsers = hiddenTags.concat(blockNames);
+      }
+
+      if (!removeLessVoteDetail && !answerOpen && !hiddenUsers.length) return;
       const elements = domA('.AnswersNavWrapper .List-item');
       let lessNum = 0;
       for (let i = this.index, len = elements.length; i < len; i++) {
@@ -1370,61 +1296,32 @@ const SET_DIRECTION = {
           removeLessVoteDetail &&
           (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
 
-        // data-za-extra-module
-        //     const that = events[i];
-        //     if (that) {
-        //       const eventThat = $(that);
-        //       if (pfConfig.removeZhihuOfficial) {
-        //         // 知乎官方账号优先级最高
-        //         const label = eventThat.find('.AuthorInfo-name .css-n99yhz').attr('aria-label');
-        //         if (/知乎[\s]*官方帐号/.test(label)) {
-        //           lessNum = fnHiddenDom(lessNum, that, '已删除一条知乎官方帐号的回答');
-        //           isRemoved = true;
-        //         }
-        //       } else {
-        //         const dataZop = eventThat.children('.AnswerItem').attr('data-zop');
-        //         REMOVE_ANSWER_BY_NAME.forEach((item) => {
-        //           const reg = new RegExp(`['"]authorName['":]*` + item.name);
-        //           if (pfConfig[item.id] && reg.test(dataZop)) {
-        //             lessNum = fnHiddenDom(lessNum, that, `已删除一条${item.name}的回答`);
-        //             isRemoved = true;
-        //           }
-        //         });
-        //       }
-        //       // 删除选自盐选专栏的回答
-        //       if (pfConfig.removeFromYanxuan && !isRemoved) {
-        //         const formYanxuan =
-        //           eventThat.find('.KfeCollection-OrdinaryLabel-content')[0] || eventThat.find('.KfeCollection-IntroCard p:first-of-type')[0];
-        //         if (formYanxuan) {
-        //           const formYanxuanText = formYanxuan ? formYanxuan.innerText : '';
-        //           if (/盐选专栏/.test(formYanxuanText)) {
-        //             lessNum = fnHiddenDom(lessNum, that, `已删除一条来自盐选专栏的回答`);
-        //             isRemoved = true;
-        //           }
-        //         }
-        //       }
-        //       // 隐藏「含有虚构内容」的回答
-        //       if (pfConfig.removeUnrealAnswer && !isRemoved) {
-        //         const aTag = eventThat.find('.KfeCollection-FabledStatement')[0];
-        //         const aTag2 = eventThat.find('.css-140fcia')[0];
-        //         if (REP_UNREAL.test(aTag ? aTag.innerText : '') || REP_UNREAL.test(aTag2 ? aTag2.innerText : '')) {
-        //           lessNum = fnHiddenDom(lessNum, that, `已删除一条内容包含虚构创作的回答`);
-        //           isRemoved = true;
-        //         }
-        //       }
-        //       // 如果 不再显示「已屏蔽」用户发布的内容 为 true 并且列表不为 0
-        //       if (pfConfig.removeBlockUserContent && pfConfig.removeBlockUserContentList.length && !isRemoved) {
-        //         const aContent = eventThat.find('.AnswerItem').attr('data-za-extra-module')
-        //           ? JSON.parse(eventThat.find('.AnswerItem').attr('data-za-extra-module')).card.content
-        //           : {};
-        //         const userId = aContent.author_member_hash_id || '';
-        //         if (pfConfig.removeBlockUserContentList.find((i) => i.id === userId)) {
-        //           lessNum = fnHiddenDom(lessNum, that, `已屏蔽一个用户的回答`);
-        //           isRemoved = true;
-        //         }
-        //       }
+        // 屏蔽知乎官方账号回答
+        if (removeZhihuOfficial && !message) {
+          const labelE = elementThis.querySelector('.AuthorInfo-name .css-n99yhz');
+          const label = labelE ? labelE.getAttribute('aria-label') : '';
+          /知乎[\s]*官方帐号/.test(label) && (message = '已删除一条知乎官方帐号的回答');
+        }
+
+        // 屏蔽带有选中标签的回答
+        let isHiddenTag = false;
+        hiddenTags.forEach((i) => pfConfig[i] && (isHiddenTag = true));
+        if (isHiddenTag && !message) {
+          const tagElement = elementThis.querySelector('.KfeCollection-AnswerTopCard-Container');
+          const tagText = tagElement ? tagElement.innerText : '';
+          hiddenTags.forEach((i) => {
+            if (pfConfig[i]) {
+              const nReg = new RegExp(HIDDEN_ANSWER_TAG[i]);
+              nReg.test(tagText) && (message = `已删除一条标签${HIDDEN_ANSWER_TAG[i]}的回答`);
+            }
+          });
+        }
+
+        // 屏蔽用户 | 知乎账号的回答
+        hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName) && (message = `已删除${dataZop.authorName}的回答`);
+
         //       pfConfig.answerItemCreatedAndModifiedTime && addTimes(eventThat);
-        //       pfConfig.showBlockUser && addBlockUser(eventThat);
+        showBlockUser && myBlack.addButton(elementThis);
 
         // 自动展开回答 和 默认收起长回答
         if (!message && answerOpen) {
@@ -1469,6 +1366,189 @@ const SET_DIRECTION = {
     };
   }
 
+  /** 漂浮收起按钮的方法 */
+  const suspensionPackUp = (elements) => {
+    const RIGHT = 60;
+    const { colorBackground, isUseThemeDark } = pfConfig;
+    for (let i = 0; i < elements.length; i++) {
+      const even = elements[i];
+      const evenPrev = i > 0 ? elements[i - 1] : null;
+      const evenBottom = even.offsetTop + even.offsetHeight;
+      const evenPrevBottom = evenPrev ? evenPrev.offsetTop + evenPrev.offsetHeight : 0;
+      const hST = dom('html').scrollTop;
+      // 收起按钮
+      const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton');
+      if (evenButton) {
+        if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
+          evenButton.style =
+            `visibility:visible!important;position: fixed!important;bottom: 60px;` +
+            `left: ${even.offsetLeft + even.offsetWidth - RIGHT}px;` +
+            `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
+            `height: 40px!important;line-height:40px;padding: 0 12px!important;` +
+            `background: ${
+              isUseThemeDark
+                ? 'transparent'
+                : BACKGROUND_CONFIG[colorBackground].opacity
+                ? BACKGROUND_CONFIG[colorBackground].opacity
+                : colorBackground
+            }`;
+        } else {
+          evenButton.style = '';
+        }
+      }
+    }
+  };
+
+  /** 黑名单用户操作方法 */
+  const myBlack = {
+    /** 初始化黑名单列表 */
+    init: function () {
+      const { removeBlockUserContentList = [] } = pfConfig;
+      let children = [];
+      removeBlockUserContentList.forEach((info) => (children += this.createItem(info)));
+      const elementBlock = domById(ID_BLOCK_LIST);
+      elementBlock.innerHTML = children;
+      elementBlock.onclick = function (event) {
+        if (event.target.classList.contains(CLASS_REMOVE_BLOCK)) {
+          const item = event.target.parentElement;
+          const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
+          const isUse = confirm('取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。');
+          isUse && this.serviceRemove(info);
+        }
+      };
+    },
+    /** 黑名单元素 */
+    createItem: function (info) {
+      const { id, name, avatar } = info;
+      return (
+        `<div class="ctz-black-item ctz-black-id-${id}" data-info='${JSON.stringify(info)}'>` +
+        `<img src="${avatar}" />` +
+        `<a href="/people/${id}" target="_blank">${name}</a>` +
+        `<i class="ctz-icon ${CLASS_REMOVE_BLOCK}" style="margin-left: 4px; cursor: pointer;">&#xe607;</i>` +
+        `</div>`
+      );
+    },
+    /** 添加「屏蔽用户」按钮 */
+    addButton: function (event) {
+      const classNameBlock = 'ctz-block-user';
+      event.querySelector(`.${classNameBlock}`) && event.querySelector(`.${classNameBlock}`).remove();
+      const userUrl = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="url"]').content;
+      const userName = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="name"]').content;
+      const avatar = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="image"]').content;
+      const aContent = event.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
+        ? JSON.parse(event.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
+        : {};
+      const userId = aContent.author_member_hash_id || '';
+      if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;
+      const buttonBlockUser = domC('button', {
+        className: classNameBlock,
+        innerHTML: '屏蔽用户',
+      });
+      buttonBlockUser.onclick = function () {
+        const isUse = confirm(
+          `是否要屏蔽${userName}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。\n如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`
+        );
+        isUse && this.serviveAdd(userUrl, userName, userId, avatar);
+      };
+      event.querySelector('.AnswerItem-authorInfo>.AuthorInfo').appendChild(buttonBlockUser);
+    },
+    /** 添加屏蔽用户 */
+    addBlockItem: function (info) {
+      pfConfig.removeBlockUserContentList.push({ ...info });
+      myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      const { id, avatar, name } = info;
+      const blackItem = domC('div', {
+        className: `ctz-black-item ctz-black-id-${id}`,
+        innerHTML:
+          `<img src="${avatar}" />` +
+          `<a href="/people/${id}" target="_blank">${name}</a>` +
+          `<i class="ctz-icon ${CLASS_REMOVE_BLOCK}" style="margin-left: 4px; cursor: pointer;">&#xe607;</i>`,
+      });
+      blackItem.dataset.info = JSON.stringify(info);
+      domById(ID_BLOCK_LIST).appendChild(blackItem);
+    },
+    /** 调用「屏蔽用户」接口 */
+    serviveAdd: function (userUrl, userName, userId, avatar) {
+      const urlToken = userUrl.match(/(?<=people\/)[\w\W]+/)[0];
+      fetch(`/api/v4/members/${urlToken}/actions/block`, {
+        method: 'POST',
+        headers: new Headers({
+          ...storageConfig.fetchHeaders,
+          'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)[0],
+          'x-zst-81': storageConfig.xZst81,
+        }),
+      }).then(() => {
+        this.addBlockItem({
+          id: userId,
+          name: userName,
+          avatar,
+          userType: 'people',
+          urlToken,
+        });
+        fnLog(`已屏蔽用户${userName}`);
+      });
+    },
+    /** 解除拉黑用户接口 */
+    serviceRemove: function (info) {
+      const { name, urlToken, id } = info;
+      fetch(`/api/v4/members/${urlToken}/actions/block`, {
+        method: 'DELETE',
+        headers: new Headers({
+          ...storageConfig.fetchHeaders,
+          'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)[0],
+          'x-zst-81': storageConfig.xZst81,
+        }),
+      }).then(() => {
+        const itemIndex = pfConfig.removeBlockUserContentList.findIndex((i) => i.id === info.id);
+        if (itemIndex >= 0) {
+          const blackList = [...pfConfig.removeBlockUserContentList];
+          blackList.splice(itemIndex, 1);
+          pfConfig.removeBlockUserContentList = blackList;
+          const removeItem = dom(`.ctz-black-id-${id}`);
+          removeItem && removeItem.remove();
+          myStorage.set('pfConfig', JSON.stringify(pfConfig));
+        }
+        fnLog(`已解除屏蔽用户：${name}`);
+      });
+    },
+    /** 同步黑名单列表 */
+    sync: function (offset = 0, l = []) {
+      !l.length && (domById(ID_BLOCK_LIST).innerHTML = '');
+      domById(ID_BUTTON_SYNC_BLOCK).innerHTML = '<i class="ctz-icon ctz-loading" style="float: left;">&#xe605;</i>';
+      domById(ID_BUTTON_SYNC_BLOCK).disabled = true;
+      const limit = 20;
+      fetch(`/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
+        method: 'GET',
+        headers: new Headers({
+          ...storageConfig.fetchHeaders,
+        }),
+      })
+        .then((response) => response.json())
+        .then(({ data, paging }) => {
+          data.forEach(({ id, name, avatar_url, user_type, url_token }) => {
+            const info = {
+              id,
+              name,
+              avatar: avatar_url,
+              userType: user_type,
+              urlToken: url_token,
+            };
+            l.push(info);
+          });
+          if (!paging.is_end) {
+            this.sync((offset + 1) * limit, l);
+          } else {
+            pfConfig.removeBlockUserContentList = l;
+            myStorage.set('pfConfig', JSON.stringify(pfConfig));
+            myBlack.init();
+            domById(ID_BUTTON_SYNC_BLOCK).innerHTML = '同步黑名单';
+            domById(ID_BUTTON_SYNC_BLOCK).disabled = false;
+            fnLog('黑名单同步完成');
+          }
+        });
+    },
+  };
+
   /** 手动调用页面大小变动 */
   const doResizePage = () => {
     const myEvent = new Event('resize');
@@ -1490,8 +1570,6 @@ const SET_DIRECTION = {
     myListenListItem.init();
     myListenSearchListItem.init();
     myListenAnswerItem.init();
-    //     // 关注人列表修改
-    //     followingListChanger();
     //     topStoryRecommendEvent();
     //     pathnameHasFn({
     //       question: () => {
@@ -1527,6 +1605,130 @@ const SET_DIRECTION = {
     //   video: () => videoFns.init(),
     // });
   }
+
+  /** 加载基础元素及绑定方法 */
+  const initHTML = () => {
+    document.body.appendChild(
+      domC('div', {
+        id: ID_MAIN,
+        innerHTML: INNER_HTML,
+      })
+    );
+
+    // 绑定元素事件
+    domById(ID_OPEN_BUTTON).onclick = myDialog.open;
+    domById(ID_CLOSE).onclick = myDialog.hide;
+
+    /** 添加弹窗底部信息 */
+    const appendFooter = () => {
+      HREF_LIST.forEach(({ name, href }) => {
+        const tagA = domC('a', {
+          href,
+          target: '_blank',
+          innerText: name,
+        });
+        dom('.ctz-footer').appendChild(tagA);
+      });
+    };
+
+    /** 添加背景色选择 */
+    const appendBackground = () => {
+      domById(ID_BG).innerHTML = '';
+      Object.keys(BACKGROUND_CONFIG).forEach((key) => {
+        domById(ID_BG).appendChild(
+          domC('label', {
+            className: 'ctz-bg-choose-label',
+            innerHTML:
+              `<input class="${CLASS_INPUT}" name="colorBackground" type="radio" value="${key}"/>` +
+              `<div style="background: ${key}; border: 2px solid ${key}">${BACKGROUND_CONFIG[key].name}</div>`,
+          })
+        );
+      });
+    };
+
+    /** 添加隐藏元素 */
+    const appendHidden = () => {
+      Object.keys(SET_DIRECTION).forEach((key) => {
+        const elementItem = dom(`#${key}_HIDDEN>.ctz-set-content`);
+        const arrHidden = SET_DIRECTION[key]['_HIDDEN'];
+        if (!arrHidden || !arrHidden.length) return;
+        elementItem.innerHTML = arrHidden
+          .map(
+            (i) =>
+              `${i
+                .map(({ label, value }) => `<label><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`)
+                .join('')}` + `<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
+          )
+          .join('');
+      });
+    };
+
+    myBlack.init();
+    try {
+      myMenu.init();
+      dom('.ctz-version').innerText = `version: ${GM_info.script.version}`;
+      appendFooter();
+      appendBackground();
+      appendHidden();
+    } catch {}
+  };
+
+  /** 加载设置弹窗绑定方法 */
+  const initOperate = () => {
+    const myOperation = {
+      [CLASS_INPUT]: fnChanger,
+      [CLASS_BUTTON]: (even) => myButtonOperation[even.name](),
+    };
+    // 绑定点击事件
+    dom('.ctz-content').onclick = (even) => {
+      Object.keys(myOperation).forEach((key) => {
+        if (even.target.classList.contains(key)) {
+          myOperation[key](even.target);
+        }
+      });
+    };
+    // 绑定菜单事件
+    dom('.ctz-menu-top').onclick = myMenu.click;
+  };
+
+  /** 加载数据 */
+  const initData = () => {
+    // storageConfig.cacheTitle = document.title;
+    echoData();
+    // $('.pf-modal-content')[0].onchange = (even) => {
+    //   if ($(even.target).hasClass('pf-i')) {
+    //     return myChanger(even.target, even.target.type);
+    //   }
+    // };
+    // $('.pf-i-input')[0].oninput = (even) => {
+    //   return myChanger(even.target, even.target.type);
+    // };
+    // initPositionPage();
+    // onChooseHeart();
+    // cacheHeader();
+    // changeTitleIco();
+    // changeTitle();
+    // changeSuspensionTab();
+    // onToHomeHref();
+    // if (isLoading) {
+    //   isLoading = false;
+    //   GM_log(
+    //     '[customize]修改器加载完毕，加载时间：' +
+    //       (performance.now() - timeStart).toFixed(2) +
+    //       'ms'
+    //   );
+    // }
+  };
+
+  /** 页面滚动方法 */
+  window.onscroll = throttle(() => {
+    // stickyB.scroll();
+    if (pfConfig.suspensionPickUp) {
+      suspensionPackUp(domA('.List-item'));
+      suspensionPackUp(domA('.TopstoryItem'));
+      suspensionPackUp(domA('.AnswerCard'));
+    }
+  }, 100);
 
   /** 网页加载完成后操作 */
   window.onload = () => {
