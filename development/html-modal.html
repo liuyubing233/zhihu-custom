@@ -23,8 +23,22 @@
       </div>
       <div class="ctz-content-right">
         <div id="CTZ_SET_BASIS_DEFAULT">
-          <div class="ctz-set-title">基本设置</div>
+          <div class="ctz-set-title"><span>基本设置</span></div>
           <div class="ctz-set-content">
+            <div>
+              <div class="ctz-label">全局修改网页标题</div>
+              <div class="ctz-flex-wrap">
+                <input type="text" name="globalTitle" style="width: 250px" />
+                <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button>
+                <button class="ctz-button" name="buttonResetTitle">还原</button>
+              </div>
+            </div>
+
+            <div>
+              <div class="ctz-label">全局修改网页标题图片</div>
+              <div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div>
+            </div>
+
             <div>
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">回答和文章图片尺寸</div>
@@ -50,7 +64,7 @@
         </div>
 
         <div id="CTZ_SET_BASIS_FLOAT">
-          <div class="ctz-set-title">悬浮模块</div>
+          <div class="ctz-set-title"><span>悬浮模块</span></div>
           <div class="ctz-set-content">
             <div class="ctz-flex-wrap">
               <label>
@@ -62,7 +76,7 @@
         </div>
 
         <div id="CTZ_SET_BASIS_BLOCK">
-          <div class="ctz-set-title">黑名单设置</div>
+          <div class="ctz-set-title"><span>黑名单设置</span></div>
           <div class="ctz-set-content">
             <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
             <div class="ctz-flex-wrap">
@@ -85,12 +99,14 @@
         </div>
 
         <div id="CTZ_SET_BASIS_HIDDEN">
-          <div class="ctz-set-title">通用模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></div>
+          <div class="ctz-set-title">
+            <span>通用模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
+          </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
         </div>
 
         <div id="CTZ_SET_BASIS_COLOR">
-          <div class="ctz-set-title">颜色设置</div>
+          <div class="ctz-set-title"><span>颜色设置</span></div>
           <div class="ctz-set-content">
             <div class="ctz-set-background">
               <div class="ctz-label">背景颜色</div>
@@ -110,7 +126,7 @@
         </div>
 
         <div id="CTZ_SET_BASIS_CONFIG">
-          <div class="ctz-set-title">配置操作</div>
+          <div class="ctz-set-title"><span>配置操作</span></div>
           <div class="ctz-set-content">
             <div class="ctz-config-import-export">
               <div class="ctz-label">配置导出导入</div>
@@ -145,7 +161,7 @@
       </div>
       <div class="ctz-content-right">
         <div id="CTZ_SET_LIST_DEFAULT">
-          <div class="ctz-set-title">基础设置</div>
+          <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
             <!-- 版心宽度 -->
             <div>
@@ -160,7 +176,9 @@
         </div>
 
         <div id="CTZ_SET_LIST_FILTER" class="ctz-filter-block">
-          <div class="ctz-set-title">屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></div>
+          <div class="ctz-set-title">
+            <span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
+          </div>
           <div class="ctz-set-content">
             <div class="ctz-filter-follow">
               <div class="ctz-label">关注列表关注人操作屏蔽</div>
@@ -189,7 +207,7 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后「关注、推荐、搜索」列表将屏蔽点赞量少于
-                <input name="lessVoteNumber" class="ctz-i" type="number" style="width: 50px; border-radius: 4px" />
+                <input name="lessVoteNumber" class="ctz-i" type="number" style="width: 50px" />
                 的内容
               </div>
             </div>
@@ -207,7 +225,9 @@
         </div>
 
         <div id="CTZ_SET_LIST_HIDDEN">
-          <div class="ctz-set-title">隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></div>
+          <div class="ctz-set-title">
+            <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
+          </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
         </div>
       </div>
@@ -223,7 +243,7 @@
       </div>
       <div class="ctz-content-right">
         <div id="CTZ_SET_ANSWER_DEFAULT">
-          <div class="ctz-set-title">基础设置</div>
+          <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
             <div>
               <div class="ctz-flex-wrap">
@@ -238,8 +258,7 @@
 
         <div id="CTZ_SET_ANSWER_FILTER" class="ctz-filter-block">
           <div class="ctz-set-title">
-            屏蔽内容
-            <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span>
+            <span>屏蔽内容 <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
           </div>
           <div class="ctz-set-content">
             <div class="ctz-filter-defail-who">
@@ -268,7 +287,7 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后问题详情页将屏蔽点赞量少于
-                <input name="lessVoteNumberDetail" class="ctz-i" type="number" style="width: 50px; border-radius: 4px" />
+                <input name="lessVoteNumberDetail" class="ctz-i" type="number" style="width: 50px" />
                 的回答
               </div>
             </div>
@@ -276,12 +295,14 @@
         </div>
 
         <div id="CTZ_SET_ANSWER_HIDDEN">
-          <div class="ctz-set-title">隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></div>
+          <div class="ctz-set-title">
+            <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
+          </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
         </div>
 
         <div id="CTZ_SET_ANSWER_OPEN">
-          <div class="ctz-set-title">回答展开收起</div>
+          <div class="ctz-set-title"><span>回答展开收起</span></div>
           <div class="ctz-set-content ctz-flex-wrap">
             <label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label>
             <label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label>
@@ -300,7 +321,7 @@
       </div>
       <div class="ctz-content-right">
         <div id="CTZ_SET_ARTICLE_DEFAULT">
-          <div class="ctz-set-title">基础设置</div>
+          <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
             <div>
               <div class="ctz-flex-wrap">
@@ -314,12 +335,16 @@
         </div>
 
         <div id="CTZ_SET_ARTICLE_FILTER">
-          <div class="ctz-set-title">屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></div>
+          <div class="ctz-set-title">
+            <span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
+          </div>
           <div class="ctz-set-content"></div>
         </div>
 
         <div id="CTZ_SET_ARTICLE_HIDDEN">
-          <div class="ctz-set-title">隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></div>
+          <div class="ctz-set-title">
+            <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
+          </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
         </div>
       </div>

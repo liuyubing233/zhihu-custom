@@ -2,7 +2,7 @@
 // @name         知乎修改器✈持续更新✈努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
 // @version      3.0.0
-// @description  页面模块可配置化|列表种类和关键词强过滤内容，关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|首页切换模块，发现切换模块、个人中心、搜素栏可悬浮并自定义位置|夜间模式开关及背景色修改|收藏夹导出为PDF|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|屏蔽用户回答|更多功能请在插件里体验...
+// @description  页面模块自定义隐藏|列表及回答内容过滤|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|视频一键下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|夜间模式开关及背景色修改|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
 // @compatible   chrome Violentmonkey
@@ -91,6 +91,8 @@ const ID_FILTER_WORDS = 'CTZ_FILTER_WORDS';
 const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
 /** 同步黑名单 按钮 ID */
 const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
+/** 修改网页标题图片 ID */
+const ID_ICO_LIST = 'CTZ_TITLE_ICO';
 
 /** INPUT 元素类名 */
 const CLASS_INPUT = 'ctz-i';
@@ -338,6 +340,22 @@ const HIDDEN_ANSWER_ACCOUNT = {
   removeYanxuanCPRecommend: '盐选测评室',
 };
 
+/** 网页标题图片集合 */
+const ICO_URL = {
+  zhihu: 'https://static.zhihu.com/heifetz/favicon.ico',
+  github: 'https://github.githubassets.com/pinned-octocat.svg',
+  juejin: 'https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png',
+  csdn: 'https://g.csdnimg.cn/static/logo/favicon32.ico',
+  runoob: 'https://static.runoob.com/images/favicon.ico',
+  vue: 'https://cli.vuejs.org/icons/apple-touch-icon-152x152.png',
+  react: 'https://zh-hans.reactjs.org/favicon-32x32.png',
+  angular: 'https://angular.cn/assets/images/favicons/favicon.ico',
+  lanhu: 'https://sso-cdn.lanhuapp.com/ssoweb/favicon.ico',
+  yuque: 'https://mdn.alipayobjects.com/huamei_0prmtq/afts/img/A*vMxOQIh4KBMAAAAAAAAAAAAADvuFAQ/original',
+  tampermonkey: 'https://tampermonkey.freetls.fastly.net/images/icon180.png',
+  greasyfork: 'https://greasyfork.org/vite/assets/blacklogo16.bc64b9f7.png',
+};
+
 (function () {
   'use strict';
   const INNER_HTML = ``;
@@ -357,6 +375,8 @@ const HIDDEN_ANSWER_ACCOUNT = {
     zoomImageType: '0', // 图片尺寸自定义类型 0 1 2
     zoomImageSize: '600', // 图片尺寸自定义大小
     showGIFinDialog: true, // 使用弹窗打开动图
+    globalTitle: '', // 网页标题
+    titleIco: '', // 网页标题logo图
 
     // chooseHeart: 'system', // 设置版心的方式
     // versionHeart: '1200', // 版心宽度
@@ -373,8 +393,6 @@ const HIDDEN_ANSWER_ACCOUNT = {
     // stickyLeft: false, // 首页左侧栏是否固定
     // stickyRight: false, // 首页右侧栏是否固定
     // zoomAnswerImage: '', // 默认 原图
-    titleIco: '', // 网页标题logo图
-    title: '', // 网页标题
     customizeCss: '',
     questionTitleTag: true, // 内容标题添加类别标签
     fixedListItemMore: false, // 列表更多按钮固定至题目右侧
@@ -745,8 +763,8 @@ const HIDDEN_ANSWER_ACCOUNT = {
 
   /** 编辑器按钮点击事件集合 */
   const myButtonOperation = {
+    /** 导出配置 */
     configExport: async () => {
-      // 导出配置
       const config = await myStorage.get('pfConfig');
       const link = domC('a', {
         href: 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config),
@@ -756,8 +774,8 @@ const HIDDEN_ANSWER_ACCOUNT = {
       link.click();
       document.body.removeChild(link);
     },
+    /** 导入配置 */
     configImport: async () => {
-      // 导入配置
       const configImport = dom('[name=textConfigImport]').value;
       pfConfig = JSON.parse(configImport);
       await myStorage.set('pfConfig', JSON.stringify(pfConfig));
@@ -776,14 +794,28 @@ const HIDDEN_ANSWER_ACCOUNT = {
         resetData();
       }
     },
+    /** 自定义样式 */
     styleCustom: async () => {
-      // 自定义样式
       const value = dom('[name="textStyleCustom"]').value || '';
       pfConfig.customizeCss = value;
       await myStorage.set('pfConfig', JSON.stringify(pfConfig));
       myCustomStyle.change();
     },
     syncBlack: () => myBlack.sync(0),
+    /** 确认更改网页标题 */
+    buttonConfirmTitle: async () => {
+      const value = dom('[name="globalTitle"]').value;
+      pfConfig.globalTitle = value || '';
+      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      changeTitle();
+    },
+    /** 还原网页标题 */
+    buttonResetTitle: async () => {
+      pfConfig.globalTitle = '';
+      dom('[name="globalTitle"]').value = storageConfig.cacheTitle;
+      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      changeTitle();
+    },
   };
 
   /** 存储使用油猴自己的GM存储，解决数据不共通的问题，添加localStorage与GM判断，获取最新存储 */
@@ -1360,7 +1392,7 @@ const HIDDEN_ANSWER_ACCOUNT = {
   /** 回填数据，供每次打开使用 */
   const echoData = () => {
     const textSameName = {
-      title: (e) => (e.value = pfConfig.title || document.title),
+      globalTitle: (e) => (e.value = pfConfig.globalTitle || document.title),
       customizeCss: (e) => (e.value = pfConfig['customizeCss']),
     };
     const echoText = (even) => {
@@ -1392,17 +1424,11 @@ const HIDDEN_ANSWER_ACCOUNT = {
       echo[item.type] && echo[item.type](item);
     });
 
+    echo.text(dom('[name="globalTitle"]'));
+
     // domA('.ctz-i-input').forEach((item) => {
     //   echo[item.type] && echo[item.type](item);
     // });
-
-    // const zoomV = pfConfig.zoomAnswerImage;
-    // const nValue = isNaN(+zoomV)
-    //   ? ZOOM_DEFAULT_OBJ[zoomV]
-    //     ? ZOOM_DEFAULT_OBJ[zoomV]
-    //     : ''
-    //   : zoomV;
-    // $('#IMAGE_SIZE')[0].innerText = nValue;
   };
 
   /** 更改编辑器方法 */
@@ -1453,8 +1479,7 @@ const HIDDEN_ANSWER_ACCOUNT = {
       // suspensionFind: cacheHeader,
       // suspensionSearch: cacheHeader,
       // suspensionUser: cacheHeader,
-      // titleIco: changeTitleIco,
-      // title: changeTitle,
+      titleIco: changeICO,
       // customizeCss: changeCustomCSS,
       // toHomeButtonZhuanlan: onToHomeHref,
       // indexPathnameRedirect: onToHomeHref,
@@ -1654,6 +1679,27 @@ const HIDDEN_ANSWER_ACCOUNT = {
     }
   };
 
+  /** 修改网页标题 */
+  const changeTitle = () => {
+    document.title = pfConfig.globalTitle || storageConfig.cacheTitle;
+  };
+
+  /** 修改网页标题图片 */
+  const changeICO = () => {
+    const { titleIco } = pfConfig;
+    const ID_ICO = 'CTZ_ICO';
+    if (!ICO_URL[titleIco]) return;
+    dom('[type="image/x-icon"]') && dom('[type="image/x-icon"]').remove();
+    domById(ID_ICO) && domById(ID_ICO).remove();
+    const linkICO = domC('link', {
+      type: 'image/x-icon',
+      href: ICO_URL[titleIco],
+      id: ID_ICO,
+      rel: 'icon',
+    });
+    dom('head').appendChild(linkICO);
+  };
+
   /** 手动调用页面大小变动 */
   const doResizePage = () => {
     const myEvent = new Event('resize');
@@ -1697,9 +1743,9 @@ const HIDDEN_ANSWER_ACCOUNT = {
       doResizePage();
     }
 
-    //   // 判断body变化后的页面title是否变化
-    //   // 原逻辑是在body变化后会请求查看是否有新的消息后再更改title
-    //   pfConfig.title !== document.title && changeTitle();
+    // 判断 body 变化后的页面 title 是否变化
+    // 原逻辑是在 body 变化后会请求查看是否有新的消息后再更改 title
+    pfConfig.globalTitle !== document.title && changeTitle();
 
     //   if (pfConfig.hiddenSearchBoxTopSearch && $('.SearchBar-input input')[0]) {
     //     $('.SearchBar-input input')[0].placeholder = '';
@@ -1806,13 +1852,27 @@ const HIDDEN_ANSWER_ACCOUNT = {
       });
     };
 
-    myBlack.init();
+    /** 添加修改网页标题图片 */
+    const appendICO = () => {
+      let icoChildren = '';
+      Object.keys(ICO_URL).forEach((key) => {
+        icoChildren +=
+          `<label>` +
+          `<input class="ctz-i" name="titleIco" type="radio" value="${key}" />` +
+          `<img src="${ICO_URL[key]}" alt="${key}">` +
+          `</label>`;
+      });
+      domById(ID_ICO_LIST).innerHTML = icoChildren;
+    };
+
     try {
+      myBlack.init();
       myMenu.init();
       dom('.ctz-version').innerText = `version: ${GM_info.script.version}`;
       appendFooter();
       appendBackground();
       appendHidden();
+      appendICO();
     } catch {}
   };
 
@@ -1843,14 +1903,14 @@ const HIDDEN_ANSWER_ACCOUNT = {
 
   /** 加载数据 */
   const initData = () => {
-    // storageConfig.cacheTitle = document.title;
+    storageConfig.cacheTitle = document.title;
     echoData();
 
     // initPositionPage();
     // onChooseHeart();
     // cacheHeader();
     // changeTitleIco();
-    // changeTitle();
+    changeTitle();
     // changeSuspensionTab();
     // onToHomeHref();
     // if (isLoading) {
@@ -1880,6 +1940,7 @@ const HIDDEN_ANSWER_ACCOUNT = {
     initHTML();
     initOperate();
     initData();
+    changeICO();
     // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
     myBackground.init();
     myVersion.initAfterLoad();
