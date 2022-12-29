@@ -75,6 +75,8 @@ const ID_STYLE_BG = 'CTZ_STYLE_BACKGROUND';
 const ID_STYLE_CUSTOM = 'CTZ_STYLE_CUSTOM';
 /** 隐藏元素模块的 样式 ID */
 const ID_STYLE_HIDDEN = 'CTZ_STYLE_HIDDEN';
+/** 版心的 样式ID */
+const ID_STYLE_VERSION = 'CTZ_STYLE_VERSION';
 /** 弹窗关闭按钮 ID */
 const ID_CLOSE = 'CTZ_CLOSE_DIALOG';
 /** 背景色元素 ID */
@@ -176,6 +178,11 @@ const CONFIG_HIDDEN_DEFAULT = {
   hiddenZhuanlanAuthorInfoDetail: false, // 文章作者简介
   hiddenQuestionSpecial: false, // 详情顶部专题收录标签
   hiddenListVideoContent: false, // 列表视频回答的内容
+  hiddenHomeCreatorEntrance: false, // 隐藏主页创作中心
+  hiddenHomeRecommendFollow: false, // 隐藏主页推荐关注
+  hiddenHomeCategory: false, // 隐藏主页分类圆桌
+  hiddenHomeCategoryMore: false, // 隐藏主页更多分类
+  hiddenHomeFooter: false, // 隐藏主页知乎指南
 };
 
 /** 屏蔽内容模块默认配置 */
@@ -185,17 +192,13 @@ const CONFIG_FILTER_DEFAULT = {
   removeYanxuanAnswer: true, // 盐选科普回答
   removeYanxuanRecommend: true, // 盐选推荐
   removeYanxuanCPRecommend: true, // 盐选测评室
-
   removeFromYanxuan: true, // 选自盐选专栏的回答
   removeUnrealAnswer: false, // 带有虚构内容的回答
-
   removeFollowVoteAnswer: false, // 关注人赞同回答
   removeFollowVoteArticle: false, // 关注人赞同文章
   removeFollowFQuestion: false, // 关注人关注问题
-
   removeBlockUserContent: true, // 不再显示黑名单用户发布的内容
   removeBlockUserContentList: [], // 已屏蔽用户列表
-
   removeItemAboutAD: false, // 商业推广
   removeItemAboutArticle: false, // 文章
   removeItemAboutVideo: false, // 视频
@@ -243,6 +246,13 @@ const SET_DIRECTION = {
   CTZ_SET_LIST: {
     /** 首页列表设置 - 隐藏模块 */
     _HIDDEN: [
+      [
+        { value: 'hiddenHomeCreatorEntrance', label: '创作中心' },
+        { value: 'hiddenHomeRecommendFollow', label: '推荐关注' },
+        { value: 'hiddenHomeCategory', label: '分类圆桌' },
+        { value: 'hiddenHomeCategoryMore', label: '更多分类' },
+        { value: 'hiddenHomeFooter', label: '知乎指南' },
+      ],
       [
         { value: 'hiddenHotItemIndex', label: '热门排序编号' },
         { value: 'hiddenHotItemLabel', label: '热门"新"元素' },
@@ -337,35 +347,41 @@ const HIDDEN_ANSWER_ACCOUNT = {
     ...CONFIG_HIDDEN_DEFAULT,
     ...CONFIG_FILTER_DEFAULT,
     answerOpen: '', // 知乎默认 | 自动展开所有回答 | 默认收起所有长回答
+    isUseThemeDark: false, // 是否开启夜间模式
+    filterKeywords: [],
+    showBlockUser: true, // 列表用户名后显示「屏蔽用户」按钮
+    colorBackground: '#ffffff', // 背景色
+    versionHome: '1000', // 列表版心宽度
+    versionAnswer: '1000', // 回答版心宽度
+    versionArticle: '690', // 文章版心宽度
+    zoomImageType: '0', // 图片尺寸自定义类型 0 1 2
+    zoomImageSize: '600', // 图片尺寸自定义大小
+    showGIFinDialog: true, // 使用弹窗打开动图
 
-    chooseHeart: 'system', // 设置版心的方式
-    versionHeart: '1200', // 版心宽度
-    versionHeartSelf: '1200', // 自定义版心宽度
-    versionHeartZhuanlan: '1000', // 文章、专栏宽度
-    positionCreation: 'right',
-    positionCreationIndex: '1',
-    positionTable: 'right',
-    positionTableIndex: '2',
-    positionFavorites: 'left',
-    positionFavoritesIndex: '3',
-    positionFooter: 'right',
-    positionFooterIndex: '4',
-    stickyLeft: false, // 首页左侧栏是否固定
-    stickyRight: false, // 首页右侧栏是否固定
-    zoomAnswerImage: '', // 默认 原图
+    // chooseHeart: 'system', // 设置版心的方式
+    // versionHeart: '1200', // 版心宽度
+    // versionHeartSelf: '1200', // 自定义版心宽度
+    // versionHeartZhuanlan: '1000', // 文章、专栏宽度
+    // positionCreation: 'right',
+    // positionCreationIndex: '1',
+    // positionTable: 'right',
+    // positionTableIndex: '2',
+    // positionFavorites: 'left',
+    // positionFavoritesIndex: '3',
+    // positionFooter: 'right',
+    // positionFooterIndex: '4',
+    // stickyLeft: false, // 首页左侧栏是否固定
+    // stickyRight: false, // 首页右侧栏是否固定
+    // zoomAnswerImage: '', // 默认 原图
     titleIco: '', // 网页标题logo图
     title: '', // 网页标题
-    colorBackground: '#ffffff', // 背景色
     customizeCss: '',
     questionTitleTag: true, // 内容标题添加类别标签
     fixedListItemMore: false, // 列表更多按钮固定至题目右侧
     shoppingLink: 'default', // 购物链接显示设置
     answerVideoLink: 'default', // 回答视频显示设置
-    filterKeywords: [],
-    showGIFinDialog: true, // 动图弹窗显示
     zoomAnswerText: false, // 回答操作文字缩放
-    isUseThemeDark: false, // 是否开启夜间模式
-    notificationAboutFilter: false, // 屏蔽内容后显示通知提醒框
+    // notificationAboutFilter: false, // 屏蔽内容后显示通知提醒框
     questionCreatedAndModifiedTime: true, // 问题显示创建和最后修改时间
     highlightOriginal: true, // 关注列表高亮原创内容
     listOutPutNotInterested: false, // 推荐列表外置[不感兴趣]按钮
@@ -374,7 +390,6 @@ const HIDDEN_ANSWER_ACCOUNT = {
     listItemCreatedAndModifiedTime: true, // 列表内容显示发布与最后修改时间
     answerItemCreatedAndModifiedTime: true, // 回答列表显示创建与最后修改时间
     indexPathnameRedirect: 'n', // 首页重定向 follow 关注, hot 热榜
-    showBlockUser: true, // 列表用户名后显示「屏蔽用户」按钮
 
     // 悬浮模块 start ----------------
     suspensionHomeTab: false, // 问题列表切换
@@ -392,7 +407,7 @@ const HIDDEN_ANSWER_ACCOUNT = {
     suspensionUserPo: 'right: 60px; top: 100px;',
     suspensionUserFixed: true,
     suspensionPickUp: true, // 长回答和列表收起按钮
-    previewOpenGIF: true, // 动图弹窗显示
+    // previewOpenGIF: true, // 动图弹窗显示
     toHomeButton: true, // 页面右下停靠返回主页按钮
     toHomeButtonZhuanlan: 'zhihu', // toHomeButtonZhuanlan
     // 悬浮模块 end -----------------
@@ -407,25 +422,6 @@ const HIDDEN_ANSWER_ACCOUNT = {
     fetchHeaders: {}, // fetch 的 headers 内容, 获取下来以供使用
     xZst81: '',
     cssDark: '', // 黑暗模式缓存
-  };
-
-  /** 启用知乎默认的黑暗模式 */
-  const onUseThemeDark = (isUse) => {
-    dom('html').setAttribute('data-theme', isUse ? 'dark' : 'light');
-  };
-
-  /** 注入样式文件的方法 */
-  const initDomStyle = (id, innerHTML) => {
-    const element = domById(id);
-    element
-      ? (element.innerHTML = innerHTML)
-      : document.head.appendChild(
-          domC('style', {
-            id,
-            type: 'text/css',
-            innerHTML,
-          })
-        );
   };
 
   /** 修改页面背景的 css */
@@ -555,6 +551,55 @@ const HIDDEN_ANSWER_ACCOUNT = {
     },
   };
 
+  /** 修改版心的 css */
+  const myVersion = {
+    init: function () {
+      const innerHTML = this.versionWidth() + this.vImgSize();
+      initDomStyle(ID_STYLE_VERSION, innerHTML);
+    },
+    initAfterLoad: function () {
+      // 自定义图片尺寸大小 range 显隐
+      domById('CTZ_IMAGE_SIZE_CUSTOM').style.display = pfConfig.zoomImageType === '2' ? 'block' : 'none';
+    },
+    change: function () {
+      this.initAfterLoad();
+      this.init();
+    },
+    /** 版心大小修改 */
+    versionWidth: function () {
+      // 首页列表版心
+      const versionHome =
+        `.Topstory-mainColumn{width: ${pfConfig.versionHome || '1000'}px!important;}` +
+        `.Topstory-container{width: fit-content!important;}`;
+      // 回答详情版心
+      const versionAnswer =
+        `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
+        `.Question-main .Question-sideColumn{margin-left: 12px;}` +
+        `.QuestionHeader .QuestionHeader-content{margin: 0 auto;padding: 0;max-width: initial!important;}` +
+        `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content` +
+        `{width: ${pfConfig.versionAnswer || '1000'}px!important;}`;
+      // 文章版心
+      const versionArticle =
+        `.zhuanlan .AuthorInfo{max-width: initial;}` +
+        `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div` +
+        `{width: ${pfConfig.versionArticle || '690'}px!important;}` +
+        `.zhuanlan .Post-SideActions{right: calc(50vw - ${+(pfConfig.versionArticle || '690') / 2 + 150}px)}`;
+      return versionHome + versionAnswer + versionArticle;
+    },
+    /** 图片尺寸修改 */
+    vImgSize: function () {
+      const content =
+        pfConfig.zoomImageType === '2'
+          ? `width: ${pfConfig.zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;`
+          : '';
+      return (
+        `.GifPlayer.isPlaying img {cursor:pointer!important;}` +
+        `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage` +
+        `{${content}}`
+      );
+    },
+  };
+
   /** 隐藏元素的 css */
   const myHidden = {
     init: function () {
@@ -671,151 +716,21 @@ const HIDDEN_ANSWER_ACCOUNT = {
         (pfConfig.hiddenZhuanlanAuthorInfoDetail ? '.zhuanlan .AuthorInfo-detail{display: none;}' : '') +
         (pfConfig.hiddenListAnswerInPerson ? '.Topstory-mainColumn .LabelContainer{display: none;}' : '') +
         (pfConfig.hiddenQuestionSpecial ? '.QuestionHeader .LabelContainer-wrapper{display: none;}' : '') +
+        (pfConfig.hiddenHomeCreatorEntrance ? '.Topstory .css-19idom{display: none;}' : '') +
+        (pfConfig.hiddenHomeRecommendFollow ? '.Topstory .css-173vipd{display: none;}' : '') +
+        (pfConfig.hiddenHomeCategory ? '.Topstory .GlobalSideBar-category{display: none;}' : '') +
+        (pfConfig.hiddenHomeCategoryMore ? '.Topstory .Card[aria-label="更多分类入口"]{display:none;}' : '') +
+        (pfConfig.hiddenHomeFooter ? '.Topstory .Footer{display: none;}' : '') +
+        (pfConfig.hiddenHomeCreatorEntrance &&
+        pfConfig.hiddenHomeRecommendFollow &&
+        pfConfig.hiddenHomeCategory &&
+        pfConfig.hiddenHomeCategoryMore &&
+        pfConfig.hiddenHomeFooter
+          ? '.Topstory-mainColumn{margin: 0 auto;}'
+          : '') +
         ''
       );
     },
-  };
-
-  /** 回填数据，供每次打开使用 */
-  const echoData = () => {
-    const textSameName = {
-      title: (e) => (e.value = pfConfig.title || document.title),
-      customizeCss: (e) => (e.value = pfConfig['customizeCss']),
-    };
-    const echoText = (even) => {
-      textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name]);
-    };
-    const echo = {
-      radio: (even) => pfConfig.hasOwnProperty(even.name) && even.value === pfConfig[even.name] && (even.checked = true),
-      checkbox: (even) => (even.checked = pfConfig[even.name] || false),
-      'select-one': (even) => {
-        if (pfConfig[even.name]) {
-          for (let i = 0; i < even.length; i++) {
-            if (even[i].value === pfConfig[even.name]) {
-              even[i].selected = true;
-            }
-          }
-        }
-      },
-      text: echoText,
-      number: echoText,
-      range: (even) => {
-        const nValue = pfConfig[even.name];
-        if (isNaN(+nValue)) {
-          // 不存在值则显示拖动条取最小值
-          even.value = $(`[name="${even.name}"]`)[0].min;
-          return;
-        }
-        echoText(even);
-      },
-    };
-
-    domA(`.${CLASS_INPUT}`).forEach((item) => {
-      echo[item.type] && echo[item.type](item);
-    });
-
-    // domA('.ctz-i-input').forEach((item) => {
-    //   echo[item.type] && echo[item.type](item);
-    // });
-
-    // const zoomV = pfConfig.zoomAnswerImage;
-    // const nValue = isNaN(+zoomV)
-    //   ? ZOOM_DEFAULT_OBJ[zoomV]
-    //     ? ZOOM_DEFAULT_OBJ[zoomV]
-    //     : ''
-    //   : zoomV;
-    // $('#IMAGE_SIZE')[0].innerText = nValue;
-  };
-
-  /** 更改编辑器方法 */
-  const fnChanger = async (ev) => {
-    // onchange 时只调用 cssVersion 的 name
-    const doCssVersion = [
-      'versionHeart',
-      'versionHeartSelf',
-      'versionHeartZhuanlan',
-      'suspensionHomeTabStyle',
-      'suspensionFindStyle',
-      'questionTitleTag',
-      'fixedListItemMore',
-      'shoppingLink',
-      'answerVideoLink',
-      'toHomeButton',
-      'zoomAnswerText',
-      'listOutPutNotInterested',
-      'highlightListItem',
-    ];
-    const { name, value, checked, type } = ev;
-    const ob = {
-      chooseHeart: () => {
-        // onChooseHeart();
-        // versionCSS.init();
-      },
-      // stickyLeft: stickyB.scroll,
-      // stickyRight: stickyB.scroll,
-      suspensionHomeTab: () => {
-        // versionCSS.init();
-        // changeSuspensionTab();
-      },
-      isUseThemeDark: () => {
-        // versionCSS.init();
-        myBackground.init();
-        onUseThemeDark(checked);
-        // followingListChanger(true);
-      },
-      colorBackground: () => {
-        myBackground.init();
-        // followingListChanger(true);
-      },
-      // suspensionFind: cacheHeader,
-      // suspensionSearch: cacheHeader,
-      // suspensionUser: cacheHeader,
-      // titleIco: changeTitleIco,
-      // title: changeTitle,
-      // customizeCss: changeCustomCSS,
-      // toHomeButtonZhuanlan: onToHomeHref,
-      // indexPathnameRedirect: onToHomeHref,
-      // answerUnfold: () => answerFoldOrNot('answerUnfold', checked),
-      // answerFoldStart: () => answerFoldOrNot('answerFoldStart', checked),
-      // showGIFinDialog: previewGIF,
-      // questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
-      // highlightOriginal: () => followingListChanger(true),
-      // articleCreateTimeToTop: addArticleCreateTimeToTop,
-      // zoomAnswerImage: () => {
-      //   const nValue = isNaN(+ev.value)
-      //     ? ZOOM_DEFAULT_OBJ[ev.value]
-      //       ? ZOOM_DEFAULT_OBJ[ev.value]
-      //       : ''
-      //     : ev.value;
-      //   $('#IMAGE_SIZE')[0].innerText = nValue;
-      //   versionCSS.init();
-      // },
-    };
-
-    pfConfig[name] = type === 'checkbox' ? checked : value;
-    await myStorage.set('pfConfig', JSON.stringify(pfConfig));
-    if (/^position/.test(name)) {
-      // initPositionPage();
-      return;
-    }
-
-    if (/^hidden/.test(name)) {
-      myHidden.init();
-      return;
-    }
-    if (doCssVersion.includes(name)) {
-      // versionCSS.init();
-      return;
-    }
-
-    ob[name] && ob[name]();
-  };
-
-  /** 在重置数据时调用 */
-  const resetData = () => {
-    onInitStyleExtra();
-    initData();
-    onUseThemeDark(pfConfig.isUseThemeDark);
   };
 
   /** 自定义样式方法 */
@@ -906,6 +821,40 @@ const HIDDEN_ANSWER_ACCOUNT = {
   const myScroll = {
     stop: () => dom('body').classList.add('ctz-stop-scroll'),
     on: () => dom('body').classList.remove('ctz-stop-scroll'),
+  };
+
+  /** 自定义预览方法 */
+  const myPreview = {
+    // 开启预览弹窗
+    open: function (src, even, isVideo) {
+      if (isVideo) {
+        dom(this.evenPathVideo).src = src;
+        domById(this.idVideo).style.display = 'block';
+      } else {
+        dom(this.evenPathImg).src = src;
+        domById(this.idImg).style.display = 'block';
+      }
+      // 存在even则保存，关闭时候清除
+      // 解决浏览GIF时的弹窗问题
+      even && (this.even = even);
+      myScroll.stop();
+    },
+    // 关闭预览弹窗
+    hide: function (pEvent) {
+      if (this.even) {
+        this.even.click();
+        this.even = null;
+      }
+      pEvent.style.display = 'none';
+      dom(this.evenPathImg).src = '';
+      dom(this.evenPathVideo).src = '';
+      myScroll.on();
+    },
+    even: null,
+    evenPathImg: '#CTZ_PREVIEW_IMAGE img',
+    evenPathVideo: '#CTZ_PREVIEW_VIDEO video',
+    idImg: 'CTZ_PREVIEW_IMAGE',
+    idVideo: 'CTZ_PREVIEW_VIDEO',
   };
 
   /** 编辑器弹窗打开关闭方法 */
@@ -1001,121 +950,6 @@ const HIDDEN_ANSWER_ACCOUNT = {
         item.style.display = isThis === item.id ? 'flex' : 'none';
       });
     },
-  };
-
-  /** 查找是否使用主题 */
-  const findTheme = () => {
-    // 开始进入先修改一次
-    onUseThemeDark(pfConfig.isUseThemeDark);
-    const elementHTML = dom('html');
-    const muConfig = { attribute: true, attributeFilter: ['data-theme'] };
-    // 监听 html 元素属性变化
-    const muCallback = function () {
-      const { isUseThemeDark } = pfConfig;
-      const themeName = elementHTML.getAttribute('data-theme');
-      if ((themeName === 'dark' && !isUseThemeDark) || (themeName === 'light' && isUseThemeDark)) {
-        onUseThemeDark(isUseThemeDark);
-      }
-    };
-    const muObserver = new MutationObserver(muCallback);
-    muObserver.observe(elementHTML, muConfig);
-  };
-
-  /** 加载额外的样式文件 */
-  const onInitStyleExtra = () => {
-    // versionCSS.init();
-    myHidden.init();
-    myBackground.init();
-    findTheme();
-  };
-
-  /** 在启动时注入的内容 */
-  async function onDocumentStart() {
-    initDomStyle(ID_STYLE, INNER_CSS);
-    if (!HTML_HOOTS.includes(location.hostname) || window.frameElement) return;
-    storageConfig.cachePfConfig = pfConfig;
-    const config = await myStorage.get('pfConfig');
-    const c = config ? JSON.parse(config) : {};
-    pfConfig = { ...pfConfig, ...c };
-    // 首页重定向
-    // if (
-    //   pfConfig.indexPathnameRedirect &&
-    //   pfConfig.indexPathnameRedirect !== 'n' &&
-    //   location.host === 'www.zhihu.com' &&
-    //   location.pathname === '/'
-    // ) {
-    //   location.href = `https://www.zhihu.com/${pfConfig.indexPathnameRedirect}`;
-    // }
-
-    onInitStyleExtra();
-
-    const host = location.host;
-
-    if (host === 'zhuanlan.zhihu.com') {
-      dom('html').classList.add('zhuanlan');
-    } else if (host === 'www.zhihu.com') {
-      dom('html').classList.add('zhihu');
-    }
-
-    // 拦截 fetch 方法, 获取 option 中的值
-    const originFetch = fetch;
-    unsafeWindow.fetch = (url, opt) => {
-      // if (
-      //   /\/answers\?/.test(url) &&
-      //   (answerSortBy === 'vote' || answerSortBy === 'comment') &&
-      //   isFirstToSort
-      // ) {
-      //   // 如果是自定义排序则知乎回答页码增加到20条
-      //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
-      // }
-
-      if (!storageConfig.fetchHeaders['x-ab-param'] && opt && opt.headers) {
-        storageConfig.fetchHeaders = opt.headers;
-      }
-
-      // 存储x-zst-81供「不感兴趣」接口使用
-      storageConfig.xZst81 = (opt && opt.headers && opt.headers['x-zst-81']) || '';
-      return originFetch(url, opt);
-    };
-
-    // if (
-    //   /\/question/.test(location.pathname) &&
-    //   location.search.match(/(?<=sort=)\w+/)
-    // ) {
-    //   answerSortBy = location.search.match(/(?<=sort=)\w+/)[0];
-    // }
-  }
-  onDocumentStart();
-
-  /** 监听过滤内容 */
-  const fnHiddenDom = (lessNum, ev, log) => {
-    ev.style.display = 'none';
-    log && fnLog(log);
-    return ++lessNum;
-  };
-
-  /** 计算过滤起始位置 */
-  const fnIndexMath = (index, i, len, lessNum) => {
-    return i + 1 === len ? i + 1 - lessNum : index;
-  };
-
-  /** 调用「不感兴趣」接口 */
-  const doFetchNotInterested = ({ id, type }) => {
-    const data = new FormData();
-    data.append('item_brief', JSON.stringify({ source: 'TS', type: type, id: id }));
-    fetch(API_NOT_INTERESTED, {
-      body: data,
-      method: 'POST',
-      headers: new Headers({
-        ...storageConfig.fetchHeaders,
-        'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)[0],
-        'x-zst-81': storageConfig.xZst81,
-      }),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        fnLog('已调用「不感兴趣」接口');
-      });
   };
 
   /** 监听列表内容 - 过滤  */
@@ -1354,51 +1188,6 @@ const HIDDEN_ANSWER_ACCOUNT = {
     },
   };
 
-  /** 节流, 使用时 fn 需要为 function () {} */
-  function throttle(fn, time = 300) {
-    let timeout = null;
-    return function () {
-      if (timeout) return;
-      timeout = setTimeout(() => {
-        timeout = null;
-        fn.apply(this, arguments);
-      }, time);
-    };
-  }
-
-  /** 漂浮收起按钮的方法 */
-  const suspensionPackUp = (elements) => {
-    const RIGHT = 60;
-    const { colorBackground, isUseThemeDark } = pfConfig;
-    for (let i = 0; i < elements.length; i++) {
-      const even = elements[i];
-      const evenPrev = i > 0 ? elements[i - 1] : null;
-      const evenBottom = even.offsetTop + even.offsetHeight;
-      const evenPrevBottom = evenPrev ? evenPrev.offsetTop + evenPrev.offsetHeight : 0;
-      const hST = dom('html').scrollTop;
-      // 收起按钮
-      const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton');
-      if (evenButton) {
-        if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
-          evenButton.style =
-            `visibility:visible!important;position: fixed!important;bottom: 60px;` +
-            `left: ${even.offsetLeft + even.offsetWidth - RIGHT}px;` +
-            `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
-            `height: 40px!important;line-height:40px;padding: 0 12px!important;` +
-            `background: ${
-              isUseThemeDark
-                ? 'transparent'
-                : BACKGROUND_CONFIG[colorBackground].opacity
-                ? BACKGROUND_CONFIG[colorBackground].opacity
-                : colorBackground
-            }`;
-        } else {
-          evenButton.style = '';
-        }
-      }
-    }
-  };
-
   /** 黑名单用户操作方法 */
   const myBlack = {
     /** 初始化黑名单列表 */
@@ -1549,6 +1338,322 @@ const HIDDEN_ANSWER_ACCOUNT = {
     },
   };
 
+  /** 启用知乎默认的黑暗模式 */
+  const onUseThemeDark = (isUse) => {
+    dom('html').setAttribute('data-theme', isUse ? 'dark' : 'light');
+  };
+
+  /** 注入样式文件的方法 */
+  const initDomStyle = (id, innerHTML) => {
+    const element = domById(id);
+    element
+      ? (element.innerHTML = innerHTML)
+      : document.head.appendChild(
+          domC('style', {
+            id,
+            type: 'text/css',
+            innerHTML,
+          })
+        );
+  };
+
+  /** 回填数据，供每次打开使用 */
+  const echoData = () => {
+    const textSameName = {
+      title: (e) => (e.value = pfConfig.title || document.title),
+      customizeCss: (e) => (e.value = pfConfig['customizeCss']),
+    };
+    const echoText = (even) => {
+      textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name]);
+    };
+    const echo = {
+      radio: (even) => pfConfig.hasOwnProperty(even.name) && even.value === pfConfig[even.name] && (even.checked = true),
+      checkbox: (even) => (even.checked = pfConfig[even.name] || false),
+      'select-one': (even) => {
+        if (pfConfig[even.name]) {
+          for (let i = 0; i < even.length; i++) {
+            if (even[i].value === pfConfig[even.name]) {
+              even[i].selected = true;
+            }
+          }
+        }
+      },
+      text: echoText,
+      number: echoText,
+      range: (even) => {
+        const nValue = pfConfig[even.name];
+        const rangeNum = isNaN(+nValue) || !(+nValue > 0) ? dom(`[name="${even.name}"]`).min : nValue;
+        even.value = rangeNum;
+        domById(even.name).innerText = rangeNum;
+      },
+    };
+
+    domA(`.${CLASS_INPUT}`).forEach((item) => {
+      echo[item.type] && echo[item.type](item);
+    });
+
+    // domA('.ctz-i-input').forEach((item) => {
+    //   echo[item.type] && echo[item.type](item);
+    // });
+
+    // const zoomV = pfConfig.zoomAnswerImage;
+    // const nValue = isNaN(+zoomV)
+    //   ? ZOOM_DEFAULT_OBJ[zoomV]
+    //     ? ZOOM_DEFAULT_OBJ[zoomV]
+    //     : ''
+    //   : zoomV;
+    // $('#IMAGE_SIZE')[0].innerText = nValue;
+  };
+
+  /** 更改编辑器方法 */
+  const fnChanger = async (ev) => {
+    // onchange 时只调用 myVersion 的 name
+    const doCssVersion = [
+      // 'versionHeart',
+      // 'versionHeartSelf',
+      // 'versionHeartZhuanlan',
+      // 'suspensionHomeTabStyle',
+      // 'suspensionFindStyle',
+      // 'questionTitleTag',
+      // 'fixedListItemMore',
+      // 'shoppingLink',
+      // 'answerVideoLink',
+      // 'toHomeButton',
+      // 'zoomAnswerText',
+      // 'listOutPutNotInterested',
+      // 'highlightListItem',
+      'zoomImageType',
+      'zoomImageSize',
+      'versionHome',
+      'versionAnswer',
+      'versionArticle',
+    ];
+    const { name, value, checked, type } = ev;
+    const ob = {
+      chooseHeart: () => {
+        // onChooseHeart();
+        // versionCSS.init();
+      },
+      // stickyLeft: stickyB.scroll,
+      // stickyRight: stickyB.scroll,
+      suspensionHomeTab: () => {
+        // versionCSS.init();
+        // changeSuspensionTab();
+      },
+      isUseThemeDark: () => {
+        // versionCSS.init();
+        myBackground.init();
+        onUseThemeDark(checked);
+        // followingListChanger(true);
+      },
+      colorBackground: () => {
+        myBackground.init();
+        // followingListChanger(true);
+      },
+      // suspensionFind: cacheHeader,
+      // suspensionSearch: cacheHeader,
+      // suspensionUser: cacheHeader,
+      // titleIco: changeTitleIco,
+      // title: changeTitle,
+      // customizeCss: changeCustomCSS,
+      // toHomeButtonZhuanlan: onToHomeHref,
+      // indexPathnameRedirect: onToHomeHref,
+      // answerUnfold: () => answerFoldOrNot('answerUnfold', checked),
+      // answerFoldStart: () => answerFoldOrNot('answerFoldStart', checked),
+      showGIFinDialog: previewGIF,
+      // questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
+      // highlightOriginal: () => followingListChanger(true),
+      // articleCreateTimeToTop: addArticleCreateTimeToTop,
+    };
+
+    pfConfig[name] = type === 'checkbox' ? checked : value;
+    await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+    type === 'range' && domById(name) && (domById(name).innerText = value);
+
+    // if (/^position/.test(name)) {
+    //   // initPositionPage();
+    //   return;
+    // }
+
+    if (/^hidden/.test(name)) {
+      myHidden.init();
+      return;
+    }
+    if (doCssVersion.includes(name)) {
+      myVersion.change();
+      return;
+    }
+
+    ob[name] && ob[name]();
+  };
+
+  /** 在重置数据时调用 */
+  const resetData = () => {
+    onInitStyleExtra();
+    initData();
+    onUseThemeDark(pfConfig.isUseThemeDark);
+  };
+
+  /** 查找是否使用主题 */
+  const findTheme = () => {
+    // 开始进入先修改一次
+    onUseThemeDark(pfConfig.isUseThemeDark);
+    const elementHTML = dom('html');
+    const muConfig = { attribute: true, attributeFilter: ['data-theme'] };
+    // 监听 html 元素属性变化
+    const muCallback = function () {
+      const { isUseThemeDark } = pfConfig;
+      const themeName = elementHTML.getAttribute('data-theme');
+      if ((themeName === 'dark' && !isUseThemeDark) || (themeName === 'light' && isUseThemeDark)) {
+        onUseThemeDark(isUseThemeDark);
+      }
+    };
+    const muObserver = new MutationObserver(muCallback);
+    muObserver.observe(elementHTML, muConfig);
+  };
+
+  /** 加载额外的样式文件 */
+  const onInitStyleExtra = () => {
+    myHidden.init();
+    myBackground.init();
+    myVersion.init();
+    findTheme();
+  };
+
+  /** 在启动时注入的内容 */
+  async function onDocumentStart() {
+    initDomStyle(ID_STYLE, INNER_CSS);
+    if (!HTML_HOOTS.includes(location.hostname) || window.frameElement) return;
+    storageConfig.cachePfConfig = pfConfig;
+    const config = await myStorage.get('pfConfig');
+    const c = config ? JSON.parse(config) : {};
+    pfConfig = { ...pfConfig, ...c };
+    // 首页重定向
+    // if (
+    //   pfConfig.indexPathnameRedirect &&
+    //   pfConfig.indexPathnameRedirect !== 'n' &&
+    //   location.host === 'www.zhihu.com' &&
+    //   location.pathname === '/'
+    // ) {
+    //   location.href = `https://www.zhihu.com/${pfConfig.indexPathnameRedirect}`;
+    // }
+
+    onInitStyleExtra();
+
+    const host = location.host;
+
+    if (host === 'zhuanlan.zhihu.com') {
+      dom('html').classList.add('zhuanlan');
+    } else if (host === 'www.zhihu.com') {
+      dom('html').classList.add('zhihu');
+    }
+
+    // 拦截 fetch 方法, 获取 option 中的值
+    const originFetch = fetch;
+    unsafeWindow.fetch = (url, opt) => {
+      // if (
+      //   /\/answers\?/.test(url) &&
+      //   (answerSortBy === 'vote' || answerSortBy === 'comment') &&
+      //   isFirstToSort
+      // ) {
+      //   // 如果是自定义排序则知乎回答页码增加到20条
+      //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
+      // }
+
+      if (!storageConfig.fetchHeaders['x-ab-param'] && opt && opt.headers) {
+        storageConfig.fetchHeaders = opt.headers;
+      }
+
+      // 存储x-zst-81供「不感兴趣」接口使用
+      storageConfig.xZst81 = (opt && opt.headers && opt.headers['x-zst-81']) || '';
+      return originFetch(url, opt);
+    };
+
+    // if (
+    //   /\/question/.test(location.pathname) &&
+    //   location.search.match(/(?<=sort=)\w+/)
+    // ) {
+    //   answerSortBy = location.search.match(/(?<=sort=)\w+/)[0];
+    // }
+  }
+  onDocumentStart();
+
+  /** 监听过滤内容 */
+  const fnHiddenDom = (lessNum, ev, log) => {
+    ev.style.display = 'none';
+    log && fnLog(log);
+    return ++lessNum;
+  };
+
+  /** 计算过滤起始位置 */
+  const fnIndexMath = (index, i, len, lessNum) => {
+    return i + 1 === len ? i + 1 - lessNum : index;
+  };
+
+  /** 调用「不感兴趣」接口 */
+  const doFetchNotInterested = ({ id, type }) => {
+    const data = new FormData();
+    data.append('item_brief', JSON.stringify({ source: 'TS', type: type, id: id }));
+    fetch(API_NOT_INTERESTED, {
+      body: data,
+      method: 'POST',
+      headers: new Headers({
+        ...storageConfig.fetchHeaders,
+        'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)[0],
+        'x-zst-81': storageConfig.xZst81,
+      }),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        fnLog('已调用「不感兴趣」接口');
+      });
+  };
+
+  /** 节流, 使用时 fn 需要为 function () {} */
+  function throttle(fn, time = 300) {
+    let timeout = null;
+    return function () {
+      if (timeout) return;
+      timeout = setTimeout(() => {
+        timeout = null;
+        fn.apply(this, arguments);
+      }, time);
+    };
+  }
+
+  /** 漂浮收起按钮的方法 */
+  const suspensionPackUp = (elements) => {
+    const RIGHT = 60;
+    const { colorBackground, isUseThemeDark } = pfConfig;
+    for (let i = 0; i < elements.length; i++) {
+      const even = elements[i];
+      const evenPrev = i > 0 ? elements[i - 1] : null;
+      const evenBottom = even.offsetTop + even.offsetHeight;
+      const evenPrevBottom = evenPrev ? evenPrev.offsetTop + evenPrev.offsetHeight : 0;
+      const hST = dom('html').scrollTop;
+      // 收起按钮
+      const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton');
+      if (evenButton) {
+        if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
+          evenButton.style =
+            `visibility:visible!important;position: fixed!important;bottom: 60px;` +
+            `left: ${even.offsetLeft + even.offsetWidth - RIGHT}px;` +
+            `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
+            `height: 40px!important;line-height:40px;padding: 0 12px!important;` +
+            `background: ${
+              isUseThemeDark
+                ? 'transparent'
+                : BACKGROUND_CONFIG[colorBackground].opacity
+                ? BACKGROUND_CONFIG[colorBackground].opacity
+                : colorBackground
+            }`;
+        } else {
+          evenButton.style = '';
+        }
+      }
+    }
+  };
+
   /** 手动调用页面大小变动 */
   const doResizePage = () => {
     const myEvent = new Event('resize');
@@ -1562,11 +1667,10 @@ const HIDDEN_ANSWER_ACCOUNT = {
 
     //   // 页面高度发生改变
     //   if (myLocalC.bodySize === myLocalC.bodySizePrev) {
-    //     // 重新赋值img预览
-    //     initPreviewImg();
-    //     previewGIF();
     //     // 外链直接打开
     //     initLinkChanger();
+    previewGIF();
+    initImagePreview();
     myListenListItem.init();
     myListenSearchListItem.init();
     myListenAnswerItem.init();
@@ -1604,6 +1708,45 @@ const HIDDEN_ANSWER_ACCOUNT = {
     // pathnameHasFn({
     //   video: () => videoFns.init(),
     // });
+  }
+
+  /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
+  function initImagePreview() {
+    const images = [domA('.TitleImage'), domA('.ArticleItem-image'), domA('.ztext figure .content_image')];
+    images.forEach((events) => {
+      events.forEach((e) => {
+        const src = e.src || (e.style.backgroundImage && e.style.backgroundImage.split('("')[1].split('")')[0]);
+        e.onclick = () => myPreview.open(src);
+      });
+    });
+
+    if (pfConfig.zoomImageType === '2') {
+      domA('.origin_image').forEach((item) => {
+        item.src = item.getAttribute('data-original') || item.src;
+        item.style = 'max-width: 100%;';
+      });
+    }
+  }
+
+  /** 预览动图回调 */
+  const callbackGIF = (mutationsList) => {
+    const target = mutationsList[0].target;
+    if (!(/\bisPlaying\b/.test(target.className) && pfConfig.showGIFinDialog)) return;
+    target.querySelector('video')
+      ? myPreview.open(target.querySelector('video').src, target, true)
+      : myPreview.open(target.querySelector('img').src, target);
+  };
+  const observerGIF = new MutationObserver(callbackGIF);
+  /** 挂载预览 observe */
+  function previewGIF() {
+    // 因为 GIF 图是点击后切换到真正 GIF, 所以在点击切换后再打开弹窗
+    // 使用 MutationObserver 监听元素属性变化
+    if (pfConfig.showGIFinDialog) {
+      const config = { attributes: true, attributeFilter: ['class'] };
+      domA('.GifPlayer').forEach((event) => observerGIF.observe(event, config));
+    } else {
+      observerGIF.disconnect();
+    }
   }
 
   /** 加载基础元素及绑定方法 */
@@ -1689,20 +1832,20 @@ const HIDDEN_ANSWER_ACCOUNT = {
     };
     // 绑定菜单事件
     dom('.ctz-menu-top').onclick = myMenu.click;
+
+    // 绑定预览方法
+    domA('.ctz-preview').forEach((item) => {
+      item.onclick = function () {
+        myPreview.hide(this);
+      };
+    });
   };
 
   /** 加载数据 */
   const initData = () => {
     // storageConfig.cacheTitle = document.title;
     echoData();
-    // $('.pf-modal-content')[0].onchange = (even) => {
-    //   if ($(even.target).hasClass('pf-i')) {
-    //     return myChanger(even.target, even.target.type);
-    //   }
-    // };
-    // $('.pf-i-input')[0].oninput = (even) => {
-    //   return myChanger(even.target, even.target.type);
-    // };
+
     // initPositionPage();
     // onChooseHeart();
     // cacheHeader();
@@ -1739,6 +1882,7 @@ const HIDDEN_ANSWER_ACCOUNT = {
     initData();
     // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
     myBackground.init();
+    myVersion.initAfterLoad();
     myCustomStyle.init();
     myFilterWord.init();
     resizeObserver.observe(document.body);

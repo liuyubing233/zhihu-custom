@@ -189,9 +189,12 @@
     align-items: center;
   }
 
-  .ctz-desc {
+  .ctz-desc,
+  .ctz-commit {
     color: #999;
     font-size: 12px;
+  }
+  .ctz-desc {
     padding-left: 4px;
   }
 }
@@ -349,6 +352,29 @@
   font-size: 12px;
   &:hover {
     background-color: #0461cf;
+  }
+}
+
+.ctz-preview {
+  box-sizing: border-box;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 200;
+  background-color: rgba(18, 18, 18, 0.4);
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    width: 100%;
+    img {
+      cursor: zoom-out;
+      user-select: none;
+    }
   }
 }
 

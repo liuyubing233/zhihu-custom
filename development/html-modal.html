@@ -24,7 +24,29 @@
       <div class="ctz-content-right">
         <div id="CTZ_SET_BASIS_DEFAULT">
           <div class="ctz-set-title">基本设置</div>
-          <div class="ctz-set-content"></div>
+          <div class="ctz-set-content">
+            <div>
+              <div class="ctz-flex-wrap">
+                <div class="ctz-label">回答和文章图片尺寸</div>
+                <label><input class="ctz-i" name="zoomImageType" type="radio" value="0" />默认</label>
+                <label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label>
+                <label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label>
+              </div>
+              <div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none">
+                <div class="ctz-flex-wrap">
+                  <div class="ctz-label">自定义图片尺寸</div>
+                  <input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" />
+                  <span id="zoomImageSize" style="margin-left: 8px">0</span>
+                </div>
+                <div class="ctz-commit">滚动条范围: 0 ~ 1000</div>
+              </div>
+            </div>
+
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">使用弹窗打开动图</span>
+              <input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" />
+            </div>
+          </div>
         </div>
 
         <div id="CTZ_SET_BASIS_FLOAT">
@@ -117,10 +139,26 @@
     <!-- 首页列表设置 -->
     <div id="CTZ_SET_LIST" style="display: none">
       <div class="ctz-content-left">
+        <a href="#CTZ_SET_LIST_DEFAULT">基础设置</a>
         <a href="#CTZ_SET_LIST_FILTER">屏蔽内容</a>
         <a href="#CTZ_SET_LIST_HIDDEN">隐藏模块</a>
       </div>
       <div class="ctz-content-right">
+        <div id="CTZ_SET_LIST_DEFAULT">
+          <div class="ctz-set-title">基础设置</div>
+          <div class="ctz-set-content">
+            <!-- 版心宽度 -->
+            <div>
+              <div class="ctz-flex-wrap">
+                <div class="ctz-label">列表版心宽度</div>
+                <input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" />
+                <span id="versionHome" style="margin-left: 8px">0</span>
+              </div>
+              <div class="ctz-commit">滚动条范围: 600 ~ 1500</div>
+            </div>
+          </div>
+        </div>
+
         <div id="CTZ_SET_LIST_FILTER" class="ctz-filter-block">
           <div class="ctz-set-title">屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></div>
           <div class="ctz-set-content">
@@ -135,7 +173,7 @@
 
             <div class="ctz-filter-type">
               <div class="ctz-label">列表类别屏蔽</div>
-              <div class="ctz-desc" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div>
+              <div class="ctz-commit" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div>
               <div class="ctz-flex-wrap">
                 <label><input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />邀请回答</label>
                 <label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label>
@@ -178,11 +216,26 @@
     <!-- 回答详情设置 -->
     <div id="CTZ_SET_ANSWER" style="display: none">
       <div class="ctz-content-left">
+        <a href="#CTZ_SET_ANSWER_DEFAULT">基础设置</a>
         <a href="#CTZ_SET_ANSWER_FILTER">屏蔽内容</a>
         <a href="#CTZ_SET_ANSWER_HIDDEN">隐藏模块</a>
         <a href="#CTZ_SET_ANSWER_OPEN">回答展开收起</a>
       </div>
       <div class="ctz-content-right">
+        <div id="CTZ_SET_ANSWER_DEFAULT">
+          <div class="ctz-set-title">基础设置</div>
+          <div class="ctz-set-content">
+            <div>
+              <div class="ctz-flex-wrap">
+                <div class="ctz-label">回答版心宽度</div>
+                <input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" />
+                <span id="versionAnswer" style="margin-left: 8px">0</span>
+              </div>
+              <div class="ctz-commit">滚动条范围: 600 ~ 1500</div>
+            </div>
+          </div>
+        </div>
+
         <div id="CTZ_SET_ANSWER_FILTER" class="ctz-filter-block">
           <div class="ctz-set-title">
             屏蔽内容
@@ -241,10 +294,25 @@
     <!-- 文章专栏设置 -->
     <div id="CTZ_SET_ARTICLE" style="display: none">
       <div class="ctz-content-left">
+        <a href="#CTZ_SET_ARTICLE_DEFAULT">基础设置</a>
         <a href="#CTZ_SET_ARTICLE_FILTER">屏蔽内容</a>
         <a href="#CTZ_SET_ARTICLE_HIDDEN">隐藏模块</a>
       </div>
       <div class="ctz-content-right">
+        <div id="CTZ_SET_ARTICLE_DEFAULT">
+          <div class="ctz-set-title">基础设置</div>
+          <div class="ctz-set-content">
+            <div>
+              <div class="ctz-flex-wrap">
+                <div class="ctz-label">文章版心宽度</div>
+                <input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" />
+                <span id="versionArticle" style="margin-left: 8px">0</span>
+              </div>
+              <div class="ctz-commit">滚动条范围: 600 ~ 1500</div>
+            </div>
+          </div>
+        </div>
+
         <div id="CTZ_SET_ARTICLE_FILTER">
           <div class="ctz-set-title">屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></div>
           <div class="ctz-set-content"></div>
@@ -261,3 +329,11 @@
 </div>
 
 <div id="CTZ_OPEN_BUTTON" class="ctz-icon">&#xe603;</div>
+
+<div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE">
+  <div><img src="" /></div>
+</div>
+
+<div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO">
+  <div><video src="" autoplay loop></video></div>
+</div>
