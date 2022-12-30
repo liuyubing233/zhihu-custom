@@ -412,11 +412,11 @@ const ICO_URL = {
     suspensionHomeTab: false, // 问题列表切换
     suspensionHomeTabPo: 'left: 20px; top: 100px;', // 定位
     suspensionHomeTabFixed: true,
-    suspensionHomeTabStyle: 'transparent', // 样式
+    // suspensionHomeTabStyle: 'transparent', // 样式
     suspensionFind: false, // 顶部发现模块
     suspensionFindPo: 'left: 10px; top: 380px;',
     suspensionFindFixed: true,
-    suspensionFindStyle: 'transparent',
+    // suspensionFindStyle: 'transparent',
     suspensionSearch: false, // 搜索栏
     suspensionSearchPo: 'left: 200px; top: 100px;',
     suspensionSearchFixed: true,
@@ -425,9 +425,20 @@ const ICO_URL = {
     suspensionUserFixed: true,
     suspensionPickUp: true, // 长回答和列表收起按钮
     // previewOpenGIF: true, // 动图弹窗显示
-    toHomeButton: true, // 页面右下停靠返回主页按钮
-    toHomeButtonZhuanlan: 'zhihu', // toHomeButtonZhuanlan
+    // toHomeButton: true, // 页面右下停靠返回主页按钮
+    // toHomeButtonZhuanlan: 'zhihu', // toHomeButtonZhuanlan
     // 悬浮模块 end -----------------
+  };
+
+  /** 缓存的doms */
+  const domCache = {
+    // positionDoms: {}, // 首页原右侧元素
+    headerDoms: {}, // header内元素
+  };
+
+  const findEvent = {
+    // creator: { fun: null, num: 0, isFind: false },
+    header: { fun: null, num: 0, isFind: false },
   };
 
   /** 脚本内配置缓存 */
@@ -573,19 +584,16 @@ const ICO_URL = {
   /** 修改版心的 css */
   const myVersion = {
     init: function () {
-      const innerHTML =
+      initDomStyle(
+        ID_STYLE_VERSION,
         this.versionWidth() +
-        this.vImgSize() +
-        this.vQuestionTitleTag() +
-        (pfConfig.listOutPutNotInterested
-          ? `.Topstory-recommend .ContentItem-title::after{content: '不感兴趣';color: #999;font-size: 12px;cursor: pointer;display: inline-block;margin-left:6px;border: 1px solid #999;border-radius: 4px;padding: 0 4px;pointer-events:auto;}` +
-            `.ContentItem-title>div,.ContentItem-title>a{pointer-events:auto;}`
-          : '') +
-        (pfConfig.fixedListItemMore
-          ? `.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action` +
-            `{visibility: visible!important;position: absolute;top: 20px;right: 10px;}`
-          : '');
-      initDomStyle(ID_STYLE_VERSION, innerHTML);
+          this.vImgSize() +
+          this.vQuestionTitleTag() +
+          this.vSusHomeTab() +
+          this.vSusHeader() +
+          this.vOutputNotInterested() +
+          this.vFixedListMore()
+      );
     },
     initAfterLoad: function () {
       // 自定义图片尺寸大小 range 显隐
@@ -595,8 +603,8 @@ const ICO_URL = {
       this.initAfterLoad();
       this.init();
     },
+    /** 版心大小修改 */
     versionWidth: function () {
-      // 版心大小修改
       // 首页列表版心
       const versionHome =
         `.Topstory-mainColumn{width: ${pfConfig.versionHome || '1000'}px!important;}` +
@@ -616,8 +624,8 @@ const ICO_URL = {
         `.zhuanlan .Post-SideActions{right: calc(50vw - ${+(pfConfig.versionArticle || '690') / 2 + 150}px)}`;
       return versionHome + versionAnswer + versionArticle;
     },
+    /** 图片尺寸修改 */
     vImgSize: () => {
-      // 图片尺寸修改
       const content =
         pfConfig.zoomImageType === '2'
           ? `width: ${pfConfig.zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;`
@@ -628,8 +636,21 @@ const ICO_URL = {
         `{${content}}`
       );
     },
+    /** 列表外置「不感兴趣」按钮 */
+    vOutputNotInterested: () => {
+      return pfConfig.listOutPutNotInterested
+        ? `.Topstory-recommend .ContentItem-title::after{content: '不感兴趣';color: #999;font-size: 12px;cursor: pointer;display: inline-block;margin-left:6px;border: 1px solid #999;border-radius: 4px;padding: 0 4px;pointer-events:auto;}` +
+            `.ContentItem-title>div,.ContentItem-title>a{pointer-events:auto;}`
+        : '';
+    },
+    /** 列表更多按钮移动至题目右侧 */
+    vFixedListMore: () => {
+      return pfConfig.fixedListItemMore
+        ? `.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{visibility: visible!important;position: absolute;top: 20px;right: 10px;}`
+        : '';
+    },
+    /** 内容标题添加类别显示 */
     vQuestionTitleTag: () => {
-      // 内容标题添加类别显示
       return pfConfig.questionTitleTag
         ? `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}` +
             `.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}` +
@@ -639,6 +660,38 @@ const ICO_URL = {
             `.ContentItem-title div{display:inline}` +
             `.TopstoryQuestionAskItem .ContentItem-title::before{content:'提问';background:#533b77}`
         : '';
+    },
+    /** 首页问题列表切换模块悬浮 */
+    vSusHomeTab: function () {
+      return pfConfig.suspensionHomeTab
+        ? `.Topstory-container .TopstoryTabs` +
+            `{${pfConfig.suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}` +
+            `.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}` +
+            `.Topstory-container .TopstoryTabs>a::after` +
+            `{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;border:1px solid #999999;color:#999999;background: ${
+              pfConfig.colorBackground || 'transparent'
+            };}` +
+            `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link {margin:0!important}` +
+            `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{color:#0066ff!important;border-color:#0066ff!important;}` +
+            `.Topstory [aria-controls='Topstory-recommend']::after{content:'推';}` +
+            `.Topstory [aria-controls='Topstory-follow']::after{content:'关';border-top-left-radius:4px;border-top-right-radius:4px;}` +
+            `.Topstory [aria-controls='Topstory-hot']::after{content:'热';}` +
+            `.Topstory [aria-controls="Topstory-zvideo"]::after{content:'视';border-bottom-left-radius:4px;border-bottom-right-radius:4px}` +
+            `.Topstory-tabs{border-color: transparent!important;}`
+        : '';
+    },
+    /** 顶部三大块悬浮 */
+    vSusHeader: function () {
+      return (
+        `.position-suspensionFind{${pfConfig.suspensionFindPo}}` +
+        `.position-suspensionUser{${pfConfig.suspensionUserPo}}` +
+        `.position-suspensionSearch{${pfConfig.suspensionSearchPo}}` +
+        `.position-suspensionFind .Tabs-link{border:1px solid #999999;color:#999999;background: ${
+          pfConfig.colorBackground || 'transparent'
+        };}` +
+        `.position-suspensionFind .Tabs-link.is-active{color:#0066ff!important;border-color:#0066ff!important;}` +
+        '.position-suspensionUser .css-1m60na {display: none;}.position-suspensionUser .css-1n0eufo{margin-right: 0;}'
+      );
     },
   };
 
@@ -1394,6 +1447,155 @@ const ICO_URL = {
     },
   };
 
+  /**
+   * 绑定页面元素的点击拖动方法
+   * 最外层函数不使用箭头函数为了能获取到自己的this
+   */
+  const myMove = {
+    init: function (eventName, configName, name) {
+      const e = dom(eventName);
+      // 保存当前元素点击事件
+      if (e) {
+        this.clicks[configName] = e.click;
+        e.onmousedown = (ev) => {
+          // 固定则跳出
+          if (pfConfig[`${name}Fixed`]) return;
+          const event = window.event || ev;
+
+          const bodyW = document.body.offsetWidth;
+          const windowW = window.innerWidth;
+          const windowH = window.innerHeight;
+          const eW = e.offsetWidth;
+          const eH = e.offsetHeight;
+          const eL = e.offsetLeft;
+          const eT = e.offsetTop;
+          const evX = event.clientX;
+          const evY = event.clientY;
+
+          const dx = evX - eL;
+          const dy = evY - eT;
+          const rx = eW + eL - evX;
+          // 按下拖动
+          document.onmousemove = (ev) => {
+            const eventN = window.event || ev;
+            const evNX = eventN.clientX;
+            let evenLeft = 0;
+            let evenRight = 0;
+            const isR = this.useR.find((i) => i === name);
+            if (isR) {
+              // 用 body 替代 window 获取宽度来解决右侧滚动条宽度不一致问题
+              const right = bodyW - evNX - rx;
+              evenRight = right <= 0 ? 0 : right >= bodyW - eW ? bodyW - eW : right;
+              e.style.right = evenRight + 'px';
+            } else {
+              const left = evNX - dx;
+              evenLeft = left <= 0 ? 0 : left >= windowW - eW ? windowW - eW : left;
+              e.style.left = evenLeft + 'px';
+            }
+            const top = eventN.clientY - dy;
+            const evenTop = top <= 0 ? 0 : top >= windowH - eH ? windowH - eH : top;
+            // 元素不能超过页面宽高
+            e.style.top = evenTop + 'px';
+            this.isMove = true;
+            this.timer[configName] && clearTimeout(this.timer[configName]);
+            this.timer[configName] = setTimeout(async () => {
+              clearTimeout(this.timer[configName]);
+              pfConfig[configName] = `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`;
+              await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+            }, 500);
+          };
+
+          // 抬起停止拖动
+          document.onmouseup = () => {
+            document.onmousemove = null;
+            document.onmouseup = null;
+            e.onclick = (e) => {
+              // 如果模块被移动则移除默认点击事件
+              // 否则返回原有点击事件
+              if (this.isMove) {
+                this.isMove = false;
+                return e.preventDefault && e.preventDefault();
+              } else {
+                return this.clicks[configName];
+              }
+            };
+          };
+          if (e.preventDefault) {
+            e.preventDefault();
+          } else {
+            return false;
+          }
+        };
+      }
+    },
+    destroy: function (eventName) {
+      const e = dom(eventName);
+      e && (e.onmousedown = null);
+    },
+    isMove: false,
+    clicks: {},
+    timer: {},
+    useL: ['suspensionHomeTab', 'suspensionFind', 'suspensionSearch'], // 使用left定位的name
+    useR: ['suspensionUser'], // 使用right定位的name
+  };
+
+  /** 悬浮模块开关锁添加移除方法 */
+  const myLock = {
+    append: function (e, name) {
+      // 悬浮模块是否固定改为鼠标放置到模块上显示开锁图标 点击即可移动模块
+      if (!e) return;
+      const lock = this.lock.class;
+      const unlock = this.unlock.class;
+      const lockMask = this.lockMask.class;
+      const classRemove = 'ctz-move-this';
+
+      const iLock = domC('i', {
+        className: `ctz-icon ${this.lock.name}`,
+        innerHTML: '&#xe700;',
+      });
+
+      const iUnlock = domC('i', {
+        className: `ctz-icon ${this.unlock.name}`,
+        innerHTML: '&#xe688;',
+      });
+
+      const dLockMask = domC('div', { className: this.lockMask.name });
+
+      !e.querySelector(lock) && e.appendChild(iLock);
+      !e.querySelector(unlock) && e.appendChild(iUnlock);
+      !e.querySelector(lockMask) && e.appendChild(dLockMask);
+
+      e.querySelector(lock).onclick = async () => {
+        pfConfig[name + 'Fixed'] = true;
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+        e.classList.remove(classRemove);
+      };
+
+      e.querySelector(unlock).onclick = async () => {
+        pfConfig[name + 'Fixed'] = false;
+        await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+        e.classList.add(classRemove);
+      };
+
+      // 如果进入页面的时候该项的 FIXED 为 false 则添加 class
+      if (pfConfig[name + 'Fixed'] === false) {
+        e.classList.add(classRemove);
+      }
+    },
+    remove: function (e) {
+      if (!e) return;
+      const lock = this.lock.class;
+      const unlock = this.unlock.class;
+      const lockMask = this.lockMask.class;
+      e.querySelector(lock) && e.querySelector(lock).remove();
+      e.querySelector(unlock) && e.querySelector(unlock).remove();
+      e.querySelector(lockMask) && e.querySelector(lockMask).remove();
+    },
+    lock: { class: '.ctz-lock', name: 'ctz-lock' },
+    unlock: { class: '.ctz-unlock', name: 'ctz-unlock' },
+    lockMask: { class: '.ctz-lock-mask', name: 'ctz-lock-mask' },
+  };
+
   /** 启用知乎默认的黑暗模式 */
   const onUseThemeDark = (isUse) => {
     dom('html').setAttribute('data-theme', isUse ? 'dark' : 'light');
@@ -1486,10 +1688,6 @@ const ICO_URL = {
       },
       // stickyLeft: stickyB.scroll,
       // stickyRight: stickyB.scroll,
-      suspensionHomeTab: () => {
-        // versionCSS.init();
-        // changeSuspensionTab();
-      },
       isUseThemeDark: () => {
         // versionCSS.init();
         myBackground.init();
@@ -1500,9 +1698,13 @@ const ICO_URL = {
         myBackground.init();
         // followingListChanger(true);
       },
-      // suspensionFind: cacheHeader,
-      // suspensionSearch: cacheHeader,
-      // suspensionUser: cacheHeader,
+      suspensionHomeTab: () => {
+        myVersion.change();
+        changeSuspensionTab();
+      },
+      suspensionFind: cacheHeader,
+      suspensionSearch: cacheHeader,
+      suspensionUser: cacheHeader,
       titleIco: changeICO,
       // customizeCss: changeCustomCSS,
       // toHomeButtonZhuanlan: onToHomeHref,
@@ -1856,6 +2058,109 @@ const ICO_URL = {
       });
   };
 
+  /** 缓存顶部元素 */
+  const cacheHeader = () => {
+    const HEADER_EVENT_NAMES = ['suspensionFind', 'suspensionSearch', 'suspensionUser'];
+    if (!findEvent.header.isFind) {
+      findEvent.header.fun && clearTimeout(findEvent.header.fun);
+      findEvent.header.fun = setTimeout(() => {
+        clearTimeout(findEvent.header.fun);
+        if (findEvent.header.num < 100) {
+          if ($('.AppHeader-inner')[0]) {
+            findEvent.header.isFind = true;
+            domCache.headerDoms = {
+              suspensionFind: {
+                class: '.AppHeader-inner .AppHeader-Tabs',
+                even: dom('.AppHeader-inner .AppHeader-Tabs'),
+                index: 1,
+              },
+              suspensionSearch: {
+                class: '.AppHeader-inner .AppHeader-SearchBar',
+                even: dom('.AppHeader-inner .AppHeader-SearchBar'),
+                index: 2,
+              },
+              suspensionUser: {
+                class: '.AppHeader-inner .AppHeader-userInfo',
+                even: dom('.AppHeader-inner .AppHeader-userInfo'),
+                index: 3,
+              },
+            };
+          }
+          findEvent.header.num++;
+          cacheHeader();
+        }
+      }, 100);
+      return;
+    }
+    const C_ICON = '.ctz-search-icon';
+    const C_PICK = '.ctz-search-pick-up';
+    const N_FOCUS = 'focus';
+    HEADER_EVENT_NAMES.forEach((name) => {
+      const { even } = domCache.headerDoms[name];
+      if (pfConfig[name]) {
+        // 如果是 suspensionSearch 则添加展开和收起按钮
+        if (name === 'suspensionSearch') {
+          const iconSearch = domC('i', {
+            className: 'ctz-icon ctz-search-icon',
+            innerHTML: '&#xe600;',
+          });
+
+          const iconPickup = domC('i', {
+            className: 'ctz-icon ctz-search-pick-up',
+            innerHTML: '&#xe601;',
+          });
+
+          !dom(C_ICON) && even.appendChild(iconSearch);
+          !dom(C_PICK) && even.appendChild(iconPickup);
+          dom(C_ICON) && (dom(C_ICON).onclick = () => even.classList.add(N_FOCUS));
+          dom(C_PICK) && (dom(C_PICK).onclick = () => even.classList.remove(N_FOCUS));
+        }
+        myLock.append(even, name);
+        even.classList.add(`position-${name}`);
+        document.body.appendChild(even);
+      } else {
+        if (name === 'suspensionSearch') {
+          dom(C_ICON) && dom(C_ICON).remove();
+          dom(C_PICK) && dom(C_PICK).remove();
+          even.classList.contains(N_FOCUS) && even.classList.remove(N_FOCUS);
+        }
+        myLock.remove(even, name);
+        even.classList.remove(`position-${name}`);
+        even.setAttribute('style', '');
+        dom('.AppHeader-inner').appendChild(even);
+      }
+      cSuspensionStyle(name);
+    });
+    myVersion.change();
+  };
+
+  /** 悬浮模块切换样式 */
+  function cSuspensionStyle(name) {
+    const cssObj = {
+      suspensionHomeTab: '.Topstory-container .TopstoryTabs',
+      suspensionFind: '.AppHeader-Tabs',
+      suspensionSearch: '.AppHeader-SearchBar', // 搜索框使用自己添加的元素
+      suspensionUser: '.AppHeader-userInfo',
+    };
+
+    if (dom(`.ctz-${name}`)) {
+      dom(`.ctz-${name}`).style = pfConfig[name] ? 'display: inline-block;' : 'display: none;';
+    }
+
+    // 如果取消悬浮，则注销掉挂载的move方法
+    if (cssObj[name]) {
+      pfConfig[name] ? myMove.init(cssObj[name], `${name}Po`, name) : myMove.destroy(cssObj[name]);
+    }
+  }
+
+  /** 改变列表切换TAB悬浮 */
+  function changeSuspensionTab() {
+    const name = 'suspensionHomeTab';
+    cSuspensionStyle(name);
+    const even = dom('.Topstory-container .TopstoryTabs');
+    pfConfig[name] ? myLock.append(even, name) : myLock.remove(even, name);
+  }
+
   /** 加载基础元素及绑定方法 */
   const initHTML = () => {
     document.body.appendChild(
@@ -1972,19 +2277,11 @@ const ICO_URL = {
 
     // initPositionPage();
     // onChooseHeart();
-    // cacheHeader();
-    // changeTitleIco();
+    cacheHeader();
+    changeICO();
     changeTitle();
-    // changeSuspensionTab();
+    changeSuspensionTab();
     // onToHomeHref();
-    // if (isLoading) {
-    //   isLoading = false;
-    //   GM_log(
-    //     '[customize]修改器加载完毕，加载时间：' +
-    //       (performance.now() - timeStart).toFixed(2) +
-    //       'ms'
-    //   );
-    // }
   };
 
   /** 页面滚动方法 */
@@ -2004,7 +2301,6 @@ const ICO_URL = {
     initHTML();
     initOperate();
     initData();
-    changeICO();
     // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
     myBackground.init();
     myVersion.initAfterLoad();

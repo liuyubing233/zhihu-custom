@@ -188,6 +188,12 @@
   input[type='number'] {
     border-radius: 4px;
   }
+  label {
+    cursor: pointer;
+    &:hover {
+      color: @hover;
+    }
+  }
 }
 
 .ctz-label {
@@ -517,5 +523,141 @@
 
   .ctz-switch-checkbox:checked + .ctz-switch-label .ctz-switch-switch {
     right: 0;
+  }
+}
+
+// header 三大金刚定位
+.ctz-unlock,
+.ctz-lock,
+.ctz-lock-mask {
+  display: none;
+  color: #999;
+  cursor: pointer;
+}
+
+.ctz-unlock,
+.ctz-lock {
+  margin: 4px;
+}
+
+.ctz-lock-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 198;
+}
+
+.position-suspensionSearch,
+.position-suspensionFind,
+.position-suspensionUser {
+  position: fixed;
+  z-index: 100;
+}
+.position-suspensionSearch,
+.position-suspensionFind,
+.position-suspensionUser,
+.Topstory-container .TopstoryTabs {
+  &:hover {
+    .ctz-unlock {
+      display: block;
+    }
+  }
+  &.ctz-move-this {
+    .ctz-unlock {
+      display: none !important;
+    }
+    .ctz-lock,
+    .ctz-lock-mask {
+      display: block;
+    }
+    .ctz-lock {
+      z-index: 199;
+      color: #cccccc;
+    }
+  }
+}
+
+.position-suspensionFind {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  .Tabs-item {
+    padding: 0 !important;
+    margin-bottom: 4px;
+    .Tabs-link {
+      padding: 8px !important;
+      border-radius: 4px;
+      &::after {
+        content: '' !important;
+        display: none !important;
+      }
+    }
+  }
+}
+
+.position-suspensionUser {
+  width: fit-content !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  .AppHeader-messages,
+  .AppHeader-notifications {
+    margin-right: 0 !important;
+    margin-bottom: 12px;
+  }
+
+  .AppHeader-login,
+  .AppHeader-login ~ button {
+    display: none;
+  }
+}
+.AppHeader-SearchBar {
+  flex: 1;
+}
+
+.position-suspensionSearch {
+  line-height: 30px;
+  border-radius: 16px;
+  width: 20px;
+  transition: width 0.5s;
+  .SearchBar-input-focus {
+    .ctz-search-pick-up {
+      display: none;
+    }
+  }
+  &.focus {
+    width: 300px;
+    & > form,
+    & > button,
+    .ctz-search-pick-up {
+      display: block;
+    }
+    .ctz-search-icon {
+      display: none;
+    }
+    &:hover {
+      width: 324px;
+    }
+  }
+  .ctz-search-icon,
+  .ctz-search-pick-up {
+    cursor: pointer;
+    color: #0066ff;
+    &:hover {
+      color: #005ce6;
+    }
+  }
+  .ctz-search-pick-up {
+    font-size: 24px;
+    margin-left: 4px;
+  }
+  & > form,
+  & > button,
+  .ctz-search-pick-up {
+    display: none;
+  }
+  .ctz-search-icon {
+    display: block;
   }
 }
