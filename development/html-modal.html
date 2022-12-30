@@ -184,6 +184,21 @@
                 <input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" />
               </label>
             </div>
+
+            <div class="ctz-flex-wrap">
+              <label>
+                <span class="ctz-label">推荐列表显示「不感兴趣」按钮</span>
+                <input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" />
+              </label>
+            </div>
+
+            <div class="ctz-flex-wrap">
+              <label>
+                <span class="ctz-label">列表更多「···」按钮移动到题目右侧</span>
+                <input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" />
+              </label>
+            </div>
+
           </div>
         </div>
 
@@ -218,7 +233,7 @@
                 <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
-                勾选后「关注、推荐、搜索」列表将屏蔽点赞量少于
+                勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
                 <input name="lessVoteNumber" class="ctz-i" type="number" style="width: 50px" />
                 的内容
               </div>
@@ -328,7 +343,6 @@
     <div id="CTZ_SET_ARTICLE" style="display: none">
       <div class="ctz-content-left">
         <a href="#CTZ_SET_ARTICLE_DEFAULT">基础设置</a>
-        <a href="#CTZ_SET_ARTICLE_FILTER">屏蔽内容</a>
         <a href="#CTZ_SET_ARTICLE_HIDDEN">隐藏模块</a>
       </div>
       <div class="ctz-content-right">
@@ -344,13 +358,6 @@
               <div class="ctz-commit">滚动条范围: 600 ~ 1500</div>
             </div>
           </div>
-        </div>
-
-        <div id="CTZ_SET_ARTICLE_FILTER">
-          <div class="ctz-set-title">
-            <span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
-          </div>
-          <div class="ctz-set-content"></div>
         </div>
 
         <div id="CTZ_SET_ARTICLE_HIDDEN">

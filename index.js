@@ -378,6 +378,8 @@ const ICO_URL = {
     globalTitle: '', // 网页标题
     titleIco: '', // 网页标题logo图
     questionTitleTag: true, // 内容标题添加类别标签
+    listOutPutNotInterested: false, // 推荐列表外置「不感兴趣」按钮
+    fixedListItemMore: false, // 列表更多按钮固定至题目右侧
 
     // chooseHeart: 'system', // 设置版心的方式
     // versionHeart: '1200', // 版心宽度
@@ -393,15 +395,13 @@ const ICO_URL = {
     // positionFooterIndex: '4',
     // stickyLeft: false, // 首页左侧栏是否固定
     // stickyRight: false, // 首页右侧栏是否固定
-    // zoomAnswerImage: '', // 默认 原图
-    fixedListItemMore: false, // 列表更多按钮固定至题目右侧
+
     shoppingLink: 'default', // 购物链接显示设置
     answerVideoLink: 'default', // 回答视频显示设置
     zoomAnswerText: false, // 回答操作文字缩放
     // notificationAboutFilter: false, // 屏蔽内容后显示通知提醒框
     questionCreatedAndModifiedTime: true, // 问题显示创建和最后修改时间
     highlightOriginal: true, // 关注列表高亮原创内容
-    listOutPutNotInterested: false, // 推荐列表外置[不感兴趣]按钮
     highlightListItem: false, // 列表内容点击高亮边框
     articleCreateTimeToTop: true, // 文章发布时间置顶
     listItemCreatedAndModifiedTime: true, // 列表内容显示发布与最后修改时间
@@ -573,7 +573,18 @@ const ICO_URL = {
   /** 修改版心的 css */
   const myVersion = {
     init: function () {
-      const innerHTML = this.versionWidth() + this.vImgSize() + this.vQuestionTitleTag();
+      const innerHTML =
+        this.versionWidth() +
+        this.vImgSize() +
+        this.vQuestionTitleTag() +
+        (pfConfig.listOutPutNotInterested
+          ? `.Topstory-recommend .ContentItem-title::after{content: '不感兴趣';color: #999;font-size: 12px;cursor: pointer;display: inline-block;margin-left:6px;border: 1px solid #999;border-radius: 4px;padding: 0 4px;pointer-events:auto;}` +
+            `.ContentItem-title>div,.ContentItem-title>a{pointer-events:auto;}`
+          : '') +
+        (pfConfig.fixedListItemMore
+          ? `.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action` +
+            `{visibility: visible!important;position: absolute;top: 20px;right: 10px;}`
+          : '');
       initDomStyle(ID_STYLE_VERSION, innerHTML);
     },
     initAfterLoad: function () {
@@ -1454,12 +1465,12 @@ const ICO_URL = {
       // 'suspensionHomeTabStyle',
       // 'suspensionFindStyle',
       'questionTitleTag',
-      // 'fixedListItemMore',
+      'fixedListItemMore',
       // 'shoppingLink',
       // 'answerVideoLink',
       // 'toHomeButton',
       // 'zoomAnswerText',
-      // 'listOutPutNotInterested',
+      'listOutPutNotInterested',
       // 'highlightListItem',
       'zoomImageType',
       'zoomImageSize',
@@ -1808,6 +1819,43 @@ const ICO_URL = {
     }
   }
 
+  /** 推荐列表最外层绑定事件 */
+  const initTopStoryRecommendEvent = () => {
+    const listTargetClass = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
+    // const canFindTargeted = (e) => {
+    //   let finded = false;
+    //   listTargetClass.forEach((item) => {
+    //     $(e).hasClass(item) && (finded = true);
+    //   });
+    //   return finded;
+    // };
+    dom('.Topstory-recommend') &&
+      (dom('.Topstory-recommend').onclick = function (event) {
+        const { target } = event;
+        // 点击外置「不感兴趣」按钮
+        if (pfConfig.listOutPutNotInterested && target.className === 'ContentItem-title') {
+          // 使用 pointer-events: none 和伪元素、子元素使用 pointer-events:auto 来获取点击
+          let dataZop = {};
+          try {
+            const dataZopJson = domP(target, 'class', 'ContentItem').getAttribute('data-zop');
+            dataZop = JSON.parse(dataZopJson);
+          } catch {}
+          const { itemId = '', type = '' } = dataZop;
+          doFetchNotInterested({ id: itemId, type });
+          domP(target, 'class', 'TopstoryItem').style.display = 'none';
+        }
+
+        // 列表内容展示更多
+        // if (canFindTargeted(event.target)) {
+        //   const conEvent = $(event.target).parents('.ContentItem');
+        //   setTimeout(() => {
+        //     pfConfig.listItemCreatedAndModifiedTime && addTimes(conEvent);
+        //     pfConfig.showBlockUser && addBlockUser(conEvent);
+        //   }, 0);
+        // }
+      });
+  };
+
   /** 加载基础元素及绑定方法 */
   const initHTML = () => {
     document.body.appendChild(
@@ -1816,10 +1864,6 @@ const ICO_URL = {
         innerHTML: INNER_HTML,
       })
     );
-
-    // 绑定元素事件
-    domById(ID_OPEN_BUTTON).onclick = myDialog.open;
-    domById(ID_CLOSE).onclick = myDialog.hide;
 
     /** 添加弹窗底部信息 */
     const appendFooter = () => {
@@ -1903,6 +1947,7 @@ const ICO_URL = {
         }
       });
     };
+
     // 绑定菜单事件
     dom('.ctz-menu-top').onclick = myMenu.click;
 
@@ -1912,6 +1957,12 @@ const ICO_URL = {
         myPreview.hide(this);
       };
     });
+
+    // 绑定元素事件
+    domById(ID_OPEN_BUTTON).onclick = myDialog.open;
+    domById(ID_CLOSE).onclick = myDialog.hide;
+
+    initTopStoryRecommendEvent();
   };
 
   /** 加载数据 */
