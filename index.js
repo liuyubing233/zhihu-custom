@@ -211,6 +211,23 @@ const CONFIG_FILTER_DEFAULT = {
   lessVoteNumberDetail: 100, // 回答详情屏蔽以下赞的内容
 };
 
+/** 悬浮模块默认配置 */
+const CONFIG_SUSPENSION = {
+  suspensionHomeTab: false, // 问题列表切换
+  suspensionHomeTabPo: 'left: 20px; top: 100px;', // 定位
+  suspensionHomeTabFixed: true,
+  suspensionFind: false, // 顶部发现模块
+  suspensionFindPo: 'left: 10px; top: 380px;',
+  suspensionFindFixed: true,
+  suspensionSearch: false, // 搜索栏
+  suspensionSearchPo: 'left: 200px; top: 100px;',
+  suspensionSearchFixed: true,
+  suspensionUser: false, // 个人中心
+  suspensionUserPo: 'right: 60px; top: 100px;',
+  suspensionUserFixed: true,
+  suspensionPickUp: true, // 长回答和列表收起按钮
+};
+
 /** 屏蔽关注列表关注人操作 */
 const FILTER_FOLLOWER_OPERATE = [
   { key: 'removeFollowVoteAnswer', rep: '赞同了回答' },
@@ -363,6 +380,7 @@ const ICO_URL = {
   let pfConfig = {
     ...CONFIG_HIDDEN_DEFAULT,
     ...CONFIG_FILTER_DEFAULT,
+    ...CONFIG_SUSPENSION,
     customizeCss: '', // 自定义样式
     answerOpen: '', // 知乎默认 | 自动展开所有回答 | 默认收起所有长回答
     isUseThemeDark: false, // 是否开启夜间模式
@@ -380,64 +398,23 @@ const ICO_URL = {
     questionTitleTag: true, // 内容标题添加类别标签
     listOutPutNotInterested: false, // 推荐列表外置「不感兴趣」按钮
     fixedListItemMore: false, // 列表更多按钮固定至题目右侧
-
-    // chooseHeart: 'system', // 设置版心的方式
-    // versionHeart: '1200', // 版心宽度
-    // versionHeartSelf: '1200', // 自定义版心宽度
-    // versionHeartZhuanlan: '1000', // 文章、专栏宽度
-    // positionCreation: 'right',
-    // positionCreationIndex: '1',
-    // positionTable: 'right',
-    // positionTableIndex: '2',
-    // positionFavorites: 'left',
-    // positionFavoritesIndex: '3',
-    // positionFooter: 'right',
-    // positionFooterIndex: '4',
-    // stickyLeft: false, // 首页左侧栏是否固定
-    // stickyRight: false, // 首页右侧栏是否固定
+    highlightOriginal: true, // 关注列表高亮原创内容
+    highlightListItem: false, // 列表内容点击高亮边框
+    listItemCreatedAndModifiedTime: true, // 列表内容显示发布与最后修改时间
+    answerItemCreatedAndModifiedTime: true, // 回答列表显示创建与最后修改时间
+    questionCreatedAndModifiedTime: true, // 问题显示创建和最后修改时间
+    articleCreateTimeToTop: true, // 文章发布时间置顶
 
     shoppingLink: 'default', // 购物链接显示设置
     answerVideoLink: 'default', // 回答视频显示设置
-    zoomAnswerText: false, // 回答操作文字缩放
-    // notificationAboutFilter: false, // 屏蔽内容后显示通知提醒框
-    questionCreatedAndModifiedTime: true, // 问题显示创建和最后修改时间
-    highlightOriginal: true, // 关注列表高亮原创内容
-    highlightListItem: false, // 列表内容点击高亮边框
-    articleCreateTimeToTop: true, // 文章发布时间置顶
-    listItemCreatedAndModifiedTime: true, // 列表内容显示发布与最后修改时间
-    answerItemCreatedAndModifiedTime: true, // 回答列表显示创建与最后修改时间
-    indexPathnameRedirect: 'n', // 首页重定向 follow 关注, hot 热榜
-
-    // 悬浮模块 start ----------------
-    suspensionHomeTab: false, // 问题列表切换
-    suspensionHomeTabPo: 'left: 20px; top: 100px;', // 定位
-    suspensionHomeTabFixed: true,
-    // suspensionHomeTabStyle: 'transparent', // 样式
-    suspensionFind: false, // 顶部发现模块
-    suspensionFindPo: 'left: 10px; top: 380px;',
-    suspensionFindFixed: true,
-    // suspensionFindStyle: 'transparent',
-    suspensionSearch: false, // 搜索栏
-    suspensionSearchPo: 'left: 200px; top: 100px;',
-    suspensionSearchFixed: true,
-    suspensionUser: false, // 个人中心
-    suspensionUserPo: 'right: 60px; top: 100px;',
-    suspensionUserFixed: true,
-    suspensionPickUp: true, // 长回答和列表收起按钮
-    // previewOpenGIF: true, // 动图弹窗显示
-    // toHomeButton: true, // 页面右下停靠返回主页按钮
-    // toHomeButtonZhuanlan: 'zhihu', // toHomeButtonZhuanlan
-    // 悬浮模块 end -----------------
   };
 
   /** 缓存的doms */
   const domCache = {
-    // positionDoms: {}, // 首页原右侧元素
     headerDoms: {}, // header内元素
   };
 
   const findEvent = {
-    // creator: { fun: null, num: 0, isFind: false },
     header: { fun: null, num: 0, isFind: false },
   };
 
@@ -592,7 +569,8 @@ const ICO_URL = {
           this.vSusHomeTab() +
           this.vSusHeader() +
           this.vOutputNotInterested() +
-          this.vFixedListMore()
+          this.vFixedListMore() +
+          this.vHighlightListItem()
       );
     },
     initAfterLoad: function () {
@@ -692,6 +670,13 @@ const ICO_URL = {
         `.position-suspensionFind .Tabs-link.is-active{color:#0066ff!important;border-color:#0066ff!important;}` +
         '.position-suspensionUser .css-1m60na {display: none;}.position-suspensionUser .css-1n0eufo{margin-right: 0;}'
       );
+    },
+    /** 列表内容点击高亮边框 */
+    vHighlightListItem: () => {
+      return pfConfig.highlightListItem
+        ? `.List-item:focus,.TopstoryItem:focus,.HotItem:focus` +
+            `{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(0, 102, 255, 0.3)!important;outline:none!important;transition:box-shadow 0.3s!important;}`
+        : '';
     },
   };
 
@@ -1139,6 +1124,21 @@ const ICO_URL = {
           }
         }
 
+        // 高亮原创
+        const userNameE = elementThis.querySelector('.FeedSource-firstline .UserLink-link');
+        const userName = userNameE ? userNameE.innerText : '';
+        if (pfConfig.highlightOriginal && dataZop.authorName === userName && !message) {
+          const highlight = `background: ${
+            pfConfig.isUseThemeDark
+              ? '#333333!important;'
+              : pfConfig.colorBackground === '#ffffff'
+              ? '#fff3d4!important;'
+              : `${pfConfig.colorBackground}!important;`
+          }`;
+          elementThis.style = `${highlight}border: 1px solid #aaa;`;
+          elementThis.querySelector('.ContentItem-actions').style = highlight;
+        }
+
         // 最后信息 & 起点位置处理
         message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
         this.index = fnIndexMath(this.index, i, len, lessNum);
@@ -1207,7 +1207,7 @@ const ICO_URL = {
       } = pfConfig;
 
       if (dom('.QuestionAnswer-content')) {
-        // pfConfig.answerItemCreatedAndModifiedTime && addTimes($('.QuestionAnswer-content'));
+        pfConfig.answerItemCreatedAndModifiedTime && addTimes(dom('.QuestionAnswer-content'));
         showBlockUser && myBlack.addButton(dom('.QuestionAnswer-content'));
       }
       const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
@@ -1263,7 +1263,7 @@ const ICO_URL = {
         // 屏蔽用户 | 知乎账号的回答
         hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName) && (message = `已删除${dataZop.authorName}的回答`);
 
-        //       pfConfig.answerItemCreatedAndModifiedTime && addTimes(eventThat);
+        pfConfig.answerItemCreatedAndModifiedTime && addTimes(elementThis);
         showBlockUser && myBlack.addButton(elementThis);
 
         // 自动展开回答 和 默认收起长回答
@@ -1661,19 +1661,12 @@ const ICO_URL = {
   const fnChanger = async (ev) => {
     // onchange 时只调用 myVersion 的 name
     const doCssVersion = [
-      // 'versionHeart',
-      // 'versionHeartSelf',
-      // 'versionHeartZhuanlan',
-      // 'suspensionHomeTabStyle',
-      // 'suspensionFindStyle',
       'questionTitleTag',
       'fixedListItemMore',
       // 'shoppingLink',
       // 'answerVideoLink',
-      // 'toHomeButton',
-      // 'zoomAnswerText',
       'listOutPutNotInterested',
-      // 'highlightListItem',
+      'highlightListItem',
       'zoomImageType',
       'zoomImageSize',
       'versionHome',
@@ -1682,21 +1675,18 @@ const ICO_URL = {
     ];
     const { name, value, checked, type } = ev;
     const ob = {
-      chooseHeart: () => {
-        // onChooseHeart();
-        // versionCSS.init();
-      },
-      // stickyLeft: stickyB.scroll,
-      // stickyRight: stickyB.scroll,
       isUseThemeDark: () => {
-        // versionCSS.init();
+        myVersion.change();
         myBackground.init();
         onUseThemeDark(checked);
-        // followingListChanger(true);
+        myListenListItem.reset();
+        myListenListItem.init();
       },
       colorBackground: () => {
         myBackground.init();
-        // followingListChanger(true);
+        myVersion.change();
+        myListenListItem.reset();
+        myListenListItem.init();
       },
       suspensionHomeTab: () => {
         myVersion.change();
@@ -1706,25 +1696,18 @@ const ICO_URL = {
       suspensionSearch: cacheHeader,
       suspensionUser: cacheHeader,
       titleIco: changeICO,
-      // customizeCss: changeCustomCSS,
-      // toHomeButtonZhuanlan: onToHomeHref,
-      // indexPathnameRedirect: onToHomeHref,
-      // answerUnfold: () => answerFoldOrNot('answerUnfold', checked),
-      // answerFoldStart: () => answerFoldOrNot('answerFoldStart', checked),
       showGIFinDialog: previewGIF,
-      // questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
-      // highlightOriginal: () => followingListChanger(true),
-      // articleCreateTimeToTop: addArticleCreateTimeToTop,
+      questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
+      highlightOriginal: () => {
+        myListenListItem.reset();
+        myListenListItem.init();
+      },
+      articleCreateTimeToTop: addArticleCreateTimeToTop,
     };
 
     pfConfig[name] = type === 'checkbox' ? checked : value;
     await myStorage.set('pfConfig', JSON.stringify(pfConfig));
     type === 'range' && domById(name) && (domById(name).innerText = value);
-
-    // if (/^position/.test(name)) {
-    //   // initPositionPage();
-    //   return;
-    // }
 
     if (/^hidden/.test(name)) {
       myHidden.init();
@@ -1763,71 +1746,76 @@ const ICO_URL = {
     muObserver.observe(elementHTML, muConfig);
   };
 
-  /** 加载额外的样式文件 */
-  const onInitStyleExtra = () => {
-    myHidden.init();
-    myBackground.init();
-    myVersion.init();
-    findTheme();
+  /** 时间格式化 */
+  const timeFormatter = (time, formatter = 'YYYY-MM-DD HH:mm:ss') => {
+    if (!time) return '';
+    const date = new Date(time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const min = date.getMinutes();
+    const sec = date.getSeconds();
+
+    // 不足十位添 0
+    const preArr = Array.apply(null, Array(10)).map(function (elem, index) {
+      return '0' + index;
+    });
+
+    return formatter
+      .replace(/YYYY/g, year)
+      .replace(/MM/g, preArr[month] || month)
+      .replace(/DD/g, preArr[day] || day)
+      .replace(/HH/g, preArr[hour] || hour)
+      .replace(/mm/g, preArr[min] || min)
+      .replace(/ss/g, preArr[sec] || sec);
   };
 
-  /** 在启动时注入的内容 */
-  async function onDocumentStart() {
-    initDomStyle(ID_STYLE, INNER_CSS);
-    if (!HTML_HOOTS.includes(location.hostname) || window.frameElement) return;
-    storageConfig.cachePfConfig = pfConfig;
-    const config = await myStorage.get('pfConfig');
-    const c = config ? JSON.parse(config) : {};
-    pfConfig = { ...pfConfig, ...c };
-    // 首页重定向
-    // if (
-    //   pfConfig.indexPathnameRedirect &&
-    //   pfConfig.indexPathnameRedirect !== 'n' &&
-    //   location.host === 'www.zhihu.com' &&
-    //   location.pathname === '/'
-    // ) {
-    //   location.href = `https://www.zhihu.com/${pfConfig.indexPathnameRedirect}`;
-    // }
+  /** 问题添加时间 */
+  const addTimes = (event) => {
+    const className = 'ctz-list-item-time';
+    event.querySelector(`.${className}`) && event.querySelector(`.${className}`).remove();
+    const crTime = event.querySelector('[itemprop="dateCreated"]') ? event.querySelector('[itemprop="dateCreated"]').content : '';
+    const puTime = event.querySelector('[itemprop="datePublished"]') ? event.querySelector('[itemprop="datePublished"]').content : '';
+    const muTime = event.querySelector('[itemprop="dateModified"]') ? event.querySelector('[itemprop="dateModified"]').content : '';
+    const created = timeFormatter(crTime || puTime);
+    const modified = timeFormatter(muTime);
+    if (!created) return;
+    const element = domC('div', {
+      className,
+      style: 'line-height: 24px;padding-top: 6px;',
+      innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
+    });
+    event.querySelector('.ContentItem-meta') && event.querySelector('.ContentItem-meta').appendChild(element);
+  };
 
-    onInitStyleExtra();
+  /** 问题详情添加时间 */
+  const addQuestionCreatedAndModifiedTime = () => {
+    const className = 'ctz-question-time';
+    dom(`.${className}`) && dom(`.${className}`).remove();
+    if (!(pfConfig.questionCreatedAndModifiedTime && dom('[itemprop="dateCreated"]'))) return;
+    const created = timeFormatter(dom('[itemprop="dateCreated"]').content);
+    const modified = timeFormatter(dom('[itemprop="dateModified"]').content);
+    const element = domC('div', {
+      className,
+      innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
+    });
+    dom('.QuestionPage .QuestionHeader-title').appendChild(element);
+  };
 
-    const host = location.host;
-
-    if (host === 'zhuanlan.zhihu.com') {
-      dom('html').classList.add('zhuanlan');
-    } else if (host === 'www.zhihu.com') {
-      dom('html').classList.add('zhihu');
-    }
-
-    // 拦截 fetch 方法, 获取 option 中的值
-    const originFetch = fetch;
-    unsafeWindow.fetch = (url, opt) => {
-      // if (
-      //   /\/answers\?/.test(url) &&
-      //   (answerSortBy === 'vote' || answerSortBy === 'comment') &&
-      //   isFirstToSort
-      // ) {
-      //   // 如果是自定义排序则知乎回答页码增加到20条
-      //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
-      // }
-
-      if (!storageConfig.fetchHeaders['x-ab-param'] && opt && opt.headers) {
-        storageConfig.fetchHeaders = opt.headers;
-      }
-
-      // 存储x-zst-81供「不感兴趣」接口使用
-      storageConfig.xZst81 = (opt && opt.headers && opt.headers['x-zst-81']) || '';
-      return originFetch(url, opt);
-    };
-
-    // if (
-    //   /\/question/.test(location.pathname) &&
-    //   location.search.match(/(?<=sort=)\w+/)
-    // ) {
-    //   answerSortBy = location.search.match(/(?<=sort=)\w+/)[0];
-    // }
-  }
-  onDocumentStart();
+  /** 文章发布时间置顶 */
+  const addArticleCreateTimeToTop = () => {
+    const className = 'ctz-article-create-time';
+    dom(`.${className}`) && dom(`.${className}`).remove();
+    if (!(pfConfig.articleCreateTimeToTop && dom('.ContentItem-time'))) return;
+    const innerHTML = dom('.ContentItem-time').innerText || '';
+    const element = domC('span', {
+      className,
+      style: 'color: #8590a6;line-height: 30px;',
+      innerHTML,
+    });
+    dom('.Post-Header').appendChild(element);
+  };
 
   /** 监听过滤内容 */
   const fnHiddenDom = (lessNum, ev, log) => {
@@ -1932,56 +1920,6 @@ const ICO_URL = {
     window.dispatchEvent(myEvent);
   };
 
-  /** 使用 ResizeObserver 监听body高度 */
-  const resizeObserver = new ResizeObserver(throttle(resizeFun, 500));
-  function resizeFun() {
-    if (!HTML_HOOTS.includes(location.hostname)) return;
-
-    //   // 页面高度发生改变
-    //   if (myLocalC.bodySize === myLocalC.bodySizePrev) {
-    //     // 外链直接打开
-    //     initLinkChanger();
-    previewGIF();
-    initImagePreview();
-    myListenListItem.init();
-    myListenSearchListItem.init();
-    myListenAnswerItem.init();
-    //     topStoryRecommendEvent();
-    //     pathnameHasFn({
-    //       question: () => {
-    //         zoomVideos();
-    //         storyHidden();
-    //         listenSelectButton();
-    //         listenQuestionSideColumn();
-    //       },
-    //       search: searchPageHidden,
-    //       collection: collectionExport,
-    //     });
-    //   } else {
-    //     myLocalC.bodySizePrev = myLocalC.bodySize;
-    //   }
-
-    // body 高度变更后比较「推荐」模块内容高度与网页高度
-    // 如果模块高度小于网页高度则手动触发 resize 使其加载数据
-    const recommendHeightLess = dom('.Topstory-recommend') && dom('.Topstory-recommend').offsetHeight < window.innerHeight;
-    const contentHeightLess = dom('.Topstory-content') && dom('.Topstory-content').offsetHeight < window.innerHeight;
-    if (recommendHeightLess || contentHeightLess) {
-      doResizePage();
-    }
-
-    // 判断 body 变化后的页面 title 是否变化
-    // 原逻辑是在 body 变化后会请求查看是否有新的消息后再更改 title
-    pfConfig.globalTitle !== document.title && changeTitle();
-
-    //   if (pfConfig.hiddenSearchBoxTopSearch && $('.SearchBar-input input')[0]) {
-    //     $('.SearchBar-input input')[0].placeholder = '';
-    //   }
-
-    // pathnameHasFn({
-    //   video: () => videoFns.init(),
-    // });
-  }
-
   /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
   function initImagePreview() {
     const images = [domA('.TitleImage'), domA('.ArticleItem-image'), domA('.ztext figure .content_image')];
@@ -2023,14 +1961,15 @@ const ICO_URL = {
 
   /** 推荐列表最外层绑定事件 */
   const initTopStoryRecommendEvent = () => {
-    const listTargetClass = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
-    // const canFindTargeted = (e) => {
-    //   let finded = false;
-    //   listTargetClass.forEach((item) => {
-    //     $(e).hasClass(item) && (finded = true);
-    //   });
-    //   return finded;
-    // };
+    const LIST_TARGET_CLASS = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
+    const canFindTargeted = (e) => {
+      let finded = false;
+      LIST_TARGET_CLASS.forEach((item) => {
+        e.classList.contains(item) && (finded = true);
+      });
+      return finded;
+    };
+
     dom('.Topstory-recommend') &&
       (dom('.Topstory-recommend').onclick = function (event) {
         const { target } = event;
@@ -2048,13 +1987,13 @@ const ICO_URL = {
         }
 
         // 列表内容展示更多
-        // if (canFindTargeted(event.target)) {
-        //   const conEvent = $(event.target).parents('.ContentItem');
-        //   setTimeout(() => {
-        //     pfConfig.listItemCreatedAndModifiedTime && addTimes(conEvent);
-        //     pfConfig.showBlockUser && addBlockUser(conEvent);
-        //   }, 0);
-        // }
+        if (canFindTargeted(target)) {
+          const conEvent = domP(target, 'class', 'ContentItem');
+          setTimeout(() => {
+            pfConfig.listItemCreatedAndModifiedTime && addTimes(conEvent);
+            pfConfig.showBlockUser && myBlack.addButton(conEvent.parentElement);
+          }, 0);
+        }
       });
   };
 
@@ -2160,6 +2099,120 @@ const ICO_URL = {
     const even = dom('.Topstory-container .TopstoryTabs');
     pfConfig[name] ? myLock.append(even, name) : myLock.remove(even, name);
   }
+
+  /** 加载额外的样式文件 */
+  const onInitStyleExtra = () => {
+    myHidden.init();
+    myBackground.init();
+    myVersion.init();
+    findTheme();
+  };
+
+  /** 判断 pathname 匹配的项并运行对应方法 */
+  const pathnameHasFn = (obj) => {
+    Object.keys(obj).forEach((name) => {
+      location.pathname.includes(name) && obj[name]();
+    });
+  };
+
+  /** 使用 ResizeObserver 监听body高度 */
+  const resizeObserver = new ResizeObserver(throttle(resizeFun, 500));
+  function resizeFun() {
+    if (!HTML_HOOTS.includes(location.hostname)) return;
+
+    //   // 页面高度发生改变
+    //   if (myLocalC.bodySize === myLocalC.bodySizePrev) {
+    //     // 外链直接打开
+    //     initLinkChanger();
+    previewGIF();
+    initImagePreview();
+    myListenListItem.init();
+    myListenSearchListItem.init();
+    myListenAnswerItem.init();
+    //     topStoryRecommendEvent();
+    //     pathnameHasFn({
+    //       question: () => {
+    //         zoomVideos();
+    //         storyHidden();
+    //         listenSelectButton();
+    //         listenQuestionSideColumn();
+    //       },
+    //       search: searchPageHidden,
+    //       collection: collectionExport,
+    //     });
+    //   } else {
+    //     myLocalC.bodySizePrev = myLocalC.bodySize;
+    //   }
+
+    // body 高度变更后比较「推荐」模块内容高度与网页高度
+    // 如果模块高度小于网页高度则手动触发 resize 使其加载数据
+    const recommendHeightLess = dom('.Topstory-recommend') && dom('.Topstory-recommend').offsetHeight < window.innerHeight;
+    const contentHeightLess = dom('.Topstory-content') && dom('.Topstory-content').offsetHeight < window.innerHeight;
+    if (recommendHeightLess || contentHeightLess) {
+      doResizePage();
+    }
+
+    // 判断 body 变化后的页面 title 是否变化
+    // 原逻辑是在 body 变化后会请求查看是否有新的消息后再更改 title
+    pfConfig.globalTitle !== document.title && changeTitle();
+
+    if (pfConfig.hiddenSearchBoxTopSearch && dom('.SearchBar-input input')) {
+      dom('.SearchBar-input input').placeholder = '';
+    }
+
+    // pathnameHasFn({
+    //   video: () => videoFns.init(),
+    // });
+  }
+
+  /** 在启动时注入的内容 */
+  async function onDocumentStart() {
+    initDomStyle(ID_STYLE, INNER_CSS);
+    if (!HTML_HOOTS.includes(location.hostname) || window.frameElement) return;
+    storageConfig.cachePfConfig = pfConfig;
+    const config = await myStorage.get('pfConfig');
+    const c = config ? JSON.parse(config) : {};
+    pfConfig = { ...pfConfig, ...c };
+
+    onInitStyleExtra();
+
+    const host = location.host;
+
+    if (host === 'zhuanlan.zhihu.com') {
+      dom('html').classList.add('zhuanlan');
+    } else if (host === 'www.zhihu.com') {
+      dom('html').classList.add('zhihu');
+    }
+
+    // 拦截 fetch 方法, 获取 option 中的值
+    const originFetch = fetch;
+    unsafeWindow.fetch = (url, opt) => {
+      // if (
+      //   /\/answers\?/.test(url) &&
+      //   (answerSortBy === 'vote' || answerSortBy === 'comment') &&
+      //   isFirstToSort
+      // ) {
+      //   // 如果是自定义排序则知乎回答页码增加到20条
+      //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
+      // }
+
+      if (!storageConfig.fetchHeaders['x-ab-param'] && opt && opt.headers) {
+        storageConfig.fetchHeaders = opt.headers;
+      }
+
+      // 存储x-zst-81供「不感兴趣」接口使用
+      storageConfig.xZst81 = (opt && opt.headers && opt.headers['x-zst-81']) || '';
+      return originFetch(url, opt);
+    };
+
+    // if (
+    //   /\/question/.test(location.pathname) &&
+    //   location.search.match(/(?<=sort=)\w+/)
+    // ) {
+    //   answerSortBy = location.search.match(/(?<=sort=)\w+/)[0];
+    // }
+  }
+  onDocumentStart();
 
   /** 加载基础元素及绑定方法 */
   const initHTML = () => {
@@ -2307,6 +2360,18 @@ const ICO_URL = {
     myCustomStyle.init();
     myFilterWord.init();
     resizeObserver.observe(document.body);
+    pathnameHasFn({
+      question: () => {
+        // listenSelectButton();
+        // listenQuestionSideColumn();
+        addQuestionCreatedAndModifiedTime();
+      },
+      // video: () => videoFns.init(),
+      // collection: collectionExport,
+    });
+    if (location.host === 'zhuanlan.zhihu.com') {
+      addArticleCreateTimeToTop();
+    }
     fnLog('加载完毕');
   };
 
