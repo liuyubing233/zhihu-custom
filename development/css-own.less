@@ -202,18 +202,23 @@
 .ctz-set-title {
   font-weight: bold;
   height: 32px;
+  line-height: 32px;
   font-size: 16px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  &::before {
+    content: '----------------------------------------------------------------------';
+    font-weight: normal;
+  }
   & > span {
-    &::before,
-    &::after {
-      content: '--------';
-      margin: 0 8px;
-      font-weight: normal;
-    }
+    position: absolute;
+    padding: 4px 8px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    word-break: keep-all;
+    white-space: pre;
   }
 }
 
@@ -263,6 +268,9 @@
 // 屏蔽内容
 .ctz-filter-block {
   background: #efefef;
+  .ctz-set-title > span {
+    background: #efefef;
+  }
   padding: 0 8px;
   margin: 0 -8px;
   [name='inputFilterWord'] {
@@ -410,6 +418,23 @@
       height: 40px;
       border: 4px solid transparent;
     }
+  }
+}
+
+.ctz-label-tag {
+  font-weight: normal;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #ffffff;
+  &-Answer {
+    background: #ec7259;
+  }
+  &-ZVideo {
+    background: #12c2e9;
+  }
+  &-Article {
+    background: #00965e;
   }
 }
 

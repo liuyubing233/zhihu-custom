@@ -352,7 +352,6 @@ const ICO_URL = {
   angular: 'https://angular.cn/assets/images/favicons/favicon.ico',
   lanhu: 'https://sso-cdn.lanhuapp.com/ssoweb/favicon.ico',
   yuque: 'https://mdn.alipayobjects.com/huamei_0prmtq/afts/img/A*vMxOQIh4KBMAAAAAAAAAAAAADvuFAQ/original',
-  tampermonkey: 'https://tampermonkey.freetls.fastly.net/images/icon180.png',
   greasyfork: 'https://greasyfork.org/vite/assets/blacklogo16.bc64b9f7.png',
 };
 
@@ -364,6 +363,7 @@ const ICO_URL = {
   let pfConfig = {
     ...CONFIG_HIDDEN_DEFAULT,
     ...CONFIG_FILTER_DEFAULT,
+    customizeCss: '', // 自定义样式
     answerOpen: '', // 知乎默认 | 自动展开所有回答 | 默认收起所有长回答
     isUseThemeDark: false, // 是否开启夜间模式
     filterKeywords: [],
@@ -377,6 +377,7 @@ const ICO_URL = {
     showGIFinDialog: true, // 使用弹窗打开动图
     globalTitle: '', // 网页标题
     titleIco: '', // 网页标题logo图
+    questionTitleTag: true, // 内容标题添加类别标签
 
     // chooseHeart: 'system', // 设置版心的方式
     // versionHeart: '1200', // 版心宽度
@@ -393,8 +394,6 @@ const ICO_URL = {
     // stickyLeft: false, // 首页左侧栏是否固定
     // stickyRight: false, // 首页右侧栏是否固定
     // zoomAnswerImage: '', // 默认 原图
-    customizeCss: '',
-    questionTitleTag: true, // 内容标题添加类别标签
     fixedListItemMore: false, // 列表更多按钮固定至题目右侧
     shoppingLink: 'default', // 购物链接显示设置
     answerVideoLink: 'default', // 回答视频显示设置
@@ -458,7 +457,8 @@ const ICO_URL = {
     dark: () => {
       // 夜间模式
       const background121212 =
-        `.css-ul9l2m,.css-mq2czy,.css-1da4iq8,.css-oqge09,.css-lpo24q,.css-16zrry9,.css-u8y4hj` +
+        `.ctz-set-title>span,#CTZ-BLOCK-LIST .ctz-black-item` +
+        `,.css-ul9l2m,.css-mq2czy,.css-1da4iq8,.css-oqge09,.css-lpo24q,.css-16zrry9,.css-u8y4hj` +
         `,.css-1yq3jl6,.css-mzh2tk,.css-6mdg56,.CreatorRecruitFooter--fix,body .Recruit-buttonFix-placeholder` +
         `,.css-ovbogu,.css-1v840mj,.css-huwkhm,.css-akuk2k,.css-ygii7h,.css-1h84h63,.css-1bwzp6r,.css-w215gm` +
         `,.css-1117lk0:hover,.zhi,.Modal-modal-wf58,.css-1j5d3ll,.GlobalSideBar-navList` +
@@ -466,7 +466,8 @@ const ICO_URL = {
         `,.css-12yl4eo,.css-1ggwojn,.css-xqep55,.css-mjg7l1,.css-q2yfd6,.css-1ulkprw` +
         `{background: #121212!important;}`;
       const background333 =
-        `.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd)` +
+        `.ctz-filter-block,.ctz-filter-block .ctz-set-title>span,#CTZ-BLOCK-LIST` +
+        `,.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd)` +
         `,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0,.css-ssvpr2,.css-m9gn5f,.FeedbackForm-inputBox-15yJ` +
         `,.FeedbackForm-canvasContainer-mrde,._Invite_container_30SP,.utils-frostedGlassEffect-2unM` +
         `,.Card-card-2K6v,.UserLivesPage-page-GSje,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448` +
@@ -518,14 +519,14 @@ const ICO_URL = {
     normal: (bg) => {
       // 普通背景色
       const background =
-        `.ctz-filter-block,#CTZ-BLOCK-LIST` +
+        `.ctz-filter-block,#CTZ-BLOCK-LIST,.ctz-filter-block .ctz-set-title>span` +
         `,body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar` +
         `,.position-suspensionSearch.focus,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N` +
         `,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z` +
         `,.zhuanlan .Post-content .ContentItem-actions,.zhuanlan .ContentItem-actions` +
         `{background-color: ${bg}!important;}`;
       const backgroundOpacity =
-        `#${ID_DIALOG}` +
+        `#${ID_DIALOG},.ctz-set-title>span` +
         `,#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#${ID_BLOCK_FILTER}` +
         `,.QuestionHeader,.Card,.HotItem,.Recommendations-Main,.GlobalSideBar-navList` +
         `,.CommentsV2-withPagination,.QuestionHeader-footer,.HoverCard,.ContentItem-actions` +
@@ -572,7 +573,7 @@ const ICO_URL = {
   /** 修改版心的 css */
   const myVersion = {
     init: function () {
-      const innerHTML = this.versionWidth() + this.vImgSize();
+      const innerHTML = this.versionWidth() + this.vImgSize() + this.vQuestionTitleTag();
       initDomStyle(ID_STYLE_VERSION, innerHTML);
     },
     initAfterLoad: function () {
@@ -583,8 +584,8 @@ const ICO_URL = {
       this.initAfterLoad();
       this.init();
     },
-    /** 版心大小修改 */
     versionWidth: function () {
+      // 版心大小修改
       // 首页列表版心
       const versionHome =
         `.Topstory-mainColumn{width: ${pfConfig.versionHome || '1000'}px!important;}` +
@@ -604,8 +605,8 @@ const ICO_URL = {
         `.zhuanlan .Post-SideActions{right: calc(50vw - ${+(pfConfig.versionArticle || '690') / 2 + 150}px)}`;
       return versionHome + versionAnswer + versionArticle;
     },
-    /** 图片尺寸修改 */
-    vImgSize: function () {
+    vImgSize: () => {
+      // 图片尺寸修改
       const content =
         pfConfig.zoomImageType === '2'
           ? `width: ${pfConfig.zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;`
@@ -615,6 +616,18 @@ const ICO_URL = {
         `img.lazy,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage` +
         `{${content}}`
       );
+    },
+    vQuestionTitleTag: () => {
+      // 内容标题添加类别显示
+      return pfConfig.questionTitleTag
+        ? `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}` +
+            `.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}` +
+            `.ZvideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}` +
+            `.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}` +
+            `.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}` +
+            `.ContentItem-title div{display:inline}` +
+            `.TopstoryQuestionAskItem .ContentItem-title::before{content:'提问';background:#533b77}`
+        : '';
     },
   };
 
@@ -1440,7 +1453,7 @@ const ICO_URL = {
       // 'versionHeartZhuanlan',
       // 'suspensionHomeTabStyle',
       // 'suspensionFindStyle',
-      // 'questionTitleTag',
+      'questionTitleTag',
       // 'fixedListItemMore',
       // 'shoppingLink',
       // 'answerVideoLink',
