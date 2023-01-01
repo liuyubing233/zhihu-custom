@@ -152,6 +152,9 @@
         <div id="CTZ_SET_BASIS_CONFIG">
           <div class="ctz-set-title"><span>配置操作</span></div>
           <div class="ctz-set-content">
+            <div class="ctz-flex-wrap">
+              <button class="ctz-button" name="useSimple">启用极简模式</button>
+            </div>
             <div class="ctz-config-import-export">
               <div class="ctz-label">配置导出导入</div>
               <div class="ctz-config-buttons">
@@ -329,6 +332,18 @@
                 <span class="ctz-label">回答内容显示创建时间与最后修改时间</span>
                 <input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" />
               </label>
+            </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">购物链接显示设置</span>
+              <label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label>
+              <label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label>
+              <label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label>
+            </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">回答视频显示设置</span>
+              <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="0" />默认</label>
+              <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="1" />仅链接</label>
+              <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="2" />隐藏</label>
             </div>
           </div>
         </div>

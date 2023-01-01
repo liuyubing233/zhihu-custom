@@ -220,12 +220,118 @@ const CONFIG_SUSPENSION = {
   suspensionFindPo: 'left: 10px; top: 380px;',
   suspensionFindFixed: true,
   suspensionSearch: false, // 搜索栏
-  suspensionSearchPo: 'left: 200px; top: 100px;',
+  suspensionSearchPo: 'left: 10px; top: 400px;',
   suspensionSearchFixed: true,
   suspensionUser: false, // 个人中心
   suspensionUserPo: 'right: 60px; top: 100px;',
   suspensionUserFixed: true,
   suspensionPickUp: true, // 长回答和列表收起按钮
+};
+
+/** 极简模式配置 */
+const CONFIG_SIMPLE = {
+  hiddenAnswerRightFooter: true,
+  hiddenFixedActions: true,
+  hiddenLogo: true,
+  hiddenHeader: true,
+  hiddenHeaderScroll: true,
+  hiddenItemActions: true,
+  hiddenAnswerText: true,
+  hiddenQuestionShare: true,
+  hiddenQuestionTag: true,
+  hiddenQuestionActions: true,
+  hiddenReward: true,
+  hiddenZhuanlanTag: true,
+  hiddenListImg: true,
+  hiddenReadMoreText: true,
+  hiddenAD: true,
+  hiddenAnswerRights: true,
+  hiddenAnswerRightsText: true,
+  hiddenAnswers: true,
+  hiddenZhuanlanActions: true,
+  hiddenZhuanlanTitleImage: true,
+  hiddenHotItemMetrics: true,
+  hiddenHotItemIndex: true,
+  hiddenHotItemLabel: true,
+  hiddenDetailAvatar: true,
+  hiddenDetailBadge: true,
+  hiddenDetailVoters: true,
+  hiddenDetailName: true,
+  hiddenDetailFollow: true,
+  hiddenHomeTab: false,
+  hiddenQuestionSide: true,
+  hiddenQuestionFollowing: true,
+  hiddenQuestionAnswer: true,
+  hiddenQuestionInvite: true,
+  hiddenSearchBoxTopSearch: true,
+  hiddenSearchPageTopSearch: true,
+  hiddenSearchPageFooter: true,
+  hiddenZhuanlanShare: true,
+  hiddenZhuanlanVoters: true,
+  hiddenListAnswerInPerson: true,
+  hiddenFollowAction: true,
+  hiddenFollowChooseUser: true,
+  hidden618HongBao: true,
+  hiddenZhuanlanFollowButton: true,
+  hiddenZhuanlanAvatarWrapper: true,
+  hiddenZhuanlanAuthorInfoHead: true,
+  hiddenZhuanlanAuthorInfoDetail: true,
+  hiddenQuestionSpecial: true,
+  hiddenListVideoContent: true,
+  hiddenHomeCreatorEntrance: true,
+  hiddenHomeRecommendFollow: true,
+  hiddenHomeCategory: true,
+  hiddenHomeCategoryMore: true,
+  hiddenHomeFooter: true,
+  removeZhihuOfficial: false,
+  removeStoryAnswer: true,
+  removeYanxuanAnswer: true,
+  removeYanxuanRecommend: true,
+  removeYanxuanCPRecommend: true,
+  removeFromYanxuan: true,
+  removeUnrealAnswer: false,
+  removeFollowVoteAnswer: false,
+  removeFollowVoteArticle: false,
+  removeFollowFQuestion: false,
+  removeBlockUserContent: true,
+  removeItemAboutAD: false,
+  removeItemAboutArticle: false,
+  removeItemAboutVideo: false,
+  removeItemQuestionAsk: false,
+  removeLessVote: false,
+  lessVoteNumber: 100,
+  removeLessVoteDetail: false,
+  lessVoteNumberDetail: 100,
+  suspensionHomeTab: false,
+  suspensionHomeTabPo: 'left: 20px; top: 100px;',
+  suspensionHomeTabFixed: true,
+  suspensionFind: false,
+  suspensionFindPo: 'left: 10px; top: 380px;',
+  suspensionFindFixed: true,
+  suspensionSearch: true,
+  suspensionSearchPo: 'left: 10px; top: 400px;',
+  suspensionSearchFixed: true,
+  suspensionUser: true,
+  suspensionUserPo: 'right: 60px; top: 100px;',
+  suspensionUserFixed: true,
+  suspensionPickUp: true,
+  answerOpen: 'off',
+  isUseThemeDark: false,
+  showBlockUser: true,
+  zoomImageType: '2',
+  zoomImageSize: '200',
+  showGIFinDialog: true,
+  questionTitleTag: true,
+  listOutPutNotInterested: true,
+  fixedListItemMore: true,
+  highlightOriginal: true,
+  highlightListItem: true,
+  listItemCreatedAndModifiedTime: true,
+  answerItemCreatedAndModifiedTime: true,
+  questionCreatedAndModifiedTime: true,
+  articleCreateTimeToTop: true,
+  linkShopping: '1',
+  linkAnswerVideo: '1',
 };
 
 /** 屏蔽关注列表关注人操作 */
@@ -253,11 +359,6 @@ const SET_DIRECTION = {
       [
         { value: 'hiddenAnswerRights', label: '收藏/喜欢/举报' },
         { value: 'hiddenAnswerRightsText', label: '收藏/喜欢/举报 文字' },
-      ],
-      [
-        { value: 'hiddenSearchBoxTopSearch', label: '搜索栏知乎热搜' },
-        { value: 'hiddenSearchPageTopSearch', label: '搜索页知乎热搜' },
-        { value: 'hiddenSearchPageFooter', label: '搜索页知乎指南' },
       ],
     ],
   },
@@ -289,6 +390,11 @@ const SET_DIRECTION = {
       [
         { value: 'hiddenFollowAction', label: '关注列表关注人操作栏' },
         { value: 'hiddenFollowChooseUser', label: '关注列表用户信息' },
+      ],
+      [
+        { value: 'hiddenSearchBoxTopSearch', label: '搜索栏知乎热搜' },
+        { value: 'hiddenSearchPageTopSearch', label: '搜索页知乎热搜' },
+        { value: 'hiddenSearchPageFooter', label: '搜索页知乎指南' },
       ],
     ],
   },
@@ -404,9 +510,8 @@ const ICO_URL = {
     answerItemCreatedAndModifiedTime: true, // 回答列表显示创建与最后修改时间
     questionCreatedAndModifiedTime: true, // 问题显示创建和最后修改时间
     articleCreateTimeToTop: true, // 文章发布时间置顶
-
-    shoppingLink: 'default', // 购物链接显示设置
-    answerVideoLink: 'default', // 回答视频显示设置
+    linkShopping: '0', // 购物链接显示设置 0 1 2
+    linkAnswerVideo: '0', // 回答视频显示设置  0 1 2
   };
 
   /** 缓存的doms */
@@ -454,7 +559,7 @@ const ICO_URL = {
         `,.css-12yl4eo,.css-1ggwojn,.css-xqep55,.css-mjg7l1,.css-q2yfd6,.css-1ulkprw` +
         `{background: #121212!important;}`;
       const background333 =
-        `.ctz-filter-block,.ctz-filter-block .ctz-set-title>span,#CTZ-BLOCK-LIST` +
+        `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
         `,.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd)` +
         `,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0,.css-ssvpr2,.css-m9gn5f,.FeedbackForm-inputBox-15yJ` +
         `,.FeedbackForm-canvasContainer-mrde,._Invite_container_30SP,.utils-frostedGlassEffect-2unM` +
@@ -507,7 +612,7 @@ const ICO_URL = {
     normal: (bg) => {
       // 普通背景色
       const background =
-        `.ctz-filter-block,#CTZ-BLOCK-LIST,.ctz-filter-block .ctz-set-title>span` +
+        `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
         `,body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar` +
         `,.position-suspensionSearch.focus,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N` +
         `,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z` +
@@ -570,7 +675,9 @@ const ICO_URL = {
           this.vSusHeader() +
           this.vOutputNotInterested() +
           this.vFixedListMore() +
-          this.vHighlightListItem()
+          this.vHighlightListItem() +
+          this.vShoppingLink() +
+          this.vAnswerVideo()
       );
     },
     initAfterLoad: function () {
@@ -585,8 +692,9 @@ const ICO_URL = {
     versionWidth: function () {
       // 首页列表版心
       const versionHome =
-        `.Topstory-mainColumn{width: ${pfConfig.versionHome || '1000'}px!important;}` +
-        `.Topstory-container{width: fit-content!important;}`;
+        `.Topstory-mainColumn,.Search-container{width: ${pfConfig.versionHome || '1000'}px!important;}` +
+        `.SearchMain{flex: 1}` +
+        `.Topstory-container,.css-knqde{width: fit-content!important;}`;
       // 回答详情版心
       const versionAnswer =
         `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
@@ -677,6 +785,57 @@ const ICO_URL = {
         ? `.List-item:focus,.TopstoryItem:focus,.HotItem:focus` +
             `{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(0, 102, 255, 0.3)!important;outline:none!important;transition:box-shadow 0.3s!important;}`
         : '';
+    },
+    vShoppingLink: function () {
+      // 购物链接CSS
+      const cssObj = {
+        0: '',
+        1:
+          '.MCNLinkCard-imageContainer,.MCNLinkCard-button,.MCNLinkCard-source' +
+          ',.ecommerce-ad-commodity-img,.ecommerce-ad-commodity-box-icon,.RichText-MCNLinkCardContainer .BottomInfo' +
+          ',.CPSCommonCard-imageBox,.RedPacketCard-imageBox,.CPSCommonCard-tool,.CPSCommonCard-subtitle' +
+          ',.RedPacketCard-subtitle,.RedPacketCard-tool' +
+          '{display: none!important;}' +
+          '.MCNLinkCard,.MCNLinkCard-card,.ecommerce-ad-commodity' +
+          ',.RichText-MCNLinkCardContainer .GoodsRecommendCard,.CPSCommonCard,.RedPacketCard-info,.RedPacketCard' +
+          '{min-height: 0!important;background: transparent!important;width:100%!important;max-width:100%!important;}' +
+          '.MCNLinkCard-cardContainer,.ecommerce-ad-commodity,.ecommerce-ad-commodity-main,.RedPacketCard,.CPSCommonCard' +
+          '{padding: 0!important;}' +
+          '.MCNLinkCard,.MCNLinkCard-info{margin: 0!important;}' +
+          '.MCNLinkCard-info,.ecommerce-ad-commodity-main{flex-direction: row!important;}' +
+          '.MCNLinkCard-price{padding-left: 12px;}' +
+          '.ecommerce-ad-commodity-box .ecommerce-ad-commodity{height: auto!important;}' +
+          '.ecommerce-ad-commodity-box-main-second{width: auto!important;}' +
+          '.MCNLinkCard-titleContainer,.ecommerce-ad-commodity-main-content-des span,.CPSCommonCard-title,.RedPacketCard-title' +
+          '{color: #fd8d55!important;justify-content: start!important;}' +
+          '.MCNLinkCard-titleContainer::before,.ecommerce-ad-commodity-main-content-des span::before' +
+          ',.CPSCommonCard-title::before,.RedPacketCard-title::before' +
+          '{content: "购物链接："}' +
+          '.MCNLinkCard-title{color: #fd8d55!important;}',
+        2:
+          'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box' +
+          ',.RichText-MCNLinkCardContainer' +
+          '{display: none!important;}',
+      };
+      return cssObj[pfConfig.linkShopping || '0'];
+    },
+    vAnswerVideo: function () {
+      // 回答内视频缩放CSS
+      const cssObj = {
+        0: '',
+        1:
+          `.VideoAnswerPlayer-video{display: none;}` +
+          `.VideoAnswerPlayer .VideoAnswerPlayer-stateBar::before{content: '视频链接';color: #f77a2d;margin-right: 12px}` +
+          `.VideoAnswerPlayer:hover{opacity: 0.8}` +
+          `.ZVideoLinkCard-playerContainer, .VideoContributionAnswer-video,.css-ujtn9j` +
+          `,.ZVideoLinkCard-info,.RichText-video .VideoCard{display: none;}` +
+          `.ZVideoLinkCard::before,.VideoContributionAnswer-container::before,.RichText-video::before` +
+          `{content: '视频链接';color: #f77a2d;cursor:pointer;}` +
+          `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}` +
+          `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
+        2: '.VideoAnswerPlayer,.RichText-video{display: none;}',
+      };
+      return cssObj[pfConfig.linkAnswerVideo || '0'];
     },
   };
 
@@ -878,6 +1037,7 @@ const ICO_URL = {
       await myStorage.set('pfConfig', JSON.stringify(pfConfig));
       changeTitle();
     },
+    useSimple: () => useSimple(),
   };
 
   /** 存储使用油猴自己的GM存储，解决数据不共通的问题，添加localStorage与GM判断，获取最新存储 */
@@ -1663,8 +1823,7 @@ const ICO_URL = {
     const doCssVersion = [
       'questionTitleTag',
       'fixedListItemMore',
-      // 'shoppingLink',
-      // 'answerVideoLink',
+      'linkShopping',
       'listOutPutNotInterested',
       'highlightListItem',
       'zoomImageType',
@@ -1703,6 +1862,10 @@ const ICO_URL = {
         myListenListItem.init();
       },
       articleCreateTimeToTop: addArticleCreateTimeToTop,
+      linkAnswerVideo: () => {
+        myVersion.change();
+        zoomVideos();
+      },
     };
 
     pfConfig[name] = type === 'checkbox' ? checked : value;
@@ -1921,7 +2084,7 @@ const ICO_URL = {
   };
 
   /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
-  function initImagePreview() {
+  const initImagePreview = () => {
     const images = [domA('.TitleImage'), domA('.ArticleItem-image'), domA('.ztext figure .content_image')];
     images.forEach((events) => {
       events.forEach((e) => {
@@ -1936,7 +2099,24 @@ const ICO_URL = {
         item.style = 'max-width: 100%;';
       });
     }
-  }
+  };
+
+  /** 视频跳转链接 */
+  const zoomVideos = () => {
+    if (pfConfig.answerVideoLink !== '1') return;
+    const itemClick = (item) => {
+      item.onclick = () => {
+        const parentModule = item.getAttribute('data-za-extra-module');
+        let videoId = '';
+        try {
+          videoId = JSON.parse(parentModule).card.content.video_id;
+        } catch {}
+        videoId && window.open(`/video/${videoId}`);
+      };
+    };
+    domA('.VideoContributionAnswer-container').forEach(itemClick);
+    domA('.RichText-video').forEach(itemClick);
+  };
 
   /** 预览动图回调 */
   const callbackGIF = (mutationsList) => {
@@ -2074,7 +2254,7 @@ const ICO_URL = {
   };
 
   /** 悬浮模块切换样式 */
-  function cSuspensionStyle(name) {
+  const cSuspensionStyle = (name) => {
     const cssObj = {
       suspensionHomeTab: '.Topstory-container .TopstoryTabs',
       suspensionFind: '.AppHeader-Tabs',
@@ -2090,15 +2270,28 @@ const ICO_URL = {
     if (cssObj[name]) {
       pfConfig[name] ? myMove.init(cssObj[name], `${name}Po`, name) : myMove.destroy(cssObj[name]);
     }
-  }
+  };
 
   /** 改变列表切换TAB悬浮 */
-  function changeSuspensionTab() {
+  const changeSuspensionTab = () => {
     const name = 'suspensionHomeTab';
     cSuspensionStyle(name);
     const even = dom('.Topstory-container .TopstoryTabs');
     pfConfig[name] ? myLock.append(even, name) : myLock.remove(even, name);
-  }
+  };
+
+  /** 使用极简模式 */
+  const useSimple = async () => {
+    const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
+    if (!isUse) return;
+    pfConfig = {
+      ...pfConfig,
+      ...CONFIG_SIMPLE,
+    };
+    await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+    onDocumentStart();
+    initData();
+  };
 
   /** 加载额外的样式文件 */
   const onInitStyleExtra = () => {
@@ -2130,16 +2323,14 @@ const ICO_URL = {
     myListenSearchListItem.init();
     myListenAnswerItem.init();
     //     topStoryRecommendEvent();
-    //     pathnameHasFn({
-    //       question: () => {
-    //         zoomVideos();
-    //         storyHidden();
-    //         listenSelectButton();
-    //         listenQuestionSideColumn();
-    //       },
-    //       search: searchPageHidden,
-    //       collection: collectionExport,
-    //     });
+    pathnameHasFn({
+      question: () => {
+        zoomVideos();
+        // storyHidden();
+        // listenSelectButton();
+      },
+      // collection: collectionExport,
+    });
     //   } else {
     //     myLocalC.bodySizePrev = myLocalC.bodySize;
     //   }
@@ -2363,7 +2554,6 @@ const ICO_URL = {
     pathnameHasFn({
       question: () => {
         // listenSelectButton();
-        // listenQuestionSideColumn();
         addQuestionCreatedAndModifiedTime();
       },
       // video: () => videoFns.init(),

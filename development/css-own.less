@@ -143,6 +143,14 @@
     overflow-y: auto;
     scroll-behavior: smooth;
     padding: 0 8px;
+    & > div:nth-of-type(2n) {
+      background: #efefef;
+      padding: 0 8px;
+      margin: 0 -8px;
+      .ctz-set-title > span {
+        background: #efefef;
+      }
+    }
 
     .ctz-set-content {
       & > div {
@@ -273,12 +281,6 @@
 
 // 屏蔽内容
 .ctz-filter-block {
-  background: #efefef;
-  .ctz-set-title > span {
-    background: #efefef;
-  }
-  padding: 0 8px;
-  margin: 0 -8px;
   [name='inputFilterWord'] {
     height: 24px;
     width: 300px;
@@ -349,7 +351,6 @@
 #CTZ-BLOCK-LIST {
   display: flex;
   flex-wrap: wrap;
-  background: #eee;
   margin: 0 -8px;
   padding: 8px;
   .ctz-black-item {
@@ -362,6 +363,7 @@
     align-items: center;
     background: #fff;
     border-radius: 4px;
+    border: @border;
     img {
       width: 30px;
       height: 30px;
