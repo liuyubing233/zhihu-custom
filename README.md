@@ -38,12 +38,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [回答内容按照点赞数和评论数排序](#回答内容按照点赞数和评论数排序)
 - [基础设置](#基础设置)
   - [基础设置 - 基本设置](#基础设置---基本设置)
-    - [更改网页和标题](#更改网页和标题)
-    - [自定义回答和文章图片尺寸](#自定义回答和文章图片尺寸)
-    - [使用弹窗打开动图](#使用弹窗打开动图)
   - [基础设置 - 悬浮模块](#基础设置---悬浮模块)
-    - [回答「收起」按钮悬浮](#回答收起按钮悬浮)
-    - [信息模块悬浮](#信息模块悬浮)
   - [基础设置 - 黑名单设置](#基础设置---黑名单设置)
   - [基础设置 - 通用模块隐藏](#基础设置---通用模块隐藏)
   - [基础设置 - 颜色设置](#基础设置---颜色设置)
@@ -51,36 +46,15 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [基础设置 - 默认功能](#基础设置---默认功能)
 - [首页列表设置](#首页列表设置)
   - [首页列表设置 - 基础设置](#首页列表设置---基础设置)
-    - [列表版心宽度](#列表版心宽度)
-    - [内容标题添加类别显示](#内容标题添加类别显示)
-    - [推荐列表显示「不感兴趣」按钮](#推荐列表显示不感兴趣按钮)
-    - [列表更多「···」按钮移动到题目右侧](#列表更多按钮移动到题目右侧)
-    - [关注列表高亮原创内容](#关注列表高亮原创内容)
-    - [列表内容点击高亮边框](#列表内容点击高亮边框)
-    - [列表内容显示发布时间和最后修改时间](#列表内容显示发布时间和最后修改时间)
   - [首页列表设置 - 屏蔽内容](#首页列表设置---屏蔽内容)
-    - [关注列表关注人操作屏蔽](#关注列表关注人操作屏蔽)
-    - [列表类别屏蔽](#列表类别屏蔽)
-    - [列表低赞内容屏蔽](#列表低赞内容屏蔽)
-    - [列表屏蔽词，关注、推荐 将屏蔽包含题目屏蔽词的内容](#列表屏蔽词关注推荐-将屏蔽包含题目屏蔽词的内容)
   - [首页列表设置 - 隐藏模块](#首页列表设置---隐藏模块)
 - [回答详情设置](#回答详情设置)
   - [回答详情设置 - 基础设置](#回答详情设置---基础设置)
-    - [回答版心宽度](#回答版心宽度)
-    - [问题详情显示创建时间和最后修改时间](#问题详情显示创建时间和最后修改时间)
-    - [回答内容显示创建时间与最后修改时间](#回答内容显示创建时间与最后修改时间)
-    - [购物链接显示设置](#购物链接显示设置)
-    - [回答视频显示设置](#回答视频显示设置)
   - [回答详情设置 - 屏蔽内容](#回答详情设置---屏蔽内容)
-    - [屏蔽官方账号的回答](#屏蔽官方账号的回答)
-    - [屏蔽带有标签的回答](#屏蔽带有标签的回答)
-    - [详情低赞回答屏蔽](#详情低赞回答屏蔽)
   - [回答详情设置 - 隐藏模块](#回答详情设置---隐藏模块)
   - [回答详情设置 - 回答展开收起](#回答详情设置---回答展开收起)
 - [文章专栏设置](#文章专栏设置)
   - [文章专栏设置 - 基础设置](#文章专栏设置---基础设置)
-    - [文章版心宽度](#文章版心宽度)
-    - [文章发布时间置顶](#文章发布时间置顶)
   - [文章专栏设置 - 隐藏模块](#文章专栏设置---隐藏模块)
 
 ### 默认功能
@@ -137,11 +111,11 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 #### 基础设置 - 基本设置
 
-##### 更改网页和标题
+**更改网页和标题**
 
 <img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=660&height=412&cropmode=none" width="660" />
 
-##### 自定义回答和文章图片尺寸
+**自定义回答和文章图片尺寸**
 
 设置此项可以将回答和专栏内图片按照所设置的大小进行缩放，并且在缩放模式下添加了所有的图片弹窗预览。
 
@@ -149,17 +123,17 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://bnz06pap004files.storage.live.com/y4mn0WCV4AeRizRJggESO-70r0GlJjeCiIyL6JHU_Kckfsff2ET3CoNsyWRisLZE2kn0kORbuQ6p0OaEjt_djhASBwV_QQe5Iub6i5ddsIyqa1HNyphDDMOM07hE5RPhTp9fh3j94ca1RxbBVH47s5hv2ULOQ3gSTw2ymIHwE0DOBfsaMFTHAfta4nqm0U2R0vD?width=660&height=641&cropmode=none" width="660" />
 
-##### 使用弹窗打开动图
+**使用弹窗打开动图**
 
 勾选此项所有的动图点击会以弹窗方式打开
 
 #### 基础设置 - 悬浮模块
 
-##### 回答「收起」按钮悬浮
+**回答「收起」按钮悬浮**
 
 将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。
 
-##### 信息模块悬浮
+**信息模块悬浮**
 
 悬浮模块，可以拖动自定义位置
 
@@ -209,43 +183,43 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 #### 首页列表设置 - 基础设置
 
-##### 列表版心宽度
+**列表版心宽度**
 
 单独设置列表的版心宽度
 
-##### 内容标题添加类别显示
+**内容标题添加类别显示**
 
 列表内容标题前添加类别标签，直观区分【问答】、【文章】、【视频】、【提问】
 
-##### 推荐列表显示「不感兴趣」按钮
+**推荐列表显示「不感兴趣」按钮**
 
 推荐列表【不感兴趣】按钮可以设置是否外置，点击删除该条内容并且自动调用【不感兴趣】接口
 
 <img src="https://by3302files.storage.live.com/y4m-hW8_FsqrpJWLf9xtYxscE9M_9XMus4Eb9yLEy2c6T-hNfHuITz7_he2mcI75K2eomhdCm9ZLrh9IZw62Fh3J5SNhHUdxxpvzHvujUYxBAVt3E5HeCaw9ClHTIqNmFNmyzxmRiMu4kJlGn68Czd6Ry81yyRyhbOmCwDD3UOHfwt0iWM6hl2p9xhH9hBCl_pB?width=1024&height=447&cropmode=none" width="800" />
 
-##### 列表更多「···」按钮移动到题目右侧
+**列表更多「···」按钮移动到题目右侧**
 
-##### 关注列表高亮原创内容
+**关注列表高亮原创内容**
 
 选择此项后关注列表里原创内容【发表回答】【发表文章】【提出问题】后将高亮显示，在所有颜色设置下生效
 
 <img src="https://by3302files.storage.live.com/y4movgDT2h4PN6dyYuCvEcmgp4MoWThn4hmsHcuBcMCY_E8-ZfM4O5AvoyD26_WVx5bbqFZD8apMJVULc9vmJDRWfb_AEAk1a-KpuBamZ4isWwLRnpWBBYPNz494X0zc3EfTs9oa_J-Sa-St6UsAlmD6NBQVM5XO8vF_rGukUaJwZ9LOyq79e_TxUsperLfGscT?width=1024&height=758&cropmode=none" width="800" />
 
-##### 列表内容点击高亮边框
+**列表内容点击高亮边框**
 
 设置此项后首页和回答详情列表在点击时边框高亮，同知乎原生快捷键 S 键
 
-##### 列表内容显示发布时间和最后修改时间
+**列表内容显示发布时间和最后修改时间**
 
 <img src="https://by3302files.storage.live.com/y4m05GjqvaVsLL9bKkY9TIFywr9x8EUmjao7eAe6Wg6bRtPTjva18t2IICu3fhp0xWqVnM-Y88lFpP11Rey2EMaJTR4JY4TMW1iLEPbyydgcmQSQxCcxntLhfNl0eGPKm7i2mMbMswBMBR6zYQ2ncU0FCXTpgDXkv4Nc-RtEWpgoluHO1gObtIdPtkxahc33F8j?width=1024&height=509&cropmode=none" width="800" />
 
 #### 首页列表设置 - 屏蔽内容
 
-##### 关注列表关注人操作屏蔽
+**关注列表关注人操作屏蔽**
 
 可以设置屏蔽关注人「赞同回答、赞同文章、关注问题」操作内容。
 
-##### 列表类别屏蔽
+**列表类别屏蔽**
 
 通过列表类别过滤内容
 
@@ -257,13 +231,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 勾选「视频」后推荐列表中将不会再出现视频内容。
 
-##### 列表低赞内容屏蔽
+**列表低赞内容屏蔽**
 
 <img src="https://bnz06pap004files.storage.live.com/y4mI2YyUBD90PJK3PpYlsaugzsGEIudCsle2m3F5xARNkivSWhcAy-z28vXM43Zef2nqf1P_qqun_N8xJx4cETRCdL59tl8l0G7h9QNOIs0olmbGMt1q7OkUqQAt8e4Xjj94cmnSQzwYKa10F1lniHQdFZACUrJZXtotZjJnvgyFyjdYVDw5tco7HiakKZigRcf?width=660&height=646&cropmode=none" width="660" />
 
 选中后，点赞量低于输入框中的「推荐页、搜索页」内容会被自动过滤
 
-##### 列表屏蔽词，关注、推荐 将屏蔽包含题目屏蔽词的内容
+**列表屏蔽词，关注、推荐** 将屏蔽包含题目屏蔽词的内容
 
 输入框输入后列表将会进行关键词过滤，可过滤多项，无上限。
 
@@ -277,19 +251,19 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 #### 回答详情设置 - 基础设置
 
-##### 回答版心宽度
+**回答版心宽度**
 
 单独设置回答页面的版心宽度
 
-##### 问题详情显示创建时间和最后修改时间
+**问题详情显示创建时间和最后修改时间**
 
 <img src="https://bnz06pap004files.storage.live.com/y4mjXltdYptJVGNdPMnfauYAeOd0BfKuoF7xFvNlqtn_NjGN6RqjdmypGjJqsPyLvKec5M-1pCRJyt4ocCE1vtnQQNFX-mflRWhTPmzgzbjY-Fq7ufpuXg71sb4Md_1152KIK1egHXzRElqUnQnkNaMV-TJ_0_m35Hndb6_nU23yW46BKnz2D7dQQ9MY0fi4Wkx?width=660&height=377&cropmode=none" width="660" />
 
-##### 回答内容显示创建时间与最后修改时间
+**回答内容显示创建时间与最后修改时间**
 
 <img src="https://by3302files.storage.live.com/y4m8d2x1gf2Ldvmpo3ukUjLrJkW_ocN_MX_0nFnl63X2rWrVjss6B3smdBYoApyqIqiPzBdBNW3BwjVEgqGftuT1xb0E1IgYqdFv31FYPWxeO-c8ch-CAhU1p6Yg_YXoer0-q2f6LudBTOFDlrPgO11WZSY7EkluhMjGaS735I1HGt_I0lBBQOf5iF4qECLNQac?width=1024&height=509&cropmode=none" width="800" />
 
-##### 购物链接显示设置
+**购物链接显示设置**
 
 可以设置回答和专栏里的购物链接只显示文字还是隐藏。
 
@@ -299,7 +273,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4m1NZYSfm8JHUPO_6MngMr2ZYINdctoRrSx6cHW6pZ9RzSweFtPs10rfLMx7d0KLNm9VXYgCoA3f2t1xkBLjSgZqWuvUxI6C1yVc22Ku1KIEsCImVth6rjsGDkpWYzLRl6TwWcQGzgeLRfhJZRxFCYc7FqL2GuSgG83HbPqRJd1C-ibMLdnkRWwd_bR-8ZfOw9?width=1024&height=457&cropmode=none" width="800" />
 
-##### 回答视频显示设置
+**回答视频显示设置**
 
 可以设置是仅显示链接还是隐藏，优化浏览体验
 
@@ -311,15 +285,15 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 #### 回答详情设置 - 屏蔽内容
 
-##### 屏蔽官方账号的回答
+**屏蔽官方账号的回答**
 
 屏蔽勾选的官方账号的回答
 
-##### 屏蔽带有标签的回答
+**屏蔽带有标签的回答**
 
 屏蔽带有勾选标签的回答
 
-##### 详情低赞回答屏蔽
+**详情低赞回答屏蔽**
 
 <img src="https://bnz06pap004files.storage.live.com/y4mikY2myD2uBtMhPk5SAzOqYxTIZa8Iv2QXTtFI30LLnG7EQPtpkqynKz7m3YuVtyAKTwnlRvC22wiuMpkKoDwFS-ybSNPRoPgapkkPW9wDpXXoDcG1gvKSLNFTVuH7JwvNwiHpkLlSnh45-BjZic-08dgKWlfSNFkVntC5d70Wn80xKlJTANxkMjtgrC5ruVH?width=660&height=657&cropmode=none" width="660" />
 
@@ -339,11 +313,11 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 #### 文章专栏设置 - 基础设置
 
-##### 文章版心宽度
+**文章版心宽度**
 
 单独设置文章页面的版心宽度
 
-##### 文章发布时间置顶
+**文章发布时间置顶**
 
 <img src="https://by3302files.storage.live.com/y4mrllfKDnCo_M2nEB2KYC3stVQQLhxe-AWbfcKRdCWSHh0NXs6Lh7yFVXZldLe1mQqLQrnfOIfQuAeH2ygsktczYa0jm-gjbF709JRoZfuY1Zh4Z08dF1BU9o--sdV7ROe3Bw4Dov_abzCqPprrtCJB5ycRhZn0xsOWPJOrrT0qtti4C7UWzReO4Ig9Dd2BN98?width=1024&height=504&cropmode=none" width="800" />
 
