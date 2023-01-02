@@ -335,6 +335,16 @@
   }
 }
 
+.ctz-video-download,
+.ctz-loading {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+
 .ctz-loading {
   animation: loadingAnimation 2s infinite;
 }
@@ -536,6 +546,69 @@
   }
 }
 
+// 默认功能
+#CTZ_DEFAULT_SELF {
+  & > div {
+    line-height: 24px;
+    margin-bottom: 4px;
+    a {
+      color: @hover;
+      &:hover {
+        color: #bbb;
+      }
+    }
+  }
+}
+
+.ctz-export-collection-box {
+  float: right;
+  text-align: right;
+  button {
+    font-size: 16px;
+  }
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0;
+  }
+}
+
+.ctz-pdf-dialog-item {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  margin: 12px;
+  background: #ffffff;
+}
+
+.ctz-pdf-dialog-title {
+  margin: 0 0 1.4em;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.ctz-pdf-box-content {
+  width: 100%;
+  background: #ffffff;
+}
+
+.ctz-pdf-view {
+  width: 100%;
+  background: #ffffff;
+  word-break: break-all;
+  white-space: pre-wrap;
+  font-size: 14px;
+  overflow-x: hidden;
+  a {
+    color: #0066ff;
+  }
+  img {
+    max-width: 100%;
+  }
+  p {
+    margin: 1.4em 0;
+  }
+}
+
 // header 三大金刚定位
 .ctz-unlock,
 .ctz-lock,
@@ -669,5 +742,23 @@
   }
   .ctz-search-icon {
     display: block;
+  }
+}
+
+.key-shadow {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;
+  font-weight: 600;
+  min-width: 26px;
+  height: 26px;
+  padding: 0px 6px;
+  text-align: center;
+}
+
+.ctz-zhihu-key a {
+  color: @hover;
+  &:hover {
+    color: #bbb;
   }
 }
