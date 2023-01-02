@@ -1,4 +1,10 @@
-<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/development/changelog.md" target="_blank">更新日志</a>
+## 修改器 v3 版本上线！
+
+#### 修改器修改为按功能「基础设置」、「首页列表设置」、「回答详情设置」、「文章专栏设置」四大分类，设置更加精确。
+
+#### 修改器默认功能内容显示添加到「基础设置 - 默认功能」模块，显示更加清晰。
+
+<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
 
 <a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a>
 
@@ -16,95 +22,64 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mVi9J2xNNGWP4VYxRPRquLOGPzu69BSk6kyzN8dkYI2621zoUYuQbkIaq9HaS2RgMa-LJH8azYF-Akh4fxJUhWj3ydhKGV3PjU1974qhiKMElT8wzaW0ygkuV1UmMhOTQ6TkwcT_-wBV0o9N9NoNpe_5xHZwy9p9vfrHYp68eWM71Z6Oh2UTIfNR2sFU2CipM?width=1024&height=58&cropmode=none" width="1024" height="58" />
 
+### 修改器样式
+
+<img src="https://bnz06pap004files.storage.live.com/y4mEWmNeuylTMRtpFVF0z5kyJ5rN19HrXNTk7gYx_BqDmT9rKWXJPI2maZtfpxRAClk0hMcwRa_uIAX2WARnIYP6LKcDYeF8e4nHJSzdL8MN35Bq6PtBMXyykJq5sqF2_3tNm_7KtF7lCG5e2C5DP9j-AKeVxGi6DlKxmFr6-pbP3Jk8NV_ejtzuzGd0W1hW7iz?width=660&height=361&cropmode=none" width="660" />
+
 ## 插件目录
 
-- [一. 唤起方式](#一-唤起方式)
-- [二. 默认功能](#二-默认功能)
-  - [1. 外链直接打开](#1-外链直接打开)
-  - [2. 视频下载](#2-视频下载)
-  - [3. 屏蔽设置页面添加一键移除所有屏蔽选项](#3-屏蔽设置页面添加一键移除所有屏蔽选项)
-  - [4. 移除登录弹窗](#4-移除登录弹窗)
-  - [5. 收藏夹内容导出为 PDF](#5-收藏夹内容导出为-pdf)
-  - [6. 回答内容按照点赞数和评论数排序](#6-回答内容按照点赞数和评论数排序)
-- [三. 基础设置](#三-基础设置)
-  - [1. 极简模式及恢复默认配置](#1-极简模式及恢复默认配置)
-  - [2. 回答和专栏图片缩放（20220121 修改为拖动条）](#2-回答和专栏图片缩放20220121-修改为拖动条)
-  - [3. 更改网页标题和标题图片](#3-更改网页标题和标题图片)
-  - [4. 页面右下停靠返回主页按钮](#4-页面右下停靠返回主页按钮)
-  - [5. 问题显示创建和最后修改时间](#5-问题显示创建和最后修改时间)
-  - [6. 关注列表高亮原创内容](#6-关注列表高亮原创内容)
-  - [7. 页面悬浮模块](#7-页面悬浮模块)
-  - [8. 列表内容高亮点击高亮边框](#8-列表内容高亮点击高亮边框)
-  - [9. 文章发布时间置顶](#9-文章发布时间置顶)
-  - [10. 首页列表显示创建与最后修改时间](#10-首页列表显示创建与最后修改时间)
-  - [11. 回答列表显示创建与最后修改时间](#11-回答列表显示创建与最后修改时间)
-  - [12. 版心宽度自定义（20210717）](#12-版心宽度自定义20210717)
-  - [13. 「屏蔽用户」按钮外置（20210824）](#13-屏蔽用户按钮外置20210824)
-  - [14. 可设置不再显示「已屏蔽」用户发布的内容（20210824）](#14-可设置不再显示已屏蔽用户发布的内容20210824)
-  - [15. 文章&专栏宽度独立修改（20220120）](#15-文章专栏宽度独立修改20220120)
-- [四. 首页设置](#四-首页设置)
-  - [1. 首页五个模块位置自定义](#1-首页五个模块位置自定义)
-  - [2. 内容标题添加类别标签](#2-内容标题添加类别标签)
-  - [3. 推荐列表外置“不感兴趣”按钮](#3-推荐列表外置不感兴趣按钮)
-- [五. 过滤内容](#五-过滤内容)
-  - [1. 过滤知乎官方账号](#1-过滤知乎官方账号)
-  - [2. 过滤列表类别](#2-过滤列表类别)
-  - [3. 关键词过滤](#3-关键词过滤)
-  - [4. 关注列表过滤](#4-关注列表过滤)
-  - [5. 过滤包含虚构创作的回答（20210924）](#5-过滤包含虚构创作的回答20210924)
-  - [6. 搜索结果过滤（20210926）](#6-搜索结果过滤20210926)
-  - [7. 自定义设置过滤低赞内容（20211228）](#7-自定义设置过滤低赞内容20211228)
-- [六. 回答设置](#六-回答设置)
-  - [1. 自动展开所有回答](#1-自动展开所有回答)
-  - [2. 默认收起所有长回答](#2-默认收起所有长回答)
-  - [3. 回答【收起】按钮悬浮](#3-回答收起按钮悬浮)
-- [七. 隐藏模块](#七-隐藏模块)
-  - [1. 购物链接显示设置](#1-购物链接显示设置)
-  - [2. 广告过滤](#2-广告过滤)
-  - [3. 顶部模块隐藏](#3-顶部模块隐藏)
-  - [4. 列表内容隐藏](#4-列表内容隐藏)
-  - [5. 详情（问答）内容隐藏](#5-详情问答内容隐藏)
-  - [6. 搜索内容隐藏](#6-搜索内容隐藏)
-  - [7. 专栏内容隐藏](#7-专栏内容隐藏)
-  - [8. 回答列表中的视频显示方式](#8-回答列表中的视频显示方式)
-  - [9. 知乎首页活动推广隐藏（20210924）](#9-知乎首页活动推广隐藏20210924)
-- [八. 颜色设置](#八-颜色设置)
-  - [1. 修改背景色](#1-修改背景色)
-  - [2. 夜间模式](#2-夜间模式)
-- [九. 配置导出导入](#九-配置导出导入)
-  - [1. 自定义 css](#1-自定义-css)
+- [修改器样式](#修改器样式)
+- [默认功能](#默认功能)
+  - [外链直接打开](#外链直接打开)
+  - [视频下载](#视频下载)
+  - [屏蔽设置页面添加一键移除所有屏蔽选项](#屏蔽设置页面添加一键移除所有屏蔽选项)
+  - [移除登录弹窗](#移除登录弹窗)
+  - [收藏夹内容导出为 PDF](#收藏夹内容导出为-pdf)
+  - [回答内容按照点赞数和评论数排序](#回答内容按照点赞数和评论数排序)
+- [基础设置](#基础设置)
+  - [基础设置 - 基本设置](#基础设置---基本设置)
+  - [基础设置 - 悬浮模块](#基础设置---悬浮模块)
+  - [基础设置 - 黑名单设置](#基础设置---黑名单设置)
+  - [基础设置 - 通用模块隐藏](#基础设置---通用模块隐藏)
+  - [基础设置 - 颜色设置](#基础设置---颜色设置)
+  - [基础设置 - 配置操作](#基础设置---配置操作)
+  - [基础设置 - 默认功能](#基础设置---默认功能)
+- [首页列表设置](#首页列表设置)
+  - [首页列表设置 - 基础设置](#首页列表设置---基础设置)
+  - [首页列表设置 - 屏蔽内容](#首页列表设置---屏蔽内容)
+  - [首页列表设置 - 隐藏模块](#首页列表设置---隐藏模块)
+- [回答详情设置](#回答详情设置)
+  - [回答详情设置 - 基础设置](#回答详情设置---基础设置)
+  - [回答详情设置 - 屏蔽内容](#回答详情设置---屏蔽内容)
+  - [回答详情设置 - 隐藏模块](#回答详情设置---隐藏模块)
+  - [回答详情设置 - 回答展开收起](#回答详情设置---回答展开收起)
+- [文章专栏设置](#文章专栏设置)
+  - [文章专栏设置 - 基础设置](#文章专栏设置---基础设置)
+  - [文章专栏设置 - 隐藏模块](#文章专栏设置---隐藏模块)
 
-### 一. 唤起方式
+### 默认功能
 
-在页面左侧处触摸出现眼睛按钮，点击弹出修改器弹窗。
-
-弹窗唤起后点击背景或右上角的关闭按钮关闭弹窗。
-
-<img src="https://by3302files.storage.live.com/y4md44Udu1ToWvEweYp159wttkOXFcuV1EarS9ZEZIFSuwrYXsPmGibCqpIzMxp2bgDKvTNq4R8tDpS2T5MqID-Y756FzIj-MhZs6kRYlvauimr6h6If90aS0O64LbjJdx2_Kra4e5dShX0EE9_-t_IP3bC__flBIUfx_EHcGsSj7p_jGhWHUbF313g6M1TKrUN?width=1024&height=602&cropmode=none" width="800" />
-
-### 二. 默认功能
-
-#### 1. 外链直接打开
+#### 外链直接打开
 
 将知乎里所有外部链接的重定向去除，可以直接访问。
 
-#### 2. 视频下载
+#### 视频下载
 
 知乎视频现在在左上角会生成一个下载按钮，点击即可下载视频。
 
-<img src="https://by3302files.storage.live.com/y4mAMNtMnqmvplhJhaX2R7miQ-wv75-zAYeGahGlfybYFESgcpKv696Zcwok-YLpv-PNJzGoBzUzARWdwZgC025DfdVrE6LAG5Tioj_aiuHvL4FyM29vd1qS4ya2hv5FNEFyEYv38fUstYqOMOYaZlTKjLTplk0FEcIH7w6_WwnVMzuDGTM8KaxihNVSHvQZi8E?width=1024&height=702&cropmode=none" width="800" />
+<img src="https://bnz06pap004files.storage.live.com/y4mqb0vb44nLu5NMJKCnR_GIf0Fblp7EEXwgUmn0EbNw7m_sD9kvljXe73nz_YcyxPnfYScWxEXaMa-Oojl0fUzpFROOIhlqpwRL98CroGVcvARQr1FEu7oC5ykjNP3p_ysg-f0xU-G_kZLIUOmjV1DZv-lPwf049kS99RKeU1yo5gvTSOFlONbsIBEgPhiSnCm?width=660&height=364&cropmode=none" width="660" />
 
-#### 3. 屏蔽设置页面添加一键移除所有屏蔽选项
+#### 屏蔽设置页面添加一键移除所有屏蔽选项
 
 因为知乎屏蔽 TAG 每次只显示部分，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽 TAG。
 
 <img src="https://by3302files.storage.live.com/y4mgpz5fP0fXYeq33PZ-6_CEqTmQHArhcPnngb_YYCurPpRg0wjbibzbaA-tz80g7RtYbDt5aVIWvm-wqJkN59zthOOXg5XHHCz-8ejrrXxTYd8hjYZPj-i2y-xoO9Uwz6g-pvfnvK7ezz8jmfSt_J04l0lN88omVzpKVEP7GbUnrekgekDTGwx8PRrAUURTFe1?width=1024&height=443&cropmode=none" width="800" />
 
-#### 4. 移除登录弹窗
+#### 移除登录弹窗
 
 未登录状态下问答和专栏移除登录弹窗
 
-#### 5. 收藏夹内容导出为 PDF
+#### 收藏夹内容导出为 PDF
 
 在收藏夹名称上方显示【生成 PDF】按钮，
 
@@ -120,7 +95,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mVvDZC3X45KzJUxF4m4_aMPdeiInIyOKzXz8klEtw5Rs3_Ih0Cr_jZ2MN9QwZ0culgSkx7qqwrL2V--0ApvuO_F7TuIi9NPF2E8lnfZgYNSSGgStBYTyXavxCLfG1YNTc6yG2yQr-fQAe0PgfpwT8vEOscrtDSioFiVi1XSDDisDAEwZ0xz5XUj6dI6l6P9lx?width=1024&height=430&cropmode=none" width="800" />
 
-#### 6. 回答内容按照点赞数和评论数排序
+#### 回答内容按照点赞数和评论数排序
 
 在页面加载完成后点击回答右上角的排序按钮，点击【点赞数排序】或【评论数排序】后，页面刷新等待排序完成。
 
@@ -132,199 +107,163 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mLzCKl5n4tGM1j2j1WdL0u3XU0_fzJpwKGh1NSf7Kf0eFZ7_tyDDatvEI1pq5k2KDYwCO5kmMapNx3dEDv2ClBv9x8BqNwUG94Mxy6AfHuCJUFCIMx9icoBUtAYGpUJiCvQkJLVPIPqu3iLFxj8yU-gOjcaQIB_ptMPLtaAr5xZbzx-VcBbsHIOD21veU7V1c?width=1024&height=467&cropmode=none" width="800" />
 
-### 三. 基础设置
+### 基础设置
 
-[返回目录](#插件目录)
+#### 基础设置 - 基本设置
 
-#### 1. 极简模式及恢复默认配置
+**更改网页和标题**
 
-点击【启用极简模式】按钮则将页面改为本人配置的极简模式样式，如需修改功能样式在修改器配置修改即可。
+<img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=660&height=412&cropmode=none" width="660" />
 
-点击【恢复默认配置】按钮则将页面还原回默认配置样式。
-
-极简模式预览：
-
-<img src="https://by3302files.storage.live.com/y4mSqmevK_F5UP654n4eKDHlgu6xtxqTjmRWEs8flN-zT1WNBRlD48kmq0LNN6zTfbuCvSs9tZrYwy-BJWj1KtIHgVzxuAmRyz-lAp2lXw1NCbDmCu0Ygstn12-XCiwDyhEBH9BivHojeYZbe3qg1o8_cCW5aDlQKOw11VCOJQV9ab7-Oiy6y3na0dOkSZAzUNW?width=660&height=327&cropmode=none" width="800" />
-
-#### 2. 回答和专栏图片缩放（20220121 修改为拖动条）
+**自定义回答和文章图片尺寸**
 
 设置此项可以将回答和专栏内图片按照所设置的大小进行缩放，并且在缩放模式下添加了所有的图片弹窗预览。
 
-【动图弹窗显示】在图片缩放模式下极为好用
+「使用弹窗打开动图」在图片缩放模式下极为好用
 
-<img src="https://by3302files.storage.live.com/y4mVs0wgi5BiHQHQ0y2Ueysz7j7ts7SqVjZAUDNjqtIhydaYz0uVOvQnSou1unSKYBSsKRgokGfZBhGYdV_bkvR89l9VIe8ciDVfvFw4fYqDjqGGdtI9DAiMQeQbGERUkMp-3MewdQYz5m5B6VEOnna-er-qxYe-g4vr2aqiitOUS-sIGRwhhsnkxm9VLAaJOC_?width=596&height=496&cropmode=none" width="596" height="496" />
+<img src="https://bnz06pap004files.storage.live.com/y4mn0WCV4AeRizRJggESO-70r0GlJjeCiIyL6JHU_Kckfsff2ET3CoNsyWRisLZE2kn0kORbuQ6p0OaEjt_djhASBwV_QQe5Iub6i5ddsIyqa1HNyphDDMOM07hE5RPhTp9fh3j94ca1RxbBVH47s5hv2ULOQ3gSTw2ymIHwE0DOBfsaMFTHAfta4nqm0U2R0vD?width=660&height=641&cropmode=none" width="660" />
 
-#### 3. 更改网页标题和标题图片
+**使用弹窗打开动图**
 
-<img src="https://by3302files.storage.live.com/y4m2FJaLWI6rv17hJgdzSSjm5gnySjQBcCNTthEW-bzzga3K3lod1CYgyusqKjHrsMAADwjWhLKH1SrT_wWwvl20llZGuJwbch8GHuTMov3Qqsi22vks6vSrEnB0D20Kh25UANYOy422nuAH562Ub72oPhYEWERIs6W4mrLCPEY-B_VWSAowmEB-x-No-vV0MEv?width=1024&height=621&cropmode=none" width="800" />
+勾选此项所有的动图点击会以弹窗方式打开
 
-#### 4. 页面右下停靠返回主页按钮
+#### 基础设置 - 悬浮模块
 
-<img src="https://by3302files.storage.live.com/y4mOhBqjWja1SLqIRo4QLazE8n0DZvcI43xDG93YdAUlFWNKuaLoT_i0bd5RnME_sUkwwry3Z6tfMoapI9G8HgsmEBD5BcGiXE8XV2A8Wb7V6M9l24QtskLRtd6dHNVRc3PagYBxVhRmbyP_ysDOmRndvRlxwdwCOdt-IwCS9Hs9TI5Rg71c4qQkoG5XcwM_AEF?width=1024&height=507&cropmode=none" width="800" />
+**回答「收起」按钮悬浮**
 
-#### 5. 问题显示创建和最后修改时间
+将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。
 
-选择改选项后会在问答页面的问题标题下方显示创建和最后修改时间
+**信息模块悬浮**
 
-<img src="https://by3302files.storage.live.com/y4muxyVssoNjJGR6jPVBwSrmqZQGvJAGYJf05588XA3BIZnqPpZgCSJ0dtLzVnCMjrG8FkEVIa3rJlV97WoDbppQZZ-wdY0lYs1eJZ-XPa2ohnJad6BFmnlsNMUirMouOXMLG6R_rls8xLVpVnVzKKBGpZ3H0kkODptXPGUPOAxboof01gU90NqxKW9IxOvCque?width=1024&height=351&cropmode=none" width="800" />
+悬浮模块，可以拖动自定义位置
 
-#### 6. 关注列表高亮原创内容
+<img src="https://bnz06pap004files.storage.live.com/y4m9rY1xviQ4qybu4wXtdHmrXo_pXYD12Nxqj-hTjPOju_Xajw21eXZolHu4sRDsQjiAXh5LdJmnYdkRJTzTdstQ26jIAZKkiiyXsHEhF0RE8my6jt52iNNt_f1zSH_Hs38iJT_D9_p-UjwLZmVZo91vkKlaW3ECkQlpMebCTIJxcSCyTpG6Ov8ota-thEVJMjc?width=660&height=361&cropmode=none" width="660" />
 
-选择此项后关注列表里原创内容【发表回答】【发表文章】【提出问题】后将高亮显示，在所有颜色设置下生效
-
-<img src="https://by3302files.storage.live.com/y4m19EHE0XCoYwlBwhNfzOV1mvcpDDKJTmkYH616fSe5RCx5Gfd42ul8weBHLVcMKt3FyWBo2vzZKtUjNXP-5qPgEJN3P1Qa_VBin_TpLuY0yucgy8gYEXdC1MvwFE0G0V1U4yiz01oiClKM9o1Aryuiul3_IMxleO8Zzh4dNc5-rX19RLXJmF7V5QYtUnQ4uVJ?width=587&height=496&cropmode=none" width="587" />
-
-<img src="https://by3302files.storage.live.com/y4movgDT2h4PN6dyYuCvEcmgp4MoWThn4hmsHcuBcMCY_E8-ZfM4O5AvoyD26_WVx5bbqFZD8apMJVULc9vmJDRWfb_AEAk1a-KpuBamZ4isWwLRnpWBBYPNz494X0zc3EfTs9oa_J-Sa-St6UsAlmD6NBQVM5XO8vF_rGukUaJwZ9LOyq79e_TxUsperLfGscT?width=1024&height=758&cropmode=none" width="800" />
-
-#### 7. 页面悬浮模块
-
-模块可配置是否悬浮显示，其中问题列表切换模块可设置是否隐藏。
-
-<img src="https://by3302files.storage.live.com/y4mdxyLs_3HIkxZ6dknGySUHvyiuBKo6FQ8RTU18JVsvMtGefDCZgHZ41Hca5XMOGsR18xTNJb056yqP-J6ccGnl2JRt6c6aQTNTS_-FuNMsARrsbieqr7Nhd0RLE2xOCDe7FypC0_VKWKHOwxMV7VTdPt468tHL6te6OYTdL9NbL4sISVw17lyN_9AiEQNZge5?width=1024&height=284&cropmode=none" width="800" />
-
-<img src="https://by3302files.storage.live.com/y4mXdEW-aTkkazcsDRSYStdnJRCoEHvcpPQSvOP0Vucnb1wtFwDqdLYiG8Tf1m2XCmFPuwd9oEVsl9iANPoIy3RZSwKmAAPjUKwP4XasBeDbxFIft9-l7NTBXMJXBxwwinpl0MrtNaBijAGplZEM6TWrh20ogxBDbfk1TUePAUUuImDxILtCfewdY5Q2fxuBDje?width=1024&height=508&cropmode=none" width="800" />
-
-#### 8. 列表内容高亮点击高亮边框
-
-设置此项后首页和回答详情列表在点击时边框高亮，同知乎原生快捷键 S 键
-
-#### 9. 文章发布时间置顶
-
-<img src="https://by3302files.storage.live.com/y4mrllfKDnCo_M2nEB2KYC3stVQQLhxe-AWbfcKRdCWSHh0NXs6Lh7yFVXZldLe1mQqLQrnfOIfQuAeH2ygsktczYa0jm-gjbF709JRoZfuY1Zh4Z08dF1BU9o--sdV7ROe3Bw4Dov_abzCqPprrtCJB5ycRhZn0xsOWPJOrrT0qtti4C7UWzReO4Ig9Dd2BN98?width=1024&height=504&cropmode=none" width="800" />
-
-#### 10. 首页列表显示创建与最后修改时间
-
-<img src="https://by3302files.storage.live.com/y4m05GjqvaVsLL9bKkY9TIFywr9x8EUmjao7eAe6Wg6bRtPTjva18t2IICu3fhp0xWqVnM-Y88lFpP11Rey2EMaJTR4JY4TMW1iLEPbyydgcmQSQxCcxntLhfNl0eGPKm7i2mMbMswBMBR6zYQ2ncU0FCXTpgDXkv4Nc-RtEWpgoluHO1gObtIdPtkxahc33F8j?width=1024&height=509&cropmode=none" width="800" />
-
-#### 11. 回答列表显示创建与最后修改时间
-
-<img src="https://by3302files.storage.live.com/y4m8d2x1gf2Ldvmpo3ukUjLrJkW_ocN_MX_0nFnl63X2rWrVjss6B3smdBYoApyqIqiPzBdBNW3BwjVEgqGftuT1xb0E1IgYqdFv31FYPWxeO-c8ch-CAhU1p6Yg_YXoer0-q2f6LudBTOFDlrPgO11WZSY7EkluhMjGaS735I1HGt_I0lBBQOf5iF4qECLNQac?width=1024&height=509&cropmode=none" width="800" />
-
-#### 12. 版心宽度自定义（20210717）
-
-选择设定版心方式为【自定义】，可以手动输入数字来调整版心宽度，再也不用担心宽度被束缚了！
-注：默认 1200，输入数字小于 1000 会按照 1000 来处理，以免因为版心过小导致排版错乱，暂时不设置上限。
-选择【使用预设】（默认）则是使用作者给出的 1000，1200，1500 和拉满四个选项。
-
-<img src="https://by3302files.storage.live.com/y4mjR0VN4GrWRtUjggsd4Kpt-4vCMTkIzcva5QYX1oAb3xOY32ktZTwG8vaFEHi5jJCM-0VU2w4awzMXKA7vm4w2EjSal-UpsMGezZJ_bUIA6vLcCdar7pGrWTPLN2s1gO6IrNFddZo4bwqZ0gILsJMpX0TYhzVaampGbzqiytvI8O9bWqaGuBc66wij3bhhF6h?width=660&height=194&cropmode=none" width="660" height="194" />
-
-#### 13. 「屏蔽用户」按钮外置（20210824）
-
-点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
-
-<img src="https://by3302files.storage.live.com/y4mZ6PRLOQPrjjEq0IGYM0xYCGSm4uvgQn1F15czFg2ddbLdRUlPX8kiRj3-d_P-WxZYsrm22OWuo4LE1tu4VaLGocY5ptSjJtCyZVua_DZrmauJ3avDpvKdVjQ0BzFeCE7Mr5_x3PPe8NPCjYPcfHTBOYkg03zIBWFHK-JcYt9tOth2Hzpxrb3JFulFDVGMkh9?width=660&height=357&cropmode=none" width="660" height="357" />
-
-#### 14. 可设置不再显示「已屏蔽」用户发布的内容（20210824）
+#### 基础设置 - 黑名单设置
 
 在使用该功能前，请先点击「同步黑名单」按钮同步黑名单内容（黑名单内容仅为演示）
 
 开启该选项后，在问答详情中将会过滤该用户的回答内容
 
-<img src="https://by3302files.storage.live.com/y4mXQ8wJIV1lE_BoqRS7m1EyM0NC4UVPu0ZCTU1e-7MZuyuGMD0N7knigO3bnvNvMv41-pmv-Uz8-YjJqs_B8QXPqvAdknUXGa48pQrQbEFeE0kfxV2x-658uBPBs3tGpqm8IcVYv9m3Vs8VmrnOkQSqaA8isSD0ewMHBNELK46glj4KPEmeCKmZiIeQOIp2pfH?width=453&height=405&cropmode=none" width="453" height="405" />
+<img src="https://bnz06pap004files.storage.live.com/y4mliXAXchX2uoVjwENCG3MYLKL-fYIIM9XPUtsZnptt6DokVzVd08x2hPz--WK3jfc6Ia7yMQwMQ_6uIsY41Djattqhf2Y6Bn0fd_S_3SW6b4p_--_vYmr3M29FaoH4FXsjQWajFeLZn4-Sko_BtkM3T4Nuu0-DPlDVE-5u-iL3Q0vPXoWUyjhwsqZwasCPZ1c?width=660&height=654&cropmode=none" width="660"  />
 
 点击已屏蔽用户了列表后方的 x 可以进行移出黑名单操作，跟知乎移除黑名单操作一致，不过如果是在知乎设置页里进行了「移除屏蔽」操作，需要手动运行同步黑名单。
 
-#### 15. 文章&专栏宽度独立修改（20220120）
+列表用户名后显示「屏蔽用户」按钮开启后，在回答页面用户后将显示「屏蔽用户」按钮，点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
 
-<img src="https://by3302files.storage.live.com/y4mfVNTDT1s4tH0MQ90m8BiMFjiu25BImp5dYMsms-ctKIs586JeYXq0ns6JkT7eqjlaiJ8cYcV9W7Eh6j4Jxhn0gT95i59GsnT1gvHvjtzoS2MzWHV0-Bgo61jkdg0VrXPc9ItHrP7GByLGu1SH_NfpSgZ8p4rCaFTNDgh96Oky5Ph918VsknbSAFVhkqoaxOq?width=588&height=486&cropmode=none" width="588" height="486" />
+#### 基础设置 - 通用模块隐藏
 
-### 四. 首页设置
+通用模块，比如首页顶部操作栏和滚动操作顶部可隐藏
 
-[返回目录](#插件目录)
+广告模块隐藏
 
-#### 1. 首页五个模块位置自定义
+所有的回答操作文字可进行隐藏
 
-首页五个模块位置自定义配置，可根据优先级排序，可设置是否隐藏。
+#### 基础设置 - 颜色设置
 
-列表标题添加类别标签，清晰的区分列表种类。
+<img src="https://bnz06pap004files.storage.live.com/y4m3W3yB5vvWZbcbC4bQS4DXprf55r2NQsk6tPgmxzYJSVS8ToVaUfr7y4PqKdPmxfAbAyYBRkgi6v1hQcy_VAOkkdM_-7o5slZeKb9nzZeWzeayJIlSClt5kX4ovARHyu_uFaCZRR8xCN4n2yT-JGOHbmjuvNj0p2QKw-i_DLkv8MGHmwpWnaufdqU3rp6TDYB?width=660&height=642&cropmode=none" width="660" />
 
-更多按钮（即列表中的【···】）是否固定到当前列表最右选项，极简模式默认启用。
+可设置背景颜色 & 是否开启夜间模式
 
-<img src="https://by3302files.storage.live.com/y4mBQ5JJN6ET0jMbCzXx5CDDHnJ0VNB19k5rQvLVIylYhHu7BrXQvjU1jXVtkMlZ01zexqE-1Ak7d-rhAIatydoc6HG0KOYxbDIwxXJhjIjismqrALZWX0_SJOrJR9HNYMBdjtfA_4o_wFmX6jqaz-t4x-gW01hP8D2Jm5Wdta675Cbc9mmbYhItvhGCIgkIhS3?width=1024&height=534&cropmode=none" width="800" />
+启用夜间模式为调用知乎原有夜间模式样式+知乎夜间模式未完成内容做的修改，如果发现夜间模式失效或渲染不完全情况请及时反馈给我。
 
-#### 2. 内容标题添加类别标签
+<img src="https://by3302files.storage.live.com/y4mdFDF3kSXpwxFio5W8ZaorG1A90k49OJPlA0VRIXPsQtYP8WzDs6R8NcpYwkEsK0-VQNafQ74OR8gbMhVJ3HQbg2X0FWHq3Cy-XQvzIsQC-wAQ9-YAaqxmqkTuLZfiAQsL8VRIa7dy-sMPQ4OS5FyNnmnyekK966qYabDbnb85zllWJRldtlrZzaE00JFd1km?width=1024&height=508&cropmode=none" width="800" />
+
+#### 基础设置 - 配置操作
+
+这里可以导出当前配置，导入配置时将导出的配置内容复制进来再点击【导入】按钮即可完成导入
+
+此部分将自己定义的 css 样式写入即可生效
+
+#### 基础设置 - 默认功能
+
+此模块为修改器自带功能的提示
+
+### 首页列表设置
+
+#### 首页列表设置 - 基础设置
+
+**列表版心宽度**
+
+单独设置列表的版心宽度
+
+**内容标题添加类别显示**
 
 列表内容标题前添加类别标签，直观区分【问答】、【文章】、【视频】、【提问】
 
-#### 3. 推荐列表外置“不感兴趣”按钮
+**推荐列表显示「不感兴趣」按钮**
 
 推荐列表【不感兴趣】按钮可以设置是否外置，点击删除该条内容并且自动调用【不感兴趣】接口
 
 <img src="https://by3302files.storage.live.com/y4m-hW8_FsqrpJWLf9xtYxscE9M_9XMus4Eb9yLEy2c6T-hNfHuITz7_he2mcI75K2eomhdCm9ZLrh9IZw62Fh3J5SNhHUdxxpvzHvujUYxBAVt3E5HeCaw9ClHTIqNmFNmyzxmRiMu4kJlGn68Czd6Ry81yyRyhbOmCwDD3UOHfwt0iWM6hl2p9xhH9hBCl_pB?width=1024&height=447&cropmode=none" width="800" />
 
-### 五. 过滤内容
+**列表更多「···」按钮移动到题目右侧**
 
-#### 1. 过滤知乎官方账号
+**关注列表高亮原创内容**
 
-设置在问题详情中过滤全部知乎官方账号还是故事档案局盐选科普等回答。
+选择此项后关注列表里原创内容【发表回答】【发表文章】【提出问题】后将高亮显示，在所有颜色设置下生效
 
-过滤后问题详情中将不显示对应账号的回答，在控制台中可以输出过滤的回答账号。
+<img src="https://by3302files.storage.live.com/y4movgDT2h4PN6dyYuCvEcmgp4MoWThn4hmsHcuBcMCY_E8-ZfM4O5AvoyD26_WVx5bbqFZD8apMJVULc9vmJDRWfb_AEAk1a-KpuBamZ4isWwLRnpWBBYPNz494X0zc3EfTs9oa_J-Sa-St6UsAlmD6NBQVM5XO8vF_rGukUaJwZ9LOyq79e_TxUsperLfGscT?width=1024&height=758&cropmode=none" width="800" />
 
-<img src="https://by3302files.storage.live.com/y4mWCP8aJwzoi3qUkD0SKE3S6YyABKM7ekHGiLoeHk-b4Y_-cxiz0G11ysE82JoBWa5KPZ1YLzGXNekuMw1yXK-QrwI4eQKqMVUSJ9-0gu2wCbli7eQaKBCSN8kYN4PTlnrghX7RVs0OW-eewWDhwIcSnMTGuaUlDDSmdzEOlGwWI9ocOgh-3yUNy1OwdFbD6k-?width=1024&height=537&cropmode=none" width="800" />
+**列表内容点击高亮边框**
 
-#### 2. 过滤列表类别
+设置此项后首页和回答详情列表在点击时边框高亮，同知乎原生快捷键 S 键
+
+**列表内容显示发布时间和最后修改时间**
+
+<img src="https://by3302files.storage.live.com/y4m05GjqvaVsLL9bKkY9TIFywr9x8EUmjao7eAe6Wg6bRtPTjva18t2IICu3fhp0xWqVnM-Y88lFpP11Rey2EMaJTR4JY4TMW1iLEPbyydgcmQSQxCcxntLhfNl0eGPKm7i2mMbMswBMBR6zYQ2ncU0FCXTpgDXkv4Nc-RtEWpgoluHO1gObtIdPtkxahc33F8j?width=1024&height=509&cropmode=none" width="800" />
+
+#### 首页列表设置 - 屏蔽内容
+
+**关注列表关注人操作屏蔽**
+
+可以设置屏蔽关注人「赞同回答、赞同文章、关注问题」操作内容。
+
+**列表类别屏蔽**
 
 通过列表类别过滤内容
 
-选择【文章】后推荐列表将不会再出现专栏文章。
+勾选「邀请回答」后推荐列表将不会显示邀请回答内容。
 
-选择【视频】后推荐列表中将不会再出现视频内容。
+勾选「商业推广」后搜索列表将不会显示商业推广内容。
 
-#### 3. 关键词过滤
+勾选「文章」后推荐列表将不会再出现专栏文章。
+
+勾选「视频」后推荐列表中将不会再出现视频内容。
+
+**列表低赞内容屏蔽**
+
+<img src="https://bnz06pap004files.storage.live.com/y4mI2YyUBD90PJK3PpYlsaugzsGEIudCsle2m3F5xARNkivSWhcAy-z28vXM43Zef2nqf1P_qqun_N8xJx4cETRCdL59tl8l0G7h9QNOIs0olmbGMt1q7OkUqQAt8e4Xjj94cmnSQzwYKa10F1lniHQdFZACUrJZXtotZjJnvgyFyjdYVDw5tco7HiakKZigRcf?width=660&height=646&cropmode=none" width="660" />
+
+选中后，点赞量低于输入框中的「推荐页、搜索页」内容会被自动过滤
+
+**列表屏蔽词，关注、推荐** 将屏蔽包含题目屏蔽词的内容
 
 输入框输入后列表将会进行关键词过滤，可过滤多项，无上限。
 
-并在关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容。
+并在关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容
 
-<img src="https://by3302files.storage.live.com/y4m7oXD2oTCdj74Zy7oMC9LaiabLYduduSqiMgFrJ1vATwHQTlIHfdxqe8tWzQ3AZTWzo1K5e7dKy5rXtogNFWlyCyHpydOZYzVFl1MEPI6H9XBIGjfM4e83dJYnsNmCt2atg_RRnmxTbQ0AcySQg5Bskj8Zd0nXad9DEr2KyDeRHpPtcMt6tEZikAv-zxJ1sdf?width=1024&height=528&cropmode=none" width="800" />
+#### 首页列表设置 - 隐藏模块
 
-选择【屏蔽内容后显示通知提醒框】则会在关键词过滤后右上方弹出弹窗提示过滤的内容，3 秒后自动消失（只是为了满足好奇心）。
+首页列表和搜索列表可隐藏部分显示模块，前往编辑器查看更多
 
-<img src="https://by3302files.storage.live.com/y4mSE-0VR0yzJI3WaR-1a3yfaeqo9D-RiomOTZ1t5-t0f5821DFQPXLnfcBUjMglJSzlYbB4k7pmx3tifr4-xGAFBVyTjTUGW4Tz7LAzHJS-F5CAnTN-6qPEaNXemOj8qV84Uy96XbgdyNoM_AMu086pZOzeYMRcp7TN7NZ-CG9QTmMU5hiHUKoWem4kCjZ7-xX?width=1024&height=536&cropmode=none" width="800" />
+### 回答详情设置
 
-#### 4. 关注列表过滤
+#### 回答详情设置 - 基础设置
 
-可以设置过滤关注列表的【关注人赞同回答】【关注人赞同文章】【关注人关注问题】内容
+**回答版心宽度**
 
-#### 5. 过滤包含虚构创作的回答（20210924）
+单独设置回答页面的版心宽度
 
-设置「过滤包含虚构创作的回答」，回答中将不再显示该内容
+**问题详情显示创建时间和最后修改时间**
 
-<img src="https://by3302files.storage.live.com/y4mmfsvMY3fNy4Eb6aR17-orFuVfWhNAmttZq5FPBYNMTnaE8__QXCfMC1hy483r292ZWrj_8IjRcNLd5epqxNkSedNvwSlsxXVfOyU0n6xHsJtz69A4oL9smHeRfA0RnchOJlYDiqTBKDe_scHOGMMclSPXcZ-c83hbiIfdhMnqnBMk6qHq0UGZixVEijBCEdl?width=589&height=485&cropmode=none" width="589" height="485" />
+<img src="https://bnz06pap004files.storage.live.com/y4mjXltdYptJVGNdPMnfauYAeOd0BfKuoF7xFvNlqtn_NjGN6RqjdmypGjJqsPyLvKec5M-1pCRJyt4ocCE1vtnQQNFX-mflRWhTPmzgzbjY-Fq7ufpuXg71sb4Md_1152KIK1egHXzRElqUnQnkNaMV-TJ_0_m35Hndb6_nU23yW46BKnz2D7dQQ9MY0fi4Wkx?width=660&height=377&cropmode=none" width="660" />
 
-#### 6. 搜索结果过滤（20210926）
+**回答内容显示创建时间与最后修改时间**
 
-<img src="https://by3302files.storage.live.com/y4mPvkTGzbeGdqXkFL00f9gXvnl4IT7MUzisFePISvoIUA2sH-RVoqvO_huC_qlEjZgfsE7QUdo6qJvihsb1frDQ51RzPvSvhCqiOBzdhKFG2v9PrLspmlRlvlmR03IZx4_TprP3suyGsPgZgOTJpiJzhLvL9RndmW2I0Cjw8mWK1y4158XDVOQm4gp-bEtG1fz?width=584&height=361&cropmode=none" width="584" height="361" />
+<img src="https://by3302files.storage.live.com/y4m8d2x1gf2Ldvmpo3ukUjLrJkW_ocN_MX_0nFnl63X2rWrVjss6B3smdBYoApyqIqiPzBdBNW3BwjVEgqGftuT1xb0E1IgYqdFv31FYPWxeO-c8ch-CAhU1p6Yg_YXoer0-q2f6LudBTOFDlrPgO11WZSY7EkluhMjGaS735I1HGt_I0lBBQOf5iF4qECLNQac?width=1024&height=509&cropmode=none" width="800" />
 
-#### 7. 自定义设置过滤低赞内容（20211228）
-
-<img src="https://by3302files.storage.live.com/y4mzMRlvGJlFOnfFaGXJdcrdhMm8FR56Ma12MGwo58CyzLARlT6-GphsHbyPm4eYbPQnJjldKbXf2FqlphEgvgAuVaUzjCGFSHsyUi_HFaJr7P8L2mk8543HhL4G4448iPkOHbUwv-kVZl6KVG0Dcr7jnaBeJcuE_Gk7OKZgfGjbugte0h1XFgFt0Sk10KnGikL?width=660&height=550&cropmode=none" width="660" height="550" />
-
-选中后，点赞量低于输入框中的「推荐页」内容会被自动过滤
-
-### 六. 回答设置
-
-[返回目录](#插件目录)
-
-#### 1. 自动展开所有回答
-
-通过推荐页进入问答详情时默认会收起长回答，选择此项后进入页面会自动展开所有收起的回答。
-
-#### 2. 默认收起所有长回答
-
-选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览。
-
-#### 3. 回答【收起】按钮悬浮
-
-将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。
-
-<img src="https://by3302files.storage.live.com/y4mXC-x6WlfP9sb0GrdPGZ_QnwQYssK7fZAwkNHxNsFoxWZdlU6jSFV1FxskWtrN_nLcVVqDr4c59d-LyzGKjbByb1hdfhv3pyGq1tWt7L-ap6IRpWPvsBPfqvWMNGa2UZ_GFjVU4OK6t-BUnuw4wu0yCoRK0qO1SVhl6P-_lYzLjduPvK1lQ_l4sNCZmoFAIO-?width=1024&height=446&cropmode=none" width="800" />
-
-### 七. 隐藏模块
-
-[返回目录](#插件目录)
-
-#### 1. 购物链接显示设置
+**购物链接显示设置**
 
 可以设置回答和专栏里的购物链接只显示文字还是隐藏。
 
@@ -334,55 +273,9 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4m1NZYSfm8JHUPO_6MngMr2ZYINdctoRrSx6cHW6pZ9RzSweFtPs10rfLMx7d0KLNm9VXYgCoA3f2t1xkBLjSgZqWuvUxI6C1yVc22Ku1KIEsCImVth6rjsGDkpWYzLRl6TwWcQGzgeLRfhJZRxFCYc7FqL2GuSgG83HbPqRJd1C-ibMLdnkRWwd_bR-8ZfOw9?width=1024&height=457&cropmode=none" width="800" />
 
-#### 2. 广告过滤
+**回答视频显示设置**
 
-默认选择此项，过滤页面内的广告，如果有没有过滤的广告请反馈给我！感谢！
-
-#### 3. 顶部模块隐藏
-
-顶部模块隐藏前后效果入下图所示。
-
-<img src="https://by3302files.storage.live.com/y4mPkfBbmUF1r5idSLhLcXok11MuiMPhL92wdzMpebEpcrKlf0l6BIJfo1DKjhqfk687S4LSZynTIoFeLyModgEOK7m8zLL5C08aFYdit3SIez4tkOds_nBJni50uM1x_GEg-SXBLjW8EopQE0qv4lZ_fUn_skBdg34VNIyOWMEANPlHSlRdcBlVwZUAMpxZyyX?width=1024&height=239&cropmode=none" width="800" />
-
-<img src="https://by3302files.storage.live.com/y4mlTOAidZXJUGnXMd44XnsfcpXT0RsVHDZG9Bkbe37x69rnfkVpzoxSB0KuXDIOj1hDnLppz838okQH0CwVOV1ONzxpw74vSAFL6S7PUn_QZocKtzBsqXgtjq4hV5wrVUP-dZRycStvxNXuX8xOMcSAIE4Ap15PCnEoqdvsAfJ2y8_Mdmnx4Iw--y_ibM2b__Q?width=1024&height=186&cropmode=none" width="800" />
-
-设置隐藏顶部模块和顶部滚动模块后：
-
-<img src="https://by3302files.storage.live.com/y4m_kQDPvJVQYLJhidK5irjLC3qKx8iWeTIbn7Or54GhY1U1BijWmMNxif4UzU6kXQjzQGFv_NkSm035UjtAgBIFWrM1oK5nsVH0xvndexfRg8l8QIZoNyefN5QRjM-176bJLMtW7RwJb2KN6kRRn1B4Wkxwc2ts1jhQWoN6egRJq9CQid44s5WxuK60R6gieSI?width=1024&height=536&cropmode=none" width="800" />
-
-#### 4. 列表内容隐藏
-
-如图所示，框选的内容均可配置隐藏。
-
-<img src="https://by3302files.storage.live.com/y4muFoyRI395-yfqXW05GhgrR2n9OMyDCr7hwcM0F9FI-pnI-jfFI_GaWXg-XDQnVcGouUOqWXn6AquROyaWnxmk6jTu2zQNnPQhY-RgY4jY_9OC76OD4i3MOiRE_WMIes14adsP8f0aUBpT8gJXd4XTeuEM9Bl7hl8p2_zrWKS7I_ta3n4yZ9qFbnZ-gLBcVlI?width=1024&height=506&cropmode=none" width="800" />
-
-<img src="https://by3302files.storage.live.com/y4m1H0sTO6g2eIoTrGlCxGPabm7_aK3pGk-mMuEgjryTN4T0XtOSbMX7ARoZLQ7CIEE1k3L3hukkhtyNMi87Izc88JRRfUcH8STC5AubTi0fZ2ovLNaUmb6IpuNN1m2yPXXHBhFIfaydpHrpAjM-5XyvVItz1mVmYwimSlVrBiZVv4jemYdjUA4V2u0_4jOVLCX?width=1024&height=505&cropmode=none" width="800" />
-
-#### 5. 详情（问答）内容隐藏
-
-如图显示内容及打赏按钮等模块配置隐藏。
-
-<img src="https://by3302files.storage.live.com/y4m98rJ_Qwp97wd4D6F2LMllqKkJNqEOwIak8mQvMV6m9yzBAzBhlXnTvaIxcoglmjbOZYaJW_04pmmTij5auZev08UF7rhjSI28P_75NVfN8YjqpevUr0aD5mzOCEpPXpafDRZAJwgPUmc9mbmRD5lUfXIxpyQ2R0vi35r-Q5oPBqHb1Yok1JcGurk9c7mFObj?width=1024&height=508&cropmode=none" width="800" />
-
-#### 6. 搜索内容隐藏
-
-如图显示内容及搜索结果的推广内容配置隐藏。
-
-搜索框内热搜隐藏在搜索框悬浮时仍然生效。
-
-<img src="https://by3302files.storage.live.com/y4mMJdlzWhc2dfbkedG0jlQ0hElqWUCAA8iRsuercfx7_80NRvTlI-7MOSZFJbMhem20nMnPNI1czABwkyFvzCS_gAmYABSN53G3SOvCZ74ohTyqSM67X6X8Q2VISI4fF6_g4NBj-CAlGEdZOjQTyt2yusmvxQAjI1i80_YuRVpxUfFCMA7o-P6r2iT2TaBwPFA?width=1024&height=515&cropmode=none" width="800" />
-
-#### 7. 专栏内容隐藏
-
-如图显示内容可配置隐藏。
-
-<img src="https://by3302files.storage.live.com/y4m0WrNz8IsEg77aGfERyfPzPKs2n5SxEGXyEDyJuwso0sCPWHpmb2m9OHkO4ZgDF8s8U-bhpt45vr8gMergapkDe7l8ySdNFwyKwWLM5H8ktdBnHHV5YzjwLkdHL9kZQI1uWudUW8Yv6HKlCaiuRegVlnwSFqVzfzr1i3hU4_sGT6k_K2luD2KRcBfozaZjPeL?width=1024&height=469&cropmode=none" width="800" />
-
-<img src="https://by3302files.storage.live.com/y4mu7BOFA15oSmt4crDMDWXXPr-LJuQzsP5M-ZFqqN6J16ZJ5-tDfVhr8mUVjJa8NZ0na30uNusubPvUXOC5FPIAYJvZHmx7UoM3GZe3ckXo9vjFscgsAzVVxF8w7NYAqf75orVwRvlOff6ax7OSEr53uWfFDngzoQRGFmNA7efEbDzbwoV_65_0BumZJcp6ntl?width=1024&height=462&cropmode=none" width="800" />
-
-#### 8. 回答列表中的视频显示方式
-
-可以设置是仅显示链接还是隐藏了，优化浏览体验
+可以设置是仅显示链接还是隐藏，优化浏览体验
 
 <img src="https://by3302files.storage.live.com/y4mac46UjdolK1otk-NzbPMmxvzXP9hi41B6RDSJ6t-4wjBsEzfMdsZ7PNT_ojm3bhrX8WSbeegttwJQhzp94bOFc7xg3losXIdjmKVKLEX_JSScGdGX-3P3q7LmtQnAHHT9toI124h0IkDeSuswHDt15EWLaqGp91RsbYp6lskrnh8225cttrVc7tnccz-234A?width=1024&height=467&cropmode=none" width="800" />
 
@@ -390,38 +283,44 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4miv_QmrUpxq69Kyl5q5RA4P-EBl_1SZsw9R9lZYy25e39oIvbREktKRk2ltc0-jrsoLR1RhBXWWU-KRgVaG0wO3B0N3Snc4fCE4vdq1wgGtZ75kT15x-zUEbYJHZFqFjEAXT8yA0mWW3do6KHPg7GmTw9rLrT9Ms-02L2ZtLtaSTF8Rx1XZI7eV95bvRutUQH?width=1024&height=473&cropmode=none" width="800" />
 
-#### 9. 知乎首页活动推广隐藏（20210924）
+#### 回答详情设置 - 屏蔽内容
 
-<img src="https://by3302files.storage.live.com/y4mk3Tq4eHEFhiFiH02q6Ggs8V215zxzjxJ1owgpTeE1bZm38WrT4TRbejtDIxiz-pi3KKZk33FSJEupVy-_x8xchQWt9Sebq9yww8jjXWrst3s0voHT4_OtnRo_iwekaLonG_cceBm4ZFNXh0sv4dJf50zcduFxd_EK-xJTgHaHWneMWuHUGV-erv9nAco7rQC?width=591&height=494&cropmode=none" width="591" height="494" />
+**屏蔽官方账号的回答**
 
-勾选该选项，如下图的首页活动推广模块就不会再显示了
+屏蔽勾选的官方账号的回答
 
-<img src="https://by3302files.storage.live.com/y4m4cYhg3QbKhadgmPPemopTPtA7OmRSEWdLFUfTa9Oqc9fLFzk1D-0Lxkgz3VhKaRmUB8_ToMlnfhogm6O7r_mnx-kNoRjy5lSlSrzIxY1LAAwQFY3hn_FCtUmhSfCnLh-Pc87CP9iLuIkaKLDE2AuOSP3itpL63v-wim0GJirb-GyqqUSihHl0aYd7o1ssPd-?width=1024&height=238&cropmode=none" width="1024" height="238" />
+**屏蔽带有标签的回答**
 
-### 八. 颜色设置
+屏蔽带有勾选标签的回答
 
-[返回目录](#插件目录)
+**详情低赞回答屏蔽**
 
-#### 1. 修改背景色
+<img src="https://bnz06pap004files.storage.live.com/y4mikY2myD2uBtMhPk5SAzOqYxTIZa8Iv2QXTtFI30LLnG7EQPtpkqynKz7m3YuVtyAKTwnlRvC22wiuMpkKoDwFS-ybSNPRoPgapkkPW9wDpXXoDcG1gvKSLNFTVuH7JwvNwiHpkLlSnh45-BjZic-08dgKWlfSNFkVntC5d70Wn80xKlJTANxkMjtgrC5ruVH?width=660&height=657&cropmode=none" width="660" />
 
-<img src="https://by3302files.storage.live.com/y4mHEbBrbiVsJ0-JjLMTRSj4oKq7TSHZc_YvnWEja4SQKjuKY82fiUCHYOO-VuecNW4lOwfImGEedAAXdOCGT5J-nZ9i7U8w9zijc0t6Rsph9W9RgV-YeMau1P9HNwrF_-2O_xj0N8hLgXwTLjvckYaXe3N90pDCpi55ZWBlG9HcwZi_59cM6z2LvKAd_7GFKFT?width=1024&height=508&cropmode=none" width="800" />
+选中后，点赞量低于输入框中的回答会被自动过滤
 
-#### 2. 夜间模式
+#### 回答详情设置 - 隐藏模块
 
-启用夜间模式为调用知乎原有夜间模式样式+知乎夜间模式未完成内容做的修改，如果发现夜间模式失效或渲染不完全情况请及时反馈给我。
+回答详情页面可隐藏部分显示模块，前往编辑器查看更多
 
-<img src="https://by3302files.storage.live.com/y4mdFDF3kSXpwxFio5W8ZaorG1A90k49OJPlA0VRIXPsQtYP8WzDs6R8NcpYwkEsK0-VQNafQ74OR8gbMhVJ3HQbg2X0FWHq3Cy-XQvzIsQC-wAQ9-YAaqxmqkTuLZfiAQsL8VRIa7dy-sMPQ4OS5FyNnmnyekK966qYabDbnb85zllWJRldtlrZzaE00JFd1km?width=1024&height=508&cropmode=none" width="800" />
+#### 回答详情设置 - 回答展开收起
 
-### 九. 配置导出导入
+自动展开所有回答：通过推荐页进入问答详情时默认会收起长回答，选择此项后进入页面会自动展开所有收起的回答。
 
-[返回目录](#插件目录)
+默认收起所有长回答：选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览。
 
-这里可以导出当前配置，导入配置时将导出的配置内容复制进来再点击【导入】按钮即可完成导入
+### 文章专栏设置
 
-#### 1. 自定义 css
+#### 文章专栏设置 - 基础设置
 
-此部分将自己定义的 css 样式写入即可生效
+**文章版心宽度**
 
-更多功能请在修改器中体验
+单独设置文章页面的版心宽度
 
-[返回目录](#插件目录)
+**文章发布时间置顶**
+
+<img src="https://by3302files.storage.live.com/y4mrllfKDnCo_M2nEB2KYC3stVQQLhxe-AWbfcKRdCWSHh0NXs6Lh7yFVXZldLe1mQqLQrnfOIfQuAeH2ygsktczYa0jm-gjbF709JRoZfuY1Zh4Z08dF1BU9o--sdV7ROe3Bw4Dov_abzCqPprrtCJB5ycRhZn0xsOWPJOrrT0qtti4C7UWzReO4Ig9Dd2BN98?width=1024&height=504&cropmode=none" width="800" />
+
+#### 文章专栏设置 - 隐藏模块
+
+文章页面可隐藏部分显示模块，前往编辑器查看更多

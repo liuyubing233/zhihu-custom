@@ -13,4 +13,5 @@
     "Zhihu",
     "Zhuanlan"
   ],
+  "prettier.printWidth": 140
 }
