@@ -9,13 +9,12 @@
 // @compatible   chrome Tampermonkey
 // @compatible   firefox Violentmonkey
 // @compatible   firefox Tampermonkey
-// @author       super pufferfish
+// @author       superPufferFish
 // @match        *://*.zhihu.com/*
 // @grant        unsafeWindow
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_info
-// @grant        GM_log
 // @grant        GM_download
 // @run-at       document-start
 // ==/UserScript==
