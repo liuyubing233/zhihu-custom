@@ -190,8 +190,7 @@
                 <div>
                   更加方便的浏览，按
                   <span class="key-shadow">?</span>
-                  （<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>）
-                  查看所有快捷键
+                  （<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键
                 </div>
                 <a href="/settings/preference" target="_blank">前往开启快捷键功能</a>
               </div>
@@ -377,13 +376,22 @@
           <div class="ctz-set-content">
             <div class="ctz-filter-defail-who">
               <div class="ctz-label">屏蔽以下官方账号的回答</div>
+              <div style="margin-bottom: 8px; border-bottom: 1px solid #ebebeb; padding-bottom: 4px">
+                <label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />所有知乎官方账号</label>
+              </div>
               <div class="ctz-flex-wrap">
-                <label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />知乎官方账号（所有知乎官方账号）</label>
                 <label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label>
                 <label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label>
                 <label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label>
                 <label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label>
               </div>
+            </div>
+
+            <div class="ctz-flex-wrap">
+              <label>
+                <span class="ctz-label">屏蔽「匿名用户」回答</span>
+                <input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" />
+              </label>
             </div>
 
             <div class="ctz-filter-defail-tag">
@@ -475,4 +483,4 @@
   <div><video src="" autoplay loop></video></div>
 </div>
 
-<iframe class="ctz-pdf-box-content" style="display: none;"></iframe>
+<iframe class="ctz-pdf-box-content" style="display: none"></iframe>
