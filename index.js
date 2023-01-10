@@ -531,8 +531,6 @@ const DEFAULT_FUNCTION = [
   const storageConfig = {
     cachePfConfig: {}, // 缓存初始配置
     cacheTitle: '', // 缓存页面原标题
-    // bodySize: 0,
-    // bodySizePrev: 0,
     fetchHeaders: {}, // fetch 的 headers 内容, 获取下来以供使用
     xZst81: '',
     cssDark: '', // 黑暗模式缓存
@@ -2826,14 +2824,10 @@ const DEFAULT_FUNCTION = [
   const initData = () => {
     storageConfig.cacheTitle = document.title;
     echoData();
-
-    // initPositionPage();
-    // onChooseHeart();
     cacheHeader();
     changeICO();
     changeTitle();
     changeSuspensionTab();
-    // onToHomeHref();
   };
 
   /** 页面滚动方法 */
