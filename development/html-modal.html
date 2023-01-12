@@ -211,7 +211,6 @@
         <div id="CTZ_SET_LIST_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
-            <!-- 版心宽度 -->
             <div>
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">列表版心宽度</div>
@@ -261,6 +260,10 @@
                 <input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" />
               </label>
             </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">列表内容标准文字大小</span>
+              <input type="number" name="fontSizeForList" class="ctz-i-change" />
+            </div>
           </div>
         </div>
 
@@ -296,17 +299,13 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
-                <input name="lessVoteNumber" class="ctz-i" type="number" style="width: 50px" />
+                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 50px" />
                 的内容
               </div>
             </div>
 
             <div class="ctz-filter-word">
               <div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div>
-              <!-- <label>
-                <span class="ctz-label">屏蔽内容后显示提醒框</span>
-                <input class="ctz-i" name="notificationAboutFilter" type="checkbox" value="on" />
-              </label> -->
               <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
               <div id="CTZ_FILTER_WORDS"></div>
             </div>
@@ -366,6 +365,10 @@
               <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="1" />仅链接</label>
               <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="2" />隐藏</label>
             </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">回答内容标准文字大小</span>
+              <input type="number" name="fontSizeForAnswer" class="ctz-i-change" />
+            </div>
           </div>
         </div>
 
@@ -409,7 +412,7 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后问题详情页将屏蔽点赞量少于
-                <input name="lessVoteNumberDetail" class="ctz-i" type="number" style="width: 50px" />
+                <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 50px" />
                 的回答
               </div>
             </div>
@@ -457,6 +460,10 @@
                 <span class="ctz-label">文章发布时间置顶</span>
                 <input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" />
               </label>
+            </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">文章内容标准文字大小</span>
+              <input type="number" name="fontSizeForArticle" class="ctz-i-change" />
             </div>
           </div>
         </div>
