@@ -841,7 +841,7 @@ const DEFAULT_FUNCTION = [
           `.ZVideoLinkCard-playerContainer, .VideoContributionAnswer-video,.css-ujtn9j` +
           `,.ZVideoLinkCard-info,.RichText-video .VideoCard{display: none;}` +
           `.ZVideoLinkCard::before,.VideoContributionAnswer-container::before,.RichText-video::before` +
-          `{content: '视频链接';color: #f77a2d;cursor:pointer;}` +
+          `{content: '「视频」';color: #f77a2d;}` +
           `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}` +
           `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
         2: '.VideoAnswerPlayer,.RichText-video{display: none;}',
