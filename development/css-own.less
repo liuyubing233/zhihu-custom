@@ -413,6 +413,13 @@
   }
 }
 
+.ctz-button-red {
+  background: #e55353 !important;
+  &:hover {
+    background: #ec7259 !important;
+  }
+}
+
 .ctz-preview {
   box-sizing: border-box;
   position: fixed;
@@ -773,5 +780,14 @@
   color: @hover;
   &:hover {
     color: #bbb;
+  }
+}
+
+.Profile-main .Profile-mainColumn {
+  .ListShortcut .List-item {
+    display: flex;
+    & > div {
+      flex: 1;
+    }
   }
 }

@@ -24,7 +24,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 ### 修改器样式
 
-<img src="https://bnz06pap004files.storage.live.com/y4mEWmNeuylTMRtpFVF0z5kyJ5rN19HrXNTk7gYx_BqDmT9rKWXJPI2maZtfpxRAClk0hMcwRa_uIAX2WARnIYP6LKcDYeF8e4nHJSzdL8MN35Bq6PtBMXyykJq5sqF2_3tNm_7KtF7lCG5e2C5DP9j-AKeVxGi6DlKxmFr6-pbP3Jk8NV_ejtzuzGd0W1hW7iz?width=660&height=361&cropmode=none" width="660" />
+<img src="https://bnz06pap004files.storage.live.com/y4mTtgkJq535dkJPhqjJYgC0xsvpOPG2uFpDJHgyJhvU6VZwKQlBKI68e_XIy_9XQNpqQ12OoQo5VevPkevsfyoxnVGaoabn3YiCxunSW18cAoIt7dS0DMtQ1fF4YxxPwd_fUbIJ6c2kSmtE9I0NhI948ZTyKNKVZqHMvKB8DYkthDIlPMnDgJ_5i96FnhdWrmI?width=1024&height=559&cropmode=none" width="1024" height="559" />
 
 ## 插件目录
 
@@ -36,6 +36,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [移除登录弹窗](#移除登录弹窗)
   - [收藏夹内容导出为 PDF](#收藏夹内容导出为-pdf)
   - [回答内容按照点赞数和评论数排序](#回答内容按照点赞数和评论数排序)
+  - [个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注](#个人主页我关注的问题我关注的收藏可以一键移除或将移除的内容添加回关注)
 - [基础设置](#基础设置)
   - [基础设置 - 基本设置](#基础设置---基本设置)
   - [基础设置 - 悬浮模块](#基础设置---悬浮模块)
@@ -67,7 +68,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 知乎视频现在在左上角会生成一个下载按钮，点击即可下载视频。
 
-<img src="https://bnz06pap004files.storage.live.com/y4mqb0vb44nLu5NMJKCnR_GIf0Fblp7EEXwgUmn0EbNw7m_sD9kvljXe73nz_YcyxPnfYScWxEXaMa-Oojl0fUzpFROOIhlqpwRL98CroGVcvARQr1FEu7oC5ykjNP3p_ysg-f0xU-G_kZLIUOmjV1DZv-lPwf049kS99RKeU1yo5gvTSOFlONbsIBEgPhiSnCm?width=660&height=364&cropmode=none" width="660" />
+<img src="https://bnz06pap004files.storage.live.com/y4m2EzgtXbvKwB3h1e9gIjMYH5Fv9sR6L36SxnwuYAVxgJPnbIuiY8wG9D9eZVJuJpQZCa3KTG8D-MY9Bhe3G_Dd8-jcbZ-WaFA1oCrUexwHQ4dyFKFTJhcmWCyPtb1QSQnEoXCcm_-RJzaCyqz94byREznrjJBJb9PuPbOlKzif_oQ4f3uYDVBx51rEcEMM-7A?width=1024&height=565&cropmode=none" width="1024" height="565" />
 
 #### 屏蔽设置页面添加一键移除所有屏蔽选项
 
@@ -107,13 +108,19 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4mLzCKl5n4tGM1j2j1WdL0u3XU0_fzJpwKGh1NSf7Kf0eFZ7_tyDDatvEI1pq5k2KDYwCO5kmMapNx3dEDv2ClBv9x8BqNwUG94Mxy6AfHuCJUFCIMx9icoBUtAYGpUJiCvQkJLVPIPqu3iLFxj8yU-gOjcaQIB_ptMPLtaAr5xZbzx-VcBbsHIOD21veU7V1c?width=1024&height=467&cropmode=none" width="800" />
 
+#### 个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注
+
+**_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面_**
+
+<img src="https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none" width="1024" height="469" />
+
 ### 基础设置
 
 #### 基础设置 - 基本设置
 
 **更改网页和标题**
 
-<img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=660&height=412&cropmode=none" width="660" />
+<img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=1024&height=639&cropmode=none" width="1024" height="639" />
 
 **自定义回答和文章图片尺寸**
 
@@ -137,7 +144,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 悬浮模块，可以拖动自定义位置
 
-<img src="https://bnz06pap004files.storage.live.com/y4m9rY1xviQ4qybu4wXtdHmrXo_pXYD12Nxqj-hTjPOju_Xajw21eXZolHu4sRDsQjiAXh5LdJmnYdkRJTzTdstQ26jIAZKkiiyXsHEhF0RE8my6jt52iNNt_f1zSH_Hs38iJT_D9_p-UjwLZmVZo91vkKlaW3ECkQlpMebCTIJxcSCyTpG6Ov8ota-thEVJMjc?width=660&height=361&cropmode=none" width="660" />
+<img src="https://bnz06pap004files.storage.live.com/y4mwNoK1snkbOYlJF0WsGJSucfKh_SMEgcRkoXUqYJ8RsQknOM4oZi6F2d5c9opZ8xc2eYrkpec1BUTp9Y4R-OQXz8N6rByTF5drwU-PTSvvFeNFj1jd-jZJvewwlZNyXapIUpfF2DuubPqWM0S50dhlVR2CY0T1OX3oXcnK0np9GJDae0t5GXjDyPIbIr0l3YS?width=1024&height=560&cropmode=none" width="1024" height="560" />
 
 #### 基础设置 - 黑名单设置
 
