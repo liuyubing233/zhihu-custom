@@ -220,6 +220,16 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://by3302files.storage.live.com/y4m05GjqvaVsLL9bKkY9TIFywr9x8EUmjao7eAe6Wg6bRtPTjva18t2IICu3fhp0xWqVnM-Y88lFpP11Rey2EMaJTR4JY4TMW1iLEPbyydgcmQSQxCcxntLhfNl0eGPKm7i2mMbMswBMBR6zYQ2ncU0FCXTpgDXkv4Nc-RtEWpgoluHO1gObtIdPtkxahc33F8j?width=1024&height=509&cropmode=none" width="800" />
 
+**列表内容标准文字大小调整**
+
+可自由调节列表内容文字大小
+
+<img src="https://bnz06pap004files.storage.live.com/y4mEa-Jp_OoDShsIzhv7Ff-bX27c0bmLhTsEThCi4QVU6PCTvE0eg0QfwSXTE4dlUgOk6emtO-nB-18er9vWebQ3DH_wLzvmET6tEhWago9wo0iqpx7x6a2BrOYk6NkZulBTpM2cvI2mHqZf5wydmNlGysWi93dmSnxxYaZLxNM4PImVye4H87-pVOjjAuCQvsR?width=660&height=653&cropmode=none" width="660" height="653" />
+
+修改后效果:
+
+<img src="https://bnz06pap004files.storage.live.com/y4mzYBRWlmp8fsTdFkGpdtSBbRUJwjEa43eyCvTqoRsFfp0G46Vht7gN9oc-UVFbLlIVg39S8kKwvx3EhcmEU4zYMolDNRa5KSYqLEkQbTwuyczrC9Qs0MwqKfhVZp1gxqrWIP3H0femfZ-7Mv49ChDU5XisAZL4B0eUvg12YhxvNats0OnykZpIFPn3Y_hYStC?width=1024&height=565&cropmode=none" width="1024" height="565" />
+
 #### 首页列表设置 - 屏蔽内容
 
 **关注列表关注人操作屏蔽**
@@ -306,6 +316,10 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 选中后，点赞量低于输入框中的回答会被自动过滤
 
+**回答内容标准文字大小调整**
+
+可自由调节回答内容文字大小，效果可参考列表文字大小调整
+
 #### 回答详情设置 - 隐藏模块
 
 回答详情页面可隐藏部分显示模块，前往编辑器查看更多
@@ -327,6 +341,10 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 **文章发布时间置顶**
 
 <img src="https://by3302files.storage.live.com/y4mrllfKDnCo_M2nEB2KYC3stVQQLhxe-AWbfcKRdCWSHh0NXs6Lh7yFVXZldLe1mQqLQrnfOIfQuAeH2ygsktczYa0jm-gjbF709JRoZfuY1Zh4Z08dF1BU9o--sdV7ROe3Bw4Dov_abzCqPprrtCJB5ycRhZn0xsOWPJOrrT0qtti4C7UWzReO4Ig9Dd2BN98?width=1024&height=504&cropmode=none" width="800" />
+
+**文章内容标准文字大小调整**
+
+可自由调节文章内容文字大小，效果可参考列表文字大小调整
 
 #### 文章专栏设置 - 隐藏模块
 
