@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.3.1
+// @version      3.4.0
 // @description  页面模块自定义隐藏|列表及回答内容过滤|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|回答视频下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录提示弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|手动调节文字大小|夜间模式开关及背景色修改|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|收藏夹内容导出为 PDF|一键移除所有屏蔽选项|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -186,6 +186,8 @@ const CONFIG_HIDDEN_DEFAULT = {
   hiddenHomeCategory: false, // 隐藏主页分类圆桌
   hiddenHomeCategoryMore: false, // 隐藏主页更多分类
   hiddenHomeFooter: false, // 隐藏主页知乎指南
+  hiddenAnswerItemActions: false, // 回答内容操作栏
+  hiddenAnswerItemTime: false, // 回答下方发布编辑时间
 };
 
 /** 屏蔽内容模块默认配置 */
@@ -332,6 +334,8 @@ const CONFIG_SIMPLE = {
   articleCreateTimeToTop: true,
   linkShopping: '1',
   linkAnswerVideo: '1',
+  hiddenAnswerItemActions: true,
+  hiddenAnswerItemTime: true,
 };
 
 /** 屏蔽关注列表关注人操作 */
@@ -413,9 +417,11 @@ const SET_DIRECTION = {
         { value: 'hiddenDetailBadge', label: '回答人简介' },
         { value: 'hiddenDetailFollow', label: '回答人关注按钮' },
         { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
-        { value: 'hiddenReward', label: '赞赏按钮' },
         { value: 'hiddenQuestionSide', label: '问题关注和被浏览数' },
-        { value: 'hiddenFixedActions', label: '回答悬浮操作条' },
+        { value: 'hiddenFixedActions', label: '回答悬浮操作栏' },
+        { value: 'hiddenAnswerItemActions', label: '回答内容操作栏' },
+        { value: 'hiddenAnswerItemTime', label: '回答底部发布编辑时间' },
+        { value: 'hiddenReward', label: '赞赏按钮' },
         { value: 'hidden618HongBao', label: '618红包链接' },
       ],
       [
@@ -984,6 +990,8 @@ const DEFAULT_FUNCTION = [
         pfConfig.hiddenHomeFooter
           ? '.Topstory-mainColumn{margin: 0 auto;}'
           : '') +
+        (pfConfig.hiddenAnswerItemActions ? '.Question-main .ContentItem-actions{display: none;}' : '') +
+        (pfConfig.hiddenAnswerItemTime ? '.Question-main .ContentItem-time{display: none;margin: 0;}' : '') +
         ''
       );
     },
@@ -1537,10 +1545,11 @@ const DEFAULT_FUNCTION = [
     addButton: function (event) {
       const classNameBlock = 'ctz-block-user';
       event.querySelector(`.${classNameBlock}`) && event.querySelector(`.${classNameBlock}`).remove();
+      const elementUser = dom('.AnswerItem-authorInfo>.AuthorInfo', event);
       try {
-        const userUrl = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="url"]').content;
-        const userName = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="name"]').content;
-        const avatar = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo>meta[itemprop="image"]').content;
+        const userUrl = elementUser.querySelector('meta[itemprop="url"]').content;
+        const userName = elementUser.querySelector('meta[itemprop="name"]').content;
+        const avatar = elementUser.querySelector('meta[itemprop="image"]').content;
         const aContent = event.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
           ? JSON.parse(event.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
           : {};
@@ -1556,7 +1565,8 @@ const DEFAULT_FUNCTION = [
           );
           isUse && this.serviveAdd(userUrl, userName, userId, avatar);
         };
-        event.querySelector('.AnswerItem-authorInfo>.AuthorInfo').appendChild(buttonBlockUser);
+        if (!elementUser.offsetHeight) return;
+        elementUser.appendChild(buttonBlockUser);
       } catch {}
     },
     /** 添加屏蔽用户 */
