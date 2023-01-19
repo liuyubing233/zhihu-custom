@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.4.0
+// @version      3.4.1
 // @description  页面模块自定义隐藏|列表及回答内容过滤|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|回答视频下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录提示弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|手动调节文字大小|夜间模式开关及背景色修改|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|收藏夹内容导出为 PDF|一键移除所有屏蔽选项|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -20,11 +20,11 @@
 // ==/UserScript==
 
 /** 获取元素 */
-const dom = (n, findDom) => (findDom || document).querySelector(n);
+const dom = (n) => document.querySelector(n);
 /** 使用 Id 获取元素 */
-const domById = (id, findDom) => (findDom || document).getElementById(id);
+const domById = (id) => document.getElementById(id);
 /** 获取所有元素 */
-const domA = (n, findDom) => (findDom || document).querySelectorAll(n);
+const domA = (n) => document.querySelectorAll(n);
 /** 创建元素 */
 const domC = (name, attrObjs) => {
   const element = document.createElement(name);
@@ -845,9 +845,10 @@ const DEFAULT_FUNCTION = [
           `.VideoAnswerPlayer .VideoAnswerPlayer-stateBar::before{content: '视频链接';color: #f77a2d;margin-right: 12px}` +
           `.VideoAnswerPlayer:hover{opacity: 0.8}` +
           `.ZVideoLinkCard-playerContainer, .VideoContributionAnswer-video,.css-ujtn9j` +
-          `,.ZVideoLinkCard-info,.RichText-video .VideoCard{display: none;}` +
+          `,.ZVideoLinkCard-info{display: none;}` +
+          `.RichText-video .VideoCard{opacity: 0;height: 1px;overflow:hidden;}` +
           `.ZVideoLinkCard::before,.VideoContributionAnswer-container::before,.RichText-video::before` +
-          `{content: '「视频」';color: #f77a2d;}` +
+          `{content:'「视频 - 点击播放」';color: #f77a2d;cursor:pointer;}` +
           `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}` +
           `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
         2: '.VideoAnswerPlayer,.RichText-video{display: none;}',
@@ -859,7 +860,8 @@ const DEFAULT_FUNCTION = [
       const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle } = pfConfig;
       const list =
         `.Topstory-body .RichContent-inner,.Topstory-body .HotItem-title,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
-        `{font-size: ${fontSizeForList}px;}`;
+        `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent` +
+        `{font-size: ${fontSizeForList}px!important;}`;
       const answer =
         `.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent` +
         `{font-size: ${fontSizeForAnswer}px}`;
@@ -1263,7 +1265,8 @@ const DEFAULT_FUNCTION = [
             innerText: '不感兴趣',
             className: CLASS_NOT_INTERESTED,
           });
-          elementThis.querySelector('.ContentItem-title').appendChild(elementNotInterested);
+          !elementThis.querySelector(`.${CLASS_NOT_INTERESTED}`) &&
+            elementThis.querySelector('.ContentItem-title').appendChild(elementNotInterested);
         }
 
         try {
@@ -1545,7 +1548,7 @@ const DEFAULT_FUNCTION = [
     addButton: function (event) {
       const classNameBlock = 'ctz-block-user';
       event.querySelector(`.${classNameBlock}`) && event.querySelector(`.${classNameBlock}`).remove();
-      const elementUser = dom('.AnswerItem-authorInfo>.AuthorInfo', event);
+      const elementUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
       try {
         const userUrl = elementUser.querySelector('meta[itemprop="url"]').content;
         const userName = elementUser.querySelector('meta[itemprop="name"]').content;
@@ -2019,7 +2022,7 @@ const DEFAULT_FUNCTION = [
         });
         elementButton.onclick = function () {
           const nItem = domP(this, 'class', classNameItem);
-          const qHref = dom(classHref, nItem) ? dom(classHref, nItem).href : '';
+          const qHref = nItem.querySelector(classHref) ? nItem.querySelector(classHref).href : '';
           if (!qHref) return;
           const nHref = qHref + `?ctzType=${ctzType}`;
           window.open(nHref);
@@ -2031,7 +2034,7 @@ const DEFAULT_FUNCTION = [
             this.classList.add(me.classNameRemove);
           }
         };
-        dom(`.${me.className}`, item) && dom(`.${me.className}`, item).remove();
+        item.querySelector(`.${me.className}`) && item.querySelector(`.${me.className}`).remove();
         item.appendChild(elementButton);
       });
     },
@@ -2428,19 +2431,23 @@ const DEFAULT_FUNCTION = [
 
   /** 视频跳转链接 */
   const zoomVideos = () => {
-    if (pfConfig.answerVideoLink !== '1') return;
+    if (pfConfig.linkAnswerVideo !== '1') return;
     const itemClick = (item) => {
       item.onclick = () => {
-        const parentModule = item.getAttribute('data-za-extra-module');
-        let videoId = '';
-        try {
-          videoId = JSON.parse(parentModule).card.content.video_id;
-        } catch {}
-        videoId && window.open(`/video/${videoId}`);
+        const itemParent = domP(item, 'class', 'VideoAnswerPlayer');
+        if (itemParent) {
+          // 可跳转视频链接
+          const videoLink = itemParent.querySelector('.VideoAnswerPlayer-video video').src;
+          videoLink && window.open(videoLink);
+        } else {
+          // 不可跳转视频链接
+          item.querySelector('.VideoCard').style = `opacity: 1;height: auto;`;
+        }
       };
     };
     domA('.VideoContributionAnswer-container').forEach(itemClick);
     domA('.RichText-video').forEach(itemClick);
+    domA('.VideoAnswerPlayer-stateBar').forEach(itemClick);
   };
 
   /** 预览动图回调 */

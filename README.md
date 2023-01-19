@@ -20,11 +20,11 @@ Safari 浏览器下在[知乎](www.zhihu.com)使用 TamperMonkey 会报错，导
 Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does not appear in the script-src directive of the Content Security Policy.
 ```
 
-<img src="https://by3302files.storage.live.com/y4mVi9J2xNNGWP4VYxRPRquLOGPzu69BSk6kyzN8dkYI2621zoUYuQbkIaq9HaS2RgMa-LJH8azYF-Akh4fxJUhWj3ydhKGV3PjU1974qhiKMElT8wzaW0ygkuV1UmMhOTQ6TkwcT_-wBV0o9N9NoNpe_5xHZwy9p9vfrHYp68eWM71Z6Oh2UTIfNR2sFU2CipM?width=1024&height=58&cropmode=none" width="1024" height="58" />
+<img src="https://by3302files.storage.live.com/y4mVi9J2xNNGWP4VYxRPRquLOGPzu69BSk6kyzN8dkYI2621zoUYuQbkIaq9HaS2RgMa-LJH8azYF-Akh4fxJUhWj3ydhKGV3PjU1974qhiKMElT8wzaW0ygkuV1UmMhOTQ6TkwcT_-wBV0o9N9NoNpe_5xHZwy9p9vfrHYp68eWM71Z6Oh2UTIfNR2sFU2CipM?width=1024&height=58&cropmode=none" width="1024"  />
 
 ### 修改器样式
 
-<img src="https://bnz06pap004files.storage.live.com/y4mTtgkJq535dkJPhqjJYgC0xsvpOPG2uFpDJHgyJhvU6VZwKQlBKI68e_XIy_9XQNpqQ12OoQo5VevPkevsfyoxnVGaoabn3YiCxunSW18cAoIt7dS0DMtQ1fF4YxxPwd_fUbIJ6c2kSmtE9I0NhI948ZTyKNKVZqHMvKB8DYkthDIlPMnDgJ_5i96FnhdWrmI?width=1024&height=559&cropmode=none" width="1024" height="559" />
+<img src="https://bnz06pap004files.storage.live.com/y4mTtgkJq535dkJPhqjJYgC0xsvpOPG2uFpDJHgyJhvU6VZwKQlBKI68e_XIy_9XQNpqQ12OoQo5VevPkevsfyoxnVGaoabn3YiCxunSW18cAoIt7dS0DMtQ1fF4YxxPwd_fUbIJ6c2kSmtE9I0NhI948ZTyKNKVZqHMvKB8DYkthDIlPMnDgJ_5i96FnhdWrmI?width=1024&height=559&cropmode=none" width="1024"  />
 
 ## 插件目录
 
@@ -68,7 +68,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 知乎视频现在在左上角会生成一个下载按钮，点击即可下载视频。
 
-<img src="https://bnz06pap004files.storage.live.com/y4m2EzgtXbvKwB3h1e9gIjMYH5Fv9sR6L36SxnwuYAVxgJPnbIuiY8wG9D9eZVJuJpQZCa3KTG8D-MY9Bhe3G_Dd8-jcbZ-WaFA1oCrUexwHQ4dyFKFTJhcmWCyPtb1QSQnEoXCcm_-RJzaCyqz94byREznrjJBJb9PuPbOlKzif_oQ4f3uYDVBx51rEcEMM-7A?width=1024&height=565&cropmode=none" width="1024" height="565" />
+<img src="https://bnz06pap004files.storage.live.com/y4m2EzgtXbvKwB3h1e9gIjMYH5Fv9sR6L36SxnwuYAVxgJPnbIuiY8wG9D9eZVJuJpQZCa3KTG8D-MY9Bhe3G_Dd8-jcbZ-WaFA1oCrUexwHQ4dyFKFTJhcmWCyPtb1QSQnEoXCcm_-RJzaCyqz94byREznrjJBJb9PuPbOlKzif_oQ4f3uYDVBx51rEcEMM-7A?width=1024&height=565&cropmode=none" width="1024"  />
 
 #### 屏蔽设置页面添加一键移除所有屏蔽选项
 
@@ -112,7 +112,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 **_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面_**
 
-<img src="https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none" width="1024" height="469" />
+<img src="https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none" width="1024" />
 
 ### 基础设置
 
@@ -120,7 +120,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 **更改网页和标题**
 
-<img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=1024&height=639&cropmode=none" width="1024" height="639" />
+<img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=1024&height=639&cropmode=none" width="1024" />
 
 **自定义回答和文章图片尺寸**
 
@@ -144,7 +144,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 悬浮模块，可以拖动自定义位置
 
-<img src="https://bnz06pap004files.storage.live.com/y4mwNoK1snkbOYlJF0WsGJSucfKh_SMEgcRkoXUqYJ8RsQknOM4oZi6F2d5c9opZ8xc2eYrkpec1BUTp9Y4R-OQXz8N6rByTF5drwU-PTSvvFeNFj1jd-jZJvewwlZNyXapIUpfF2DuubPqWM0S50dhlVR2CY0T1OX3oXcnK0np9GJDae0t5GXjDyPIbIr0l3YS?width=1024&height=560&cropmode=none" width="1024" height="560" />
+<img src="https://bnz06pap004files.storage.live.com/y4mwNoK1snkbOYlJF0WsGJSucfKh_SMEgcRkoXUqYJ8RsQknOM4oZi6F2d5c9opZ8xc2eYrkpec1BUTp9Y4R-OQXz8N6rByTF5drwU-PTSvvFeNFj1jd-jZJvewwlZNyXapIUpfF2DuubPqWM0S50dhlVR2CY0T1OX3oXcnK0np9GJDae0t5GXjDyPIbIr0l3YS?width=1024&height=560&cropmode=none" width="1024" />
 
 #### 基础设置 - 黑名单设置
 
@@ -224,11 +224,11 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 可自由调节列表内容文字大小
 
-<img src="https://bnz06pap004files.storage.live.com/y4mEa-Jp_OoDShsIzhv7Ff-bX27c0bmLhTsEThCi4QVU6PCTvE0eg0QfwSXTE4dlUgOk6emtO-nB-18er9vWebQ3DH_wLzvmET6tEhWago9wo0iqpx7x6a2BrOYk6NkZulBTpM2cvI2mHqZf5wydmNlGysWi93dmSnxxYaZLxNM4PImVye4H87-pVOjjAuCQvsR?width=660&height=653&cropmode=none" width="660" height="653" />
+<img src="https://bnz06pap004files.storage.live.com/y4mEa-Jp_OoDShsIzhv7Ff-bX27c0bmLhTsEThCi4QVU6PCTvE0eg0QfwSXTE4dlUgOk6emtO-nB-18er9vWebQ3DH_wLzvmET6tEhWago9wo0iqpx7x6a2BrOYk6NkZulBTpM2cvI2mHqZf5wydmNlGysWi93dmSnxxYaZLxNM4PImVye4H87-pVOjjAuCQvsR?width=660&height=653&cropmode=none" width="660"  />
 
 修改后效果:
 
-<img src="https://bnz06pap004files.storage.live.com/y4mzYBRWlmp8fsTdFkGpdtSBbRUJwjEa43eyCvTqoRsFfp0G46Vht7gN9oc-UVFbLlIVg39S8kKwvx3EhcmEU4zYMolDNRa5KSYqLEkQbTwuyczrC9Qs0MwqKfhVZp1gxqrWIP3H0femfZ-7Mv49ChDU5XisAZL4B0eUvg12YhxvNats0OnykZpIFPn3Y_hYStC?width=1024&height=565&cropmode=none" width="1024" height="565" />
+<img src="https://bnz06pap004files.storage.live.com/y4mzYBRWlmp8fsTdFkGpdtSBbRUJwjEa43eyCvTqoRsFfp0G46Vht7gN9oc-UVFbLlIVg39S8kKwvx3EhcmEU4zYMolDNRa5KSYqLEkQbTwuyczrC9Qs0MwqKfhVZp1gxqrWIP3H0femfZ-7Mv49ChDU5XisAZL4B0eUvg12YhxvNats0OnykZpIFPn3Y_hYStC?width=1024&height=565&cropmode=none" width="1024"  />
 
 #### 首页列表设置 - 屏蔽内容
 
