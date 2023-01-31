@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.4.4
+// @version      3.4.5
 // @description  页面模块自定义隐藏|列表及回答内容过滤|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|回答视频下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录提示弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|手动调节文字大小|夜间模式开关及背景色修改|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|收藏夹内容导出为 PDF|一键移除所有屏蔽选项|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -1470,8 +1470,11 @@ const EXTRA_CLASS_HTML = {
         let isHiddenTag = false;
         hiddenTags.forEach((i) => pfConfig[i] && (isHiddenTag = true));
         if (isHiddenTag && !message) {
-          const tagElement = elementThis.querySelector('.KfeCollection-AnswerTopCard-Container');
-          const tagText = tagElement ? tagElement.innerText : '';
+          const nodeTag1 = elementThis.querySelector('.KfeCollection-AnswerTopCard-Container');
+          const nodeTag2 = elementThis.querySelector('.LabelContainer-wrapper');
+          const text1 = nodeTag1 ? nodeTag1.innerText : '';
+          const text2 = nodeTag2 ? nodeTag2.innerText : '';
+          const tagText = text1 + text2;
           hiddenTags.forEach((i) => {
             if (pfConfig[i]) {
               const nReg = new RegExp(HIDDEN_ANSWER_TAG[i]);
@@ -1488,11 +1491,6 @@ const EXTRA_CLASS_HTML = {
           const userName = elementThis.querySelector('[itemprop="name"]').content;
           userName === '匿名用户' && (message = `已屏蔽一条「匿名用户」回答`);
         }
-
-        // 添加回答时间
-        pfConfig.answerItemCreatedAndModifiedTime && addTimes(elementThis);
-        // 添加「屏蔽用户」按钮
-        showBlockUser && myBlack.addButton(elementThis);
 
         // 自动展开回答 和 默认收起长回答
         if (!message && answerOpen) {
@@ -1513,6 +1511,13 @@ const EXTRA_CLASS_HTML = {
             isF && foldButton.click();
             lessNum++;
           }
+        }
+
+        if (!message) {
+          // 添加回答时间
+          pfConfig.answerItemCreatedAndModifiedTime && addTimes(elementThis);
+          // 添加「屏蔽用户」按钮
+          showBlockUser && myBlack.addButton(elementThis);
         }
 
         // 最后信息 & 起点位置处理
