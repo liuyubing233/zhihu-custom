@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.5.0
+// @version      3.5.1
 // @description  页面模块自定义隐藏|列表及回答内容过滤|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|回答视频下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录提示弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|手动调节文字大小|切换主题，夜间模式调整|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|收藏夹内容导出为 PDF|一键移除所有屏蔽选项|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -610,7 +610,7 @@ const EXTRA_CLASS_HTML = {
         `,.css-1yq3jl6,.css-mzh2tk,.css-6mdg56,.CreatorRecruitFooter--fix,body .Recruit-buttonFix-placeholder` +
         `,.css-ovbogu,.css-1v840mj,.css-huwkhm,.css-akuk2k,.css-ygii7h,.css-1h84h63,.css-1bwzp6r,.css-w215gm` +
         `,.css-1117lk0:hover,.zhi,.Modal-modal-wf58,.css-1j5d3ll,.GlobalSideBar-navList,.KfeCollection-FeedBlockSetting` +
-        `,.css-iebf30,.css-1qjzmdv,.AnswerForm-footer,.css-g3xs10,.css-jlyj5p,.ContentItem-rightButton` +
+        `,.css-iebf30,.css-1qjzmdv,.AnswerForm-footer,.css-g3xs10,.css-jlyj5p,.css-805ti0` +
         `,.css-12yl4eo,.css-1ggwojn,.css-xqep55,.css-mjg7l1,.css-q2yfd6,.css-1ulkprw,.Card,.ContentItem-actions,.QuestionHeader` +
         `,.QuestionHeader-footer,.MoreAnswers .List-headerText,.EQvEDwRqICOvs_x_kUWW,.ProfileHeader-wrapper,.SettingsFAQ` +
         `,.QuestionWaiting-types,.Popover-content` +
@@ -2395,16 +2395,16 @@ const EXTRA_CLASS_HTML = {
         if (evenBottom > hST + window.innerHeight && evenPrevBottom < hST) {
           evenButton.style =
             `visibility:visible!important;position: fixed!important;bottom: 60px;` +
-            `left: ${even.offsetLeft + even.offsetWidth - RIGHT}px;` +
+            `right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + RIGHT}px;` +
             `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
-            `height: 40px!important;line-height:40px;padding: 0 12px!important;` +
+            `height: 40px!important;padding: 0 12px!important;` +
             `background: ${
               myBackground.isUseDark()
-                ? 'transparent'
+                ? BACKGROUND_DARK_COLORS[colorBackground].b2
                 : BACKGROUND_CONFIG[colorBackground].opacity
                 ? BACKGROUND_CONFIG[colorBackground].opacity
                 : colorBackground
-            }`;
+            }!important;`;
         } else {
           evenButton.style = '';
         }
