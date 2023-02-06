@@ -9,7 +9,7 @@
 // @compatible   chrome Tampermonkey
 // @compatible   firefox Violentmonkey
 // @compatible   firefox Tampermonkey
-// @author       superPufferFish
+// @author       liuyubing
 // @match        *://*.zhihu.com/*
 // @grant        unsafeWindow
 // @grant        GM_setValue
