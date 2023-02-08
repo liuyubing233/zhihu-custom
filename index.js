@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.6.0
+// @version      3.7.0
 // @description  页面模块自定义隐藏|列表及回答内容过滤|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|回答视频下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录提示弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|手动调节文字大小|切换主题，夜间模式调整|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|收藏夹内容导出为 PDF|一键移除所有屏蔽选项|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -589,6 +589,7 @@ const EXTRA_CLASS_HTML = {
     cacheTitle: '', // 缓存页面原标题
     fetchHeaders: {}, // fetch 的 headers 内容, 获取下来以供使用
     xZst81: '',
+    heightForList: 0, // 列表缓存高度
   };
 
   /** 修改页面背景的 css */
@@ -2818,10 +2819,18 @@ const EXTRA_CLASS_HTML = {
   function resizeFun() {
     if (!HTML_HOOTS.includes(location.hostname)) return;
 
+    // 比较列表缓存的高度是否大于当前高度，如果大于则是从 index = 0 遍历
+    if (domById('TopstoryContent')) {
+      const heightTopstoageContent = domById('TopstoryContent').offsetHeight;
+      heightTopstoageContent < storageConfig.heightForList ? myListenListItem.restart() : myListenListItem.init();
+      // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
+      heightTopstoageContent < window.innerHeight && doResizePage();
+      storageConfig.heightForList = heightTopstoageContent;
+    }
+
     initLinkChanger();
     previewGIF();
     initImagePreview();
-    myListenListItem.init();
     myListenSearchListItem.init();
     myListenAnswerItem.init();
     pathnameHasFn({
@@ -2832,14 +2841,6 @@ const EXTRA_CLASS_HTML = {
       video: () => myVideo.init(),
       collection: () => myCollectionExport.init(),
     });
-
-    // body 高度变更后比较「推荐」模块内容高度与网页高度
-    // 如果模块高度小于网页高度则手动触发 resize 使其加载数据
-    const recommendHeightLess = dom('.Topstory-recommend') && dom('.Topstory-recommend').offsetHeight < window.innerHeight;
-    const contentHeightLess = dom('.Topstory-content') && dom('.Topstory-content').offsetHeight < window.innerHeight;
-    if (recommendHeightLess || contentHeightLess) {
-      doResizePage();
-    }
 
     // 判断 body 变化后的页面 title 是否变化
     // 原逻辑是在 body 变化后会请求查看是否有新的消息后再更改 title
