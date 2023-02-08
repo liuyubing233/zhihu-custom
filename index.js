@@ -623,7 +623,7 @@ const EXTRA_CLASS_HTML = {
         `,.QuestionHeader-footer,.MoreAnswers .List-headerText,.EQvEDwRqICOvs_x_kUWW,.ProfileHeader-wrapper,.SettingsFAQ` +
         `,.QuestionWaiting-types,.Popover-content,.Post-content,.KfeCollection-PcCollegeCard-root,.SearchTabs,.GlobalSideBar-navList` +
         `,.WebPage-root-g7WXc,.KfeCollection-FeedBlockSetting,.AnswerForm-footer,.CreatorRecruitFooter--fix,body .Recruit-buttonFix-placeholder` +
-        `,.CreatorIndex-BottomBox-Item` +
+        `,.CreatorIndex-BottomBox-Item,.Recommendations-Main` +
         `{background: ${bg}!important;}`;
 
       const backgroundB2 =
@@ -632,7 +632,7 @@ const EXTRA_CLASS_HTML = {
         `,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0,.css-ssvpr2,.css-m9gn5f,.FeedbackForm-inputBox-15yJ,.css-106u01g,.css-c29erj` +
         `,.FeedbackForm-canvasContainer-mrde,._Invite_container_30SP,.utils-frostedGlassEffect-2unM,.css-16eulm,.index-root-3h4H5` +
         `,.Card-card-2K6v,.UserLivesPage-page-GSje,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448` +
-        `,.PubIndex-CategoriesHeader,.AppHeader,body,.UserPageItem--withButton,.QuestionWaiting-typesTopper` +
+        `,.PubIndex-CategoriesHeader,.AppHeader,body,.UserPageItem--withButton,.QuestionWaiting-typesTopper,.PostItem,.LinkCard.new` +
         `{background:${b2}!important;}`;
 
       const backgroundTransparent =
