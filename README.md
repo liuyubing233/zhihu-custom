@@ -120,14 +120,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 推荐页内容链接根据有新到旧进行缓存，可缓存 100 条；「编辑器 - 历史记录 - 推荐列表缓存」
 
-
-<img src="https://s1.ax1x.com/2023/02/09/pSWArex.md.png" alt="pSWArex.md.png" border="0">
+<img src="https://bnz06pap004files.storage.live.com/y4m57E4fziLSLmLGt_Nz-CNFucYHkMaCEIzfY4AWXed2sCxKtAt1X7WGZK0dtzP7fQCZz6jHvYrm6tvVgmBPjwQEQVgcnxOCBe27O20fJYx7vbFeuwqFRHjFV8nY3UlLO3MZ6TyHckmIzLowb5eETwMD_YiEOdteGFlMMCUsFzGWzlF40KsZ6vFRk_AqwpuS06Y?width=1024&height=612&cropmode=none" width="1024" />
 
 #### 保存浏览历史记录
 
 可保存 100 条浏览历史记录链接，内容为打开的问题、文章、视频；「编辑器 - 历史记录 - 浏览历史记录」
 
-<img src="https://s1.ax1x.com/2023/02/09/pSWAcFO.md.png" alt="pSWAcFO.md.png" border="0">
+<img src="https://bnz06pap004files.storage.live.com/y4mX6wlaBERlQTa9hfLa6IxfVrb2MdcX0kOR59JdAsHyC4v58PeZhGBWAL4ux_gokKhLJccmuwkEfdwJ6DXUnU3Ssl5LlfCdy4EaTAYvLOAZyMxt7hecrCGe1MNIuSFSmgzKjLDAwvserMiIAspx68oI6qeGoFASch-Mog8DdF4-vx7LikpLenvYEL1UhxUpehu?width=1024&height=772&cropmode=none" width="1024" />
 
 ### 基础设置
 
