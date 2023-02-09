@@ -37,6 +37,8 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
   - [收藏夹内容导出为 PDF](#收藏夹内容导出为-pdf)
   - [回答内容按照点赞数和评论数排序](#回答内容按照点赞数和评论数排序)
   - [个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注](#个人主页我关注的问题我关注的收藏可以一键移除或将移除的内容添加回关注)
+  - [推荐页内容缓存](#推荐页内容缓存)
+  - [保存浏览历史记录](#保存浏览历史记录)
 - [基础设置](#基础设置)
   - [基础设置 - 基本设置](#基础设置---基本设置)
   - [基础设置 - 悬浮模块](#基础设置---悬浮模块)
@@ -113,6 +115,18 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 **_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面_**
 
 <img src="https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none" width="1024" />
+
+#### 推荐页内容缓存
+
+推荐页内容链接根据有新到旧进行缓存，可缓存 100 条；「编辑器 - 历史记录 - 推荐列表缓存」
+
+<img src="https://bnz06pap004files.storage.live.com/y4m57E4fziLSLmLGt_Nz-CNFucYHkMaCEIzfY4AWXed2sCxKtAt1X7WGZK0dtzP7fQCZz6jHvYrm6tvVgmBPjwQEQVgcnxOCBe27O20fJYx7vbFeuwqFRHjFV8nY3UlLO3MZ6TyHckmIzLowb5eETwMD_YiEOdteGFlMMCUsFzGWzlF40KsZ6vFRk_AqwpuS06Y?width=1024&height=612&cropmode=none" width="1024" />
+
+#### 保存浏览历史记录
+
+可保存 100 条浏览历史记录链接，内容为打开的问题、文章、视频；「编辑器 - 历史记录 - 浏览历史记录」
+
+<img src="https://bnz06pap004files.storage.live.com/y4mX6wlaBERlQTa9hfLa6IxfVrb2MdcX0kOR59JdAsHyC4v58PeZhGBWAL4ux_gokKhLJccmuwkEfdwJ6DXUnU3Ssl5LlfCdy4EaTAYvLOAZyMxt7hecrCGe1MNIuSFSmgzKjLDAwvserMiIAspx68oI6qeGoFASch-Mog8DdF4-vx7LikpLenvYEL1UhxUpehu?width=1024&height=772&cropmode=none" width="1024" />
 
 ### 基础设置
 
