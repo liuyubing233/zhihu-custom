@@ -1436,7 +1436,6 @@ const EXTRA_CLASS_HTML = {
           const nI = i - lessNum >= 0 ? i - lessNum : 0;
           this.index = nI;
           myStorage.set('pfHistory', JSON.stringify(pfHistory));
-          fnLog('已缓存推荐列表');
         }
       }
     },
@@ -1706,7 +1705,6 @@ const EXTRA_CLASS_HTML = {
           userType: 'people',
           urlToken,
         });
-        fnLog(`已屏蔽用户${userName}`);
       });
     },
     /** 解除拉黑用户接口 */
@@ -1728,7 +1726,6 @@ const EXTRA_CLASS_HTML = {
           removeItem && removeItem.remove();
           myStorage.set('pfConfig', JSON.stringify(pfConfig));
         }
-        fnLog(`已解除屏蔽用户：${name}`);
       });
     },
     /** 同步黑名单列表 */
@@ -1763,7 +1760,6 @@ const EXTRA_CLASS_HTML = {
             myBlack.init();
             domById(ID_BUTTON_SYNC_BLOCK).innerHTML = '同步黑名单';
             domById(ID_BUTTON_SYNC_BLOCK).disabled = false;
-            fnLog('黑名单同步完成');
           }
         });
     },
@@ -2410,7 +2406,6 @@ const EXTRA_CLASS_HTML = {
   /** 监听过滤内容 */
   const fnHiddenDom = (lessNum, ev, log) => {
     ev.style.display = 'none';
-    log && fnLog(log);
     return ++lessNum;
   };
 
@@ -2431,11 +2426,7 @@ const EXTRA_CLASS_HTML = {
         'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)[0],
         'content-type': 'application/json;charset=utf-8',
       }),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        fnLog('已调用「不感兴趣」接口');
-      });
+    }).then((res) => res.json());
   };
 
   /** 节流, 使用时 fn 需要为 function () {} */
@@ -2738,7 +2729,6 @@ const EXTRA_CLASS_HTML = {
       }
       item.href = href;
       item.classList.add(operaLink);
-      fnLog('外链重定向');
     };
     esName.forEach((name) => {
       domA(`${name}:not(.${operaLink})`).forEach(hrefChanger);
@@ -2923,7 +2913,6 @@ const EXTRA_CLASS_HTML = {
         view.slice(0, 100);
         pfHistory.view = view;
         myStorage.set('pfHistory', JSON.stringify(pfHistory));
-        fnLog('已添加浏览历史');
       }
     }, 100);
   };
@@ -3091,7 +3080,6 @@ const EXTRA_CLASS_HTML = {
         pfHistory[dataId] = [];
         await myStorage.set('pfHistory', JSON.stringify(pfHistory));
         echoHistory();
-        fnLog(`清空${event.target.innerText}`);
       };
     });
 
