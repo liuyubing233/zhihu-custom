@@ -6,9 +6,10 @@
   </div>
   <div class="ctz-menu-top">
     <a href="#CTZ_SET_BASIS">基础设置</a>
-    <a href="#CTZ_SET_LIST">首页列表设置</a>
-    <a href="#CTZ_SET_ANSWER">回答详情设置</a>
-    <a href="#CTZ_SET_ARTICLE">文章专栏设置</a>
+    <a href="#CTZ_SET_LIST">首页列表</a>
+    <a href="#CTZ_SET_ANSWER">回答详情</a>
+    <a href="#CTZ_SET_ARTICLE">文章专栏</a>
+    <a href="#CTZ_SET_HISTORY">历史记录</a>
   </div>
   <div class="ctz-content">
     <!-- 基础设置 -->
@@ -462,6 +463,30 @@
             <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
           </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 历史记录 -->
+    <div id="CTZ_SET_HISTORY" style="display: none">
+      <div class="ctz-content-left">
+        <a href="#CTZ_SET_HISTORY_LIST">推荐列表缓存</a>
+        <a href="#CTZ_SET_HISTORY_VIEW">浏览历史记录</a>
+      </div>
+      <div class="ctz-content-right">
+        <div id="CTZ_SET_HISTORY_LIST">
+          <div class="ctz-set-title">
+            <span>推荐列表缓存<span class="ctz-desc">最多缓存100条，包含已过滤项</span></span>
+          </div>
+          <button class="ctz-button" name="button_history_clear" data-id="list" >清空推荐列表缓存</button>
+          <div class="ctz-set-content"></div>
+        </div>
+        <div id="CTZ_SET_HISTORY_VIEW">
+          <div class="ctz-set-title">
+            <span>浏览历史记录<span class="ctz-desc">最多缓存100条</span></span>
+          </div>
+          <button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button>
+          <div class="ctz-set-content"></div>
         </div>
       </div>
     </div>
