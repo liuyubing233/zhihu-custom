@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.7.3
+// @version      3.7.4
 // @description  页面模块自定义隐藏|列表及回答内容过滤|保存浏览历史记录|推荐页内容缓存|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|回答视频下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录提示弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|手动调节文字大小|切换主题，夜间模式调整|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|收藏夹内容导出为 PDF|一键移除所有屏蔽选项|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -1646,6 +1646,7 @@ const EXTRA_CLASS_HTML = {
     },
     /** 添加「屏蔽用户」按钮 */
     addButton: function (event) {
+      const me = this;
       const classNameBlock = 'ctz-block-user';
       event.querySelector(`.${classNameBlock}`) && event.querySelector(`.${classNameBlock}`).remove();
       const elementUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
@@ -1666,7 +1667,7 @@ const EXTRA_CLASS_HTML = {
           const isUse = confirm(
             `是否要屏蔽${userName}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。\n如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`
           );
-          isUse && this.serviveAdd(userUrl, userName, userId, avatar);
+          isUse && me.serviveAdd(userUrl, userName, userId, avatar);
         };
         if (!elementUser.offsetHeight) return;
         elementUser.appendChild(buttonBlockUser);
@@ -2417,14 +2418,10 @@ const EXTRA_CLASS_HTML = {
   /** 调用「不感兴趣」接口 */
   const doFetchNotInterested = ({ id, type }) => {
     const nHeader = storageConfig.fetchHeaders;
-    if (nHeader['vod-authorization']) {
-      delete nHeader['vod-authorization'];
-    }
-
-    if (nHeader['content-encoding']) {
-      delete nHeader['content-encoding'];
-    }
-
+    delete nHeader['vod-authorization'];
+    delete nHeader['content-encoding'];
+    delete nHeader['Content-Type'];
+    delete nHeader['content-type'];
     fetch(API_NOT_INTERESTED, {
       body: `item_brief=${encodeURIComponent(JSON.stringify({ source: 'TS', type: type, id: id }))}`,
       method: 'POST',
