@@ -24,7 +24,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 ### 修改器样式
 
-<img src="https://bnz06pap004files.storage.live.com/y4mTtgkJq535dkJPhqjJYgC0xsvpOPG2uFpDJHgyJhvU6VZwKQlBKI68e_XIy_9XQNpqQ12OoQo5VevPkevsfyoxnVGaoabn3YiCxunSW18cAoIt7dS0DMtQ1fF4YxxPwd_fUbIJ6c2kSmtE9I0NhI948ZTyKNKVZqHMvKB8DYkthDIlPMnDgJ_5i96FnhdWrmI?width=1024&height=559&cropmode=none" width="1024"  />
+<img src="https://bnz06pap004files.storage.live.com/y4mAhAptpWV9QP4JHWGD_qUIVeUj_ZLgci29uvsznTSiHZVBBQ01rZp1Ym_6DM6qR5Siv3ab79BUr8QhhCkDke159k4FJ51YcTI_vG2fhIIJQHgIpULL503r0KLgdlEt21lP-GzmiDF0OM1VF-MRqk7SCCooPnOZ505uvrMBrlf-qjIj1-8didIzekRzY4USA5E?width=1024&height=545&cropmode=none" width="1024" />
 
 ## 插件目录
 
