@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.7.4
+// @version      3.7.5
 // @description  页面模块自定义隐藏|列表及回答内容过滤|保存浏览历史记录|推荐页内容缓存|列表种类和关键词强过滤，自动调用「不感兴趣」接口|屏蔽用户回答|回答视频下载|回答内容按照点赞数和评论数排序|设置自动收起所有长回答或自动展开所有回答|移除登录提示弹窗|设置过滤故事档案局和盐选科普回答等知乎官方账号回答|手动调节文字大小|切换主题，夜间模式调整|隐藏知乎热搜，体验纯净搜索|列表添加标签种类|去除广告|设置购买链接显示方式|收藏夹内容导出为 PDF|一键移除所有屏蔽选项|外链直接打开|更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -2869,7 +2869,12 @@ const EXTRA_CLASS_HTML = {
     // 比较列表缓存的高度是否大于当前高度，如果大于则是从 index = 0 遍历
     if (domById('TopstoryContent')) {
       const heightTopstoageContent = domById('TopstoryContent').offsetHeight;
-      heightTopstoageContent < storageConfig.heightForList ? myListenListItem.restart() : myListenListItem.init();
+      if (heightTopstoageContent < storageConfig.heightForList) {
+        myListenListItem.restart();
+        initTopStoryRecommendEvent();
+      } else {
+        myListenListItem.init();
+      }
       // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
       heightTopstoageContent < window.innerHeight && doResizePage();
       storageConfig.heightForList = heightTopstoageContent;
