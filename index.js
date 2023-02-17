@@ -59,11 +59,8 @@
   const fnLog = (str) => console.log('「知乎修改器」', str);
 
   const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
-
   /** 设置弹窗 */
   const ID_DIALOG = 'CTZ_DIALOG_MAIN';
-  /** 背景色元素 ID */
-  const ID_BG = 'CTZ_BACKGROUND';
   /** 屏蔽词 ID */
   const ID_FILTER_WORDS = 'CTZ_FILTER_WORDS';
   /** 黑名单列表 ID */
@@ -84,9 +81,6 @@
     on: 'ctz-fold-open',
     off: 'ctz-fold-close',
   };
-
-  /** 不感兴趣接口 */
-  const API_NOT_INTERESTED = '/api/v3/feed/topstory/uninterestv2';
 
   /** 背景色设置 */
   const BACKGROUND_CONFIG = {
@@ -1536,6 +1530,95 @@
     },
   };
 
+  /** 回答排序 */
+  const myListenSelect = {
+    isSortFirst: true,
+    observer: null,
+    keySort: 'default',
+    /** 添加回答排序 */
+    answerSortIds: {
+      'Select1-0': { key: 'default', name: '默认排序' },
+      'Select1-1': { key: 'update', name: '按时间排序' },
+      'Select1-2': { key: 'vote', name: '点赞数排序' },
+      'Select1-3': { key: 'comment', name: '评论数排序' },
+    },
+    sortKeys: { vote: '点赞数排序', comment: '评论数排序' },
+    /** 加载监听问题详情里的.Select-button按钮 */
+    init: function () {
+      const classSelectButton = '.Select-button';
+      if (this.keySort === 'vote' || this.keySort === 'comment') {
+        dom(classSelectButton).innerHTML = dom(classSelectButton).innerHTML.replace(
+          /[\u4e00-\u9fa5]+(?=<svg)/,
+          this.sortKeys[this.keySort]
+        );
+      }
+      const clickSort = (id) => {
+        myListenAnswerItem.reset();
+        const { key, name } = this.answerSortIds[id];
+        this.keySort = key;
+        dom(classSelectButton).innerHTML = dom(classSelectButton).innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name);
+        if (key === 'vote' || key === 'comment') {
+          location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + key;
+        } else if (key === 'default') {
+          /\?sort=/.test(location.href) && (location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ''));
+        }
+      };
+
+      if (dom(classSelectButton)) {
+        try {
+          this.observer.disconnect();
+        } catch {}
+        const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] };
+        this.observer = new MutationObserver(() => {
+          const elementSelect = dom('.Answers-select');
+          if (dom(classSelectButton).getAttribute('aria-expanded') === 'true' && elementSelect) {
+            elementSelect.appendChild(
+              domC('button', { className: 'Select-option', tabindex: '-1', role: 'option', id: 'Select1-2', innerHTML: '点赞数排序' })
+            );
+            elementSelect.appendChild(
+              domC('button', { className: 'Select-option', tabindex: '-1', role: 'option', id: 'Select1-3', innerHTML: '评论数排序' })
+            );
+            domA('.Select-option').forEach((ev) => {
+              ev.onclick = () => clickSort(ev.id);
+            });
+          }
+        });
+        this.observer.observe(dom(classSelectButton), buConfig);
+      }
+    },
+    addSort: function () {
+      // 排序列表
+      // 因为知乎并没有开放点赞数和评论排序参数，所以只能每次加载后按照当前的数据进行页面排序
+      // 为了防止页面错乱，只对前20条进行排序
+      const keySort = this.keySort;
+      if ((keySort === 'vote' || keySort === 'comment') && this.isSortFirst) {
+        const element = dom('.List>div:nth-child(2)>div');
+        const arrElement = Array.from(element.querySelectorAll('.List-item:not(.PlaceHolder)')).sort((a, b) => {
+          const aContent = a.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
+            ? JSON.parse(a.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
+            : {};
+          const bContent = b.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
+            ? JSON.parse(b.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
+            : {};
+          switch (keySort) {
+            case 'vote':
+              return aContent.upvote_num - bContent.upvote_num;
+            case 'comment':
+              return aContent.comment_num - bContent.comment_num;
+            default:
+              return true;
+          }
+        });
+        element.querySelector('.List-item:not(.PlaceHolder)') && element.querySelector('.List-item:not(.PlaceHolder)').remove();
+        const eleFirst = element.querySelector(':first-child');
+        arrElement.forEach((item, index) => {
+          element.insertBefore(item, index === 0 ? eleFirst : arrElement[index - 1]);
+        });
+        this.isSortFirst = false;
+      }
+    },
+  };
+
   /** 黑名单用户操作方法 */
   const myBlack = {
     /** 初始化黑名单列表 */
@@ -1789,7 +1872,6 @@
       const iLock = domC('i', { className: `ctz-icon ${this.lock.name}`, innerHTML: '&#xe700;' });
       const iUnlock = domC('i', { className: `ctz-icon ${this.unlock.name}`, innerHTML: '&#xe688;' });
       const dLockMask = domC('div', { className: this.lockMask.name });
-
       !e.querySelector(lock) && e.appendChild(iLock);
       !e.querySelector(unlock) && e.appendChild(iUnlock);
       !e.querySelector(lockMask) && e.appendChild(dLockMask);
@@ -2118,7 +2200,6 @@
     };
     domA(`.${CLASS_INPUT_CLICK}`).forEach(doEcho);
     domA(`.${CLASS_INPUT_CHANGE}`).forEach(doEcho);
-
     echo.text(dom('[name="globalTitle"]'));
   };
 
@@ -2226,19 +2307,14 @@
     const hour = date.getHours();
     const min = date.getMinutes();
     const sec = date.getSeconds();
-
-    // 不足十位添 0
-    const preArr = Array.apply(null, Array(10)).map(function (elem, index) {
-      return '0' + index;
-    });
-
+    const preArr = (num) => (String(num).length !== 2 ? '0' + String(num) : String(num));
     return formatter
       .replace(/YYYY/g, year)
-      .replace(/MM/g, preArr[month] || month)
-      .replace(/DD/g, preArr[day] || day)
-      .replace(/HH/g, preArr[hour] || hour)
-      .replace(/mm/g, preArr[min] || min)
-      .replace(/ss/g, preArr[sec] || sec);
+      .replace(/MM/g, preArr(month))
+      .replace(/DD/g, preArr(day))
+      .replace(/HH/g, preArr(hour))
+      .replace(/mm/g, preArr(min))
+      .replace(/ss/g, preArr(sec));
   };
 
   /** 问题添加时间 */
@@ -2250,13 +2326,14 @@
     const muTime = event.querySelector('[itemprop="dateModified"]') ? event.querySelector('[itemprop="dateModified"]').content : '';
     const created = timeFormatter(crTime || puTime);
     const modified = timeFormatter(muTime);
-    if (!created) return;
-    const element = domC('div', {
-      className,
-      style: 'line-height: 24px;padding-top: 6px;',
-      innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
-    });
-    event.querySelector('.ContentItem-meta') && event.querySelector('.ContentItem-meta').appendChild(element);
+    if (!created || !event.querySelector('.ContentItem-meta')) return;
+    event.querySelector('.ContentItem-meta').appendChild(
+      domC('div', {
+        className,
+        style: 'line-height: 24px;padding-top: 6px;',
+        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
+      })
+    );
   };
 
   /** 问题详情添加时间 */
@@ -2266,11 +2343,12 @@
     if (!(pfConfig.questionCreatedAndModifiedTime && dom('[itemprop="dateCreated"]'))) return;
     const created = timeFormatter(dom('[itemprop="dateCreated"]').content);
     const modified = timeFormatter(dom('[itemprop="dateModified"]').content);
-    const element = domC('div', {
-      className,
-      innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
-    });
-    dom('.QuestionPage .QuestionHeader-title').appendChild(element);
+    dom('.QuestionPage .QuestionHeader-title').appendChild(
+      domC('div', {
+        className,
+        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
+      })
+    );
   };
 
   /** 文章发布时间置顶 */
@@ -2278,13 +2356,13 @@
     const className = 'ctz-article-create-time';
     dom(`.${className}`) && dom(`.${className}`).remove();
     if (!(pfConfig.articleCreateTimeToTop && dom('.ContentItem-time'))) return;
-    const innerHTML = dom('.ContentItem-time').innerText || '';
-    const element = domC('span', {
-      className,
-      style: 'color: #8590a6;line-height: 30px;',
-      innerHTML,
-    });
-    dom('.Post-Header').appendChild(element);
+    dom('.Post-Header').appendChild(
+      domC('span', {
+        className,
+        style: 'color: #8590a6;line-height: 30px;',
+        innerHTML: dom('.ContentItem-time').innerText || '',
+      })
+    );
   };
 
   /** 监听过滤内容 */
@@ -2306,7 +2384,7 @@
     delete nHeader['content-encoding'];
     delete nHeader['Content-Type'];
     delete nHeader['content-type'];
-    fetch(API_NOT_INTERESTED, {
+    fetch('/api/v3/feed/topstory/uninterestv2', {
       body: `item_brief=${encodeURIComponent(JSON.stringify({ source: 'TS', type: type, id: id }))}`,
       method: 'POST',
       headers: new Headers({
@@ -2318,11 +2396,11 @@
 
   /** 节流, 使用时 fn 需要为 function () {} */
   function throttle(fn, time = 300) {
-    let timeout = null;
+    let tout = null;
     return function () {
-      if (timeout) return;
-      timeout = setTimeout(() => {
-        timeout = null;
+      if (tout) return;
+      tout = setTimeout(() => {
+        tout = null;
         fn.apply(this, arguments);
       }, time);
     };
@@ -2369,17 +2447,18 @@
   /** 修改网页标题图片 */
   const changeICO = () => {
     const { titleIco } = pfConfig;
-    const ID_ICO = 'CTZ_ICO';
+    const nId = 'CTZ_ICO';
     if (!ICO_URL[titleIco]) return;
     dom('[type="image/x-icon"]') && dom('[type="image/x-icon"]').remove();
-    domById(ID_ICO) && domById(ID_ICO).remove();
-    const linkICO = domC('link', {
-      type: 'image/x-icon',
-      href: ICO_URL[titleIco],
-      id: ID_ICO,
-      rel: 'icon',
-    });
-    dom('head').appendChild(linkICO);
+    domById(nId) && domById(nId).remove();
+    dom('head').appendChild(
+      domC('link', {
+        type: 'image/x-icon',
+        href: ICO_URL[titleIco],
+        id: nId,
+        rel: 'icon',
+      })
+    );
   };
 
   /** 手动调用页面大小变动 */
@@ -2397,7 +2476,6 @@
         e.onclick = () => myPreview.open(src);
       });
     });
-
     if (pfConfig.zoomImageType === '2') {
       domA('.origin_image').forEach((item) => {
         item.src = item.getAttribute('data-original') || item.src;
@@ -2450,44 +2528,38 @@
 
   /** 推荐列表最外层绑定事件 */
   const initTopStoryRecommendEvent = () => {
-    const LIST_TARGET_CLASS = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
+    if (!dom('.Topstory-recommend')) return;
+    const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
     const canFindTargeted = (e) => {
       let finded = false;
-      LIST_TARGET_CLASS.forEach((item) => {
+      classTarget.forEach((item) => {
         (e.classList.contains(item) || e.parentElement.classList.contains(item)) && (finded = true);
       });
       return finded;
     };
-
-    dom('.Topstory-recommend') &&
-      (dom('.Topstory-recommend').onclick = function (event) {
-        const { target } = event;
-        // 点击外置「不感兴趣」按钮
-        if (pfConfig.listOutPutNotInterested && target.classList.contains(CLASS_NOT_INTERESTED)) {
-          let dataZop = {};
-          try {
-            const dataZopJson = domP(target, 'class', 'ContentItem').getAttribute('data-zop');
-            dataZop = JSON.parse(dataZopJson);
-          } catch {}
-          const { itemId = '', type = '' } = dataZop;
-          doFetchNotInterested({ id: itemId, type });
-          domP(target, 'class', 'TopstoryItem').style.display = 'none';
-        }
-
-        // 列表内容展示更多
-        if (canFindTargeted(target)) {
-          const conEvent = domP(target, 'class', 'ContentItem');
-          setTimeout(() => {
-            pfConfig.listItemCreatedAndModifiedTime && addTimes(conEvent);
-            pfConfig.showBlockUser && myBlack.addButton(conEvent.parentElement);
-          }, 0);
-        }
-      });
+    dom('.Topstory-recommend').onclick = function (event) {
+      const { target } = event;
+      const nodeContentItem = domP(target, 'class', 'ContentItem');
+      // 点击外置「不感兴趣」按钮
+      if (pfConfig.listOutPutNotInterested && target.classList.contains(CLASS_NOT_INTERESTED)) {
+        const dataZopJson = nodeContentItem && nodeContentItem.getAttribute('data-zop');
+        const { itemId = '', type = '' } = JSON.parse(dataZopJson || '{}');
+        doFetchNotInterested({ id: itemId, type });
+        domP(target, 'class', 'TopstoryItem').style.display = 'none';
+      }
+      // 列表内容展示更多
+      if (canFindTargeted(target)) {
+        setTimeout(() => {
+          pfConfig.listItemCreatedAndModifiedTime && addTimes(nodeContentItem);
+          pfConfig.showBlockUser && myBlack.addButton(nodeContentItem.parentElement);
+        }, 0);
+      }
+    };
   };
 
   /** 缓存顶部元素 */
   const cacheHeader = () => {
-    const HEADER_EVENT_NAMES = ['suspensionFind', 'suspensionSearch', 'suspensionUser'];
+    const headerEventNames = ['suspensionFind', 'suspensionSearch', 'suspensionUser'];
     if (!findEvent.header.isFind) {
       findEvent.header.fun && clearTimeout(findEvent.header.fun);
       findEvent.header.fun = setTimeout(() => {
@@ -2519,37 +2591,27 @@
       }, 100);
       return;
     }
-    const C_ICON = '.ctz-search-icon';
-    const C_PICK = '.ctz-search-pick-up';
-    const N_FOCUS = 'focus';
-    HEADER_EVENT_NAMES.forEach((name) => {
+    const classIcon = '.ctz-search-icon';
+    const classPickup = '.ctz-search-pick-up';
+    const classNameFocus = 'focus';
+    headerEventNames.forEach((name) => {
       const { even } = storageConfig.headerDoms[name];
       if (pfConfig[name]) {
         // 如果是 suspensionSearch 则添加展开和收起按钮
         if (name === 'suspensionSearch') {
-          const iconSearch = domC('i', {
-            className: 'ctz-icon ctz-search-icon',
-            innerHTML: '&#xe600;',
-          });
-
-          const iconPickup = domC('i', {
-            className: 'ctz-icon ctz-search-pick-up',
-            innerHTML: '&#xe601;',
-          });
-
-          !dom(C_ICON) && even.appendChild(iconSearch);
-          !dom(C_PICK) && even.appendChild(iconPickup);
-          dom(C_ICON) && (dom(C_ICON).onclick = () => even.classList.add(N_FOCUS));
-          dom(C_PICK) && (dom(C_PICK).onclick = () => even.classList.remove(N_FOCUS));
+          !dom(classIcon) && even.appendChild(domC('i', { className: 'ctz-icon ctz-search-icon', innerHTML: '&#xe600;' }));
+          !dom(classPickup) && even.appendChild(domC('i', { className: 'ctz-icon ctz-search-pick-up', innerHTML: '&#xe601;' }));
+          dom(classIcon).onclick = () => even.classList.add(classNameFocus);
+          dom(classPickup).onclick = () => even.classList.remove(classNameFocus);
         }
         myLock.append(even, name);
         even.classList.add(`position-${name}`);
         dom('#root').appendChild(even);
       } else {
         if (name === 'suspensionSearch') {
-          dom(C_ICON) && dom(C_ICON).remove();
-          dom(C_PICK) && dom(C_PICK).remove();
-          even.classList.contains(N_FOCUS) && even.classList.remove(N_FOCUS);
+          dom(classIcon) && dom(classIcon).remove();
+          dom(classPickup) && dom(classPickup).remove();
+          even.classList.remove(classNameFocus);
         }
         myLock.remove(even, name);
         even.classList.remove(`position-${name}`);
@@ -2615,114 +2677,6 @@
     esName.forEach((name) => {
       domA(`${name}:not(.${operaLink})`).forEach(hrefChanger);
     });
-  };
-
-  const myListenSelect = {
-    isSortFirst: true,
-    observer: null,
-    keySort: 'default',
-    /** 添加回答排序 */
-    answerSortIds: {
-      'Select1-0': { key: 'default', name: '默认排序' },
-      'Select1-1': { key: 'update', name: '按时间排序' },
-      'Select1-2': { key: 'vote', name: '点赞数排序' },
-      'Select1-3': { key: 'comment', name: '评论数排序' },
-    },
-    sortKeys: { vote: '点赞数排序', comment: '评论数排序' },
-    /** 加载监听问题详情里的.Select-button按钮 */
-    init: function () {
-      const classSelectButton = '.Select-button';
-      if (this.keySort === 'vote' || this.keySort === 'comment') {
-        dom(classSelectButton).innerHTML = dom(classSelectButton).innerHTML.replace(
-          /[\u4e00-\u9fa5]+(?=<svg)/,
-          this.sortKeys[this.keySort]
-        );
-      }
-
-      const clickSort = (id) => {
-        myListenAnswerItem.reset();
-        const { key, name } = this.answerSortIds[id];
-        this.keySort = key;
-        dom(classSelectButton).innerHTML = dom(classSelectButton).innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name);
-        if (key === 'vote' || key === 'comment') {
-          location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + key;
-        } else if (key === 'default') {
-          /\?sort=/.test(location.href) && (location.href = location.href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ''));
-        }
-      };
-
-      if (dom(classSelectButton)) {
-        try {
-          this.observer.disconnect();
-        } catch {}
-        const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] };
-        this.observer = new MutationObserver(() => {
-          const elementSelect = dom('.Answers-select');
-          if (dom(classSelectButton).getAttribute('aria-expanded') === 'true' && elementSelect) {
-            const elementSortByVote = domC('button', {
-              className: 'Select-option',
-              tabindex: '-1',
-              role: 'option',
-              id: 'Select1-2',
-              innerHTML: '点赞数排序',
-            });
-
-            const elementSortByComment = domC('button', {
-              className: 'Select-option',
-              tabindex: '-1',
-              role: 'option',
-              id: 'Select1-3',
-              innerHTML: '评论数排序',
-            });
-
-            elementSelect.appendChild(elementSortByVote);
-            elementSelect.appendChild(elementSortByComment);
-            domA('.Select-option').forEach((ev) => {
-              ev.onclick = () => clickSort(ev.id);
-            });
-          }
-        });
-        this.observer.observe(dom(classSelectButton), buConfig);
-      }
-    },
-    /**
-     * 排序列表
-     * 因为知乎并没有开放点赞数和评论排序参数，所以只能每次加载后按照当前的数据进行页面排序
-     * 为了防止页面错乱 只对前 20 条进行排序
-     */
-    addSort: function () {
-      const keySort = this.keySort;
-      if ((keySort === 'vote' || keySort === 'comment') && this.isSortFirst) {
-        const element = dom('.List>div:nth-child(2)>div');
-        const arrElement = Array.from(element.querySelectorAll('.List-item:not(.PlaceHolder)')).sort((a, b) => {
-          const aContent = a.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
-            ? JSON.parse(a.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
-            : {};
-          const bContent = b.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
-            ? JSON.parse(b.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
-            : {};
-
-          switch (keySort) {
-            case 'vote':
-              return aContent.upvote_num - bContent.upvote_num;
-            case 'comment':
-              return aContent.comment_num - bContent.comment_num;
-            default:
-              return true;
-          }
-        });
-        element.querySelector('.List-item:not(.PlaceHolder)') && element.querySelector('.List-item:not(.PlaceHolder)').remove();
-        const eleFirst = element.querySelector(':first-child');
-        arrElement.forEach((item, index) => {
-          if (index === 0) {
-            element.insertBefore(item, eleFirst);
-          } else {
-            element.insertBefore(item, arrElement[index - 1]);
-          }
-        });
-        this.isSortFirst = false;
-      }
-    },
   };
 
   /** 加载额外的样式文件 */
@@ -2867,7 +2821,7 @@
         `<div style="background: ${key};border: 2px solid ${key};color: ${color}">${name}</div>` +
         `</label>`;
     });
-    domById(ID_BG).innerHTML = backgroundParents;
+    domById('CTZ_BACKGROUND').innerHTML = backgroundParents;
 
     // 添加隐藏元素
     Object.keys(SET_DIRECTION).forEach((key) => {
