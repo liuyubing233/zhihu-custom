@@ -165,6 +165,14 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 列表用户名后显示「屏蔽用户」按钮开启后，在回答页面用户后将显示「屏蔽用户」按钮，点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
 
+回答列表页面添加「屏蔽用户并隐藏该回答」及屏蔽用户后的解除屏蔽按钮
+
+<img src="https://bnz06pap004files.storage.live.com/y4mycVRs_iN0ljlYMudcDJ_GkK8_nP7l5zGVNoNwW9bmH2sGHlpHKdJpL6VyUtLu-HjVZ9Lio8bAP2v86_rE6-z4tsDmkZtPOtWcwoqdqVZiGJZxDX9zTVCQPm8uZ6uLMyRcT3IljXPQMD7zFjZf34FRUUQO5JpWm59XupoxHS8qSNmEgZvp-eoMcNvzbaxrXQY?width=1024&height=616&cropmode=none" width="1024"  />
+
+点击屏蔽后（或未开启过滤屏蔽用户回答）
+
+<img src="https://bnz06pap004files.storage.live.com/y4mM7EyuAgRFTiMUPdPsoprp8CbJfsqm11QzOabFh8Vhe9lOh1bPOC94RtoFOPHD36Qt4X87ogfjMeDcfyabtSUA9lZJByCieedZdduTo7n8iexYwe0FeO-CRxmVo0qfoOQCCuONAosYOtpi-F9724ZlGEF2-UOYcasyYTjCmKjF0Hg0-YTOwWlhbmabEJjYZX6?width=1024&height=664&cropmode=none" width="1024"  />
+
 #### 基础设置 - 通用模块隐藏
 
 通用模块，比如首页顶部操作栏和滚动操作顶部可隐藏
