@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.9.1
+// @version      3.9.2
 // @description  页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，回答视频下载，回答内容按照点赞数和评论数排序，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及夜间模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容导出为PDF，一键移除所有屏蔽选项，外链直接打开，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -2898,55 +2898,6 @@
     changeSuspensionTab();
   };
 
-  /** 页面滚动方法 */
-  window.onscroll = throttle(() => {
-    if (pfConfig.suspensionPickUp) {
-      suspensionPackUp(domA('.List-item'));
-      suspensionPackUp(domA('.TopstoryItem'));
-      suspensionPackUp(domA('.AnswerCard'));
-    }
-  }, 100);
-
-  window.onload = async () => {
-    // 如果脚本注入时 document.head 未加载完成则在页面渲染后重新进行加载
-    if (!isHaveHeadWhenInit) {
-      await onDocumentStart();
-    }
-
-    if (HTML_HOOTS.includes(location.hostname) && !window.frameElement) {
-      // 不考虑在 iframe 中的情况
-      initHTML();
-      initOperate();
-      initData();
-      // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
-      myBackground.init();
-      myVersion.initAfterLoad();
-      myCustomStyle.init();
-      myFilterWord.init();
-      resizeObserver.observe(document.body);
-      myCtzTypeOperation.init();
-      echoHistory();
-    }
-
-    pathnameHasFn({
-      question: () => {
-        myListenSelect.init();
-        addQuestionCreatedAndModifiedTime();
-      },
-      video: () => myVideo.init(),
-      filter: () => myPageFilterSetting.init(),
-      collection: () => myCollectionExport.init(),
-      following: () => myFollowRemove.init(),
-    });
-
-    if (location.host === 'zhuanlan.zhihu.com') {
-      addArticleCreateTimeToTop();
-    }
-    // 如果存在登录弹窗则移除
-    dom('.signFlowModal') && dom('.signFlowModal').querySelector('.Modal-closeButton').click();
-    fnLog('加载完毕');
-  };
-
   /** 页面路由变化, 部分操作方法 */
   const changeHistory = () => {
     pathnameHasFn({
@@ -2962,4 +2913,62 @@
   /** history 变化 */
   window.addEventListener('popstate', changeHistory);
   window.addEventListener('pushState', changeHistory);
+
+  /** 页面滚动方法 */
+  window.addEventListener(
+    'scroll',
+    throttle(() => {
+      if (pfConfig.suspensionPickUp) {
+        suspensionPackUp(domA('.List-item'));
+        suspensionPackUp(domA('.TopstoryItem'));
+        suspensionPackUp(domA('.AnswerCard'));
+      }
+    }, 100),
+    false
+  );
+
+  /** 页面加载完成 */
+  window.addEventListener(
+    'load',
+    async () => {
+      // 如果脚本注入时 document.head 未加载完成则在页面渲染后重新进行加载
+      if (!isHaveHeadWhenInit) {
+        await onDocumentStart();
+      }
+
+      if (HTML_HOOTS.includes(location.hostname) && !window.frameElement) {
+        // 不考虑在 iframe 中的情况
+        initHTML();
+        initOperate();
+        initData();
+        // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
+        myBackground.init();
+        myVersion.initAfterLoad();
+        myCustomStyle.init();
+        myFilterWord.init();
+        resizeObserver.observe(document.body);
+        myCtzTypeOperation.init();
+        echoHistory();
+      }
+
+      pathnameHasFn({
+        question: () => {
+          myListenSelect.init();
+          addQuestionCreatedAndModifiedTime();
+        },
+        video: () => myVideo.init(),
+        filter: () => myPageFilterSetting.init(),
+        collection: () => myCollectionExport.init(),
+        following: () => myFollowRemove.init(),
+      });
+
+      if (location.host === 'zhuanlan.zhihu.com') {
+        addArticleCreateTimeToTop();
+      }
+      // 如果存在登录弹窗则移除
+      dom('.signFlowModal') && dom('.signFlowModal').querySelector('.Modal-closeButton').click();
+      fnLog('加载完毕');
+    },
+    false
+  );
 })();
