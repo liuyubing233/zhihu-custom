@@ -185,11 +185,14 @@
     hiddenAppHeaderTabVIP: false, // 发现模块-会员
     hiddenAppHeaderTabFind: false, // 发现模块-发现
     hiddenAppHeaderTabWaitingForYou: false, // 发现模块-等你来答
-    hiddenHomeListTab: false, //全部问题列表切换模块
-    hiddenHomeListTabFollow: false, //问题列表切换 - 关注
-    hiddenHomeListTabRecommend: false, //问题列表切换 - 推荐
-    hiddenHomeListTabHot: false, //问题列表切换 - 热榜
-    hiddenHomeListTabVideo: false, //问题列表切换 - 视频
+    hiddenHomeListTab: false, // 全部问题列表切换模块
+    hiddenHomeListTabFollow: false, // 问题列表切换 - 关注
+    hiddenHomeListTabRecommend: false, // 问题列表切换 - 推荐
+    hiddenHomeListTabHot: false, // 问题列表切换 - 热榜
+    hiddenHomeListTabVideo: false, // 问题列表切换 - 视频
+    hiddenQuestionGoodQuestion: false, // 「好问题」按钮
+    hiddenQuestionComment: false, // 添加评论按钮
+    hiddenQuestionMore: false, // 问题「...」按钮
   };
 
   /** 屏蔽内容模块默认配置 */
@@ -420,6 +423,9 @@
         [
           { value: 'hiddenQuestionTag', label: '问题话题' },
           { value: 'hiddenQuestionShare', label: '问题分享' },
+          { value: 'hiddenQuestionGoodQuestion', label: '「好问题」按钮' },
+          { value: 'hiddenQuestionComment', label: '添加评论' },
+          { value: 'hiddenQuestionMore', label: '问题更多「...」按钮' },
           { value: 'hiddenQuestionActions', label: '问题操作栏' },
           { value: 'hiddenQuestionSpecial', label: '问题专题收录标签' },
           { value: 'hiddenQuestionFollowing', label: '问题关注按钮' },
@@ -748,7 +754,8 @@
         `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
         `.Question-main .Question-sideColumn{margin-left: 12px;}` +
         `.QuestionHeader .QuestionHeader-content{margin: 0 auto;padding: 0;max-width: initial!important;}` +
-        `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${pfConfig.versionAnswer || '1000'}px!important;}`;
+        `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${pfConfig.versionAnswer || '1000'}px!important;}` +
+        `.Question-main .List-item{border-bottom: 1px dashed #ddd;}`;
       // 文章版心
       const versionArticle =
         `.zhuanlan .AuthorInfo{max-width: initial;}` +
@@ -997,6 +1004,9 @@
       hiddenHomeListTabHot: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-hot"]{display: none}',
       hiddenHomeListTabVideo: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-zvideo"]{display: none}',
       hiddenHomeListTab: '.Topstory-container .TopstoryTabs{display: none}',
+      hiddenQuestionGoodQuestion: '.QuestionPage .QuestionHeader .GoodQuestionAction{display: none}',
+      hiddenQuestionComment: '.QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}',
+      hiddenQuestionMore: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
     },
     cssForKeysArray: [
       {
