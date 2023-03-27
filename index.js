@@ -345,9 +345,6 @@
     { key: 'removeFollowFQuestion', rep: '关注了问题' },
   ];
 
-  /** 顶部菜单哈希 */
-  const MENU_IDS = ['#CTZ_SET_BASIS', '#CTZ_SET_LIST', '#CTZ_SET_ANSWER', '#CTZ_SET_ARTICLE'];
-
   /** 隐藏模块指向 */
   const HIDDEN_DIRECITION = {
     /** 基础设置 */
@@ -1221,7 +1218,7 @@
     init: function () {
       // 匹配顶部菜单项或者匹配菜单子项
       const { hash } = window.location;
-      const chooseId = MENU_IDS.find((i) => i === hash || hash.replace(i) !== hash);
+      const chooseId = [...dom('.ctz-menu-top').children].map((i) => i.hash).find((i) => i === hash || hash.replace(i) !== hash);
       if (chooseId) {
         this.click({ target: dom(`a[href="${chooseId}"]`) });
         return;
@@ -2450,12 +2447,6 @@
     );
   };
 
-  /** 手动调用页面大小变动 */
-  const doResizePage = () => {
-    const myEvent = new Event('resize');
-    window.dispatchEvent(myEvent);
-  };
-
   /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
   const initImagePreview = () => {
     const images = [domA('.TitleImage'), domA('.ArticleItem-image'), domA('.ztext figure .content_image')];
@@ -2695,7 +2686,7 @@
         myListenListItem.init();
       }
       // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
-      heightTopstoageContent < window.innerHeight && doResizePage();
+      heightTopstoageContent < window.innerHeight && window.dispatchEvent(new Event('resize'));
       storageConfig.heightForList = heightTopstoageContent;
     }
 
