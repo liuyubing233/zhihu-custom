@@ -1,5 +1,7 @@
 <img src="https://bnz06pap004files.storage.live.com/y4mQD2H4SPlPWTspXqKWJkrbStIwZ0373pFiyrwNt4kdccB73D1LcORbOqvLOkLHHYb8uFMJzwie5adae-lVTAYyC8oYtKlXyzK9SVMyFfnZwmY-DQoWIMYInDHzHy58bqwnX5ZoUOq_h0onGHLtTQK5B4r2c-VfFjEFW84Hk8l_OgcUNlgolU4lGOgor6bybeE?width=1024&height=539&cropmode=none" width="1024" />
 
+快捷键 <span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">></span>（<span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">Shift</span>+<span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">.</span>）唤起修改器弹窗
+
 请先确认已安装 <a href="https://www.tampermonkey.net/" target="_blank">tampermonkey</a> 脚本管理器后，再安装本助手
 
 <a href="https://github.com/superPufferfish/custom-zhihu/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
@@ -8,7 +10,7 @@
 
 <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
 
-发现 bug 和想要添加的内容请反馈给我，感谢！！！
+发现问题和想要添加的内容请反馈给我，感谢！！！
 
 插件目录跳转失效请移步<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/README.md" target="_blank">这里查看</a>
 
