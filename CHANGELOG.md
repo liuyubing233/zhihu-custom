@@ -5,6 +5,8 @@
 #### feature
 
 1. 添加快捷键 <span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">></span>（<span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">Shift</span>+<span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">.</span>）唤起修改器弹窗
+2. 修改替换图标
+
 
 ### 3.10.0
 
