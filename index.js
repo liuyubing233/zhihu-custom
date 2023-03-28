@@ -550,6 +550,9 @@
     view: [],
   };
 
+  /** 用户信息 */
+  let userInfo = {};
+
   const findEvent = {
     header: { fun: null, num: 0, isFind: false },
   };
@@ -2725,6 +2728,21 @@
     }, 100);
   };
 
+  /** 获取用户信息 */
+  const initUserInfo = () => {
+    fetch(
+      `/api/v4/me?include=is_realname%2Cad_type%2Cavailable_message_types%2Cdefault_notifications_count%2Cfollow_notifications_count%2Cvote_thank_notifications_count%2Cmessages_count%2Cemail%2Caccount_status%2Cis_bind_phone%2Cfollowing_question_count%2Cis_force_renamed%2Crenamed_fullname%2Cis_destroy_waiting`,
+      {
+        method: 'GET',
+        headers: new Headers(storageConfig.fetchHeaders),
+      }
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        userInfo = res || {};
+      });
+  };
+
   /** 在启动时注入的内容 */
   async function onDocumentStart() {
     if (!document.head) {
@@ -2762,6 +2780,8 @@
     if (/\/question/.test(location.pathname) && location.search.match(/(?<=sort=)\w+/)) {
       myListenSelect.keySort = location.search.match(/(?<=sort=)\w+/)[0];
     }
+
+    initUserInfo();
   }
   onDocumentStart();
 
