@@ -5,19 +5,12 @@
 // @description  server local js about zhihu style,init this js into tampermonkey,save js can reload page
 // @author       liuyubing
 // @match        *://*.zhihu.com/*
-// @grant        unsafeWindow
-// @grant        GM_setValue
-// @grant        GM_getValue
-// @grant        GM_deleteValue
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // @connect      127.0.0.1
 // ==/UserScript==
 (function () {
   // 使用 live server 启动
-  // 清除 tampermonkey GM
-  GM_deleteValue('code');
-
   const CODE_NAME = 'CODE_FOR_CUSTOM_ZHIHU';
 
   const innerCSS = () => {

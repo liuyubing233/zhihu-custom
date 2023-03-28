@@ -13,7 +13,6 @@
 // @match        *://*.zhihu.com/*
 // @grant        unsafeWindow
 // @grant        GM_info
-// @grant        GM_download
 // @run-at       document-start
 // ==/UserScript==
 
@@ -1882,16 +1881,9 @@
                   elementDownload.style.display = 'none';
                   even.appendChild(elementLoading);
                   const name = url.match(/(?<=\/)[\d\w-\.]+(?=\?)/)[0];
-                  // 使用 tamperMonkey 的 download 方法
-                  GM_download({
-                    url,
-                    name,
-                    saveAs: true,
-                    onload: () => {
-                      // blob转换完成，开始下载的回调
-                      elementDownload.style.display = 'block';
-                      elementLoading.remove();
-                    },
+                  videoDownload(url, name).then(() => {
+                    elementDownload.style.display = 'block';
+                    elementLoading.remove();
                   });
                 }
               };
@@ -2115,6 +2107,22 @@
       dom('.CollectionDetailPageHeader-actions .FollowButton') && dom('.CollectionDetailPageHeader-actions .FollowButton').click();
       window.close();
     },
+  };
+
+  /** 视频下载 */
+  const videoDownload = async (url, name) => {
+    return fetch(url)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const objectUrl = window.URL.createObjectURL(blob);
+        const elementA = domC('a', {
+          download: name,
+          href: objectUrl,
+        });
+        elementA.click();
+        window.URL.revokeObjectURL(objectUrl);
+        elementA.remove();
+      });
   };
 
   /** 启用知乎默认的黑暗模式 */
@@ -2736,7 +2744,7 @@
 
     // 拦截 fetch 方法, 获取 option 中的值
     const originFetch = fetch;
-    unsafeWindow.fetch = (url, opt) => {
+    window.fetch = (url, opt) => {
       if (/\/answers\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
         // 如果是自定义排序则知乎回答页码增加到20条
         url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
