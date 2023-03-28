@@ -12,8 +12,6 @@
 // @author       liuyubing
 // @match        *://*.zhihu.com/*
 // @grant        unsafeWindow
-// @grant        GM_setValue
-// @grant        GM_getValue
 // @grant        GM_info
 // @grant        GM_download
 // @run-at       document-start
@@ -1018,8 +1016,8 @@
   /** 编辑器按钮点击事件集合 */
   const myButtonOperation = {
     /** 导出配置 */
-    configExport: async () => {
-      const config = await myStorage.get('pfConfig');
+    configExport: () => {
+      const config = myStorage.get('pfConfig');
       const link = domC('a', {
         href: 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config),
         download: `知乎编辑器配置-${+new Date()}.txt`,
@@ -1029,13 +1027,13 @@
       document.body.removeChild(link);
     },
     /** 导入配置 */
-    configImport: async () => {
+    configImport: () => {
       const configImport = dom('[name=textConfigImport]').value;
       pfConfig = JSON.parse(configImport);
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      myStorage.set('pfConfig', JSON.stringify(pfConfig));
       resetData();
     },
-    configReset: async () => {
+    configReset: () => {
       const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
       if (!isUse) return;
       const { filterKeywords = [], removeBlockUserContentList = [] } = pfConfig;
@@ -1044,80 +1042,53 @@
         filterKeywords,
         removeBlockUserContentList,
       };
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      myStorage.set('pfConfig', JSON.stringify(pfConfig));
       resetData();
     },
     /** 自定义样式 */
-    styleCustom: async () => {
+    styleCustom: () => {
       const value = dom('[name="textStyleCustom"]').value || '';
       pfConfig.customizeCss = value;
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      myStorage.set('pfConfig', JSON.stringify(pfConfig));
       myCustomStyle.change();
     },
     syncBlack: () => myBlack.sync(0),
     /** 确认更改网页标题 */
-    buttonConfirmTitle: async () => {
+    buttonConfirmTitle: () => {
       const value = dom('[name="globalTitle"]').value;
       pfConfig.globalTitle = value || '';
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      myStorage.set('pfConfig', JSON.stringify(pfConfig));
       changeTitle();
     },
     /** 还原网页标题 */
-    buttonResetTitle: async () => {
+    buttonResetTitle: () => {
       pfConfig.globalTitle = '';
       dom('[name="globalTitle"]').value = storageConfig.cacheTitle;
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      myStorage.set('pfConfig', JSON.stringify(pfConfig));
       changeTitle();
     },
     useSimple: () => useSimple(),
   };
 
-  /** 存储使用油猴自己的GM存储，解决数据不共通的问题，添加localStorage与GM判断，获取最新存储 */
+  /** 使用 localStorage 存储 */
   const myStorage = {
-    set: async function (name, value) {
-      let v = value;
-      if (this.namesNeedT.includes(name)) {
-        const valueParse = JSON.parse(value);
-        valueParse.t = +new Date();
-        v = JSON.stringify(valueParse);
-      }
-      localStorage.setItem(name, v);
-      await GM_setValue(name, v);
+    set: (name, value) => {
+      localStorage.setItem(name, value);
     },
-    get: async function (name) {
-      const config = await GM_getValue(name);
-      const configLocal = localStorage.getItem(name);
-      let c = config;
-      if (this.namesNeedT.includes(name)) {
-        const cParse = config ? JSON.parse(config) : null;
-        const cLParse = configLocal ? JSON.parse(configLocal) : null;
-        if (!cParse && !cLParse) return '';
-        if (!cParse) return configLocal;
-        if (!cLParse) return config;
-        if (cParse.t < cLParse.t) return configLocal;
-        return config;
-      }
-      return c;
-    },
+    get: (name) => localStorage.getItem(name),
     initConfig: async function () {
-      const nConfig = await this.get('pfConfig');
+      const nConfig = this.get('pfConfig');
+      if (nConfig === JSON.stringify(pfConfig)) return Promise.resolve(false);
       const c = nConfig ? JSON.parse(nConfig) : {};
-      if (nConfig === JSON.stringify(pfConfig)) {
-        return Promise.resolve(false);
-      }
       pfConfig = { ...pfConfig, ...c };
       return Promise.resolve(true);
     },
     initHistory: async function () {
-      const nHistory = await myStorage.get('pfHistory');
-      const h = nHistory ? JSON.parse(nHistory) : pfHistory;
-      if (nHistory === JSON.stringify(pfHistory)) {
-        return Promise.resolve(false);
-      }
-      pfHistory = h;
+      const nHistory = this.get('pfHistory');
+      if (nHistory === JSON.stringify(pfHistory)) return Promise.resolve(false);
+      pfHistory = nHistory ? JSON.parse(nHistory) : pfHistory;
       return Promise.resolve(true);
     },
-    namesNeedT: ['pfConfig', 'pfHistory'], // 需要时间戳的名称
   };
 
   /** 在打开弹窗时候停止页面滚动，只允许弹窗滚动 */
@@ -1175,13 +1146,13 @@
 
   /** 屏蔽词方法 */
   const myFilterWord = {
-    add: async function (target) {
+    add: function (target) {
       // 添加屏蔽词
       const word = target.value;
       const { filterKeywords } = pfConfig;
       filterKeywords.push(word);
       pfConfig = { ...pfConfig, filterKeywords };
-      await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+      myStorage.set('pfConfig', JSON.stringify(pfConfig));
       const item = domC('span', { innerHTML: this.evenText(word) });
       item.dataset.title = word;
       domById(ID_FILTER_WORDS).appendChild(item);
@@ -1806,10 +1777,10 @@
             e.style.top = evenTop + 'px';
             this.isMove = true;
             this.timer[configName] && clearTimeout(this.timer[configName]);
-            this.timer[configName] = setTimeout(async () => {
+            this.timer[configName] = setTimeout(() => {
               clearTimeout(this.timer[configName]);
               pfConfig[configName] = `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`;
-              await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+              myStorage.set('pfConfig', JSON.stringify(pfConfig));
             }, 500);
           };
 
@@ -1862,14 +1833,14 @@
       !e.querySelector(lock) && e.appendChild(iLock);
       !e.querySelector(unlock) && e.appendChild(iUnlock);
       !e.querySelector(lockMask) && e.appendChild(dLockMask);
-      e.querySelector(lock).onclick = async () => {
+      e.querySelector(lock).onclick = () => {
         pfConfig[name + 'Fixed'] = true;
-        await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+        myStorage.set('pfConfig', JSON.stringify(pfConfig));
         e.classList.remove(classRemove);
       };
-      e.querySelector(unlock).onclick = async () => {
+      e.querySelector(unlock).onclick = () => {
         pfConfig[name + 'Fixed'] = false;
-        await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+        myStorage.set('pfConfig', JSON.stringify(pfConfig));
         e.classList.add(classRemove);
       };
       // 如果进入页面的时候该项的 FIXED 为 false 则添加 class
@@ -2197,7 +2168,7 @@
   };
 
   /** 更改编辑器方法 */
-  const fnChanger = async (ev) => {
+  const fnChanger = (ev) => {
     // onchange 时只调用 myVersion 的 name
     const doCssVersion = [
       'questionTitleTag',
@@ -2245,7 +2216,7 @@
     };
 
     pfConfig[name] = type === 'checkbox' ? checked : value;
-    await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+    myStorage.set('pfConfig', JSON.stringify(pfConfig));
     type === 'range' && domById(name) && (domById(name).innerText = value);
     if (/^hidden/.test(name)) {
       myHidden.init();
@@ -2627,11 +2598,11 @@
   };
 
   /** 使用极简模式 */
-  const useSimple = async () => {
+  const useSimple = () => {
     const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
     pfConfig = { ...pfConfig, ...CONFIG_SIMPLE };
-    await myStorage.set('pfConfig', JSON.stringify(pfConfig));
+    myStorage.set('pfConfig', JSON.stringify(pfConfig));
     onDocumentStart();
     initData();
   };
@@ -2725,7 +2696,7 @@
   };
 
   /** 添加浏览历史 */
-  const initHistoryView = async () => {
+  const initHistoryView = () => {
     const question = 'www.zhihu.com/question/';
     const article = 'zhuanlan.zhihu.com/p/';
     const video = 'www.zhihu.com/zvideo/';
@@ -2740,8 +2711,7 @@
       const { view } = pfHistory;
       if (nA !== view[0]) {
         view.unshift(nA);
-        view.slice(0, 100);
-        pfHistory.view = view;
+        pfHistory.view = view.slice(0, 100);
         myStorage.set('pfHistory', JSON.stringify(pfHistory));
       }
     }, 100);
@@ -2855,12 +2825,12 @@
     });
 
     domA('[name="button_history_clear"]').forEach((item) => {
-      item.onclick = async (event) => {
+      item.onclick = (event) => {
         const dataId = event.target.getAttribute('data-id');
         const isClear = confirm(`是否清空${event.target.innerText}`);
         if (!isClear) return;
         pfHistory[dataId] = [];
-        await myStorage.set('pfHistory', JSON.stringify(pfHistory));
+        myStorage.set('pfHistory', JSON.stringify(pfHistory));
         echoHistory();
       };
     });
