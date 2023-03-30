@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.13.0
+// @version      3.13.1
 // @description  页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，回答视频下载，回答内容按照点赞数和评论数排序，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及夜间模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容导出为PDF，一键移除所有屏蔽选项，外链直接打开，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -48,7 +48,7 @@
   /** 判断是否返回空字符串 */
   const fnReturnStr = (str, isHave = false, strFalse = '') => (isHave ? str : strFalse);
   /** 带前缀的 log */
-  const fnLog = (...str) => console.log('%c「修改器」', 'color: green', ...str);
+  const fnLog = (...str) => console.log('%c「修改器」', 'color: green;font-weight: bold;', ...str);
   /** 注入样式文件的方法 */
   const fnInitDomStyle = (id, innerHTML) => {
     const element = domById(id);
@@ -991,7 +991,7 @@
       hiddenQuestionGoodQuestion: '.QuestionPage .QuestionHeader .GoodQuestionAction{display: none}',
       hiddenQuestionComment: '.QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}',
       hiddenQuestionMore: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
-      hiddenOpenButton: '#CTZ_OPEN_BUTTON{display: none;}'
+      hiddenOpenButton: '#CTZ_OPEN_BUTTON{display: none;}',
     },
     cssForKeysArray: [
       {
@@ -2963,15 +2963,17 @@
       }
       // 如果存在登录弹窗则移除
       dom('.signFlowModal') && dom('.signFlowModal').querySelector('.Modal-closeButton').click();
-      fnLog('加载完毕 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗');
+      fnLog('加载完毕 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗，如果快捷键不生效可以在控制台使用 window.openCtz() 唤起');
     },
     false
   );
 
   /** shift + . 唤醒修改器弹窗 */
   window.addEventListener('keydown', (event) => {
-    if (event.key === '>') {
+    if (event.key === '>' || event.key === '》' || event.keyCode === 190) {
       domById(ID_DIALOG).style.display === 'none' ? myDialog.open() : myDialog.hide();
     }
   });
+
+  unsafeWindow.openCtz = myDialog.open;
 })();
