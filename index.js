@@ -115,104 +115,202 @@
 
   /** 隐藏内容模块默认配置 */
   const CONFIG_HIDDEN_DEFAULT = {
-    hiddenAnswerRightFooter: true, // 回答页面右侧内容
-    hiddenFixedActions: false, // 回答下方悬浮操作条
-    hiddenLogo: false, // logo
-    hiddenHeader: false, // header
-    hiddenHeaderScroll: false, // 顶部滚动header
-    hiddenItemActions: false, // 列表回答操作
-    hiddenAnswerText: false, // 回答操作文字
-    hiddenQuestionShare: false, // 问题分享
-    hiddenQuestionTag: false, // 问题话题
-    hiddenQuestionActions: false, // 问题操作栏
-    hiddenReward: false, // 赞赏按钮
-    hiddenZhuanlanTag: false, // 专栏关联话题
-    hiddenListImg: false, // 问题列表图片
-    hiddenReadMoreText: true, // 阅读全文文字
-    hiddenAD: true, // 广告
-    hiddenAnswers: false, // 问题列表回答内容
-    hiddenZhuanlanActions: false, // 专栏下方操作条
-    hiddenZhuanlanTitleImage: false, // 专栏标题图片
-    hiddenHotItemMetrics: false, // 热门热度值
-    hiddenHotItemIndex: false, // 热门排序
-    hiddenHotItemLabel: false, // 热门"新"元素
-    hiddenDetailAvatar: false, // 详情回答人头像
-    hiddenDetailBadge: false, // 详情回答人简介
-    hiddenDetailVoters: false, // 详情回答人下赞同数
-    hiddenDetailName: false, // 详情回答人姓名
-    hiddenDetailFollow: true, // 详情回答人关注按钮
-    hiddenHomeTab: false, // 首页问题列表切换模块
-    hiddenQuestionSide: false, // 问题关注和被浏览数
-    hiddenQuestionFollowing: false, // 关注问题按钮
-    hiddenQuestionAnswer: false, // 写回答按钮
-    hiddenQuestionInvite: false, // 邀请回答按钮
-    hiddenSearchBoxTopSearch: false, // 搜索栏知乎热搜
-    hiddenSearchPageTopSearch: false, // 搜索页知乎热搜
-    hiddenSearchPageFooter: false, // 搜索页知乎指南
-    hiddenZhuanlanShare: false, // 专栏悬浮分享按钮
-    hiddenZhuanlanVoters: false, // 专栏悬浮赞同按钮
-    hiddenListAnswerInPerson: false, // 列表[亲自答]标签
-    hiddenFollowAction: false, // 关注列表关注人操作栏
-    hiddenFollowChooseUser: false, // 关注列表用户信息
-    hiddenAnswerRightFooterAnswerAuthor: false, // 信息栏关于作者
-    hiddenAnswerRightFooterFavorites: false, // 信息栏被收藏次数
-    hiddenAnswerRightFooterRelatedQuestions: false, // 信息栏相关问题
-    hiddenAnswerRightFooterContentList: false, // 信息栏相关推荐
-    hiddenAnswerRightFooterFooter: false, // 信息栏知乎指南
-    hidden618HongBao: true, // 618红包链接（临时补充）
-    hiddenZhuanlanFollowButton: false, // 文章作者关注按钮
-    hiddenZhuanlanAvatarWrapper: false, // 文章作者头像
-    hiddenZhuanlanAuthorInfoHead: false, // 文章作者姓名
-    hiddenZhuanlanAuthorInfoDetail: false, // 文章作者简介
-    hiddenQuestionSpecial: false, // 详情顶部专题收录标签
-    hiddenListVideoContent: false, // 列表视频回答的内容
-    hiddenHomeCreatorEntrance: false, // 隐藏主页创作中心
-    hiddenHomeRecommendFollow: false, // 隐藏主页推荐关注
-    hiddenHomeCategory: false, // 隐藏主页分类圆桌
-    hiddenHomeCategoryMore: false, // 隐藏主页更多分类
-    hiddenHomeFooter: false, // 隐藏主页知乎指南
-    hiddenAnswerItemActions: false, // 回答内容操作栏
-    hiddenAnswerItemTime: false, // 回答下方发布编辑时间
-    hiddenAppHeaderTabHome: false, // 发现模块-首页
-    hiddenAppHeaderTabZhi: false, // 发现模块-知学堂
-    hiddenAppHeaderTabVIP: false, // 发现模块-会员
-    hiddenAppHeaderTabFind: false, // 发现模块-发现
-    hiddenAppHeaderTabWaitingForYou: false, // 发现模块-等你来答
-    hiddenHomeListTab: false, // 全部问题列表切换模块
-    hiddenHomeListTabFollow: false, // 问题列表切换 - 关注
-    hiddenHomeListTabRecommend: false, // 问题列表切换 - 推荐
-    hiddenHomeListTabHot: false, // 问题列表切换 - 热榜
-    hiddenHomeListTabVideo: false, // 问题列表切换 - 视频
-    hiddenQuestionGoodQuestion: false, // 「好问题」按钮
-    hiddenQuestionComment: false, // 添加评论按钮
-    hiddenQuestionMore: false, // 问题「...」按钮
-    hiddenOpenButton: false, // 不显示修改器唤醒图标
+    /** 隐藏回答页面右侧内容 */
+    hiddenAnswerRightFooter: true,
+    /** 隐藏回答下方悬浮操作条 */
+    hiddenFixedActions: false,
+    /** 隐藏logo */
+    hiddenLogo: false,
+    /** 隐藏header */
+    hiddenHeader: false,
+    /** 隐藏顶部滚动header */
+    hiddenHeaderScroll: false,
+    /** 隐藏列表回答操作 */
+    hiddenItemActions: false,
+    /** 隐藏回答操作文字 */
+    hiddenAnswerText: false,
+    /** 隐藏问题分享 */
+    hiddenQuestionShare: false,
+    /** 隐藏问题话题 */
+    hiddenQuestionTag: false,
+    /** 隐藏问题操作栏 */
+    hiddenQuestionActions: false,
+    /** 隐藏赞赏按钮 */
+    hiddenReward: false,
+    /** 隐藏专栏关联话题 */
+    hiddenZhuanlanTag: false,
+    /** 隐藏问题列表图片 */
+    hiddenListImg: false,
+    /** 隐藏阅读全文文字 */
+    hiddenReadMoreText: true,
+    /** 隐藏广告 */
+    hiddenAD: true,
+    /** 隐藏问题列表回答内容 */
+    hiddenAnswers: false,
+    /** 隐藏专栏下方操作条 */
+    hiddenZhuanlanActions: false,
+    /** 隐藏专栏标题图片 */
+    hiddenZhuanlanTitleImage: false,
+    /** 隐藏热门热度值 */
+    hiddenHotItemMetrics: false,
+    /** 隐藏热门排序 */
+    hiddenHotItemIndex: false,
+    /** 热门"新"隐藏元素 */
+    hiddenHotItemLabel: false,
+    /** 隐藏详情回答人头像 */
+    hiddenDetailAvatar: false,
+    /** 隐藏详情回答人简介 */
+    hiddenDetailBadge: false,
+    /** 隐藏详情回答人下赞同数 */
+    hiddenDetailVoters: false,
+    /** 隐藏详情回答人姓名 */
+    hiddenDetailName: false,
+    /** 隐藏详情回答人关注按钮 */
+    hiddenDetailFollow: true,
+    /** 隐藏首页问题列表切换模块 */
+    hiddenHomeTab: false,
+    /** 隐藏问题关注和被浏览数 */
+    hiddenQuestionSide: false,
+    /** 隐藏关注问题按钮 */
+    hiddenQuestionFollowing: false,
+    /** 隐藏写回答按钮 */
+    hiddenQuestionAnswer: false,
+    /** 隐藏邀请回答按钮 */
+    hiddenQuestionInvite: false,
+    /** 隐藏搜索栏知乎热搜 */
+    hiddenSearchBoxTopSearch: false,
+    /** 隐藏搜索页知乎热搜 */
+    hiddenSearchPageTopSearch: false,
+    /** 隐藏搜索页知乎指南 */
+    hiddenSearchPageFooter: false,
+    /** 隐藏专栏悬浮分享按钮 */
+    hiddenZhuanlanShare: false,
+    /** 隐藏专栏悬浮赞同按钮 */
+    hiddenZhuanlanVoters: false,
+    /** 列表[亲自答]隐藏标签 */
+    hiddenListAnswerInPerson: false,
+    /** 隐藏关注列表关注人操作栏 */
+    hiddenFollowAction: false,
+    /** 隐藏关注列表用户信息 */
+    hiddenFollowChooseUser: false,
+    /** 隐藏信息栏关于作者 */
+    hiddenAnswerRightFooterAnswerAuthor: false,
+    /** 隐藏信息栏被收藏次数 */
+    hiddenAnswerRightFooterFavorites: false,
+    /** 隐藏信息栏相关问题 */
+    hiddenAnswerRightFooterRelatedQuestions: false,
+    /** 隐藏信息栏相关推荐 */
+    hiddenAnswerRightFooterContentList: false,
+    /** 隐藏信息栏知乎指南 */
+    hiddenAnswerRightFooterFooter: false,
+    /** 隐藏618红包链接（临时补充） */
+    hidden618HongBao: true,
+    /** 隐藏文章作者关注按钮 */
+    hiddenZhuanlanFollowButton: false,
+    /** 隐藏文章作者头像 */
+    hiddenZhuanlanAvatarWrapper: false,
+    /** 隐藏文章作者姓名 */
+    hiddenZhuanlanAuthorInfoHead: false,
+    /** 隐藏文章作者简介 */
+    hiddenZhuanlanAuthorInfoDetail: false,
+    /** 隐藏详情顶部专题收录标签 */
+    hiddenQuestionSpecial: false,
+    /** 隐藏列表视频回答的内容 */
+    hiddenListVideoContent: false,
+    /** 隐藏主页创作中心 */
+    hiddenHomeCreatorEntrance: false,
+    /** 隐藏主页推荐关注 */
+    hiddenHomeRecommendFollow: false,
+    /** 隐藏主页分类圆桌 */
+    hiddenHomeCategory: false,
+    /** 隐藏主页更多分类 */
+    hiddenHomeCategoryMore: false,
+    /** 隐藏主页知乎指南 */
+    hiddenHomeFooter: false,
+    /** 隐藏回答内容操作栏 */
+    hiddenAnswerItemActions: false,
+    /** 隐藏回答下方发布编辑时间 */
+    hiddenAnswerItemTime: false,
+    /** 发现模块-隐藏首页 */
+    hiddenAppHeaderTabHome: false,
+    /** 发现模块-隐藏知学堂 */
+    hiddenAppHeaderTabZhi: false,
+    /** 发现模块-隐藏会员 */
+    hiddenAppHeaderTabVIP: false,
+    /** 发现模块-隐藏发现 */
+    hiddenAppHeaderTabFind: false,
+    /** 发现模块-隐藏等你来答 */
+    hiddenAppHeaderTabWaitingForYou: false,
+    /** 隐藏全部问题列表切换模块 */
+    hiddenHomeListTab: false,
+    /** 问题列表切换 - 隐藏关注 */
+    hiddenHomeListTabFollow: false,
+    /** 问题列表切换 - 隐藏推荐 */
+    hiddenHomeListTabRecommend: false,
+    /** 问题列表切换 - 隐藏热榜 */
+    hiddenHomeListTabHot: false,
+    /** 问题列表切换 - 隐藏视频 */
+    hiddenHomeListTabVideo: false,
+    /** 隐藏「好问题」按钮 */
+    hiddenQuestionGoodQuestion: false,
+    /** 隐藏添加评论按钮 */
+    hiddenQuestionComment: false,
+    /** 问题「...隐藏」按钮 */
+    hiddenQuestionMore: false,
+    /** 隐藏不显示修改器唤醒图标 */
+    hiddenOpenButton: false,
+    /** 回答操作 - 赞同按钮仅显示赞同数 */
+    justVoteNum: false,
+    /** 回答操作 - 评论按钮仅显示评论数 */
+    justCommitNum: false,
   };
 
   /** 屏蔽内容模块默认配置 */
   const CONFIG_FILTER_DEFAULT = {
-    removeZhihuOfficial: false, // 知乎官方账号回答
-    removeStoryAnswer: true, // 故事档案局回答
-    removeYanxuanAnswer: true, // 盐选科普回答
-    removeYanxuanRecommend: true, // 盐选推荐
-    removeYanxuanCPRecommend: true, // 盐选测评室
-    removeFromYanxuan: true, // 选自盐选专栏的回答
-    removeUnrealAnswer: false, // 带有虚构内容的回答
-    removeFollowVoteAnswer: false, // 关注人赞同回答
-    removeFollowVoteArticle: false, // 关注人赞同文章
-    removeFollowFQuestion: false, // 关注人关注问题
-    removeBlockUserContent: true, // 不再显示黑名单用户发布的内容
-    removeBlockUserContentList: [], // 已屏蔽用户列表
-    removeItemAboutAD: false, // 商业推广
-    removeItemAboutArticle: false, // 文章
-    removeItemAboutVideo: false, // 视频
-    removeItemQuestionAsk: false, // 列表提问
-    removeLessVote: false, // 关注列表过滤低于以下赞的内容
-    lessVoteNumber: 100, // 关注列表过滤低于以下赞的内容
-    removeLessVoteDetail: false, // 回答低赞内容屏蔽
-    lessVoteNumberDetail: 100, // 回答详情屏蔽以下赞的内容
-    removeAnonymousAnswer: false, // 屏蔽匿名用户回答
-    removeMyOperateAtFollow: false, // 关注列表屏蔽自己的操作
+    /** 屏蔽知乎官方账号回答 */
+    removeZhihuOfficial: false,
+    /** 屏蔽故事档案局回答 */
+    removeStoryAnswer: true,
+    /** 屏蔽盐选科普回答 */
+    removeYanxuanAnswer: true,
+    /** 屏蔽盐选推荐 */
+    removeYanxuanRecommend: true,
+    /** 屏蔽盐选测评室 */
+    removeYanxuanCPRecommend: true,
+    /** 屏蔽选自盐选专栏的回答 */
+    removeFromYanxuan: true,
+    /** 屏蔽带有虚构内容的回答 */
+    removeUnrealAnswer: false,
+    /** 屏蔽关注人赞同回答 */
+    removeFollowVoteAnswer: false,
+    /** 屏蔽关注人赞同文章 */
+    removeFollowVoteArticle: false,
+    /** 屏蔽关注人关注问题 */
+    removeFollowFQuestion: false,
+    /** 屏蔽不再显示黑名单用户发布的内容 */
+    removeBlockUserContent: true,
+    /** 屏蔽已屏蔽用户列表 */
+    removeBlockUserContentList: [],
+    /** 屏蔽商业推广 */
+    removeItemAboutAD: false,
+    /** 屏蔽文章 */
+    removeItemAboutArticle: false,
+    /** 屏蔽视频 */
+    removeItemAboutVideo: false,
+    /** 屏蔽列表提问 */
+    removeItemQuestionAsk: false,
+    /** 关注列表过滤低于以下赞的内容 */
+    removeLessVote: false,
+    /** 关注列表过滤低于以下赞的内容 */
+    lessVoteNumber: 100,
+    /** 回答低赞内容屏蔽 */
+    removeLessVoteDetail: false,
+    /** 回答详情屏蔽以下赞的内容 */
+    lessVoteNumberDetail: 100,
+    /** 屏蔽匿名用户回答 */
+    removeAnonymousAnswer: false,
+    /** 关注列表屏蔽自己的操作 */
+    removeMyOperateAtFollow: false,
   };
 
   /** 悬浮模块默认配置 */
@@ -361,7 +459,11 @@
         { value: 'hiddenAppHeaderTabFind', label: '发现模块-发现' },
         { value: 'hiddenAppHeaderTabWaitingForYou', label: '发现模块-等你来答' },
       ],
-      [{ value: 'hiddenAnswerText', label: '回答操作文字' }],
+      [
+        { value: 'hiddenAnswerText', label: '回答操作文字' },
+        { value: 'justVoteNum', label: '回答操作 - 赞同按钮仅显示赞同数' },
+        { value: 'justCommitNum', label: '回答操作 - 评论按钮仅显示评论数' },
+      ],
     ],
     /** 首页列表设置 */
     CTZ_SET_LIST: [
@@ -518,33 +620,59 @@
     ...CONFIG_HIDDEN_DEFAULT,
     ...CONFIG_FILTER_DEFAULT,
     ...CONFIG_SUSPENSION,
-    customizeCss: '', // 自定义样式
-    answerOpen: '', // 知乎默认 | 自动展开所有回答 | 默认收起所有长回答
+    /** 自定义样式 */
+    customizeCss: '',
+    /** 知乎默认 | 自动展开所有回答 | 默认收起所有长回答 */
+    answerOpen: '',
     filterKeywords: [],
-    showBlockUser: true, // 列表用户名后显示「屏蔽用户」按钮
-    colorBackground: '#ffffff', // 背景色
-    versionHome: '1000', // 列表版心宽度
-    versionAnswer: '1000', // 回答版心宽度
-    versionArticle: '690', // 文章版心宽度
-    zoomImageType: '0', // 图片尺寸自定义类型 0 1 2
-    zoomImageSize: '600', // 图片尺寸自定义大小
-    showGIFinDialog: true, // 使用弹窗打开动图
-    globalTitle: '', // 网页标题
-    titleIco: '', // 网页标题logo图
-    questionTitleTag: true, // 内容标题添加类别标签
-    listOutPutNotInterested: false, // 推荐列表外置「不感兴趣」按钮
-    fixedListItemMore: false, // 列表更多按钮固定至题目右侧
-    highlightOriginal: true, // 关注列表高亮原创内容
-    highlightListItem: false, // 列表内容点击高亮边框
-    listItemCreatedAndModifiedTime: true, // 列表内容显示发布与最后修改时间
-    answerItemCreatedAndModifiedTime: true, // 回答列表显示创建与最后修改时间
-    questionCreatedAndModifiedTime: true, // 问题显示创建和最后修改时间
-    articleCreateTimeToTop: true, // 文章发布时间置顶
-    linkShopping: '0', // 购物链接显示设置 0 1 2
-    linkAnswerVideo: '0', // 回答视频显示设置  0 1 2
-    fontSizeForList: 15, // 列表内容标准文字大小
-    fontSizeForAnswer: 15, // 回答内容标准文字大小
-    fontSizeForArticle: 16, // 文章内容标准文字大小
+    /** 列表用户名后显示「屏蔽用户」按钮 */
+    showBlockUser: true,
+    /** 背景色 */
+    colorBackground: '#ffffff',
+    /** 列表版心宽度 */
+    versionHome: '1000',
+    /** 回答版心宽度 */
+    versionAnswer: '1000',
+    /** 文章版心宽度 */
+    versionArticle: '690',
+    /** 图片尺寸自定义类型 0 1 2 */
+    zoomImageType: '0',
+    /** 图片尺寸自定义大小 */
+    zoomImageSize: '600',
+    /** 使用弹窗打开动图 */
+    showGIFinDialog: true,
+    /** 网页标题 */
+    globalTitle: '',
+    /** 网页标题logo图 */
+    titleIco: '',
+    /** 内容标题添加类别标签 */
+    questionTitleTag: true,
+    /** 推荐列表外置「不感兴趣」按钮 */
+    listOutPutNotInterested: false,
+    /** 列表更多按钮固定至题目右侧 */
+    fixedListItemMore: false,
+    /** 关注列表高亮原创内容 */
+    highlightOriginal: true,
+    /** 列表内容点击高亮边框 */
+    highlightListItem: false,
+    /** 列表内容显示发布与最后修改时间 */
+    listItemCreatedAndModifiedTime: true,
+    /** 回答列表显示创建与最后修改时间 */
+    answerItemCreatedAndModifiedTime: true,
+    /** 问题显示创建和最后修改时间 */
+    questionCreatedAndModifiedTime: true,
+    /** 文章发布时间置顶 */
+    articleCreateTimeToTop: true,
+    /** 购物链接显示设置 0 1 2 */
+    linkShopping: '0',
+    /** 回答视频显示设置  0 1 2 */
+    linkAnswerVideo: '0',
+    /** 列表内容标准文字大小 */
+    fontSizeForList: 15,
+    /** 回答内容标准文字大小 */
+    fontSizeForAnswer: 15,
+    /** 文章内容标准文字大小 */
+    fontSizeForArticle: 16,
   };
   /** 缓存历史记录 */
   let pfHistory = {
@@ -1251,7 +1379,6 @@
           cardContent = JSON.parse(nodeItemContent.getAttribute('data-za-extra-module')).card.content;
         } catch {}
         const { itemId = '', title = '', type = '' } = dataZop || {};
-
         // 关注列表屏蔽自己的操作
         if (removeMyOperateAtFollow && nodeItem.classList.contains('TopstoryItem-isFollow')) {
           try {
@@ -1260,23 +1387,19 @@
             findUserId === myUserId && (message = '关注列表屏蔽自己的操作');
           } catch {}
         }
-
         // 列表种类过滤
         const haveVideo = nodeItemContent.classList.contains('ZVideoItem') && removeItemAboutVideo;
         const haveArticle = nodeItemContent.classList.contains('ArticleItem') && removeItemAboutArticle;
         (haveVideo || haveArticle) && !message && (message = '列表种类屏蔽');
-
         // 屏蔽低赞内容
         if (removeLessVote && !message) {
           cardContent['upvote_num'] < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num']}`);
         }
-
         // 屏蔽邀请回答
         const elementQuestionAsk = nodeItem.querySelector('.TopstoryQuestionAskItem');
         if (removeItemQuestionAsk && elementQuestionAsk && !message) {
           message = '屏蔽邀请回答';
         }
-
         // 关注列表屏蔽关注人操作
         const isFilterFollowerOperate = removeFollowVoteAnswer || removeFollowVoteArticle || removeFollowFQuestion;
         if (isFilterFollowerOperate && !message && nodeItem.classList.contains('TopstoryItem-isFollow')) {
@@ -1289,7 +1412,6 @@
             }
           }
         }
-
         if (!message) {
           let matchedWord = ''; // 匹配到的内容, 仅匹配第一个
           for (let itemWord of filterKeywords) {
@@ -1299,7 +1421,6 @@
               break;
             }
           }
-
           // 匹配到屏蔽词, 屏蔽词过滤
           if (matchedWord) {
             const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
@@ -1308,7 +1429,6 @@
             message = `屏蔽列表内容: ${title},匹配屏蔽词：${matchedWord}, 链接：${routeURL}`;
           }
         }
-
         // 高亮原创
         const userNameE = nodeItem.querySelector('.FeedSource-firstline .UserLink-link');
         const userName = userNameE ? userNameE.innerText : '';
@@ -1323,10 +1443,8 @@
           nodeItem.style = `${highlight}border: 1px solid #aaa;`;
           nodeItem.querySelector('.ContentItem-actions').style = highlight;
         }
-
         // 最后信息 & 起点位置处理
         message && (lessNum = fnHiddenDom(lessNum, nodeItem, message));
-
         // 缓存推荐列表
         if (domP(nodeItem, 'class', 'Topstory-recommend') && nodeItem.querySelector('.ContentItem-title a')) {
           const nodeATitle = nodeItem.querySelector('.ContentItem-title a');
@@ -1338,7 +1456,7 @@
             pfHistory.list = historyList.slice(0, 100);
           }
         }
-
+        fnJustNum(nodeItem);
         if (i + 1 === len) {
           const nI = i - lessNum >= 0 ? i - lessNum : 0;
           this.index = nI;
@@ -1372,7 +1490,6 @@
         const haveArticle = removeItemAboutArticle && elementThis.querySelector('.ArticleItem');
         const haveVideo = removeItemAboutVideo && elementThis.querySelector('.ZvideoItem');
         (haveAD || haveArticle || haveVideo) && (message = '列表种类屏蔽');
-
         // 低赞内容过滤
         if (removeLessVote && !message) {
           const elementUpvote = elementThis.querySelector('.ContentItem-actions .VoteButton--up');
@@ -1383,7 +1500,7 @@
             message = `屏蔽低赞内容: ${upvote}赞`;
           }
         }
-
+        fnJustNum(elementThis);
         // 最后信息 & 起点位置处理
         message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
         this.index = fnIndexMath(this.index, i, len, lessNum);
@@ -1422,7 +1539,6 @@
       let hiddenUsers = [];
       Object.keys(HIDDEN_ANSWER_ACCOUNT).forEach((i) => pfConfig[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]));
       removeBlockUserContent && (hiddenUsers = hiddenTags.concat(removeBlockUserContentList.map((i) => i.name)));
-
       const elements = domA('.AnswersNavWrapper .List-item');
       let lessNum = 0;
       for (let i = this.index, len = elements.length; i < len; i++) {
@@ -1435,18 +1551,15 @@
           dataZop = JSON.parse(elementInfo.getAttribute('data-zop'));
           dataCardContent = JSON.parse(elementInfo.getAttribute('data-za-extra-module')).card.content;
         } catch {}
-
         // FIRST
         // 低赞回答过滤
         dataCardContent['upvote_num'] < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
-
         // 屏蔽知乎官方账号回答
         if (removeZhihuOfficial && !message) {
           const labelE = elementThis.querySelector('.AuthorInfo-name .css-n99yhz');
           const label = labelE ? labelE.getAttribute('aria-label') : '';
           /知乎[\s]*官方帐号/.test(label) && (message = '已删除一条知乎官方帐号的回答');
         }
-
         // 屏蔽带有选中标签的回答
         let isHiddenTag = false;
         hiddenTags.forEach((i) => pfConfig[i] && (isHiddenTag = true));
@@ -1463,16 +1576,13 @@
             }
           });
         }
-
         // 屏蔽用户 | 知乎账号的回答
         hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName) && (message = `已删除${dataZop.authorName}的回答`);
-
         // 屏蔽「匿名用户」回答
         if (removeAnonymousAnswer && !message) {
           const userName = elementThis.querySelector('[itemprop="name"]').content;
           userName === '匿名用户' && (message = `已屏蔽一条「匿名用户」回答`);
         }
-
         // 自动展开回答 和 默认收起长回答
         if (!message && answerOpen) {
           const unFoldButton = elementThis.querySelector('.ContentItem-expandButton');
@@ -1484,7 +1594,6 @@
             elementThis.classList.add(OB_CLASS_FOLD.on);
             lessNum++;
           }
-
           const isF = foldButton && elementThis.offsetHeight > 939;
           const isFC = unFoldButton; // 已经收起的回答
           if (answerOpen === 'off' && isNotClose && (isF || isFC)) {
@@ -1493,7 +1602,7 @@
             lessNum++;
           }
         }
-
+        fnJustNum(elementThis);
         if (!message) {
           // 添加回答时间
           pfConfig.answerItemCreatedAndModifiedTime && addTimes(elementThis);
@@ -2125,6 +2234,27 @@
       dom('.CollectionDetailPageHeader-actions .FollowButton') && dom('.CollectionDetailPageHeader-actions .FollowButton').click();
       window.close();
     },
+  };
+
+  /** 仅显示数字内容 */
+  const fnJustNum = (element) => {
+    if (!element) return;
+    const { justVoteNum, justCommitNum } = pfConfig;
+    const nodeVoteup = element.querySelector('.VoteButton--up');
+    if (justVoteNum && nodeVoteup) {
+      nodeVoteup.style = 'font-size: 14px!important;';
+      nodeVoteup.innerHTML = nodeVoteup.innerHTML.replace('赞同 ', '');
+    }
+    if (justCommitNum) {
+      const buttons = element.querySelectorAll('.ContentItem-actions button');
+      for (let i = 0; i < buttons.length; i++) {
+        const buttonThis = buttons[i];
+        if (buttonThis.innerHTML.includes('条评论')) {
+          buttonThis.style = 'font-size: 14px!important;margin-top:-5px;';
+          buttonThis.innerHTML = buttonThis.innerHTML.replace('条评论', '');
+        }
+      }
+    }
   };
 
   /** 视频下载 */
@@ -2951,6 +3081,7 @@
         question: () => {
           myListenSelect.init();
           addQuestionCreatedAndModifiedTime();
+          fnJustNum(dom('.QuestionAnswer-content'));
         },
         video: () => myVideo.init(),
         filter: () => myPageFilterSetting.init(),
