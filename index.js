@@ -707,12 +707,8 @@
       fnInitDomStyle('CTZ_STYLE_BACKGROUND', innerHTML);
     },
     change: function (bg) {
-      if (this.isUseDark()) {
-        return this.dark(bg);
-      }
-      if (bg === '#ffffff') {
-        return this.default();
-      }
+      if (this.isUseDark()) return this.dark(bg);
+      if (bg === '#ffffff') return this.default();
       return this.normal(bg) + this.normalAppHeader(bg);
     },
     isUseDark: () => Object.keys(BACKGROUND_DARK_COLORS).includes(pfConfig.colorBackground),
@@ -740,8 +736,7 @@
         `,.PubIndex-CategoriesHeader,.AppHeader,body,.UserPageItem--withButton,.QuestionWaiting-typesTopper,.PostItem,.LinkCard.new` +
         `{background:${b2}!important;}`;
       const backgroundTransparent =
-        `._AccountSettings_accountLine_3HJS,.css-1gfpqrv,.css-13dk2dh,.css-u6lvao,.css-u6lvao:before,.css-u6lvao:after` +
-        `,.Community-ContentLayout` +
+        `._AccountSettings_accountLine_3HJS,.css-1gfpqrv,.css-13dk2dh,.css-u6lvao,.css-u6lvao:before,.css-u6lvao:after,.Community-ContentLayout` +
         `{background: transparent!important;}`;
       const colorT1 =
         `.ctz-footer` +
@@ -3122,6 +3117,5 @@
       domById(ID_DIALOG).style.display === 'none' ? myDialog.open() : myDialog.hide();
     }
   });
-
   unsafeWindow.openCtz = myDialog.open;
 })();
