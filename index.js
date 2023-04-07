@@ -579,11 +579,13 @@
     runoob: 'https://static.runoob.com/images/favicon.ico',
     vue: 'https://cli.vuejs.org/icons/apple-touch-icon-152x152.png',
     bilibili: 'https://www.bilibili.com/favicon.ico',
-    angular: 'https://angular.cn/assets/images/favicons/favicon.ico',
     lanhu: 'https://sso-cdn.lanhuapp.com/ssoweb/favicon.ico',
     yuque: 'https://mdn.alipayobjects.com/huamei_0prmtq/afts/img/A*vMxOQIh4KBMAAAAAAAAAAAAADvuFAQ/original',
-    greasyfork: 'https://greasyfork.org/vite/assets/blacklogo16.bc64b9f7.png',
     threeDM: 'https://bbs.3dmgame.com/favicon.ico',
+    mailQQ: 'https://mail.qq.com/zh_CN/htmledition/images/favicon/qqmail_favicon_96h.png',
+    mail163: 'https://mail.163.com/favicon.ico',
+    weibo: 'https://weibo.com/favicon.ico',
+    qzone: 'https://qzonestyle.gtimg.cn/aoi/img/logo/favicon.ico?max_age=31536000',
   };
 
   /** 默认功能文案 */
