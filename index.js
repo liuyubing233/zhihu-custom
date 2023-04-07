@@ -2978,6 +2978,19 @@
 
     // 添加更多默认设置
     domById('CTZ_DEFAULT_SELF').innerHTML = DEFAULT_FUNCTION.map((elementItem, index) => `<div>${index + 1}. ${elementItem}</div>`).join('');
+
+    {
+      const href = userInfo.url ? userInfo.url.replace('/api/v4', '') : '';
+      if (href) {
+        // 保存个人主页位置
+        const homeLink = domC('a', {
+          href,
+          target: '_blank',
+          innerText: '个人主页',
+        });
+        dom('#CTZ_SET_BASIS .ctz-content-left').appendChild(homeLink);
+      }
+    }
   };
 
   /** 加载设置弹窗绑定方法 */
