@@ -6,6 +6,8 @@
 // @author       liuyubing
 // @match        *://*.zhihu.com/*
 // @grant        GM_xmlhttpRequest
+// @grant        GM_setValue
+// @grant        GM_getValue
 // @run-at       document-start
 // @connect      127.0.0.1
 // ==/UserScript==
