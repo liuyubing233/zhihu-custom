@@ -259,6 +259,20 @@
               <span class="ctz-label">列表内容标准文字大小</span>
               <input type="number" name="fontSizeForList" class="ctz-i-change" />
             </div>
+            <div>
+              <div class="ctz-flex-wrap">
+                <div class="ctz-label">列表视频回答内容尺寸</div>
+                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label>
+                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label>
+              </div>
+              <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM">
+                <div class="ctz-flex-wrap">
+                  <input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" />
+                  <span id="zoomListVideoSize" style="margin-left: 8px">0</span>
+                </div>
+                <div class="ctz-commit">滚动条范围: 0 ~ 1000</div>
+              </div>
+            </div>
           </div>
         </div>
 
