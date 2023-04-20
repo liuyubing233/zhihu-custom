@@ -3157,10 +3157,14 @@
     false
   );
 
-  /** shift + . 唤醒修改器弹窗 */
   window.addEventListener('keydown', (event) => {
+    // shift + . 唤醒关闭修改器弹窗
     if (event.key === '>' || event.key === '》' || event.keyCode === 190) {
       domById(ID_DIALOG).style.display === 'none' ? myDialog.open() : myDialog.hide();
+    }
+    // esc 关闭弹窗
+    if (event.key === 'Escape' || event.keyCode === 27) {
+      myDialog.hide();
     }
   });
   unsafeWindow.openCtz = myDialog.open;
