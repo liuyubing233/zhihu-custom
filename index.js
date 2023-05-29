@@ -109,11 +109,7 @@
 
   const FOOTER_HTML =
     `<a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github⭐</a>` +
-    `<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>` +
-    `<span>` +
-    `打开关闭编辑器快捷键：<span class="key-shadow">></span>` +
-    `（<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>）` +
-    `</span>`;
+    `<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>`;
 
   /** 隐藏内容模块默认配置 */
   const CONFIG_HIDDEN_DEFAULT = {
@@ -682,6 +678,8 @@
     zoomListVideoType: '0',
     /** 列表视频回答内容缩放 */
     zoomListVideoSize: '500',
+    /** 唤醒快捷键是否开启 */
+    hotKey: true,
   };
   /** 缓存历史记录 */
   let pfHistory = {
@@ -3158,9 +3156,11 @@
   );
 
   window.addEventListener('keydown', (event) => {
-    // shift + . 唤醒关闭修改器弹窗
-    if (event.key === '>' || event.key === '》' || event.keyCode === 190) {
-      domById(ID_DIALOG).style.display === 'none' ? myDialog.open() : myDialog.hide();
+    if (pfConfig.hotKey) {
+      // shift + . 唤醒关闭修改器弹窗
+      if (event.key === '>' || event.key === '》' || event.keyCode === 190) {
+        domById(ID_DIALOG).style.display === 'none' ? myDialog.open() : myDialog.hide();
+      }
     }
     // esc 关闭弹窗
     if (event.key === 'Escape' || event.keyCode === 27) {
