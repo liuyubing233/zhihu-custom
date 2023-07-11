@@ -580,11 +580,11 @@
     bilibili: 'https://www.bilibili.com/favicon.ico',
     lanhu: 'https://sso-cdn.lanhuapp.com/ssoweb/favicon.ico',
     yuque: 'https://mdn.alipayobjects.com/huamei_0prmtq/afts/img/A*vMxOQIh4KBMAAAAAAAAAAAAADvuFAQ/original',
-    threeDM: 'https://bbs.3dmgame.com/favicon.ico',
     mailQQ: 'https://mail.qq.com/zh_CN/htmledition/images/favicon/qqmail_favicon_96h.png',
     mail163: 'https://mail.163.com/favicon.ico',
     weibo: 'https://weibo.com/favicon.ico',
     qzone: 'https://qzonestyle.gtimg.cn/aoi/img/logo/favicon.ico?max_age=31536000',
+    baidu: 'https://www.baidu.com/favicon.ico',
   };
 
   /** 默认功能文案 */
@@ -2932,6 +2932,22 @@
 
   /** 在启动时注入的内容 */
   async function onDocumentStart() {
+    const { pathname, hostname, host, origin } = location;
+    const pathnameForPhone = '/tardis/sogou/qus/';
+    const pathnameForArt = '/tardis/zm/art/';
+    // 重定向页面
+    if (pathname.includes(pathnameForPhone)) {
+      const questionId = pathname.replace(pathnameForPhone, '');
+      location.href = origin + '/question/' + questionId;
+      return;
+    }
+
+    if (pathname.includes(pathnameForArt)) {
+      const questionId = pathname.replace(pathnameForArt, '');
+      location.href = 'https://zhuanlan.zhihu.com/p/' + questionId;
+      return;
+    }
+
     if (!document.head) {
       fnLog('not find document.head, waiting for reload...');
       isHaveHeadWhenInit = false;
@@ -2939,13 +2955,13 @@
     }
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-    if (!HTML_HOOTS.includes(location.hostname) || window.frameElement) return;
+    if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
     storageConfig.cachePfConfig = pfConfig;
     await myStorage.initConfig();
     await myStorage.initHistory();
     initHistoryView();
     onInitStyleExtra();
-    EXTRA_CLASS_HTML[location.host] && dom('html').classList.add(EXTRA_CLASS_HTML[location.host]);
+    EXTRA_CLASS_HTML[host] && dom('html').classList.add(EXTRA_CLASS_HTML[host]);
 
     // 拦截 fetch 方法, 获取 option 中的值
     const originFetch = fetch;
@@ -2965,7 +2981,7 @@
       return originFetch(url, opt);
     };
 
-    if (/\/question/.test(location.pathname) && location.search.match(/(?<=sort=)\w+/)) {
+    if (/\/question/.test(pathname) && location.search.match(/(?<=sort=)\w+/)) {
       myListenSelect.keySort = location.search.match(/(?<=sort=)\w+/)[0];
     }
 
