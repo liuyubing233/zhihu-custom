@@ -32,7 +32,9 @@
   /** 创建元素 */
   const domC = (name, attrObjs) => {
     const node = document.createElement(name);
-    Object.keys(attrObjs).forEach((key) => (node[key] = attrObjs[key]));
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
     return node;
   };
   /** 查找父级元素 */
@@ -59,7 +61,9 @@
   /** 元素替换内容 */
   const fnDomReplace = (node, attrObjs) => {
     if (!node) return;
-    Object.keys(attrObjs).forEach((key) => (node[key] = attrObjs[key]));
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
   };
 
   const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
@@ -1577,7 +1581,9 @@
       const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
       // 屏蔽用户名称列表
       let hiddenUsers = [];
-      Object.keys(HIDDEN_ANSWER_ACCOUNT).forEach((i) => pfConfig[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]));
+      for (let i in HIDDEN_ANSWER_ACCOUNT) {
+        pfConfig[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
+      }
       removeBlockUserContent && (hiddenUsers = hiddenTags.concat(removeBlockUserContentList.map((i) => i.name)));
       const elements = domA('.AnswersNavWrapper .List-item');
       let lessNum = 0;
@@ -2836,9 +2842,9 @@
 
   /** 判断 pathname 匹配的项并运行对应方法 */
   const pathnameHasFn = (obj) => {
-    Object.keys(obj).forEach((name) => {
+    for (let name in obj) {
       location.pathname.includes(name) && obj[name]();
-    });
+    }
   };
 
   /** 使用 ResizeObserver 监听body高度 */
@@ -3013,9 +3019,9 @@
       .join('');
 
     // 添加隐藏元素
-    Object.keys(HIDDEN_DIRECITION).forEach((key) => {
+    for (let key in HIDDEN_DIRECITION) {
       const arrHidden = HIDDEN_DIRECITION[key];
-      if (!arrHidden || !arrHidden.length) return;
+      if (!arrHidden || !arrHidden.length) continue;
       const elementItem = dom(`#${key}_HIDDEN>.ctz-set-content`);
       elementItem.innerHTML = arrHidden
         .map(
@@ -3024,7 +3030,7 @@
             `<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
         )
         .join('');
-    });
+    }
 
     // 添加修改网页标题图片
     domById('CTZ_TITLE_ICO').innerHTML = Object.keys(ICO_URL)
@@ -3056,9 +3062,9 @@
       'ctz-button': (even) => myButtonOperation[even.name] && myButtonOperation[even.name](),
     };
     const operation = (even) => {
-      Object.keys(myOperation).forEach((key) => {
+      for (let key in myOperation) {
         even.target.classList.contains(key) && myOperation[key](even.target);
-      });
+      }
     };
     dom('.ctz-content').onclick = operation;
     dom('.ctz-content').onchange = operation;
