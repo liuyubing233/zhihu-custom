@@ -796,7 +796,7 @@
       const backgroundOpacity =
         `#${ID_DIALOG},.ctz-set-title>span` +
         `,#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
-        `,.QuestionHeader,.Card,.HotItem,.Recommendations-Main,.GlobalSideBar-navList` +
+        `,.QuestionHeader,.Card,.HotItem,.Recommendations-Main,.GlobalSideBar-navList,.SearchSubTabs` +
         `,.CommentsV2-withPagination,.QuestionHeader-footer,.HoverCard,.ContentItem-actions` +
         `,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer,.Select-plainButton` +
         `,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard` +
@@ -818,7 +818,7 @@
         `,.css-1j5d3ll,.css-iebf30,.css-1qjzmdv,.AnswerForm-footer,.css-g3xs10,.css-jlyj5p,.CommentEditorV2-inputUpload` +
         `,.css-805ti0,.css-10fqe38,.css-n9os37,.css-sdgtgb,.css-f955pw,.css-6tr06j,.css-pslzz3,.css-10rrwst,.css-1ne387d,.css-1bmbu2d` +
         `,.css-mjg7l1,.css-1ulkprw,.css-1k8sxfm,.css-a9sbyu,.CreatorIndex-BottomBox-Item,.css-1r9j229,.css-wgpue5,.css-1hwwfws` +
-        `,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g,.css-c29erj,.Modal-content,.Sticky` +
+        `,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g,.css-c29erj,.Modal-content,.Sticky,.css-2i2hyg,.css-1sz5gzk,.css-vvikez` +
         `{background-color:${BACKGROUND_CONFIG[bg].opacity}!important;background:${BACKGROUND_CONFIG[bg].opacity}!important;}`;
       const backgroundTransparent =
         `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn` +
@@ -1096,7 +1096,7 @@
       hiddenQuestionAnswer: '.QuestionHeader .FollowButton ~ a{display: none;}',
       hiddenQuestionInvite: '.QuestionHeader .QuestionHeaderActions>button:first-child{display: none;}',
       hiddenSearchPageTopSearch: '.Search-container .TopSearch{display: none;}',
-      hiddenSearchPageFooter: '.Search-container .Footer{display: none;}',
+      hiddenSearchPageFooter: '.Search-container .Footer,.Search-container footer{display: none;}',
       hiddenSearchBoxTopSearch: '.SearchBar-noValueMenu .AutoComplete-group:first-child{display:none;}',
       hiddenZhuanlanShare: '.zhuanlan .Post-SideActions .Popover.ShareMenu{display: none!important;}',
       hiddenZhuanlanVoters: '.zhuanlan .Post-SideActions .like{display: none!important;}',
@@ -1119,7 +1119,7 @@
       hiddenHomeRecommendFollow: '.Topstory .css-173vipd{display: none;}',
       hiddenHomeCategory: '.Topstory .GlobalSideBar-category{display: none;}',
       hiddenHomeCategoryMore: '.Topstory .Card[aria-label="更多分类入口"]{display:none;}',
-      hiddenHomeFooter: '.Topstory .Footer{display: none;}',
+      hiddenHomeFooter: '.Topstory .Footer,.Topstory footer{display: none;}',
       hiddenAnswerItemActions: '.Question-main .ContentItem-actions{display: none;}',
       hiddenAnswerItemTime: '.Question-main .ContentItem-time{display: none;margin: 0;}',
       hiddenAppHeaderTabHome: '.AppHeader-Tab:nth-of-type(1){display: none}',
