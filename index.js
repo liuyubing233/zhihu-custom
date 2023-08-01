@@ -3085,7 +3085,7 @@
 
   /** 页面加载完成 */
   window.addEventListener(
-    'load',
+    'DOMContentLoaded',
     async () => {
       // 如果脚本注入时 document.head 未加载完成则在页面渲染后重新进行加载
       if (!isHaveHeadWhenInit) {
