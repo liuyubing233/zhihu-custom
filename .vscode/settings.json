@@ -7,14 +7,8 @@
   "search.followSymlinks": false,
   "emmet.triggerExpansionOnTab": true,
   "less.compile": {
-    "compress": true, //是否压缩
+    "compress": true //是否压缩
   },
-  "cSpell.words": [
-    "liuyubing",
-    "Tampermonkey",
-    "Violentmonkey",
-    "Zhihu",
-    "Zhuanlan"
-  ],
+  "cSpell.words": ["liuyubing", "Tampermonkey", "Violentmonkey", "Zhihu", "Zhuanlan"],
   "prettier.printWidth": 160
 }
