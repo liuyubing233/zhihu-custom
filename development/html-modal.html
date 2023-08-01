@@ -10,6 +10,7 @@
     <a href="#CTZ_SET_ANSWER">回答详情</a>
     <a href="#CTZ_SET_ARTICLE">文章专栏</a>
     <a href="#CTZ_SET_HISTORY">历史记录</a>
+    <a href="#CTZ_SET_BLACKLIST">黑名单设置</a>
   </div>
   <div class="ctz-content">
     <!-- 基础设置 -->
@@ -17,7 +18,6 @@
       <div class="ctz-content-left">
         <a href="#CTZ_SET_BASIS_DEFAULT">基本设置</a>
         <a href="#CTZ_SET_BASIS_FLOAT">悬浮模块</a>
-        <a href="#CTZ_SET_BASIS_BLOCK">黑名单设置</a>
         <a href="#CTZ_SET_BASIS_HIDDEN">通用模块隐藏</a>
         <a href="#CTZ_SET_BASIS_COLOR">颜色设置</a>
         <a href="#CTZ_SET_BASIS_CONFIG">配置操作</a>
@@ -115,29 +115,6 @@
                   搜索栏模块
                 </label>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="CTZ_SET_BASIS_BLOCK">
-          <div class="ctz-set-title"><span>黑名单设置</span></div>
-          <div class="ctz-set-content">
-            <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
-            <div class="ctz-flex-wrap">
-              <label>
-                <span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span>
-                <input class="ctz-i" name="showBlockUser" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div class="ctz-flex-wrap">
-              <label>
-                <span class="ctz-label">屏蔽黑名单用户发布的内容</span>
-                <input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" />
-              </label>
-            </div>
-            <div>
-              <div class="ctz-label">黑名单列表</div>
-              <div id="CTZ-BLOCK-LIST"></div>
             </div>
           </div>
         </div>
@@ -526,6 +503,37 @@
           </div>
           <button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button>
           <div class="ctz-set-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 黑名单设置 -->
+    <div id="CTZ_SET_BLACKLIST" style="display: none">
+      <div class="ctz-content-left">
+        <a href="#CTZ_SET_BASIS_BLOCK">黑名单设置</a>
+      </div>
+      <div class="ctz-content-right">
+        <div id="CTZ_SET_BASIS_BLOCK">
+          <div class="ctz-set-title"><span>黑名单设置</span></div>
+          <div class="ctz-set-content">
+            <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
+            <div class="ctz-flex-wrap">
+              <label>
+                <span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span>
+                <input class="ctz-i" name="showBlockUser" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div class="ctz-flex-wrap">
+              <label>
+                <span class="ctz-label">屏蔽黑名单用户发布的内容</span>
+                <input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" />
+              </label>
+            </div>
+            <div>
+              <div class="ctz-label">黑名单列表</div>
+              <div id="CTZ-BLOCK-LIST"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
