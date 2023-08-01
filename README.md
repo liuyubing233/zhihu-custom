@@ -4,15 +4,15 @@
 
 请先确认已安装 <a href="https://www.tampermonkey.net/" target="_blank">tampermonkey</a> 脚本管理器后，再安装本助手
 
-<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
+<a href="https://github.com/liuyubing233/custom-zhihu/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
 
-<a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github</a>
+<a href="https://github.com/liuyubing233/custom-zhihu/tree/main" target="_blank">Github</a>
 
 <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
 
 发现问题和想要添加的内容请反馈给我，感谢！！！
 
-插件目录跳转失效请移步<a href="https://github.com/superPufferfish/custom-zhihu/blob/main/README.md" target="_blank">这里查看</a>
+插件目录跳转失效请移步<a href="https://github.com/liuyubing233/custom-zhihu/blob/main/README.md" target="_blank">这里查看</a>
 
 Safari 浏览器下在[知乎](www.zhihu.com)使用 TamperMonkey 会报错，导致插件无法使用，暂时没有解决头绪...
 
