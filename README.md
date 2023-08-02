@@ -8,6 +8,8 @@
 
 <a href="https://github.com/liuyubing233/custom-zhihu/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
 
+<a href="https://github.com/liuyubing233/custom-zhihu/blob/main/Q%26A.md" target="_blank">部分问题解答</a>
+
 <a href="https://github.com/liuyubing233/custom-zhihu/tree/main" target="_blank">Github</a>
 
 <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
