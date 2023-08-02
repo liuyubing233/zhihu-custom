@@ -37,6 +37,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 	- [回答内容按照点赞数和评论数排序](#回答内容按照点赞数和评论数排序)
 	- [个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注](#个人主页我关注的问题我关注的收藏可以一键移除或将移除的内容添加回关注)
 	- [一键邀请功能](#一键邀请功能)
+	- [复制代码块删除版权信息](#复制代码块删除版权信息)
 - [基础设置](#基础设置)
 	- [基础设置 - 基本设置](#基础设置---基本设置)
 		- [更改网页和标题](#更改网页和标题)
@@ -148,6 +149,12 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 <img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211312&authkey=%21AAASWfmg8Hhe7rE&width=1028&height=485" width="1028" height="485" />
 
 添加一键邀请功能，点击即可邀请当前页面所有推荐用户
+
+#### 复制代码块删除版权信息
+
+复制代码块内容删除烦人的版权信息
+
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211319&authkey=%21AE_fgVVOOid4wOU&width=1024&height=999999" width="1024" height="auto" />
 
 ### 基础设置
 
