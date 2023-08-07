@@ -5,26 +5,27 @@
     <i id="CTZ_CLOSE_DIALOG" class="ctz-icon">&#xe602;</i>
   </div>
   <div class="ctz-menu-top">
-    <a href="#CTZ_SET_BASIS">基础设置</a>
-    <a href="#CTZ_SET_LIST">首页列表</a>
-    <a href="#CTZ_SET_ANSWER">回答详情</a>
-    <a href="#CTZ_SET_ARTICLE">文章专栏</a>
-    <a href="#CTZ_SET_HISTORY">历史记录</a>
-    <a href="#CTZ_SET_BLACKLIST">黑名单设置</a>
+    <a href="#CTZ_BASIS">基础设置</a>
+    <a href="#CTZ_LIST">首页列表</a>
+    <a href="#CTZ_ANSWER">回答详情</a>
+    <a href="#CTZ_ARTICLE">文章专栏</a>
+    <a href="#CTZ_HISTORY">历史记录</a>
+    <a href="#CTZ_BLACKLIST">黑名单设置</a>
   </div>
   <div class="ctz-content">
     <!-- 基础设置 -->
-    <div id="CTZ_SET_BASIS" style="display: none">
+    <div id="CTZ_BASIS" style="display: none">
       <div class="ctz-content-left">
-        <a href="#CTZ_SET_BASIS_DEFAULT">基本设置</a>
-        <a href="#CTZ_SET_BASIS_FLOAT">悬浮模块</a>
-        <a href="#CTZ_SET_BASIS_HIDDEN">通用模块隐藏</a>
-        <a href="#CTZ_SET_BASIS_COLOR">颜色设置</a>
-        <a href="#CTZ_SET_BASIS_CONFIG">配置操作</a>
-        <a href="#CTZ_SET_BASIS_MORE">默认功能</a>
+        <a href="#CTZ_BASIS_DEFAULT">基本设置</a>
+        <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
+        <a href="#CTZ_BASIS_HIDDEN">通用模块隐藏</a>
+        <a href="#CTZ_BASIS_COLOR">颜色设置</a>
+        <a href="#CTZ_BASIS_CONFIG">配置操作</a>
+        <a href="#CTZ_BASIS_MORE">默认功能</a>
       </div>
       <div class="ctz-content-right">
-        <div id="CTZ_SET_BASIS_DEFAULT">
+        <div class="ctz-commit-top">当前设置为通用设置，设置完成后在所有页面生效</div>
+        <div id="CTZ_BASIS_DEFAULT">
           <div class="ctz-set-title"><span>基本设置</span></div>
           <div class="ctz-set-content">
             <div>
@@ -83,7 +84,7 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_BASIS_FLOAT">
+        <div id="CTZ_BASIS_FLOAT">
           <div class="ctz-set-title"><span>悬浮模块</span></div>
           <div class="ctz-set-content">
             <div class="ctz-flex-wrap">
@@ -119,14 +120,14 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_BASIS_HIDDEN">
+        <div id="CTZ_BASIS_HIDDEN">
           <div class="ctz-set-title">
             <span>通用模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
           </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
         </div>
 
-        <div id="CTZ_SET_BASIS_COLOR">
+        <div id="CTZ_BASIS_COLOR">
           <div class="ctz-set-title"><span>颜色设置</span></div>
           <div class="ctz-set-content">
             <div class="ctz-set-background">
@@ -135,7 +136,7 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_BASIS_CONFIG">
+        <div id="CTZ_BASIS_CONFIG">
           <div class="ctz-set-title"><span>配置操作</span></div>
           <div class="ctz-set-content">
             <div class="ctz-flex-wrap">
@@ -163,7 +164,7 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_BASIS_MORE">
+        <div id="CTZ_BASIS_MORE">
           <div class="ctz-set-title">
             <span>默认功能<span class="ctz-desc">此部分功能为编辑器默认功能，不需要额外开启</span></span>
           </div>
@@ -186,14 +187,15 @@
     </div>
 
     <!-- 首页列表设置 -->
-    <div id="CTZ_SET_LIST" style="display: none">
+    <div id="CTZ_LIST" style="display: none">
       <div class="ctz-content-left">
-        <a href="#CTZ_SET_LIST_DEFAULT">基础设置</a>
-        <a href="#CTZ_SET_LIST_FILTER">屏蔽内容</a>
-        <a href="#CTZ_SET_LIST_HIDDEN">隐藏模块</a>
+        <a href="#CTZ_LIST_DEFAULT">基础设置</a>
+        <a href="#CTZ_LIST_FILTER">屏蔽内容</a>
+        <a href="#CTZ_LIST_HIDDEN">隐藏模块</a>
       </div>
       <div class="ctz-content-right">
-        <div id="CTZ_SET_LIST_DEFAULT">
+        <div class="ctz-commit-top">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div>
+        <div id="CTZ_LIST_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
             <div>
@@ -266,7 +268,7 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_LIST_FILTER" class="ctz-filter-block">
+        <div id="CTZ_LIST_FILTER" class="ctz-filter-block">
           <div class="ctz-set-title">
             <span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
           </div>
@@ -318,7 +320,7 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_LIST_HIDDEN">
+        <div id="CTZ_LIST_HIDDEN">
           <div class="ctz-set-title">
             <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
           </div>
@@ -328,15 +330,16 @@
     </div>
 
     <!-- 回答详情设置 -->
-    <div id="CTZ_SET_ANSWER" style="display: none">
+    <div id="CTZ_ANSWER" style="display: none">
       <div class="ctz-content-left">
-        <a href="#CTZ_SET_ANSWER_DEFAULT">基础设置</a>
-        <a href="#CTZ_SET_ANSWER_FILTER">屏蔽内容</a>
-        <a href="#CTZ_SET_ANSWER_HIDDEN">隐藏模块</a>
-        <a href="#CTZ_SET_ANSWER_OPEN">回答展开收起</a>
+        <a href="#CTZ_ANSWER_DEFAULT">基础设置</a>
+        <a href="#CTZ_ANSWER_FILTER">屏蔽内容</a>
+        <a href="#CTZ_ANSWER_HIDDEN">隐藏模块</a>
+        <a href="#CTZ_ANSWER_OPEN">回答展开收起</a>
       </div>
       <div class="ctz-content-right">
-        <div id="CTZ_SET_ANSWER_DEFAULT">
+        <div class="ctz-commit-top">当前设置完成后问答内容页面生效</div>
+        <div id="CTZ_ANSWER_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
             <div>
@@ -378,7 +381,7 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_ANSWER_FILTER" class="ctz-filter-block">
+        <div id="CTZ_ANSWER_FILTER" class="ctz-filter-block">
           <div class="ctz-set-title">
             <span>屏蔽内容 <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
           </div>
@@ -425,14 +428,14 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_ANSWER_HIDDEN">
+        <div id="CTZ_ANSWER_HIDDEN">
           <div class="ctz-set-title">
             <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
           </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
         </div>
 
-        <div id="CTZ_SET_ANSWER_OPEN">
+        <div id="CTZ_ANSWER_OPEN">
           <div class="ctz-set-title"><span>回答展开收起</span></div>
           <div class="ctz-set-content ctz-flex-wrap">
             <label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label>
@@ -444,13 +447,14 @@
     </div>
 
     <!-- 文章专栏设置 -->
-    <div id="CTZ_SET_ARTICLE" style="display: none">
+    <div id="CTZ_ARTICLE" style="display: none">
       <div class="ctz-content-left">
-        <a href="#CTZ_SET_ARTICLE_DEFAULT">基础设置</a>
-        <a href="#CTZ_SET_ARTICLE_HIDDEN">隐藏模块</a>
+        <a href="#CTZ_ARTICLE_DEFAULT">基础设置</a>
+        <a href="#CTZ_ARTICLE_HIDDEN">隐藏模块</a>
       </div>
       <div class="ctz-content-right">
-        <div id="CTZ_SET_ARTICLE_DEFAULT">
+        <div class="ctz-commit-top">当前设置完成后在专栏文章页面生效</div>
+        <div id="CTZ_ARTICLE_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
             <div>
@@ -474,7 +478,7 @@
           </div>
         </div>
 
-        <div id="CTZ_SET_ARTICLE_HIDDEN">
+        <div id="CTZ_ARTICLE_HIDDEN">
           <div class="ctz-set-title">
             <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
           </div>
@@ -484,20 +488,20 @@
     </div>
 
     <!-- 历史记录 -->
-    <div id="CTZ_SET_HISTORY" style="display: none">
+    <div id="CTZ_HISTORY" style="display: none">
       <div class="ctz-content-left">
-        <a href="#CTZ_SET_HISTORY_LIST">推荐列表缓存</a>
-        <a href="#CTZ_SET_HISTORY_VIEW">浏览历史记录</a>
+        <a href="#CTZ_HISTORY_LIST">推荐列表缓存</a>
+        <a href="#CTZ_HISTORY_VIEW">浏览历史记录</a>
       </div>
       <div class="ctz-content-right">
-        <div id="CTZ_SET_HISTORY_LIST">
+        <div id="CTZ_HISTORY_LIST">
           <div class="ctz-set-title">
             <span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span>
           </div>
           <button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button>
           <div class="ctz-set-content"></div>
         </div>
-        <div id="CTZ_SET_HISTORY_VIEW">
+        <div id="CTZ_HISTORY_VIEW">
           <div class="ctz-set-title">
             <span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span>
           </div>
@@ -508,12 +512,12 @@
     </div>
 
     <!-- 黑名单设置 -->
-    <div id="CTZ_SET_BLACKLIST" style="display: none">
+    <div id="CTZ_BLACKLIST" style="display: none">
       <div class="ctz-content-left">
-        <a href="#CTZ_SET_BASIS_BLOCK">黑名单设置</a>
+        <a href="#CTZ_BASIS_BLOCK">黑名单设置</a>
       </div>
       <div class="ctz-content-right">
-        <div id="CTZ_SET_BASIS_BLOCK">
+        <div id="CTZ_BASIS_BLOCK">
           <div class="ctz-set-title"><span>黑名单设置</span></div>
           <div class="ctz-set-content">
             <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
