@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      3.16.1
+// @version      3.16.2
 // @description  页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，回答视频下载，回答内容按照点赞数和评论数排序，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及夜间模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容导出为PDF，一键移除所有屏蔽选项，外链直接打开，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -616,13 +616,13 @@
       const backgroundB2 =
         `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
         `,.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd),.css-r9mkgf,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z,.css-1gnqr8i,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0,.css-ssvpr2,.css-m9gn5f,.FeedbackForm-inputBox-15yJ,.css-106u01g,.css-c29erj,.css-1xk2o8d,.FeedbackForm-canvasContainer-mrde,._Invite_container_30SP,.utils-frostedGlassEffect-2unM,.css-16eulm,.index-root-3h4H5` +
-        `,.Card-card-2K6v,.UserLivesPage-page-GSje,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448,.PubIndex-CategoriesHeader,.AppHeader,body,.UserPageItem--withButton,.QuestionWaiting-typesTopper,.PostItem,.LinkCard.new` +
+        `,.Card-card-2K6v,.UserLivesPage-page-GSje,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448,.PubIndex-CategoriesHeader,.AppHeader,body,.UserPageItem--withButton,.QuestionWaiting-typesTopper,.PostItem,.LinkCard.new,.signQr-container,.css-16h0l39` +
         `{background:${b2}!important;}`;
       const backgroundTransparent =
         `._AccountSettings_accountLine_3HJS,.css-1gfpqrv,.css-13dk2dh,.css-u6lvao,.css-u6lvao:before,.css-u6lvao:after,.Community-ContentLayout` +
         `{background: transparent!important;}`;
       const colorT1 =
-        `.ctz-footer` +
+        `.ctz-footer,.css-k49mnn,.css-qj3urb,.css-1bdtll5,.css-x9rxz4,.css-1iubajs,.css-186oz3i` +
         `,.css-7v0haq,.css-1yj4z27,.css-1204lgo,.css-1ng3oge,.css-5abu0r,.css-p52k8h,.css-1dpmqsl,.css-1myqwel,.css-1ykn8va,.css-1117lk0,.css-m9gn5f,.css-oqge09,.css-8u7moq,.css-k0fmhp,css-bc6idi,.css-nsw6sf,.css-25wprl,.css-294ohd,.css-1nmddht,.css-11nn00q,.css-1c4skpi,.GlobalSidebar-appDownloadTip-33iw,.css-pgcb4h,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z,.css-jwse5c,.css-hd7egx,.css-1zcaix,.css-4a3k6y,.css-eonief,.css-dy7bva,.css-sthon2,.css-teb1rp,.css-uq88u1,.css-nymych,.css-1gomreu,.css-tnsaxh,.css-jt1vdv,.css-tfs9zi,.css-1m2h1o9,.css-16p5ii9,.css-kkim14,.css-1mx84bz,.css-74475r,.css-3dzvwq,.css-1ab1nhi,.css-1l1sy07,.css-1bbvash,.css-1stnbni:hover,.css-tad50r,.css-1rd0h6f,.css-1k10w8f,.css-195d1c3,.css-1bfi5pu,.css-kk7b9z` +
         `,.CopyrightSettings h2,.CopyrightSettings,.LiveItem-title-2qes,.GlobalSidebar-introItem-24PB h3,.Card-card-2K6v,.LiveItem-description-Tliw,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448,.zu-main-content,.zu-main-sidebar,.FeedbackForm-form-1uUg,.CopyrightSettings h1,.index-root-3h4H5,.TopNavBar-userInfo-kfSJK .TopNavBar-icon-9TVP7,.ZVideo-body .UserLink,.ZVideo-body .CommentRichText,.CommentContent,.TopNavBar-logoContainer-vDhU2 .TopNavBar-zhihuLogo-jzM1f,.RichContent-collapsedText,.ContentItem-arrowIcon,.TopNavBar-inner-baxks .TopNavBar-tab-hBAaU a,.UserHeader-Info,.NavItemClassName,#creator-statistic,#creator-task-dayTask,#creator-task-creatorTask,#creator-manual` +
         `{color: ${t1}!important}`;
@@ -649,7 +649,7 @@
       // 普通背景色
       const background =
         `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
-        `,body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar,.position-suspensionSearch.focus,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z,.zhuanlan .Post-content .ContentItem-actions,.zhuanlan .ContentItem-actions,.LinkCard.new,.WebPage-root-g7WXc,.KfeCollection-FeedBlockSetting,.ShelfTopNav-root-eb3BX` +
+        `,body,.Post-content,.HotList,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar,.position-suspensionSearch.focus,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z,.zhuanlan .Post-content .ContentItem-actions,.zhuanlan .ContentItem-actions,.LinkCard.new,.WebPage-root-g7WXc,.KfeCollection-FeedBlockSetting,.ShelfTopNav-root-eb3BX,.signQr-container,.css-16h0l39` +
         `{background-color: ${bg}!important;}`;
       const backgroundOpacity =
         `#${ID_DIALOG},.ctz-set-title>span,#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
@@ -1681,12 +1681,13 @@
     /** 调用「屏蔽用户」接口 */
     serviveAdd: function (urlToken, userName, userId, avatar) {
       const me = this;
-      fetch(`/api/v4/members/${urlToken}/actions/block`, {
+      fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
         method: 'POST',
         headers: new Headers({
           ...storageConfig.fetchHeaders,
           'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)[0],
         }),
+        credentials: 'include',
       }).then(() => {
         me.addBlackItem({ id: userId, name: userName, avatar, userType: 'people', urlToken });
       });
@@ -1694,12 +1695,13 @@
     /** 解除拉黑用户接口 */
     serviceRemove: function (info) {
       const { urlToken, id } = info;
-      fetch(`/api/v4/members/${urlToken}/actions/block`, {
+      fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
         method: 'DELETE',
         headers: new Headers({
           ...storageConfig.fetchHeaders,
           'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)[0],
         }),
+        credentials: 'include',
       }).then(() => {
         const itemIndex = pfConfig.removeBlockUserContentList.findIndex((i) => i.id === info.id);
         if (itemIndex >= 0) {
@@ -1717,11 +1719,12 @@
       !l.length && (domById(ID_BLOCK_LIST).innerHTML = '');
       fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '<i class="ctz-icon ctz-loading">&#xe605;</i>', disabled: true });
       const limit = 20;
-      fetch(`/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
+      fetch(`https://www.zhihu.com/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
         method: 'GET',
         headers: new Headers({
           ...storageConfig.fetchHeaders,
         }),
+        credentials: 'include',
       })
         .then((response) => response.json())
         .then(({ data, paging }) => {
@@ -2762,10 +2765,11 @@
   /** 获取用户信息 */
   const initUserInfo = () => {
     fetch(
-      `/api/v4/me?include=is_realname%2Cad_type%2Cavailable_message_types%2Cdefault_notifications_count%2Cfollow_notifications_count%2Cvote_thank_notifications_count%2Cmessages_count%2Cemail%2Caccount_status%2Cis_bind_phone%2Cfollowing_question_count%2Cis_force_renamed%2Crenamed_fullname%2Cis_destroy_waiting`,
+      `https://www.zhihu.com/api/v4/me?include=is_realname%2Cad_type%2Cavailable_message_types%2Cdefault_notifications_count%2Cfollow_notifications_count%2Cvote_thank_notifications_count%2Cmessages_count%2Cemail%2Caccount_status%2Cis_bind_phone%2Cfollowing_question_count%2Cis_force_renamed%2Crenamed_fullname%2Cis_destroy_waiting`,
       {
         method: 'GET',
         headers: new Headers(storageConfig.fetchHeaders),
+        credentials: 'include',
       }
     )
       .then((response) => response.json())
@@ -3026,8 +3030,6 @@
       if (host === 'zhuanlan.zhihu.com') {
         addArticleCreateTimeToTop();
       }
-      // 如果存在登录弹窗则移除
-      dom('.signFlowModal') && dom('.signFlowModal').querySelector('.Modal-closeButton').click();
       fnLog(
         `加载完毕, 加载时长: ${
           (performance.now() - T0) / 1000
@@ -3036,6 +3038,11 @@
     },
     false
   );
+
+  window.addEventListener('load', () => {
+    // 如果存在登录弹窗则移除
+    dom('.signFlowModal') && dom('.signFlowModal').querySelector('.Modal-closeButton').click();
+  });
 
   window.addEventListener('keydown', (event) => {
     if (pfConfig.hotKey) {
