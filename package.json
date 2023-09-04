@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "formatter": "node node-formatter.js",
-    "build": "webpack"
+    "build": "esbuild ./src/index.ts --bundle --outfile=index.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/superPufferfish/custom-zhihu#readme",
   "devDependencies": {
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "esbuild": "^0.19.2",
+    "typescript": "^5.2.2"
   }
 }
