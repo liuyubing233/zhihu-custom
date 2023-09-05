@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "formatter": "node node-formatter.js",
-    "build": "esbuild ./src/index.ts --bundle --outfile=index.js"
+    "start": "APP_ENV=dev node ./esbuild.build.js",
+    "build": "APP_ENV=prod node ./esbuild.build.js"
   },
   "repository": {
     "type": "git",
