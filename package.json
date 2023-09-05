@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/superPufferfish/custom-zhihu#readme",
   "devDependencies": {
+    "@types/node": "^20.5.9",
     "esbuild": "^0.19.2",
     "typescript": "^5.2.2"
   }

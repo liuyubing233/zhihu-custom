@@ -1,5 +1,5 @@
-/** 隐藏模块指向 */
-export const HIDDEN_DIRECITION = {
+/** 隐藏模块指向 prev: HIDDEN_DIRECITION */
+export const HIDDEN_DIRECTION = {
   /** 基础设置 */
   CTZ_BASIS: [
     [{ value: 'hiddenAD', label: '广告' }],

@@ -23,7 +23,7 @@ export const OB_CLASS_FOLD = {
 };
 
 /** html 添加额外的类名 */
-const EXTRA_CLASS_HTML = {
+export const EXTRA_CLASS_HTML = {
   'zhuanlan.zhihu.com': 'zhuanlan',
   'www.zhihu.com': 'zhihu',
 };
