@@ -1,5 +1,7 @@
 import { IFindEvent, IPfHistory, IStorageConfig, IUserinfo } from '../types';
 
+export * from './configs';
+
 /** 用户信息 更改prev: userInfo */
 export let userinfo: IUserinfo | undefined = undefined;
 
