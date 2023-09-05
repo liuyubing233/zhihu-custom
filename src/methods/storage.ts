@@ -1,4 +1,5 @@
-import { IPfConfig, IPfHistory } from '../types';
+import { IPfHistory } from "../types/variable-cache";
+import { IPfConfig } from "../types/variable-configs";
 
 /** 使用 localStorage + GM 存储，解决跨域存储配置不同的问题 */
 export const myStorage = {

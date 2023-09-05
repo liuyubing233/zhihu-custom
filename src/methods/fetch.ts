@@ -1,4 +1,4 @@
-import { IUserinfo } from '../types';
+import { IUserinfo } from "../types/variable-cache";
 
 /** 调用「不感兴趣」接口 */
 export const doFetchNotInterested = ({ id, type }: { id: string; type: string }, headers: HeadersInit) => {

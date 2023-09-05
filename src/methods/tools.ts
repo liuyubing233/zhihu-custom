@@ -1,4 +1,4 @@
-import { IMyElement } from '../types';
+import { IMyElement } from '../types/dom';
 
 /** 获取元素 */
 export const dom = (n: string): IMyElement | undefined => document.querySelector(n) as IMyElement;
@@ -57,7 +57,7 @@ export const fnDomReplace = (node: any, attrObjs: Record<string, any>) => {
 
 /** 节流, 使用时 fn 需要为 function () {} */
 export function throttle(fn: Function, time = 300) {
-  let tout: NodeJS.Timer | undefined = undefined;
+  let tout: NodeJS.Timeout | undefined = undefined;
   return function () {
     if (tout) return;
     tout = setTimeout(() => {

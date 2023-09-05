@@ -1,5 +1,6 @@
-import { IFindEvent, IFindEventEntries, IHeaderDoms, IPfConfig, IPfHistory, IStorageConfig, IUserinfo } from '../types';
-import { CONFIG_FILTER_DEFAULT, CONFIG_HIDDEN_DEFAULT, CONFIG_SUSPENSION } from '../variable';
+import { IFindEvent, IFindEventEntries, IHeaderDoms, IPfHistory, IStorageConfig, IUserinfo } from "../types/variable-cache";
+import { IPfConfig } from "../types/variable-configs";
+import { CONFIG_FILTER_DEFAULT, CONFIG_HIDDEN_DEFAULT, CONFIG_SUSPENSION } from "../variable/configs";
 
 type IKeyofHistory = keyof IPfHistory;
 type IKeyofFindEvent = keyof IFindEvent;

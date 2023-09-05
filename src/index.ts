@@ -1,10 +1,11 @@
-import { needRedirect } from './inner';
-import { fetchGetUserinfo } from './methods';
+import { needRedirect } from './inner/redirect';
+import { fetchGetUserinfo } from './methods/fetch';
 import { myListenSelect } from './methods/listen-select';
 import { myStorage } from './methods/storage';
 import { dom, fnLog } from './methods/tools';
+import { fixVideoAutoPlay } from './methods/video';
 import { store } from './store';
-import { EXTRA_CLASS_HTML, HTML_HOOTS } from './variable';
+import { EXTRA_CLASS_HTML, HTML_HOOTS } from './variable/dom-name';
 
 (function () {
   if (needRedirect()) return;
@@ -23,8 +24,7 @@ import { EXTRA_CLASS_HTML, HTML_HOOTS } from './variable';
       isHaveHeadWhenInit = false;
       return;
     }
-    // TODO!!!!!!
-    // fixVideoAutoPlay();
+    fixVideoAutoPlay();
     // TODO!!!!!!
     // fnInitDomStyle('CTZ_STYLE', INNER_CSS);
 

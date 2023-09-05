@@ -1,7 +1,9 @@
 import { store } from '../store';
-import { IMyElement, IZhihuCardContent, IZhihuDataZop } from '../types';
+import { IMyElement } from '../types/dom';
 import { IMyListenAnswerItem } from '../types/listen';
-import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../variable';
+import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu';
+import { OB_CLASS_FOLD } from '../variable/dom-name';
+import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG } from '../variable/hidden';
 import { myBlack } from './black';
 import { fnHiddenDom, fnIndexMath, fnJustNum } from './listen-math';
 import { myListenSelect } from './listen-select';
@@ -123,4 +125,3 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
     this.init();
   },
 };
-

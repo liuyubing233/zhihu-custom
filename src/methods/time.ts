@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { IMyElement } from '../types';
+import { IMyElement } from '../types/dom';
 import { dom, domC } from './tools';
 
 /** 时间格式化 */

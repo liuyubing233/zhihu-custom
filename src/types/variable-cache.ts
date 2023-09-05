@@ -1,5 +1,5 @@
+import { IMyElement } from './dom';
 import { IPfConfig } from './variable-configs';
-import { IMyElement } from './variable-dom-name';
 
 /** 用户信息 */
 export interface IUserinfo {
@@ -65,7 +65,7 @@ export interface IFindEvent {
 }
 
 export interface IFindEventEntries {
-  fun: NodeJS.Timer | null | undefined;
+  fun: NodeJS.Timeout | null | undefined;
   num: number;
   isFind: boolean;
 }

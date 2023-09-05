@@ -1,7 +1,9 @@
 import { store } from '../store';
-import { IBlockUserItem, IMyElement, IZhihuCardContent } from '../types';
+import { IMyElement } from '../types/dom';
 import { IMyListenAnswerItem } from '../types/listen';
-import { CLASS_REMOVE_BLOCK, ID_BLOCK_LIST, ID_BUTTON_SYNC_BLOCK } from '../variable';
+import { IBlockUserItem } from '../types/variable-configs';
+import { IZhihuCardContent } from '../types/zhihu';
+import { CLASS_REMOVE_BLOCK, ID_BLOCK_LIST, ID_BUTTON_SYNC_BLOCK } from '../variable/dom-name';
 import { myStorage } from './storage';
 import { dom, domById, domC, fnDomReplace, fnReturnStr } from './tools';
 

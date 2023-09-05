@@ -1,4 +1,5 @@
-import { IMyElement, IPfConfig } from '../types';
+import { IMyElement } from '../types/dom';
+import { IPfConfig } from '../types/variable-configs';
 import { fnLog } from './tools';
 
 /** 监听过滤内容 */

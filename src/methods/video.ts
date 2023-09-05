@@ -1,30 +1,40 @@
+import { store } from '../store';
+import { IMyElement } from '../types/dom';
+import { domA, domC, domP } from './tools';
+
+interface IMyVideo {
+  index: number;
+  timeout: NodeJS.Timeout | null;
+  init: () => void;
+}
+
 /** 视频的操作方法|下载 */
-export const myVideo = {
+export const myVideo: IMyVideo = {
   index: 0,
   timeout: null,
   init: function () {
     this.timeout && clearTimeout(this.timeout);
     if (this.index < 30) {
       this.timeout = setTimeout(() => {
-        clearTimeout(this.timeout);
         if (domA('#player video').length) {
           this.index = 0;
           domA('#player>div').forEach((even) => {
             const elementDownload = domC('i', { className: 'ctz-icon ctz-video-download', innerHTML: '&#xe608;' });
             const elementLoading = domC('i', { className: 'ctz-icon ctz-loading', innerHTML: '&#xe605;' });
             elementDownload.onclick = () => {
-              const url = elementDownload.parentElement.parentElement.querySelector('video').src;
+              const url = elementDownload.parentElement!.parentElement!.querySelector('video')!.src;
               if (url) {
                 elementDownload.style.display = 'none';
                 even.appendChild(elementLoading);
-                const name = url.match(/(?<=\/)[\d\w-\.]+(?=\?)/)[0];
+                const name = url.match(/(?<=\/)[\d\w-\.]+(?=\?)/)![0];
                 videoDownload(url, name).then(() => {
                   elementDownload.style.display = 'block';
                   elementLoading.remove();
                 });
               }
             };
-            even.querySelector('.ctz-video-download') && even.querySelector('.ctz-video-download').remove();
+            const nodeDownload = even.querySelector('.ctz-video-download');
+            nodeDownload && nodeDownload.remove();
             even.appendChild(elementDownload);
           });
         } else {
@@ -37,7 +47,7 @@ export const myVideo = {
 };
 
 /** 视频下载 */
-const videoDownload = async (url, name) => {
+const videoDownload = async (url: string, name: string) => {
   return fetch(url)
     .then((res) => res.blob())
     .then((blob) => {
@@ -54,17 +64,21 @@ const videoDownload = async (url, name) => {
 
 /** 视频跳转链接 */
 export const zoomVideos = () => {
-  if (pfConfig.linkAnswerVideo !== '1') return;
-  const itemClick = (item) => {
+  const { getConfig } = store;
+  const { linkAnswerVideo } = getConfig();
+  if (linkAnswerVideo !== '1') return;
+  const itemClick = (item: IMyElement) => {
     item.onclick = () => {
       const itemParent = domP(item, 'class', 'VideoAnswerPlayer');
       if (itemParent) {
         // 可跳转视频链接
-        const videoLink = itemParent.querySelector('.VideoAnswerPlayer-video video').src;
+        const nodeVideo = itemParent.querySelector('.VideoAnswerPlayer-video video') as IMyElement;
+        const videoLink = nodeVideo ? nodeVideo.src : '';
         videoLink && window.open(videoLink);
       } else {
         // 不可跳转视频链接
-        item.querySelector('.VideoCard').style = `opacity: 1;height: auto;`;
+        const nodeVideoCard = item.querySelector('.VideoCard') as IMyElement;
+        nodeVideoCard && (nodeVideoCard.style.cssText = `opacity: 1;height: auto;`);
       }
     };
   };
@@ -77,11 +91,13 @@ export const zoomVideos = () => {
 export const fixVideoAutoPlay = () => {
   // 拦截 video.play() 指令
   var originalPlay = HTMLMediaElement.prototype.play;
+  // @ts-ignore
   HTMLMediaElement.prototype.play = function () {
     // 如果视频隐藏则退出
     if (!this.offsetHeight) {
       return;
     }
+    // @ts-ignore
     // 否则正常执行 video.play() 指令
     return originalPlay.apply(this, arguments);
   };
