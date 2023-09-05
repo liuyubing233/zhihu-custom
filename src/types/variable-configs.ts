@@ -158,11 +158,11 @@ export interface IConfigHidden {
 
 /** 自定义黑名单列表内容 */
 export interface IBlockUserItem {
-  avatar: string;
-  id: string;
-  name: string;
-  urlToken: string;
-  userType: string;
+  avatar?: string;
+  id?: string;
+  name?: string;
+  urlToken?: string;
+  userType?: string;
 }
 
 /** 屏蔽内容模块默认配置 */

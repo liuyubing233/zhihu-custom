@@ -1,7 +1,7 @@
 import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from '../types';
 
 /** 隐藏内容模块默认为 true 的配置 */
-const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
+export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
   hiddenAnswerRightFooter: true,
   hiddenReadMoreText: true,
   hiddenAD: true,
@@ -10,7 +10,7 @@ const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
 };
 
 /** 屏蔽内容模块默认配置 */
-const CONFIG_FILTER_DEFAULT: IConfigFilter = {
+export const CONFIG_FILTER_DEFAULT: IConfigFilter = {
   removeZhihuOfficial: false,
   removeStoryAnswer: true,
   removeYanxuanAnswer: true,
@@ -36,7 +36,7 @@ const CONFIG_FILTER_DEFAULT: IConfigFilter = {
 };
 
 /** 悬浮模块默认配置 */
-const CONFIG_SUSPENSION: IConfigSuspension = {
+export const CONFIG_SUSPENSION: IConfigSuspension = {
   suspensionHomeTab: false,
   suspensionHomeTabPo: 'left: 20px; top: 100px;',
   suspensionHomeTabFixed: true,
@@ -157,39 +157,5 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenAnswerItemTime: true,
 };
 
-/** 配置项 */
-export let pfConfig: IPfConfig = {
-  ...CONFIG_HIDDEN_DEFAULT,
-  ...CONFIG_FILTER_DEFAULT,
-  ...CONFIG_SUSPENSION,
-  customizeCss: '',
-  answerOpen: '',
-  filterKeywords: [],
-  showBlockUser: true,
-  colorBackground: '#ffffff',
-  versionHome: '1000',
-  versionAnswer: '1000',
-  versionArticle: '690',
-  zoomImageType: '0',
-  zoomImageSize: '600',
-  showGIFinDialog: true,
-  globalTitle: '',
-  titleIco: '',
-  questionTitleTag: true,
-  listOutPutNotInterested: false,
-  fixedListItemMore: false,
-  highlightOriginal: true,
-  highlightListItem: false,
-  listItemCreatedAndModifiedTime: true,
-  answerItemCreatedAndModifiedTime: true,
-  questionCreatedAndModifiedTime: true,
-  articleCreateTimeToTop: true,
-  linkShopping: '0',
-  linkAnswerVideo: '0',
-  fontSizeForList: 15,
-  fontSizeForAnswer: 15,
-  fontSizeForArticle: 16,
-  zoomListVideoType: '0',
-  zoomListVideoSize: '500',
-  hotKey: true,
-};
+/** 缓存的历史记录数量 */
+export const SAVE_HISTORY_NUMBER = 500;

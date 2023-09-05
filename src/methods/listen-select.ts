@@ -1,7 +1,10 @@
+import { myListenAnswerItem } from './listen-answer';
+import { dom, domA, domC } from './tools';
+
 /** 回答排序 */
-export const myListenSelect = {
+export const myListenSelect: IMyListenSelect = {
   isSortFirst: true,
-  observer: null,
+  observer: undefined,
   keySort: 'default',
   /** 添加回答排序 */
   answerSortIds: {
@@ -14,14 +17,17 @@ export const myListenSelect = {
   /** 加载监听问题详情里的.Select-button按钮 */
   init: function () {
     const classSelectButton = '.Select-button';
+    const { href } = location;
     if (this.keySort === 'vote' || this.keySort === 'comment') {
-      dom(classSelectButton).innerHTML = dom(classSelectButton).innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, this.sortKeys[this.keySort]);
+      const elementBtn = dom(classSelectButton);
+      elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, this.sortKeys[this.keySort]));
     }
-    const clickSort = (id) => {
+    const clickSort = (id: IAnswerKey) => {
       myListenAnswerItem.reset();
       const { key, name } = this.answerSortIds[id];
       this.keySort = key;
-      dom(classSelectButton).innerHTML = dom(classSelectButton).innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name);
+      const elementBtn = dom(classSelectButton);
+      elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name));
       if (key === 'vote' || key === 'comment') {
         location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, '') + '?sort=' + key;
       } else if (key === 'default') {
@@ -29,22 +35,23 @@ export const myListenSelect = {
       }
     };
 
-    if (dom(classSelectButton)) {
+    const btn = dom(classSelectButton);
+    if (btn) {
       try {
-        this.observer.disconnect();
+        this.observer?.disconnect();
       } catch {}
       const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] };
       this.observer = new MutationObserver(() => {
         const elementSelect = dom('.Answers-select');
-        if (dom(classSelectButton).getAttribute('aria-expanded') === 'true' && elementSelect) {
+        if (btn.getAttribute('aria-expanded') === 'true' && elementSelect) {
           elementSelect.appendChild(domC('button', { className: 'Select-option', tabindex: '-1', role: 'option', id: 'Select1-2', innerHTML: '点赞数排序' }));
           elementSelect.appendChild(domC('button', { className: 'Select-option', tabindex: '-1', role: 'option', id: 'Select1-3', innerHTML: '评论数排序' }));
           domA('.Select-option').forEach((ev) => {
-            ev.onclick = () => clickSort(ev.id);
+            ev.onclick = () => clickSort(ev.id as IAnswerKey);
           });
         }
       });
-      this.observer.observe(dom(classSelectButton), buConfig);
+      this.observer.observe(btn, buConfig);
     }
   },
   addSort: function () {
@@ -54,23 +61,29 @@ export const myListenSelect = {
     const keySort = this.keySort;
     if ((keySort === 'vote' || keySort === 'comment') && this.isSortFirst) {
       const element = dom('.List>div:nth-child(2)>div');
+      if (!element) return;
+
       const arrElement = Array.from(element.querySelectorAll('.List-item:not(.PlaceHolder)')).sort((a, b) => {
-        const aContent = a.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
-          ? JSON.parse(a.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
-          : {};
-        const bContent = b.querySelector('.AnswerItem').getAttribute('data-za-extra-module')
-          ? JSON.parse(b.querySelector('.AnswerItem').getAttribute('data-za-extra-module')).card.content
-          : {};
+        const answerItemA = a.querySelector('.AnswerItem');
+        const extraA = answerItemA ? answerItemA.getAttribute('data-za-extra-module') || '{}' : '{}';
+        const contentA = JSON.parse(extraA).card.content;
+
+        const answerItemB = b.querySelector('.AnswerItem');
+        const extraB = answerItemB ? answerItemB.getAttribute('data-za-extra-module') || '{}' : '{}';
+        const contentB = JSON.parse(extraB).card.content;
+
         switch (keySort) {
           case 'vote':
-            return aContent.upvote_num - bContent.upvote_num;
+            return contentA.upvote_num - contentB.upvote_num;
           case 'comment':
-            return aContent.comment_num - bContent.comment_num;
+            return contentA.comment_num - contentB.comment_num;
           default:
-            return true;
+            return 1;
         }
       });
-      element.querySelector('.List-item:not(.PlaceHolder)') && element.querySelector('.List-item:not(.PlaceHolder)').remove();
+
+      const listItem = element.querySelector('.List-item:not(.PlaceHolder)');
+      listItem && listItem.remove();
       const eleFirst = element.querySelector(':first-child');
       arrElement.forEach((item, index) => {
         element.insertBefore(item, index === 0 ? eleFirst : arrElement[index - 1]);
@@ -79,3 +92,26 @@ export const myListenSelect = {
     }
   },
 };
+
+type IAnswerKey = 'Select1-0' | 'Select1-1' | 'Select1-2' | 'Select1-3';
+type IAnswerSortIds = Record<IAnswerKey, IAnswerSortIdsEntries>;
+
+interface IAnswerSortIdsEntries {
+  key: string;
+  name: string;
+}
+
+interface ISortKeys {
+  vote: string;
+  comment: string;
+}
+
+interface IMyListenSelect {
+  isSortFirst: boolean;
+  observer?: MutationObserver;
+  keySort: string;
+  answerSortIds: IAnswerSortIds;
+  sortKeys: ISortKeys;
+  init: () => void;
+  addSort: () => void;
+}

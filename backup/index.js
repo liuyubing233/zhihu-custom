@@ -15,6 +15,8 @@
 // @grant        GM_info
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM.getValue
+// @grant        GM.setValue
 // @run-at       document-start
 // ==/UserScript==
 
@@ -1071,10 +1073,10 @@
         v = JSON.stringify(valueParse);
       }
       localStorage.setItem(name, v);
-      await GM_setValue(name, v);
+      await GM.setValue(name, v);
     },
     get: async function (name) {
-      const config = await GM_getValue(name);
+      const config = await GM.getValue(name);
       const configLocal = localStorage.getItem(name);
       let c = config;
       if (this.namesNeedT.includes(name)) {

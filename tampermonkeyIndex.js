@@ -1,5 +1,65 @@
 "use strict";
 (() => {
+  // src/inner/redirect.ts
+  var needRedirect = () => {
+    const { pathname, origin } = location;
+    const PATHNAME_FOR_PHONE_QUESTION = "/tardis/sogou/qus/";
+    const PATHNAME_FOR_PHONE_ART = "/tardis/zm/art/";
+    if (pathname.includes(PATHNAME_FOR_PHONE_QUESTION)) {
+      const questionId = pathname.replace(PATHNAME_FOR_PHONE_QUESTION, "");
+      location.href = origin + "/question/" + questionId;
+      return true;
+    }
+    if (pathname.includes(PATHNAME_FOR_PHONE_ART)) {
+      const questionId = pathname.replace(PATHNAME_FOR_PHONE_ART, "");
+      location.href = "https://zhuanlan.zhihu.com/p/" + questionId;
+      return true;
+    }
+    return false;
+  };
+
+  // src/methods/fetch.ts
+  var fetchGetUserinfo = (headers) => {
+    return new Promise((resolve) => {
+      fetch(
+        `https://www.zhihu.com/api/v4/me?include=is_realname%2Cad_type%2Cavailable_message_types%2Cdefault_notifications_count%2Cfollow_notifications_count%2Cvote_thank_notifications_count%2Cmessages_count%2Cemail%2Caccount_status%2Cis_bind_phone%2Cfollowing_question_count%2Cis_force_renamed%2Crenamed_fullname%2Cis_destroy_waiting`,
+        {
+          method: "GET",
+          headers: new Headers(headers),
+          credentials: "include"
+        }
+      ).then((response) => response.json()).then((res) => {
+        resolve(res);
+      });
+    });
+  };
+
+  // src/variable/dom-name.ts
+  var HTML_HOOTS = ["www.zhihu.com", "zhuanlan.zhihu.com"];
+  var ID_BLOCK_LIST = "CTZ-BLOCK-LIST";
+  var ID_BUTTON_SYNC_BLOCK = "CTZ-BUTTON-SYNC-BLOCK";
+  var CLASS_REMOVE_BLOCK = "ctz-remove-block";
+  var OB_CLASS_FOLD = {
+    on: "ctz-fold-open",
+    off: "ctz-fold-close"
+  };
+  var EXTRA_CLASS_HTML = {
+    "zhuanlan.zhihu.com": "zhuanlan",
+    "www.zhihu.com": "zhihu"
+  };
+
+  // src/variable/hidden.ts
+  var HIDDEN_ANSWER_TAG = {
+    removeFromYanxuan: "盐选专栏",
+    removeUnrealAnswer: "虚构创作"
+  };
+  var HIDDEN_ANSWER_ACCOUNT = {
+    removeStoryAnswer: "故事档案局",
+    removeYanxuanAnswer: "盐选科普",
+    removeYanxuanRecommend: "盐选推荐",
+    removeYanxuanCPRecommend: "盐选测评室"
+  };
+
   // src/variable/configs.ts
   var CONFIG_HIDDEN_DEFAULT = {
     hiddenAnswerRightFooter: true,
@@ -47,50 +107,654 @@
     suspensionUserFixed: true,
     suspensionPickUp: true
   };
-  var pfConfig = {
-    ...CONFIG_HIDDEN_DEFAULT,
-    ...CONFIG_FILTER_DEFAULT,
-    ...CONFIG_SUSPENSION,
-    customizeCss: "",
-    answerOpen: "",
-    filterKeywords: [],
-    showBlockUser: true,
-    colorBackground: "#ffffff",
-    versionHome: "1000",
-    versionAnswer: "1000",
-    versionArticle: "690",
-    zoomImageType: "0",
-    zoomImageSize: "600",
-    showGIFinDialog: true,
-    globalTitle: "",
-    titleIco: "",
-    questionTitleTag: true,
-    listOutPutNotInterested: false,
-    fixedListItemMore: false,
-    highlightOriginal: true,
-    highlightListItem: false,
-    listItemCreatedAndModifiedTime: true,
-    answerItemCreatedAndModifiedTime: true,
-    questionCreatedAndModifiedTime: true,
-    articleCreateTimeToTop: true,
-    linkShopping: "0",
-    linkAnswerVideo: "0",
-    fontSizeForList: 15,
-    fontSizeForAnswer: 15,
-    fontSizeForArticle: 16,
-    zoomListVideoType: "0",
-    zoomListVideoSize: "500",
-    hotKey: true
+
+  // src/store/index.ts
+  var Store = class {
+    constructor() {
+      /** 修改器配置 */
+      this.pfConfig = {
+        ...CONFIG_HIDDEN_DEFAULT,
+        ...CONFIG_FILTER_DEFAULT,
+        ...CONFIG_SUSPENSION,
+        customizeCss: "",
+        answerOpen: "",
+        filterKeywords: [],
+        showBlockUser: true,
+        colorBackground: "#ffffff",
+        versionHome: "1000",
+        versionAnswer: "1000",
+        versionArticle: "690",
+        zoomImageType: "0",
+        zoomImageSize: "600",
+        showGIFinDialog: true,
+        globalTitle: "",
+        titleIco: "",
+        questionTitleTag: true,
+        listOutPutNotInterested: false,
+        fixedListItemMore: false,
+        highlightOriginal: true,
+        highlightListItem: false,
+        listItemCreatedAndModifiedTime: true,
+        answerItemCreatedAndModifiedTime: true,
+        questionCreatedAndModifiedTime: true,
+        articleCreateTimeToTop: true,
+        linkShopping: "0",
+        linkAnswerVideo: "0",
+        fontSizeForList: 15,
+        fontSizeForAnswer: 15,
+        fontSizeForArticle: 16,
+        zoomListVideoType: "0",
+        zoomListVideoSize: "500",
+        hotKey: true
+      };
+      /** 缓存浏览历史记录 */
+      this.pfHistory = {
+        view: [],
+        list: []
+      };
+      /** 用户信息 更改prev: userInfo */
+      this.userinfo = void 0;
+      this.findEvent = {
+        header: { fun: null, num: 0, isFind: false }
+      };
+      /** 脚本内配置缓存 */
+      this.storageConfig = {
+        cachePfConfig: {},
+        cacheTitle: "",
+        fetchHeaders: {},
+        heightForList: 0,
+        headerDoms: {}
+      };
+    }
+    setConfig(inner) {
+      this.pfConfig = inner;
+    }
+    getConfig() {
+      return this.pfConfig;
+    }
+    setHistory(inner) {
+      this.pfHistory = inner;
+    }
+    setHistoryItem(key, content) {
+      this.pfHistory[key] = content;
+    }
+    getHistory() {
+      return this.pfHistory;
+    }
+    getHistoryItem(key) {
+      return this.pfHistory[key];
+    }
+    setUserinfo(inner) {
+      this.userinfo = inner;
+    }
+    getUserinfo() {
+      return this.userinfo;
+    }
+    setFindEvent(inner) {
+      this.findEvent = inner;
+    }
+    setFindEventItem(key, content) {
+      this.findEvent[key] = content;
+    }
+    getFindEvent() {
+      return this.findEvent;
+    }
+    getFindEventItem(key) {
+      return this.findEvent[key];
+    }
+    setStorageConfig(inner) {
+      this.storageConfig = inner;
+    }
+    setStorageConfigItem(key, content) {
+      this.storageConfig[key] = content;
+    }
+    getStorageConfig() {
+      return this.storageConfig;
+    }
+    getStorageConfigItem(key) {
+      return this.storageConfig[key];
+    }
+  };
+  var store = new Store();
+
+  // src/methods/storage.ts
+  var myStorage = {
+    set: async function(name, value) {
+      const valueParse = JSON.parse(value);
+      valueParse.t = +/* @__PURE__ */ new Date();
+      const v = JSON.stringify(valueParse);
+      localStorage.setItem(name, v);
+      await GM.setValue(name, v);
+    },
+    get: async function(name) {
+      const config = await GM.getValue(name);
+      const configLocal = localStorage.getItem(name);
+      const cParse = config ? JSON.parse(config) : null;
+      const cLParse = configLocal ? JSON.parse(configLocal) : null;
+      if (!cParse && !cLParse)
+        return "";
+      if (!cParse)
+        return configLocal;
+      if (!cLParse)
+        return config;
+      if (cParse.t < cLParse.t)
+        return configLocal;
+      return config;
+    },
+    initConfig: async function(config) {
+      const nConfig = await this.get("pfConfig");
+      const c = nConfig ? JSON.parse(nConfig) : {};
+      return Promise.resolve({ ...config, ...c });
+    },
+    initHistory: async function(historyConfig) {
+      const nHistory = await myStorage.get("pfHistory");
+      const h = nHistory ? JSON.parse(nHistory) : historyConfig;
+      return Promise.resolve(h);
+    }
   };
 
-  // src/web-resources.ts
-  var INNER_HTML = `<div id="CTZ_DIALOG_MAIN" style="display: none"><div class="ctz-header"><span>修改器</span><span class="ctz-version"></span><i id="CTZ_CLOSE_DIALOG" class="ctz-icon">&#xe602;</i></div><div class="ctz-menu-top"><a href="#CTZ_BASIS">基础设置</a><a href="#CTZ_LIST">首页列表</a><a href="#CTZ_ANSWER">回答详情</a><a href="#CTZ_ARTICLE">文章专栏</a><a href="#CTZ_HISTORY">历史记录</a><a href="#CTZ_BLACKLIST">黑名单设置</a></div><div class="ctz-content"><div id="CTZ_BASIS" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_DEFAULT">基本设置</a><a href="#CTZ_BASIS_FLOAT">悬浮模块</a><a href="#CTZ_BASIS_HIDDEN">通用模块隐藏</a><a href="#CTZ_BASIS_COLOR">颜色设置</a><a href="#CTZ_BASIS_CONFIG">配置操作</a><a href="#CTZ_BASIS_MORE">默认功能</a></div><div class="ctz-content-right"><div class="ctz-commit-top">当前设置为通用设置，设置完成后在所有页面生效</div><div id="CTZ_BASIS_DEFAULT"><div class="ctz-set-title"><span>基本设置</span></div><div class="ctz-set-content"><div><label><span class="ctz-label">不显示修改器唤醒图标<span class="ctz-icon" style="margin: 0 6px">&#xe603;</span></span><input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" /></label></div><div><label><span class="ctz-label">快捷键唤起编辑器<span class="key-shadow">></span>(<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)</span><input class="ctz-i" name="hotKey" type="checkbox" value="on" /></label></div><div><div class="ctz-label">全局修改网页标题</div><div class="ctz-flex-wrap"><input type="text" name="globalTitle" style="width: 250px" /><button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button><button class="ctz-button" name="buttonResetTitle">还原</button></div></div><div><div class="ctz-label">全局修改网页标题图片（图标可能会因为网络问题丢失）</div><div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div></div><div><div class="ctz-flex-wrap"><div class="ctz-label">回答和文章图片尺寸</div><label><input class="ctz-i" name="zoomImageType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label></div><div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none"><div class="ctz-flex-wrap"><div class="ctz-label">自定义图片尺寸</div><input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" /><span id="zoomImageSize" style="margin-left: 8px">0</span></div><div class="ctz-commit">滚动条范围: 0 ~ 1000</div></div></div><div class="ctz-flex-wrap"><span class="ctz-label">使用弹窗打开动图</span><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></div></div></div><div id="CTZ_BASIS_FLOAT"><div class="ctz-set-title"><span>悬浮模块</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容「收起」按钮悬浮</span><input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" /></label></div><div><div class="ctz-label">信息模块悬浮</div><div class="ctz-commit">拖动悬浮模块定位位置</div><div class="ctz-commit">鼠标放置显示解锁按钮解锁即可拖动<i class="ctz-icon" style="margin-left: 4px">&#xe688;</i></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />首页列表切换</label><label><input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />顶部发现模块</label><label><input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />个人中心模块</label><label><input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />搜索栏模块</label></div></div></div></div><div id="CTZ_BASIS_HIDDEN"><div class="ctz-set-title"><span>通用模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_BASIS_COLOR"><div class="ctz-set-title"><span>颜色设置</span></div><div class="ctz-set-content"><div class="ctz-set-background"><div id="CTZ_BACKGROUND"></div></div></div></div><div id="CTZ_BASIS_CONFIG"><div class="ctz-set-title"><span>配置操作</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><button class="ctz-button" name="useSimple">启用极简模式</button></div><div class="ctz-config-import-export"><div class="ctz-label">配置导出导入</div><div class="ctz-config-buttons"><button class="ctz-button" name="configExport">导出配置</button><button class="ctz-button" name="configReset">恢复默认配置</button></div><div class="ctz-content"><textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea><button class="ctz-button" name="configImport">导 入</button></div></div><div class="ctz-customize-css"><div class="ctz-label">自定义样式</div><div class="ctz-content"><textarea name="textStyleCustom" placeholder="格式为CSS"></textarea><button class="ctz-button" name="styleCustom">确 定</button></div></div></div></div><div id="CTZ_BASIS_MORE"><div class="ctz-set-title"><span>默认功能<span class="ctz-desc">此部分功能为编辑器默认功能，不需要额外开启</span></span></div><div class="ctz-set-content"><div id="CTZ_DEFAULT_SELF"></div><div class="ctz-zhihu-self"><div class="ctz-zhihu-key"><div>更加方便的浏览，按<span class="key-shadow">?</span>（<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键</div><a href="/settings/preference" target="_blank">前往开启快捷键功能</a></div></div></div></div></div></div><div id="CTZ_LIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_LIST_DEFAULT">基础设置</a><a href="#CTZ_LIST_FILTER">屏蔽内容</a><a href="#CTZ_LIST_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-commit-top">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div><div id="CTZ_LIST_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">列表版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" /><span id="versionHome" style="margin-left: 8px">0</span></div><div class="ctz-commit">滚动条范围: 600 ~ 1500</div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">内容标题添加类别显示<span class="ctz-label-tag ctz-label-tag-Answer">问答</span><span class="ctz-label-tag ctz-label-tag-Article">文章</span><span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span></span><input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">推荐列表显示「不感兴趣」按钮</span><input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表更多「···」按钮移动到题目右侧</span><input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">关注列表高亮原创内容</span><input type="checkbox" name="highlightOriginal" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容点击高亮边框</span><input type="checkbox" name="highlightListItem" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容显示发布时间和最后修改时间</span><input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">列表内容标准文字大小</span><input type="number" name="fontSizeForList" class="ctz-i-change" /></div><div><div class="ctz-flex-wrap"><div class="ctz-label">列表视频回答内容尺寸</div><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label></div><div id="CTZ_LIST_VIDEO_SIZE_CUSTOM"><div class="ctz-flex-wrap"><input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" /><span id="zoomListVideoSize" style="margin-left: 8px">0</span></div><div class="ctz-commit">滚动条范围: 0 ~ 1000</div></div></div></div></div><div id="CTZ_LIST_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-follow"><div class="ctz-label">关注列表关注人操作屏蔽</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />赞同回答</label><label><input class="ctz-i" name="removeFollowVoteArticle" type="checkbox" value="on" />赞同文章</label><label><input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />关注问题</label></div></div><div class="ctz-filter-me"><label style="display: flex; align-items: center"><span class="ctz-label">关注列表屏蔽自己的操作</span><input class="ctz-i" name="removeMyOperateAtFollow" type="checkbox" value="on" /></label></div><div class="ctz-filter-type"><div class="ctz-label">列表类别屏蔽</div><div class="ctz-commit" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />邀请回答</label><label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label><label><input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label><label><input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label></div></div><div class="ctz-filter-list-vote"><label style="display: flex; align-items: center"><span class="ctz-label">列表低赞内容屏蔽</span><input class="ctz-i" name="removeLessVote" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后「关注、推荐、搜索」列表屏蔽点赞量少于<input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 50px" />的内容</div></div><div class="ctz-filter-word"><div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div><input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" /><div id="CTZ_FILTER_WORDS"></div></div></div></div><div id="CTZ_LIST_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_ANSWER" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ANSWER_DEFAULT">基础设置</a><a href="#CTZ_ANSWER_FILTER">屏蔽内容</a><a href="#CTZ_ANSWER_HIDDEN">隐藏模块</a><a href="#CTZ_ANSWER_OPEN">回答展开收起</a></div><div class="ctz-content-right"><div class="ctz-commit-top">当前设置完成后问答内容页面生效</div><div id="CTZ_ANSWER_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">回答版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" /><span id="versionAnswer" style="margin-left: 8px">0</span></div><div class="ctz-commit">滚动条范围: 600 ~ 1500</div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">问题详情显示创建时间和最后修改时间</span><input type="checkbox" name="questionCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容显示创建时间与最后修改时间</span><input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">购物链接显示设置</span><label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label><label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label></div><div class="ctz-flex-wrap"><span class="ctz-label">回答视频显示设置</span><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="1" />仅链接</label><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="2" />隐藏</label></div><div class="ctz-flex-wrap"><span class="ctz-label">回答内容标准文字大小</span><input type="number" name="fontSizeForAnswer" class="ctz-i-change" /></div></div></div><div id="CTZ_ANSWER_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容 <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-defail-who"><div class="ctz-label">屏蔽以下官方账号的回答</div><div style="margin-bottom: 8px; border-bottom: 1px solid #ebebeb; padding-bottom: 4px"><label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />所有知乎官方账号</label></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label><label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label><label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label><label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽「匿名用户」回答</span><input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" /></label></div><div class="ctz-filter-defail-tag"><div class="ctz-label">屏蔽带有以下标签的回答</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏</label><label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label></div></div><div class="ctz-filter-detail-vote"><label style="display: flex; align-items: center"><span class="ctz-label">详情低赞回答屏蔽</span><input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后问题详情页将屏蔽点赞量少于<input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 50px" />的回答</div></div></div></div><div id="CTZ_ANSWER_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_ANSWER_OPEN"><div class="ctz-set-title"><span>回答展开收起</span></div><div class="ctz-set-content ctz-flex-wrap"><label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label><label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label><label><input class="ctz-i" type="radio" name="answerOpen" value="off" />默认收起所有长回答</label></div></div></div></div><div id="CTZ_ARTICLE" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ARTICLE_DEFAULT">基础设置</a><a href="#CTZ_ARTICLE_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-commit-top">当前设置完成后在专栏文章页面生效</div><div id="CTZ_ARTICLE_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">文章版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" /><span id="versionArticle" style="margin-left: 8px">0</span></div><div class="ctz-commit">滚动条范围: 600 ~ 1500</div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">文章发布时间置顶</span><input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">文章内容标准文字大小</span><input type="number" name="fontSizeForArticle" class="ctz-i-change" /></div></div></div><div id="CTZ_ARTICLE_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_HISTORY" style="display: none"><div class="ctz-content-left"><a href="#CTZ_HISTORY_LIST">推荐列表缓存</a><a href="#CTZ_HISTORY_VIEW">浏览历史记录</a></div><div class="ctz-content-right"><div id="CTZ_HISTORY_LIST"><div class="ctz-set-title"><span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span></div><button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button><div class="ctz-set-content"></div></div><div id="CTZ_HISTORY_VIEW"><div class="ctz-set-title"><span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span></div><button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button><div class="ctz-set-content"></div></div></div></div><div id="CTZ_BLACKLIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_BLOCK">黑名单设置</a></div><div class="ctz-content-right"><div id="CTZ_BASIS_BLOCK"><div class="ctz-set-title"><span>黑名单设置</span></div><div class="ctz-set-content"><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button><div class="ctz-flex-wrap"><label><span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span><input class="ctz-i" name="showBlockUser" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽黑名单用户发布的内容</span><input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" /></label></div><div><div class="ctz-label">黑名单列表</div><div id="CTZ-BLOCK-LIST"></div></div></div></div></div></div></div><div class="ctz-footer"></div></div><div id="CTZ_OPEN_BUTTON" class="ctz-icon">&#xe603;</div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE"><div><img src="" /></div></div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO"><div><video src="" autoplay loop></video></div></div><iframe class="ctz-pdf-box-content" style="display: none"></iframe>`;
+  // src/methods/tools.ts
+  var dom = (n) => document.querySelector(n);
+  var domById = (id) => document.getElementById(id);
+  var domA = (n) => document.querySelectorAll(n);
+  var domC = (name, attrObjs) => {
+    const node = document.createElement(name);
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
+    return node;
+  };
+  var fnReturnStr = (str, isHave = false, strFalse = "") => isHave ? str : strFalse;
+  var fnLog = (...str) => console.log("%c「修改器」", "color: green;font-weight: bold;", ...str);
+  var fnDomReplace = (node, attrObjs) => {
+    if (!node)
+      return;
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
+  };
+
+  // src/methods/black.ts
+  var myBlack = {
+    messageCancel: "取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。",
+    /** 初始化黑名单列表 */
+    init: function() {
+      const me = this;
+      const elementBlock = domById(ID_BLOCK_LIST);
+      if (!elementBlock)
+        return;
+      const { getConfig } = store;
+      const { removeBlockUserContentList = [] } = getConfig();
+      elementBlock.innerHTML = removeBlockUserContentList.map((i) => this.createItem(i)).join("");
+      elementBlock.onclick = (event) => {
+        const target = event.target;
+        if (!target || !target.classList.contains(CLASS_REMOVE_BLOCK))
+          return;
+        const item = target.parentElement;
+        const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
+        confirm(me.messageCancel) && me.serviceRemove(info);
+      };
+    },
+    /** 黑名单元素 */
+    createItem: function(info) {
+      return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
+    },
+    createItemContent: ({ id, name, avatar }) => {
+      return `<img src="${avatar}"/><a href="/people/${id}" target="_blank">${name}</a><i class="ctz-icon ${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">&#xe607;</i>`;
+    },
+    /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
+    addButton: function(event, objMy) {
+      const me = this;
+      const classBox = "ctz-block-box";
+      const nodeBlockBox = event.querySelector(`.${classBox}`);
+      nodeBlockBox && nodeBlockBox.remove();
+      const nodeUser = event.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
+      if (!nodeUser || !nodeUser.offsetHeight)
+        return;
+      const userUrl = nodeUser.querySelector('meta[itemprop="url"]').content;
+      const userName = nodeUser.querySelector('meta[itemprop="name"]').content;
+      const avatar = nodeUser.querySelector('meta[itemprop="image"]').content;
+      const nodeAnswerItem = event.querySelector(".AnswerItem");
+      const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute("data-za-extra-module") || "{}" : "{}";
+      const aContent = JSON.parse(mo).card.content;
+      const userId = aContent.author_member_hash_id || "";
+      if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, ""))
+        return;
+      const { getConfig } = store;
+      const { removeBlockUserContentList = [] } = getConfig();
+      const isAlreadyBlack = removeBlockUserContentList.findIndex((i) => i.id === userId) >= 0;
+      const message = `是否要屏蔽${userName}？
+屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。
+如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`;
+      const classBlack = "ctz-black";
+      const classBlackRemove = "ctz-black-remove";
+      const classBlackFilter = "ctz-black-filter";
+      const classJustFilter = "ctz-just-filter";
+      const innerHTML = isAlreadyBlack ? `<button class="${classBlackRemove}">解除屏蔽</button>` + fnReturnStr(`<button class="${classJustFilter}">隐藏该回答</button>`, !!objMy) : `<button class="${classBlack}">屏蔽用户</button>` + fnReturnStr(`<button class="${classBlackFilter}">屏蔽用户并隐藏该回答</button>`, !!objMy);
+      const nodeBox = domC("div", { className: classBox, innerHTML });
+      nodeBox.onclick = function(ev) {
+        const target = ev.target;
+        const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
+        const urlToken = matched ? matched[0] : "";
+        if (target.classList.contains(classBlack)) {
+          if (!confirm(message))
+            return;
+          me.serviceAdd(urlToken, userName, userId, avatar);
+          fnDomReplace(this.querySelector(`.${classBlackFilter}`), { className: classJustFilter, innerText: "隐藏该回答" });
+          fnDomReplace(target, { className: classBlackRemove, innerText: "解除屏蔽" });
+          return;
+        }
+        if (target.classList.contains(classBlackRemove)) {
+          if (!confirm(me.messageCancel))
+            return;
+          me.serviceRemove({ urlToken, id: userId, name: userName });
+          fnDomReplace(target, { className: classBlack, innerText: "屏蔽用户" });
+          fnDomReplace(this.querySelector(`.${classJustFilter}`), { className: classBlackFilter, innerText: "屏蔽用户并隐藏该回答" });
+          return;
+        }
+        if (target.classList.contains(classBlackFilter) || target.classList.contains(classJustFilter)) {
+          if (target.classList.contains(classBlackFilter)) {
+            if (!confirm(message))
+              return;
+            me.serviceAdd(urlToken, userName, userId, avatar);
+          }
+          event.style.display = "none";
+          if (objMy) {
+            objMy.index = objMy.index - 1 > 0 ? objMy.index - 1 : 0;
+          }
+          return;
+        }
+      };
+      nodeUser.appendChild(nodeBox);
+    },
+    /** 添加屏蔽用户 */
+    addBlackItem: function(info) {
+      const { getConfig, setConfig } = store;
+      const pfConfig = getConfig();
+      const nL = pfConfig.removeBlockUserContentList ?? [];
+      nL.push(info);
+      pfConfig.removeBlockUserContentList = nL;
+      setConfig(pfConfig);
+      myStorage.set("pfConfig", JSON.stringify(pfConfig));
+      const nodeBlackItem = domC("div", { className: `ctz-black-item ctz-black-id-${info.id}`, innerHTML: this.createItemContent(info) });
+      nodeBlackItem.dataset.info = JSON.stringify(info);
+      domById(ID_BLOCK_LIST).appendChild(nodeBlackItem);
+    },
+    /** 调用「屏蔽用户」接口 */
+    serviceAdd: function(urlToken, userName, userId, avatar) {
+      const me = this;
+      const headers = this.getHeaders();
+      fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
+        method: "POST",
+        headers: new Headers({
+          ...headers,
+          "x-xsrftoken": document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)?.[0] ?? ""
+        }),
+        credentials: "include"
+      }).then(() => {
+        me.addBlackItem({ id: userId, name: userName, avatar, userType: "people", urlToken });
+      });
+    },
+    /** 解除拉黑用户接口 */
+    serviceRemove: function(info) {
+      const { urlToken, id } = info;
+      const headers = this.getHeaders();
+      fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
+        method: "DELETE",
+        headers: new Headers({
+          ...headers,
+          "x-xsrftoken": document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)?.[0] ?? ""
+        }),
+        credentials: "include"
+      }).then(() => {
+        const { getConfig, setConfig } = store;
+        const pfConfig = getConfig();
+        const nL = pfConfig.removeBlockUserContentList ?? [];
+        const itemIndex = nL.findIndex((i) => i.id === info.id);
+        if (itemIndex >= 0) {
+          nL.splice(itemIndex, 1);
+          pfConfig.removeBlockUserContentList = nL;
+          const removeItem = dom(`.ctz-black-id-${id}`);
+          removeItem && removeItem.remove();
+          setConfig(pfConfig);
+          myStorage.set("pfConfig", JSON.stringify(pfConfig));
+        }
+      });
+    },
+    /** 同步黑名单列表 */
+    sync: function(offset = 0, l = []) {
+      const nodeList = domById(ID_BLOCK_LIST);
+      !l.length && nodeList && (nodeList.innerHTML = "");
+      fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '<i class="ctz-icon ctz-loading">&#xe605;</i>', disabled: true });
+      const limit = 20;
+      const headers = this.getHeaders();
+      fetch(`https://www.zhihu.com/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
+        method: "GET",
+        headers: new Headers(headers),
+        credentials: "include"
+      }).then((response) => response.json()).then(({ data, paging }) => {
+        data.forEach(({ id, name, avatar_url, user_type, url_token }) => {
+          l.push({ id, name, avatar: avatar_url, userType: user_type, urlToken: url_token });
+        });
+        if (!paging.is_end) {
+          this.sync((offset + 1) * limit, l);
+        } else {
+          const { getConfig, setConfig } = store;
+          const pfConfig = getConfig();
+          pfConfig.removeBlockUserContentList = l;
+          setConfig(pfConfig);
+          myStorage.set("pfConfig", JSON.stringify(pfConfig));
+          myBlack.init();
+          fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: "同步黑名单", disabled: false });
+        }
+      });
+    },
+    getHeaders: () => {
+      const { getStorageConfigItem } = store;
+      return getStorageConfigItem("fetchHeaders");
+    }
+  };
+
+  // src/methods/listen-math.ts
+  var fnHiddenDom = (lessNum, ev, log) => {
+    ev.style.display = "none";
+    fnLog(log);
+    return ++lessNum;
+  };
+  var fnIndexMath = (index, i, len, lessNum) => {
+    return i + 1 === len ? i - lessNum >= 0 ? i - lessNum : 0 : index;
+  };
+  var fnJustNum = (element, conf) => {
+    if (!element)
+      return;
+    const { justVoteNum, justCommitNum } = conf;
+    const nodeVoteUp = element.querySelector(".VoteButton--up");
+    if (justVoteNum && nodeVoteUp) {
+      nodeVoteUp.style.cssText = "font-size: 14px!important;";
+      nodeVoteUp.innerHTML = nodeVoteUp.innerHTML.replace("赞同 ", "");
+    }
+    if (justCommitNum) {
+      const buttons = element.querySelectorAll(".ContentItem-actions button");
+      for (let i = 0; i < buttons.length; i++) {
+        const buttonThis = buttons[i];
+        if (buttonThis.innerHTML.includes("条评论")) {
+          buttonThis.style.cssText = "font-size: 14px!important;margin-top:-5px;";
+          buttonThis.innerHTML = buttonThis.innerHTML.replace("条评论", "");
+        }
+      }
+    }
+  };
+
+  // src/methods/time.ts
+  var timeFormatter = (time, formatter = "YYYY-MM-DD HH:mm:ss") => {
+    if (!time)
+      return "";
+    const date = new Date(time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const min = date.getMinutes();
+    const sec = date.getSeconds();
+    const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
+    return formatter.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
+  };
+  var addTimes = (event) => {
+    const className = "ctz-list-item-time";
+    const node = event.querySelector(`.${className}`);
+    node && node.remove();
+    const nodeCreated = event.querySelector('[itemprop="dateCreated"]');
+    const nodePublished = event.querySelector('[itemprop="datePublished"]');
+    const nodeModified = event.querySelector('[itemprop="dateModified"]');
+    const crTime = nodeCreated ? nodeCreated.content : "";
+    const puTime = nodePublished ? nodePublished.content : "";
+    const muTime = nodeModified ? nodeModified.content : "";
+    const created = timeFormatter(crTime || puTime);
+    const modified = timeFormatter(muTime);
+    const nodeMeta = event.querySelector(".ContentItem-meta");
+    if (!created || !nodeMeta)
+      return;
+    nodeMeta.appendChild(
+      domC("div", {
+        className,
+        style: "line-height: 24px;padding-top: 6px;",
+        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`
+      })
+    );
+  };
+
+  // src/methods/listen-answer.ts
+  var myListenAnswerItem = {
+    index: 0,
+    init: function() {
+      const { getConfig } = store;
+      const conf = getConfig();
+      myListenSelect.addSort();
+      const {
+        removeLessVoteDetail,
+        lessVoteNumberDetail = 0,
+        answerOpen,
+        removeZhihuOfficial,
+        removeBlockUserContent,
+        removeBlockUserContentList,
+        showBlockUser,
+        removeAnonymousAnswer,
+        answerItemCreatedAndModifiedTime
+      } = conf;
+      const nodeQuestionAnswer = dom(".QuestionAnswer-content");
+      if (nodeQuestionAnswer) {
+        answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
+      }
+      const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
+      let hiddenUsers = [];
+      for (let i in HIDDEN_ANSWER_ACCOUNT) {
+        conf[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
+      }
+      removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i) => i.name ?? "")));
+      const elements = domA(".AnswersNavWrapper .List-item");
+      let lessNum = 0;
+      for (let i = this.index, len = elements.length; i < len; i++) {
+        let message = "";
+        const elementThis = elements[i];
+        const elementInfo = elementThis.querySelector(".ContentItem");
+        if (!elementInfo)
+          continue;
+        let dataZop = {};
+        let dataCardContent = {};
+        try {
+          dataZop = JSON.parse(elementInfo.getAttribute("data-zop") || "{}");
+          dataCardContent = JSON.parse(elementInfo.getAttribute("data-za-extra-module") || "{}").card.content;
+        } catch {
+        }
+        (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
+        if (removeZhihuOfficial && !message) {
+          const labelE = elementThis.querySelector(".AuthorInfo-name .css-n99yhz");
+          const label = labelE ? labelE.getAttribute("aria-label") || "" : "";
+          /知乎[\s]*官方帐号/.test(label) && (message = "已删除一条知乎官方帐号的回答");
+        }
+        let isHiddenTag = false;
+        hiddenTags.forEach((i2) => conf[i2] && (isHiddenTag = true));
+        if (isHiddenTag && !message) {
+          const nodeTag1 = elementThis.querySelector(".KfeCollection-AnswerTopCard-Container");
+          const nodeTag2 = elementThis.querySelector(".LabelContainer-wrapper");
+          const text1 = nodeTag1 ? nodeTag1.innerText : "";
+          const text2 = nodeTag2 ? nodeTag2.innerText : "";
+          const tagText = text1 + text2;
+          hiddenTags.forEach((i2) => {
+            if (conf[i2]) {
+              const nReg = new RegExp(HIDDEN_ANSWER_TAG[i2]);
+              nReg.test(tagText) && (message = `已删除一条标签${HIDDEN_ANSWER_TAG[i2]}的回答`);
+            }
+          });
+        }
+        hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName || "") && (message = `已删除${dataZop.authorName}的回答`);
+        if (removeAnonymousAnswer && !message) {
+          const userName = elementThis.querySelector('[itemprop="name"]').content;
+          userName === "匿名用户" && (message = `已屏蔽一条「匿名用户」回答`);
+        }
+        if (!message && answerOpen) {
+          const unFoldButton = elementThis.querySelector(".ContentItem-expandButton");
+          const foldButton = elementThis.querySelector(".RichContent-collapsedText");
+          const isNotOpen = !elementThis.classList.contains(OB_CLASS_FOLD.on);
+          const isNotClose = !elementThis.classList.contains(OB_CLASS_FOLD.off);
+          if (answerOpen === "on" && isNotOpen) {
+            unFoldButton && unFoldButton.click();
+            elementThis.classList.add(OB_CLASS_FOLD.on);
+            lessNum++;
+          }
+          const isF = foldButton && elementThis.offsetHeight > 939;
+          const isFC = unFoldButton;
+          if (answerOpen === "off" && isNotClose && (isF || isFC)) {
+            elementThis.classList.add(OB_CLASS_FOLD.off);
+            isF && foldButton && foldButton.click();
+            lessNum++;
+          }
+        }
+        fnJustNum(elementThis, conf);
+        if (!message) {
+          conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
+        }
+        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
+        this.index = fnIndexMath(this.index, i, len, lessNum);
+      }
+    },
+    reset: function() {
+      this.index = 0;
+    },
+    restart: function() {
+      this.reset();
+      this.init();
+    }
+  };
+
+  // src/methods/listen-select.ts
+  var myListenSelect = {
+    isSortFirst: true,
+    observer: void 0,
+    keySort: "default",
+    /** 添加回答排序 */
+    answerSortIds: {
+      "Select1-0": { key: "default", name: "默认排序" },
+      "Select1-1": { key: "update", name: "按时间排序" },
+      "Select1-2": { key: "vote", name: "点赞数排序" },
+      "Select1-3": { key: "comment", name: "评论数排序" }
+    },
+    sortKeys: { vote: "点赞数排序", comment: "评论数排序" },
+    /** 加载监听问题详情里的.Select-button按钮 */
+    init: function() {
+      const classSelectButton = ".Select-button";
+      const { href } = location;
+      if (this.keySort === "vote" || this.keySort === "comment") {
+        const elementBtn = dom(classSelectButton);
+        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, this.sortKeys[this.keySort]));
+      }
+      const clickSort = (id) => {
+        myListenAnswerItem.reset();
+        const { key, name } = this.answerSortIds[id];
+        this.keySort = key;
+        const elementBtn = dom(classSelectButton);
+        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name));
+        if (key === "vote" || key === "comment") {
+          location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, "") + "?sort=" + key;
+        } else if (key === "default") {
+          /\?sort=/.test(href) && (location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ""));
+        }
+      };
+      const btn = dom(classSelectButton);
+      if (btn) {
+        try {
+          this.observer?.disconnect();
+        } catch {
+        }
+        const buConfig = { attribute: true, attributeFilter: ["aria-expanded"] };
+        this.observer = new MutationObserver(() => {
+          const elementSelect = dom(".Answers-select");
+          if (btn.getAttribute("aria-expanded") === "true" && elementSelect) {
+            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-2", innerHTML: "点赞数排序" }));
+            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-3", innerHTML: "评论数排序" }));
+            domA(".Select-option").forEach((ev) => {
+              ev.onclick = () => clickSort(ev.id);
+            });
+          }
+        });
+        this.observer.observe(btn, buConfig);
+      }
+    },
+    addSort: function() {
+      const keySort = this.keySort;
+      if ((keySort === "vote" || keySort === "comment") && this.isSortFirst) {
+        const element = dom(".List>div:nth-child(2)>div");
+        if (!element)
+          return;
+        const arrElement = Array.from(element.querySelectorAll(".List-item:not(.PlaceHolder)")).sort((a, b) => {
+          const answerItemA = a.querySelector(".AnswerItem");
+          const extraA = answerItemA ? answerItemA.getAttribute("data-za-extra-module") || "{}" : "{}";
+          const contentA = JSON.parse(extraA).card.content;
+          const answerItemB = b.querySelector(".AnswerItem");
+          const extraB = answerItemB ? answerItemB.getAttribute("data-za-extra-module") || "{}" : "{}";
+          const contentB = JSON.parse(extraB).card.content;
+          switch (keySort) {
+            case "vote":
+              return contentA.upvote_num - contentB.upvote_num;
+            case "comment":
+              return contentA.comment_num - contentB.comment_num;
+            default:
+              return 1;
+          }
+        });
+        const listItem = element.querySelector(".List-item:not(.PlaceHolder)");
+        listItem && listItem.remove();
+        const eleFirst = element.querySelector(":first-child");
+        arrElement.forEach((item, index) => {
+          element.insertBefore(item, index === 0 ? eleFirst : arrElement[index - 1]);
+        });
+        this.isSortFirst = false;
+      }
+    }
+  };
 
   // src/index.ts
-  console.log("hahahah-----");
-  console.log(INNER_HTML);
-  var str = "";
-  str = "哈哈哈哈";
-  console.log(str);
-  console.log(pfConfig);
+  (function() {
+    if (needRedirect())
+      return;
+    const T0 = performance.now();
+    const { pathname, hostname, host, origin, search, hash, href } = location;
+    const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, getHistory, setUserinfo } = store;
+    let isHaveHeadWhenInit = true;
+    async function onDocumentStart() {
+      if (!HTML_HOOTS.includes(hostname) || window.frameElement)
+        return;
+      if (!document.head) {
+        fnLog("not find document.head, waiting for reload...");
+        isHaveHeadWhenInit = false;
+        return;
+      }
+      const prevConfig = getConfig();
+      setStorageConfigItem("cachePfConfig", prevConfig);
+      setConfig(await myStorage.initConfig(prevConfig));
+      setHistory(await myStorage.initHistory(getHistory()));
+      EXTRA_CLASS_HTML[host] && dom("html").classList.add(EXTRA_CLASS_HTML[host]);
+      const prevHeaders = getStorageConfigItem("fetchHeaders");
+      const originFetch = fetch;
+      unsafeWindow.fetch = (url, opt) => {
+        if (/\/answers\?/.test(url) && (myListenSelect.keySort === "vote" || myListenSelect.keySort === "comment") && myListenSelect.isSortFirst) {
+          url = url.replace(/(?<=limit=)\d+(?=&)/, "20");
+        }
+        if (opt && opt.headers) {
+          setStorageConfigItem("fetchHeaders", {
+            ...prevHeaders,
+            ...opt.headers
+          });
+        }
+        return originFetch(url, opt);
+      };
+      const matched = search.match(/(?<=sort=)\w+/);
+      if (/\/question/.test(pathname) && matched) {
+        myListenSelect.keySort = matched[0];
+      }
+      setUserinfo(await fetchGetUserinfo(prevHeaders));
+    }
+    onDocumentStart();
+  })();
+  console.log(myBlack);
 })();

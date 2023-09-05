@@ -1,24 +1,5 @@
 (function () {
-  const { pathname, hostname, host, origin, search, hash, href } = location;
-  const PATHNAME_FOR_PHONE_QUESTION = '/tardis/sogou/qus/';
-  const PATHNAME_FOR_PHONE_ART = '/tardis/zm/art/';
-  // 重定向页面
-  if (pathname.includes(PATHNAME_FOR_PHONE_QUESTION)) {
-    const questionId = pathname.replace(PATHNAME_FOR_PHONE_QUESTION, '');
-    location.href = origin + '/question/' + questionId;
-    return;
-  }
 
-  if (pathname.includes(PATHNAME_FOR_PHONE_ART)) {
-    const questionId = pathname.replace(PATHNAME_FOR_PHONE_ART, '');
-    location.href = 'https://zhuanlan.zhihu.com/p/' + questionId;
-    return;
-  }
-
-  const T0 = performance.now();
-
-  /** 挂载脚本时 document.head 是否渲染 */
-  let isHaveHeadWhenInit = true;
 
   /** 使用极简模式 */
   const useSimple = async () => {
@@ -29,7 +10,6 @@
     onDocumentStart();
     initData();
   };
-
 
   /** 判断 pathname 匹配的项并运行对应方法 */
   const pathnameHasFn = (obj) => {
@@ -76,48 +56,6 @@
     }
   }
 
-  /** 在启动时注入的内容 */
-  async function onDocumentStart() {
-    if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
-    if (!document.head) {
-      fnLog('not find document.head, waiting for reload...');
-      isHaveHeadWhenInit = false;
-      return;
-    }
-    fixVideoAutoPlay();
-    fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-    storageConfig.cachePfConfig = pfConfig;
-    await myStorage.initConfig();
-    await myStorage.initHistory();
-    initHistoryView();
-    onInitStyleExtra();
-    EXTRA_CLASS_HTML[host] && dom('html').classList.add(EXTRA_CLASS_HTML[host]);
-
-    // 拦截 fetch 方法, 获取 option 中的值
-    const originFetch = fetch;
-    unsafeWindow.fetch = (url, opt) => {
-      if (/\/answers\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
-        // 如果是自定义排序则知乎回答页码增加到20条
-        url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
-      }
-
-      // 缓存 header
-      if (opt && opt.headers) {
-        storageConfig.fetchHeaders = {
-          ...storageConfig.fetchHeaders,
-          ...opt.headers,
-        };
-      }
-      return originFetch(url, opt);
-    };
-
-    if (/\/question/.test(pathname) && search.match(/(?<=sort=)\w+/)) {
-      myListenSelect.keySort = search.match(/(?<=sort=)\w+/)[0];
-    }
-
-    initUserInfo();
-  }
-  onDocumentStart();
 
   /** 页面路由变化, 部分操作方法 */
   const changeHistory = () => {

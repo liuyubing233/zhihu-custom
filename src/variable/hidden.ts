@@ -119,13 +119,13 @@ export const HIDDEN_DIRECTION = {
 };
 
 /** 屏蔽带有标签的回答 */
-export const HIDDEN_ANSWER_TAG = {
+export const HIDDEN_ANSWER_TAG: Record<string, string> = {
   removeFromYanxuan: '盐选专栏',
   removeUnrealAnswer: '虚构创作',
 };
 
 /** 屏蔽账号回答 */
-export const HIDDEN_ANSWER_ACCOUNT = {
+export const HIDDEN_ANSWER_ACCOUNT: Record<string, string> = {
   removeStoryAnswer: '故事档案局',
   removeYanxuanAnswer: '盐选科普',
   removeYanxuanRecommend: '盐选推荐',

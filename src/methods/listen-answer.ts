@@ -1,84 +1,96 @@
-import { pfConfig } from '../variable/configs';
+import { store } from '../store';
+import { IMyElement, IZhihuCardContent, IZhihuDataZop } from '../types';
+import { IMyListenAnswerItem } from '../types/listen';
+import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../variable';
+import { myBlack } from './black';
 import { fnHiddenDom, fnIndexMath, fnJustNum } from './listen-math';
+import { myListenSelect } from './listen-select';
+import { addTimes } from './time';
+import { dom, domA } from './tools';
 
 /** 监听详情回答 - 过滤 */
-export const myListenAnswerItem = {
+export const myListenAnswerItem: IMyListenAnswerItem = {
   index: 0,
   init: function () {
+    const { getConfig } = store;
+    const conf = getConfig();
     myListenSelect.addSort();
     const {
       removeLessVoteDetail,
-      lessVoteNumberDetail,
+      lessVoteNumberDetail = 0,
       answerOpen,
       removeZhihuOfficial,
       removeBlockUserContent,
       removeBlockUserContentList,
       showBlockUser,
       removeAnonymousAnswer,
-    } = pfConfig;
-    if (dom('.QuestionAnswer-content')) {
-      pfConfig.answerItemCreatedAndModifiedTime && addTimes(dom('.QuestionAnswer-content'));
-      showBlockUser && myBlack.addButton(dom('.QuestionAnswer-content'));
+      answerItemCreatedAndModifiedTime,
+    } = conf;
+    const nodeQuestionAnswer = dom('.QuestionAnswer-content');
+    if (nodeQuestionAnswer) {
+      answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
+      showBlockUser && myBlack.addButton(nodeQuestionAnswer);
     }
     const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
     // 屏蔽用户名称列表
     let hiddenUsers = [];
     for (let i in HIDDEN_ANSWER_ACCOUNT) {
-      pfConfig[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
+      conf[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
     }
-    removeBlockUserContent && (hiddenUsers = hiddenTags.concat(removeBlockUserContentList.map((i) => i.name)));
+    removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i) => i.name || '')));
     const elements = domA('.AnswersNavWrapper .List-item');
     let lessNum = 0;
     for (let i = this.index, len = elements.length; i < len; i++) {
       let message = '';
       const elementThis = elements[i];
       const elementInfo = elementThis.querySelector('.ContentItem');
-      let dataZop = {};
-      let dataCardContent = {}; // 回答扩展信息
+      if (!elementInfo) continue;
+      let dataZop: IZhihuDataZop = {};
+      let dataCardContent: IZhihuCardContent = {}; // 回答扩展信息
       try {
-        dataZop = JSON.parse(elementInfo.getAttribute('data-zop'));
-        dataCardContent = JSON.parse(elementInfo.getAttribute('data-za-extra-module')).card.content;
+        dataZop = JSON.parse(elementInfo.getAttribute('data-zop') || '{}');
+        dataCardContent = JSON.parse(elementInfo.getAttribute('data-za-extra-module') || '{}').card.content;
       } catch {}
       // FIRST
       // 低赞回答过滤
-      dataCardContent['upvote_num'] < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
+      (dataCardContent['upvote_num'] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
       // 屏蔽知乎官方账号回答
       if (removeZhihuOfficial && !message) {
         const labelE = elementThis.querySelector('.AuthorInfo-name .css-n99yhz');
-        const label = labelE ? labelE.getAttribute('aria-label') : '';
+        const label = labelE ? labelE.getAttribute('aria-label') || '' : '';
         /知乎[\s]*官方帐号/.test(label) && (message = '已删除一条知乎官方帐号的回答');
       }
       // 屏蔽带有选中标签的回答
       let isHiddenTag = false;
-      hiddenTags.forEach((i) => pfConfig[i] && (isHiddenTag = true));
+      hiddenTags.forEach((i) => conf[i] && (isHiddenTag = true));
       if (isHiddenTag && !message) {
-        const nodeTag1 = elementThis.querySelector('.KfeCollection-AnswerTopCard-Container');
-        const nodeTag2 = elementThis.querySelector('.LabelContainer-wrapper');
+        const nodeTag1 = elementThis.querySelector('.KfeCollection-AnswerTopCard-Container') as IMyElement;
+        const nodeTag2 = elementThis.querySelector('.LabelContainer-wrapper') as IMyElement;
         const text1 = nodeTag1 ? nodeTag1.innerText : '';
         const text2 = nodeTag2 ? nodeTag2.innerText : '';
         const tagText = text1 + text2;
         hiddenTags.forEach((i) => {
-          if (pfConfig[i]) {
+          if (conf[i]) {
             const nReg = new RegExp(HIDDEN_ANSWER_TAG[i]);
             nReg.test(tagText) && (message = `已删除一条标签${HIDDEN_ANSWER_TAG[i]}的回答`);
           }
         });
       }
       // 屏蔽用户 | 知乎账号的回答
-      hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName) && (message = `已删除${dataZop.authorName}的回答`);
+      hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName || '') && (message = `已删除${dataZop.authorName}的回答`);
       // 屏蔽「匿名用户」回答
       if (removeAnonymousAnswer && !message) {
-        const userName = elementThis.querySelector('[itemprop="name"]').content;
+        const userName = (elementThis.querySelector('[itemprop="name"]') as IMyElement).content;
         userName === '匿名用户' && (message = `已屏蔽一条「匿名用户」回答`);
       }
       // 自动展开回答 和 默认收起长回答
       if (!message && answerOpen) {
-        const unFoldButton = elementThis.querySelector('.ContentItem-expandButton');
-        const foldButton = elementThis.querySelector('.RichContent-collapsedText');
+        const unFoldButton = elementThis.querySelector('.ContentItem-expandButton') as HTMLButtonElement;
+        const foldButton = elementThis.querySelector('.RichContent-collapsedText') as HTMLButtonElement;
         const isNotOpen = !elementThis.classList.contains(OB_CLASS_FOLD.on);
         const isNotClose = !elementThis.classList.contains(OB_CLASS_FOLD.off);
         if (answerOpen === 'on' && isNotOpen) {
-          unFoldButton.click();
+          unFoldButton && unFoldButton.click();
           elementThis.classList.add(OB_CLASS_FOLD.on);
           lessNum++;
         }
@@ -86,14 +98,14 @@ export const myListenAnswerItem = {
         const isFC = unFoldButton; // 已经收起的回答
         if (answerOpen === 'off' && isNotClose && (isF || isFC)) {
           elementThis.classList.add(OB_CLASS_FOLD.off);
-          isF && foldButton.click();
+          isF && foldButton && foldButton.click();
           lessNum++;
         }
       }
-      fnJustNum(elementThis);
+      fnJustNum(elementThis, conf);
       if (!message) {
         // 添加回答时间
-        pfConfig.answerItemCreatedAndModifiedTime && addTimes(elementThis);
+        conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
         // 添加「屏蔽用户」按钮
         showBlockUser && myBlack.addButton(elementThis, this);
       }
@@ -111,3 +123,4 @@ export const myListenAnswerItem = {
     this.init();
   },
 };
+

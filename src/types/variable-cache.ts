@@ -77,7 +77,7 @@ export interface IStorageConfig {
   /** 缓存页面原标题 */
   cacheTitle: string;
   /** 接口的 headers 内容, 获取下来以供使用 */
-  fetchHeaders: Record<string, string>;
+  fetchHeaders: HeadersInit;
   /** 列表缓存高度 */
   heightForList: number;
   /** header内元素 */
