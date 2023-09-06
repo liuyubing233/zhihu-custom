@@ -1,6 +1,6 @@
+import { dom, domC } from '../commons/tools';
 import { store } from '../store';
-import { IMyElement } from '../types/dom';
-import { dom, domC } from './tools';
+import { IMyElement } from '../types';
 
 /** 时间格式化 */
 const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') => {

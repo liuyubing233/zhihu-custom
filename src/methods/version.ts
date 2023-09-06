@@ -1,5 +1,5 @@
+import { domById, fnInitDomStyle, fnReturnStr } from '../commons/tools';
 import { store } from '../store';
-import { domById, fnInitDomStyle, fnReturnStr } from './tools';
 
 /** 修改版心的 css */
 export const myVersion = {

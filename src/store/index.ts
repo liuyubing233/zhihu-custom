@@ -1,11 +1,16 @@
-import { IFindEvent, IFindEventEntries, IHeaderDoms, IPfHistory, IStorageConfig, IUserinfo } from "../types/variable-cache";
-import { IPfConfig } from "../types/variable-configs";
-import { CONFIG_FILTER_DEFAULT, CONFIG_HIDDEN_DEFAULT, CONFIG_SUSPENSION } from "../variable/configs";
-
-type IKeyofHistory = keyof IPfHistory;
-type IKeyofFindEvent = keyof IFindEvent;
-type IKeyofStorageConfig = keyof IStorageConfig;
-type IContentStorageConfig = string | number | IPfConfig | HeadersInit | IHeaderDoms;
+import { CONFIG_FILTER_DEFAULT, CONFIG_HIDDEN_DEFAULT, CONFIG_SUSPENSION } from '../configs/default';
+import {
+  IContentStorageConfig,
+  IFindEvent,
+  IFindEventEntries,
+  IKeyofFindEvent,
+  IKeyofHistory,
+  IKeyofStorageConfig,
+  IPfHistory,
+  IStorageConfig,
+  IZhihuUserinfo,
+} from '../types';
+import { IPfConfig } from '../types/variable-configs.type';
 
 class Store {
   /** 修改器配置 */
@@ -52,7 +57,7 @@ class Store {
   };
 
   /** 用户信息 更改prev: userInfo */
-  userinfo: IUserinfo | undefined = undefined;
+  userinfo: IZhihuUserinfo | undefined = undefined;
 
   findEvent: IFindEvent = {
     header: { fun: null, num: 0, isFind: false },
@@ -89,7 +94,7 @@ class Store {
     return this.pfHistory[key];
   }
 
-  setUserinfo(inner: IUserinfo) {
+  setUserinfo(inner: IZhihuUserinfo) {
     this.userinfo = inner;
   }
   getUserinfo() {
@@ -112,7 +117,7 @@ class Store {
   setStorageConfig(inner: IStorageConfig) {
     this.storageConfig = inner;
   }
-  setStorageConfigItem(key: IKeyofStorageConfig, content: IContentStorageConfig) {
+  setStorageConfigItem(key: IKeyofStorageConfig, content: any) {
     (this.storageConfig[key] as IContentStorageConfig) = content;
   }
   getStorageConfig() {

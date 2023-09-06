@@ -1,5 +1,5 @@
-import { myListenAnswerItem } from './listen-answer';
-import { dom, domA, domC } from './tools';
+import { dom, domA, domC } from '../commons/tools';
+import { myListenAnswerItem } from './listen-answer-item';
 
 /** 回答排序 */
 export const myListenSelect: IMyListenSelect = {

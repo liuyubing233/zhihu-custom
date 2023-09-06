@@ -1,6 +1,6 @@
+import { domA, domC, domP } from '../commons/tools';
 import { store } from '../store';
-import { IMyElement } from '../types/dom';
-import { domA, domC, domP } from './tools';
+import { IMyElement } from '../types';
 
 interface IMyVideo {
   index: number;

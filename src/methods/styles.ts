@@ -1,7 +1,6 @@
+import { dom, fnInitDomStyle } from '../commons/tools';
+import { BACKGROUND_CONFIG, BACKGROUND_DARK_COLORS, ID_DIALOG } from '../configs';
 import { store } from '../store';
-import { BACKGROUND_CONFIG, BACKGROUND_DARK_COLORS } from '../variable/background';
-import { ID_DIALOG } from '../variable/dom-name';
-import { dom, fnInitDomStyle } from './tools';
 
 /** 修改页面背景的 css */
 export const myBackground = {

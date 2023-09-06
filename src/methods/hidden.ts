@@ -1,5 +1,5 @@
+import { fnInitDomStyle } from '../commons/tools';
 import { store } from '../store';
-import { fnInitDomStyle } from './tools';
 
 /** 隐藏元素的 css */
 export const myHidden: IMyHidden = {

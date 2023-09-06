@@ -1,11 +1,8 @@
+import { myStorage } from '../commons/storage';
+import { dom, domById, domC, fnDomReplace, fnReturnStr } from '../commons/tools';
+import { CLASS_REMOVE_BLOCK, ID_BLOCK_LIST, ID_BUTTON_SYNC_BLOCK } from '../configs';
 import { store } from '../store';
-import { IMyElement } from '../types/dom';
-import { IMyListenAnswerItem } from '../types/listen';
-import { IBlockUserItem } from '../types/variable-configs';
-import { IZhihuCardContent } from '../types/zhihu';
-import { CLASS_REMOVE_BLOCK, ID_BLOCK_LIST, ID_BUTTON_SYNC_BLOCK } from '../variable/dom-name';
-import { myStorage } from './storage';
-import { dom, domById, domC, fnDomReplace, fnReturnStr } from './tools';
+import { IBlockUserItem, IMyElement, IMyListenAnswerItem, IZhihuCardContent } from '../types';
 
 /** 黑名单用户操作方法 */
 export const myBlack: IMyBlack = {
@@ -98,13 +95,11 @@ export const myBlack: IMyBlack = {
   },
   /** 添加屏蔽用户 */
   addBlackItem: function (info) {
-    const { getConfig, setConfig } = store;
+    const { getConfig } = store;
     const pfConfig = getConfig();
     const nL = pfConfig.removeBlockUserContentList || [];
     nL.push(info);
-    pfConfig.removeBlockUserContentList = nL;
-    setConfig(pfConfig);
-    myStorage.set('pfConfig', JSON.stringify(pfConfig));
+    myStorage.configUpdateItem('removeBlockUserContentList', nL);
     const nodeBlackItem = domC('div', { className: `ctz-black-item ctz-black-id-${info.id}`, innerHTML: this.createItemContent(info) });
     nodeBlackItem.dataset.info = JSON.stringify(info);
     domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
@@ -136,17 +131,15 @@ export const myBlack: IMyBlack = {
       }),
       credentials: 'include',
     }).then(() => {
-      const { getConfig, setConfig } = store;
+      const { getConfig } = store;
       const pfConfig = getConfig();
       const nL = pfConfig.removeBlockUserContentList || [];
       const itemIndex = nL.findIndex((i) => i.id === info.id);
       if (itemIndex >= 0) {
         nL.splice(itemIndex, 1);
-        pfConfig.removeBlockUserContentList = nL;
         const removeItem = dom(`.ctz-black-id-${id}`);
         removeItem && removeItem.remove();
-        setConfig(pfConfig);
-        myStorage.set('pfConfig', JSON.stringify(pfConfig));
+        myStorage.configUpdateItem('removeBlockUserContentList', nL);
       }
     });
   },
@@ -170,11 +163,7 @@ export const myBlack: IMyBlack = {
         if (!paging.is_end) {
           this.sync((offset + 1) * limit, l);
         } else {
-          const { getConfig, setConfig } = store;
-          const pfConfig = getConfig();
-          pfConfig.removeBlockUserContentList = l;
-          setConfig(pfConfig);
-          myStorage.set('pfConfig', JSON.stringify(pfConfig));
+          myStorage.configUpdateItem('removeBlockUserContentList', l);
           myBlack.init();
           fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '同步黑名单', disabled: false });
         }
@@ -193,10 +182,10 @@ interface IMyBlack {
   init: () => void;
   createItem: (info: IBlockUserItem) => void;
   createItemContent: (info: IBlockUserItem) => void;
-  addButton: (event: IMyElement, objMy?: IObjMy) => void;
+  addButton: (event: HTMLElement, objMy?: IObjMy) => void;
   addBlackItem: (info: IBlockUserItem) => void;
   serviceAdd: (urlToken: string, userName: string, userId: string, avatar: string) => void;
   serviceRemove: (info: IBlockUserItem) => void;
-  sync: (offset: number, l: IBlockUserItem[]) => void;
+  sync: (offset?: number, l?: IBlockUserItem[]) => void;
   getHeaders: () => HeadersInit;
 }

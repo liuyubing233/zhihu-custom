@@ -1,7 +1,7 @@
-import { myStorage } from '../methods/storage';
-import { dom } from '../methods/tools';
+import { myStorage } from '../commons/storage';
+import { dom } from '../commons/tools';
+import { SAVE_HISTORY_NUMBER } from '../configs';
 import { store } from '../store';
-import { SAVE_HISTORY_NUMBER } from '../variable/configs';
 
 /** 添加浏览历史 */
 export const initHistoryView = async () => {
