@@ -72,7 +72,25 @@ class Store {
     headerDoms: {},
   };
 
-  constructor() {}
+  constructor() {
+    // to fix this is undefined
+    this.setConfig = this.setConfig.bind(this);
+    this.getConfig = this.getConfig.bind(this);
+    this.setHistory = this.setHistory.bind(this);
+    this.setHistoryItem = this.setHistoryItem.bind(this);
+    this.getHistory = this.getHistory.bind(this);
+    this.getHistoryItem = this.getHistoryItem.bind(this);
+    this.setUserinfo = this.setUserinfo.bind(this);
+    this.getUserinfo = this.getUserinfo.bind(this);
+    this.setFindEvent = this.setFindEvent.bind(this);
+    this.setFindEventItem = this.setFindEventItem.bind(this);
+    this.getFindEvent = this.getFindEvent.bind(this);
+    this.getFindEventItem = this.getFindEventItem.bind(this);
+    this.setStorageConfig = this.setStorageConfig.bind(this);
+    this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
+    this.getStorageConfig = this.getStorageConfig.bind(this);
+    this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
+  }
 
   setConfig(inner: IPfConfig) {
     this.pfConfig = inner;
