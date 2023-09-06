@@ -1,6 +1,5 @@
-export type IBackgroundKey = '#ffffff' | '#ffe4c4' | '#FAF9DE' | '#cce8cf' | '#EAEAEF' | '#E9EBFE' | '#121212' | '#1f1f1f' | '#15202b' | '#272822';
 /** 背景色设置 */
-export type IBackgroundConfigs = Record<IBackgroundKey, IBackgroundEntries>;
+export type IBackgroundConfigs = Record<string, IBackgroundEntries>;
 export interface IBackgroundEntries {
   /** 名称 */
   name: string;
@@ -10,7 +9,6 @@ export interface IBackgroundEntries {
   color: string;
 }
 
-export type IBackgroundDarkKey = '#121212' | '#1f1f1f' | '#15202b' | '#272822';
 export interface IBackgroundDarkEntries {
   /** 第二背景色 */
   b2: string;
@@ -21,4 +19,4 @@ export interface IBackgroundDarkEntries {
 }
 
 /** 夜间模式配置 */
-export type IBackgroundDarkConfigs = Record<IBackgroundDarkKey, IBackgroundDarkEntries>;
+export type IBackgroundDarkConfigs = Record<string, IBackgroundDarkEntries>;

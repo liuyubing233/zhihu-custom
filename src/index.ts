@@ -1,11 +1,14 @@
+import { initHistoryView } from './inner/init-history-view';
+import { onInitStyleExtra } from './inner/init-style-extra';
 import { needRedirect } from './inner/redirect';
 import { fetchGetUserinfo } from './methods/fetch';
 import { myListenSelect } from './methods/listen-select';
 import { myStorage } from './methods/storage';
-import { dom, fnLog } from './methods/tools';
+import { dom, fnInitDomStyle, fnLog } from './methods/tools';
 import { fixVideoAutoPlay } from './methods/video';
 import { store } from './store';
 import { EXTRA_CLASS_HTML, HTML_HOOTS } from './variable/dom-name';
+import { INNER_CSS } from './web-resources';
 
 (function () {
   if (needRedirect()) return;
@@ -25,17 +28,13 @@ import { EXTRA_CLASS_HTML, HTML_HOOTS } from './variable/dom-name';
       return;
     }
     fixVideoAutoPlay();
-    // TODO!!!!!!
-    // fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-
+    fnInitDomStyle('CTZ_STYLE', INNER_CSS);
     const prevConfig = getConfig();
     setStorageConfigItem('cachePfConfig', prevConfig);
     setConfig(await myStorage.initConfig(prevConfig));
     setHistory(await myStorage.initHistory(getHistory()));
-    // TODO!!!!!!
-    // initHistoryView();
-    // TODO!!!!!!
-    // onInitStyleExtra();
+    initHistoryView();
+    onInitStyleExtra();
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
 
     const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;

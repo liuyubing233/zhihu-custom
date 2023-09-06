@@ -1,4 +1,5 @@
-import { fnInitDomStyle, domById, fnReturnStr } from './tools';
+import { store } from '../store';
+import { domById, fnInitDomStyle, fnReturnStr } from './tools';
 
 /** 修改版心的 css */
 export const myVersion = {
@@ -19,17 +20,19 @@ export const myVersion = {
     );
   },
   initAfterLoad: function () {
+    const pfConfig = this.getConfig();
     // 自定义图片尺寸大小 range 显隐
-    domById('CTZ_IMAGE_SIZE_CUSTOM').style.display = pfConfig.zoomImageType === '2' ? 'block' : 'none';
+    domById('CTZ_IMAGE_SIZE_CUSTOM')!.style.display = pfConfig.zoomImageType === '2' ? 'block' : 'none';
     // 自定义列表视频回答内容 range 显隐
-    domById('CTZ_LIST_VIDEO_SIZE_CUSTOM').style.display = pfConfig.zoomListVideoType === '2' ? 'block' : 'none';
+    domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.style.display = pfConfig.zoomListVideoType === '2' ? 'block' : 'none';
   },
   change: function () {
     this.initAfterLoad();
     this.init();
   },
   /** 版心大小修改 */
-  versionWidth: () => {
+  versionWidth: function () {
+    const pfConfig = this.getConfig();
     // 首页列表版心
     const versionHome =
       `.Topstory-mainColumn,.Search-container{width: ${pfConfig.versionHome || '1000'}px!important;}` +
@@ -51,7 +54,8 @@ export const myVersion = {
     return versionHome + versionAnswer + versionArticle;
   },
   /** 图片尺寸修改 */
-  vImgSize: () => {
+  vImgSize: function () {
+    const pfConfig = this.getConfig();
     const nContent = fnReturnStr(
       `width: ${pfConfig.zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;`,
       pfConfig.zoomImageType === '2'
@@ -62,18 +66,21 @@ export const myVersion = {
     );
   },
   /** 列表视频回答内容尺寸修改 */
-  vListVideoSize: () => {
+  vListVideoSize: function () {
+    const pfConfig = this.getConfig();
     return `.ZVideoItem>div:first-of-type{${fnReturnStr(`width: ${pfConfig.zoomListVideoSize}px!important;`, pfConfig.zoomListVideoType === '2')}}`;
   },
   /** 列表更多按钮移动至题目右侧 */
-  vFixedListMore: () => {
+  vFixedListMore: function () {
+    const pfConfig = this.getConfig();
     return fnReturnStr(
       `.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{visibility: visible!important;position: absolute;top: 20px;right: 10px;}`,
       pfConfig.fixedListItemMore
     );
   },
   /** 内容标题添加类别显示 */
-  vQuestionTitleTag: () => {
+  vQuestionTitleTag: function () {
+    const pfConfig = this.getConfig();
     return fnReturnStr(
       `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}` +
         `.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}` +
@@ -85,7 +92,8 @@ export const myVersion = {
     );
   },
   /** 首页问题列表切换模块悬浮 */
-  vSusHomeTab: () => {
+  vSusHomeTab: function () {
+    const pfConfig = this.getConfig();
     return fnReturnStr(
       `.Topstory-container .TopstoryTabs` +
         `{${pfConfig.suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}` +
@@ -105,7 +113,8 @@ export const myVersion = {
     );
   },
   /** 顶部三大块悬浮 */
-  vSusHeader: () => {
+  vSusHeader: function () {
+    const pfConfig = this.getConfig();
     return (
       `.position-suspensionFind{${pfConfig.suspensionFindPo}}` +
       `.position-suspensionUser{${pfConfig.suspensionUserPo}}` +
@@ -116,13 +125,15 @@ export const myVersion = {
     );
   },
   /** 列表内容点击高亮边框 */
-  vHighlightListItem: () => {
+  vHighlightListItem: function () {
+    const pfConfig = this.getConfig();
     return fnReturnStr(
       `.List-item:focus,.TopstoryItem:focus,.HotItem:focus{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(0, 102, 255, 0.3)!important;outline:none!important;transition:box-shadow 0.3s!important;}`,
       pfConfig.highlightListItem
     );
   },
-  vShoppingLink: () => {
+  vShoppingLink: function () {
+    const pfConfig = this.getConfig();
     // 购物链接CSS
     const cssObj = {
       0: '',
@@ -155,7 +166,8 @@ export const myVersion = {
     };
     return cssObj[pfConfig.linkShopping || '0'];
   },
-  vAnswerVideo: () => {
+  vAnswerVideo: function () {
+    const pfConfig = this.getConfig();
     // 回答内视频缩放CSS
     const cssObj = {
       0: '',
@@ -174,7 +186,8 @@ export const myVersion = {
     };
     return cssObj[pfConfig.linkAnswerVideo || '0'];
   },
-  vFontSizeContent: () => {
+  vFontSizeContent: function () {
+    const pfConfig = this.getConfig();
     // 调整文字大小
     const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle } = pfConfig;
     const list =
@@ -184,5 +197,9 @@ export const myVersion = {
     const answer = `.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent{font-size: ${fontSizeForAnswer}px}`;
     const article = `.zhuanlan .Post-RichTextContainer,.zhuanlan .ctz-article-create-time,.zhuanlan .CommentContent{font-size: ${fontSizeForArticle}px}`;
     return list + answer + article;
+  },
+  getConfig: () => {
+    const { getConfig } = store;
+    return getConfig();
   },
 };

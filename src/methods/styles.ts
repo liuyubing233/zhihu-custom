@@ -1,20 +1,28 @@
-import { fnInitDomStyle, dom } from './tools';
-import { BACKGROUND_DARK_COLORS, BACKGROUND_CONFIG } from '../variable/background';
+import { store } from '../store';
+import { BACKGROUND_CONFIG, BACKGROUND_DARK_COLORS } from '../variable/background';
+import { ID_DIALOG } from '../variable/dom-name';
+import { dom, fnInitDomStyle } from './tools';
 
 /** 修改页面背景的 css */
 export const myBackground = {
   init: function () {
-    const innerHTML = this.change(pfConfig.colorBackground);
+    const { getConfig } = store;
+    const nConf = getConfig();
+    const innerHTML = this.change(nConf.colorBackground || '');
     fnInitDomStyle('CTZ_STYLE_BACKGROUND', innerHTML);
   },
-  change: function (bg) {
+  change: function (bg: string) {
     if (this.isUseDark()) return this.dark(bg);
     if (bg === '#ffffff') return this.default();
     return this.normal(bg) + this.normalAppHeader(bg);
   },
-  isUseDark: () => Object.keys(BACKGROUND_DARK_COLORS).includes(pfConfig.colorBackground),
+  isUseDark: () => {
+    const { getConfig } = store;
+    const nConf = getConfig();
+    return Object.keys(BACKGROUND_DARK_COLORS).includes(nConf.colorBackground || '');
+  },
   default: () => '.GlobalSideBar-navList{background: #fff}',
-  dark: (bg) => {
+  dark: (bg: string) => {
     const { b2, t1, t2 } = BACKGROUND_DARK_COLORS[bg];
     const backgroundBG =
       `#${ID_DIALOG},.ctz-set-title>span,#CTZ-BLOCK-LIST .ctz-black-item` +
@@ -40,7 +48,7 @@ export const myBackground = {
     const dialogBorder = `#${ID_DIALOG}{border: 1px solid ${b2}}.ctz-menu-top>a.target{border-bottom: 4px solid ${t1};color: ${t1};}`;
 
     // 添加 html[data-theme=dark] 前缀
-    const addPrefix = (i) =>
+    const addPrefix = (i: string) =>
       i
         .split(',')
         .map((i) => `html[data-theme=dark] ${i}`)
@@ -53,7 +61,7 @@ export const myBackground = {
 
     return addPrefix(backgroundBG + backgroundB2 + backgroundTransparent + colorT1 + colorB2 + colorT2 + borderColorBG + dialogBorder + pageLearning);
   },
-  normal: (bg) => {
+  normal: (bg: string) => {
     // 普通背景色
     const background =
       `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
@@ -70,10 +78,12 @@ export const myBackground = {
     const borderColor = `.MenuBar-root-rQeFm{border-color: ${bg}!important;}`;
     return background + backgroundOpacity + backgroundTransparent + borderColor;
   },
-  normalAppHeader: (bg) => {
+  normalAppHeader: (bg: string) => {
     // header 颜色变化
-    const elementHC = dom('.AppHeader') && dom('.AppHeader').classList;
-    const haveTopAD = dom('.Topstory>div:not(.Topstory-container)') && dom('.Topstory>div:not(.Topstory-container)').childElementCount;
+    const nodeAppHeader = dom('.AppHeader');
+    const nodeTopStoryC = dom('.Topstory>div:not(.Topstory-container)');
+    const elementHC = nodeAppHeader ? nodeAppHeader.classList || [] : [];
+    const haveTopAD = nodeTopStoryC && nodeTopStoryC.childElementCount;
     const headerBelongAd = haveTopAD ? elementHC[elementHC.length - 1] : '';
     return (
       `${headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : '.AppHeader'}` +
@@ -85,15 +95,19 @@ export const myBackground = {
 /** 自定义样式方法 */
 export const myCustomStyle = {
   init: function () {
-    dom('[name="textStyleCustom"]').value = pfConfig.customizeCss || '';
-    this.change();
+    const nodeCustomStyle = dom('[name="textStyleCustom"]') as HTMLTextAreaElement;
+    if (!nodeCustomStyle) return;
+    const { getConfig } = store;
+    const strCustomCss = getConfig().customizeCss || '';
+    nodeCustomStyle.value = strCustomCss;
+    this.change(strCustomCss);
   },
-  change: () => fnInitDomStyle('CTZ_STYLE_CUSTOM', pfConfig.customizeCss || ''),
+  change: (innerCus: string) => fnInitDomStyle('CTZ_STYLE_CUSTOM', innerCus),
 };
 
 /** 启用知乎默认的黑暗模式 */
 export const onUseThemeDark = () => {
-  dom('html').setAttribute('data-theme', myBackground.isUseDark() ? 'dark' : 'light');
+  dom('html')!.setAttribute('data-theme', myBackground.isUseDark() ? 'dark' : 'light');
 };
 
 /** 查找是否使用主题 */
@@ -102,6 +116,7 @@ export const findTheme = () => {
   onUseThemeDark();
   const elementHTML = dom('html');
   const muConfig = { attribute: true, attributeFilter: ['data-theme'] };
+  if (!elementHTML) return;
   // 监听 html 元素属性变化
   const muCallback = function () {
     const themeName = elementHTML.getAttribute('data-theme');

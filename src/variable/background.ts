@@ -1,4 +1,4 @@
-import { IBackgroundConfigs, IBackgroundDarkConfigs } from '../types';
+import { IBackgroundConfigs, IBackgroundDarkConfigs } from "../types/variable-background";
 
 /** 背景色设置 */
 export const BACKGROUND_CONFIG: IBackgroundConfigs = {

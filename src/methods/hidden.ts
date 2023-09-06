@@ -1,11 +1,14 @@
+import { store } from '../store';
 import { fnInitDomStyle } from './tools';
 
 /** 隐藏元素的 css */
-export const myHidden = {
+export const myHidden: IMyHidden = {
   init: function () {
     fnInitDomStyle('CTZ_STYLE_HIDDEN', this.change() || '');
   },
   change: function () {
+    const { getConfig } = store;
+    const pfConfig = getConfig();
     const cssHidden = Object.keys(this.cssForKey)
       .map((key) => (pfConfig[key] ? this.cssForKey[key] : ''))
       .join('');
@@ -132,3 +135,15 @@ export const myHidden = {
     },
   ],
 };
+
+interface IMyHidden {
+  init: () => void;
+  change: () => string;
+  cssForKey: Record<string, string>;
+  cssForKeysArray: ICssForKeys[];
+}
+
+interface ICssForKeys {
+  keys: string[];
+  value: string;
+}
