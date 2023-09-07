@@ -2794,7 +2794,7 @@
     if (needRedirect())
       return;
     const T0 = performance.now();
-    const { pathname, hostname, host, origin, search, hash, href } = location;
+    const { pathname, hostname, host, search } = location;
     const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, getHistory, setUserinfo } = store;
     let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
@@ -2882,7 +2882,7 @@
           addArticleCreateTimeToTop();
         }
         fnLog(
-          `加载完毕, 加载时长: ${(performance.now() - T0) / 1e3}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗，如果快捷键不生效可以在控制台使用 window.openCtz() 唤起`
+          `加载完毕, 加载时长: ${Math.floor((performance.now() - T0) * 1e3) / 1e6}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗，如果快捷键不生效可以在控制台使用 window.openCtz() 唤起`
         );
       },
       false

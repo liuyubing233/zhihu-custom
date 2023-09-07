@@ -6,13 +6,13 @@
   "main": "index.js",
   "scripts": {
     "start": "APP_ENV=dev node ./esbuild.build.js",
-    "build": "APP_ENV=prod node ./esbuild.build.js & APP_ENV=prod node ./process-after-build.js"
+    "build": "APP_ENV=prod node ./esbuild.build.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/superPufferfish/custom-zhihu.git"
   },
-  "keywords": ["zhihu", "tempermonkey", "javascript", "typescript"],
+  "keywords": ["zhihu", "tampermonkey", "javascript", "typescript"],
   "author": "liuyubing",
   "license": "ISC",
   "bugs": {
