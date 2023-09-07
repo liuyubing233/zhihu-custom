@@ -220,13 +220,9 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 #### 基础设置 - 颜色设置
 
-<img src="https://bnz06pap004files.storage.live.com/y4msRtzhbDNF0tm1DbAJYK_DcKq75Lp1BTi2pWnDsaY0I7C6yi0HSAQTTmrAT6sD2oaPP2_ZorFvAG8I25D8OK10z-iDXgurfDBUPqI2oQzbBI669KZFChJmBpLRoy0_59m2gWMEOC5Lu-ItmjynIRMVTzSKCzV0153PF3nKMfLOHVa52EpKRmtPIVWRE0dwfyl?width=1024&height=809&cropmode=none" width="1024" height="809" />
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211355&authkey=%21AO8NCx0TYnqsdk8&width=1024" width="1024" height="auto" />
 
-可设置背景颜色 & 夜间模式
-
-夜间模式为调用知乎原有夜间模式样式+知乎夜间模式未完成内容做的修改，如果发现夜间模式失效或渲染不完全情况请及时反馈给我。
-
-<img src="https://bnz06pap004files.storage.live.com/y4mOeMbcfWmI9lkBfxtKZyaMwWQqNkxIVI1KMoHYjenI9vN4f_zLIqPIMq45ER05FuXjQnE5msg3a0zFMTN_Dkmtvu9RUL6CRWGgMTHjcwAn1AOZ45UPzcU6zsgKwgoVy7fT2TeYGcYh2DG7C5BCxPQhPv0gt9GG1RcQGx3bl_Wzo5DYTJXxBaV7Y-i5TWCsxU2?width=1024&height=898&cropmode=none" width="1024" height="898" />
+设置为自动时，背景色可跟随浏览器颜色变化
 
 #### 基础设置 - 配置操作
 
