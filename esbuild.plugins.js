@@ -65,7 +65,8 @@ const envEnd = {
         return;
       }
       const nIndex = `${info}\n\n(function(){\n  'use strict';\n${funContent}})()`;
-      fs.writeFileSync(path.join(__dirname, 'index.js'), nIndex);
+      const regCommit = /\s*\/\/\ssrc[^\n]*\n/g; // 匹配路径注释
+      fs.writeFileSync(path.join(__dirname, 'index.js'), nIndex.replace(regCommit, '\n'));
     });
   },
 };

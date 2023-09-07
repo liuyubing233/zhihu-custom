@@ -15,7 +15,6 @@
 // @connect      127.0.0.1
 // ==/UserScript==
 (function () {
-  // 使用 live server 启动
   const CODE_NAME = 'CODE_FOR_CUSTOM_ZHIHU';
 
   const innerJS = () => {
