@@ -10,6 +10,7 @@
 // @compatible   firefox Violentmonkey
 // @compatible   firefox Tampermonkey
 // @author       liuyubing
+// @license      MIT
 // @match        *://*.zhihu.com/*
 // @grant        unsafeWindow
 // @grant        GM_info

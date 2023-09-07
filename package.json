@@ -14,7 +14,7 @@
   },
   "keywords": ["zhihu", "tampermonkey", "javascript", "typescript"],
   "author": "liuyubing",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/superPufferfish/custom-zhihu/issues"
   },

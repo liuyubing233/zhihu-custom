@@ -48,6 +48,7 @@ const envEnd = {
         `// @compatible   firefox Violentmonkey\n` +
         `// @compatible   firefox Tampermonkey\n` +
         `// @author       ${packageConf.author}\n` +
+        `// @license      ${packageConf.license}\n` +
         '// @match        *://*.zhihu.com/*' +
         `\n// @grant        unsafeWindow\n` +
         `// @grant        GM_info\n` +
