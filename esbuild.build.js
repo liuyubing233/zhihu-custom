@@ -5,7 +5,6 @@ const isDev = process.env.APP_ENV === 'dev';
 
 const options = {
   entryPoints: ['./src/index.ts'],
-  // outfile: 'tampermonkeyIndex.js',
   outdir: 'dist',
   bundle: true, // 是否打包
   format: 'iife', // 打包输出格式设置为 iife，用立即执行函数包裹

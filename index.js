@@ -2500,15 +2500,15 @@
   }
   var needRedirect = () => {
     const { pathname, origin } = location;
-    const PATHNAME_FOR_PHONE_QUESTION = "/tardis/sogou/qus/";
-    const PATHNAME_FOR_PHONE_ART = "/tardis/zm/art/";
-    if (pathname.includes(PATHNAME_FOR_PHONE_QUESTION)) {
-      const questionId = pathname.replace(PATHNAME_FOR_PHONE_QUESTION, "");
+    const phoneQuestion = "/tardis/sogou/qus/";
+    const phoneArt = "/tardis/zm/art/";
+    if (pathname.includes(phoneQuestion)) {
+      const questionId = pathname.replace(phoneQuestion, "");
       location.href = origin + "/question/" + questionId;
       return true;
     }
-    if (pathname.includes(PATHNAME_FOR_PHONE_ART)) {
-      const questionId = pathname.replace(PATHNAME_FOR_PHONE_ART, "");
+    if (pathname.includes(phoneArt)) {
+      const questionId = pathname.replace(phoneArt, "");
       location.href = "https://zhuanlan.zhihu.com/p/" + questionId;
       return true;
     }
@@ -2692,7 +2692,7 @@
       return;
     const T0 = performance.now();
     const { pathname, hostname, host, search } = location;
-    const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, getHistory, setUserinfo } = store;
+    const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo } = store;
     let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement)
@@ -2779,7 +2779,7 @@
           addArticleCreateTimeToTop();
         }
         fnLog(
-          `加载完毕, 加载时长: ${Math.floor((performance.now() - T0) * 1e3) / 1e6}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗，如果快捷键不生效可以在控制台使用 window.openCtz() 唤起`
+          `加载完毕, 加载时长: ${Math.floor((performance.now() - T0) / 10) / 100}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗，如果快捷键不生效可以在控制台使用 window.openCtz() 唤起`
         );
       },
       false
