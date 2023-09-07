@@ -2,10 +2,10 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { fnHiddenDom, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { domA, domC, domP } from '../commons/tools';
-import { BACKGROUND_DARK_COLORS, CLASS_NOT_INTERESTED, FILTER_FOLLOWER_OPERATE, SAVE_HISTORY_NUMBER } from '../configs';
+import { CLASS_NOT_INTERESTED, FILTER_FOLLOWER_OPERATE, SAVE_HISTORY_NUMBER, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
-import { IZhihuCardContent, IZhihuDataZop } from '../types';
-import { myBackground } from './styles';
+import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
+import { isDark } from './background';
 
 /** 监听列表内容 - 过滤  */
 export const myListenListItem = {
@@ -25,7 +25,8 @@ export const myListenListItem = {
       removeFollowFQuestion,
       listOutPutNotInterested,
       highlightOriginal,
-      colorBackground = '',
+      themeDark = EThemeDark.夜间护眼一,
+      themeLight = EThemeLight.默认,
       removeMyOperateAtFollow,
     } = pfConfig;
     const elements = domA('.TopstoryItem');
@@ -109,11 +110,11 @@ export const myListenListItem = {
       const userName = userNameE ? userNameE.innerText : '';
       if (highlightOriginal && dataZop && dataZop.authorName === userName && !message) {
         const highlight = `background: ${
-          myBackground.isUseDark()
-            ? `${BACKGROUND_DARK_COLORS[colorBackground].b2}!important;`
-            : colorBackground === '#ffffff'
+          isDark()
+            ? `${THEME_CONFIG_DARK[themeDark].background2}!important;`
+            : themeLight === EThemeLight.默认
             ? '#fff3d4!important;'
-            : `${colorBackground}!important;`
+            : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`
         }`;
         const nodeActions = nodeItem.querySelector('.ContentItem-actions') as HTMLElement;
         nodeItem.style.cssText = `${highlight}border: 1px solid #aaa;`;

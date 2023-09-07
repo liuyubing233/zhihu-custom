@@ -1,22 +1,34 @@
-import { IBackgroundConfigs, IBackgroundDarkConfigs } from "../types/variable-background.type";
-
 /** 背景色设置 */
-export const BACKGROUND_CONFIG: IBackgroundConfigs = {
-  '#ffffff': { name: '默认', opacity: '', color: '#333' },
-  '#ffe4c4': { name: '护眼红', opacity: '#fff4e7', color: '#333' },
-  '#FAF9DE': { name: '杏仁黄', opacity: '#fdfdf2', color: '#333' },
-  '#cce8cf': { name: '青草绿', opacity: '#e5f1e7', color: '#333' },
-  '#EAEAEF': { name: '极光灰', opacity: '#f3f3f5', color: '#333' },
-  '#E9EBFE': { name: '葛巾紫', opacity: '#f2f3fb', color: '#333' },
-  '#121212': { name: '夜间模式', opacity: '', color: '#ffffff' },
-  '#1f1f1f': { name: '夜间护眼一', opacity: '', color: '#f7f9f9' },
-  '#15202b': { name: '夜间护眼二', opacity: '', color: '#f7f9f9' },
-  '#272822': { name: '夜间护眼三', opacity: '', color: '#f7f9f9' },
+import {
+  ETheme,
+  EThemeDark,
+  EThemeLight,
+  IThemeConfigDark,
+  IThemeConfigLight
+} from '../types/variable-background.type';
+
+export const THEMES = [
+  { label: '浅色', value: ETheme.浅色, background: '#fff', color: '#000' },
+  { label: '深色', value: ETheme.深色, background: '#000', color: '#fff' },
+  { label: '自动', value: ETheme.自动, background: 'linear-gradient(to right, #fff, #000)', color: '#000' },
+];
+
+export const THEME_CONFIG_LIGHT: IThemeConfigLight = {
+  [EThemeLight.默认]: { name: '默认', background: '#ffffff', background2: '' },
+  [EThemeLight.护眼红]: { name: '护眼红', background: '#ffe4c4', background2: '#fff4e7' },
+  [EThemeLight.杏仁黄]: { name: '杏仁黄', background: '#faf9de', background2: '#fdfdf2' },
+  [EThemeLight.青草绿]: { name: '青草绿', background: '#cce8cf', background2: '#e5f1e7' },
+  [EThemeLight.极光灰]: { name: '极光灰', background: '#eaeaef', background2: '#f3f3f5' },
+  [EThemeLight.葛巾紫]: { name: '葛巾紫', background: '#e9ebfe', background2: '#f2f3fb' },
 };
 
-export const BACKGROUND_DARK_COLORS: IBackgroundDarkConfigs = {
-  '#121212': { b2: '#333333', t1: '#fff', t2: '#999' },
-  '#15202b': { b2: '#38444d', t1: '#f7f9f9', t2: '#161d23' },
-  '#1f1f1f': { b2: '#303030', t1: '#f7f9f9', t2: '#161d23' },
-  '#272822': { b2: '#383932', t1: '#f7f9f9', t2: '#161d23' },
+export const THEME_CONFIG_DARK: IThemeConfigDark = {
+  [EThemeDark.夜间模式默认]: { name: '默认', color: '#fff', color2: '#999', background: '#121212', background2: '#333333' },
+  [EThemeDark.夜间护眼一]: { name: '夜间护眼一', color: '#f7f9f9', color2: '#161d23', background: '#15202b', background2: '#38444d' },
+  [EThemeDark.夜间护眼二]: { name: '夜间护眼二', color: '#f7f9f9', color2: '#161d23', background: '#1f1f1f', background2: '#303030' },
+  [EThemeDark.夜间护眼三]: { name: '夜间护眼三', color: '#f7f9f9', color2: '#161d23', background: '#272822', background2: '#383932' },
 };
+
+export const INPUT_NAME_THEME = 'theme';
+export const INPUT_NAME_THEME_DARK = 'themeDark';
+export const INPUT_NAME_ThEME_LIGHT = 'themeLight';

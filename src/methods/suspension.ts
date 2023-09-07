@@ -1,16 +1,16 @@
 import { dom, domC } from '../commons/tools';
-import { BACKGROUND_CONFIG, BACKGROUND_DARK_COLORS } from '../configs';
+import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
-import { IHeaderDoms, IMyElement } from '../types';
+import { EThemeDark, EThemeLight, IHeaderDoms, IMyElement } from '../types';
+import { isDark } from './background';
 import { myLock } from './lock';
 import { myMove } from './move';
-import { myBackground } from './styles';
 import { myVersion } from './version';
 
 /** 漂浮收起按钮的方法 */
 export const suspensionPackUp = (elements: NodeListOf<IMyElement>) => {
   const RIGHT = 60;
-  const { colorBackground = '' } = store.getConfig();
+  const { themeLight = EThemeLight.默认, themeDark = EThemeDark.夜间护眼一 } = store.getConfig();
   for (let i = 0; i < elements.length; i++) {
     const even = elements[i];
     const evenPrev = i > 0 ? elements[i - 1] : null;
@@ -27,11 +27,7 @@ export const suspensionPackUp = (elements: NodeListOf<IMyElement>) => {
         `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
         `height: 40px!important;padding: 0 12px!important;` +
         `background: ${
-          myBackground.isUseDark()
-            ? BACKGROUND_DARK_COLORS[colorBackground].b2
-            : BACKGROUND_CONFIG[colorBackground].opacity
-            ? BACKGROUND_CONFIG[colorBackground].opacity
-            : colorBackground
+          isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][themeLight !== EThemeLight.默认 ? 'background2' : 'background']
         }!important;`
       : '';
   }

@@ -1,5 +1,8 @@
 import { CONFIG_FILTER_DEFAULT, CONFIG_HIDDEN_DEFAULT, CONFIG_SUSPENSION } from '../configs/default';
 import {
+  ETheme,
+  EThemeDark,
+  EThemeLight,
   IContentStorageConfig,
   IFindEvent,
   IFindEventEntries,
@@ -22,7 +25,6 @@ class Store {
     answerOpen: '',
     filterKeywords: [],
     showBlockUser: true,
-    colorBackground: '#ffffff',
     versionHome: '1000',
     versionAnswer: '1000',
     versionArticle: '690',
@@ -48,6 +50,9 @@ class Store {
     zoomListVideoType: '0',
     zoomListVideoSize: '500',
     hotKey: true,
+    theme: ETheme.自动,
+    themeLight: EThemeLight.默认,
+    themeDark: EThemeDark.夜间护眼一,
   };
 
   /** 缓存浏览历史记录 */

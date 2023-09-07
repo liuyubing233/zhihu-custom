@@ -1,5 +1,8 @@
 import { domById, fnInitDomStyle, fnReturnStr } from '../commons/tools';
+import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
+import { EThemeDark, EThemeLight } from '../types';
+import { isDark } from './background';
 
 /** 修改版心的 css */
 export const myVersion = {
@@ -94,13 +97,15 @@ export const myVersion = {
   /** 首页问题列表切换模块悬浮 */
   vSusHomeTab: function () {
     const pfConfig = this.getConfig();
+    const { themeDark = EThemeDark.夜间护眼一, themeLight = EThemeLight.默认 } = pfConfig;
+    const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
     return fnReturnStr(
       `.Topstory-container .TopstoryTabs` +
         `{${pfConfig.suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}` +
         `.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}` +
         `.Topstory-container .TopstoryTabs>a::after` +
         `{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;border:1px solid #999999;color:#999999;background: ${
-          pfConfig.colorBackground || 'transparent'
+          background || 'transparent'
         };}` +
         `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link {margin:0!important}` +
         `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{color:#0066ff!important;border-color:#0066ff!important;}` +
@@ -115,11 +120,13 @@ export const myVersion = {
   /** 顶部三大块悬浮 */
   vSusHeader: function () {
     const pfConfig = this.getConfig();
+    const { themeDark = EThemeDark.夜间护眼一, themeLight = EThemeLight.默认 } = pfConfig;
+    const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
     return (
       `.position-suspensionFind{${pfConfig.suspensionFindPo}}` +
       `.position-suspensionUser{${pfConfig.suspensionUserPo}}` +
       `.position-suspensionSearch{${pfConfig.suspensionSearchPo}}` +
-      `.position-suspensionFind .Tabs-link{border:1px solid #999999;color:#999999;background: ${pfConfig.colorBackground || 'transparent'};}` +
+      `.position-suspensionFind .Tabs-link{border:1px solid #999999;color:#999999;background: ${background || 'transparent'};}` +
       `.position-suspensionFind .Tabs-link.is-active{color:#0066ff!important;border-color:#0066ff!important;}` +
       '.position-suspensionUser .css-1m60na {display: none;}.position-suspensionUser .css-1n0eufo{margin-right: 0;}'
     );

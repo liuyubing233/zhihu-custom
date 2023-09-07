@@ -1,10 +1,11 @@
 import { myStorage } from '../commons/storage';
 import { domById } from '../commons/tools';
+import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
+import { loadBackground, onUseThemeDark } from './background';
 import { myHidden } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO } from './page-title';
-import { myBackground, onUseThemeDark } from './styles';
 import { cacheHeader, changeSuspensionTab } from './suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './time';
 import { myVersion } from './version';
@@ -30,13 +31,17 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'zoomListVideoSize',
   ];
   const { name, value, checked, type } = ev;
+  const changeBackground = () => {
+    myVersion.change();
+    loadBackground();
+    myListenListItem.restart();
+    onUseThemeDark();
+  };
+
   const ob: Record<string, Function> = {
-    colorBackground: () => {
-      myVersion.change();
-      myBackground.init();
-      myListenListItem.restart();
-      onUseThemeDark();
-    },
+    [INPUT_NAME_THEME]: changeBackground,
+    [INPUT_NAME_ThEME_LIGHT]: changeBackground,
+    [INPUT_NAME_THEME_DARK]: changeBackground,
     suspensionHomeTab: () => {
       myVersion.change();
       changeSuspensionTab();
@@ -59,7 +64,6 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       zoomVideos();
     },
   };
-
   await myStorage.configUpdateItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);
   type === 'range' && nodeName && (nodeName.innerText = value);

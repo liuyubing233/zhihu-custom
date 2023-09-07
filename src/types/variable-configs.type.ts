@@ -1,3 +1,5 @@
+import { ETheme, EThemeDark, EThemeLight } from './variable-background.type';
+
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {
   /** 隐藏回答页面右侧内容 */
@@ -253,8 +255,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   filterKeywords?: string[];
   /** 列表用户名后显示「屏蔽用户」按钮 */
   showBlockUser?: boolean;
-  /** 背景色 */
-  colorBackground?: string;
   /** 列表版心宽度 */
   versionHome?: string;
   /** 回答版心宽度 */
@@ -305,4 +305,10 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   zoomListVideoSize?: string;
   /** 唤醒快捷键是否开启 */
   hotKey?: boolean;
+  /** 颜色主题 浅色、深色、自动 */
+  theme?: ETheme;
+  /** 浅色主题选择的样式 */
+  themeLight?: EThemeLight;
+  /** 深色主题选择的样式 */
+  themeDark?: EThemeDark;
 }

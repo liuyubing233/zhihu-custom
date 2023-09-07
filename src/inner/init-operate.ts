@@ -1,6 +1,7 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../configs';
+import { myCustomStyle, onUseThemeDark } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { myDialog } from '../methods/dialog-open-close';
 import { echoHistory } from '../methods/echo-history';
@@ -8,7 +9,6 @@ import { fnChanger } from '../methods/fn-changer';
 import { myMenu } from '../methods/menu';
 import { changeTitle } from '../methods/page-title';
 import { myPreview } from '../methods/preview';
-import { myCustomStyle, onUseThemeDark } from '../methods/styles';
 import { store } from '../store';
 import { IKeyofHistory, IPfConfig } from '../types';
 import { initData } from './init-data';

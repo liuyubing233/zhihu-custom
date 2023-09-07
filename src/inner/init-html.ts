@@ -1,5 +1,6 @@
 import { dom, domById, domC } from '../commons/tools';
-import { BACKGROUND_CONFIG, CLASS_INPUT_CLICK, DEFAULT_FUNCTION, FOOTER_HTML, HIDDEN_DIRECTION, ICO_URL } from '../configs';
+import { DEFAULT_FUNCTION, FOOTER_HTML, HIDDEN_DIRECTION, ICO_URL } from '../configs';
+import { addBackgroundElements } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { myMenu } from '../methods/menu';
 import { store } from '../store';
@@ -20,20 +21,7 @@ export const initHTML = () => {
   const nodeCTZFooter = dom('.ctz-footer');
   nodeCTZFooter && (nodeCTZFooter.innerHTML = FOOTER_HTML);
 
-  // 添加背景色选择
-  const nodeCTZBackground = domById('CTZ_BACKGROUND');
-  nodeCTZBackground &&
-    (nodeCTZBackground.innerHTML = Object.keys(BACKGROUND_CONFIG)
-      .map((key) => {
-        const { name, color } = BACKGROUND_CONFIG[key];
-        return (
-          `<label class="ctz-bg-choose-label">` +
-          `<input class="${CLASS_INPUT_CLICK}" name="colorBackground" type="radio" value="${key}"/>` +
-          `<div style="background: ${key};border: 2px solid ${key};color: ${color}">${name}</div>` +
-          `</label>`
-        );
-      })
-      .join(''));
+  addBackgroundElements();
 
   for (let key in HIDDEN_DIRECTION) {
     const arrHidden = HIDDEN_DIRECTION[key];

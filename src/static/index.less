@@ -248,18 +248,20 @@
 }
 
 // 颜色设置
-#CTZ_BACKGROUND {
+#CTZ_BACKGROUND,
+#CTZ_BACKGROUND_LIGHT,
+#CTZ_BACKGROUND_DARK {
   display: grid;
   grid-template-columns: 30% 30% 30%;
   gap: 8px;
-  label {
+  & > label {
     position: relative;
     input {
       position: absolute;
-      left: 10px;
-      top: 18px;
+      visibility: hidden;
       &:checked + div {
-        border-color: @hover!important;
+        border: 4px solid @hover;
+        margin: 0 !important;
       }
     }
     div {
@@ -267,7 +269,15 @@
       border-radius: 8px;
       line-height: 50px;
       padding-left: 30px;
+      margin: 4px;
     }
+  }
+}
+
+.ctz-set-background {
+  .ctz-commit {
+    line-height: 24px;
+    font-size: 14px;
   }
 }
 
