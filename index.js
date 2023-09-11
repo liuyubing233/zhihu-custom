@@ -21,8 +21,8 @@
 // @run-at       document-start
 // ==/UserScript==
 
-(function(){
-  'use strict';
+"use strict";
+(() => {
   var CONFIG_HIDDEN_DEFAULT = {
     hiddenAnswerRightFooter: true,
     hiddenReadMoreText: true,
@@ -2877,4 +2877,4 @@
       false
     );
   })();
-})()
+})();
