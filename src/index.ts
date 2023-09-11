@@ -19,6 +19,7 @@ import { myDialog } from './methods/dialog-open-close';
 import { echoHistory } from './methods/echo-history';
 import { myFilterWord } from './methods/filter-word';
 import { myFollowRemove } from './methods/follow-remove';
+import { keydownNextImage } from './methods/image';
 import { myListenAnswerItem } from './methods/listen-answer-item';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
@@ -167,6 +168,8 @@ import { INNER_CSS } from './web-resources';
     if (event.key === 'Escape') {
       myDialog.hide();
     }
+
+    keydownNextImage(event)
   });
   unsafeWindow.openCtz = myDialog.open;
 

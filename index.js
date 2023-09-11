@@ -1667,6 +1667,27 @@
       observerGIF.disconnect();
     }
   }
+  var keydownNextImage = (event) => {
+    const { key } = event;
+    const nodeImgDialog = dom(".css-ypb3io");
+    if ((key === "ArrowRight" || key === "ArrowLeft") && nodeImgDialog) {
+      const src = nodeImgDialog.src;
+      const nodeImage = dom(`.origin_image[src="${src}"]`);
+      const nodeContentInner = domP(nodeImage, "class", "RichContent-inner") || domP(nodeImage, "class", "Post-RichTextContainer");
+      if (nodeContentInner) {
+        const nodesImageList = Array.from(nodeContentInner.querySelectorAll(".origin_image"));
+        const index = nodesImageList.findIndex((i) => i.src === src);
+        if (key === "ArrowRight" && index < nodesImageList.length - 1) {
+          nodeImgDialog.src = nodesImageList[index + 1].src;
+          return;
+        }
+        if (key === "ArrowLeft" && index > 0) {
+          nodeImgDialog.src = nodesImageList[index - 1].src;
+          return;
+        }
+      }
+    }
+  };
   var myListenListItem = {
     index: 0,
     init: async function() {
@@ -2840,6 +2861,7 @@
       if (event.key === "Escape") {
         myDialog.hide();
       }
+      keydownNextImage(event);
     });
     unsafeWindow.openCtz = myDialog.open;
     document.addEventListener("copy", function(event) {

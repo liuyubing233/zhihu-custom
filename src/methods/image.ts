@@ -1,4 +1,4 @@
-import { domA } from '../commons/tools';
+import { dom, domA, domP } from '../commons/tools';
 import { store } from '../store';
 import { myPreview } from './preview';
 
@@ -26,3 +26,27 @@ export function previewGIF() {
     observerGIF.disconnect();
   }
 }
+
+/** 键盘点击下一张或上一张图片（仅静态图片） */
+export const keydownNextImage = (event: KeyboardEvent) => {
+  const { key } = event;
+  const nodeImgDialog = dom('.css-ypb3io');
+  if ((key === 'ArrowRight' || key === 'ArrowLeft') && nodeImgDialog) {
+    const src = nodeImgDialog.src;
+    const nodeImage = dom(`.origin_image[src="${src}"]`);
+    const nodeContentInner = domP(nodeImage, 'class', 'RichContent-inner') || domP(nodeImage, 'class', 'Post-RichTextContainer');
+    if (nodeContentInner) {
+      const nodesImageList = Array.from(nodeContentInner.querySelectorAll('.origin_image')) as HTMLImageElement[];
+      const index = nodesImageList.findIndex((i) => i.src === src);
+      if (key === 'ArrowRight' && index < nodesImageList.length - 1) {
+        nodeImgDialog.src = nodesImageList[index + 1].src;
+        return;
+      }
+
+      if (key === 'ArrowLeft' && index > 0) {
+        nodeImgDialog.src = nodesImageList[index - 1].src;
+        return;
+      }
+    }
+  }
+};
