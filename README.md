@@ -1,6 +1,6 @@
 # 知乎修改器
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211361&authkey=%21AB_w6cVdgur_8wc&width=1024" width="1024" height="auto" />
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211362&authkey=%21AFOAxiiaJWQyVGs&width=1024" width="1024" height="auto" />
 
 快捷键 >（Shift + .）唤起修改器弹窗
 
