@@ -55,7 +55,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
+  width: 700px;
   height: 500px;
   border-radius: 4px;
   background: #fff;
@@ -519,6 +519,10 @@
   & > div {
     line-height: 24px;
     margin-bottom: 4px;
+    font-weight: bold;
+    .ctz-commit {
+      font-weight: normal;
+    }
     a {
       color: @hover;
       &:hover {
@@ -724,13 +728,6 @@
   text-align: center;
 }
 
-.ctz-zhihu-key a {
-  color: @hover;
-  &:hover {
-    color: #bbb;
-  }
-}
-
 .ContentItem-title div {
   display: inline;
 }
@@ -750,5 +747,12 @@
   i {
     top: 2px;
     left: 28px;
+  }
+}
+
+.ctz-zhihu-key a {
+  color: @hover!important;
+  &:hover {
+    color: #bbb !important;
   }
 }
