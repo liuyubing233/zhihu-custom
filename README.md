@@ -1,8 +1,8 @@
 # 知乎修改器
 
-<img src="https://bnz06pap004files.storage.live.com/y4mQD2H4SPlPWTspXqKWJkrbStIwZ0373pFiyrwNt4kdccB73D1LcORbOqvLOkLHHYb8uFMJzwie5adae-lVTAYyC8oYtKlXyzK9SVMyFfnZwmY-DQoWIMYInDHzHy58bqwnX5ZoUOq_h0onGHLtTQK5B4r2c-VfFjEFW84Hk8l_OgcUNlgolU4lGOgor6bybeE?width=1024&height=539&cropmode=none" width="1024" />
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211361&authkey=%21AB_w6cVdgur_8wc&width=1024" width="1024" height="auto" />
 
-快捷键 <span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">></span>（<span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">Shift</span>+<span style="border: 1px solid #eee;border-radius: 4px;box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;font-weight: 600;min-width: 26px;height: 26px;padding: 0px 6px;text-align: center;">.</span>）唤起修改器弹窗
+快捷键 >（Shift + .）唤起修改器弹窗
 
 请先确认已安装 <a href="https://www.tampermonkey.net/" target="_blank">tampermonkey</a> 脚本管理器后，再安装本助手
 
@@ -40,6 +40,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 	- [个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注](#个人主页我关注的问题我关注的收藏可以一键移除或将移除的内容添加回关注)
 	- [一键邀请功能](#一键邀请功能)
 	- [复制代码块删除版权信息](#复制代码块删除版权信息)
+	- [静态图片弹窗观看点击键盘左右直接切换到上一张或下一张](#静态图片弹窗观看点击键盘左右直接切换到上一张或下一张)
 - [基础设置](#基础设置)
 	- [基础设置 - 基本设置](#基础设置---基本设置)
 		- [更改网页和标题](#更改网页和标题)
@@ -157,6 +158,10 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 复制代码块内容删除烦人的版权信息
 
 <img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211319&authkey=%21AE_fgVVOOid4wOU&width=1024&height=999999" width="1024" height="auto" />
+
+#### 静态图片弹窗观看点击键盘左右直接切换到上一张或下一张
+
+查看图片点击预览大图时，如果当前回答或者文章中存在多个图片，可以使用键盘方向键左右切换图片显示。
 
 ### 基础设置
 
