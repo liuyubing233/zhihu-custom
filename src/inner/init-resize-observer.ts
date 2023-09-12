@@ -1,4 +1,4 @@
-import { dom, domById, pathnameHasFn, throttle } from '../commons/tools';
+import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/tools';
 import { HTML_HOOTS } from '../configs';
 import { myCollectionExport } from '../methods/collection-export';
 import { previewGIF } from '../methods/image';
@@ -35,7 +35,7 @@ function resizeFun() {
       myListenListItem.init();
     }
     // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
-    heightTopStoryContent < window.innerHeight && window.dispatchEvent(new Event('resize'));
+    heightTopStoryContent < window.innerHeight && windowResize();
     setStorageConfigItem('heightForList', heightTopStoryContent);
   }
 

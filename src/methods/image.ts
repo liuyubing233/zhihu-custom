@@ -1,5 +1,6 @@
 import { dom, domA, domP } from '../commons/tools';
 import { store } from '../store';
+import { IMyElement } from '../types';
 import { myPreview } from './preview';
 
 /** 预览动图回调 */
@@ -33,18 +34,40 @@ export const keydownNextImage = (event: KeyboardEvent) => {
   const nodeImgDialog = dom('.css-ypb3io');
   if ((key === 'ArrowRight' || key === 'ArrowLeft') && nodeImgDialog) {
     const src = nodeImgDialog.src;
-    const nodeImage = dom(`.origin_image[src="${src}"]`);
+    const nodeImage = dom(`img[src="${src}"]`);
+    // const nodeImage = dom(`.origin_image[src="${src}"]`);
     const nodeContentInner = domP(nodeImage, 'class', 'RichContent-inner') || domP(nodeImage, 'class', 'Post-RichTextContainer');
     if (nodeContentInner) {
-      const nodesImageList = Array.from(nodeContentInner.querySelectorAll('.origin_image')) as HTMLImageElement[];
+      const nodesImageList = Array.from(nodeContentInner.querySelectorAll('img')) as HTMLImageElement[];
+      // const nodesImageList = Array.from(nodeContentInner.querySelectorAll('.origin_image')) as HTMLImageElement[];
       const index = nodesImageList.findIndex((i) => i.src === src);
+
+      const dialogChange = (nodeDialog: IMyElement, nodeImage: HTMLImageElement) => {
+        const { width, height, src } = nodeImage;
+        const { innerWidth, innerHeight } = window;
+        /** 网页宽高比 */
+        const aspectRatioWindow = innerWidth / innerHeight;
+        /** 图片宽高比 */
+        const aspectRatioImage = width / height;
+        /** 当前缩放比例，如果图片宽高比 > 网页宽高比，则使用图片宽度为基准计算 */
+        const scale = aspectRatioImage > aspectRatioWindow ? (innerWidth - 200) / width : (innerHeight - 50) / height;
+        const top = document.documentElement.scrollTop;
+        const left = innerWidth / 2 - (width * scale) / 2;
+        nodeDialog.src = src;
+        nodeDialog.style.cssText =
+          nodeDialog.style.cssText +
+          `width: ${width}px;height: ${height}px;top: ${top}px;left: ${left}px;` +
+          `transform: translateX(0) translateY(0) scale(${scale}) translateZ(0px);will-change:unset;` +
+          `transform-origin: 0 0;`;
+      };
+
       if (key === 'ArrowRight' && index < nodesImageList.length - 1) {
-        nodeImgDialog.src = nodesImageList[index + 1].src;
+        dialogChange(nodeImgDialog, nodesImageList[index + 1]);
         return;
       }
 
       if (key === 'ArrowLeft' && index > 0) {
-        nodeImgDialog.src = nodesImageList[index - 1].src;
+        dialogChange(nodeImgDialog, nodesImageList[index - 1]);
         return;
       }
     }

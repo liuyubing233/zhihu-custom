@@ -382,6 +382,9 @@
       pathname.includes(name) && obj[name]();
     }
   };
+  var windowResize = () => {
+    window.dispatchEvent(new Event("resize"));
+  };
   var fnHiddenDom = (lessNum, ev, log) => {
     ev.style.display = "none";
     fnLog(log);
@@ -1673,17 +1676,28 @@
     const nodeImgDialog = dom(".css-ypb3io");
     if ((key === "ArrowRight" || key === "ArrowLeft") && nodeImgDialog) {
       const src = nodeImgDialog.src;
-      const nodeImage = dom(`.origin_image[src="${src}"]`);
+      const nodeImage = dom(`img[src="${src}"]`);
       const nodeContentInner = domP(nodeImage, "class", "RichContent-inner") || domP(nodeImage, "class", "Post-RichTextContainer");
       if (nodeContentInner) {
-        const nodesImageList = Array.from(nodeContentInner.querySelectorAll(".origin_image"));
+        const nodesImageList = Array.from(nodeContentInner.querySelectorAll("img"));
         const index = nodesImageList.findIndex((i) => i.src === src);
+        const dialogChange = (nodeDialog, nodeImage2) => {
+          const { width, height, src: src2 } = nodeImage2;
+          const { innerWidth, innerHeight } = window;
+          const aspectRatioWindow = innerWidth / innerHeight;
+          const aspectRatioImage = width / height;
+          const scale = aspectRatioImage > aspectRatioWindow ? (innerWidth - 200) / width : (innerHeight - 50) / height;
+          const top = document.documentElement.scrollTop;
+          const left = innerWidth / 2 - width * scale / 2;
+          nodeDialog.src = src2;
+          nodeDialog.style.cssText = nodeDialog.style.cssText + `width: ${width}px;height: ${height}px;top: ${top}px;left: ${left}px;transform: translateX(0) translateY(0) scale(${scale}) translateZ(0px);will-change:unset;transform-origin: 0 0;`;
+        };
         if (key === "ArrowRight" && index < nodesImageList.length - 1) {
-          nodeImgDialog.src = nodesImageList[index + 1].src;
+          dialogChange(nodeImgDialog, nodesImageList[index + 1]);
           return;
         }
         if (key === "ArrowLeft" && index > 0) {
-          nodeImgDialog.src = nodesImageList[index - 1].src;
+          dialogChange(nodeImgDialog, nodesImageList[index - 1]);
           return;
         }
       }
@@ -2538,7 +2552,7 @@
       } else {
         myListenListItem.init();
       }
-      heightTopStoryContent < window.innerHeight && window.dispatchEvent(new Event("resize"));
+      heightTopStoryContent < window.innerHeight && windowResize();
       setStorageConfigItem("heightForList", heightTopStoryContent);
     }
     initLinkChanger();
