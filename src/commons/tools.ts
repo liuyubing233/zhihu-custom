@@ -21,16 +21,9 @@ export const domC = (name: string, attrObjs: Record<string, any>) => {
 /** 查找父级元素 */
 export const domP = (node: any, attrName: string, attrValue: string): IMyElement | undefined => {
   const nodeP = node.parentElement as IMyElement;
-  if (!nodeP) {
-    return undefined;
-  }
-
-  if (!attrName || !attrValue) {
-    return nodeP;
-  }
-  if (nodeP === document.body) {
-    return undefined;
-  }
+  if (!nodeP) return undefined;
+  if (!attrName || !attrValue) return nodeP;
+  if (nodeP === document.body) return undefined;
   const attrValueList = (nodeP.getAttribute(attrName) || '').split(' ');
   return attrValueList.includes(attrValue) ? nodeP : domP(nodeP, attrName, attrValue);
 };

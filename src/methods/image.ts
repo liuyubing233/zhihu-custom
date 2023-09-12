@@ -36,7 +36,8 @@ export const keydownNextImage = (event: KeyboardEvent) => {
     const src = nodeImgDialog.src;
     const nodeImage = dom(`img[src="${src}"]`);
     // const nodeImage = dom(`.origin_image[src="${src}"]`);
-    const nodeContentInner = domP(nodeImage, 'class', 'RichContent-inner') || domP(nodeImage, 'class', 'Post-RichTextContainer');
+    const nodeContentInner =
+      domP(nodeImage, 'class', 'RichContent-inner') || domP(nodeImage, 'class', 'Post-RichTextContainer') || domP(nodeImage, 'class', 'QuestionRichText');
     if (nodeContentInner) {
       const nodesImageList = Array.from(nodeContentInner.querySelectorAll('img')) as HTMLImageElement[];
       // const nodesImageList = Array.from(nodeContentInner.querySelectorAll('.origin_image')) as HTMLImageElement[];
