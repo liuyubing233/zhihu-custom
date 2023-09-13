@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      4.2.1
+// @version      4.2.2
 // @description  页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，回答视频下载，回答内容按照点赞数和评论数排序，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及夜间模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -410,65 +410,6 @@
       }
     }
   };
-  var myStorage = {
-    set: async function(name, value) {
-      const valueParse = JSON.parse(value);
-      valueParse.t = +/* @__PURE__ */ new Date();
-      const v = JSON.stringify(valueParse);
-      localStorage.setItem(name, v);
-      await GM.setValue(name, v);
-    },
-    get: async function(name) {
-      const config = await GM.getValue(name);
-      const configLocal = localStorage.getItem(name);
-      const cParse = config ? JSON.parse(config) : null;
-      const cLParse = configLocal ? JSON.parse(configLocal) : null;
-      if (!cParse && !cLParse)
-        return "";
-      if (!cParse)
-        return configLocal;
-      if (!cLParse)
-        return config;
-      if (cParse.t < cLParse.t)
-        return configLocal;
-      return config;
-    },
-    initConfig: async function() {
-      const prevConfig = store.getConfig();
-      const nConfig = await this.get("pfConfig");
-      const c = nConfig ? JSON.parse(nConfig) : {};
-      return Promise.resolve({ ...prevConfig, ...c });
-    },
-    initHistory: async function() {
-      const prevHistory = store.getHistory();
-      const nHistory = await myStorage.get("pfHistory");
-      const h = nHistory ? JSON.parse(nHistory) : prevHistory;
-      return Promise.resolve(h);
-    },
-    configUpdateItem: (
-      /** 修改配置中的值 */
-      async function(key, value) {
-        const { getConfig, setConfig } = store;
-        const prevConfig = getConfig();
-        if (typeof key === "string") {
-          prevConfig[key] = value;
-        } else {
-          for (let itemKey in key) {
-            prevConfig[itemKey] = key[itemKey];
-          }
-        }
-        setConfig(prevConfig);
-        await myStorage.set("pfConfig", JSON.stringify(prevConfig));
-      }
-    ),
-    configUpdate: (
-      /** 更新配置 */
-      async function(params) {
-        store.setConfig(params);
-        await myStorage.set("pfConfig", JSON.stringify(params));
-      }
-    )
-  };
   var THEMES = [
     { label: "浅色", value: "0" /* 浅色 */, background: "#fff", color: "#000" },
     { label: "深色", value: "1" /* 深色 */, background: "#000", color: "#fff" },
@@ -669,6 +610,68 @@
     weibo: "https://weibo.com/favicon.ico",
     qzone: "https://qzonestyle.gtimg.cn/aoi/img/logo/favicon.ico?max_age=31536000",
     baidu: "https://www.baidu.com/favicon.ico"
+  };
+  var myStorage = {
+    set: async function(name, value) {
+      const valueParse = JSON.parse(value);
+      valueParse.t = +/* @__PURE__ */ new Date();
+      const v = JSON.stringify(valueParse);
+      localStorage.setItem(name, v);
+      await GM.setValue(name, v);
+    },
+    get: async function(name) {
+      const config = await GM.getValue(name);
+      const configLocal = localStorage.getItem(name);
+      const cParse = config ? JSON.parse(config) : null;
+      const cLParse = configLocal ? JSON.parse(configLocal) : null;
+      if (!cParse && !cLParse)
+        return "";
+      if (!cParse)
+        return configLocal;
+      if (!cLParse)
+        return config;
+      if (cParse.t < cLParse.t)
+        return configLocal;
+      return config;
+    },
+    initConfig: async function() {
+      const prevConfig = store.getConfig();
+      const nConfig = await this.get("pfConfig");
+      const c = nConfig ? JSON.parse(nConfig) : {};
+      return Promise.resolve({ ...prevConfig, ...c });
+    },
+    initHistory: async function() {
+      const prevHistory = store.getHistory();
+      const nHistory = await myStorage.get("pfHistory");
+      const h = nHistory ? JSON.parse(nHistory) : prevHistory;
+      return Promise.resolve(h);
+    },
+    /** 修改配置中的值 */
+    configUpdateItem: async function(key, value) {
+      const { getConfig, setConfig } = store;
+      const prevConfig = getConfig();
+      if (typeof key === "string") {
+        prevConfig[key] = value;
+      } else {
+        for (let itemKey in key) {
+          prevConfig[itemKey] = key[itemKey];
+        }
+      }
+      setConfig(prevConfig);
+      await this.set("pfConfig", JSON.stringify(prevConfig));
+    },
+    /** 更新配置 */
+    configUpdate: async function(params) {
+      store.setConfig(params);
+      await this.set("pfConfig", JSON.stringify(params));
+    },
+    historyUpdate: async function(key, params) {
+      const { getHistory, setHistory } = store;
+      const pfHistory = getHistory();
+      pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
+      setHistory(pfHistory);
+      await this.set("pfHistory", JSON.stringify(pfHistory));
+    }
   };
   var echoData = () => {
     const pfConfig = store.getConfig();
@@ -1193,7 +1196,7 @@
   };
   var initHistoryView = async () => {
     const { href, origin, pathname } = location;
-    const { getHistory, setHistory } = store;
+    const { getHistory } = store;
     const question = "www.zhihu.com/question/";
     const article = "zhuanlan.zhihu.com/p/";
     const video = "www.zhihu.com/zvideo/";
@@ -1207,11 +1210,9 @@
       const nA = `<a href="${origin + pathname}" target="_blank">${name}</a>`;
       const browseHistory = getHistory();
       const { view } = browseHistory;
-      if (nA !== view[0]) {
+      if (!view.includes(nA)) {
         view.unshift(nA);
-        browseHistory.view = view.slice(0, SAVE_HISTORY_NUMBER);
-        setHistory(browseHistory);
-        myStorage.set("pfHistory", JSON.stringify(browseHistory));
+        myStorage.historyUpdate("view", view);
       }
     }, 100);
   };
@@ -1703,7 +1704,7 @@
   var myListenListItem = {
     index: 0,
     init: async function() {
-      const { getConfig, getHistory, setHistory, getUserinfo } = store;
+      const { getConfig, getHistory, getUserinfo } = store;
       const pfConfig = getConfig();
       const {
         filterKeywords = [],
@@ -1808,9 +1809,8 @@
             const itemHref = nodeATitle.href;
             const itemTitle = nodeATitle.innerText;
             const itemA = `<a href="${itemHref}" target="_blank">${itemTitle}</a>`;
-            if (historyList[0] !== itemA) {
+            if (!historyList.includes(itemA)) {
               historyList.unshift(itemA);
-              pfHistory.list = historyList.slice(0, SAVE_HISTORY_NUMBER);
             }
           }
         }
@@ -1818,8 +1818,7 @@
         if (i + 1 === len) {
           const nI = i - lessNum >= 0 ? i - lessNum : 0;
           this.index = nI;
-          setHistory(pfHistory);
-          myStorage.set("pfHistory", JSON.stringify(pfHistory));
+          myStorage.historyUpdate("list", historyList);
         }
       }
     },
