@@ -3,7 +3,7 @@ import { myStorage } from "../commons/storage";
 import { domById } from "../commons/tools";
 import { ID_DIALOG } from "../configs";
 import { echoData } from "./echo-data";
-import { echoHistory } from "./echo-history";
+import { echoHistory } from "./history";
 
 /** 编辑器弹窗打开关闭方法 */
 export const myDialog = {

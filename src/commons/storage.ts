@@ -1,3 +1,4 @@
+import { SAVE_HISTORY_NUMBER } from '../configs';
 import { store } from '../store';
 import { IPfConfig } from '../types';
 
@@ -33,7 +34,8 @@ export const myStorage = {
     const h = nHistory ? JSON.parse(nHistory) : prevHistory;
     return Promise.resolve(h);
   },
-  configUpdateItem: /** 修改配置中的值 */ async function (key: string | Record<string, any>, value?: any) {
+  /** 修改配置中的值 */
+  configUpdateItem: async function (key: string | Record<string, any>, value?: any) {
     const { getConfig, setConfig } = store;
     const prevConfig = getConfig();
     if (typeof key === 'string') {
@@ -44,10 +46,18 @@ export const myStorage = {
       }
     }
     setConfig(prevConfig);
-    await myStorage.set('pfConfig', JSON.stringify(prevConfig));
+    await this.set('pfConfig', JSON.stringify(prevConfig));
   },
-  configUpdate: /** 更新配置 */ async function (params: IPfConfig) {
+  /** 更新配置 */
+  configUpdate: async function (params: IPfConfig) {
     store.setConfig(params);
-    await myStorage.set('pfConfig', JSON.stringify(params));
+    await this.set('pfConfig', JSON.stringify(params));
+  },
+  historyUpdate: async function (key: 'list' | 'view', params: string[]) {
+    const { getHistory, setHistory } = store;
+    const pfHistory = getHistory();
+    pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
+    setHistory(pfHistory);
+    await this.set('pfHistory', JSON.stringify(pfHistory));
   },
 };

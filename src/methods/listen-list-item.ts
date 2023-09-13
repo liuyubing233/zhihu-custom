@@ -2,7 +2,7 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { fnHiddenDom, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { domA, domC, domP } from '../commons/tools';
-import { CLASS_NOT_INTERESTED, FILTER_FOLLOWER_OPERATE, SAVE_HISTORY_NUMBER, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
+import { CLASS_NOT_INTERESTED, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { isDark } from './background';
@@ -11,7 +11,7 @@ import { isDark } from './background';
 export const myListenListItem = {
   index: 0,
   init: async function () {
-    const { getConfig, getHistory, setHistory, getUserinfo } = store;
+    const { getConfig, getHistory, getUserinfo } = store;
     const pfConfig = getConfig();
     const {
       filterKeywords = [],
@@ -129,9 +129,8 @@ export const myListenListItem = {
           const itemHref = nodeATitle.href;
           const itemTitle = nodeATitle.innerText;
           const itemA = `<a href="${itemHref}" target="_blank">${itemTitle}</a>`;
-          if (historyList[0] !== itemA) {
+          if (!historyList.includes(itemA)) {
             historyList.unshift(itemA);
-            pfHistory.list = historyList.slice(0, SAVE_HISTORY_NUMBER);
           }
         }
       }
@@ -139,8 +138,7 @@ export const myListenListItem = {
       if (i + 1 === len) {
         const nI = i - lessNum >= 0 ? i - lessNum : 0;
         this.index = nI;
-        setHistory(pfHistory);
-        myStorage.set('pfHistory', JSON.stringify(pfHistory));
+        myStorage.historyUpdate('list', historyList);
       }
     }
   },
