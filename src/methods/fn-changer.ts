@@ -37,11 +37,11 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     myListenListItem.restart();
     onUseThemeDark();
   };
-
   const ob: Record<string, Function> = {
     [INPUT_NAME_THEME]: changeBackground,
     [INPUT_NAME_ThEME_LIGHT]: changeBackground,
     [INPUT_NAME_THEME_DARK]: changeBackground,
+    colorText1: changeBackground,
     suspensionHomeTab: () => {
       myVersion.change();
       changeSuspensionTab();

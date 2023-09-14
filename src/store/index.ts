@@ -53,6 +53,7 @@ class Store {
     theme: ETheme.自动,
     themeLight: EThemeLight.默认,
     themeDark: EThemeDark.夜间护眼一,
+    colorText1: '',
   };
 
   /** 缓存浏览历史记录 */

@@ -20,9 +20,12 @@ const myBackground = {
     fnInitDomStyle('CTZ_STYLE_BACKGROUND', innerHTML);
   },
   change: function (themeDark: EThemeDark, themeLight: EThemeLight) {
-    if (this.isUseDark()) return this.dark(themeDark);
-    if (themeLight === EThemeLight.默认) return this.default();
-    return this.light(themeLight);
+    const getBackground = () => {
+      if (this.isUseDark()) return this.dark(themeDark);
+      if (themeLight === EThemeLight.默认) return this.default();
+      return this.light(themeLight);
+    };
+    return getBackground() + this.text();
   },
   isUseDark: () => {
     const { theme = ETheme.自动 } = store.getConfig();
@@ -61,7 +64,7 @@ const myBackground = {
     const cssBgTransparent =
       `._AccountSettings_accountLine_3HJS,.css-1gfpqrv,.css-13dk2dh,.css-u6lvao,.css-u6lvao:before,.css-u6lvao:after,.Community-ContentLayout` +
       `{background: transparent!important;}`;
-    const cssC =
+    const cssColor1 =
       `.ctz-footer,.css-k49mnn,.css-qj3urb,.css-1bdtll5,.css-x9rxz4,.css-1iubajs,.css-186oz3i` +
       `,.css-7v0haq,.css-1yj4z27,.css-1204lgo,.css-1ng3oge,.css-5abu0r,.css-p52k8h,.css-1dpmqsl,.css-1myqwel` +
       `,.css-1ykn8va,.css-1117lk0,.css-m9gn5f,.css-oqge09,.css-8u7moq,.css-k0fmhp,css-bc6idi,.css-nsw6sf,.css-25wprl` +
@@ -94,9 +97,9 @@ const myBackground = {
       `.TopNavBar-fixMode-qXKMs,.index-tabWrap-4Smyx,.index-bannerItem-3o3D7,.LearningRouteCard-pathContent-j3jVv{background: ${background}!important;}` +
       `.LearningRouteCard-pathItem-xin1f .LearningRouteCard-content-kw2RW .LearningRouteCard-title-do7ND{color: ${color}!important;}`;
 
-    return addPrefix(cssBg + cssBg2 + cssBgTransparent + cssC + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning);
+    return addPrefix(cssBg + cssBg2 + cssColor1 + cssBgTransparent + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning);
   },
-  light: /** 浅色背景色 */ (lightKey: EThemeLight) => {
+  light: (lightKey: EThemeLight) => {
     const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
     const cssBg =
       `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
@@ -106,7 +109,6 @@ const myBackground = {
       `,.zhuanlan .ContentItem-actions,.LinkCard.new,.WebPage-root-g7WXc,.KfeCollection-FeedBlockSetting` +
       `,.ShelfTopNav-root-eb3BX,.signQr-container,.css-16h0l39` +
       `{background-color: ${background}!important;}`;
-
     const cssBg2 =
       `#${ID_DIALOG},.ctz-set-title>span,#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
       `,.QuestionHeader,.Card,.HotItem,.Recommendations-Main,.GlobalSideBar-navList,.SearchSubTabs,.CommentsV2-withPagination` +
@@ -129,11 +131,8 @@ const myBackground = {
       `,.css-a9sbyu,.CreatorIndex-BottomBox-Item,.css-1r9j229,.css-wgpue5,.css-1hwwfws,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g` +
       `,.css-c29erj,.Modal-content,.Sticky,.css-2i2hyg,.css-1sz5gzk,.css-vvikez` +
       `{background-color:${background2}!important;background:${background2}!important;}`;
-
     const cssBgTransparent = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn{background-color: transparent!important;}`;
-
     const borderColor = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
-
     // Header 变化
     const nodeAppHeader = dom('.AppHeader');
     const nodeTopStoryC = dom('.Topstory>div:not(.Topstory-container)');
@@ -144,6 +143,12 @@ const myBackground = {
       headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : '.AppHeader'
     }{background-color:${background2}!important;background:${background2}!important;}`;
     return cssBg + cssBg2 + cssBgTransparent + borderColor + cssHeader;
+  },
+  /** 设置字体颜色 */
+  text: function () {
+    const { colorText1 } = store.getConfig();
+    const styleColorText1 = `.ContentItem-title, body` + `{color: ${colorText1}!important;}`;
+    return styleColorText1;
   },
 };
 

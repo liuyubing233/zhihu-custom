@@ -311,4 +311,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   themeLight?: EThemeLight;
   /** 深色主题选择的样式 */
   themeDark?: EThemeDark;
+  /** 字体颜色 */
+  colorText1?: '';
 }
