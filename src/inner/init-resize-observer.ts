@@ -1,6 +1,6 @@
 import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/tools';
 import { HTML_HOOTS } from '../configs';
-import { myCollectionExport } from '../methods/collection-export';
+import { myCollectionExport } from '../methods/collection-export-PDF';
 import { previewGIF } from '../methods/image';
 import { myListenAnswerItem } from '../methods/listen-answer-item';
 import { myListenListItem } from '../methods/listen-list-item';

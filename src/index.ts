@@ -13,7 +13,7 @@ import { initResizeObserver } from './inner/init-resize-observer';
 import { onInitStyleExtra } from './inner/init-style-extra';
 import { needRedirect } from './inner/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
-import { myCollectionExport } from './methods/collection-export';
+import { myCollectionExport } from './methods/collection-export-PDF';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
 import { myFilterWord } from './methods/filter-word';
