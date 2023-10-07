@@ -1,5 +1,6 @@
-import { dom, domC } from '../commons/tools';
+import { dom, domC, promisePercent } from '../commons/tools';
 import { store } from '../store';
+import { IPromisePercentCallbackParams } from '../types';
 import { INNER_CSS } from '../web-resources';
 
 /** 收藏夹打印 */
@@ -77,7 +78,12 @@ export const myCollectionExport = {
                 );
               });
 
-              Promise.all(imgLoadPromises).then(() => {
+              const callbackLoadImg = (params: IPromisePercentCallbackParams) => {
+                const { numberFinished, numberTotal, percent } = params;
+                me.innerText = `资源加载进度 ${percent}，已完成/总数：${numberFinished}/${numberTotal}...`;
+              };
+
+              promisePercent(imgLoadPromises, callbackLoadImg).then(() => {
                 // 图片加载完成后调用打印方法
                 me.innerText = '生成PDF';
                 me.disabled = false;

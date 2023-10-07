@@ -353,6 +353,20 @@
   var windowResize = () => {
     window.dispatchEvent(new Event("resize"));
   };
+  var promisePercent = (requests = [], callback) => {
+    let index = 0;
+    requests.forEach((item) => {
+      item.then(() => {
+        index++;
+        callback({
+          numberFinished: index,
+          numberTotal: requests.length,
+          percent: Math.floor(index / requests.length * 100) + "%"
+        });
+      });
+    });
+    return Promise.all(requests);
+  };
   var doFetchNotInterested = ({ id, type }) => {
     const nHeader = store.getStorageConfigItem("fetchHeaders");
     delete nHeader["vod-authorization"];
@@ -2261,7 +2275,11 @@
                 })
               );
             });
-            Promise.all(imgLoadPromises).then(() => {
+            const callbackLoadImg = (params) => {
+              const { numberFinished, numberTotal, percent } = params;
+              me.innerText = `资源加载进度 ${percent}，已完成/总数：${numberFinished}/${numberTotal}...`;
+            };
+            promisePercent(imgLoadPromises, callbackLoadImg).then(() => {
               me.innerText = "生成PDF";
               me.disabled = false;
               iframe.contentWindow && iframe.contentWindow.print();

@@ -1,4 +1,4 @@
-import { IMyElement } from '../types';
+import { IMyElement, IPromisePercentCallbackParams } from '../types';
 
 /** 获取元素 */
 export const dom = (n: string): IMyElement | undefined => document.querySelector(n) as IMyElement;
@@ -72,4 +72,20 @@ export const pathnameHasFn = (obj: Record<string, Function>) => {
 /** 手动触发页面尺寸变更方法 */
 export const windowResize = () => {
   window.dispatchEvent(new Event('resize'));
+};
+
+/** Promise.all 百分比进度 */
+export const promisePercent = (requests: any[] = [], callback: (pro: IPromisePercentCallbackParams) => void): Promise<any[]> => {
+  let index = 0;
+  requests.forEach((item) => {
+    item.then(() => {
+      index++;
+      callback({
+        numberFinished: index,
+        numberTotal: requests.length,
+        percent: Math.floor((index / requests.length) * 100) + '%'
+      });
+    });
+  });
+  return Promise.all(requests);
 };
