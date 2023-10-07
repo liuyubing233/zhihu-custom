@@ -1,5 +1,6 @@
-import { store } from "../store";
-import { IZhihuUserinfo } from "../types";
+import { store } from '../store';
+import { IZhihuUserinfo } from '../types';
+import { fnLog } from './tools';
 
 /** 调用「不感兴趣」接口 */
 export const doFetchNotInterested = ({ id, type }: { id: string; type: string }) => {
@@ -8,8 +9,13 @@ export const doFetchNotInterested = ({ id, type }: { id: string; type: string })
   delete nHeader['content-encoding'];
   delete nHeader['Content-Type'];
   delete nHeader['content-type'];
+  const idToNum = +id;
+  if (String(idToNum) === 'NaN') {
+    fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
+    return;
+  }
   fetch('/api/v3/feed/topstory/uninterestv2', {
-    body: `item_brief=${encodeURIComponent(JSON.stringify({ source: 'TS', type: type, id: id }))}`,
+    body: `item_brief=${encodeURIComponent(JSON.stringify({ source: 'TS', type: type, id: idToNum }))}`,
     method: 'POST',
     headers: new Headers({
       ...nHeader,
