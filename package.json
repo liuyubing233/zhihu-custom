@@ -6,7 +6,11 @@
   "main": "index.js",
   "scripts": {
     "start": "APP_ENV=dev node ./esbuild.build.js",
-    "build": "APP_ENV=prod node ./esbuild.build.js"
+    "build": "APP_ENV=prod node ./esbuild.build.js",
+    "tag:fix": "yarn tagAuto fix",
+    "tag:feature": "yarn tagAuto feature",
+    "tag:release": "yarn tagAuto release",
+    "tagAuto": "node ./auto-tag.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +31,7 @@
   "devDependencies": {
     "@types/node": "^20.5.9",
     "esbuild": "^0.19.2",
+    "shelljs": "^0.8.5",
     "typescript": "^5.2.2"
   }
 }
