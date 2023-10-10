@@ -1,8 +1,11 @@
 @text: rgba(0, 0, 0, 0.85);
 @text65: rgba(0, 0, 0, 0.65);
 @text45: rgba(0, 0, 0, 0.45);
-@hover: #056de8;
-@border: 1px solid #bbb;
+@hover: #1677ff;
+@border: 1px solid #b0b0b0;
+
+@primary: #1677ff;
+@primary-hover: #e6f4ff;
 
 @font-face {
   font-family: 'tp-icon';
@@ -14,7 +17,7 @@
 .hover-style {
   cursor: pointer;
   &:hover {
-    color: @hover!important;
+    color: @primary!important;
   }
 }
 
@@ -55,37 +58,70 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 700px;
-  height: 500px;
-  border-radius: 4px;
+  width: 800px;
+  height: 600px;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
   background: #fff;
   z-index: 201;
   flex-direction: column;
   font-size: 14px;
-  box-shadow: 5px 5px 10px #ababab, -5px -5px 10px #ffffff;
-  border: 1px solid #ccc;
-
+  padding: 16px;
+  transition: all 0.2s;
   input[type='text'],
   input[type='number'] {
-    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px 11px;
+    font-size: 14px;
+    line-height: 1.5;
+    list-style: none;
+    position: relative;
+    display: inline-block;
+    min-width: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-radius: 6px;
+    transition: all 0.2s;
   }
+
+  textarea {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px 11px;
+    font-size: 14px;
+    line-height: 1.5;
+    list-style: none;
+    position: relative;
+    display: inline-block;
+    min-width: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
   label {
     cursor: pointer;
+    transition: all 0.2s;
     &:hover {
       color: @hover!important;
     }
   }
   a {
+    transition: all 0.2s;
     text-decoration: none;
     color: inherit;
   }
 }
 
 .ctz-header {
-  height: 28px;
-  line-height: 28px;
-  padding: 0 8px;
-  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
 }
 
 .ctz-version {
@@ -95,22 +131,45 @@
 
 #CTZ_CLOSE_DIALOG {
   float: right;
-  .hover-style();
+  padding: 0;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  background: transparent;
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  outline: 0;
+  transition: all 0.2s;
+  i {
+    font-size: 14px;
+  }
+  &:hover {
+    color: rgba(0, 0, 0, 0.88);
+    background-color: rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+  }
 }
 
 .ctz-menu-top {
-  height: 28px;
+  height: 46px;
   border-bottom: @border;
   display: flex;
   a {
     flex: 1;
-    line-height: 28px;
+    line-height: 46px;
     text-align: center;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: all 0.2s;
     &:hover {
-      border-bottom: 4px solid #bbb;
+      color: #1677ff !important;
+      border-bottom-color: #1677ff !important;
     }
     &.target {
-      border-bottom: 4px solid #121212;
+      border-bottom-color: #121212;
     }
   }
 }
@@ -143,16 +202,20 @@
 }
 
 .ctz-content-left {
-  width: 100px;
+  width: 130px;
   border-right: @border;
   a {
-    padding: 0 8px;
-    height: 32px;
-    line-height: 32px;
+    transition: all 0.2s;
+    margin: 2px 0;
+    padding-left: 16px;
+    height: 40px;
+    line-height: 40px;
     display: flex;
     font-size: 14px;
+    border-radius: 8px;
     &:hover {
-      background: #ededed;
+      background: #e6f4ff;
+      color: #1677ff !important;
     }
   }
 }
@@ -183,12 +246,10 @@
 }
 
 .ctz-footer {
-  height: 28px;
-  line-height: 28px;
-  padding: 0 16px;
   border-top: @border;
-  font-size: 14px;
-  color: @text65;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
   a {
     margin-right: 16px;
     .hover-style();
@@ -209,10 +270,17 @@
 .ctz-desc {
   padding-left: 4px;
 }
-.ctz-commit-top {
+
+.ctz-alert-red {
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   color: red;
+  height: 36px;
+  line-height: 36px;
+  background-color: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 8px;
+  margin: 4px 0;
 }
 
 .ctz-label {
@@ -232,7 +300,7 @@
   overflow: hidden;
   position: relative;
   &::before {
-    content: '----------------------------------------------------------------------';
+    content: '-------------------------------------------------------------------------------------------';
     font-weight: normal;
   }
   & > span {
@@ -284,18 +352,15 @@
 // 配置操作
 #CTZ_BASIS_CONFIG {
   .ctz-config-buttons {
-    width: 80%;
-    margin-bottom: 8px;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    gap: 8px;
+    padding: 8px 0;
+    button {
+      margin-right: 8px;
+    }
   }
   .ctz-content {
-    width: 80%;
     textarea {
-      flex: 1;
       margin-right: 8px;
-      border-radius: 4px;
+      flex: 1;
     }
   }
 }
@@ -312,10 +377,10 @@
   flex-wrap: wrap;
   cursor: default;
   & > span {
-    padding: 2px 4px;
-    border-radius: 2px;
+    padding: 2px 8px;
+    border-radius: 4px;
     font-size: 12px;
-    background-color: #999;
+    background-color: #909090;
     margin: 4px 4px 0 0;
     color: #fff;
     display: flex;
@@ -343,14 +408,29 @@
 
 // 按钮样式
 .ctz-button {
-  padding: 4px 8px;
-  font-size: 14px;
-  border-radius: 2px;
-  background: #ddd;
-  border: @border;
+  outline: none;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
   text-align: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  user-select: none;
+  touch-action: manipulation;
+  line-height: 1.5;
+  font-size: 14px;
+  height: 32px;
+  padding: 4px 15px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  border-color: #d9d9d9;
+  color: rgba(0, 0, 0, 0.88);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
   &:hover {
-    background: #eee;
+    color: #4096ff;
+    border-color: #4096ff;
   }
 }
 
@@ -401,12 +481,12 @@
   height: 30px;
   line-height: 30px;
   box-sizing: content-box;
-  padding: 4px;
+  padding: 4px 8px;
   margin: 0 8px 8px 0;
   display: flex;
   align-items: center;
   background: #fff;
-  border-radius: 4px;
+  border-radius: 8px;
   border: @border;
   img {
     width: 30px;
@@ -417,6 +497,16 @@
   a {
     &:hover {
       color: @hover;
+      transition: all 0.2s;
+    }
+  }
+  .ctz-remove-block {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    &:hover {
+      background: #d9d9d9;
+      border-radius: 8px;
     }
   }
 }
@@ -490,6 +580,7 @@
   border-radius: 4px;
   font-size: 12px;
   color: #ffffff;
+  margin: 0 2px;
   &-Answer {
     background: #ec7259;
   }
@@ -718,7 +809,7 @@
 }
 
 .key-shadow {
-  border: 1px solid #eee;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 6%) 0px 1px 1px 0px;
   font-weight: 600;
@@ -740,13 +831,15 @@
   }
 }
 
+[name="button_history_clear"],
+[name="button_history_clear"],
 #CTZ-BUTTON-SYNC-BLOCK {
-  height: 30px;
-  width: 88px;
-  position: relative;
+  min-width: 88px;
+  margin-bottom: 8px;
   i {
-    top: 2px;
+    top: 0px;
     left: 28px;
+    color: #909090;
   }
 }
 

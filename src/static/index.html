@@ -2,7 +2,7 @@
   <div class="ctz-header">
     <span>修改器</span>
     <span class="ctz-version"></span>
-    <i id="CTZ_CLOSE_DIALOG" class="ctz-icon">&#xe602;</i>
+    <button id="CTZ_CLOSE_DIALOG"><i class="ctz-icon">&#xe61b;</i></button>
   </div>
   <div class="ctz-menu-top">
     <a href="#CTZ_BASIS">基础设置</a>
@@ -24,7 +24,7 @@
         <a href="#CTZ_BASIS_CONFIG">配置操作</a>
       </div>
       <div class="ctz-content-right">
-        <div class="ctz-commit-top">当前设置为通用设置，设置完成后在所有页面生效</div>
+        <div class="ctz-alert-red">当前设置为通用设置，设置完成后在所有页面生效</div>
         <div id="CTZ_BASIS_DEFAULT">
           <div class="ctz-set-title"><span>基本设置</span></div>
           <div class="ctz-set-content">
@@ -182,7 +182,7 @@
         <a href="#CTZ_LIST_HIDDEN">隐藏模块</a>
       </div>
       <div class="ctz-content-right">
-        <div class="ctz-commit-top">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div>
+        <div class="ctz-alert-red">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div>
         <div id="CTZ_LIST_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
@@ -295,14 +295,14 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
-                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 50px" />
+                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />
                 的内容
               </div>
             </div>
 
             <div class="ctz-filter-word">
               <div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div>
-              <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
+              <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" style="margin: 4px 0;width: 100%;" />
               <div id="CTZ_FILTER_WORDS"></div>
             </div>
           </div>
@@ -326,7 +326,7 @@
         <a href="#CTZ_ANSWER_OPEN">回答展开收起</a>
       </div>
       <div class="ctz-content-right">
-        <div class="ctz-commit-top">当前设置完成后问答内容页面生效</div>
+        <div class="ctz-alert-red">当前设置完成后问答内容页面生效</div>
         <div id="CTZ_ANSWER_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
@@ -409,7 +409,7 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后问题详情页将屏蔽点赞量少于
-                <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 50px" />
+                <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />
                 的回答
               </div>
             </div>
@@ -441,7 +441,7 @@
         <a href="#CTZ_ARTICLE_HIDDEN">隐藏模块</a>
       </div>
       <div class="ctz-content-right">
-        <div class="ctz-commit-top">当前设置完成后在专栏文章页面生效</div>
+        <div class="ctz-alert-red">当前设置完成后在专栏文章页面生效</div>
         <div id="CTZ_ARTICLE_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">

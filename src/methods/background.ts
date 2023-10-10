@@ -66,7 +66,7 @@ const myBackground = {
       `._AccountSettings_accountLine_3HJS,.css-1gfpqrv,.css-13dk2dh,.css-u6lvao,.css-u6lvao:before,.css-u6lvao:after,.Community-ContentLayout` +
       `{background: transparent!important;}`;
     const cssColor1 =
-      `.ctz-block-box>button,.ctz-footer` +
+      `.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG` +
       `,.css-k49mnn,.css-qj3urb,.css-1bdtll5,.css-x9rxz4,.css-1iubajs,.css-186oz3i` +
       `,.css-7v0haq,.css-1yj4z27,.css-1204lgo,.css-1ng3oge,.css-5abu0r,.css-p52k8h,.css-1dpmqsl,.css-1myqwel` +
       `,.css-1ykn8va,.css-1117lk0,.css-m9gn5f,.css-oqge09,.css-8u7moq,.css-k0fmhp,css-bc6idi,.css-nsw6sf,.css-25wprl` +
@@ -83,7 +83,7 @@ const myBackground = {
       `,#creator-statistic,#creator-task-dayTask,#creator-task-creatorTask,#creator-manual` +
       `{color: ${color}!important}`;
     const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
-    const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.ctz-button{color: ${background2}!important}`;
+    const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover{color: ${background2}!important}`;
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-menu-top>a.target{border-bottom: 4px solid ${color};color: ${color};}`;
 
