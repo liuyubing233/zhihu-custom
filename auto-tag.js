@@ -41,6 +41,6 @@ const doExec = async (commit) => {
   await doExec('git add .');
   await doExec(`git commit -m "docs: v${nVersion}"`);
   await doExec(`git push`);
-  await doExec(`git tag v${nVersion}--text`)
+  await doExec(`git tag v${nVersion}`)
   await doExec(`git push --tag`)
 })();
