@@ -198,7 +198,7 @@ export const myVersion = {
     // 调整文字大小
     const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle } = pfConfig;
     const list =
-      `.Topstory-body .RichContent-inner,.Topstory-body .HotItem-title,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
+      `.Topstory-body .RichContent-inner,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
       `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent` +
       `{font-size: ${fontSizeForList}px!important;}`;
     const answer = `.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent{font-size: ${fontSizeForAnswer}px}`;
