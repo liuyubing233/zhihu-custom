@@ -10,7 +10,7 @@ const QUERY_CLASS_PDF_IFRAME = '.ctz-pdf-box-content';
 export const myCollectionExport = {
   init: function () {
     const { pathname } = location;
-    const elementBox = domC('div', { className: `${this.className} ctz-button`, innerHTML: this.element });
+    const elementBox = domC('div', { className: `${this.className}`, innerHTML: this.element });
     const nodeThis = dom(`.${this.className}`);
     nodeThis && nodeThis.remove();
     const elementTypeSpan = this.elementTypeSpan;
