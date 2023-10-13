@@ -149,7 +149,7 @@ export const myArticlePDF = {
     const nClass = 'ctz-export-article';
     const prevButton = nodeArticleItem.querySelector(`.${nClass}`);
     prevButton && prevButton.remove();
-    const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.AuthorInfo-content');
+    const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.Post-Header .AuthorInfo-content');
     if (!nodeUser) return;
     const nodeButton = domC('button', {
       innerHTML: '导出当前文章',
