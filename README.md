@@ -35,7 +35,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 	- [视频下载](#视频下载)
 	- [屏蔽设置页面添加一键移除所有屏蔽选项](#屏蔽设置页面添加一键移除所有屏蔽选项)
 	- [移除登录弹窗](#移除登录弹窗)
-	- [收藏夹内容导出为 PDF](#收藏夹内容导出为-pdf)
+	- [收藏夹内容、回答、文章导出为 PDF](#收藏夹内容回答文章导出为-pdf)
 	- [回答内容按照点赞数和评论数排序](#回答内容按照点赞数和评论数排序)
 	- [个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注](#个人主页我关注的问题我关注的收藏可以一键移除或将移除的内容添加回关注)
 	- [一键邀请功能](#一键邀请功能)
@@ -125,11 +125,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 未登录状态下问答和专栏移除登录弹窗
 
-#### 收藏夹内容导出为 PDF
+#### 收藏夹内容、回答、文章导出为 PDF
 
 在收藏夹名称上方显示【生成 PDF】按钮，点击导出当前页码的收藏夹详细内容。
 
 <img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211114&authkey=%21AMrTLMx_Q0LHgDs&width=1024&height=999999" width="1024" height="auto" />
+
+回答、文章也存在「导出当前回答」和「导出当前文章」按钮
 
 #### 回答内容按照点赞数和评论数排序
 
