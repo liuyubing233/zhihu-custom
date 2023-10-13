@@ -4,7 +4,7 @@ import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../conf
 import { store } from '../store';
 import { IMyElement, IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
-import { myAnswerPDF, myArticlePDF } from './collection-export-PDF';
+import { myAnswerPDF, myArticlePDF } from './export-PDF';
 import { myListenSelect } from './listen-select';
 import { addTimes } from './time';
 

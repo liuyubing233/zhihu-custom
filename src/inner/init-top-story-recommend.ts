@@ -2,7 +2,7 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED } from '../configs';
 import { myBlack } from '../methods/black';
-import { myAnswerPDF, myArticlePDF } from '../methods/collection-export-PDF';
+import { myAnswerPDF, myArticlePDF } from '../methods/export-PDF';
 import { addTimes } from '../methods/time';
 import { store } from '../store';
 
