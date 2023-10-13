@@ -228,9 +228,19 @@
     background: #efefef;
     padding: 0 8px;
     margin: 0 -8px;
-    .ctz-set-title > span {
-      background: #efefef;
-    }
+  }
+}
+
+.ctz-set-title {
+  font-weight: bold;
+  height: 36px;
+  line-height: 36px;
+  font-size: 16px;
+  overflow: hidden;
+  vertical-align: middle;
+  & > span {
+    vertical-align: middle;
+    display: inline-block;
   }
 }
 
@@ -286,32 +296,8 @@
 .ctz-label {
   font-size: 14px;
   line-height: 24px;
-  font-weight: bold;
   &::after {
     content: '：';
-  }
-}
-
-.ctz-set-title {
-  font-weight: bold;
-  height: 32px;
-  line-height: 32px;
-  font-size: 16px;
-  overflow: hidden;
-  position: relative;
-  &::before {
-    content: '-------------------------------------------------------------------------------------------';
-    font-weight: normal;
-  }
-  & > span {
-    position: absolute;
-    padding: 4px 8px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: #ffffff;
-    word-break: keep-all;
-    white-space: pre;
   }
 }
 
@@ -610,7 +596,6 @@
   & > div {
     line-height: 24px;
     margin-bottom: 4px;
-    font-weight: bold;
     .ctz-commit {
       font-weight: normal;
     }
@@ -831,8 +816,8 @@
   }
 }
 
-[name="button_history_clear"],
-[name="button_history_clear"],
+[name='button_history_clear'],
+[name='button_history_clear'],
 #CTZ-BUTTON-SYNC-BLOCK {
   min-width: 88px;
   margin-bottom: 8px;

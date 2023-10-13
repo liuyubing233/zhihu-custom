@@ -40,7 +40,7 @@ const myBackground = {
   dark: (darkKey: EThemeDark) => {
     const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
     const cssBg =
-      `#${ID_DIALOG},.ctz-set-title>span,#CTZ-BLOCK-LIST .ctz-black-item` +
+      `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item` +
       `,.css-ul9l2m,.css-mq2czy,.css-1da4iq8,.css-oqge09,.css-lpo24q,.css-16zrry9,.css-u8y4hj,.css-805ti0,.css-12yl4eo` +
       `,.css-1117lk0:hover,.css-1yq3jl6,.css-mzh2tk,.css-6mdg56,.css-mjg7l1,.css-q2yfd6,.css-1ggwojn,.css-xqep55,.css-1vtgv04` +
       `,.css-1ulkprw,.Modal-modal-wf58,.css-1j5d3ll,.css-ovbogu,.css-1v840mj,.css-huwkhm,.css-akuk2k,.css-1ne387d` +
@@ -54,7 +54,7 @@ const myBackground = {
       `,.Question-mainColumnLogin,.css-l63y2t,.css-hvo7ig`+
       `{background: ${background}!important;}`;
     const cssBg2 =
-      `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
+      `.ctz-content-right>div:nth-of-type(2n)` +
       `,.css-1vwmxb4:hover,.css-1xegbra,.css-xevy9w tbody tr:nth-of-type(odd),.css-r9mkgf,.css-1sqjzsk` +
       `,.css-t3f0zn,.css-1cj0s4z,.css-1gnqr8i,.css-1stnbni:hover,.css-5abu0r,.css-n7efg0,.css-ssvpr2` +
       `,.css-m9gn5f,.FeedbackForm-inputBox-15yJ,.css-106u01g,.css-c29erj,.css-1xk2o8d,.FeedbackForm-canvasContainer-mrde` +
@@ -105,7 +105,7 @@ const myBackground = {
   light: (lightKey: EThemeLight) => {
     const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
     const cssBg =
-      `.ctz-content-right>div:nth-of-type(2n),.ctz-content-right>div:nth-of-type(2n) .ctz-set-title > span` +
+      `.ctz-content-right>div:nth-of-type(2n)` +
       `,body,.Post-content,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar,.position-suspensionSearch.focus` +
       `,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh` +
       `,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z,.zhuanlan .Post-content .ContentItem-actions` +
@@ -113,7 +113,7 @@ const myBackground = {
       `,.ShelfTopNav-root-eb3BX,.signQr-container,.css-16h0l39` +
       `{background-color: ${background}!important;}`;
     const cssBg2 =
-      `#${ID_DIALOG},.ctz-set-title>span,#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
+      `#${ID_DIALOG},#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
       `,.QuestionHeader,.Card,.HotItem,.Recommendations-Main,.GlobalSideBar-navList,.SearchSubTabs,.CommentsV2-withPagination` +
       `,.QuestionHeader-footer,.HoverCard,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer` +
       `,.Select-plainButton,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard` +
