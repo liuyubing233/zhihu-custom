@@ -13,9 +13,9 @@ import { initResizeObserver } from './inner/init-resize-observer';
 import { onInitStyleExtra } from './inner/init-style-extra';
 import { needRedirect } from './inner/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
-import { myCollectionExport } from './methods/collection-export-PDF';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
+import { myArticlePDF, myCollectionExport } from './methods/export-PDF';
 import { myFilterWord } from './methods/filter-word';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
@@ -137,6 +137,8 @@ import { INNER_CSS } from './web-resources';
 
       if (host === 'zhuanlan.zhihu.com') {
         addArticleCreateTimeToTop();
+        const nodeArticle = dom('.Post-content')
+        nodeArticle && myArticlePDF.addBtn(nodeArticle)
       }
       fnLog(
         `加载完毕, 加载时长: ${

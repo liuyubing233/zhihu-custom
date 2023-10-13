@@ -4,6 +4,7 @@ import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../conf
 import { store } from '../store';
 import { IMyElement, IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
+import { myAnswerPDF, myArticlePDF } from './export-PDF';
 import { myListenSelect } from './listen-select';
 import { addTimes } from './time';
 
@@ -29,6 +30,8 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
     if (nodeQuestionAnswer) {
       answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
       showBlockUser && myBlack.addButton(nodeQuestionAnswer);
+      myAnswerPDF.addBtn(nodeQuestionAnswer)
+      myArticlePDF.addBtn(nodeQuestionAnswer)
     }
     const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
     // 屏蔽用户名称列表
@@ -107,6 +110,8 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
         conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
         // 添加「屏蔽用户」按钮
         showBlockUser && myBlack.addButton(elementThis, this);
+        myAnswerPDF.addBtn(elementThis)
+        myArticlePDF.addBtn(elementThis)
       }
 
       // 最后信息 & 起点位置处理

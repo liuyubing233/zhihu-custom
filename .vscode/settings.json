@@ -9,7 +9,14 @@
   "less.compile": {
     "compress": true //是否压缩
   },
-  "cSpell.words": ["liuyubing", "Tampermonkey", "Violentmonkey", "Zhihu", "Zhuanlan"],
+  "cSpell.words": [
+    "liuyubing",
+    "Tampermonkey",
+    "Topstory",
+    "Violentmonkey",
+    "Zhihu",
+    "Zhuanlan"
+  ],
   "prettier.printWidth": 160,
   "editor.codeActionsOnSave": { "source.organizeImports": true }
 }

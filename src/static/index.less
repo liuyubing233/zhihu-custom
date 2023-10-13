@@ -184,8 +184,7 @@
 
   ::-webkit-scrollbar {
     width: 8px;
-    height: 24px;
-    background: #eee;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
     border-radius: 0;
@@ -228,9 +227,21 @@
     background: #efefef;
     padding: 0 8px;
     margin: 0 -8px;
-    .ctz-set-title > span {
-      background: #efefef;
-    }
+    box-shadow: rgb(153, 153, 153) 0px 0px 5px inset;
+    border-radius: 8px;
+  }
+}
+
+.ctz-set-title {
+  font-weight: bold;
+  height: 36px;
+  line-height: 36px;
+  font-size: 16px;
+  overflow: hidden;
+  vertical-align: middle;
+  & > span {
+    vertical-align: middle;
+    display: inline-block;
   }
 }
 
@@ -286,32 +297,8 @@
 .ctz-label {
   font-size: 14px;
   line-height: 24px;
-  font-weight: bold;
   &::after {
     content: '：';
-  }
-}
-
-.ctz-set-title {
-  font-weight: bold;
-  height: 32px;
-  line-height: 32px;
-  font-size: 16px;
-  overflow: hidden;
-  position: relative;
-  &::before {
-    content: '-------------------------------------------------------------------------------------------';
-    font-weight: normal;
-  }
-  & > span {
-    position: absolute;
-    padding: 4px 8px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: #ffffff;
-    word-break: keep-all;
-    white-space: pre;
   }
 }
 
@@ -396,6 +383,7 @@
 .ctz-flex-wrap {
   display: flex;
   flex-wrap: wrap;
+  line-height: 24px;
   label {
     margin-right: 4px;
     display: flex;
@@ -610,7 +598,6 @@
   & > div {
     line-height: 24px;
     margin-bottom: 4px;
-    font-weight: bold;
     .ctz-commit {
       font-weight: normal;
     }
@@ -831,8 +818,8 @@
   }
 }
 
-[name="button_history_clear"],
-[name="button_history_clear"],
+[name='button_history_clear'],
+[name='button_history_clear'],
 #CTZ-BUTTON-SYNC-BLOCK {
   min-width: 88px;
   margin-bottom: 8px;

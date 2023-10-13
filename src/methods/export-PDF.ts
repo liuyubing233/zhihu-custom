@@ -3,11 +3,14 @@ import { store } from '../store';
 import { IPromisePercentCallbackParams } from '../types';
 import { INNER_CSS } from '../web-resources';
 
+/** 查找生成PDF的元素类名 */
+const QUERY_CLASS_PDF_IFRAME = '.ctz-pdf-box-content';
+
 /** 收藏夹打印 */
 export const myCollectionExport = {
   init: function () {
     const { pathname } = location;
-    const elementBox = domC('div', { className: this.className, innerHTML: this.element });
+    const elementBox = domC('div', { className: `${this.className}`, innerHTML: this.element });
     const nodeThis = dom(`.${this.className}`);
     nodeThis && nodeThis.remove();
     const elementTypeSpan = this.elementTypeSpan;
@@ -56,7 +59,7 @@ export const myCollectionExport = {
               }
             });
 
-            const iframe = dom('.ctz-pdf-box-content') as HTMLIFrameElement;
+            const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
             if (iframe.contentWindow) {
               const collectionsHTML = collectionsHTMLMap.join('');
               const doc = iframe.contentWindow.document;
@@ -109,5 +112,61 @@ export const myCollectionExport = {
       article: '<span class="ctz-label-tag" style="color: #00965e;">文章</span>',
     };
     return typeObj[type] || '';
+  },
+};
+
+/** 回答添加导出为 PDF 按钮 */
+export const myAnswerPDF = {
+  addBtn: (nodeAnswerItem: HTMLElement) => {
+    const nClass = 'ctz-export-answer';
+    const prevButton = nodeAnswerItem.querySelector(`.${nClass}`);
+    prevButton && prevButton.remove();
+    const nodeUser = nodeAnswerItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
+    if (!nodeUser) return;
+    const nodeButton = domC('button', {
+      innerHTML: '导出当前回答',
+      className: `ctz-button ${nClass}`,
+      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;',
+    });
+
+    nodeButton.onclick = function () {
+      const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
+      const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
+      const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
+      if (!iframe.contentWindow || !nodeAnswerContent) return;
+      const doc = iframe.contentWindow.document;
+      doc.body.innerHTML = '';
+      doc.write(`${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent.innerHTML}`);
+      iframe.contentWindow.print();
+    };
+    nodeUser.appendChild(nodeButton);
+  },
+};
+
+/** 文章添加导出为 PDF 按钮 */
+export const myArticlePDF = {
+  addBtn: (nodeArticleItem: HTMLElement) => {
+    const nClass = 'ctz-export-article';
+    const prevButton = nodeArticleItem.querySelector(`.${nClass}`);
+    prevButton && prevButton.remove();
+    const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.Post-Header .AuthorInfo-content');
+    if (!nodeUser) return;
+    const nodeButton = domC('button', {
+      innerHTML: '导出当前文章',
+      className: `ctz-button ${nClass}`,
+      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;',
+    });
+
+    nodeButton.onclick = function () {
+      const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
+      const nodeAnswerUserLink = nodeArticleItem.querySelector('.AuthorInfo-name');
+      const nodeAnswerContent = nodeArticleItem.querySelector('.RichContent-inner') || nodeArticleItem.querySelector('.Post-RichTextContainer');
+      if (!iframe.contentWindow || !nodeAnswerContent) return;
+      const doc = iframe.contentWindow.document;
+      doc.body.innerHTML = '';
+      doc.write(`${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent.innerHTML}`);
+      iframe.contentWindow.print();
+    };
+    nodeUser.appendChild(nodeButton);
   },
 };
