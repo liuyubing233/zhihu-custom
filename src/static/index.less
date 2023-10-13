@@ -184,8 +184,7 @@
 
   ::-webkit-scrollbar {
     width: 8px;
-    height: 24px;
-    background: #eee;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
     border-radius: 0;
@@ -228,6 +227,8 @@
     background: #efefef;
     padding: 0 8px;
     margin: 0 -8px;
+    box-shadow: rgb(153, 153, 153) 0px 0px 5px inset;
+    border-radius: 8px;
   }
 }
 
@@ -382,6 +383,7 @@
 .ctz-flex-wrap {
   display: flex;
   flex-wrap: wrap;
+  line-height: 24px;
   label {
     margin-right: 4px;
     display: flex;
