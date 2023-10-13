@@ -2,12 +2,13 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED } from '../configs';
 import { myBlack } from '../methods/black';
+import { myAnswerPDF, myArticlePDF } from '../methods/collection-export-PDF';
 import { addTimes } from '../methods/time';
 import { store } from '../store';
 
 /** 推荐列表最外层绑定事件 */
 export const initTopStoryRecommendEvent = () => {
-  const nodeTopStoryRecommend = dom('.Topstory-recommend');
+  const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow');
   if (!nodeTopStoryRecommend) return;
   const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
   const canFindTargeted = (e: HTMLElement) => {
@@ -35,6 +36,8 @@ export const initTopStoryRecommendEvent = () => {
       setTimeout(() => {
         listItemCreatedAndModifiedTime && addTimes(nodeContentItem);
         showBlockUser && myBlack.addButton(nodeContentItem.parentElement!);
+        myAnswerPDF.addBtn(nodeContentItem.parentElement!)
+        myArticlePDF.addBtn(nodeContentItem.parentElement!)
       }, 0);
     }
   };
