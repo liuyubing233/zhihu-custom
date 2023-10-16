@@ -56,7 +56,7 @@ const myBackground = {
       `,.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div` +
       `,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer` +
       ',.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div' +
-      `,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard` +
+      `,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white` +
       `,.css-guh6n2,.css-yqosku` +
       `{background: ${background}!important;}`;
     const cssBg2 =
@@ -113,7 +113,7 @@ const myBackground = {
       `,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh` +
       `,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z,.zhuanlan .Post-content .ContentItem-actions` +
       `,.zhuanlan .ContentItem-actions,.LinkCard.new,.WebPage-root-g7WXc,.KfeCollection-FeedBlockSetting` +
-      `,.ShelfTopNav-root-eb3BX,.signQr-container,.css-16h0l39,.css-1so3nbl,.css-13mrzb0,.css-17aitwe,.NavigationBar-mainArea` +
+      `,.ShelfTopNav-root-eb3BX,.signQr-container,.css-16h0l39,.css-1so3nbl,.css-13mrzb0,.css-17aitwe,.NavigationBar-mainArea,.Notification-white` +
       `{background-color: ${background}!important;}`;
     const cssBg2 =
       `#${ID_DIALOG},#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
@@ -137,7 +137,7 @@ const myBackground = {
       `,.css-a9sbyu,.CreatorIndex-BottomBox-Item,.css-1r9j229,.css-wgpue5,.css-1hwwfws,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g` +
       `,.css-c29erj,.Modal-content,.Sticky,.css-2i2hyg,.css-1sz5gzk,.css-vvikez,.css-bnfl40,.css-kt4t4n,.css-127i0sx,.css-172osot,.css-3dzt4y,.HotList,.css-1rge9t3,.css-10wc74s,.css-hvo7ig` +
       `,.Question-mainColumnLogin,.css-l63y2t,.css-uhfrs2,.css-1os3m0m,.css-my2hkh,.css-lwqucw,.css-1o83xzo,.css-1nipbaf,.css-p4x5ie,.css-7hf26x,.css-xks12i,.css-fqja0q` +
-      `,.css-slqtjm,.Sticky>ul` +
+      `,.css-slqtjm,.Sticky>ul,.css-1dja9sh,.css-np3nxw div,.AnswerAdd div,.css-lxxesj` +
       `{background-color:${background2}!important;background:${background2}!important;}`;
     const cssBgTransparent = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn{background-color: transparent!important;}`;
     const borderColor = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
