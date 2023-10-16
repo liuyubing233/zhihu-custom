@@ -117,7 +117,7 @@ const myBackground = {
       `{background-color: ${background}!important;}`;
     const cssBg2 =
       `#${ID_DIALOG},#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
-      `,.QuestionHeader,.Card,.HotItem,.Recommendations-Main,.GlobalSideBar-navList,.SearchSubTabs,.CommentsV2-withPagination` +
+      `,.QuestionHeader,.Card:not(.GrowthLevel-panelCard),.HotItem,.Recommendations-Main,.GlobalSideBar-navList,.SearchSubTabs,.CommentsV2-withPagination` +
       `,.QuestionHeader-footer,.HoverCard,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer` +
       `,.Select-plainButton,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard` +
       `,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop` +
@@ -137,7 +137,9 @@ const myBackground = {
       `,.css-a9sbyu,.CreatorIndex-BottomBox-Item,.css-1r9j229,.css-wgpue5,.css-1hwwfws,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g` +
       `,.css-c29erj,.Modal-content,.Sticky,.css-2i2hyg,.css-1sz5gzk,.css-vvikez,.css-bnfl40,.css-kt4t4n,.css-127i0sx,.css-172osot,.css-3dzt4y,.HotList,.css-1rge9t3,.css-10wc74s,.css-hvo7ig` +
       `,.Question-mainColumnLogin,.css-l63y2t,.css-uhfrs2,.css-1os3m0m,.css-my2hkh,.css-lwqucw,.css-1o83xzo,.css-1nipbaf,.css-p4x5ie,.css-7hf26x,.css-xks12i,.css-fqja0q` +
-      `,.css-slqtjm,.Sticky>ul,.css-1dja9sh,.css-np3nxw div,.AnswerAdd div,.css-lxxesj` +
+      `,.css-slqtjm,.Sticky>ul,.css-1dja9sh,.css-np3nxw div,.AnswerAdd div,.css-lxxesj,.css-11oa45q,.css-dkeaqz,.css-1j9apkt,.css-1vnbimf,.css-1mbpn2d,.css-1yjqd5z` +
+      `,.ToolsQuestion div,.Creator-mainColumn .Card>div:not(.GrowthLevel-panelCardContent),.css-djayhh,.css-1cr4989,.css-1rniuv1>ul,.css-1rniuv1>div,.css-1oqbvad,.css-1ta275q` +
+      `,.Card>ul,.css-yckfye,.css-lztgnc` +
       `{background-color:${background2}!important;background:${background2}!important;}`;
     const cssBgTransparent = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn{background-color: transparent!important;}`;
     const borderColor = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
