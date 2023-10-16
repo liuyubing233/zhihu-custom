@@ -126,18 +126,14 @@ export const myAnswerPDF = {
     const nodeButton = domC('button', {
       innerHTML: '导出当前回答',
       className: `ctz-button ${nClass}`,
-      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;',
+      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;background: transparent;',
     });
 
     nodeButton.onclick = function () {
-      const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
       const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
       const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
-      if (!iframe.contentWindow || !nodeAnswerContent) return;
-      const doc = iframe.contentWindow.document;
-      doc.body.innerHTML = '';
-      doc.write(`${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent.innerHTML}`);
-      iframe.contentWindow.print();
+      const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML: ''}`
+      pdfExport(innerHTML)
     };
     nodeUser.appendChild(nodeButton);
   },
@@ -154,19 +150,25 @@ export const myArticlePDF = {
     const nodeButton = domC('button', {
       innerHTML: '导出当前文章',
       className: `ctz-button ${nClass}`,
-      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;',
+      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;background: transparent;',
     });
 
     nodeButton.onclick = function () {
-      const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
       const nodeAnswerUserLink = nodeArticleItem.querySelector('.AuthorInfo-name');
       const nodeAnswerContent = nodeArticleItem.querySelector('.RichContent-inner') || nodeArticleItem.querySelector('.Post-RichTextContainer');
-      if (!iframe.contentWindow || !nodeAnswerContent) return;
-      const doc = iframe.contentWindow.document;
-      doc.body.innerHTML = '';
-      doc.write(`${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent.innerHTML}`);
-      iframe.contentWindow.print();
+      const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ''}`;
+      pdfExport(innerHTML)
     };
     nodeUser.appendChild(nodeButton);
   },
+};
+
+/** 直接打印元素内容为PDF */
+const pdfExport = (content: string) => {
+  const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
+  if (!iframe.contentWindow || !content) return;
+  const doc = iframe.contentWindow.document;
+  doc.body.innerHTML = '';
+  doc.write(content);
+  iframe.contentWindow.print();
 };
