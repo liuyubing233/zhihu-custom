@@ -245,8 +245,9 @@
   }
 }
 
-.ctz-set-content {
-  & > div {
+.ctz-set-content:not(.ctz-flex-wrap) {
+  & > div,
+  & > label {
     padding-bottom: 8px;
     margin-bottom: 8px;
     border-bottom: 1px dashed #ddd;

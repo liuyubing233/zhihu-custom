@@ -148,10 +148,6 @@ export interface IConfigHidden {
   hiddenQuestionMore?: boolean;
   /** 隐藏不显示修改器唤醒图标 */
   hiddenOpenButton?: boolean;
-  /** 回答操作 - 赞同按钮仅显示赞同数 */
-  justVoteNum?: boolean;
-  /** 回答操作 - 评论按钮仅显示评论数 */
-  justCommitNum?: boolean;
   /** 是否隐藏 - 评论「回复」按钮 */
   hiddenCommitReply?: boolean;
   /** 是否隐藏 - 评论「点赞」按钮 */
@@ -315,4 +311,8 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   themeDark?: EThemeDark;
   /** 字体颜色 */
   colorText1?: '';
+  /** 回答操作 - 赞同按钮仅显示赞同数 */
+  justVoteNum?: boolean;
+  /** 回答操作 - 评论按钮仅显示评论数 */
+  justCommitNum?: boolean;
 }

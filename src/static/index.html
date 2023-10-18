@@ -19,7 +19,8 @@
       <div class="ctz-content-left">
         <a href="#CTZ_BASIS_DEFAULT">基本设置</a>
         <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
-        <a href="#CTZ_BASIS_HIDDEN">通用模块隐藏</a>
+        <a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a>
+        <a href="#CTZ_BASIS_HIDDEN">模块隐藏</a>
         <a href="#CTZ_BASIS_COLOR">颜色设置</a>
         <a href="#CTZ_BASIS_CONFIG">配置操作</a>
       </div>
@@ -77,10 +78,10 @@
               </div>
             </div>
 
-            <div class="ctz-flex-wrap">
+            <label class="ctz-flex-wrap">
               <span class="ctz-label">使用弹窗打开动图</span>
               <input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" />
-            </div>
+            </label>
           </div>
         </div>
 
@@ -120,9 +121,25 @@
           </div>
         </div>
 
+        <div id="CTZ_BASIS_SHOW_CONTENT">
+          <div class="ctz-set-title">
+            <span>显示修改<span class="ctz-desc" style="color: red;">修改后刷新页面生效</span></span>
+          </div>
+          <div class="ctz-set-content">
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">赞同按钮仅显示赞同数</span>
+              <input class="ctz-i" name="justVoteNum" type="checkbox" value="on" />
+            </label>
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">评论按钮仅显示评论数</span>
+              <input class="ctz-i" name="justCommitNum" type="checkbox" value="on" />
+            </label>
+          </div>
+        </div>
+
         <div id="CTZ_BASIS_HIDDEN">
           <div class="ctz-set-title">
-            <span>通用模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
+            <span>模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
           </div>
           <div class="ctz-set-content ctz-flex-wrap"></div>
         </div>
