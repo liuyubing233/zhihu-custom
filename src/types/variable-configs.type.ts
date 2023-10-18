@@ -315,4 +315,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   justVoteNum?: boolean;
   /** 回答操作 - 评论按钮仅显示评论数 */
   justCommitNum?: boolean;
+  /** 内容顶部是否显示赞同数 */
+  topVote?: boolean;
 }
