@@ -1967,28 +1967,28 @@
       let lessNum = 0;
       for (let i = this.index, len = elements.length; i < len; i++) {
         let message = "";
-        const elementThis = elements[i];
-        const elementInfo = elementThis.querySelector(".ContentItem");
-        if (!elementInfo)
+        const nodeItem = elements[i];
+        const nodeItemContent = nodeItem.querySelector(".ContentItem");
+        if (!nodeItemContent)
           continue;
         let dataZop = {};
         let dataCardContent = {};
         try {
-          dataZop = JSON.parse(elementInfo.getAttribute("data-zop") || "{}");
-          dataCardContent = JSON.parse(elementInfo.getAttribute("data-za-extra-module") || "{}").card.content;
+          dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
+          dataCardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
         } catch {
         }
         (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
         if (removeZhihuOfficial && !message) {
-          const labelE = elementThis.querySelector(".AuthorInfo-name .css-n99yhz");
+          const labelE = nodeItem.querySelector(".AuthorInfo-name .css-n99yhz");
           const label = labelE ? labelE.getAttribute("aria-label") || "" : "";
           /知乎[\s]*官方帐号/.test(label) && (message = "已删除一条知乎官方帐号的回答");
         }
         let isHiddenTag = false;
         hiddenTags.forEach((i2) => conf[i2] && (isHiddenTag = true));
         if (isHiddenTag && !message) {
-          const nodeTag1 = elementThis.querySelector(".KfeCollection-AnswerTopCard-Container");
-          const nodeTag2 = elementThis.querySelector(".LabelContainer-wrapper");
+          const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
+          const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
           const text1 = nodeTag1 ? nodeTag1.innerText : "";
           const text2 = nodeTag2 ? nodeTag2.innerText : "";
           const tagText = text1 + text2;
@@ -2001,32 +2001,33 @@
         }
         hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName || "") && (message = `已删除${dataZop.authorName}的回答`);
         if (removeAnonymousAnswer && !message) {
-          const userName = elementThis.querySelector('[itemprop="name"]').content;
+          const userName = nodeItem.querySelector('[itemprop="name"]').content;
           userName === "匿名用户" && (message = `已屏蔽一条「匿名用户」回答`);
         }
         if (!message && answerOpen) {
-          const unFoldButton = elementThis.querySelector(".ContentItem-expandButton");
-          const foldButton = elementThis.querySelector(".RichContent-collapsedText");
-          const isNotOpen = !elementThis.classList.contains(OB_CLASS_FOLD.on);
-          const isNotClose = !elementThis.classList.contains(OB_CLASS_FOLD.off);
+          const unFoldButton = nodeItem.querySelector(".ContentItem-expandButton");
+          const foldButton = nodeItem.querySelector(".RichContent-collapsedText");
+          const isNotOpen = !nodeItem.classList.contains(OB_CLASS_FOLD.on);
+          const isNotClose = !nodeItem.classList.contains(OB_CLASS_FOLD.off);
           if (answerOpen === "on" && isNotOpen) {
             unFoldButton && unFoldButton.click();
-            elementThis.classList.add(OB_CLASS_FOLD.on);
+            nodeItem.classList.add(OB_CLASS_FOLD.on);
             lessNum++;
           }
-          const isF = foldButton && elementThis.offsetHeight > 939;
+          const isF = foldButton && nodeItem.offsetHeight > 939;
           const isFC = unFoldButton;
           if (answerOpen === "off" && isNotClose && (isF || isFC)) {
-            elementThis.classList.add(OB_CLASS_FOLD.off);
+            nodeItem.classList.add(OB_CLASS_FOLD.off);
             isF && foldButton && foldButton.click();
             lessNum++;
           }
         }
-        fnJustNum(elementThis);
-        if (!message) {
-          addFnInNodeItem(elementThis, this);
+        fnJustNum(nodeItem);
+        if (message) {
+          lessNum = fnHiddenDom(lessNum, nodeItem, message);
+        } else {
+          addFnInNodeItem(nodeItem, this);
         }
-        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
         this.index = fnIndexMath(this.index, i, len, lessNum);
       }
     },
@@ -2727,24 +2728,18 @@
       let ctzType = params.get("ctzType");
       this[ctzType] && this[ctzType]();
     },
-    "1": (
-      /** 移除、关注问题并关闭网页 */
-      function() {
-        this.clickAndClose(".QuestionButtonGroup button");
-      }
-    ),
-    "2": (
-      /** 移除、关注话题并关闭网页 */
-      function() {
-        this.clickAndClose(".TopicActions .FollowButton");
-      }
-    ),
-    "3": (
-      /** 移除、关注收藏夹并关闭网页 */
-      function() {
-        this.clickAndClose(".CollectionDetailPageHeader-actions .FollowButton");
-      }
-    ),
+    /** 移除、关注问题并关闭网页 */
+    "1": function() {
+      this.clickAndClose(".QuestionButtonGroup button");
+    },
+    /** 移除、关注话题并关闭网页 */
+    "2": function() {
+      this.clickAndClose(".TopicActions .FollowButton");
+    },
+    /** 移除、关注收藏夹并关闭网页 */
+    "3": function() {
+      this.clickAndClose(".CollectionDetailPageHeader-actions .FollowButton");
+    },
     clickAndClose: (eventname) => {
       const nodeItem = dom(eventname);
       nodeItem && nodeItem.click();
@@ -2752,49 +2747,43 @@
     }
   };
   var myFilterWord = {
-    add: (
-      /** 添加屏蔽词 */
-      async function(target) {
-        const word = target.value;
-        const { filterKeywords = [] } = store.getConfig();
-        filterKeywords.push(word);
-        await myStorage.configUpdateItem("filterKeywords", filterKeywords);
-        const item = domC("span", { innerHTML: this.evenText(word) });
-        item.dataset.title = word;
-        const nodeFilterWords = domById(ID_FILTER_WORDS);
-        nodeFilterWords && nodeFilterWords.appendChild(item);
-        target.value = "";
+    /** 添加屏蔽词 */
+    add: async function(target) {
+      const word = target.value;
+      const { filterKeywords = [] } = store.getConfig();
+      filterKeywords.push(word);
+      await myStorage.configUpdateItem("filterKeywords", filterKeywords);
+      const item = domC("span", { innerHTML: this.evenText(word) });
+      item.dataset.title = word;
+      const nodeFilterWords = domById(ID_FILTER_WORDS);
+      nodeFilterWords && nodeFilterWords.appendChild(item);
+      target.value = "";
+    },
+    /** 删除屏蔽词 */
+    remove: (event) => {
+      const title = event.dataset.title;
+      const { filterKeywords = [] } = store.getConfig();
+      event.remove();
+      myStorage.configUpdateItem(
+        "filterKeywords",
+        filterKeywords.filter((i) => i !== title)
+      );
+    },
+    /** 初始化 */
+    init: function() {
+      const { filterKeywords = [] } = store.getConfig();
+      const children = (filterKeywords || []).map((i) => this.evenTextBlock(i)).join("");
+      const nodeFilterWords = domById(ID_FILTER_WORDS);
+      if (nodeFilterWords) {
+        nodeFilterWords.innerHTML = children || "";
+        nodeFilterWords.onclick = (e) => {
+          const target = e.target;
+          target.classList.contains("ctz-filter-word-remove") && this.remove(target.parentElement);
+        };
       }
-    ),
-    remove: (
-      /** 删除屏蔽词 */
-      (event) => {
-        const title = event.dataset.title;
-        const { filterKeywords = [] } = store.getConfig();
-        event.remove();
-        myStorage.configUpdateItem(
-          "filterKeywords",
-          filterKeywords.filter((i) => i !== title)
-        );
-      }
-    ),
-    init: (
-      /** 初始化 */
-      function() {
-        const { filterKeywords = [] } = store.getConfig();
-        const children = (filterKeywords || []).map((i) => this.evenTextBlock(i)).join("");
-        const nodeFilterWords = domById(ID_FILTER_WORDS);
-        if (nodeFilterWords) {
-          nodeFilterWords.innerHTML = children || "";
-          nodeFilterWords.onclick = (e) => {
-            const target = e.target;
-            target.classList.contains("ctz-filter-word-remove") && this.remove(target.parentElement);
-          };
-        }
-        const nodeInput = dom('[name="inputFilterWord"]');
-        nodeInput && (nodeInput.onchange = (e) => this.add.call(this, e.target));
-      }
-    ),
+      const nodeInput = dom('[name="inputFilterWord"]');
+      nodeInput && (nodeInput.onchange = (e) => this.add.call(this, e.target));
+    },
     evenText: (w) => `<span>${w}</span><i class="ctz-icon ctz-filter-word-remove">&#xe602;</i>`,
     evenTextBlock: function(w) {
       return `<span data-title="${w}">${this.evenText(w)}</span>`;

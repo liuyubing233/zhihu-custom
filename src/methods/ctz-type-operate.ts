@@ -7,13 +7,16 @@ export const myCtzTypeOperation = {
     let ctzType = params.get('ctzType') as '1' | '2' | '3';
     this[ctzType] && this[ctzType]();
   },
-  '1': /** 移除、关注问题并关闭网页 */ function () {
+  /** 移除、关注问题并关闭网页 */
+  '1': function () {
     this.clickAndClose('.QuestionButtonGroup button');
   },
-  '2': /** 移除、关注话题并关闭网页 */ function () {
+  /** 移除、关注话题并关闭网页 */
+  '2': function () {
     this.clickAndClose('.TopicActions .FollowButton');
   },
-  '3': /** 移除、关注收藏夹并关闭网页 */ function () {
+  /** 移除、关注收藏夹并关闭网页 */
+  '3': function () {
     this.clickAndClose('.CollectionDetailPageHeader-actions .FollowButton');
   },
   clickAndClose: (eventname: string) => {
