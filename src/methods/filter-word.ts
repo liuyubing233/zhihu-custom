@@ -5,7 +5,8 @@ import { store } from '../store';
 
 /** 屏蔽词方法 */
 export const myFilterWord = {
-  add: /** 添加屏蔽词 */ async function (target: HTMLInputElement) {
+  /** 添加屏蔽词 */
+  add: async function (target: HTMLInputElement) {
     const word = target.value;
     const { filterKeywords = [] } = store.getConfig();
     filterKeywords.push(word);
@@ -16,7 +17,8 @@ export const myFilterWord = {
     nodeFilterWords && nodeFilterWords.appendChild(item);
     target.value = '';
   },
-  remove: /** 删除屏蔽词 */ (event: HTMLElement) => {
+  /** 删除屏蔽词 */
+  remove: (event: HTMLElement) => {
     const title = event.dataset.title;
     const { filterKeywords = [] } = store.getConfig();
     event.remove();
@@ -25,7 +27,8 @@ export const myFilterWord = {
       filterKeywords.filter((i) => i !== title)
     );
   },
-  init: /** 初始化 */ function () {
+  /** 初始化 */
+  init: function () {
     const { filterKeywords = [] } = store.getConfig();
     const children = (filterKeywords || []).map((i) => this.evenTextBlock(i)).join('');
     const nodeFilterWords = domById(ID_FILTER_WORDS);
