@@ -1828,28 +1828,35 @@
     const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
     return formatter.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
   };
-  var addTimes = (event) => {
+  var updateItemTime = (event) => {
+    const { listItemCreatedAndModifiedTime } = store.getConfig();
+    if (!listItemCreatedAndModifiedTime)
+      return;
     const className = "ctz-list-item-time";
-    const node = event.querySelector(`.${className}`);
-    node && node.remove();
     const nodeCreated = event.querySelector('[itemprop="dateCreated"]');
     const nodePublished = event.querySelector('[itemprop="datePublished"]');
     const nodeModified = event.querySelector('[itemprop="dateModified"]');
     const crTime = nodeCreated ? nodeCreated.content : "";
     const puTime = nodePublished ? nodePublished.content : "";
     const muTime = nodeModified ? nodeModified.content : "";
-    const created = timeFormatter(crTime || puTime);
-    const modified = timeFormatter(muTime);
-    const nodeMeta = event.querySelector(".ContentItem-meta");
-    if (!created || !nodeMeta)
+    const timeCreated = timeFormatter(crTime || puTime);
+    const timeModified = timeFormatter(muTime);
+    const nodeContentItemMeta = event.querySelector(".ContentItem-meta");
+    if (!timeCreated || !nodeContentItemMeta)
       return;
-    nodeMeta.appendChild(
-      domC("div", {
-        className,
-        style: "line-height: 24px;padding-top: 2px;",
-        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`
-      })
-    );
+    const innerHTML = `<div>创建时间：${timeCreated}</div><div>最后修改时间：${timeModified}</div>`;
+    const domTime = event.querySelector(`.${className}`);
+    if (domTime) {
+      domTime.innerHTML = innerHTML;
+    } else {
+      nodeContentItemMeta.appendChild(
+        domC("div", {
+          className,
+          innerHTML,
+          style: "line-height: 24px;padding-top: 2px;font-size: 14px;"
+        })
+      );
+    }
   };
   var addQuestionCreatedAndModifiedTime = () => {
     const { getConfig } = store;
@@ -1938,17 +1945,18 @@
         removeBlockUserContent,
         removeBlockUserContentList,
         showBlockUser,
-        removeAnonymousAnswer,
-        answerItemCreatedAndModifiedTime
+        removeAnonymousAnswer
       } = conf;
-      const nodeQuestionAnswer = dom(".QuestionAnswer-content");
-      if (nodeQuestionAnswer) {
-        updateTopVote(nodeQuestionAnswer);
-        answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
-        showBlockUser && myBlack.addButton(nodeQuestionAnswer);
-        myAnswerPDF.addBtn(nodeQuestionAnswer);
-        myArticlePDF.addBtn(nodeQuestionAnswer);
-      }
+      const addFnInNodeItem = (nodeItem, initThis) => {
+        if (!nodeItem)
+          return;
+        updateTopVote(nodeItem);
+        updateItemTime(nodeItem);
+        showBlockUser && myBlack.addButton(nodeItem, initThis);
+        myAnswerPDF.addBtn(nodeItem);
+        myArticlePDF.addBtn(nodeItem);
+      };
+      addFnInNodeItem(dom(".QuestionAnswer-content"));
       const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
       let hiddenUsers = [];
       for (let i in HIDDEN_ANSWER_ACCOUNT) {
@@ -2016,11 +2024,7 @@
         }
         fnJustNum(elementThis);
         if (!message) {
-          updateTopVote(elementThis);
-          conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
-          showBlockUser && myBlack.addButton(elementThis, this);
-          myAnswerPDF.addBtn(elementThis);
-          myArticlePDF.addBtn(elementThis);
+          addFnInNodeItem(elementThis, this);
         }
         message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
         this.index = fnIndexMath(this.index, i, len, lessNum);
@@ -2330,7 +2334,7 @@
       const nodeContentItem = domP(target, "class", "ContentItem");
       if (!nodeContentItem)
         return;
-      const { listOutPutNotInterested, listItemCreatedAndModifiedTime, showBlockUser } = store.getConfig();
+      const { listOutPutNotInterested, showBlockUser } = store.getConfig();
       if (listOutPutNotInterested && target.classList.contains(CLASS_NOT_INTERESTED)) {
         const dataZopJson = nodeContentItem.getAttribute("data-zop");
         const { itemId = "", type = "" } = JSON.parse(dataZopJson || "{}");
@@ -2341,7 +2345,7 @@
       if (canFindTargeted(target)) {
         setTimeout(() => {
           updateTopVote(nodeContentItem);
-          listItemCreatedAndModifiedTime && addTimes(nodeContentItem);
+          updateItemTime(nodeContentItem);
           showBlockUser && myBlack.addButton(nodeContentItem.parentElement);
           myAnswerPDF.addBtn(nodeContentItem.parentElement);
           myArticlePDF.addBtn(nodeContentItem.parentElement);

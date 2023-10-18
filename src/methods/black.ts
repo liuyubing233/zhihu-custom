@@ -182,6 +182,7 @@ interface IMyBlack {
   init: () => void;
   createItem: (info: IBlockUserItem) => void;
   createItemContent: (info: IBlockUserItem) => void;
+  /** 添加「屏蔽用户」按钮 */
   addButton: (event: HTMLElement, objMy?: IObjMy) => void;
   addBlackItem: (info: IBlockUserItem) => void;
   serviceAdd: (urlToken: string, userName: string, userId: string, avatar: string) => void;
