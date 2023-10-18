@@ -40,7 +40,7 @@ const myBackground = {
   dark: (darkKey: EThemeDark) => {
     const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
     const cssBg =
-      `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item` +
+      `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,#CTZ_OPEN_BUTTON` +
       `,.Card,.ListShortcut>div,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
       `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Menu-item.is-active,.Popover-content button:hover` +
       `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
@@ -73,7 +73,7 @@ const myBackground = {
       `,.Popover button` +
       `{background: transparent!important;}`;
     const cssColor1 =
-      `.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer` +
+      `#CTZ_DIALOG_MAIN,.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON` +
       `,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button` +
       `,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button` +
       `,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div` +
