@@ -7,6 +7,7 @@ import { myBlack } from './black';
 import { myAnswerPDF, myArticlePDF } from './export-PDF';
 import { myListenSelect } from './listen-select';
 import { addTimes } from './time';
+import { updateTopVote } from './topVote';
 
 /** 监听详情回答 - 过滤 */
 export const myListenAnswerItem: IMyListenAnswerItem = {
@@ -28,10 +29,11 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
     } = conf;
     const nodeQuestionAnswer = dom('.QuestionAnswer-content');
     if (nodeQuestionAnswer) {
+      updateTopVote(nodeQuestionAnswer)
       answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
       showBlockUser && myBlack.addButton(nodeQuestionAnswer);
-      myAnswerPDF.addBtn(nodeQuestionAnswer)
-      myArticlePDF.addBtn(nodeQuestionAnswer)
+      myAnswerPDF.addBtn(nodeQuestionAnswer);
+      myArticlePDF.addBtn(nodeQuestionAnswer);
     }
     const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
     // 屏蔽用户名称列表
@@ -106,12 +108,13 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       }
       fnJustNum(elementThis);
       if (!message) {
+        updateTopVote(elementThis);
         // 添加回答时间
         conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
         // 添加「屏蔽用户」按钮
         showBlockUser && myBlack.addButton(elementThis, this);
-        myAnswerPDF.addBtn(elementThis)
-        myArticlePDF.addBtn(elementThis)
+        myAnswerPDF.addBtn(elementThis);
+        myArticlePDF.addBtn(elementThis);
       }
 
       // 最后信息 & 起点位置处理

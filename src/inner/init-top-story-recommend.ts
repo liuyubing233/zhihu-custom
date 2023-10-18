@@ -4,6 +4,7 @@ import { CLASS_NOT_INTERESTED } from '../configs';
 import { myBlack } from '../methods/black';
 import { myAnswerPDF, myArticlePDF } from '../methods/export-PDF';
 import { addTimes } from '../methods/time';
+import { updateTopVote } from '../methods/topVote';
 import { store } from '../store';
 
 /** 推荐列表最外层绑定事件 */
@@ -34,10 +35,11 @@ export const initTopStoryRecommendEvent = () => {
     // 列表内容展示更多
     if (canFindTargeted(target)) {
       setTimeout(() => {
+        updateTopVote(nodeContentItem);
         listItemCreatedAndModifiedTime && addTimes(nodeContentItem);
         showBlockUser && myBlack.addButton(nodeContentItem.parentElement!);
-        myAnswerPDF.addBtn(nodeContentItem.parentElement!)
-        myArticlePDF.addBtn(nodeContentItem.parentElement!)
+        myAnswerPDF.addBtn(nodeContentItem.parentElement!);
+        myArticlePDF.addBtn(nodeContentItem.parentElement!);
       }, 0);
     }
   };

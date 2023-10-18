@@ -8,8 +8,8 @@ import { initData } from './inner/init-data';
 import { initHistoryView } from './inner/init-history-view';
 import { initHTML } from './inner/init-html';
 import { initInviteOnce } from './inner/init-invite-once';
+import { initResizeObserver } from './inner/init-observer-resize';
 import { initOperate } from './inner/init-operate';
-import { initResizeObserver } from './inner/init-resize-observer';
 import { onInitStyleExtra } from './inner/init-style-extra';
 import { needRedirect } from './inner/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
@@ -137,8 +137,8 @@ import { INNER_CSS } from './web-resources';
 
       if (host === 'zhuanlan.zhihu.com') {
         addArticleCreateTimeToTop();
-        const nodeArticle = dom('.Post-content')
-        nodeArticle && myArticlePDF.addBtn(nodeArticle)
+        const nodeArticle = dom('.Post-content');
+        nodeArticle && myArticlePDF.addBtn(nodeArticle);
       }
       fnLog(
         `加载完毕, 加载时长: ${
@@ -171,7 +171,7 @@ import { INNER_CSS } from './web-resources';
       myDialog.hide();
     }
 
-    keydownNextImage(event)
+    keydownNextImage(event);
   });
   unsafeWindow.openCtz = myDialog.open;
 

@@ -780,7 +780,7 @@
       const cssBg = `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,.Card,.ListShortcut>div,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Menu-item.is-active,.Popover-content button:hover,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ,.SettingsMain div:not(.StickerItem-Border),.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item,.Sticky div,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ContentItem-actions.ZVideoToolbar,.List-item .ZVideoToolbar button,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5),.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer,.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white,.css-guh6n2,.css-yqosku{background: ${background}!important;}`;
       const cssBg2 = `.ctz-content-right>div:nth-of-type(2n),body,.Input-wrapper,.Popover-content,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.toolbar-section button:hover,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.Notifications-footer,.skeleton,.Community-ContentLayout,.css-1j8bif6>div,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Sticky a:hover,.Sticky a:hover>div,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.InputLike,.Popover-content div,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover{background:${background2}!important;}`;
       const cssBgTransparent = `.css-3dzt4y,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.css-u4sx7k,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button{background: transparent!important;}`;
-      const cssColor1 = `.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div{color: ${color}!important}`;
+      const cssColor1 = `.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-button,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div{color: ${color}!important}`;
       const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
       const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path{color: ${background2}!important}`;
       const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
@@ -1438,7 +1438,7 @@
       domA(".ctz-content>div").forEach((item) => item.style.display = isThis === item.id ? "flex" : "none");
     }
   };
-  var INNER_HTML = `<div id="CTZ_DIALOG_MAIN" style="display: none"><div class="ctz-header"><span>修改器</span><span class="ctz-version"></span><button id="CTZ_CLOSE_DIALOG"><i class="ctz-icon">&#xe61b;</i></button></div><div class="ctz-menu-top"><a href="#CTZ_BASIS">基础设置</a><a href="#CTZ_LIST">首页列表</a><a href="#CTZ_ANSWER">回答详情</a><a href="#CTZ_ARTICLE">文章专栏</a><a href="#CTZ_HISTORY">历史记录</a><a href="#CTZ_BLACKLIST">黑名单设置</a><a href="#CTZ_DEFAULT">默认功能</a></div><div class="ctz-content"><div id="CTZ_BASIS" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_DEFAULT">基本设置</a><a href="#CTZ_BASIS_FLOAT">悬浮模块</a><a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a><a href="#CTZ_BASIS_HIDDEN">模块隐藏</a><a href="#CTZ_BASIS_COLOR">颜色设置</a><a href="#CTZ_BASIS_CONFIG">配置操作</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置为通用设置，设置完成后在所有页面生效</div><div id="CTZ_BASIS_DEFAULT"><div class="ctz-set-title"><span>基本设置</span></div><div class="ctz-set-content"><div><label><span class="ctz-label">不显示修改器唤醒图标<span class="ctz-icon" style="margin: 0 6px">&#xe603;</span></span><input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" /></label></div><div><label><span class="ctz-label">快捷键唤起编辑器<span class="key-shadow">></span>(<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)</span><input class="ctz-i" name="hotKey" type="checkbox" value="on" /></label></div><div><div class="ctz-label">全局修改网页标题</div><div class="ctz-flex-wrap"><input type="text" name="globalTitle" style="width: 250px" /><button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button><button class="ctz-button" name="buttonResetTitle">还原</button></div></div><div><div class="ctz-label">全局修改网页标题图片（图标可能会因为网络问题丢失）</div><div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div></div><div><div class="ctz-flex-wrap"><div class="ctz-label">回答和文章图片尺寸</div><label><input class="ctz-i" name="zoomImageType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label></div><div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none"><div class="ctz-flex-wrap"><div class="ctz-label">自定义图片尺寸</div><input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" /><span id="zoomImageSize" style="margin:0 8px;">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div><label class="ctz-flex-wrap"><span class="ctz-label">使用弹窗打开动图</span><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></label></div></div><div id="CTZ_BASIS_FLOAT"><div class="ctz-set-title"><span>悬浮模块</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容「收起」按钮悬浮</span><input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" /></label></div><div><div class="ctz-label">信息模块悬浮</div><div class="ctz-commit">拖动悬浮模块定位位置</div><div class="ctz-commit">鼠标放置显示解锁按钮解锁即可拖动<i class="ctz-icon" style="margin-left: 4px">&#xe688;</i></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />首页列表切换</label><label><input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />顶部发现模块</label><label><input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />个人中心模块</label><label><input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />搜索栏模块</label></div></div></div></div><div id="CTZ_BASIS_SHOW_CONTENT"><div class="ctz-set-title"><span>显示修改<span class="ctz-desc" style="color: red;">修改后刷新页面生效</span></span></div><div class="ctz-set-content"><label class="ctz-flex-wrap"><span class="ctz-label">赞同按钮仅显示赞同数</span><input class="ctz-i" name="justVoteNum" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">评论按钮仅显示评论数</span><input class="ctz-i" name="justCommitNum" type="checkbox" value="on" /></label></div></div><div id="CTZ_BASIS_HIDDEN"><div class="ctz-set-title"><span>模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_BASIS_COLOR"><div class="ctz-set-title"><span>颜色设置</span></div><div class="ctz-set-content"><div class="ctz-set-background"><div id="CTZ_BACKGROUND"></div><div class="ctz-commit">浅色颜色选择:</div><div id="CTZ_BACKGROUND_LIGHT"></div><div class="ctz-commit">深色颜色选择:</div><div id="CTZ_BACKGROUND_DARK"></div></div><div class="ctz-set-color ctz-flex-wrap"><div class="ctz-label">修改文字颜色（例: #f7f9f9）</div><input type="text" class="ctz-i" name="colorText1" style="width: 200px" /></div></div></div><div id="CTZ_BASIS_CONFIG"><div class="ctz-set-title"><span>配置操作</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><button class="ctz-button" name="useSimple">启用极简模式</button></div><div class="ctz-config-import-export"><div class="ctz-label">配置导出导入</div><div class="ctz-config-buttons"><button class="ctz-button" name="configExport">导出配置</button><button class="ctz-button" name="configReset">恢复默认配置</button></div><div class="ctz-content"><textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea><button class="ctz-button" name="configImport">导 入</button></div></div><div class="ctz-customize-css"><div class="ctz-label">自定义样式</div><div class="ctz-content"><textarea name="textStyleCustom" placeholder="格式为CSS"></textarea><button class="ctz-button" name="styleCustom">确 定</button></div></div></div></div></div></div><div id="CTZ_LIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_LIST_DEFAULT">基础设置</a><a href="#CTZ_LIST_FILTER">屏蔽内容</a><a href="#CTZ_LIST_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div><div id="CTZ_LIST_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">列表版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" /><span id="versionHome" style="margin: 0 8px;">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">内容标题添加类别显示<span class="ctz-label-tag ctz-label-tag-Answer">问答</span><span class="ctz-label-tag ctz-label-tag-Article">文章</span><span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span></span><input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">推荐列表显示「不感兴趣」按钮</span><input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表更多「···」按钮移动到题目右侧</span><input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">关注列表高亮原创内容</span><input type="checkbox" name="highlightOriginal" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容点击高亮边框</span><input type="checkbox" name="highlightListItem" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容显示发布时间和最后修改时间</span><input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">列表内容标准文字大小</span><input type="number" name="fontSizeForList" class="ctz-i-change" /></div><div><div class="ctz-flex-wrap"><div class="ctz-label">列表视频回答内容尺寸</div><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label></div><div id="CTZ_LIST_VIDEO_SIZE_CUSTOM"><div class="ctz-flex-wrap"><input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" /><span id="zoomListVideoSize" style="margin:0 8px">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div></div></div><div id="CTZ_LIST_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-follow"><div class="ctz-label">关注列表关注人操作屏蔽</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />赞同回答</label><label><input class="ctz-i" name="removeFollowVoteArticle" type="checkbox" value="on" />赞同文章</label><label><input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />关注问题</label></div></div><div class="ctz-filter-me"><label style="display: flex; align-items: center"><span class="ctz-label">关注列表屏蔽自己的操作</span><input class="ctz-i" name="removeMyOperateAtFollow" type="checkbox" value="on" /></label></div><div class="ctz-filter-type"><div class="ctz-label">列表类别屏蔽</div><div class="ctz-commit" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />邀请回答</label><label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label><label><input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label><label><input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label></div></div><div class="ctz-filter-list-vote"><label style="display: flex; align-items: center"><span class="ctz-label">列表低赞内容屏蔽</span><input class="ctz-i" name="removeLessVote" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后「关注、推荐、搜索」列表屏蔽点赞量少于<input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />的内容</div></div><div class="ctz-filter-word"><div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div><input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" style="margin: 4px 0;width: 100%;" /><div id="CTZ_FILTER_WORDS"></div></div></div></div><div id="CTZ_LIST_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_ANSWER" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ANSWER_DEFAULT">基础设置</a><a href="#CTZ_ANSWER_FILTER">屏蔽内容</a><a href="#CTZ_ANSWER_HIDDEN">隐藏模块</a><a href="#CTZ_ANSWER_OPEN">回答展开收起</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后问答内容页面生效</div><div id="CTZ_ANSWER_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">回答版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" /><span id="versionAnswer" style="margin:0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">问题详情显示创建时间和最后修改时间</span><input type="checkbox" name="questionCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容显示创建时间与最后修改时间</span><input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">购物链接显示设置</span><label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label><label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label></div><div class="ctz-flex-wrap"><span class="ctz-label">回答视频显示设置</span><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="1" />仅链接</label><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="2" />隐藏</label></div><div class="ctz-flex-wrap"><span class="ctz-label">回答内容标准文字大小</span><input type="number" name="fontSizeForAnswer" class="ctz-i-change" /></div></div></div><div id="CTZ_ANSWER_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容 <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-defail-who"><div class="ctz-label">屏蔽以下官方账号的回答</div><div style="margin-bottom: 8px; border-bottom: 1px solid #ebebeb; padding-bottom: 4px"><label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />所有知乎官方账号</label></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label><label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label><label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label><label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽「匿名用户」回答</span><input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" /></label></div><div class="ctz-filter-defail-tag"><div class="ctz-label">屏蔽带有以下标签的回答</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏</label><label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label></div></div><div class="ctz-filter-detail-vote"><label style="display: flex; align-items: center"><span class="ctz-label">详情低赞回答屏蔽</span><input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后问题详情页将屏蔽点赞量少于<input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />的回答</div></div></div></div><div id="CTZ_ANSWER_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_ANSWER_OPEN"><div class="ctz-set-title"><span>回答展开收起</span></div><div class="ctz-set-content ctz-flex-wrap"><label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label><label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label><label><input class="ctz-i" type="radio" name="answerOpen" value="off" />默认收起所有长回答</label></div></div></div></div><div id="CTZ_ARTICLE" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ARTICLE_DEFAULT">基础设置</a><a href="#CTZ_ARTICLE_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后在专栏文章页面生效</div><div id="CTZ_ARTICLE_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">文章版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" /><span id="versionArticle" style="margin: 0 8px;">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">文章发布时间置顶</span><input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">文章内容标准文字大小</span><input type="number" name="fontSizeForArticle" class="ctz-i-change" /></div></div></div><div id="CTZ_ARTICLE_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_HISTORY" style="display: none"><div class="ctz-content-left"><a href="#CTZ_HISTORY_LIST">推荐列表缓存</a><a href="#CTZ_HISTORY_VIEW">浏览历史记录</a></div><div class="ctz-content-right"><div id="CTZ_HISTORY_LIST"><div class="ctz-set-title"><span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span></div><button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button><div class="ctz-set-content"></div></div><div id="CTZ_HISTORY_VIEW"><div class="ctz-set-title"><span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span></div><button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button><div class="ctz-set-content"></div></div></div></div><div id="CTZ_BLACKLIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_BLOCK">黑名单设置</a></div><div class="ctz-content-right"><div id="CTZ_BASIS_BLOCK"><div class="ctz-set-title"><span>黑名单设置</span></div><div class="ctz-set-content"><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button><div class="ctz-flex-wrap"><label><span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span><input class="ctz-i" name="showBlockUser" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽黑名单用户发布的内容</span><input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" /></label></div><div><div class="ctz-label">黑名单列表</div><div id="CTZ-BLOCK-LIST"></div></div></div></div></div></div><div id="CTZ_DEFAULT" style="display: none"><div class="ctz-content-left"><a href="#CTZ_DEFAULT_CONTENT">默认功能</a></div><div class="ctz-content-right"><div id="CTZ_DEFAULT_CONTENT"><div class="ctz-set-title"><span>默认功能<span class="ctz-desc">此部分功能为编辑器默认功能，不需要额外开启</span></span></div><div class="ctz-set-content"><div id="CTZ_DEFAULT_SELF"></div><div class="ctz-zhihu-self"><div class="ctz-zhihu-key">更加方便的浏览，按<span class="key-shadow">?</span>（<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。<a href="/settings/preference" target="_blank">前往开启快捷键功能</a></div></div></div></div></div></div></div><div class="ctz-footer"></div></div><div id="CTZ_OPEN_BUTTON" class="ctz-icon">&#xe603;</div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE"><div><img src="" /></div></div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO"><div><video src="" autoplay loop></video></div></div><iframe class="ctz-pdf-box-content" style="display: none"></iframe>`;
+  var INNER_HTML = `<div id="CTZ_DIALOG_MAIN" style="display: none"><div class="ctz-header"><span>修改器</span><span class="ctz-version"></span><button id="CTZ_CLOSE_DIALOG"><i class="ctz-icon">&#xe61b;</i></button></div><div class="ctz-menu-top"><a href="#CTZ_BASIS">基础设置</a><a href="#CTZ_LIST">首页列表</a><a href="#CTZ_ANSWER">回答详情</a><a href="#CTZ_ARTICLE">文章专栏</a><a href="#CTZ_HISTORY">历史记录</a><a href="#CTZ_BLACKLIST">黑名单设置</a><a href="#CTZ_DEFAULT">默认功能</a></div><div class="ctz-content"><div id="CTZ_BASIS" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_DEFAULT">基本设置</a><a href="#CTZ_BASIS_FLOAT">悬浮模块</a><a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a><a href="#CTZ_BASIS_HIDDEN">模块隐藏</a><a href="#CTZ_BASIS_COLOR">颜色设置</a><a href="#CTZ_BASIS_CONFIG">配置操作</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置为通用设置，设置完成后在所有页面生效</div><div id="CTZ_BASIS_DEFAULT"><div class="ctz-set-title"><span>基本设置</span></div><div class="ctz-set-content"><div><label><span class="ctz-label">不显示修改器唤醒图标<span class="ctz-icon" style="margin: 0 6px">&#xe603;</span></span><input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" /></label></div><div><label><span class="ctz-label">快捷键唤起编辑器<span class="key-shadow">></span>(<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)</span><input class="ctz-i" name="hotKey" type="checkbox" value="on" /></label></div><div><div class="ctz-label">全局修改网页标题</div><div class="ctz-flex-wrap"><input type="text" name="globalTitle" style="width: 250px" /><button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button><button class="ctz-button" name="buttonResetTitle">还原</button></div></div><div><div class="ctz-label">全局修改网页标题图片（图标可能会因为网络问题丢失）</div><div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div></div><div><div class="ctz-flex-wrap"><div class="ctz-label">回答和文章图片尺寸</div><label><input class="ctz-i" name="zoomImageType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label></div><div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none"><div class="ctz-flex-wrap"><div class="ctz-label">自定义图片尺寸</div><input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" /><span id="zoomImageSize" style="margin:0 8px;">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div><label class="ctz-flex-wrap"><span class="ctz-label">使用弹窗打开动图</span><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></label></div></div><div id="CTZ_BASIS_FLOAT"><div class="ctz-set-title"><span>悬浮模块</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容「收起」按钮悬浮</span><input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" /></label></div><div><div class="ctz-label">信息模块悬浮</div><div class="ctz-commit">拖动悬浮模块定位位置</div><div class="ctz-commit">鼠标放置显示解锁按钮解锁即可拖动<i class="ctz-icon" style="margin-left: 4px">&#xe688;</i></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />首页列表切换</label><label><input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />顶部发现模块</label><label><input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />个人中心模块</label><label><input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />搜索栏模块</label></div></div></div></div><div id="CTZ_BASIS_SHOW_CONTENT"><div class="ctz-set-title"><span>显示修改<span class="ctz-desc" style="color: red;">修改后刷新页面生效</span></span></div><div class="ctz-set-content"><label class="ctz-flex-wrap"><span class="ctz-label">赞同按钮仅显示数字</span><input class="ctz-i" name="justVoteNum" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">评论按钮仅显示数字</span><input class="ctz-i" name="justCommitNum" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">内容顶部显示赞同数</span><input class="ctz-i" name="topVote" type="checkbox" value="on" /></label></div></div><div id="CTZ_BASIS_HIDDEN"><div class="ctz-set-title"><span>模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_BASIS_COLOR"><div class="ctz-set-title"><span>颜色设置</span></div><div class="ctz-set-content"><div class="ctz-set-background"><div id="CTZ_BACKGROUND"></div><div class="ctz-commit">浅色颜色选择:</div><div id="CTZ_BACKGROUND_LIGHT"></div><div class="ctz-commit">深色颜色选择:</div><div id="CTZ_BACKGROUND_DARK"></div></div><div class="ctz-set-color ctz-flex-wrap"><div class="ctz-label">修改文字颜色（例: #f7f9f9）</div><input type="text" class="ctz-i" name="colorText1" style="width: 200px" /></div></div></div><div id="CTZ_BASIS_CONFIG"><div class="ctz-set-title"><span>配置操作</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><button class="ctz-button" name="useSimple">启用极简模式</button></div><div class="ctz-config-import-export"><div class="ctz-label">配置导出导入</div><div class="ctz-config-buttons"><button class="ctz-button" name="configExport">导出配置</button><button class="ctz-button" name="configReset">恢复默认配置</button></div><div class="ctz-content"><textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea><button class="ctz-button" name="configImport">导 入</button></div></div><div class="ctz-customize-css"><div class="ctz-label">自定义样式</div><div class="ctz-content"><textarea name="textStyleCustom" placeholder="格式为CSS"></textarea><button class="ctz-button" name="styleCustom">确 定</button></div></div></div></div></div></div><div id="CTZ_LIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_LIST_DEFAULT">基础设置</a><a href="#CTZ_LIST_FILTER">屏蔽内容</a><a href="#CTZ_LIST_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div><div id="CTZ_LIST_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">列表版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" /><span id="versionHome" style="margin: 0 8px;">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">内容标题添加类别显示<span class="ctz-label-tag ctz-label-tag-Answer">问答</span><span class="ctz-label-tag ctz-label-tag-Article">文章</span><span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span></span><input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">推荐列表显示「不感兴趣」按钮</span><input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表更多「···」按钮移动到题目右侧</span><input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">关注列表高亮原创内容</span><input type="checkbox" name="highlightOriginal" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容点击高亮边框</span><input type="checkbox" name="highlightListItem" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容显示发布时间和最后修改时间</span><input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">列表内容标准文字大小</span><input type="number" name="fontSizeForList" class="ctz-i-change" /></div><div><div class="ctz-flex-wrap"><div class="ctz-label">列表视频回答内容尺寸</div><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label></div><div id="CTZ_LIST_VIDEO_SIZE_CUSTOM"><div class="ctz-flex-wrap"><input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" /><span id="zoomListVideoSize" style="margin:0 8px">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div></div></div><div id="CTZ_LIST_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-follow"><div class="ctz-label">关注列表关注人操作屏蔽</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />赞同回答</label><label><input class="ctz-i" name="removeFollowVoteArticle" type="checkbox" value="on" />赞同文章</label><label><input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />关注问题</label></div></div><div class="ctz-filter-me"><label style="display: flex; align-items: center"><span class="ctz-label">关注列表屏蔽自己的操作</span><input class="ctz-i" name="removeMyOperateAtFollow" type="checkbox" value="on" /></label></div><div class="ctz-filter-type"><div class="ctz-label">列表类别屏蔽</div><div class="ctz-commit" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />邀请回答</label><label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label><label><input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label><label><input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label></div></div><div class="ctz-filter-list-vote"><label style="display: flex; align-items: center"><span class="ctz-label">列表低赞内容屏蔽</span><input class="ctz-i" name="removeLessVote" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后「关注、推荐、搜索」列表屏蔽点赞量少于<input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />的内容</div></div><div class="ctz-filter-word"><div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div><input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" style="margin: 4px 0;width: 100%;" /><div id="CTZ_FILTER_WORDS"></div></div></div></div><div id="CTZ_LIST_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_ANSWER" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ANSWER_DEFAULT">基础设置</a><a href="#CTZ_ANSWER_FILTER">屏蔽内容</a><a href="#CTZ_ANSWER_HIDDEN">隐藏模块</a><a href="#CTZ_ANSWER_OPEN">回答展开收起</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后问答内容页面生效</div><div id="CTZ_ANSWER_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">回答版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" /><span id="versionAnswer" style="margin:0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">问题详情显示创建时间和最后修改时间</span><input type="checkbox" name="questionCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容显示创建时间与最后修改时间</span><input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">购物链接显示设置</span><label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label><label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label></div><div class="ctz-flex-wrap"><span class="ctz-label">回答视频显示设置</span><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="1" />仅链接</label><label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="2" />隐藏</label></div><div class="ctz-flex-wrap"><span class="ctz-label">回答内容标准文字大小</span><input type="number" name="fontSizeForAnswer" class="ctz-i-change" /></div></div></div><div id="CTZ_ANSWER_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容 <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-defail-who"><div class="ctz-label">屏蔽以下官方账号的回答</div><div style="margin-bottom: 8px; border-bottom: 1px solid #ebebeb; padding-bottom: 4px"><label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />所有知乎官方账号</label></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label><label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label><label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label><label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽「匿名用户」回答</span><input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" /></label></div><div class="ctz-filter-defail-tag"><div class="ctz-label">屏蔽带有以下标签的回答</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏</label><label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label></div></div><div class="ctz-filter-detail-vote"><label style="display: flex; align-items: center"><span class="ctz-label">详情低赞回答屏蔽</span><input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后问题详情页将屏蔽点赞量少于<input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />的回答</div></div></div></div><div id="CTZ_ANSWER_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_ANSWER_OPEN"><div class="ctz-set-title"><span>回答展开收起</span></div><div class="ctz-set-content ctz-flex-wrap"><label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label><label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label><label><input class="ctz-i" type="radio" name="answerOpen" value="off" />默认收起所有长回答</label></div></div></div></div><div id="CTZ_ARTICLE" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ARTICLE_DEFAULT">基础设置</a><a href="#CTZ_ARTICLE_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后在专栏文章页面生效</div><div id="CTZ_ARTICLE_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div><div class="ctz-flex-wrap"><div class="ctz-label">文章版心宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" /><span id="versionArticle" style="margin: 0 8px;">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">文章发布时间置顶</span><input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">文章内容标准文字大小</span><input type="number" name="fontSizeForArticle" class="ctz-i-change" /></div></div></div><div id="CTZ_ARTICLE_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_HISTORY" style="display: none"><div class="ctz-content-left"><a href="#CTZ_HISTORY_LIST">推荐列表缓存</a><a href="#CTZ_HISTORY_VIEW">浏览历史记录</a></div><div class="ctz-content-right"><div id="CTZ_HISTORY_LIST"><div class="ctz-set-title"><span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span></div><button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button><div class="ctz-set-content"></div></div><div id="CTZ_HISTORY_VIEW"><div class="ctz-set-title"><span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span></div><button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button><div class="ctz-set-content"></div></div></div></div><div id="CTZ_BLACKLIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_BLOCK">黑名单设置</a></div><div class="ctz-content-right"><div id="CTZ_BASIS_BLOCK"><div class="ctz-set-title"><span>黑名单设置</span></div><div class="ctz-set-content"><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button><div class="ctz-flex-wrap"><label><span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span><input class="ctz-i" name="showBlockUser" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽黑名单用户发布的内容</span><input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" /></label></div><div><div class="ctz-label">黑名单列表</div><div id="CTZ-BLOCK-LIST"></div></div></div></div></div></div><div id="CTZ_DEFAULT" style="display: none"><div class="ctz-content-left"><a href="#CTZ_DEFAULT_CONTENT">默认功能</a></div><div class="ctz-content-right"><div id="CTZ_DEFAULT_CONTENT"><div class="ctz-set-title"><span>默认功能<span class="ctz-desc">此部分功能为编辑器默认功能，不需要额外开启</span></span></div><div class="ctz-set-content"><div id="CTZ_DEFAULT_SELF"></div><div class="ctz-zhihu-self"><div class="ctz-zhihu-key">更加方便的浏览，按<span class="key-shadow">?</span>（<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。<a href="/settings/preference" target="_blank">前往开启快捷键功能</a></div></div></div></div></div></div></div><div class="ctz-footer"></div></div><div id="CTZ_OPEN_BUTTON" class="ctz-icon">&#xe603;</div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE"><div><img src="" /></div></div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO"><div><video src="" autoplay loop></video></div></div><iframe class="ctz-pdf-box-content" style="display: none"></iframe>`;
   var INNER_CSS = `@font-face{font-family:'tp-icon';src:url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.woff2?t=1670580424651') format('woff2'),url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.woff?t=1670580424651') format('woff'),url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.ttf?t=1670580424651') format('truetype')}.hover-style{cursor:pointer}.hover-style:hover{color:#1677ff !important}.ctz-icon{font-family:'tp-icon' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}#CTZ_OPEN_BUTTON{position:fixed;left:0;top:100px;font-size:18px;height:48px;line-height:48px;text-align:center;width:48px;border-radius:0 8px 8px 0;background:rgba(255,255,255,0.6);cursor:pointer;user-select:none;transform:translate(-30px);transition:transform .5s;z-index:200}#CTZ_OPEN_BUTTON:hover{transform:translate(0)}#CTZ_DIALOG_MAIN{position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);width:800px;height:600px;border-radius:8px;box-shadow:0 6px 16px 0 rgba(0,0,0,0.08),0 3px 6px -4px rgba(0,0,0,0.12),0 9px 28px 8px rgba(0,0,0,0.05);background:#fff;z-index:201;flex-direction:column;font-size:14px;padding:16px;transition:all .2s}#CTZ_DIALOG_MAIN input[type='text'],#CTZ_DIALOG_MAIN input[type='number']{box-sizing:border-box;margin:0;padding:4px 11px;font-size:14px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border-width:1px;border-style:solid;border-color:#d9d9d9;border-radius:6px;transition:all .2s}#CTZ_DIALOG_MAIN textarea{box-sizing:border-box;margin:0;padding:4px 11px;font-size:14px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border-width:1px;border-style:solid;border-color:#d9d9d9;border-radius:6px;transition:all .2s}#CTZ_DIALOG_MAIN label{cursor:pointer;transition:all .2s}#CTZ_DIALOG_MAIN label:hover{color:#1677ff !important}#CTZ_DIALOG_MAIN a{transition:all .2s;text-decoration:none;color:inherit}.ctz-header{font-weight:600;font-size:16px;line-height:1.5;word-wrap:break-word}.ctz-version{padding-left:8px;font-size:12px}#CTZ_CLOSE_DIALOG{float:right;padding:0;color:rgba(0,0,0,0.45);font-weight:600;line-height:1;text-decoration:none;background:transparent;border-radius:4px;width:22px;height:22px;border:0;outline:0;transition:all .2s}#CTZ_CLOSE_DIALOG i{font-size:14px}#CTZ_CLOSE_DIALOG:hover{color:rgba(0,0,0,0.88);background-color:rgba(0,0,0,0.06);text-decoration:none}.ctz-menu-top{height:46px;border-bottom:1px solid #b0b0b0;display:flex}.ctz-menu-top a{flex:1;line-height:46px;text-align:center;cursor:pointer;border-bottom:4px solid transparent;transition:all .2s}.ctz-menu-top a:hover{color:#1677ff !important;border-bottom-color:#1677ff !important}.ctz-menu-top a.target{border-bottom-color:#121212}.ctz-content{flex:1;display:flex;overflow:hidden}.ctz-content>div{width:100%}.ctz-content ::-webkit-scrollbar{width:8px;height:8px}.ctz-content ::-webkit-scrollbar-track{border-radius:0}.ctz-content ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:8px}.ctz-content ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.ctz-content-left{width:130px;border-right:1px solid #b0b0b0}.ctz-content-left a{transition:all .2s;margin:2px 0;padding-left:16px;height:40px;line-height:40px;display:flex;font-size:14px;border-radius:8px}.ctz-content-left a:hover{background:#e6f4ff;color:#1677ff !important}.ctz-content-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 8px}.ctz-content-right>div:nth-of-type(2n){background:#efefef;padding:0 8px;margin:0 -8px;box-shadow:#999 0 0 5px inset;border-radius:8px}.ctz-set-title{font-weight:bold;height:36px;line-height:36px;font-size:16px;overflow:hidden;vertical-align:middle}.ctz-set-title>span{vertical-align:middle;display:inline-block}.ctz-set-content:not(.ctz-flex-wrap)>div,.ctz-set-content:not(.ctz-flex-wrap)>label{padding-bottom:8px;margin-bottom:8px;border-bottom:1px dashed #ddd}.ctz-set-content:not(.ctz-flex-wrap)>div:last-of-type,.ctz-set-content:not(.ctz-flex-wrap)>label:last-of-type{border-bottom:0}.ctz-footer{border-top:1px solid #b0b0b0;height:40px;line-height:40px;font-size:16px}.ctz-footer a{margin-right:16px;cursor:pointer}.ctz-footer a:hover{color:#1677ff !important}.ctz-dark{display:flex;height:28px;align-items:center}.ctz-desc,.ctz-commit{color:#666;font-size:12px}.ctz-desc{padding-left:4px}.ctz-alert-red{text-align:center;font-size:16px;color:red;height:36px;line-height:36px;background-color:#fff2f0;border:1px solid #ffccc7;border-radius:8px;margin:4px 0}.ctz-label{font-size:14px;line-height:24px}.ctz-label::after{content:'：'}#CTZ_BACKGROUND,#CTZ_BACKGROUND_LIGHT,#CTZ_BACKGROUND_DARK{display:grid;grid-template-columns:30% 30% 30%;gap:8px}#CTZ_BACKGROUND>label,#CTZ_BACKGROUND_LIGHT>label,#CTZ_BACKGROUND_DARK>label{position:relative}#CTZ_BACKGROUND>label input,#CTZ_BACKGROUND_LIGHT>label input,#CTZ_BACKGROUND_DARK>label input{position:absolute;visibility:hidden}#CTZ_BACKGROUND>label input:checked+div,#CTZ_BACKGROUND_LIGHT>label input:checked+div,#CTZ_BACKGROUND_DARK>label input:checked+div{border:4px solid #1677ff;margin:0 !important}#CTZ_BACKGROUND>label div,#CTZ_BACKGROUND_LIGHT>label div,#CTZ_BACKGROUND_DARK>label div{font-size:14px;border-radius:8px;line-height:50px;padding-left:30px;margin:4px}.ctz-set-background .ctz-commit{line-height:24px;font-size:14px}#CTZ_BASIS_CONFIG .ctz-config-buttons{padding:8px 0}#CTZ_BASIS_CONFIG .ctz-config-buttons button{margin-right:8px}#CTZ_BASIS_CONFIG .ctz-content textarea{margin-right:8px;flex:1}[name='inputFilterWord']{height:24px;width:300px;border-radius:4px}#CTZ_FILTER_WORDS{display:flex;flex-wrap:wrap;cursor:default}#CTZ_FILTER_WORDS>span{padding:2px 8px;border-radius:4px;font-size:12px;background-color:#909090;margin:4px 4px 0 0;color:#fff;display:flex;align-items:center}#CTZ_FILTER_WORDS>span>i{font-size:14px;margin-left:2px;cursor:pointer}#CTZ_FILTER_WORDS>span>i:hover{color:#1677ff !important}.ctz-flex-wrap{display:flex;flex-wrap:wrap;line-height:24px}.ctz-flex-wrap label{margin-right:4px;display:flex;align-items:center}.ctz-flex-wrap label input[type='radio']{margin:0 4px 0 0}.ctz-button{outline:none;position:relative;display:inline-block;font-weight:400;white-space:nowrap;text-align:center;border:1px solid transparent;cursor:pointer;transition:all .2s cubic-bezier(.645, .045, .355, 1);user-select:none;touch-action:manipulation;line-height:1.5;font-size:14px;height:32px;padding:4px 15px;border-radius:6px;background-color:#ffffff;border-color:#d9d9d9;color:rgba(0,0,0,0.88);box-shadow:0 2px 0 rgba(0,0,0,0.02)}.ctz-button:hover{color:#4096ff;border-color:#4096ff}.ctz-not-interested{color:#999;font-size:12px;border:1px solid #999;border-radius:4px;padding:0 4px;margin-left:6px}.ctz-not-interested:hover{border-color:#1677ff !important;color:#1677ff !important}.ctz-video-download,.ctz-loading{position:absolute;top:20px;left:20px;font-size:24px;color:rgba(255,255,255,0.9);cursor:pointer}.ctz-loading{animation:loadingAnimation 2s infinite}@keyframes loadingAnimation{from{transform:rotate(0)}to{transform:rotate(360deg)}}#CTZ-BLOCK-LIST{display:flex;flex-wrap:wrap;margin:0 -8px;padding:8px}.ctz-black-item{height:30px;line-height:30px;box-sizing:content-box;padding:4px 8px;margin:0 8px 8px 0;display:flex;align-items:center;background:#fff;border-radius:8px;border:1px solid #b0b0b0}.ctz-black-item img{width:30px;height:30px;margin-right:4px}.ctz-black-item .ctz-remove-block:hover,.ctz-black-item a:hover{color:#1677ff;transition:all .2s}.ctz-black-item .ctz-remove-block{width:30px;height:30px;text-align:center}.ctz-black-item .ctz-remove-block:hover{background:#d9d9d9;border-radius:8px}.ctz-block-box>button,.ctz-button-block{padding:2px 8px;color:#666;border:1px solid #666;border-radius:4px;font-size:12px;margin-left:12px}.ctz-block-box>button:hover,.ctz-button-block:hover{border-color:#0461cf;color:#0461cf}.ctz-button-red{color:#e55353 !important;border:1px solid #e55353 !important}.ctz-button-red:hover{color:#ec7259 !important;border:1px solid #ec7259 !important}.ctz-preview{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;overflow-y:auto;z-index:200;background-color:rgba(18,18,18,0.4)}.ctz-preview div{display:flex;justify-content:center;align-items:center;min-height:100%;width:100%}.ctz-preview div img{cursor:zoom-out;user-select:none}#CTZ_TITLE_ICO label{margin:0 4px 4px 0}#CTZ_TITLE_ICO label input{display:none}#CTZ_TITLE_ICO label input:checked+img{border:4px solid #0461cf}#CTZ_TITLE_ICO label img{width:40px;height:40px;border:4px solid transparent}.ctz-label-tag{font-weight:normal;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff;margin:0 2px}.ctz-label-tag-Answer{background:#ec7259}.ctz-label-tag-ZVideo{background:#12c2e9}.ctz-label-tag-Article{background:#00965e}.ctz-question-time{color:#999 !important;font-size:14px !important;font-weight:normal !important;line-height:24px}.ctz-stop-scroll{height:100% !important;overflow:hidden !important}#CTZ_DEFAULT_SELF>div{line-height:24px;margin-bottom:4px}#CTZ_DEFAULT_SELF>div .ctz-commit{font-weight:normal}#CTZ_DEFAULT_SELF>div a{color:#1677ff}#CTZ_DEFAULT_SELF>div a:hover{color:#bbb}.ctz-export-collection-box{float:right;text-align:right}.ctz-export-collection-box button{font-size:16px}.ctz-export-collection-box p{font-size:14px;color:#666;margin:4px 0}.ctz-pdf-dialog-item{padding:12px;border-bottom:1px solid #eee;margin:12px;background:#ffffff}.ctz-pdf-dialog-title{margin:0 0 1.4em;font-size:20px;font-weight:bold}.ctz-pdf-box-content{width:100%;background:#ffffff}.ctz-pdf-view{width:100%;background:#ffffff;word-break:break-all;white-space:pre-wrap;font-size:14px;overflow-x:hidden}.ctz-pdf-view a{color:#0066ff}.ctz-pdf-view img{max-width:100%}.ctz-pdf-view p{margin:1.4em 0}.ctz-unlock,.ctz-lock,.ctz-lock-mask{display:none;color:#999;cursor:pointer}.ctz-unlock,.ctz-lock{margin:4px}.ctz-lock-mask{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:198}.position-suspensionSearch,.position-suspensionFind,.position-suspensionUser{position:fixed;z-index:100}.position-suspensionSearch:hover .ctz-unlock,.position-suspensionFind:hover .ctz-unlock,.position-suspensionUser:hover .ctz-unlock,.Topstory-container .TopstoryTabs:hover .ctz-unlock{display:block}.position-suspensionSearch.ctz-move-this .ctz-unlock,.position-suspensionFind.ctz-move-this .ctz-unlock,.position-suspensionUser.ctz-move-this .ctz-unlock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-unlock{display:none !important}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock,.position-suspensionSearch.ctz-move-this .ctz-lock-mask,.position-suspensionFind.ctz-move-this .ctz-lock-mask,.position-suspensionUser.ctz-move-this .ctz-lock-mask,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock-mask{display:block}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock{z-index:199;color:#cccccc}.position-suspensionFind{display:flex;flex-direction:column;margin:0 !important}.position-suspensionFind .Tabs-item{padding:0 !important;margin-bottom:4px}.position-suspensionFind .Tabs-item .Tabs-link{padding:8px !important;border-radius:4px}.position-suspensionFind .Tabs-item .Tabs-link::after{content:'' !important;display:none !important}.position-suspensionUser{width:fit-content !important;margin:0 !important;display:flex;flex-direction:column}.position-suspensionUser .AppHeader-messages,.position-suspensionUser .AppHeader-notifications{margin-right:0 !important;margin-bottom:12px}.position-suspensionUser .AppHeader-login,.position-suspensionUser .AppHeader-login~button{display:none}.SearchBar{flex:1}.position-suspensionSearch{line-height:30px;border-radius:16px;width:20px;transition:width .5s}.position-suspensionSearch .SearchBar-input-focus .ctz-search-pick-up{display:none}.position-suspensionSearch.focus{width:300px}.position-suspensionSearch.focus>form,.position-suspensionSearch.focus>button,.position-suspensionSearch.focus .ctz-search-pick-up{display:block}.position-suspensionSearch.focus .ctz-search-icon{display:none}.position-suspensionSearch.focus:hover{width:324px}.position-suspensionSearch .ctz-search-icon,.position-suspensionSearch .ctz-search-pick-up{cursor:pointer;color:#0066ff}.position-suspensionSearch .ctz-search-icon:hover,.position-suspensionSearch .ctz-search-pick-up:hover{color:#005ce6}.position-suspensionSearch .ctz-search-pick-up{font-size:24px;margin-left:4px}.position-suspensionSearch>form,.position-suspensionSearch>button,.position-suspensionSearch .ctz-search-pick-up{display:none}.position-suspensionSearch .ctz-search-icon{display:block}.key-shadow{border:1px solid #e0e0e0;border-radius:4px;box-shadow:rgba(0,0,0,0.06) 0 1px 1px 0;font-weight:600;min-width:26px;height:26px;padding:0px 6px;text-align:center}.ContentItem-title div{display:inline}#CTZ_HISTORY_LIST .ctz-set-content,#CTZ_HISTORY_VIEW .ctz-set-content{word-break:break-all}#CTZ_HISTORY_LIST .ctz-set-content a,#CTZ_HISTORY_VIEW .ctz-set-content a{cursor:pointer}#CTZ_HISTORY_LIST .ctz-set-content a:hover,#CTZ_HISTORY_VIEW .ctz-set-content a:hover{color:#1677ff !important}[name='button_history_clear'],[name='button_history_clear'],#CTZ-BUTTON-SYNC-BLOCK{min-width:88px;margin-bottom:8px}[name='button_history_clear'] i,[name='button_history_clear'] i,#CTZ-BUTTON-SYNC-BLOCK i{top:0px;left:28px;color:#909090}.ctz-zhihu-key a{color:#1677ff !important}.ctz-zhihu-key a:hover{color:#bbb !important}#root .css-1liaddi{margin-right:0}`;
   var initHTML = () => {
     const { getUserinfo } = store;
@@ -1507,579 +1507,6 @@
     };
     const nodeTopBar = domInvitation.querySelector(".Topbar");
     nodeTopBar && nodeTopBar.appendChild(nButton);
-  };
-  var myScroll = {
-    stop: () => dom("body").classList.add("ctz-stop-scroll"),
-    on: () => dom("body").classList.remove("ctz-stop-scroll")
-  };
-  var echoHistory = () => {
-    const { list, view } = store.getHistory();
-    const nodeList = dom("#CTZ_HISTORY_LIST .ctz-set-content");
-    const nodeView = dom("#CTZ_HISTORY_VIEW .ctz-set-content");
-    nodeList && (nodeList.innerHTML = list.join("<br/>"));
-    nodeView && (nodeView.innerHTML = view.join("<br/>"));
-  };
-  var myDialog = {
-    open: async () => {
-      const nodeDialog = domById(ID_DIALOG);
-      nodeDialog && (nodeDialog.style.display = "flex");
-      myScroll.stop();
-      const isChangeConfig = await myStorage.initConfig();
-      isChangeConfig && echoData();
-      const isChangeHistory = await myStorage.initHistory();
-      isChangeHistory && echoHistory();
-    },
-    hide: () => {
-      const nodeDialog = domById(ID_DIALOG);
-      nodeDialog && (nodeDialog.style.display = "none");
-      myScroll.on();
-    }
-  };
-  var myHidden = {
-    init: function() {
-      fnInitDomStyle("CTZ_STYLE_HIDDEN", this.change() || "");
-    },
-    change: function() {
-      const { getConfig } = store;
-      const pfConfig = getConfig();
-      const cssHidden = Object.keys(this.cssForKey).map((key) => pfConfig[key] ? this.cssForKey[key] : "").join("");
-      let cssHiddenMore = "";
-      this.cssForKeysArray.forEach(({ keys, value }) => {
-        let trueNumber = 0;
-        keys.forEach((key) => pfConfig[key] && trueNumber++);
-        trueNumber === keys.length && (cssHiddenMore += value);
-      });
-      return cssHidden + cssHiddenMore;
-    },
-    cssForKey: {
-      hiddenLogo: `.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo{display: none!important;}`,
-      hiddenHeader: `.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}.PubIndex-CategoriesHeader{top: 0!important;}`,
-      hiddenHeaderScroll: `.AppHeader.is-fixed{display:none!important;}`,
-      hiddenItemActions: `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint{visibility:hidden!important;height:0!important;padding:0!important;}.TopstoryQuestionAskItem-hint{margin: 0!important;}.Topstory .ContentItem-actions{padding: 0!important;}.SearchResult-Card .ContentItem-actions{display: none;}`,
-      hiddenAnswerText: `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}.VoteButton{color: #8590a6!important; }.VoteButton.is-active{color: #056de8!important;}.ContentItem-action{margin-left:8px!important;}.Search-questionFollowButton{display: none}`,
-      hiddenQuestionTag: ".QuestionHeader-tags{display: none!important;}",
-      hiddenQuestionShare: ".zhihu .Popover.ShareMenu{display: none!important;}",
-      hiddenQuestionActions: ".QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}",
-      hiddenReward: ".Reward{display: none!important;}",
-      hiddenZhuanlanTag: ".Post-topicsAndReviewer{display: none!important;}",
-      hiddenListImg: `.RichContent-cover,.HotItem-img{display:none!important;}.HotItem-metrics--bottom{position: initial!important;}`,
-      hiddenReadMoreText: ".ContentItem-more{font-size:0!important;}",
-      hiddenAD: ".TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}",
-      hiddenAnswers: `.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine,.TopstoryQuestionAskItem .RichContent .RichContent-inner,.HotItem-content .HotItem-excerpt,.Topstory-recommend .ZVideoItem-video, .Topstory-recommend .VideoAnswerPlayer{display: none;}`,
-      hiddenListVideoContent: `.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}`,
-      hiddenZhuanlanActions: ".RichContent-actions.is-fixed>.ContentItem-actions{display: none;}",
-      hiddenZhuanlanTitleImage: ".css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}",
-      hiddenFixedActions: `.ContentItem .RichContent-actions.is-fixed,.List-item .RichContent-actions.is-fixed{visibility: hidden!important;}`,
-      hiddenHotItemMetrics: ".HotItem-content .HotItem-metrics{display: none;}",
-      hiddenHotItemIndex: ".HotItem-index{display: none;}.HotItem{padding: 16px!important;}",
-      hiddenHotItemLabel: ".HotItem-label{display: none;}",
-      hiddenDetailAvatar: ".AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}",
-      hiddenDetailBadge: ".AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}",
-      // hiddenDetailVoters: '.AnswerItem .Voters button{display: none;}',
-      hiddenWhoVoters: ".css-1vqda4a{display: none!important;}",
-      hiddenDetailName: ".AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}",
-      hiddenDetailFollow: ".AnswerItem .AuthorInfo .FollowButton{display: none;}",
-      hiddenHomeTab: ".Topstory-container .TopstoryTabs{display: none!important;}",
-      hiddenQuestionSide: ".QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}",
-      hiddenQuestionFollowing: ".QuestionHeader .FollowButton{display: none;}",
-      hiddenQuestionAnswer: ".QuestionHeader .FollowButton ~ a{display: none;}",
-      hiddenQuestionInvite: ".QuestionHeader .QuestionHeaderActions>button:first-child{display: none;}",
-      hiddenSearchPageTopSearch: ".Search-container .TopSearch{display: none;}",
-      hiddenSearchPageFooter: ".Search-container .Footer,.Search-container footer{display: none;}",
-      hiddenSearchBoxTopSearch: ".SearchBar-noValueMenu .AutoComplete-group:first-child{display:none;}",
-      hiddenZhuanlanShare: ".zhuanlan .Post-SideActions .Popover.ShareMenu{display: none!important;}",
-      hiddenZhuanlanVoters: ".zhuanlan .Post-SideActions .like{display: none!important;}",
-      hiddenFollowAction: ".TopstoryItem-isFollow .FeedSource-firstline{display: none;}",
-      hiddenFollowChooseUser: ".TopstoryItem-isFollow .AuthorInfo{display: none;}",
-      hiddenAnswerRightFooter: ".Question-sideColumn{display: none!important;}.Question-main .Question-mainColumn,.ListShortcut{width: inherit;}",
-      hiddenAnswerRightFooterAnswerAuthor: ".Question-sideColumn .AnswerAuthor{display: none;}",
-      hiddenAnswerRightFooterFavorites: ".Question-sideColumn .AnswerAuthor + .Card{display: none;}",
-      hiddenAnswerRightFooterRelatedQuestions: '.Question-sideColumn [data-za-detail-view-path-module="RelatedQuestions"]{display: none;}',
-      hiddenAnswerRightFooterContentList: '.Question-sideColumn [data-za-detail-view-path-module="ContentList"]{display: none;}',
-      hiddenAnswerRightFooterFooter: ".Question-sideColumn .Footer{display: none;}",
-      hidden618HongBao: '.MCNLinkCard[data-mcn-source="淘宝"],.MCNLinkCard[data-mcn-source="京东"],.MCNLinkCard[data-mcn-source="知乎"]{display:none;}',
-      hiddenZhuanlanFollowButton: ".zhuanlan .FollowButton{display: none;}",
-      hiddenZhuanlanAvatarWrapper: ".zhuanlan .AuthorInfo-avatarWrapper{display: none;}",
-      hiddenZhuanlanAuthorInfoHead: ".zhuanlan .AuthorInfo-head{display: none;}",
-      hiddenZhuanlanAuthorInfoDetail: ".zhuanlan .AuthorInfo-detail{display: none;}",
-      hiddenListAnswerInPerson: ".Topstory-mainColumn .LabelContainer{display: none;}",
-      hiddenQuestionSpecial: ".QuestionHeader .LabelContainer-wrapper{display: none;}",
-      hiddenHomeCreatorEntrance: ".Topstory .css-19idom{display: none;}",
-      hiddenHomeRecommendFollow: ".Topstory .css-173vipd{display: none;}",
-      hiddenHomeCategory: ".Topstory .GlobalSideBar-category{display: none;}",
-      hiddenHomeCategoryMore: '.Topstory .Card[aria-label="更多分类入口"]{display:none;}',
-      hiddenHomeFooter: ".Topstory .Footer,.Topstory footer{display: none;}",
-      hiddenAnswerItemActions: ".Question-main .ContentItem-actions{display: none;}",
-      hiddenAnswerItemTime: ".Question-main .ContentItem-time{display: none;margin: 0;}",
-      hiddenAppHeaderTabHome: ".AppHeader-Tab:nth-of-type(1){display: none}",
-      hiddenAppHeaderTabZhi: ".AppHeader-Tab:nth-of-type(2){display: none}",
-      hiddenAppHeaderTabVIP: ".AppHeader-Tab:nth-of-type(3){display: none}",
-      hiddenAppHeaderTabFind: ".AppHeader-Tab:nth-of-type(4){display: none}",
-      hiddenAppHeaderTabWaitingForYou: ".AppHeader-Tab:nth-of-type(5){display: none}",
-      hiddenHomeListTabFollow: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-follow"]{display: none}',
-      hiddenHomeListTabRecommend: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-recommend"]{display: none}',
-      hiddenHomeListTabHot: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-hot"]{display: none}',
-      hiddenHomeListTabVideo: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-zvideo"]{display: none}',
-      hiddenHomeListTab: ".Topstory-container .TopstoryTabs{display: none}",
-      hiddenQuestionGoodQuestion: ".QuestionPage .QuestionHeader .GoodQuestionAction{display: none}",
-      hiddenQuestionComment: ".QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}",
-      hiddenQuestionMore: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
-      hiddenOpenButton: "#CTZ_OPEN_BUTTON{display: none;}",
-      hiddenTopAD: ".App-main .Topstory>div:first-of-type:not(.Topstory-container){display: none}",
-      hiddenCommitReply: ".Comments-container .css-140jo2 button:first-of-type{display:none;}",
-      hiddenCommitVote: ".Comments-container .css-140jo2 button:last-of-type{display:none;}",
-      hiddenCommitBottom: ".Comments-container .css-140jo2{display:none;}"
-    },
-    cssForKeysArray: [
-      {
-        keys: ["hiddenSearchPageTopSearch", "hiddenSearchPageFooter"],
-        value: ".SearchSideBar{display: none}"
-      },
-      {
-        keys: ["hiddenHomeCreatorEntrance", "hiddenHomeRecommendFollow", "hiddenHomeCategory", "hiddenHomeCategoryMore", "hiddenHomeFooter"],
-        value: ".Topstory-mainColumn{margin: 0 auto;}"
-      },
-      {
-        keys: ["hiddenHomeListTabFollow", "hiddenHomeListTabRecommend", "hiddenHomeListTabHot", "hiddenHomeListTabVideo"],
-        value: ".Topstory-container .TopstoryTabs{display: none}"
-      }
-    ]
-  };
-  var myPreview = {
-    // 开启预览弹窗
-    open: function(src, even, isVideo) {
-      const nameDom = isVideo ? this.evenPathVideo : this.evenPathImg;
-      const idDom = isVideo ? this.idVideo : this.idImg;
-      const nodeName = dom(nameDom);
-      const nodeId = domById(idDom);
-      nodeName && (nodeName.src = src);
-      nodeId && (nodeId.style.display = "block");
-      even && (this.even = even);
-      myScroll.stop();
-    },
-    // 关闭预览弹窗
-    hide: function(pEvent) {
-      if (this.even) {
-        this.even.click();
-        this.even = null;
-      }
-      pEvent.style.display = "none";
-      const nodeImg = dom(this.evenPathImg);
-      const nodeVideo = dom(this.evenPathVideo);
-      nodeImg && (nodeImg.src = "");
-      nodeVideo && (nodeVideo.src = "");
-      myScroll.on();
-    },
-    even: null,
-    evenPathImg: "#CTZ_PREVIEW_IMAGE img",
-    evenPathVideo: "#CTZ_PREVIEW_VIDEO video",
-    idImg: "CTZ_PREVIEW_IMAGE",
-    idVideo: "CTZ_PREVIEW_VIDEO"
-  };
-  var callbackGIF = (mutationsList) => {
-    const target = mutationsList[0].target;
-    const targetClassList = target.classList;
-    const { showGIFinDialog } = store.getConfig();
-    if (!(targetClassList.contains("isPlaying") && !targetClassList.contains("css-1isopsn") && showGIFinDialog))
-      return;
-    const nodeVideo = target.querySelector("video");
-    const nodeImg = target.querySelector("img");
-    const srcImg = nodeImg ? nodeImg.src : "";
-    nodeVideo ? myPreview.open(nodeVideo.src, target, true) : myPreview.open(srcImg, target);
-  };
-  var observerGIF = new MutationObserver(callbackGIF);
-  function previewGIF() {
-    const { showGIFinDialog } = store.getConfig();
-    if (showGIFinDialog) {
-      const config = { attributes: true, attributeFilter: ["class"] };
-      domA(".GifPlayer").forEach((event) => observerGIF.observe(event, config));
-    } else {
-      observerGIF.disconnect();
-    }
-  }
-  var keydownNextImage = (event) => {
-    const { key } = event;
-    const nodeImgDialog = dom(".css-ypb3io");
-    if ((key === "ArrowRight" || key === "ArrowLeft") && nodeImgDialog) {
-      const src = nodeImgDialog.src;
-      const nodeImage = dom(`img[src="${src}"]`);
-      const nodeContentInner = domP(nodeImage, "class", "RichContent-inner") || domP(nodeImage, "class", "Post-RichTextContainer") || domP(nodeImage, "class", "QuestionRichText");
-      if (nodeContentInner) {
-        const nodesImageList = Array.from(nodeContentInner.querySelectorAll("img"));
-        const index = nodesImageList.findIndex((i) => i.src === src);
-        const dialogChange = (nodeDialog, nodeImage2) => {
-          const { width, height, src: src2 } = nodeImage2;
-          const { innerWidth, innerHeight } = window;
-          const aspectRatioWindow = innerWidth / innerHeight;
-          const aspectRatioImage = width / height;
-          const scale = aspectRatioImage > aspectRatioWindow ? (innerWidth - 200) / width : (innerHeight - 50) / height;
-          const top = document.documentElement.scrollTop;
-          const left = innerWidth / 2 - width * scale / 2;
-          nodeDialog.src = src2;
-          nodeDialog.style.cssText = nodeDialog.style.cssText + `width: ${width}px;height: ${height}px;top: ${top}px;left: ${left}px;transform: translateX(0) translateY(0) scale(${scale}) translateZ(0px);will-change:unset;transform-origin: 0 0;`;
-        };
-        if (key === "ArrowRight" && index < nodesImageList.length - 1) {
-          dialogChange(nodeImgDialog, nodesImageList[index + 1]);
-          return;
-        }
-        if (key === "ArrowLeft" && index > 0) {
-          dialogChange(nodeImgDialog, nodesImageList[index - 1]);
-          return;
-        }
-      }
-    }
-  };
-  var myListenListItem = {
-    index: 0,
-    init: async function() {
-      const { getConfig, getHistory, getUserinfo } = store;
-      const pfConfig = getConfig();
-      const {
-        filterKeywords = [],
-        removeItemAboutVideo,
-        removeItemAboutArticle,
-        removeLessVote,
-        lessVoteNumber = 0,
-        removeItemQuestionAsk,
-        removeFollowVoteAnswer,
-        removeFollowVoteArticle,
-        removeFollowFQuestion,
-        listOutPutNotInterested,
-        highlightOriginal,
-        themeDark = "1" /* 夜间护眼一 */,
-        themeLight = "0" /* 默认 */,
-        removeMyOperateAtFollow
-      } = pfConfig;
-      const elements = domA(".TopstoryItem");
-      let lessNum = 0;
-      await myStorage.initHistory();
-      const pfHistory = getHistory();
-      const historyList = pfHistory.list;
-      for (let i = this.index, len = elements.length; i < len; i++) {
-        let message = "";
-        let dataZop = {};
-        let cardContent = {};
-        const nodeItem = elements[i];
-        const nodeItemContent = nodeItem.querySelector(".ContentItem");
-        if (!nodeItem.scrollHeight || !nodeItemContent)
-          continue;
-        if (listOutPutNotInterested) {
-          const elementNotInterested = domC("button", { innerText: "不感兴趣", className: CLASS_NOT_INTERESTED });
-          const nodeContentItemTitle = nodeItem.querySelector(".ContentItem-title");
-          !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(elementNotInterested);
-        }
-        try {
-          dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
-          cardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
-        } catch {
-        }
-        const { itemId = "", title = "", type = "" } = dataZop || {};
-        if (removeMyOperateAtFollow && nodeItem.classList.contains("TopstoryItem-isFollow")) {
-          try {
-            const userinfo = getUserinfo();
-            const nodeUserLink = nodeItem.querySelector(".UserLink .UserLink-link");
-            const findUserId = nodeUserLink.href.match(/[^\/]+$/)[0];
-            const myUserId = userinfo.url.match(/[^\/]+$/)[0];
-            findUserId === myUserId && (message = "关注列表屏蔽自己的操作");
-          } catch {
-          }
-        }
-        const haveVideo = nodeItemContent.classList.contains("ZVideoItem") && removeItemAboutVideo;
-        const haveArticle = nodeItemContent.classList.contains("ArticleItem") && removeItemAboutArticle;
-        (haveVideo || haveArticle) && !message && (message = "列表种类屏蔽");
-        if (removeLessVote && !message) {
-          (cardContent["upvote_num"] || 0) < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"]}`);
-        }
-        const elementQuestionAsk = nodeItem.querySelector(".TopstoryQuestionAskItem");
-        if (removeItemQuestionAsk && elementQuestionAsk && !message) {
-          message = "屏蔽邀请回答";
-        }
-        const isFilterFollowerOperate = removeFollowVoteAnswer || removeFollowVoteArticle || removeFollowFQuestion;
-        if (isFilterFollowerOperate && !message && nodeItem.classList.contains("TopstoryItem-isFollow")) {
-          const nodeFirstLine = nodeItem.querySelector(".FeedSource-firstline");
-          const textFollowerOperate = nodeFirstLine ? nodeFirstLine.innerText : "";
-          for (let itemOperate of FILTER_FOLLOWER_OPERATE) {
-            const thisRep = new RegExp(itemOperate.rep);
-            if (pfConfig[itemOperate.key] && thisRep.test(textFollowerOperate)) {
-              message = `屏蔽关注人操作: ${textFollowerOperate}`;
-              break;
-            }
-          }
-        }
-        if (!message) {
-          let matchedWord = "";
-          for (let itemWord of filterKeywords) {
-            const rep = new RegExp(itemWord.toLowerCase());
-            if (rep.test(title.toLowerCase())) {
-              matchedWord += `「${itemWord}」`;
-              break;
-            }
-          }
-          if (matchedWord) {
-            const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-            const routeURL = elementItemProp && elementItemProp.getAttribute("content");
-            doFetchNotInterested({ id: String(itemId), type });
-            message = `屏蔽列表内容: ${title},匹配屏蔽词：${matchedWord}, 链接：${routeURL}`;
-          }
-        }
-        const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
-        const userName = userNameE ? userNameE.innerText : "";
-        if (highlightOriginal && dataZop && dataZop.authorName === userName && !message) {
-          const highlight = `background: ${isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : themeLight === "0" /* 默认 */ ? "#fff3d4!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`}`;
-          const nodeActions = nodeItem.querySelector(".ContentItem-actions");
-          nodeItem.style.cssText = `${highlight}border: 1px solid #aaa;`;
-          nodeActions && (nodeActions.style.cssText = highlight);
-        }
-        message && (lessNum = fnHiddenDom(lessNum, nodeItem, message));
-        if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
-          const nodeATitle = nodeItem.querySelector(".ContentItem-title a");
-          if (nodeATitle) {
-            const itemHref = nodeATitle.href;
-            const itemTitle = nodeATitle.innerText;
-            const itemA = `<a href="${itemHref}" target="_blank">${itemTitle}</a>`;
-            if (!historyList.includes(itemA)) {
-              historyList.unshift(itemA);
-            }
-          }
-        }
-        fnJustNum(nodeItem);
-        if (i + 1 === len) {
-          const nI = i - lessNum >= 0 ? i - lessNum : 0;
-          this.index = nI;
-          myStorage.historyUpdate("list", historyList);
-        }
-      }
-    },
-    reset: function() {
-      this.index = 0;
-    },
-    restart: function() {
-      this.reset();
-      this.init();
-    }
-  };
-  var timeFormatter = (time, formatter = "YYYY-MM-DD HH:mm:ss") => {
-    if (!time)
-      return "";
-    const date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    const sec = date.getSeconds();
-    const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
-    return formatter.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
-  };
-  var addTimes = (event) => {
-    const className = "ctz-list-item-time";
-    const node = event.querySelector(`.${className}`);
-    node && node.remove();
-    const nodeCreated = event.querySelector('[itemprop="dateCreated"]');
-    const nodePublished = event.querySelector('[itemprop="datePublished"]');
-    const nodeModified = event.querySelector('[itemprop="dateModified"]');
-    const crTime = nodeCreated ? nodeCreated.content : "";
-    const puTime = nodePublished ? nodePublished.content : "";
-    const muTime = nodeModified ? nodeModified.content : "";
-    const created = timeFormatter(crTime || puTime);
-    const modified = timeFormatter(muTime);
-    const nodeMeta = event.querySelector(".ContentItem-meta");
-    if (!created || !nodeMeta)
-      return;
-    nodeMeta.appendChild(
-      domC("div", {
-        className,
-        style: "line-height: 24px;padding-top: 6px;",
-        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`
-      })
-    );
-  };
-  var addQuestionCreatedAndModifiedTime = () => {
-    const { getConfig } = store;
-    const className = "ctz-question-time";
-    const nodeTime = dom(`.${className}`);
-    nodeTime && nodeTime.remove();
-    const conf = getConfig();
-    const nodeCreated = dom('[itemprop="dateCreated"]');
-    const nodeModified = dom('[itemprop="dateModified"]');
-    if (!(conf.questionCreatedAndModifiedTime && nodeCreated && nodeModified))
-      return;
-    const created = timeFormatter(nodeCreated.content);
-    const modified = timeFormatter(nodeModified.content);
-    const nodeTitle = dom(".QuestionPage .QuestionHeader-title");
-    nodeTitle && nodeTitle.appendChild(
-      domC("div", {
-        className,
-        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`
-      })
-    );
-  };
-  var addArticleCreateTimeToTop = () => {
-    const { getConfig } = store;
-    const className = "ctz-article-create-time";
-    const nodeT = dom(`.${className}`);
-    nodeT && nodeT.remove();
-    const conf = getConfig();
-    const nodeContentTime = dom(".ContentItem-time");
-    const nodeHeader = dom(".Post-Header");
-    if (!(conf.articleCreateTimeToTop && nodeContentTime && nodeHeader))
-      return;
-    nodeHeader.appendChild(
-      domC("span", {
-        className,
-        style: "color: #8590a6;line-height: 30px;",
-        innerHTML: nodeContentTime.innerText || ""
-      })
-    );
-  };
-  var myVideo = {
-    index: 0,
-    timeout: null,
-    init: function() {
-      this.timeout && clearTimeout(this.timeout);
-      if (this.index < 30) {
-        this.timeout = setTimeout(() => {
-          if (domA("#player video").length) {
-            this.index = 0;
-            domA("#player>div").forEach((even) => {
-              const elementDownload = domC("i", { className: "ctz-icon ctz-video-download", innerHTML: "&#xe608;" });
-              const elementLoading = domC("i", { className: "ctz-icon ctz-loading", innerHTML: "&#xe605;" });
-              elementDownload.onclick = () => {
-                const url = elementDownload.parentElement.parentElement.querySelector("video").src;
-                if (url) {
-                  elementDownload.style.display = "none";
-                  even.appendChild(elementLoading);
-                  const name = url.match(/(?<=\/)[\d\w-\.]+(?=\?)/)[0];
-                  videoDownload(url, name).then(() => {
-                    elementDownload.style.display = "block";
-                    elementLoading.remove();
-                  });
-                }
-              };
-              const nodeDownload = even.querySelector(".ctz-video-download");
-              nodeDownload && nodeDownload.remove();
-              even.appendChild(elementDownload);
-            });
-          } else {
-            this.init();
-            this.index++;
-          }
-        }, 500);
-      }
-    }
-  };
-  var videoDownload = async (url, name) => {
-    return fetch(url).then((res) => res.blob()).then((blob) => {
-      const objectUrl = window.URL.createObjectURL(blob);
-      const elementA = domC("a", {
-        download: name,
-        href: objectUrl
-      });
-      elementA.click();
-      window.URL.revokeObjectURL(objectUrl);
-      elementA.remove();
-    });
-  };
-  var zoomVideos = () => {
-    const { getConfig } = store;
-    const { linkAnswerVideo } = getConfig();
-    if (linkAnswerVideo !== "1")
-      return;
-    const itemClick = (item) => {
-      item.onclick = () => {
-        const itemParent = domP(item, "class", "VideoAnswerPlayer");
-        if (itemParent) {
-          const nodeVideo = itemParent.querySelector(".VideoAnswerPlayer-video video");
-          const videoLink = nodeVideo ? nodeVideo.src : "";
-          videoLink && window.open(videoLink);
-        } else {
-          const nodeVideoCard = item.querySelector(".VideoCard");
-          nodeVideoCard && (nodeVideoCard.style.cssText = `opacity: 1;height: auto;`);
-        }
-      };
-    };
-    domA(".VideoContributionAnswer-container").forEach(itemClick);
-    domA(".RichText-video").forEach(itemClick);
-    domA(".VideoAnswerPlayer-stateBar").forEach(itemClick);
-  };
-  var fixVideoAutoPlay = () => {
-    var originalPlay = HTMLMediaElement.prototype.play;
-    HTMLMediaElement.prototype.play = function() {
-      if (!this.offsetHeight) {
-        return;
-      }
-      return originalPlay.apply(this, arguments);
-    };
-  };
-  var fnChanger = async (ev) => {
-    const doCssVersion = [
-      "questionTitleTag",
-      "fixedListItemMore",
-      "linkShopping",
-      "highlightListItem",
-      "zoomImageType",
-      "zoomImageSize",
-      "versionHome",
-      "versionAnswer",
-      "versionArticle",
-      "fontSizeForList",
-      "fontSizeForAnswer",
-      "fontSizeForArticle",
-      "zoomListVideoType",
-      "zoomListVideoSize"
-    ];
-    const { name, value, checked, type } = ev;
-    const changeBackground = () => {
-      myVersion.change();
-      loadBackground();
-      myListenListItem.restart();
-      onUseThemeDark();
-    };
-    const ob = {
-      [INPUT_NAME_THEME]: changeBackground,
-      [INPUT_NAME_ThEME_LIGHT]: changeBackground,
-      [INPUT_NAME_THEME_DARK]: changeBackground,
-      colorText1: changeBackground,
-      suspensionHomeTab: () => {
-        myVersion.change();
-        changeSuspensionTab();
-      },
-      suspensionFind: cacheHeader,
-      suspensionSearch: cacheHeader,
-      suspensionUser: cacheHeader,
-      titleIco: changeICO,
-      showGIFinDialog: previewGIF,
-      questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
-      highlightOriginal: () => {
-        myListenListItem.restart();
-      },
-      listOutPutNotInterested: () => {
-        myListenListItem.restart();
-      },
-      articleCreateTimeToTop: addArticleCreateTimeToTop,
-      linkAnswerVideo: () => {
-        myVersion.change();
-        zoomVideos();
-      }
-    };
-    await myStorage.configUpdateItem(name, type === "checkbox" ? checked : value);
-    const nodeName = domById(name);
-    type === "range" && nodeName && (nodeName.innerText = value);
-    if (/^hidden/.test(name)) {
-      myHidden.init();
-      return;
-    }
-    if (doCssVersion.includes(name)) {
-      myVersion.change();
-      return;
-    }
-    ob[name] && ob[name]();
-  };
-  var onInitStyleExtra = () => {
-    myHidden.init();
-    loadBackground();
-    myVersion.init();
-    loadFindTheme();
   };
   var QUERY_CLASS_PDF_IFRAME = ".ctz-pdf-box-content";
   var myCollectionExport = {
@@ -2216,6 +1643,676 @@
     doc.write(content);
     iframe.contentWindow.print();
   };
+  var myScroll = {
+    stop: () => dom("body").classList.add("ctz-stop-scroll"),
+    on: () => dom("body").classList.remove("ctz-stop-scroll")
+  };
+  var myPreview = {
+    // 开启预览弹窗
+    open: function(src, even, isVideo) {
+      const nameDom = isVideo ? this.evenPathVideo : this.evenPathImg;
+      const idDom = isVideo ? this.idVideo : this.idImg;
+      const nodeName = dom(nameDom);
+      const nodeId = domById(idDom);
+      nodeName && (nodeName.src = src);
+      nodeId && (nodeId.style.display = "block");
+      even && (this.even = even);
+      myScroll.stop();
+    },
+    // 关闭预览弹窗
+    hide: function(pEvent) {
+      if (this.even) {
+        this.even.click();
+        this.even = null;
+      }
+      pEvent.style.display = "none";
+      const nodeImg = dom(this.evenPathImg);
+      const nodeVideo = dom(this.evenPathVideo);
+      nodeImg && (nodeImg.src = "");
+      nodeVideo && (nodeVideo.src = "");
+      myScroll.on();
+    },
+    even: null,
+    evenPathImg: "#CTZ_PREVIEW_IMAGE img",
+    evenPathVideo: "#CTZ_PREVIEW_VIDEO video",
+    idImg: "CTZ_PREVIEW_IMAGE",
+    idVideo: "CTZ_PREVIEW_VIDEO"
+  };
+  var callbackGIF = (mutationsList) => {
+    const target = mutationsList[0].target;
+    const targetClassList = target.classList;
+    const { showGIFinDialog } = store.getConfig();
+    if (!(targetClassList.contains("isPlaying") && !targetClassList.contains("css-1isopsn") && showGIFinDialog))
+      return;
+    const nodeVideo = target.querySelector("video");
+    const nodeImg = target.querySelector("img");
+    const srcImg = nodeImg ? nodeImg.src : "";
+    nodeVideo ? myPreview.open(nodeVideo.src, target, true) : myPreview.open(srcImg, target);
+  };
+  var observerGIF = new MutationObserver(callbackGIF);
+  function previewGIF() {
+    const { showGIFinDialog } = store.getConfig();
+    if (showGIFinDialog) {
+      const config = { attributes: true, attributeFilter: ["class"] };
+      domA(".GifPlayer").forEach((event) => observerGIF.observe(event, config));
+    } else {
+      observerGIF.disconnect();
+    }
+  }
+  var keydownNextImage = (event) => {
+    const { key } = event;
+    const nodeImgDialog = dom(".css-ypb3io");
+    if ((key === "ArrowRight" || key === "ArrowLeft") && nodeImgDialog) {
+      const src = nodeImgDialog.src;
+      const nodeImage = dom(`img[src="${src}"]`);
+      const nodeContentInner = domP(nodeImage, "class", "RichContent-inner") || domP(nodeImage, "class", "Post-RichTextContainer") || domP(nodeImage, "class", "QuestionRichText");
+      if (nodeContentInner) {
+        const nodesImageList = Array.from(nodeContentInner.querySelectorAll("img"));
+        const index = nodesImageList.findIndex((i) => i.src === src);
+        const dialogChange = (nodeDialog, nodeImage2) => {
+          const { width, height, src: src2 } = nodeImage2;
+          const { innerWidth, innerHeight } = window;
+          const aspectRatioWindow = innerWidth / innerHeight;
+          const aspectRatioImage = width / height;
+          const scale = aspectRatioImage > aspectRatioWindow ? (innerWidth - 200) / width : (innerHeight - 50) / height;
+          const top = document.documentElement.scrollTop;
+          const left = innerWidth / 2 - width * scale / 2;
+          nodeDialog.src = src2;
+          nodeDialog.style.cssText = nodeDialog.style.cssText + `width: ${width}px;height: ${height}px;top: ${top}px;left: ${left}px;transform: translateX(0) translateY(0) scale(${scale}) translateZ(0px);will-change:unset;transform-origin: 0 0;`;
+        };
+        if (key === "ArrowRight" && index < nodesImageList.length - 1) {
+          dialogChange(nodeImgDialog, nodesImageList[index + 1]);
+          return;
+        }
+        if (key === "ArrowLeft" && index > 0) {
+          dialogChange(nodeImgDialog, nodesImageList[index - 1]);
+          return;
+        }
+      }
+    }
+  };
+  var myListenSelect = {
+    isSortFirst: true,
+    observer: void 0,
+    keySort: "default",
+    /** 添加回答排序 */
+    answerSortIds: {
+      "Select1-0": { key: "default", name: "默认排序" },
+      "Select1-1": { key: "update", name: "按时间排序" },
+      "Select1-2": { key: "vote", name: "点赞数排序" },
+      "Select1-3": { key: "comment", name: "评论数排序" }
+    },
+    sortKeys: { vote: "点赞数排序", comment: "评论数排序" },
+    /** 加载监听问题详情里的.Select-button按钮 */
+    init: function() {
+      const classSelectButton = ".Select-button";
+      const { href } = location;
+      if (this.keySort === "vote" || this.keySort === "comment") {
+        const elementBtn = dom(classSelectButton);
+        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, this.sortKeys[this.keySort]));
+      }
+      const clickSort = (id) => {
+        myListenAnswerItem.reset();
+        const { key, name } = this.answerSortIds[id];
+        this.keySort = key;
+        const elementBtn = dom(classSelectButton);
+        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name));
+        if (key === "vote" || key === "comment") {
+          location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, "") + "?sort=" + key;
+        } else if (key === "default") {
+          /\?sort=/.test(href) && (location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ""));
+        }
+      };
+      const btn = dom(classSelectButton);
+      if (btn) {
+        try {
+          this.observer?.disconnect();
+        } catch {
+        }
+        const buConfig = { attribute: true, attributeFilter: ["aria-expanded"] };
+        this.observer = new MutationObserver(() => {
+          const elementSelect = dom(".Answers-select");
+          if (btn.getAttribute("aria-expanded") === "true" && elementSelect) {
+            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-2", innerHTML: "点赞数排序" }));
+            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-3", innerHTML: "评论数排序" }));
+            domA(".Select-option").forEach((ev) => {
+              ev.onclick = () => clickSort(ev.id);
+            });
+          }
+        });
+        this.observer.observe(btn, buConfig);
+      }
+    },
+    addSort: function() {
+      const keySort = this.keySort;
+      if ((keySort === "vote" || keySort === "comment") && this.isSortFirst) {
+        const element = dom(".List>div:nth-child(2)>div");
+        if (!element)
+          return;
+        const arrElement = Array.from(element.querySelectorAll(".List-item:not(.PlaceHolder)")).sort((a, b) => {
+          const answerItemA = a.querySelector(".AnswerItem");
+          const extraA = answerItemA ? answerItemA.getAttribute("data-za-extra-module") || "{}" : "{}";
+          const contentA = JSON.parse(extraA).card.content;
+          const answerItemB = b.querySelector(".AnswerItem");
+          const extraB = answerItemB ? answerItemB.getAttribute("data-za-extra-module") || "{}" : "{}";
+          const contentB = JSON.parse(extraB).card.content;
+          switch (keySort) {
+            case "vote":
+              return contentA.upvote_num - contentB.upvote_num;
+            case "comment":
+              return contentA.comment_num - contentB.comment_num;
+            default:
+              return 1;
+          }
+        });
+        const listItem = element.querySelector(".List-item:not(.PlaceHolder)");
+        listItem && listItem.remove();
+        const eleFirst = element.querySelector(":first-child");
+        arrElement.forEach((item, index) => {
+          element.insertBefore(item, index === 0 ? eleFirst : arrElement[index - 1]);
+        });
+        this.isSortFirst = false;
+      }
+    }
+  };
+  var timeFormatter = (time, formatter = "YYYY-MM-DD HH:mm:ss") => {
+    if (!time)
+      return "";
+    const date = new Date(time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const min = date.getMinutes();
+    const sec = date.getSeconds();
+    const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
+    return formatter.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
+  };
+  var addTimes = (event) => {
+    const className = "ctz-list-item-time";
+    const node = event.querySelector(`.${className}`);
+    node && node.remove();
+    const nodeCreated = event.querySelector('[itemprop="dateCreated"]');
+    const nodePublished = event.querySelector('[itemprop="datePublished"]');
+    const nodeModified = event.querySelector('[itemprop="dateModified"]');
+    const crTime = nodeCreated ? nodeCreated.content : "";
+    const puTime = nodePublished ? nodePublished.content : "";
+    const muTime = nodeModified ? nodeModified.content : "";
+    const created = timeFormatter(crTime || puTime);
+    const modified = timeFormatter(muTime);
+    const nodeMeta = event.querySelector(".ContentItem-meta");
+    if (!created || !nodeMeta)
+      return;
+    nodeMeta.appendChild(
+      domC("div", {
+        className,
+        style: "line-height: 24px;padding-top: 2px;",
+        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`
+      })
+    );
+  };
+  var addQuestionCreatedAndModifiedTime = () => {
+    const { getConfig } = store;
+    const className = "ctz-question-time";
+    const nodeTime = dom(`.${className}`);
+    nodeTime && nodeTime.remove();
+    const conf = getConfig();
+    const nodeCreated = dom('[itemprop="dateCreated"]');
+    const nodeModified = dom('[itemprop="dateModified"]');
+    if (!(conf.questionCreatedAndModifiedTime && nodeCreated && nodeModified))
+      return;
+    const created = timeFormatter(nodeCreated.content);
+    const modified = timeFormatter(nodeModified.content);
+    const nodeTitle = dom(".QuestionPage .QuestionHeader-title");
+    nodeTitle && nodeTitle.appendChild(
+      domC("div", {
+        className,
+        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`
+      })
+    );
+  };
+  var addArticleCreateTimeToTop = () => {
+    const { getConfig } = store;
+    const className = "ctz-article-create-time";
+    const nodeT = dom(`.${className}`);
+    nodeT && nodeT.remove();
+    const conf = getConfig();
+    const nodeContentTime = dom(".ContentItem-time");
+    const nodeHeader = dom(".Post-Header");
+    if (!(conf.articleCreateTimeToTop && nodeContentTime && nodeHeader))
+      return;
+    nodeHeader.appendChild(
+      domC("span", {
+        className,
+        style: "color: #8590a6;line-height: 30px;",
+        innerHTML: nodeContentTime.innerText || ""
+      })
+    );
+  };
+  var updateTopVote = (nodeItem) => {
+    if (!nodeItem)
+      return;
+    const nodeContentItemMeta = nodeItem.querySelector(".ContentItem-meta");
+    const nodeMetaVote = nodeItem.querySelector('[itemprop="upvoteCount"]');
+    const { topVote } = store.getConfig();
+    if (!nodeMetaVote || !topVote || !nodeContentItemMeta)
+      return;
+    const vote = nodeMetaVote.content;
+    if (+vote === 0)
+      return;
+    const className = "ctz-top-vote";
+    const domVotePrev = nodeContentItemMeta.querySelector(`.${className}`);
+    const innerHTML = `${vote} 个赞`;
+    if (domVotePrev) {
+      domVotePrev.innerHTML = innerHTML;
+    } else {
+      const domVote = domC("div", {
+        className,
+        innerHTML,
+        style: "font-size: 14px;padding-top: 2px;"
+      });
+      nodeContentItemMeta.appendChild(domVote);
+      const metaObserver = new MutationObserver(() => {
+        updateTopVote(nodeItem);
+      });
+      metaObserver.observe(nodeMetaVote, {
+        attributes: true,
+        childList: false,
+        characterData: false,
+        characterDataOldValue: false,
+        subtree: false
+      });
+    }
+  };
+  var myListenAnswerItem = {
+    index: 0,
+    init: function() {
+      const { getConfig } = store;
+      const conf = getConfig();
+      myListenSelect.addSort();
+      const {
+        removeLessVoteDetail,
+        lessVoteNumberDetail = 0,
+        answerOpen,
+        removeZhihuOfficial,
+        removeBlockUserContent,
+        removeBlockUserContentList,
+        showBlockUser,
+        removeAnonymousAnswer,
+        answerItemCreatedAndModifiedTime
+      } = conf;
+      const nodeQuestionAnswer = dom(".QuestionAnswer-content");
+      if (nodeQuestionAnswer) {
+        updateTopVote(nodeQuestionAnswer);
+        answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
+        showBlockUser && myBlack.addButton(nodeQuestionAnswer);
+        myAnswerPDF.addBtn(nodeQuestionAnswer);
+        myArticlePDF.addBtn(nodeQuestionAnswer);
+      }
+      const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
+      let hiddenUsers = [];
+      for (let i in HIDDEN_ANSWER_ACCOUNT) {
+        conf[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
+      }
+      removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i) => i.name || "")));
+      const elements = domA(".AnswersNavWrapper .List-item");
+      let lessNum = 0;
+      for (let i = this.index, len = elements.length; i < len; i++) {
+        let message = "";
+        const elementThis = elements[i];
+        const elementInfo = elementThis.querySelector(".ContentItem");
+        if (!elementInfo)
+          continue;
+        let dataZop = {};
+        let dataCardContent = {};
+        try {
+          dataZop = JSON.parse(elementInfo.getAttribute("data-zop") || "{}");
+          dataCardContent = JSON.parse(elementInfo.getAttribute("data-za-extra-module") || "{}").card.content;
+        } catch {
+        }
+        (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
+        if (removeZhihuOfficial && !message) {
+          const labelE = elementThis.querySelector(".AuthorInfo-name .css-n99yhz");
+          const label = labelE ? labelE.getAttribute("aria-label") || "" : "";
+          /知乎[\s]*官方帐号/.test(label) && (message = "已删除一条知乎官方帐号的回答");
+        }
+        let isHiddenTag = false;
+        hiddenTags.forEach((i2) => conf[i2] && (isHiddenTag = true));
+        if (isHiddenTag && !message) {
+          const nodeTag1 = elementThis.querySelector(".KfeCollection-AnswerTopCard-Container");
+          const nodeTag2 = elementThis.querySelector(".LabelContainer-wrapper");
+          const text1 = nodeTag1 ? nodeTag1.innerText : "";
+          const text2 = nodeTag2 ? nodeTag2.innerText : "";
+          const tagText = text1 + text2;
+          hiddenTags.forEach((i2) => {
+            if (conf[i2]) {
+              const nReg = new RegExp(HIDDEN_ANSWER_TAG[i2]);
+              nReg.test(tagText) && (message = `已删除一条标签${HIDDEN_ANSWER_TAG[i2]}的回答`);
+            }
+          });
+        }
+        hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName || "") && (message = `已删除${dataZop.authorName}的回答`);
+        if (removeAnonymousAnswer && !message) {
+          const userName = elementThis.querySelector('[itemprop="name"]').content;
+          userName === "匿名用户" && (message = `已屏蔽一条「匿名用户」回答`);
+        }
+        if (!message && answerOpen) {
+          const unFoldButton = elementThis.querySelector(".ContentItem-expandButton");
+          const foldButton = elementThis.querySelector(".RichContent-collapsedText");
+          const isNotOpen = !elementThis.classList.contains(OB_CLASS_FOLD.on);
+          const isNotClose = !elementThis.classList.contains(OB_CLASS_FOLD.off);
+          if (answerOpen === "on" && isNotOpen) {
+            unFoldButton && unFoldButton.click();
+            elementThis.classList.add(OB_CLASS_FOLD.on);
+            lessNum++;
+          }
+          const isF = foldButton && elementThis.offsetHeight > 939;
+          const isFC = unFoldButton;
+          if (answerOpen === "off" && isNotClose && (isF || isFC)) {
+            elementThis.classList.add(OB_CLASS_FOLD.off);
+            isF && foldButton && foldButton.click();
+            lessNum++;
+          }
+        }
+        fnJustNum(elementThis);
+        if (!message) {
+          updateTopVote(elementThis);
+          conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
+          showBlockUser && myBlack.addButton(elementThis, this);
+          myAnswerPDF.addBtn(elementThis);
+          myArticlePDF.addBtn(elementThis);
+        }
+        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
+        this.index = fnIndexMath(this.index, i, len, lessNum);
+      }
+    },
+    reset: function() {
+      this.index = 0;
+    },
+    restart: function() {
+      this.reset();
+      this.init();
+    }
+  };
+  var myListenListItem = {
+    index: 0,
+    init: async function() {
+      const { getConfig, getHistory, getUserinfo } = store;
+      const pfConfig = getConfig();
+      const {
+        filterKeywords = [],
+        removeItemAboutVideo,
+        removeItemAboutArticle,
+        removeLessVote,
+        lessVoteNumber = 0,
+        removeItemQuestionAsk,
+        removeFollowVoteAnswer,
+        removeFollowVoteArticle,
+        removeFollowFQuestion,
+        listOutPutNotInterested,
+        highlightOriginal,
+        themeDark = "1" /* 夜间护眼一 */,
+        themeLight = "0" /* 默认 */,
+        removeMyOperateAtFollow
+      } = pfConfig;
+      const elements = domA(".TopstoryItem");
+      let lessNum = 0;
+      await myStorage.initHistory();
+      const pfHistory = getHistory();
+      const historyList = pfHistory.list;
+      for (let i = this.index, len = elements.length; i < len; i++) {
+        let message = "";
+        let dataZop = {};
+        let cardContent = {};
+        const nodeItem = elements[i];
+        const nodeItemContent = nodeItem.querySelector(".ContentItem");
+        if (!nodeItem.scrollHeight || !nodeItemContent)
+          continue;
+        if (listOutPutNotInterested) {
+          const elementNotInterested = domC("button", { innerText: "不感兴趣", className: CLASS_NOT_INTERESTED });
+          const nodeContentItemTitle = nodeItem.querySelector(".ContentItem-title");
+          !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(elementNotInterested);
+        }
+        try {
+          dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
+          cardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
+        } catch {
+        }
+        const { itemId = "", title = "", type = "" } = dataZop || {};
+        if (removeMyOperateAtFollow && nodeItem.classList.contains("TopstoryItem-isFollow")) {
+          try {
+            const userinfo = getUserinfo();
+            const nodeUserLink = nodeItem.querySelector(".UserLink .UserLink-link");
+            const findUserId = nodeUserLink.href.match(/[^\/]+$/)[0];
+            const myUserId = userinfo.url.match(/[^\/]+$/)[0];
+            findUserId === myUserId && (message = "关注列表屏蔽自己的操作");
+          } catch {
+          }
+        }
+        const haveVideo = nodeItemContent.classList.contains("ZVideoItem") && removeItemAboutVideo;
+        const haveArticle = nodeItemContent.classList.contains("ArticleItem") && removeItemAboutArticle;
+        (haveVideo || haveArticle) && !message && (message = "列表种类屏蔽");
+        if (removeLessVote && !message) {
+          (cardContent["upvote_num"] || 0) < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"]}`);
+        }
+        const elementQuestionAsk = nodeItem.querySelector(".TopstoryQuestionAskItem");
+        if (removeItemQuestionAsk && elementQuestionAsk && !message) {
+          message = "屏蔽邀请回答";
+        }
+        const isFilterFollowerOperate = removeFollowVoteAnswer || removeFollowVoteArticle || removeFollowFQuestion;
+        if (isFilterFollowerOperate && !message && nodeItem.classList.contains("TopstoryItem-isFollow")) {
+          const nodeFirstLine = nodeItem.querySelector(".FeedSource-firstline");
+          const textFollowerOperate = nodeFirstLine ? nodeFirstLine.innerText : "";
+          for (let itemOperate of FILTER_FOLLOWER_OPERATE) {
+            const thisRep = new RegExp(itemOperate.rep);
+            if (pfConfig[itemOperate.key] && thisRep.test(textFollowerOperate)) {
+              message = `屏蔽关注人操作: ${textFollowerOperate}`;
+              break;
+            }
+          }
+        }
+        if (!message) {
+          let matchedWord = "";
+          for (let itemWord of filterKeywords) {
+            const rep = new RegExp(itemWord.toLowerCase());
+            if (rep.test(title.toLowerCase())) {
+              matchedWord += `「${itemWord}」`;
+              break;
+            }
+          }
+          if (matchedWord) {
+            const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+            const routeURL = elementItemProp && elementItemProp.getAttribute("content");
+            doFetchNotInterested({ id: String(itemId), type });
+            message = `屏蔽列表内容: ${title},匹配屏蔽词：${matchedWord}, 链接：${routeURL}`;
+          }
+        }
+        const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
+        const userName = userNameE ? userNameE.innerText : "";
+        if (highlightOriginal && dataZop && dataZop.authorName === userName && !message) {
+          const highlight = `background: ${isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : themeLight === "0" /* 默认 */ ? "#fff3d4!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`}`;
+          const nodeActions = nodeItem.querySelector(".ContentItem-actions");
+          nodeItem.style.cssText = `${highlight}border: 1px solid #aaa;`;
+          nodeActions && (nodeActions.style.cssText = highlight);
+        }
+        message && (lessNum = fnHiddenDom(lessNum, nodeItem, message));
+        if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
+          const nodeATitle = nodeItem.querySelector(".ContentItem-title a");
+          if (nodeATitle) {
+            const itemHref = nodeATitle.href;
+            const itemTitle = nodeATitle.innerText;
+            const itemA = `<a href="${itemHref}" target="_blank">${itemTitle}</a>`;
+            if (!historyList.includes(itemA)) {
+              historyList.unshift(itemA);
+            }
+          }
+        }
+        fnJustNum(nodeItem);
+        if (i + 1 === len) {
+          const nI = i - lessNum >= 0 ? i - lessNum : 0;
+          this.index = nI;
+          myStorage.historyUpdate("list", historyList);
+        }
+      }
+    },
+    reset: function() {
+      this.index = 0;
+    },
+    restart: function() {
+      this.reset();
+      this.init();
+    }
+  };
+  var myListenSearchListItem = {
+    index: 0,
+    init: function() {
+      const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = store.getConfig();
+      const elements = domA('.SearchResult-Card[role="listitem"]');
+      let lessNum = 0;
+      for (let i = this.index, len = elements.length; i < len; i++) {
+        let message = "";
+        const elementThis = elements[i];
+        if (!elementThis)
+          continue;
+        const haveAD = removeItemAboutAD && elementThis.querySelector(".KfeCollection-PcCollegeCard-root");
+        const haveArticle = removeItemAboutArticle && elementThis.querySelector(".ArticleItem");
+        const haveVideo = removeItemAboutVideo && elementThis.querySelector(".ZvideoItem");
+        (haveAD || haveArticle || haveVideo) && (message = "列表种类屏蔽");
+        if (removeLessVote && !message) {
+          const elementUpvote = elementThis.querySelector(".ContentItem-actions .VoteButton--up");
+          const ariaLabel = elementUpvote ? elementUpvote.getAttribute("aria-label") : "";
+          const upvoteText = ariaLabel ? ariaLabel.trim().replace(/\W+/, "") : "0";
+          const upvote = upvoteText.includes("万") ? +upvoteText.replace("万", "").trim() * 1e4 : +upvoteText;
+          if (upvote > -1 && upvote < lessVoteNumber) {
+            message = `屏蔽低赞内容: ${upvote}赞`;
+          }
+        }
+        fnJustNum(elementThis);
+        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
+        this.index = fnIndexMath(this.index, i, len, lessNum);
+      }
+    },
+    reset: function() {
+      this.index = 0;
+    },
+    restart: function() {
+      this.reset();
+      this.init();
+    }
+  };
+  var myVideo = {
+    index: 0,
+    timeout: null,
+    init: function() {
+      this.timeout && clearTimeout(this.timeout);
+      if (this.index < 30) {
+        this.timeout = setTimeout(() => {
+          if (domA("#player video").length) {
+            this.index = 0;
+            domA("#player>div").forEach((even) => {
+              const elementDownload = domC("i", { className: "ctz-icon ctz-video-download", innerHTML: "&#xe608;" });
+              const elementLoading = domC("i", { className: "ctz-icon ctz-loading", innerHTML: "&#xe605;" });
+              elementDownload.onclick = () => {
+                const url = elementDownload.parentElement.parentElement.querySelector("video").src;
+                if (url) {
+                  elementDownload.style.display = "none";
+                  even.appendChild(elementLoading);
+                  const name = url.match(/(?<=\/)[\d\w-\.]+(?=\?)/)[0];
+                  videoDownload(url, name).then(() => {
+                    elementDownload.style.display = "block";
+                    elementLoading.remove();
+                  });
+                }
+              };
+              const nodeDownload = even.querySelector(".ctz-video-download");
+              nodeDownload && nodeDownload.remove();
+              even.appendChild(elementDownload);
+            });
+          } else {
+            this.init();
+            this.index++;
+          }
+        }, 500);
+      }
+    }
+  };
+  var videoDownload = async (url, name) => {
+    return fetch(url).then((res) => res.blob()).then((blob) => {
+      const objectUrl = window.URL.createObjectURL(blob);
+      const elementA = domC("a", {
+        download: name,
+        href: objectUrl
+      });
+      elementA.click();
+      window.URL.revokeObjectURL(objectUrl);
+      elementA.remove();
+    });
+  };
+  var zoomVideos = () => {
+    const { getConfig } = store;
+    const { linkAnswerVideo } = getConfig();
+    if (linkAnswerVideo !== "1")
+      return;
+    const itemClick = (item) => {
+      item.onclick = () => {
+        const itemParent = domP(item, "class", "VideoAnswerPlayer");
+        if (itemParent) {
+          const nodeVideo = itemParent.querySelector(".VideoAnswerPlayer-video video");
+          const videoLink = nodeVideo ? nodeVideo.src : "";
+          videoLink && window.open(videoLink);
+        } else {
+          const nodeVideoCard = item.querySelector(".VideoCard");
+          nodeVideoCard && (nodeVideoCard.style.cssText = `opacity: 1;height: auto;`);
+        }
+      };
+    };
+    domA(".VideoContributionAnswer-container").forEach(itemClick);
+    domA(".RichText-video").forEach(itemClick);
+    domA(".VideoAnswerPlayer-stateBar").forEach(itemClick);
+  };
+  var fixVideoAutoPlay = () => {
+    var originalPlay = HTMLMediaElement.prototype.play;
+    HTMLMediaElement.prototype.play = function() {
+      if (!this.offsetHeight) {
+        return;
+      }
+      return originalPlay.apply(this, arguments);
+    };
+  };
+  var initImagePreview = () => {
+    const { zoomImageType } = store.getConfig();
+    const images = [domA(".TitleImage"), domA(".ArticleItem-image"), domA(".ztext figure .content_image")];
+    images.forEach((events) => {
+      events.forEach((e) => {
+        const src = e.src || e.style.backgroundImage && e.style.backgroundImage.split('("')[1].split('")')[0];
+        e.onclick = () => myPreview.open(src);
+      });
+    });
+    if (zoomImageType === "2") {
+      domA(".origin_image").forEach((item) => {
+        item.src = item.getAttribute("data-original") || item.src;
+        item.style.cssText = "max-width: 100%;";
+      });
+    }
+  };
+  var initLinkChanger = () => {
+    const esName = ["a.external", "a.LinkCard"];
+    const operaLink = "is-link-changed";
+    const hrefChanger = (item) => {
+      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
+      let href = "";
+      try {
+        href = decodeURIComponent(hrefFormat);
+      } catch {
+        href = hrefFormat;
+      }
+      item.href = href;
+      item.classList.add(operaLink);
+    };
+    esName.forEach((name) => {
+      domA(`${name}:not(.${operaLink})`).forEach(hrefChanger);
+    });
+  };
   var initTopStoryRecommendEvent = () => {
     const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow");
     if (!nodeTopStoryRecommend)
@@ -2243,6 +2340,7 @@
       }
       if (canFindTargeted(target)) {
         setTimeout(() => {
+          updateTopVote(nodeContentItem);
           listItemCreatedAndModifiedTime && addTimes(nodeContentItem);
           showBlockUser && myBlack.addButton(nodeContentItem.parentElement);
           myAnswerPDF.addBtn(nodeContentItem.parentElement);
@@ -2250,6 +2348,250 @@
         }, 0);
       }
     };
+  };
+  var initResizeObserver = () => {
+    const resizeObserver = new ResizeObserver(throttle(resizeFun, 500));
+    resizeObserver.observe(document.body);
+  };
+  function resizeFun() {
+    if (!HTML_HOOTS.includes(location.hostname))
+      return;
+    const { getStorageConfigItem, getConfig, setStorageConfigItem } = store;
+    const { globalTitle, hiddenSearchBoxTopSearch } = getConfig();
+    const nodeTopStoryC = domById("TopstoryContent");
+    if (nodeTopStoryC) {
+      const heightForList = getStorageConfigItem("heightForList");
+      const heightTopStoryContent = nodeTopStoryC.offsetHeight;
+      if (heightTopStoryContent < heightForList) {
+        myListenListItem.restart();
+        initTopStoryRecommendEvent();
+      } else {
+        myListenListItem.init();
+      }
+      heightTopStoryContent < window.innerHeight && windowResize();
+      setStorageConfigItem("heightForList", heightTopStoryContent);
+    }
+    initLinkChanger();
+    previewGIF();
+    initImagePreview();
+    myListenSearchListItem.init();
+    myListenAnswerItem.init();
+    pathnameHasFn({
+      question: () => {
+        zoomVideos();
+        myListenSelect.init();
+      },
+      video: () => myVideo.init(),
+      collection: () => myCollectionExport.init()
+    });
+    globalTitle !== document.title && changeTitle();
+    const nodeSearchBarInput = dom(".SearchBar-input input");
+    if (hiddenSearchBoxTopSearch && nodeSearchBarInput) {
+      nodeSearchBarInput.placeholder = "";
+    }
+  }
+  var echoHistory = () => {
+    const { list, view } = store.getHistory();
+    const nodeList = dom("#CTZ_HISTORY_LIST .ctz-set-content");
+    const nodeView = dom("#CTZ_HISTORY_VIEW .ctz-set-content");
+    nodeList && (nodeList.innerHTML = list.join("<br/>"));
+    nodeView && (nodeView.innerHTML = view.join("<br/>"));
+  };
+  var myDialog = {
+    open: async () => {
+      const nodeDialog = domById(ID_DIALOG);
+      nodeDialog && (nodeDialog.style.display = "flex");
+      myScroll.stop();
+      const isChangeConfig = await myStorage.initConfig();
+      isChangeConfig && echoData();
+      const isChangeHistory = await myStorage.initHistory();
+      isChangeHistory && echoHistory();
+    },
+    hide: () => {
+      const nodeDialog = domById(ID_DIALOG);
+      nodeDialog && (nodeDialog.style.display = "none");
+      myScroll.on();
+    }
+  };
+  var myHidden = {
+    init: function() {
+      fnInitDomStyle("CTZ_STYLE_HIDDEN", this.change() || "");
+    },
+    change: function() {
+      const { getConfig } = store;
+      const pfConfig = getConfig();
+      const cssHidden = Object.keys(this.cssForKey).map((key) => pfConfig[key] ? this.cssForKey[key] : "").join("");
+      let cssHiddenMore = "";
+      this.cssForKeysArray.forEach(({ keys, value }) => {
+        let trueNumber = 0;
+        keys.forEach((key) => pfConfig[key] && trueNumber++);
+        trueNumber === keys.length && (cssHiddenMore += value);
+      });
+      return cssHidden + cssHiddenMore;
+    },
+    cssForKey: {
+      hiddenLogo: `.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo{display: none!important;}`,
+      hiddenHeader: `.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}.PubIndex-CategoriesHeader{top: 0!important;}`,
+      hiddenHeaderScroll: `.AppHeader.is-fixed{display:none!important;}`,
+      hiddenItemActions: `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint{visibility:hidden!important;height:0!important;padding:0!important;}.TopstoryQuestionAskItem-hint{margin: 0!important;}.Topstory .ContentItem-actions{padding: 0!important;}.SearchResult-Card .ContentItem-actions{display: none;}`,
+      hiddenAnswerText: `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}.VoteButton{color: #8590a6!important; }.VoteButton.is-active{color: #056de8!important;}.ContentItem-action{margin-left:8px!important;}.Search-questionFollowButton{display: none}`,
+      hiddenQuestionTag: ".QuestionHeader-tags{display: none!important;}",
+      hiddenQuestionShare: ".zhihu .Popover.ShareMenu{display: none!important;}",
+      hiddenQuestionActions: ".QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}",
+      hiddenReward: ".Reward{display: none!important;}",
+      hiddenZhuanlanTag: ".Post-topicsAndReviewer{display: none!important;}",
+      hiddenListImg: `.RichContent-cover,.HotItem-img{display:none!important;}.HotItem-metrics--bottom{position: initial!important;}`,
+      hiddenReadMoreText: ".ContentItem-more{font-size:0!important;}",
+      hiddenAD: ".TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}",
+      hiddenAnswers: `.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine,.TopstoryQuestionAskItem .RichContent .RichContent-inner,.HotItem-content .HotItem-excerpt,.Topstory-recommend .ZVideoItem-video, .Topstory-recommend .VideoAnswerPlayer{display: none;}`,
+      hiddenListVideoContent: `.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}`,
+      hiddenZhuanlanActions: ".RichContent-actions.is-fixed>.ContentItem-actions{display: none;}",
+      hiddenZhuanlanTitleImage: ".css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}",
+      hiddenFixedActions: `.ContentItem .RichContent-actions.is-fixed,.List-item .RichContent-actions.is-fixed{visibility: hidden!important;}`,
+      hiddenHotItemMetrics: ".HotItem-content .HotItem-metrics{display: none;}",
+      hiddenHotItemIndex: ".HotItem-index{display: none;}.HotItem{padding: 16px!important;}",
+      hiddenHotItemLabel: ".HotItem-label{display: none;}",
+      hiddenDetailAvatar: ".AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}",
+      hiddenDetailBadge: ".AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}",
+      // hiddenDetailVoters: '.AnswerItem .Voters button{display: none;}',
+      hiddenWhoVoters: ".css-1vqda4a{display: none!important;}",
+      hiddenDetailName: ".AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}",
+      hiddenDetailFollow: ".AnswerItem .AuthorInfo .FollowButton{display: none;}",
+      hiddenHomeTab: ".Topstory-container .TopstoryTabs{display: none!important;}",
+      hiddenQuestionSide: ".QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}",
+      hiddenQuestionFollowing: ".QuestionHeader .FollowButton{display: none;}",
+      hiddenQuestionAnswer: ".QuestionHeader .FollowButton ~ a{display: none;}",
+      hiddenQuestionInvite: ".QuestionHeader .QuestionHeaderActions>button:first-child{display: none;}",
+      hiddenSearchPageTopSearch: ".Search-container .TopSearch{display: none;}",
+      hiddenSearchPageFooter: ".Search-container .Footer,.Search-container footer{display: none;}",
+      hiddenSearchBoxTopSearch: ".SearchBar-noValueMenu .AutoComplete-group:first-child{display:none;}",
+      hiddenZhuanlanShare: ".zhuanlan .Post-SideActions .Popover.ShareMenu{display: none!important;}",
+      hiddenZhuanlanVoters: ".zhuanlan .Post-SideActions .like{display: none!important;}",
+      hiddenFollowAction: ".TopstoryItem-isFollow .FeedSource-firstline{display: none;}",
+      hiddenFollowChooseUser: ".TopstoryItem-isFollow .AuthorInfo{display: none;}",
+      hiddenAnswerRightFooter: ".Question-sideColumn{display: none!important;}.Question-main .Question-mainColumn,.ListShortcut{width: inherit;}",
+      hiddenAnswerRightFooterAnswerAuthor: ".Question-sideColumn .AnswerAuthor{display: none;}",
+      hiddenAnswerRightFooterFavorites: ".Question-sideColumn .AnswerAuthor + .Card{display: none;}",
+      hiddenAnswerRightFooterRelatedQuestions: '.Question-sideColumn [data-za-detail-view-path-module="RelatedQuestions"]{display: none;}',
+      hiddenAnswerRightFooterContentList: '.Question-sideColumn [data-za-detail-view-path-module="ContentList"]{display: none;}',
+      hiddenAnswerRightFooterFooter: ".Question-sideColumn .Footer{display: none;}",
+      hidden618HongBao: '.MCNLinkCard[data-mcn-source="淘宝"],.MCNLinkCard[data-mcn-source="京东"],.MCNLinkCard[data-mcn-source="知乎"]{display:none;}',
+      hiddenZhuanlanFollowButton: ".zhuanlan .FollowButton{display: none;}",
+      hiddenZhuanlanAvatarWrapper: ".zhuanlan .AuthorInfo-avatarWrapper{display: none;}",
+      hiddenZhuanlanAuthorInfoHead: ".zhuanlan .AuthorInfo-head{display: none;}",
+      hiddenZhuanlanAuthorInfoDetail: ".zhuanlan .AuthorInfo-detail{display: none;}",
+      hiddenListAnswerInPerson: ".Topstory-mainColumn .LabelContainer{display: none;}",
+      hiddenQuestionSpecial: ".QuestionHeader .LabelContainer-wrapper{display: none;}",
+      hiddenHomeCreatorEntrance: ".Topstory .css-19idom{display: none;}",
+      hiddenHomeRecommendFollow: ".Topstory .css-173vipd{display: none;}",
+      hiddenHomeCategory: ".Topstory .GlobalSideBar-category{display: none;}",
+      hiddenHomeCategoryMore: '.Topstory .Card[aria-label="更多分类入口"]{display:none;}',
+      hiddenHomeFooter: ".Topstory .Footer,.Topstory footer{display: none;}",
+      hiddenAnswerItemActions: ".Question-main .ContentItem-actions{display: none;}",
+      hiddenAnswerItemTime: ".Question-main .ContentItem-time{display: none;margin: 0;}",
+      hiddenAppHeaderTabHome: ".AppHeader-Tab:nth-of-type(1){display: none}",
+      hiddenAppHeaderTabZhi: ".AppHeader-Tab:nth-of-type(2){display: none}",
+      hiddenAppHeaderTabVIP: ".AppHeader-Tab:nth-of-type(3){display: none}",
+      hiddenAppHeaderTabFind: ".AppHeader-Tab:nth-of-type(4){display: none}",
+      hiddenAppHeaderTabWaitingForYou: ".AppHeader-Tab:nth-of-type(5){display: none}",
+      hiddenHomeListTabFollow: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-follow"]{display: none}',
+      hiddenHomeListTabRecommend: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-recommend"]{display: none}',
+      hiddenHomeListTabHot: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-hot"]{display: none}',
+      hiddenHomeListTabVideo: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-zvideo"]{display: none}',
+      hiddenHomeListTab: ".Topstory-container .TopstoryTabs{display: none}",
+      hiddenQuestionGoodQuestion: ".QuestionPage .QuestionHeader .GoodQuestionAction{display: none}",
+      hiddenQuestionComment: ".QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}",
+      hiddenQuestionMore: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
+      hiddenOpenButton: "#CTZ_OPEN_BUTTON{display: none;}",
+      hiddenTopAD: ".App-main .Topstory>div:first-of-type:not(.Topstory-container){display: none}",
+      hiddenCommitReply: ".Comments-container .css-140jo2 button:first-of-type{display:none;}",
+      hiddenCommitVote: ".Comments-container .css-140jo2 button:last-of-type{display:none;}",
+      hiddenCommitBottom: ".Comments-container .css-140jo2{display:none;}"
+    },
+    cssForKeysArray: [
+      {
+        keys: ["hiddenSearchPageTopSearch", "hiddenSearchPageFooter"],
+        value: ".SearchSideBar{display: none}"
+      },
+      {
+        keys: ["hiddenHomeCreatorEntrance", "hiddenHomeRecommendFollow", "hiddenHomeCategory", "hiddenHomeCategoryMore", "hiddenHomeFooter"],
+        value: ".Topstory-mainColumn{margin: 0 auto;}"
+      },
+      {
+        keys: ["hiddenHomeListTabFollow", "hiddenHomeListTabRecommend", "hiddenHomeListTabHot", "hiddenHomeListTabVideo"],
+        value: ".Topstory-container .TopstoryTabs{display: none}"
+      }
+    ]
+  };
+  var fnChanger = async (ev) => {
+    const doCssVersion = [
+      "questionTitleTag",
+      "fixedListItemMore",
+      "linkShopping",
+      "highlightListItem",
+      "zoomImageType",
+      "zoomImageSize",
+      "versionHome",
+      "versionAnswer",
+      "versionArticle",
+      "fontSizeForList",
+      "fontSizeForAnswer",
+      "fontSizeForArticle",
+      "zoomListVideoType",
+      "zoomListVideoSize"
+    ];
+    const { name, value, checked, type } = ev;
+    const changeBackground = () => {
+      myVersion.change();
+      loadBackground();
+      myListenListItem.restart();
+      onUseThemeDark();
+    };
+    const ob = {
+      [INPUT_NAME_THEME]: changeBackground,
+      [INPUT_NAME_ThEME_LIGHT]: changeBackground,
+      [INPUT_NAME_THEME_DARK]: changeBackground,
+      colorText1: changeBackground,
+      suspensionHomeTab: () => {
+        myVersion.change();
+        changeSuspensionTab();
+      },
+      suspensionFind: cacheHeader,
+      suspensionSearch: cacheHeader,
+      suspensionUser: cacheHeader,
+      titleIco: changeICO,
+      showGIFinDialog: previewGIF,
+      questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
+      highlightOriginal: () => {
+        myListenListItem.restart();
+      },
+      listOutPutNotInterested: () => {
+        myListenListItem.restart();
+      },
+      articleCreateTimeToTop: addArticleCreateTimeToTop,
+      linkAnswerVideo: () => {
+        myVersion.change();
+        zoomVideos();
+      }
+    };
+    await myStorage.configUpdateItem(name, type === "checkbox" ? checked : value);
+    const nodeName = domById(name);
+    type === "range" && nodeName && (nodeName.innerText = value);
+    if (/^hidden/.test(name)) {
+      myHidden.init();
+      return;
+    }
+    if (doCssVersion.includes(name)) {
+      myVersion.change();
+      return;
+    }
+    ob[name] && ob[name]();
+  };
+  var onInitStyleExtra = () => {
+    myHidden.init();
+    loadBackground();
+    myVersion.init();
+    loadFindTheme();
   };
   var initOperate = () => {
     const myOperation = {
@@ -2359,310 +2701,6 @@
     initData();
     onUseThemeDark();
   };
-  var myListenSelect = {
-    isSortFirst: true,
-    observer: void 0,
-    keySort: "default",
-    /** 添加回答排序 */
-    answerSortIds: {
-      "Select1-0": { key: "default", name: "默认排序" },
-      "Select1-1": { key: "update", name: "按时间排序" },
-      "Select1-2": { key: "vote", name: "点赞数排序" },
-      "Select1-3": { key: "comment", name: "评论数排序" }
-    },
-    sortKeys: { vote: "点赞数排序", comment: "评论数排序" },
-    /** 加载监听问题详情里的.Select-button按钮 */
-    init: function() {
-      const classSelectButton = ".Select-button";
-      const { href } = location;
-      if (this.keySort === "vote" || this.keySort === "comment") {
-        const elementBtn = dom(classSelectButton);
-        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, this.sortKeys[this.keySort]));
-      }
-      const clickSort = (id) => {
-        myListenAnswerItem.reset();
-        const { key, name } = this.answerSortIds[id];
-        this.keySort = key;
-        const elementBtn = dom(classSelectButton);
-        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name));
-        if (key === "vote" || key === "comment") {
-          location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, "") + "?sort=" + key;
-        } else if (key === "default") {
-          /\?sort=/.test(href) && (location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ""));
-        }
-      };
-      const btn = dom(classSelectButton);
-      if (btn) {
-        try {
-          this.observer?.disconnect();
-        } catch {
-        }
-        const buConfig = { attribute: true, attributeFilter: ["aria-expanded"] };
-        this.observer = new MutationObserver(() => {
-          const elementSelect = dom(".Answers-select");
-          if (btn.getAttribute("aria-expanded") === "true" && elementSelect) {
-            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-2", innerHTML: "点赞数排序" }));
-            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-3", innerHTML: "评论数排序" }));
-            domA(".Select-option").forEach((ev) => {
-              ev.onclick = () => clickSort(ev.id);
-            });
-          }
-        });
-        this.observer.observe(btn, buConfig);
-      }
-    },
-    addSort: function() {
-      const keySort = this.keySort;
-      if ((keySort === "vote" || keySort === "comment") && this.isSortFirst) {
-        const element = dom(".List>div:nth-child(2)>div");
-        if (!element)
-          return;
-        const arrElement = Array.from(element.querySelectorAll(".List-item:not(.PlaceHolder)")).sort((a, b) => {
-          const answerItemA = a.querySelector(".AnswerItem");
-          const extraA = answerItemA ? answerItemA.getAttribute("data-za-extra-module") || "{}" : "{}";
-          const contentA = JSON.parse(extraA).card.content;
-          const answerItemB = b.querySelector(".AnswerItem");
-          const extraB = answerItemB ? answerItemB.getAttribute("data-za-extra-module") || "{}" : "{}";
-          const contentB = JSON.parse(extraB).card.content;
-          switch (keySort) {
-            case "vote":
-              return contentA.upvote_num - contentB.upvote_num;
-            case "comment":
-              return contentA.comment_num - contentB.comment_num;
-            default:
-              return 1;
-          }
-        });
-        const listItem = element.querySelector(".List-item:not(.PlaceHolder)");
-        listItem && listItem.remove();
-        const eleFirst = element.querySelector(":first-child");
-        arrElement.forEach((item, index) => {
-          element.insertBefore(item, index === 0 ? eleFirst : arrElement[index - 1]);
-        });
-        this.isSortFirst = false;
-      }
-    }
-  };
-  var myListenAnswerItem = {
-    index: 0,
-    init: function() {
-      const { getConfig } = store;
-      const conf = getConfig();
-      myListenSelect.addSort();
-      const {
-        removeLessVoteDetail,
-        lessVoteNumberDetail = 0,
-        answerOpen,
-        removeZhihuOfficial,
-        removeBlockUserContent,
-        removeBlockUserContentList,
-        showBlockUser,
-        removeAnonymousAnswer,
-        answerItemCreatedAndModifiedTime
-      } = conf;
-      const nodeQuestionAnswer = dom(".QuestionAnswer-content");
-      if (nodeQuestionAnswer) {
-        answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
-        showBlockUser && myBlack.addButton(nodeQuestionAnswer);
-        myAnswerPDF.addBtn(nodeQuestionAnswer);
-        myArticlePDF.addBtn(nodeQuestionAnswer);
-      }
-      const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
-      let hiddenUsers = [];
-      for (let i in HIDDEN_ANSWER_ACCOUNT) {
-        conf[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
-      }
-      removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i) => i.name || "")));
-      const elements = domA(".AnswersNavWrapper .List-item");
-      let lessNum = 0;
-      for (let i = this.index, len = elements.length; i < len; i++) {
-        let message = "";
-        const elementThis = elements[i];
-        const elementInfo = elementThis.querySelector(".ContentItem");
-        if (!elementInfo)
-          continue;
-        let dataZop = {};
-        let dataCardContent = {};
-        try {
-          dataZop = JSON.parse(elementInfo.getAttribute("data-zop") || "{}");
-          dataCardContent = JSON.parse(elementInfo.getAttribute("data-za-extra-module") || "{}").card.content;
-        } catch {
-        }
-        (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
-        if (removeZhihuOfficial && !message) {
-          const labelE = elementThis.querySelector(".AuthorInfo-name .css-n99yhz");
-          const label = labelE ? labelE.getAttribute("aria-label") || "" : "";
-          /知乎[\s]*官方帐号/.test(label) && (message = "已删除一条知乎官方帐号的回答");
-        }
-        let isHiddenTag = false;
-        hiddenTags.forEach((i2) => conf[i2] && (isHiddenTag = true));
-        if (isHiddenTag && !message) {
-          const nodeTag1 = elementThis.querySelector(".KfeCollection-AnswerTopCard-Container");
-          const nodeTag2 = elementThis.querySelector(".LabelContainer-wrapper");
-          const text1 = nodeTag1 ? nodeTag1.innerText : "";
-          const text2 = nodeTag2 ? nodeTag2.innerText : "";
-          const tagText = text1 + text2;
-          hiddenTags.forEach((i2) => {
-            if (conf[i2]) {
-              const nReg = new RegExp(HIDDEN_ANSWER_TAG[i2]);
-              nReg.test(tagText) && (message = `已删除一条标签${HIDDEN_ANSWER_TAG[i2]}的回答`);
-            }
-          });
-        }
-        hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName || "") && (message = `已删除${dataZop.authorName}的回答`);
-        if (removeAnonymousAnswer && !message) {
-          const userName = elementThis.querySelector('[itemprop="name"]').content;
-          userName === "匿名用户" && (message = `已屏蔽一条「匿名用户」回答`);
-        }
-        if (!message && answerOpen) {
-          const unFoldButton = elementThis.querySelector(".ContentItem-expandButton");
-          const foldButton = elementThis.querySelector(".RichContent-collapsedText");
-          const isNotOpen = !elementThis.classList.contains(OB_CLASS_FOLD.on);
-          const isNotClose = !elementThis.classList.contains(OB_CLASS_FOLD.off);
-          if (answerOpen === "on" && isNotOpen) {
-            unFoldButton && unFoldButton.click();
-            elementThis.classList.add(OB_CLASS_FOLD.on);
-            lessNum++;
-          }
-          const isF = foldButton && elementThis.offsetHeight > 939;
-          const isFC = unFoldButton;
-          if (answerOpen === "off" && isNotClose && (isF || isFC)) {
-            elementThis.classList.add(OB_CLASS_FOLD.off);
-            isF && foldButton && foldButton.click();
-            lessNum++;
-          }
-        }
-        fnJustNum(elementThis);
-        if (!message) {
-          conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
-          showBlockUser && myBlack.addButton(elementThis, this);
-          myAnswerPDF.addBtn(elementThis);
-          myArticlePDF.addBtn(elementThis);
-        }
-        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
-        this.index = fnIndexMath(this.index, i, len, lessNum);
-      }
-    },
-    reset: function() {
-      this.index = 0;
-    },
-    restart: function() {
-      this.reset();
-      this.init();
-    }
-  };
-  var myListenSearchListItem = {
-    index: 0,
-    init: function() {
-      const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = store.getConfig();
-      const elements = domA('.SearchResult-Card[role="listitem"]');
-      let lessNum = 0;
-      for (let i = this.index, len = elements.length; i < len; i++) {
-        let message = "";
-        const elementThis = elements[i];
-        if (!elementThis)
-          continue;
-        const haveAD = removeItemAboutAD && elementThis.querySelector(".KfeCollection-PcCollegeCard-root");
-        const haveArticle = removeItemAboutArticle && elementThis.querySelector(".ArticleItem");
-        const haveVideo = removeItemAboutVideo && elementThis.querySelector(".ZvideoItem");
-        (haveAD || haveArticle || haveVideo) && (message = "列表种类屏蔽");
-        if (removeLessVote && !message) {
-          const elementUpvote = elementThis.querySelector(".ContentItem-actions .VoteButton--up");
-          const ariaLabel = elementUpvote ? elementUpvote.getAttribute("aria-label") : "";
-          const upvoteText = ariaLabel ? ariaLabel.trim().replace(/\W+/, "") : "0";
-          const upvote = upvoteText.includes("万") ? +upvoteText.replace("万", "").trim() * 1e4 : +upvoteText;
-          if (upvote > -1 && upvote < lessVoteNumber) {
-            message = `屏蔽低赞内容: ${upvote}赞`;
-          }
-        }
-        fnJustNum(elementThis);
-        message && (lessNum = fnHiddenDom(lessNum, elementThis, message));
-        this.index = fnIndexMath(this.index, i, len, lessNum);
-      }
-    },
-    reset: function() {
-      this.index = 0;
-    },
-    restart: function() {
-      this.reset();
-      this.init();
-    }
-  };
-  var initImagePreview = () => {
-    const { zoomImageType } = store.getConfig();
-    const images = [domA(".TitleImage"), domA(".ArticleItem-image"), domA(".ztext figure .content_image")];
-    images.forEach((events) => {
-      events.forEach((e) => {
-        const src = e.src || e.style.backgroundImage && e.style.backgroundImage.split('("')[1].split('")')[0];
-        e.onclick = () => myPreview.open(src);
-      });
-    });
-    if (zoomImageType === "2") {
-      domA(".origin_image").forEach((item) => {
-        item.src = item.getAttribute("data-original") || item.src;
-        item.style.cssText = "max-width: 100%;";
-      });
-    }
-  };
-  var initLinkChanger = () => {
-    const esName = ["a.external", "a.LinkCard"];
-    const operaLink = "is-link-changed";
-    const hrefChanger = (item) => {
-      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
-      let href = "";
-      try {
-        href = decodeURIComponent(hrefFormat);
-      } catch {
-        href = hrefFormat;
-      }
-      item.href = href;
-      item.classList.add(operaLink);
-    };
-    esName.forEach((name) => {
-      domA(`${name}:not(.${operaLink})`).forEach(hrefChanger);
-    });
-  };
-  var initResizeObserver = () => {
-    const resizeObserver = new ResizeObserver(throttle(resizeFun, 500));
-    resizeObserver.observe(document.body);
-  };
-  function resizeFun() {
-    if (!HTML_HOOTS.includes(location.hostname))
-      return;
-    const { getStorageConfigItem, getConfig, setStorageConfigItem } = store;
-    const { globalTitle, hiddenSearchBoxTopSearch } = getConfig();
-    const nodeTopStoryC = domById("TopstoryContent");
-    if (nodeTopStoryC) {
-      const heightForList = getStorageConfigItem("heightForList");
-      const heightTopStoryContent = nodeTopStoryC.offsetHeight;
-      if (heightTopStoryContent < heightForList) {
-        myListenListItem.restart();
-        initTopStoryRecommendEvent();
-      } else {
-        myListenListItem.init();
-      }
-      heightTopStoryContent < window.innerHeight && windowResize();
-      setStorageConfigItem("heightForList", heightTopStoryContent);
-    }
-    initLinkChanger();
-    previewGIF();
-    initImagePreview();
-    myListenSearchListItem.init();
-    myListenAnswerItem.init();
-    pathnameHasFn({
-      question: () => {
-        zoomVideos();
-        myListenSelect.init();
-      },
-      video: () => myVideo.init(),
-      collection: () => myCollectionExport.init()
-    });
-    globalTitle !== document.title && changeTitle();
-    const nodeSearchBarInput = dom(".SearchBar-input input");
-    if (hiddenSearchBoxTopSearch && nodeSearchBarInput) {
-      nodeSearchBarInput.placeholder = "";
-    }
-  }
   var needRedirect = () => {
     const { pathname, origin } = location;
     const phoneQuestion = "/tardis/sogou/qus/";

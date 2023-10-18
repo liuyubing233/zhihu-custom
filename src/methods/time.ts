@@ -40,7 +40,7 @@ export const addTimes = (event: IMyElement) => {
   nodeMeta.appendChild(
     domC('div', {
       className,
-      style: 'line-height: 24px;padding-top: 6px;',
+      style: 'line-height: 24px;padding-top: 2px;',
       innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
     })
   );
