@@ -48,8 +48,10 @@ export interface IConfigHidden {
   hiddenDetailAvatar?: boolean;
   /** 隐藏详情回答人简介 */
   hiddenDetailBadge?: boolean;
-  /** 隐藏详情回答人下赞同数 */
-  hiddenDetailVoters?: boolean;
+  // /** 隐藏详情回答人下赞同数 */
+  // hiddenDetailVoters?: boolean;
+  /** 隐藏详情回答人下赞同用户和「你赞同过」 */
+  hiddenWhoVoters?: boolean;
   /** 隐藏详情回答人姓名 */
   hiddenDetailName?: boolean;
   /** 隐藏详情回答人关注按钮 */
