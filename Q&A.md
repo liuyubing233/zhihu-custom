@@ -22,7 +22,7 @@ A: 1. 检查在「首页列表」里列表类别屏蔽一栏是否设置了屏�
    2. 检查在「首页列表」是否设置了低赞内容屏蔽
    3. 是否过滤了屏蔽词内容
    4. 以上设置在首页列表跟搜索也列表均会生效
-  issue: <https://github.com/liuyubing233/custom-zhihu/issues/65>
+  issue: <https://github.com/liuyubing233/zhihu-custom/issues/65>
 
 ## Q: 问题回答页面内容闪烁，有时候浏览时候回答消失
 

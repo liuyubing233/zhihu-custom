@@ -602,7 +602,7 @@
     removeYanxuanRecommend: "盐选推荐",
     removeYanxuanCPRecommend: "盐选测评室"
   };
-  var FOOTER_HTML = `<a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github⭐</a><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>`;
+  var FOOTER_HTML = `<a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>`;
   var DEFAULT_FUNCTION = [
     '外链直接打开<div class="ctz-commit">知乎里所有外部链接的重定向去除，可以直接访问</div>',
     "移除登录提示弹窗",

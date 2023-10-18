@@ -1,5 +1,5 @@
 export const FOOTER_HTML =
-  `<a href="https://github.com/superPufferfish/custom-zhihu" target="_blank">Github⭐</a>` +
+  `<a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a>` +
   `<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>`;
 
 /** 默认功能文案 */
