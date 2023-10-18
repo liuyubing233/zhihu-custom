@@ -16,7 +16,10 @@ export const HIDDEN_DIRECTION: Record<string, { value: string; label: string }[]
       { value: 'hiddenAppHeaderTabFind', label: '发现模块-发现' },
       { value: 'hiddenAppHeaderTabWaitingForYou', label: '发现模块-等你来答' },
     ],
-    [{ value: 'hiddenAnswerText', label: '回答操作文字' }],
+    [
+      { value: 'hiddenAnswerText', label: '回答操作文字' },
+      { value: 'hiddenWhoVoters', label: '回答隐藏用户信息下下赞同用户和「你赞同过」' },
+    ],
     [
       { value: 'hiddenCommitReply', label: '评论「回复」按钮' },
       { value: 'hiddenCommitVote', label: '评论「点赞」按钮' },
@@ -82,7 +85,6 @@ export const HIDDEN_DIRECTION: Record<string, { value: string; label: string }[]
       { value: 'hiddenDetailBadge', label: '回答人简介' },
       { value: 'hiddenDetailFollow', label: '回答人关注按钮' },
       // { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
-      { value: 'hiddenWhoVoters', label: '隐藏详情回答人下赞同用户和「你赞同过」' },
       { value: 'hiddenQuestionSide', label: '问题关注和被浏览数' },
       { value: 'hiddenFixedActions', label: '回答悬浮操作栏' },
       { value: 'hiddenAnswerItemActions', label: '回答内容操作栏' },
