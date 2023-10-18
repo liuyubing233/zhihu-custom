@@ -3,7 +3,7 @@ import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED } from '../configs';
 import { myBlack } from '../methods/black';
 import { myAnswerPDF, myArticlePDF } from '../methods/export-PDF';
-import { addTimes } from '../methods/time';
+import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
 import { store } from '../store';
 
@@ -23,7 +23,7 @@ export const initTopStoryRecommendEvent = () => {
     const target = event.target as HTMLElement;
     const nodeContentItem = domP(target, 'class', 'ContentItem');
     if (!nodeContentItem) return;
-    const { listOutPutNotInterested, listItemCreatedAndModifiedTime, showBlockUser } = store.getConfig();
+    const { listOutPutNotInterested, showBlockUser } = store.getConfig();
     // 点击外置「不感兴趣」按钮
     if (listOutPutNotInterested && target.classList.contains(CLASS_NOT_INTERESTED)) {
       const dataZopJson = nodeContentItem.getAttribute('data-zop');
@@ -36,7 +36,7 @@ export const initTopStoryRecommendEvent = () => {
     if (canFindTargeted(target)) {
       setTimeout(() => {
         updateTopVote(nodeContentItem);
-        listItemCreatedAndModifiedTime && addTimes(nodeContentItem);
+        updateItemTime(nodeContentItem);
         showBlockUser && myBlack.addButton(nodeContentItem.parentElement!);
         myAnswerPDF.addBtn(nodeContentItem.parentElement!);
         myArticlePDF.addBtn(nodeContentItem.parentElement!);

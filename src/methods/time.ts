@@ -23,27 +23,33 @@ const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') => {
 };
 
 /** 问题添加时间 */
-export const addTimes = (event: IMyElement) => {
+export const updateItemTime = (event: IMyElement) => {
+  const { listItemCreatedAndModifiedTime } = store.getConfig();
+  if (!listItemCreatedAndModifiedTime) return;
   const className = 'ctz-list-item-time';
-  const node = event.querySelector(`.${className}`);
-  node && node.remove();
-  const nodeCreated = event.querySelector('[itemprop="dateCreated"]') as IMyElement;
-  const nodePublished = event.querySelector('[itemprop="datePublished"]') as IMyElement;
-  const nodeModified = event.querySelector('[itemprop="dateModified"]') as IMyElement;
+  const nodeCreated = event.querySelector('[itemprop="dateCreated"]') as HTMLMetaElement;
+  const nodePublished = event.querySelector('[itemprop="datePublished"]') as HTMLMetaElement;
+  const nodeModified = event.querySelector('[itemprop="dateModified"]') as HTMLMetaElement;
   const crTime = nodeCreated ? nodeCreated.content : '';
   const puTime = nodePublished ? nodePublished.content : '';
   const muTime = nodeModified ? nodeModified.content : '';
-  const created = timeFormatter(crTime || puTime);
-  const modified = timeFormatter(muTime);
-  const nodeMeta = event.querySelector('.ContentItem-meta');
-  if (!created || !nodeMeta) return;
-  nodeMeta.appendChild(
-    domC('div', {
-      className,
-      style: 'line-height: 24px;padding-top: 2px;',
-      innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
-    })
-  );
+  const timeCreated = timeFormatter(crTime || puTime);
+  const timeModified = timeFormatter(muTime);
+  const nodeContentItemMeta = event.querySelector('.ContentItem-meta');
+  if (!timeCreated || !nodeContentItemMeta) return;
+  const innerHTML = `<div>创建时间：${timeCreated}</div><div>最后修改时间：${timeModified}</div>`;
+  const domTime = event.querySelector(`.${className}`);
+  if (domTime) {
+    domTime.innerHTML = innerHTML;
+  } else {
+    nodeContentItemMeta.appendChild(
+      domC('div', {
+        className,
+        innerHTML,
+        style: 'line-height: 24px;padding-top: 2px;font-size: 14px;',
+      })
+    );
+  }
 };
 
 /** 问题详情添加时间 */

@@ -6,7 +6,7 @@ import { IMyElement, IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } fro
 import { myBlack } from './black';
 import { myAnswerPDF, myArticlePDF } from './export-PDF';
 import { myListenSelect } from './listen-select';
-import { addTimes } from './time';
+import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
 
 /** 监听详情回答 - 过滤 */
@@ -25,16 +25,19 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       removeBlockUserContentList,
       showBlockUser,
       removeAnonymousAnswer,
-      answerItemCreatedAndModifiedTime,
     } = conf;
-    const nodeQuestionAnswer = dom('.QuestionAnswer-content');
-    if (nodeQuestionAnswer) {
-      updateTopVote(nodeQuestionAnswer)
-      answerItemCreatedAndModifiedTime && addTimes(nodeQuestionAnswer);
-      showBlockUser && myBlack.addButton(nodeQuestionAnswer);
-      myAnswerPDF.addBtn(nodeQuestionAnswer);
-      myArticlePDF.addBtn(nodeQuestionAnswer);
-    }
+
+    /** 添加功能 */
+    const addFnInNodeItem = (nodeItem?: IMyElement, initThis?: any) => {
+      if (!nodeItem) return;
+      updateTopVote(nodeItem);
+      updateItemTime(nodeItem);
+      showBlockUser && myBlack.addButton(nodeItem, initThis);
+      myAnswerPDF.addBtn(nodeItem);
+      myArticlePDF.addBtn(nodeItem);
+    };
+
+    addFnInNodeItem(dom('.QuestionAnswer-content'));
     const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
     // 屏蔽用户名称列表
     let hiddenUsers = [];
@@ -108,13 +111,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       }
       fnJustNum(elementThis);
       if (!message) {
-        updateTopVote(elementThis);
-        // 添加回答时间
-        conf.answerItemCreatedAndModifiedTime && addTimes(elementThis);
-        // 添加「屏蔽用户」按钮
-        showBlockUser && myBlack.addButton(elementThis, this);
-        myAnswerPDF.addBtn(elementThis);
-        myArticlePDF.addBtn(elementThis);
+        addFnInNodeItem(elementThis, this);
       }
 
       // 最后信息 & 起点位置处理
