@@ -37,41 +37,8 @@ const myBackground = {
     return theme === ETheme.深色;
   },
   default: () => '.GlobalSideBar-navList{background: #fff}',
-  dark: (darkKey: EThemeDark) => {
+  dark: function (darkKey: EThemeDark) {
     const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
-    const cssBg =
-      `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,#CTZ_OPEN_BUTTON` +
-      `,.Card,.ListShortcut>div,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
-      `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Menu-item.is-active,.Popover-content button:hover` +
-      `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
-      `,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z` +
-      `,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ` +
-      `,.SettingsMain div:not(.StickerItem-Border),.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div` +
-      `,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item,.Sticky div` +
-      `,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div` +
-      `,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ContentItem-actions.ZVideoToolbar,.List-item .ZVideoToolbar button` +
-      `,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a` +
-      `,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a` +
-      `,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5)` +
-      `,.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div` +
-      `,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer` +
-      ',.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div' +
-      `,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white` +
-      `,.css-guh6n2,.css-yqosku` +
-      `{background: ${background}!important;}`;
-    const cssBg2 =
-      `.ctz-content-right>div:nth-of-type(2n)` +
-      `,body,.Input-wrapper,.Popover-content,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.toolbar-section button:hover` +
-      `,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.Notifications-footer,.skeleton,.Community-ContentLayout` +
-      `,.css-1j8bif6>div,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div` +
-      `,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions` +
-      `,.Sticky a:hover,.Sticky a:hover>div,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.InputLike,.Popover-content div` +
-      `,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover` +
-      `{background:${background2}!important;}`;
-    const cssBgTransparent =
-      `.css-3dzt4y,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.css-u4sx7k,.ColumnHomeTop:before,.ColumnHomeBottom` +
-      `,.Popover button` +
-      `{background: transparent!important;}`;
     const cssColor1 =
       `#CTZ_DIALOG_MAIN,.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON` +
       `,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button` +
@@ -90,6 +57,7 @@ const myBackground = {
     const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path{color: ${background2}!important}`;
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-menu-top>a.target{border-bottom: 4px solid ${color};color: ${color};}`;
+    const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`
 
     // 添加 html[data-theme=dark] 前缀
     const addPrefix = (i: string) =>
@@ -103,45 +71,10 @@ const myBackground = {
       `.TopNavBar-fixMode-qXKMs,.index-tabWrap-4Smyx,.index-bannerItem-3o3D7,.LearningRouteCard-pathContent-j3jVv{background: ${background}!important;}` +
       `.LearningRouteCard-pathItem-xin1f .LearningRouteCard-content-kw2RW .LearningRouteCard-title-do7ND{color: ${color}!important;}`;
 
-    return addPrefix(cssBg + cssBg2 + cssColor1 + cssBgTransparent + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning);
+    return addPrefix(this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1);
   },
-  light: (lightKey: EThemeLight) => {
+  light: function (lightKey: EThemeLight) {
     const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
-    const cssBg =
-      `.ctz-content-right>div:nth-of-type(2n)` +
-      `,body,.Post-content,.HotListNavEditPad,.ColumnPageHeader,.ZVideoToolbar,.position-suspensionSearch.focus` +
-      `,.Modal-modal-wf58,.Community-ContentLayout,.App-root-8rX7N,.MenuBar-root-rQeFm,.TopNavBar-fixMode-4nQmh` +
-      `,.App-active-dPFhH,.CategorySection-categoryList-mrt3Z,.zhuanlan .Post-content .ContentItem-actions` +
-      `,.zhuanlan .ContentItem-actions,.LinkCard.new,.WebPage-root-g7WXc,.KfeCollection-FeedBlockSetting` +
-      `,.ShelfTopNav-root-eb3BX,.signQr-container,.css-16h0l39,.css-1so3nbl,.css-13mrzb0,.css-17aitwe,.NavigationBar-mainArea,.Notification-white` +
-      `{background-color: ${background}!important;}`;
-    const cssBg2 =
-      `#${ID_DIALOG},#${ID_DIALOG} select,#${ID_DIALOG} input,#${ID_DIALOG} textarea,#CTZ_SET_FILTER` +
-      `,.QuestionHeader,.Card:not(.GrowthLevel-panelCard),.HotItem,.Recommendations-Main,.GlobalSideBar-navList,.SearchSubTabs,.CommentsV2-withPagination` +
-      `,.QuestionHeader-footer,.HoverCard,.ContentItem-actions,.MoreAnswers .List-headerText,.Topbar,.CommentsV2-footer` +
-      `,.Select-plainButton,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreSpecialCard,.ExploreColumnCard` +
-      `,.ExploreHomePage-ContentSection-moreButton a,.QuestionWaiting-types,.AutoInviteItem-wrapper--desktop` +
-      `,.Popover-content,.Notifications-footer,.SettingsFAQ,.Popover-arrow:after,.Messages-footer,.Modal-inner` +
-      `,.RichContent-actions,.KfeCollection-FeedBlockSetting,.CommentListV2-header-divider,.Input-wrapper:not(.Input-wrapper--grey)` +
-      `,.TopstoryItem .ZVideoToolbar,.SearchTabs,.Topic-bar,.VotableTopicCard,textarea.FeedbackForm-inputBox-15yJ,.FeedbackForm-canvasContainer-mrde` +
-      `,.css-mq2czy,.css-lpo24q,.css-16zrry9,.css-1v840mj,.css-ovbogu,.css-1h84h63,.css-u8y4hj,.css-1bwzp6r,.css-w215gm` +
-      `,.InputLike,.AnswerForm-footer,.Editable-toolbar,.Chat,.css-ul9l2m,.Balance-Main .Tabs,.Community,.Report-list tr:nth-child(2n)` +
-      `,.Report-Pagination,.Report-list,.Report-header th,._Invite_container_30SP,.css-ssvpr2,.css-1p1lrh0,.zu-main` +
-      `,.utils-frostedGlassEffect-2unM,.Card-card-2K6v,.UserLivesPage-page-GSje,.Tooltip-tooltip-2Cut.Tooltip-light-3TwZ .Tooltip-tooltipInner-B448` +
-      `,.PubIndex-CategoriesHeader,.css-r9mkgf,.CornerButton,.css-1sqjzsk,.css-t3f0zn,.css-1cj0s4z,.css-1vtgv04,.WikiLandingHeader` +
-      `,.WikiLanding,.WikiLandingItemCard,.WikiLandingEntryCard,.SideNavs-navContainer-6VkAT,.App-root-cPFwn,.TopNavs-root-rwAr7,.App-root-qzkuH` +
-      `,.App-actionTrigger-cCyD7,.ProductTrigger-root-amaSi,.App-infiniteContainer-nrxGj,.ActionTrigger-content-dPn6H,.App-card-pkbhv,.css-zvnmar` +
-      `,.Login-options,.SignFlowInput-errorMask,.ColumnHomeColumnCard,.KfeCollection-PcCollegeCard-root,.KfeCollection-PcCollegeCard-wrapper` +
-      `,.css-1j5d3ll,.css-iebf30,.css-1qjzmdv,.AnswerForm-footer,.css-g3xs10,.css-jlyj5p,.CommentEditorV2-inputUpload,.css-805ti0,.css-10fqe38` +
-      `,.css-n9os37,.css-sdgtgb,.css-f955pw,.css-6tr06j,.css-pslzz3,.css-10rrwst,.css-1ne387d,.css-1bmbu2d,.css-mjg7l1,.css-1ulkprw,.css-1k8sxfm` +
-      `,.css-a9sbyu,.CreatorIndex-BottomBox-Item,.css-1r9j229,.css-wgpue5,.css-1hwwfws,.css-1clwviw,.css-ndqbqd,.css-19v79p5,.css-f7rzgf,.css-106u01g` +
-      `,.css-c29erj,.Modal-content,.Sticky,.css-2i2hyg,.css-1sz5gzk,.css-vvikez,.css-bnfl40,.css-kt4t4n,.css-127i0sx,.css-172osot,.css-3dzt4y,.HotList,.css-1rge9t3,.css-10wc74s,.css-hvo7ig` +
-      `,.Question-mainColumnLogin,.css-l63y2t,.css-uhfrs2,.css-1os3m0m,.css-my2hkh,.css-lwqucw,.css-1o83xzo,.css-1nipbaf,.css-p4x5ie,.css-7hf26x,.css-xks12i,.css-fqja0q` +
-      `,.css-slqtjm,.Sticky>ul,.css-1dja9sh,.css-np3nxw div,.AnswerAdd div,.css-lxxesj,.css-11oa45q,.css-dkeaqz,.css-1j9apkt,.css-1vnbimf,.css-1mbpn2d,.css-1yjqd5z` +
-      `,.ToolsQuestion div,.Creator-mainColumn .Card>div:not(.GrowthLevel-panelCardContent),.css-djayhh,.css-1cr4989,.css-1rniuv1>ul,.css-1rniuv1>div,.css-1oqbvad,.css-1ta275q` +
-      `,.Card>ul,.css-yckfye,.css-lztgnc` +
-      `{background-color:${background2}!important;background:${background2}!important;}`;
-    const cssBgTransparent = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn{background-color: transparent!important;}`;
     const borderColor = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     // Header 变化
     const nodeAppHeader = dom('.AppHeader');
@@ -152,7 +85,8 @@ const myBackground = {
     const cssHeader = `${
       headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : '.AppHeader'
     }{background-color:${background2}!important;background:${background2}!important;}`;
-    return cssBg + cssBg2 + cssBgTransparent + borderColor + cssHeader;
+    const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`
+    return this.doSetCSS(background, background2) + borderColor + cssHeader + cssColorUseBg1;
   },
   /** 设置字体颜色 */
   text: function () {
@@ -160,6 +94,53 @@ const myBackground = {
     const styleColorText1 = `.ContentItem-title, body` + `{color: ${colorText1}!important;}`;
     return styleColorText1;
   },
+  doSetCSS: function (background: string, background2: string): string {
+    const cssBg = `${this.cssNamesBackground1}{background-color: ${background}!important;}`;
+    const cssBg2 = `${this.cssNamesBackground2}{background-color:${background2}!important;background:${background2}!important;}`;
+    const cssBgTransparent = `${this.cssNamesBackgroundTransparent}{background-color: transparent!important;}`;
+    const input = `.SignContainer-content input:-webkit-autofill{-webkit-box-shadow: inset 0 0 0 30px ${background2}!important;}`
+    return cssBg + cssBg2 + cssBgTransparent + input
+  },
+  /** 使用背景色1的元素名称 */
+  cssNamesBackground1:
+    `.ctz-content-right>div:nth-of-type(2n)` +
+    `,body,.Input-wrapper,.toolbar-section button:hover` +
+    `,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
+    `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div` +
+    `,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem` +
+    `,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active` +
+    `,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after` +
+    `,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover` +
+    `,.Popover-content button:hover,::-webkit-scrollbar-thumb,.ZVideoComment .css-kt4t4n,.css-1j8bif6>.css-11v6bw0`,
+  /** 使用背景色2的元素名称 */
+  cssNamesBackground2:
+    `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,#CTZ_OPEN_BUTTON` +
+    `,.Card,.ListShortcut>div,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
+    `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
+    `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
+    `,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z` +
+    `,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ` +
+    `,.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div` +
+    `,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item` +
+    `,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div` +
+    `,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ContentItem-actions.ZVideoToolbar,.List-item .ZVideoToolbar button` +
+    `,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a` +
+    `,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a` +
+    `,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5)` +
+    `,.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div` +
+    `,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer` +
+    ',.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div' +
+    `,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white` +
+    `,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike` +
+    `,.Popover-content,.Notifications-footer,::-webkit-scrollbar,.Messages-footer,.Popover-arrow:after` +
+    `,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div)` +
+    `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm`+
+    `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask`,
+  /** 背景色透明的元素名称 */
+  cssNamesBackgroundTransparent:
+    `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
+    `,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button`,
+  cssNamesColorUserBackground1: `.css-z0izby`
 };
 
 /** 自定义样式方法 */
