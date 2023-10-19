@@ -57,7 +57,7 @@ const myBackground = {
     const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path{color: ${background2}!important}`;
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-menu-top>a.target{border-bottom: 4px solid ${color};color: ${color};}`;
-    const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`
+    const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
 
     // 添加 html[data-theme=dark] 前缀
     const addPrefix = (i: string) =>
@@ -85,7 +85,7 @@ const myBackground = {
     const cssHeader = `${
       headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : '.AppHeader'
     }{background-color:${background2}!important;background:${background2}!important;}`;
-    const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`
+    const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
     return this.doSetCSS(background, background2) + borderColor + cssHeader + cssColorUseBg1;
   },
   /** 设置字体颜色 */
@@ -98,8 +98,8 @@ const myBackground = {
     const cssBg = `${this.cssNamesBackground1}{background-color: ${background}!important;}`;
     const cssBg2 = `${this.cssNamesBackground2}{background-color:${background2}!important;background:${background2}!important;}`;
     const cssBgTransparent = `${this.cssNamesBackgroundTransparent}{background-color: transparent!important;}`;
-    const input = `.SignContainer-content input:-webkit-autofill{-webkit-box-shadow: inset 0 0 0 30px ${background2}!important;}`
-    return cssBg + cssBg2 + cssBgTransparent + input
+    const input = `.SignContainer-content input:-webkit-autofill{-webkit-box-shadow: inset 0 0 0 30px ${background2}!important;}`;
+    return cssBg + cssBg2 + cssBgTransparent + input;
   },
   /** 使用背景色1的元素名称 */
   cssNamesBackground1:
@@ -115,7 +115,7 @@ const myBackground = {
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
     `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,#CTZ_OPEN_BUTTON` +
-    `,.Card,.ListShortcut>div,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
+    `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
     `,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z` +
@@ -134,13 +134,14 @@ const myBackground = {
     `,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike` +
     `,.Popover-content,.Notifications-footer,::-webkit-scrollbar,.Messages-footer,.Popover-arrow:after` +
     `,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div)` +
-    `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm`+
+    `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm` +
+    `,.ListShortcut>div:not(.Question-mainColumn)` +
     `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask`,
   /** 背景色透明的元素名称 */
   cssNamesBackgroundTransparent:
     `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
     `,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button`,
-  cssNamesColorUserBackground1: `.css-z0izby`
+  cssNamesColorUserBackground1: `.css-z0izby`,
 };
 
 /** 自定义样式方法 */
