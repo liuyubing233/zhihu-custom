@@ -16,8 +16,6 @@
 
 发现问题和想要添加的内容请反馈给我，感谢！！！
 
-插件目录跳转失效请移步<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">这里查看</a>
-
 Safari 浏览器下在[知乎](www.zhihu.com)使用 TamperMonkey 会报错，导致插件无法使用，暂时没有解决头绪...
 
 ```text
@@ -27,6 +25,8 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 <img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211127&authkey=%21AMkK7HHwEAS2dXE&width=1024&height=999999" width="1024" height="auto" />
 
 ## 插件目录
+
+插件目录跳转失效请移步<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">这里</a>查看
 
 - [默认功能](#默认功能)
 	- [推荐页内容缓存](#推荐页内容缓存)
@@ -41,6 +41,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 	- [一键邀请功能](#一键邀请功能)
 	- [复制代码块删除版权信息](#复制代码块删除版权信息)
 	- [静态图片弹窗观看点击键盘左右直接切换到上一张或下一张](#静态图片弹窗观看点击键盘左右直接切换到上一张或下一张)
+	- [用户主页导出当前页回答和当前页文章功能](#用户主页导出当前页回答和当前页文章功能)
 - [基础设置](#基础设置)
 	- [基础设置 - 基本设置](#基础设置---基本设置)
 		- [更改网页和标题](#更改网页和标题)
@@ -164,6 +165,20 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 #### 静态图片弹窗观看点击键盘左右直接切换到上一张或下一张
 
 查看图片点击预览大图时，如果当前回答或者文章中存在多个图片，可以使用键盘方向键左右切换图片显示。
+
+#### 用户主页导出当前页回答和当前页文章功能
+
+导出文章功能如图，回答同理
+
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211384&authkey=%21AFGeL5AlNzJ5PFo&width=660" width="660" />
+
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211383&authkey=%21AKCiVhLw6ualNoQ&width=660" width="660" />
+
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211385&authkey=%21ALMFwbmClmZ7uYI&width=660" width="660" />
+
+导出当前页下的文章：
+
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211386&authkey=%21AKgcVH3Lo-4G20k&width=1024" width="1024" height="auto" />
 
 ### 基础设置
 
