@@ -6,8 +6,11 @@ import {
   IContentStorageConfig,
   IFindEvent,
   IFindEventEntries,
+  IHomeFetch,
+  IHomeFetchContent,
   IKeyofFindEvent,
   IKeyofHistory,
+  IKeyofHomeFetch,
   IKeyofStorageConfig,
   IPfHistory,
   IStorageConfig,
@@ -78,6 +81,9 @@ class Store {
     headerDoms: {},
   };
 
+  /** 用户页面列表接口缓存 */
+  homeFetch: IHomeFetch = {}
+
   constructor() {
     // to fix this is undefined
     this.setConfig = this.setConfig.bind(this);
@@ -96,6 +102,8 @@ class Store {
     this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
     this.getStorageConfig = this.getStorageConfig.bind(this);
     this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
+    this.getHomeFetch = this.getHomeFetch.bind(this)
+    this.setHomeFetch = this.setHomeFetch.bind(this)
   }
 
   setConfig(inner: IPfConfig) {
@@ -149,6 +157,13 @@ class Store {
   }
   getStorageConfigItem(key: IKeyofStorageConfig): IContentStorageConfig {
     return this.storageConfig[key];
+  }
+
+  getHomeFetch(key: IKeyofHomeFetch): IHomeFetchContent | undefined {
+    return this.homeFetch[key]
+  }
+  setHomeFetch(key: IKeyofHomeFetch, content: IHomeFetchContent) {
+    this.homeFetch[key] = content;
   }
 }
 

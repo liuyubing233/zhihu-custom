@@ -233,6 +233,8 @@
         heightForList: 0,
         headerDoms: {}
       };
+      /** 用户页面列表接口缓存 */
+      this.homeFetch = {};
       this.setConfig = this.setConfig.bind(this);
       this.getConfig = this.getConfig.bind(this);
       this.setHistory = this.setHistory.bind(this);
@@ -249,6 +251,8 @@
       this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
       this.getStorageConfig = this.getStorageConfig.bind(this);
       this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
+      this.getHomeFetch = this.getHomeFetch.bind(this);
+      this.setHomeFetch = this.setHomeFetch.bind(this);
     }
     setConfig(inner) {
       this.pfConfig = inner;
@@ -297,6 +301,12 @@
     }
     getStorageConfigItem(key) {
       return this.storageConfig[key];
+    }
+    getHomeFetch(key) {
+      return this.homeFetch[key];
+    }
+    setHomeFetch(key, content) {
+      this.homeFetch[key] = content;
     }
   };
   var store = new Store();
@@ -1661,117 +1671,77 @@
     doc.write(content);
     iframe.contentWindow.print();
   };
-  var myExportForPeopleAnswer = {
-    init: function() {
-      const originFetch = fetch;
-      unsafeWindow.fetch = (url, opt) => {
-        if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
-          this.headers = opt?.headers;
-        }
-        return originFetch(url, opt);
-      };
-    },
-    addBtn: function() {
-      const me = this;
-      const domListHeader = dom(".Profile-main .List-headerText");
-      const domButtonOnce = dom(".ctz-people-export-answer-once");
-      if (!domListHeader || domButtonOnce)
-        return;
-      const nDomButtonOnce = domC("button", {
-        innerHTML: "导出当前页回答",
-        className: `ctz-button ctz-people-export-answer-once`,
-        style: styleButton
-      });
-      const { pathname } = location;
-      const userId = pathname.replace("/people/", "").replace("/answers", "");
-      nDomButtonOnce.onclick = async function() {
-        const eventBtn = this;
-        const { search } = location;
-        const page = search.replace("?page=", "") || "1";
-        eventBtn.innerText = "加载回答内容中...";
-        eventBtn.disabled = true;
-        const res = await me.doFetch(userId, +page);
-        const content = (res.data || []).map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join("");
-        loadIframeAndExport(eventBtn, content, "导出当前页回答");
-      };
-      domListHeader.appendChild(nDomButtonOnce);
-    },
-    doFetch: function(userId, page = 1, limit = 20) {
-      const offset = limit * (page - 1);
-      const me = this;
-      return new Promise((resolve) => {
-        fetch(
-          `/api/v4/members/${userId}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Cmark_infos%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${offset}&limit=${limit}&sort_by=created`,
-          {
-            method: "GET",
-            headers: new Headers(me.headers)
-          }
-        ).then((response) => response.json()).then((res) => resolve(res));
-      });
-    },
-    headers: {}
+  var doHomeFetch = (url, headers) => {
+    return new Promise((resolve) => {
+      if (!url) {
+        resolve([]);
+      } else {
+        fetch(url, {
+          method: "GET",
+          headers: new Headers(headers)
+        }).then((response) => response.json()).then((res) => resolve(res.data));
+      }
+    });
   };
-  var myExportForPeopleArticles = {
-    init: function() {
-      const originFetch = fetch;
-      unsafeWindow.fetch = (url, opt) => {
-        if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
-          this.currentURL = url;
-          this.headers = opt?.headers;
-        }
-        return originFetch(url, opt);
-      };
-    },
-    addBtn: function() {
-      const me = this;
-      const domListHeader = dom(".Profile-main .List-headerText");
-      const domButtonOnce = dom(".ctz-people-export-articles-once");
-      if (!domListHeader || domButtonOnce)
+  var addBtnForExportPeopleAnswer = () => {
+    const domListHeader = dom(".Profile-main .List-headerText");
+    const domButtonOnce = dom(".ctz-people-export-answer-once");
+    if (!domListHeader || domButtonOnce)
+      return;
+    const nDomButtonOnce = domC("button", {
+      innerHTML: "导出当前页回答",
+      className: `ctz-button ctz-people-export-answer-once`,
+      style: styleButton
+    });
+    nDomButtonOnce.onclick = async function() {
+      const eventBtn = this;
+      eventBtn.innerText = "加载回答内容中...";
+      eventBtn.disabled = true;
+      const config = store.getHomeFetch("answer");
+      if (!config)
         return;
-      const nDomButtonOnce = domC("button", {
-        innerHTML: "导出当前页文章",
-        className: `ctz-button ctz-people-export-articles-once`,
-        style: styleButton
-      });
-      nDomButtonOnce.onclick = async function() {
-        const eventBtn = this;
-        const { search } = location;
-        const page = search.replace("?page=", "") || "1";
-        eventBtn.innerText = "加载文章内容中...";
-        eventBtn.disabled = true;
-        const prevData = [];
-        if (page === "1") {
-          const domScript = dom("#js-initialData");
-          if (!domScript)
-            return;
-          const scriptData = JSON.parse(domScript.innerText);
-          const articles = scriptData.initialState.entities.articles;
-          for (let key in articles) {
-            prevData.push(articles[key]);
-          }
+      const data = await doHomeFetch(config.url, config.header);
+      const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join("");
+      loadIframeAndExport(eventBtn, content, "导出当前页回答");
+    };
+    domListHeader.appendChild(nDomButtonOnce);
+  };
+  var addBtnForExportPeopleArticles = () => {
+    const me = void 0;
+    const domListHeader = dom(".Profile-main .List-headerText");
+    const domButtonOnce = dom(".ctz-people-export-articles-once");
+    if (!domListHeader || domButtonOnce)
+      return;
+    const nDomButtonOnce = domC("button", {
+      innerHTML: "导出当前页文章",
+      className: `ctz-button ctz-people-export-articles-once`,
+      style: styleButton
+    });
+    nDomButtonOnce.onclick = async function() {
+      const eventBtn = this;
+      const { search } = location;
+      const page = search.replace("?page=", "") || "1";
+      eventBtn.innerText = "加载文章内容中...";
+      eventBtn.disabled = true;
+      const prevData = [];
+      if (page === "1") {
+        const domScript = dom("#js-initialData");
+        if (!domScript)
+          return;
+        const scriptData = JSON.parse(domScript.innerText);
+        const articles = scriptData.initialState.entities.articles;
+        for (let key in articles) {
+          prevData.push(articles[key]);
         }
-        const nextData = await me.doFetch();
-        const data = prevData.concat(nextData);
-        const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join("");
-        loadIframeAndExport(eventBtn, content, "导出当前页文章");
-      };
-      domListHeader.appendChild(nDomButtonOnce);
-    },
-    doFetch: function() {
-      const { currentURL, headers } = this;
-      return new Promise((resolve) => {
-        if (!currentURL) {
-          resolve([]);
-        } else {
-          fetch(currentURL, {
-            method: "GET",
-            headers: new Headers(headers)
-          }).then((response) => response.json()).then((res) => resolve(res.data));
-        }
-      });
-    },
-    headers: {},
-    currentURL: ""
+      }
+      const config = store.getHomeFetch("articles");
+      if (!config)
+        return;
+      const data = await doHomeFetch(config.url, config.header);
+      const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join("");
+      loadIframeAndExport(eventBtn, content, "导出当前页文章");
+    };
+    domListHeader.appendChild(nDomButtonOnce);
   };
   var myScroll = {
     stop: () => dom("body").classList.add("ctz-stop-scroll"),
@@ -3023,7 +2993,7 @@
       return;
     const T0 = performance.now();
     const { pathname, hostname, host, search } = location;
-    const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo } = store;
+    const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo, setHomeFetch } = store;
     const prevConfig = getConfig();
     let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
@@ -3054,10 +3024,14 @@
             ...opt.headers
           });
         }
+        if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
+          setHomeFetch("answer", { url, header: opt?.headers });
+        }
+        if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+          setHomeFetch("articles", { url, header: opt?.headers });
+        }
         return originFetch(url, opt);
       };
-      myExportForPeopleAnswer.init();
-      myExportForPeopleArticles.init();
       const matched = search.match(/(?<=sort=)\w+/);
       if (/\/question/.test(pathname) && matched) {
         myListenSelect.keySort = matched[0];
@@ -3106,8 +3080,8 @@
           filter: () => myPageFilterSetting.init(),
           collection: () => myCollectionExport.init(),
           following: () => myFollowRemove.init(),
-          answers: () => myExportForPeopleAnswer.addBtn(),
-          posts: () => myExportForPeopleArticles.addBtn()
+          answers: () => addBtnForExportPeopleAnswer(),
+          posts: () => addBtnForExportPeopleArticles()
         });
         if (host === "zhuanlan.zhihu.com") {
           addArticleCreateTimeToTop();
@@ -3124,8 +3098,8 @@
       pathnameHasFn({
         filter: () => myPageFilterSetting.init(),
         following: () => myFollowRemove.init(),
-        answers: throttle(myExportForPeopleAnswer.addBtn),
-        posts: throttle(myExportForPeopleArticles.addBtn)
+        answers: throttle(addBtnForExportPeopleAnswer),
+        posts: throttle(addBtnForExportPeopleArticles)
       });
       myListenListItem.reset();
       myListenSearchListItem.reset();
