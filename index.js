@@ -1676,7 +1676,7 @@
       if (!domListHeader || domButtonOnce)
         return;
       const nDomButtonOnce = domC("button", {
-        innerHTML: "导出当前页面回答",
+        innerHTML: "导出当前页回答",
         className: `ctz-button ctz-people-export-answer-once`,
         style: styleButton
       });
@@ -1690,7 +1690,7 @@
         eventBtn.disabled = true;
         const res = await me.doFetch(userId, +page);
         const content = (res.data || []).map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join("");
-        loadIframeAndExport(eventBtn, content, "导出当前页面回答");
+        loadIframeAndExport(eventBtn, content, "导出当前页回答");
       };
       domListHeader.appendChild(nDomButtonOnce);
     },
@@ -3042,6 +3042,7 @@
           collection: () => myCollectionExport.init(),
           following: () => myFollowRemove.init(),
           answers: () => myExportForPeopleAnswer.addBtn()
+          // posts: () => myExportForPeopleArticles.addBtn(),
         });
         if (host === "zhuanlan.zhihu.com") {
           addArticleCreateTimeToTop();
@@ -3059,6 +3060,7 @@
         filter: () => myPageFilterSetting.init(),
         following: () => myFollowRemove.init(),
         answers: throttle(myExportForPeopleAnswer.addBtn)
+        // posts: throttle(myExportForPeopleArticles.addBtn),
       });
       myListenListItem.reset();
       myListenSearchListItem.reset();
