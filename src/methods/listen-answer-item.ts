@@ -4,7 +4,7 @@ import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../conf
 import { store } from '../store';
 import { IMyElement, IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
-import { myAnswerPDF, myArticlePDF } from './export-PDF';
+import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './export-PDF';
 import { myListenSelect } from './listen-select';
 import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
@@ -25,6 +25,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       removeBlockUserContentList,
       showBlockUser,
       removeAnonymousAnswer,
+      topExportContent,
     } = conf;
 
     /** 添加功能 */
@@ -33,8 +34,10 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       updateTopVote(nodeItem);
       updateItemTime(nodeItem);
       showBlockUser && myBlack.addButton(nodeItem, initThis);
-      myAnswerPDF.addBtn(nodeItem);
-      myArticlePDF.addBtn(nodeItem);
+      if (topExportContent) {
+        addButtonForAnswerExportPDF(nodeItem);
+        addButtonForArticleExportPDF(nodeItem);
+      }
     };
 
     addFnInNodeItem(dom('.QuestionAnswer-content'));

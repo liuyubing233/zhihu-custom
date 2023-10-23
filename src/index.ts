@@ -15,7 +15,7 @@ import { needRedirect } from './inner/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
-import { myArticlePDF, myCollectionExport } from './methods/export-PDF';
+import { addButtonForArticleExportPDF, myCollectionExport } from './methods/export-PDF';
 import { myFilterWord } from './methods/filter-word';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
@@ -37,6 +37,7 @@ import { INNER_CSS } from './web-resources';
   const T0 = performance.now();
   const { pathname, hostname, host, search } = location;
   const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo } = store;
+  const prevConfig = getConfig();
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -51,7 +52,6 @@ import { INNER_CSS } from './web-resources';
     }
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-    const prevConfig = getConfig();
     setStorageConfigItem('cachePfConfig', prevConfig);
     setConfig(await myStorage.initConfig());
     setHistory(await myStorage.initHistory());
@@ -111,7 +111,6 @@ import { INNER_CSS } from './web-resources';
         dom('[name="useSimple"]')!.onclick = async function () {
           const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
           if (!isUse) return;
-          const prevConfig = store.getConfig();
           myStorage.configUpdate({
             ...prevConfig,
             ...CONFIG_SIMPLE,
@@ -138,7 +137,7 @@ import { INNER_CSS } from './web-resources';
       if (host === 'zhuanlan.zhihu.com') {
         addArticleCreateTimeToTop();
         const nodeArticle = dom('.Post-content');
-        nodeArticle && myArticlePDF.addBtn(nodeArticle);
+        prevConfig.topExportContent && nodeArticle && addButtonForArticleExportPDF(nodeArticle);
       }
       fnLog(
         `加载完毕, 加载时长: ${

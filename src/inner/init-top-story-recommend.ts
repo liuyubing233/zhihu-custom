@@ -2,7 +2,7 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED } from '../configs';
 import { myBlack } from '../methods/black';
-import { myAnswerPDF, myArticlePDF } from '../methods/export-PDF';
+import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from '../methods/export-PDF';
 import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
 import { store } from '../store';
@@ -23,7 +23,7 @@ export const initTopStoryRecommendEvent = () => {
     const target = event.target as HTMLElement;
     const nodeContentItem = domP(target, 'class', 'ContentItem');
     if (!nodeContentItem) return;
-    const { listOutPutNotInterested, showBlockUser } = store.getConfig();
+    const { listOutPutNotInterested, showBlockUser,topExportContent } = store.getConfig();
     // 点击外置「不感兴趣」按钮
     if (listOutPutNotInterested && target.classList.contains(CLASS_NOT_INTERESTED)) {
       const dataZopJson = nodeContentItem.getAttribute('data-zop');
@@ -38,8 +38,10 @@ export const initTopStoryRecommendEvent = () => {
         updateTopVote(nodeContentItem);
         updateItemTime(nodeContentItem);
         showBlockUser && myBlack.addButton(nodeContentItem.parentElement!);
-        myAnswerPDF.addBtn(nodeContentItem.parentElement!);
-        myArticlePDF.addBtn(nodeContentItem.parentElement!);
+        if (topExportContent) {
+          addButtonForAnswerExportPDF(nodeContentItem.parentElement!);
+          addButtonForArticleExportPDF(nodeContentItem.parentElement!);
+        }
       }, 0);
     }
   };
