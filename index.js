@@ -1707,7 +1707,6 @@
     domListHeader.appendChild(nDomButtonOnce);
   };
   var addBtnForExportPeopleArticles = () => {
-    const me = void 0;
     const domListHeader = dom(".Profile-main .List-headerText");
     const domButtonOnce = dom(".ctz-people-export-articles-once");
     if (!domListHeader || domButtonOnce)
