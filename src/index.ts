@@ -15,7 +15,7 @@ import { needRedirect } from './inner/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
-import { addButtonForArticleExportPDF, myCollectionExport, myExportForPeopleAnswer } from './methods/export-PDF';
+import { addButtonForArticleExportPDF, myCollectionExport, myExportForPeopleAnswer, myExportForPeopleArticles } from './methods/export-PDF';
 import { myFilterWord } from './methods/filter-word';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
@@ -77,7 +77,7 @@ import { INNER_CSS } from './web-resources';
       return originFetch(url, opt);
     };
     myExportForPeopleAnswer.init();
-    // myExportForPeopleArticles.init();
+    myExportForPeopleArticles.init();
 
     const matched = search.match(/(?<=sort=)\w+/);
     if (/\/question/.test(pathname) && matched) {
@@ -135,7 +135,7 @@ import { INNER_CSS } from './web-resources';
         collection: () => myCollectionExport.init(),
         following: () => myFollowRemove.init(),
         answers: () => myExportForPeopleAnswer.addBtn(),
-        // posts: () => myExportForPeopleArticles.addBtn(),
+        posts: () => myExportForPeopleArticles.addBtn()
       });
 
       if (host === 'zhuanlan.zhihu.com') {
@@ -158,7 +158,7 @@ import { INNER_CSS } from './web-resources';
       filter: () => myPageFilterSetting.init(),
       following: () => myFollowRemove.init(),
       answers: throttle(myExportForPeopleAnswer.addBtn),
-      // posts: throttle(myExportForPeopleArticles.addBtn),
+      posts: throttle(myExportForPeopleArticles.addBtn),
     });
     // 重置监听起点
     myListenListItem.reset();

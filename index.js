@@ -614,7 +614,9 @@
     '个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注<div class="ctz-commit">由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面</div>',
     "推荐页内容链接根据有新到旧进行缓存，可缓存 100 条；缓存内容在「编辑器 - 历史记录 - 推荐列表缓存」",
     "可保存 100 条浏览历史记录链接，内容为打开的问题、文章、视频；「编辑器 - 历史记录 - 浏览历史记录」",
-    '静态图片弹窗观看点击键盘左右直接切换到上一张或下一张<div class="ctz-commit">查看图片点击预览大图时，如果当前回答或者文章中存在多个图片，可以使用键盘方向键左右切换图片显示</div>'
+    '静态图片弹窗观看点击键盘左右直接切换到上一张或下一张<div class="ctz-commit">查看图片点击预览大图时，如果当前回答或者文章中存在多个图片，可以使用键盘方向键左右切换图片显示</div>',
+    "用户页面回答栏导出当前页码用户回答的功能",
+    "用户页面文章栏导出当前页码用户文章的功能"
   ];
   var ICO_URL = {
     zhihu: "https://static.zhihu.com/heifetz/favicon.ico",
@@ -1708,6 +1710,68 @@
       });
     },
     headers: {}
+  };
+  var myExportForPeopleArticles = {
+    init: function() {
+      const originFetch = fetch;
+      unsafeWindow.fetch = (url, opt) => {
+        if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+          this.currentURL = url;
+          this.headers = opt?.headers;
+        }
+        return originFetch(url, opt);
+      };
+    },
+    addBtn: function() {
+      const me = this;
+      const domListHeader = dom(".Profile-main .List-headerText");
+      const domButtonOnce = dom(".ctz-people-export-articles-once");
+      if (!domListHeader || domButtonOnce)
+        return;
+      const nDomButtonOnce = domC("button", {
+        innerHTML: "导出当前页文章",
+        className: `ctz-button ctz-people-export-articles-once`,
+        style: styleButton
+      });
+      nDomButtonOnce.onclick = async function() {
+        const eventBtn = this;
+        const { search } = location;
+        const page = search.replace("?page=", "") || "1";
+        eventBtn.innerText = "加载文章内容中...";
+        eventBtn.disabled = true;
+        const prevData = [];
+        if (page === "1") {
+          const domScript = dom("#js-initialData");
+          if (!domScript)
+            return;
+          const scriptData = JSON.parse(domScript.innerText);
+          const articles = scriptData.initialState.entities.articles;
+          for (let key in articles) {
+            prevData.push(articles[key]);
+          }
+        }
+        const nextData = await me.doFetch();
+        const data = prevData.concat(nextData);
+        const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join("");
+        loadIframeAndExport(eventBtn, content, "导出当前页文章");
+      };
+      domListHeader.appendChild(nDomButtonOnce);
+    },
+    doFetch: function() {
+      const { currentURL, headers } = this;
+      return new Promise((resolve) => {
+        if (!currentURL) {
+          resolve([]);
+        } else {
+          fetch(currentURL, {
+            method: "GET",
+            headers: new Headers(headers)
+          }).then((response) => response.json()).then((res) => resolve(res.data));
+        }
+      });
+    },
+    headers: {},
+    currentURL: ""
   };
   var myScroll = {
     stop: () => dom("body").classList.add("ctz-stop-scroll"),
@@ -2993,6 +3057,7 @@
         return originFetch(url, opt);
       };
       myExportForPeopleAnswer.init();
+      myExportForPeopleArticles.init();
       const matched = search.match(/(?<=sort=)\w+/);
       if (/\/question/.test(pathname) && matched) {
         myListenSelect.keySort = matched[0];
@@ -3041,8 +3106,8 @@
           filter: () => myPageFilterSetting.init(),
           collection: () => myCollectionExport.init(),
           following: () => myFollowRemove.init(),
-          answers: () => myExportForPeopleAnswer.addBtn()
-          // posts: () => myExportForPeopleArticles.addBtn(),
+          answers: () => myExportForPeopleAnswer.addBtn(),
+          posts: () => myExportForPeopleArticles.addBtn()
         });
         if (host === "zhuanlan.zhihu.com") {
           addArticleCreateTimeToTop();
@@ -3059,8 +3124,8 @@
       pathnameHasFn({
         filter: () => myPageFilterSetting.init(),
         following: () => myFollowRemove.init(),
-        answers: throttle(myExportForPeopleAnswer.addBtn)
-        // posts: throttle(myExportForPeopleArticles.addBtn),
+        answers: throttle(myExportForPeopleAnswer.addBtn),
+        posts: throttle(myExportForPeopleArticles.addBtn)
       });
       myListenListItem.reset();
       myListenSearchListItem.reset();

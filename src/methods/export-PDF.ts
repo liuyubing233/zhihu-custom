@@ -2,6 +2,7 @@ import { dom, domC, promisePercent } from '../commons/tools';
 import { store } from '../store';
 import { IPromisePercentCallbackParams } from '../types';
 import { IResponseZhihuAnswer } from '../types/zhihu-answer.type';
+import { IZhihuArticlesDataItem } from '../types/zhihu-articles.type';
 import { INNER_CSS } from '../web-resources';
 
 /** 查找生成PDF的元素类名 */
@@ -263,19 +264,18 @@ export const myExportForPeopleAnswer: {
 };
 
 /** 当前用户文档导出为PDF */
-// TODO?: 有的用户进入其文章页面不请求 articles 接口来获取数据或 articles 接口获取不到数据
-// TODO?: 有的用户使用 articles 接口获取页码混乱
-// TODO?: 所以暂时不开放导出用户文章功能
 export const myExportForPeopleArticles: {
   init: () => void;
   addBtn: () => void;
-  doFetch: (userId: string, page: number, limit?: number) => Promise<IResponseZhihuAnswer>;
+  doFetch: () => Promise<IZhihuArticlesDataItem[]>;
   headers?: HeadersInit;
+  currentURL: string;
 } = {
   init: function () {
     const originFetch = fetch;
     unsafeWindow.fetch = (url: string, opt) => {
       if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+        this.currentURL = url;
         this.headers = opt?.headers;
       }
       return originFetch(url, opt);
@@ -292,8 +292,8 @@ export const myExportForPeopleArticles: {
       style: styleButton,
     });
 
-    const { pathname } = location;
-    const userId = pathname.replace('/people/', '').replace('/posts', '');
+    // const { pathname } = location;
+    // const userId = pathname.replace('/people/', '').replace('/posts', '');
 
     nDomButtonOnce.onclick = async function () {
       const eventBtn = this as HTMLButtonElement;
@@ -301,26 +301,39 @@ export const myExportForPeopleArticles: {
       const page = search.replace('?page=', '') || '1';
       eventBtn.innerText = '加载文章内容中...';
       eventBtn.disabled = true;
-      const res = await me.doFetch(userId, +page);
-      const content = (res.data || []).map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join('');
+      const prevData: IZhihuArticlesDataItem[] = [];
+      if (page === '1') {
+        // 文章第一页内容为 script 标签生成部分
+        const domScript = dom('#js-initialData');
+        if (!domScript) return;
+        const scriptData = JSON.parse(domScript.innerText);
+        const articles = scriptData.initialState.entities.articles;
+        for (let key in articles) {
+          prevData.push(articles[key]);
+        }
+      }
+      const nextData = await me.doFetch();
+      const data = prevData.concat(nextData);
+      const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join('');
       loadIframeAndExport(eventBtn, content, '导出当前页文章');
     };
     domListHeader.appendChild(nDomButtonOnce);
   },
-  doFetch: function (userId: string, page = 1, limit = 20) {
-    const offset = limit * (page - 1);
-    const me = this;
+  doFetch: function () {
+    const { currentURL, headers } = this;
     return new Promise((resolve) => {
-      fetch(
-        `/api/v4/members/${userId}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${offset}&limit=${limit}&sort_by=created`,
-        {
+      if (!currentURL) {
+        resolve([]);
+      } else {
+        fetch(currentURL, {
           method: 'GET',
-          headers: new Headers(me.headers),
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => resolve(res));
+          headers: new Headers(headers),
+        })
+          .then((response) => response.json())
+          .then((res) => resolve(res.data));
+      }
     });
   },
   headers: {},
+  currentURL: '',
 };
