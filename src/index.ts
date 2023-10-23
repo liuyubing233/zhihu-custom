@@ -15,7 +15,7 @@ import { needRedirect } from './inner/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
-import { addButtonForArticleExportPDF, myCollectionExport, myExportForPeopleAnswer, myExportForPeopleArticles } from './methods/export-PDF';
+import { addBtnForExportPeopleAnswer, addBtnForExportPeopleArticles, addButtonForArticleExportPDF, myCollectionExport } from './methods/export-PDF';
 import { myFilterWord } from './methods/filter-word';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
@@ -36,7 +36,7 @@ import { INNER_CSS } from './web-resources';
   if (needRedirect()) return;
   const T0 = performance.now();
   const { pathname, hostname, host, search } = location;
-  const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo } = store;
+  const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo, setHomeFetch } = store;
   const prevConfig = getConfig();
 
   /** 挂载脚本时 document.head 是否渲染 */
@@ -60,7 +60,7 @@ import { INNER_CSS } from './web-resources';
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
 
     const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
-    // 拦截 fetch 方法, 获取 option 中的值
+    // 拦截 fetch 方法，获取接口内容，唯一
     const originFetch = fetch;
     unsafeWindow.fetch = (url: string, opt) => {
       if (/\/answers\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
@@ -74,10 +74,19 @@ import { INNER_CSS } from './web-resources';
           ...opt.headers,
         });
       }
+
+      if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
+        // 如果为用户页面的 回答栏
+        setHomeFetch('answer', { url, header: opt?.headers! });
+      }
+
+      if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+        // 如果为用户页面的 文章栏
+        setHomeFetch('articles', { url, header: opt?.headers! });
+      }
+
       return originFetch(url, opt);
     };
-    myExportForPeopleAnswer.init();
-    myExportForPeopleArticles.init();
 
     const matched = search.match(/(?<=sort=)\w+/);
     if (/\/question/.test(pathname) && matched) {
@@ -134,8 +143,8 @@ import { INNER_CSS } from './web-resources';
         filter: () => myPageFilterSetting.init(),
         collection: () => myCollectionExport.init(),
         following: () => myFollowRemove.init(),
-        answers: () => myExportForPeopleAnswer.addBtn(),
-        posts: () => myExportForPeopleArticles.addBtn()
+        answers: () => addBtnForExportPeopleAnswer(),
+        posts: () => addBtnForExportPeopleArticles(),
       });
 
       if (host === 'zhuanlan.zhihu.com') {
@@ -157,8 +166,8 @@ import { INNER_CSS } from './web-resources';
     pathnameHasFn({
       filter: () => myPageFilterSetting.init(),
       following: () => myFollowRemove.init(),
-      answers: throttle(myExportForPeopleAnswer.addBtn),
-      posts: throttle(myExportForPeopleArticles.addBtn),
+      answers: throttle(addBtnForExportPeopleAnswer),
+      posts: throttle(addBtnForExportPeopleArticles),
     });
     // 重置监听起点
     myListenListItem.reset();
