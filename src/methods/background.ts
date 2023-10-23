@@ -92,7 +92,7 @@ const myBackground = {
   text: function () {
     const { colorText1 } = store.getConfig();
     const styleColorText1 = `.ContentItem-title, body` + `{color: ${colorText1}!important;}`;
-    return styleColorText1;
+    return colorText1 ? styleColorText1 : '';
   },
   doSetCSS: function (background: string, background2: string): string {
     const cssBg = `${this.cssNamesBackground1}{background-color: ${background}!important;}`;

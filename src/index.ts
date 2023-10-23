@@ -15,7 +15,7 @@ import { needRedirect } from './inner/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
-import { addButtonForArticleExportPDF, myCollectionExport } from './methods/export-PDF';
+import { addButtonForArticleExportPDF, myCollectionExport, myExportForPeopleAnswer } from './methods/export-PDF';
 import { myFilterWord } from './methods/filter-word';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
@@ -76,6 +76,7 @@ import { INNER_CSS } from './web-resources';
       }
       return originFetch(url, opt);
     };
+    myExportForPeopleAnswer.init();
 
     const matched = search.match(/(?<=sort=)\w+/);
     if (/\/question/.test(pathname) && matched) {
@@ -132,6 +133,7 @@ import { INNER_CSS } from './web-resources';
         filter: () => myPageFilterSetting.init(),
         collection: () => myCollectionExport.init(),
         following: () => myFollowRemove.init(),
+        answers: () => myExportForPeopleAnswer.addBtn(),
       });
 
       if (host === 'zhuanlan.zhihu.com') {
@@ -147,6 +149,22 @@ import { INNER_CSS } from './web-resources';
     },
     false
   );
+
+  /** 页面路由变化, 部分操作方法 */
+  const changeHistory = () => {
+    pathnameHasFn({
+      filter: () => myPageFilterSetting.init(),
+      following: () => myFollowRemove.init(),
+      answers: throttle(myExportForPeopleAnswer.addBtn),
+    });
+    // 重置监听起点
+    myListenListItem.reset();
+    myListenSearchListItem.reset();
+    myListenAnswerItem.reset();
+  };
+  /** history 变化 */
+  window.addEventListener('popstate', changeHistory);
+  window.addEventListener('pushState', changeHistory);
 
   /** 页面资源加载完成 */
   window.addEventListener('load', () => {
@@ -186,21 +204,6 @@ import { INNER_CSS } from './web-resources';
       clipboardData.setData('text/plain', text);
     }
   });
-
-  /** 页面路由变化, 部分操作方法 */
-  const changeHistory = () => {
-    pathnameHasFn({
-      filter: () => myPageFilterSetting.init(),
-      following: () => myFollowRemove.init(),
-    });
-    // 重置监听起点
-    myListenListItem.reset();
-    myListenSearchListItem.reset();
-    myListenAnswerItem.reset();
-  };
-  /** history 变化 */
-  window.addEventListener('popstate', changeHistory);
-  window.addEventListener('pushState', changeHistory);
 
   /** 页面滚动方法 */
   window.addEventListener(
