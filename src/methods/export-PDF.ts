@@ -116,51 +116,47 @@ export const myCollectionExport = {
 };
 
 /** 回答添加导出为 PDF 按钮 */
-export const myAnswerPDF = {
-  addBtn: (nodeAnswerItem: HTMLElement) => {
-    const nClass = 'ctz-export-answer';
-    const prevButton = nodeAnswerItem.querySelector(`.${nClass}`);
-    prevButton && prevButton.remove();
-    const nodeUser = nodeAnswerItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
-    if (!nodeUser) return;
-    const nodeButton = domC('button', {
-      innerHTML: '导出当前回答',
-      className: `ctz-button ${nClass}`,
-      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;background: transparent;',
-    });
+export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
+  const nClass = 'ctz-export-answer';
+  const prevButton = nodeAnswerItem.querySelector(`.${nClass}`);
+  prevButton && prevButton.remove();
+  const nodeUser = nodeAnswerItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
+  if (!nodeUser) return;
+  const nodeButton = domC('button', {
+    innerHTML: '导出当前回答',
+    className: `ctz-button ${nClass}`,
+    style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;background: transparent;',
+  });
 
-    nodeButton.onclick = function () {
-      const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
-      const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
-      const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML: ''}`
-      pdfExport(innerHTML)
-    };
-    nodeUser.appendChild(nodeButton);
-  },
+  nodeButton.onclick = function () {
+    const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
+    const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
+    const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ''}`;
+    pdfExport(innerHTML);
+  };
+  nodeUser.appendChild(nodeButton);
 };
 
 /** 文章添加导出为 PDF 按钮 */
-export const myArticlePDF = {
-  addBtn: (nodeArticleItem: HTMLElement) => {
-    const nClass = 'ctz-export-article';
-    const prevButton = nodeArticleItem.querySelector(`.${nClass}`);
-    prevButton && prevButton.remove();
-    const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.Post-Header .AuthorInfo-content');
-    if (!nodeUser) return;
-    const nodeButton = domC('button', {
-      innerHTML: '导出当前文章',
-      className: `ctz-button ${nClass}`,
-      style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;background: transparent;',
-    });
+export const addButtonForArticleExportPDF = (nodeArticleItem: HTMLElement) => {
+  const nClass = 'ctz-export-article';
+  const prevButton = nodeArticleItem.querySelector(`.${nClass}`);
+  prevButton && prevButton.remove();
+  const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.Post-Header .AuthorInfo-content');
+  if (!nodeUser) return;
+  const nodeButton = domC('button', {
+    innerHTML: '导出当前文章',
+    className: `ctz-button ${nClass}`,
+    style: 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;background: transparent;',
+  });
 
-    nodeButton.onclick = function () {
-      const nodeAnswerUserLink = nodeArticleItem.querySelector('.AuthorInfo-name');
-      const nodeAnswerContent = nodeArticleItem.querySelector('.RichContent-inner') || nodeArticleItem.querySelector('.Post-RichTextContainer');
-      const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ''}`;
-      pdfExport(innerHTML)
-    };
-    nodeUser.appendChild(nodeButton);
-  },
+  nodeButton.onclick = function () {
+    const nodeAnswerUserLink = nodeArticleItem.querySelector('.AuthorInfo-name');
+    const nodeAnswerContent = nodeArticleItem.querySelector('.RichContent-inner') || nodeArticleItem.querySelector('.Post-RichTextContainer');
+    const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ''}`;
+    pdfExport(innerHTML);
+  };
+  nodeUser.appendChild(nodeButton);
 };
 
 /** 直接打印元素内容为PDF */
