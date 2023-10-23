@@ -77,6 +77,7 @@ import { INNER_CSS } from './web-resources';
       return originFetch(url, opt);
     };
     myExportForPeopleAnswer.init();
+    // myExportForPeopleArticles.init();
 
     const matched = search.match(/(?<=sort=)\w+/);
     if (/\/question/.test(pathname) && matched) {
@@ -134,6 +135,7 @@ import { INNER_CSS } from './web-resources';
         collection: () => myCollectionExport.init(),
         following: () => myFollowRemove.init(),
         answers: () => myExportForPeopleAnswer.addBtn(),
+        // posts: () => myExportForPeopleArticles.addBtn(),
       });
 
       if (host === 'zhuanlan.zhihu.com') {
@@ -156,6 +158,7 @@ import { INNER_CSS } from './web-resources';
       filter: () => myPageFilterSetting.init(),
       following: () => myFollowRemove.init(),
       answers: throttle(myExportForPeopleAnswer.addBtn),
+      // posts: throttle(myExportForPeopleArticles.addBtn),
     });
     // 重置监听起点
     myListenListItem.reset();

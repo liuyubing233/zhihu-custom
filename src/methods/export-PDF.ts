@@ -199,7 +199,7 @@ export const myExportForPeopleAnswer: {
     // const domButton = dom('.ctz-people-export-answer');
     if (!domListHeader || domButtonOnce) return;
     const nDomButtonOnce = domC('button', {
-      innerHTML: '导出当前页面回答',
+      innerHTML: '导出当前页回答',
       className: `ctz-button ctz-people-export-answer-once`,
       style: styleButton,
     });
@@ -220,7 +220,7 @@ export const myExportForPeopleAnswer: {
       eventBtn.disabled = true;
       const res = await me.doFetch(userId, +page);
       const content = (res.data || []).map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join('');
-      loadIframeAndExport(eventBtn, content, '导出当前页面回答');
+      loadIframeAndExport(eventBtn, content, '导出当前页回答');
     };
     // nDomButton.onclick = async function () {
     //   const eventBtn = this as HTMLButtonElement;
@@ -250,6 +250,69 @@ export const myExportForPeopleAnswer: {
     return new Promise((resolve) => {
       fetch(
         `/api/v4/members/${userId}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Cmark_infos%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${offset}&limit=${limit}&sort_by=created`,
+        {
+          method: 'GET',
+          headers: new Headers(me.headers),
+        }
+      )
+        .then((response) => response.json())
+        .then((res) => resolve(res));
+    });
+  },
+  headers: {},
+};
+
+/** 当前用户文档导出为PDF */
+// TODO?: 有的用户进入其文章页面不请求 articles 接口来获取数据或 articles 接口获取不到数据
+// TODO?: 有的用户使用 articles 接口获取页码混乱
+// TODO?: 所以暂时不开放导出用户文章功能
+export const myExportForPeopleArticles: {
+  init: () => void;
+  addBtn: () => void;
+  doFetch: (userId: string, page: number, limit?: number) => Promise<IResponseZhihuAnswer>;
+  headers?: HeadersInit;
+} = {
+  init: function () {
+    const originFetch = fetch;
+    unsafeWindow.fetch = (url: string, opt) => {
+      if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+        this.headers = opt?.headers;
+      }
+      return originFetch(url, opt);
+    };
+  },
+  addBtn: function () {
+    const me = this;
+    const domListHeader = dom('.Profile-main .List-headerText');
+    const domButtonOnce = dom('.ctz-people-export-articles-once');
+    if (!domListHeader || domButtonOnce) return;
+    const nDomButtonOnce = domC('button', {
+      innerHTML: '导出当前页文章',
+      className: `ctz-button ctz-people-export-articles-once`,
+      style: styleButton,
+    });
+
+    const { pathname } = location;
+    const userId = pathname.replace('/people/', '').replace('/posts', '');
+
+    nDomButtonOnce.onclick = async function () {
+      const eventBtn = this as HTMLButtonElement;
+      const { search } = location;
+      const page = search.replace('?page=', '') || '1';
+      eventBtn.innerText = '加载文章内容中...';
+      eventBtn.disabled = true;
+      const res = await me.doFetch(userId, +page);
+      const content = (res.data || []).map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join('');
+      loadIframeAndExport(eventBtn, content, '导出当前页文章');
+    };
+    domListHeader.appendChild(nDomButtonOnce);
+  },
+  doFetch: function (userId: string, page = 1, limit = 20) {
+    const offset = limit * (page - 1);
+    const me = this;
+    return new Promise((resolve) => {
+      fetch(
+        `/api/v4/members/${userId}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${offset}&limit=${limit}&sort_by=created`,
         {
           method: 'GET',
           headers: new Headers(me.headers),
