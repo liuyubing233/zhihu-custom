@@ -218,39 +218,37 @@ export const addBtnForExportPeopleAnswer = () => {
 
 /** 当前用户文章导出为PDF */
 export const addBtnForExportPeopleArticles = () => {
-  const me = this;
-    const domListHeader = dom('.Profile-main .List-headerText');
-    const domButtonOnce = dom('.ctz-people-export-articles-once');
-    if (!domListHeader || domButtonOnce) return;
-    const nDomButtonOnce = domC('button', {
-      innerHTML: '导出当前页文章',
-      className: `ctz-button ctz-people-export-articles-once`,
-      style: styleButton,
-    });
+  const domListHeader = dom('.Profile-main .List-headerText');
+  const domButtonOnce = dom('.ctz-people-export-articles-once');
+  if (!domListHeader || domButtonOnce) return;
+  const nDomButtonOnce = domC('button', {
+    innerHTML: '导出当前页文章',
+    className: `ctz-button ctz-people-export-articles-once`,
+    style: styleButton,
+  });
 
-    nDomButtonOnce.onclick = async function () {
-      const eventBtn = this as HTMLButtonElement;
-      const { search } = location;
-      const page = search.replace('?page=', '') || '1';
-      eventBtn.innerText = '加载文章内容中...';
-      eventBtn.disabled = true;
-      const prevData: IZhihuArticlesDataItem[] = [];
-      if (page === '1') {
-        // 文章第一页内容为 script 标签生成部分
-        const domScript = dom('#js-initialData');
-        if (!domScript) return;
-        const scriptData = JSON.parse(domScript.innerText);
-        const articles = scriptData.initialState.entities.articles;
-        for (let key in articles) {
-          prevData.push(articles[key]);
-        }
+  nDomButtonOnce.onclick = async function () {
+    const eventBtn = this as HTMLButtonElement;
+    const { search } = location;
+    const page = search.replace('?page=', '') || '1';
+    eventBtn.innerText = '加载文章内容中...';
+    eventBtn.disabled = true;
+    const prevData: IZhihuArticlesDataItem[] = [];
+    if (page === '1') {
+      // 文章第一页内容为 script 标签生成部分
+      const domScript = dom('#js-initialData');
+      if (!domScript) return;
+      const scriptData = JSON.parse(domScript.innerText);
+      const articles = scriptData.initialState.entities.articles;
+      for (let key in articles) {
+        prevData.push(articles[key]);
       }
-      const config = store.getHomeFetch('articles');
-      if (!config) return;
-      const data = await doHomeFetch(config.url, config.header);
-      const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join('');
-      loadIframeAndExport(eventBtn, content, '导出当前页文章');
-    };
-    domListHeader.appendChild(nDomButtonOnce);
-}
-
+    }
+    const config = store.getHomeFetch('articles');
+    if (!config) return;
+    const data = await doHomeFetch(config.url, config.header);
+    const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join('');
+    loadIframeAndExport(eventBtn, content, '导出当前页文章');
+  };
+  domListHeader.appendChild(nDomButtonOnce);
+};
