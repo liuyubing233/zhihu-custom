@@ -43,12 +43,7 @@ export const myBlack: IMyBlack = {
     const avatar = (nodeUser.querySelector('meta[itemprop="image"]') as IMyElement).content;
     const nodeAnswerItem = event.querySelector('.AnswerItem');
     const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute('data-za-extra-module') || '{}' : '{}';
-    console.log('event', event);
-
-    console.log('JSON.parse(mo).card', JSON.parse(mo).card,  JSON.parse(mo));
     if (!JSON.parse(mo).card) return;
-
-
     const aContent: IZhihuCardContent = JSON.parse(mo).card.content;
     const userId = aContent.author_member_hash_id || '';
     if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;

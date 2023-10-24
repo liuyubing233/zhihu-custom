@@ -1306,8 +1306,6 @@
       const avatar = nodeUser.querySelector('meta[itemprop="image"]').content;
       const nodeAnswerItem = event.querySelector(".AnswerItem");
       const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute("data-za-extra-module") || "{}" : "{}";
-      console.log("event", event);
-      console.log("JSON.parse(mo).card", JSON.parse(mo).card, JSON.parse(mo));
       if (!JSON.parse(mo).card)
         return;
       const aContent = JSON.parse(mo).card.content;
