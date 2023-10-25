@@ -146,11 +146,12 @@ export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
 
 /** 文章添加导出为 PDF 按钮 */
 export const addButtonForArticleExportPDF = (nodeArticleItem: HTMLElement) => {
+  const {topExportContent} = store.getConfig()
   const nClass = 'ctz-export-article';
   const prevButton = nodeArticleItem.querySelector(`.${nClass}`);
   prevButton && prevButton.remove();
   const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.Post-Header .AuthorInfo-content');
-  if (!nodeUser) return;
+  if (!nodeUser || !topExportContent) return;
   const nodeButton = domC('button', {
     innerHTML: '导出当前文章',
     className: `ctz-button ${nClass}`,

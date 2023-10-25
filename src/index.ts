@@ -28,7 +28,7 @@ import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './methods/time';
 import { myVersion } from './methods/version';
-import { fixVideoAutoPlay, myVideo } from './methods/video';
+import { fixVideoAutoPlay, itemVideoUseLink, myVideo } from './methods/video';
 import { store } from './store';
 import { INNER_CSS } from './web-resources';
 
@@ -37,7 +37,6 @@ import { INNER_CSS } from './web-resources';
   const T0 = performance.now();
   const { pathname, hostname, host, search } = location;
   const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo, setHomeFetch } = store;
-  const prevConfig = getConfig();
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -52,7 +51,8 @@ import { INNER_CSS } from './web-resources';
     }
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-    setStorageConfigItem('cachePfConfig', prevConfig);
+    const config = getConfig();
+    setStorageConfigItem('cachePfConfig', config);
     setConfig(await myStorage.initConfig());
     setHistory(await myStorage.initHistory());
     initHistoryView();
@@ -64,7 +64,7 @@ import { INNER_CSS } from './web-resources';
     const originFetch = fetch;
     unsafeWindow.fetch = (url: string, opt) => {
       if (/\/answers\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
-        // 如果是自定义排序则知乎回答页码增加到20条
+        // 如果是自定义排序则回答页码增加到20条
         url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
       }
       // 缓存 header
@@ -122,8 +122,9 @@ import { INNER_CSS } from './web-resources';
         dom('[name="useSimple"]')!.onclick = async function () {
           const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
           if (!isUse) return;
+          const config = getConfig();
           myStorage.configUpdate({
-            ...prevConfig,
+            ...config,
             ...CONFIG_SIMPLE,
           });
           onDocumentStart();
@@ -150,7 +151,10 @@ import { INNER_CSS } from './web-resources';
       if (host === 'zhuanlan.zhihu.com') {
         addArticleCreateTimeToTop();
         const nodeArticle = dom('.Post-content');
-        prevConfig.topExportContent && nodeArticle && addButtonForArticleExportPDF(nodeArticle);
+        if (nodeArticle) {
+          itemVideoUseLink(nodeArticle);
+          addButtonForArticleExportPDF(nodeArticle);
+        }
       }
       fnLog(
         `加载完毕, 加载时长: ${
@@ -184,6 +188,13 @@ import { INNER_CSS } from './web-resources';
     const nodeSignModal = dom('.signFlowModal');
     const nodeSignClose = nodeSignModal && (nodeSignModal.querySelector('.Modal-closeButton') as HTMLButtonElement);
     nodeSignClose && nodeSignClose.click();
+
+    if (host === 'zhuanlan.zhihu.com') {
+      const nodeArticle = dom('.Post-content');
+      if (nodeArticle) {
+        itemVideoUseLink(nodeArticle);
+      }
+    }
   });
 
   window.addEventListener('keydown', (event) => {

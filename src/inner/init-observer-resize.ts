@@ -7,7 +7,7 @@ import { myListenListItem } from '../methods/listen-list-item';
 import { myListenSearchListItem } from '../methods/listen-search-list-item';
 import { myListenSelect } from '../methods/listen-select';
 import { changeTitle } from '../methods/page-title';
-import { myVideo, zoomVideos } from '../methods/video';
+import { myVideo } from '../methods/video';
 import { store } from '../store';
 import { initImagePreview } from './init-image-preview';
 import { initLinkChanger } from './init-link-changer';
@@ -46,7 +46,7 @@ function resizeFun() {
   myListenAnswerItem.init();
   pathnameHasFn({
     question: () => {
-      zoomVideos();
+      // zoomVideos();
       myListenSelect.init();
     },
     video: () => myVideo.init(),

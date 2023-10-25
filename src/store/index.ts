@@ -46,7 +46,7 @@ class Store {
     questionCreatedAndModifiedTime: true,
     articleCreateTimeToTop: true,
     linkShopping: '0',
-    linkAnswerVideo: '0',
+    // linkAnswerVideo: '0',
     fontSizeForList: 15,
     fontSizeForAnswer: 15,
     fontSizeForArticle: 16,

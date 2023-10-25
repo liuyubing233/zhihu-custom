@@ -1,6 +1,5 @@
-import { domA, domC, domP } from '../commons/tools';
+import { domA, domC } from '../commons/tools';
 import { store } from '../store';
-import { IMyElement } from '../types';
 
 interface IMyVideo {
   index: number;
@@ -62,30 +61,30 @@ const videoDownload = async (url: string, name: string) => {
     });
 };
 
-/** 视频跳转链接 */
-export const zoomVideos = () => {
-  const { getConfig } = store;
-  const { linkAnswerVideo } = getConfig();
-  if (linkAnswerVideo !== '1') return;
-  const itemClick = (item: IMyElement) => {
-    item.onclick = () => {
-      const itemParent = domP(item, 'class', 'VideoAnswerPlayer');
-      if (itemParent) {
-        // 可跳转视频链接
-        const nodeVideo = itemParent.querySelector('.VideoAnswerPlayer-video video') as IMyElement;
-        const videoLink = nodeVideo ? nodeVideo.src : '';
-        videoLink && window.open(videoLink);
-      } else {
-        // 不可跳转视频链接
-        const nodeVideoCard = item.querySelector('.VideoCard') as IMyElement;
-        nodeVideoCard && (nodeVideoCard.style.cssText = `opacity: 1;height: auto;`);
-      }
-    };
-  };
-  domA('.VideoContributionAnswer-container').forEach(itemClick);
-  domA('.RichText-video').forEach(itemClick);
-  domA('.VideoAnswerPlayer-stateBar').forEach(itemClick);
-};
+// /** 视频跳转链接 */
+// export const zoomVideos = () => {
+//   const { getConfig } = store;
+//   const { linkAnswerVideo } = getConfig();
+//   if (linkAnswerVideo !== '1') return;
+//   const itemClick = (item: IMyElement) => {
+//     item.onclick = () => {
+//       const itemParent = domP(item, 'class', 'VideoAnswerPlayer');
+//       if (itemParent) {
+//         // 可跳转视频链接
+//         const nodeVideo = itemParent.querySelector('.VideoAnswerPlayer-video video') as IMyElement;
+//         const videoLink = nodeVideo ? nodeVideo.src : '';
+//         videoLink && window.open(videoLink);
+//       } else {
+//         // 不可跳转视频链接
+//         const nodeVideoCard = item.querySelector('.VideoCard') as IMyElement;
+//         nodeVideoCard && (nodeVideoCard.style.cssText = `opacity: 1;height: auto;`);
+//       }
+//     };
+//   };
+//   domA('.VideoContributionAnswer-container').forEach(itemClick);
+//   domA('.RichText-video').forEach(itemClick);
+//   domA('.VideoAnswerPlayer-stateBar').forEach(itemClick);
+// };
 
 /** 解决视频自动播放问题 */
 export const fixVideoAutoPlay = () => {
@@ -101,4 +100,43 @@ export const fixVideoAutoPlay = () => {
     // 否则正常执行 video.play() 指令
     return originalPlay.apply(this, arguments);
   };
+};
+
+/** 视频内容替换为视频链接 */
+export const itemVideoUseLink = (nodeAnswerItem: HTMLElement) => {
+  const { videoUseLink } = store.getConfig();
+  if (!videoUseLink) return;
+  const classNameForVideoBox = '.css-1h1xzpn'; // 回答中视频盒子的类名（后续可能会更改）
+  const classNameVideoLink = 'ctz-video-link';
+  const classNameVideoCommit = 'ctz-video-commit';
+  const domVideos = nodeAnswerItem.querySelectorAll(classNameForVideoBox);
+  for (let i = 0, len = domVideos.length; i < len; i++) {
+    const domVideoBox = domVideos[i] as HTMLElement;
+    const domVideoBoxParent = domVideoBox.parentElement;
+    if (!domVideoBoxParent) continue;
+    domVideoBox.style.display = 'none';
+    domVideoBoxParent.style.textAlign = 'center';
+    if (domVideoBoxParent.querySelector(`.${classNameVideoLink}`)) continue;
+    const domVideo = domVideoBox.querySelector('video');
+    const domImgCover = domVideoBox.querySelector('img');
+    const domVideoCommit = domVideoBoxParent.querySelector(`.${classNameVideoCommit}`);
+    domVideoCommit && domVideoCommit.remove();
+    if (domVideo) {
+      const srcVideo = domVideo.src;
+      const srcCoverImg = domImgCover ? domImgCover.src : '';
+      const nDomVideoLink = domC('a', {
+        href: srcVideo,
+        className: classNameVideoLink,
+        target: '_blank',
+        innerHTML: `${srcCoverImg ? `<img src="${srcCoverImg}" />` : ''}<span>视频链接，点击跳转查看</span>`,
+      });
+      domVideoBoxParent.appendChild(nDomVideoLink);
+    } else {
+      const nDomVideoCommit = domC('span', {
+        innerText: '视频资源加载中...',
+        className: classNameVideoCommit,
+      });
+      domVideoBoxParent.appendChild(nDomVideoCommit);
+    }
+  }
 };

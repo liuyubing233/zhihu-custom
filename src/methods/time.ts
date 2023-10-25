@@ -76,14 +76,13 @@ export const addQuestionCreatedAndModifiedTime = () => {
 
 /** 文章发布时间置顶 */
 export const addArticleCreateTimeToTop = () => {
-  const { getConfig } = store;
+  const { articleCreateTimeToTop } = store.getConfig();
   const className = 'ctz-article-create-time';
   const nodeT = dom(`.${className}`);
   nodeT && nodeT.remove();
-  const conf = getConfig();
   const nodeContentTime = dom('.ContentItem-time');
   const nodeHeader = dom('.Post-Header');
-  if (!(conf.articleCreateTimeToTop && nodeContentTime && nodeHeader)) return;
+  if (!(articleCreateTimeToTop && nodeContentTime && nodeHeader)) return;
   nodeHeader.appendChild(
     domC('span', {
       className,
