@@ -28,7 +28,7 @@ import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './methods/time';
 import { myVersion } from './methods/version';
-import { fixVideoAutoPlay, itemVideoUseLink, myVideo } from './methods/video';
+import { fixVideoAutoPlay, initVideoDownload, itemVideoUseLink } from './methods/video';
 import { store } from './store';
 import { INNER_CSS } from './web-resources';
 
@@ -140,7 +140,6 @@ import { INNER_CSS } from './web-resources';
           nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
           initInviteOnce();
         },
-        video: () => myVideo.init(),
         filter: () => myPageFilterSetting.init(),
         collection: () => myCollectionExport.init(),
         following: () => myFollowRemove.init(),
@@ -154,6 +153,7 @@ import { INNER_CSS } from './web-resources';
         if (nodeArticle) {
           itemVideoUseLink(nodeArticle);
           addButtonForArticleExportPDF(nodeArticle);
+          initVideoDownload(nodeArticle)
         }
       }
       fnLog(
@@ -193,8 +193,16 @@ import { INNER_CSS } from './web-resources';
       const nodeArticle = dom('.Post-content');
       if (nodeArticle) {
         itemVideoUseLink(nodeArticle);
+        initVideoDownload(nodeArticle)
       }
     }
+
+    pathnameHasFn({
+      zvideo: () => {
+        const domFind = dom('.ZVideo-mainColumn');
+        domFind && initVideoDownload(domFind);
+      },
+    });
   });
 
   window.addEventListener('keydown', (event) => {

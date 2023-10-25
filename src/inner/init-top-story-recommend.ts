@@ -5,7 +5,7 @@ import { myBlack } from '../methods/black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from '../methods/export-PDF';
 import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
-import { itemVideoUseLink } from '../methods/video';
+import { initVideoDownload, itemVideoUseLink } from '../methods/video';
 import { store } from '../store';
 
 /** 推荐列表最外层绑定事件 */
@@ -40,6 +40,7 @@ export const initTopStoryRecommendEvent = () => {
         updateItemTime(nodeContentItem);
         showBlockUser && myBlack.addButton(nodeContentItem.parentElement!);
         itemVideoUseLink(nodeContentItem);
+        initVideoDownload(nodeContentItem)
         if (topExportContent) {
           addButtonForAnswerExportPDF(nodeContentItem.parentElement!);
           addButtonForArticleExportPDF(nodeContentItem.parentElement!);

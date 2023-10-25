@@ -8,7 +8,7 @@ import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './exp
 import { myListenSelect } from './listen-select';
 import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
-import { itemVideoUseLink } from './video';
+import { initVideoDownload, itemVideoUseLink } from './video';
 
 /** 监听详情回答 - 过滤 */
 export const myListenAnswerItem: IMyListenAnswerItem = {
@@ -40,6 +40,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
         addButtonForArticleExportPDF(nodeItem);
       }
       itemVideoUseLink(nodeItem)
+      initVideoDownload(nodeItem)
     };
 
     addFnInNodeItem(dom('.QuestionAnswer-content'));

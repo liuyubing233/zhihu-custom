@@ -58,10 +58,6 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       myListenListItem.restart();
     },
     articleCreateTimeToTop: addArticleCreateTimeToTop,
-    // linkAnswerVideo: () => {
-    //   myVersion.change();
-    //   zoomVideos();
-    // },
   };
   await myStorage.configUpdateItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);

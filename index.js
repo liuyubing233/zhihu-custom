@@ -2,7 +2,7 @@
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
 // @version      4.7.0
-// @description  页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，回答视频下载，回答内容按照点赞数和评论数排序，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及夜间模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容、回答、文章导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，更多功能请在插件里体验...
+// @description  页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，视频下载，回答内容按照点赞数和评论数排序，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及夜间模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容、回答、文章导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
 // @compatible   chrome Violentmonkey
@@ -169,7 +169,6 @@
     questionCreatedAndModifiedTime: true,
     articleCreateTimeToTop: true,
     linkShopping: "1",
-    // linkAnswerVideo: '1',
     hiddenAnswerItemActions: true,
     hiddenAnswerItemTime: true,
     videoUseLink: true
@@ -204,7 +203,6 @@
         questionCreatedAndModifiedTime: true,
         articleCreateTimeToTop: true,
         linkShopping: "0",
-        // linkAnswerVideo: '0',
         fontSizeForList: 15,
         fontSizeForAnswer: 15,
         fontSizeForArticle: 16,
@@ -1104,26 +1102,6 @@
       };
       return cssObj[pfConfig.linkShopping || "0"];
     },
-    // vAnswerVideo: function () {
-    //   const pfConfig = this.getConfig();
-    //   // 回答内视频缩放CSS
-    //   const cssObj = {
-    //     0: '',
-    //     1:
-    //       `.VideoAnswerPlayer-video{display: none;}` +
-    //       `.VideoAnswerPlayer .VideoAnswerPlayer-stateBar::before{content: '视频链接';color: #f77a2d;margin-right: 12px}` +
-    //       `.VideoAnswerPlayer:hover{opacity: 0.8}` +
-    //       `.ZVideoLinkCard-playerContainer, .VideoContributionAnswer-video,.css-ujtn9j` +
-    //       `,.ZVideoLinkCard-info{display: none;}` +
-    //       `.RichText-video .VideoCard{opacity: 0;height: 1px;overflow:hidden;}` +
-    //       `.ZVideoLinkCard::before,.VideoContributionAnswer-container::before,.RichText-video::before` +
-    //       `{content:'「视频 - 点击播放」';color: #f77a2d;cursor:pointer;}` +
-    //       `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}` +
-    //       `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
-    //     2: '.VideoAnswerPlayer,.RichText-video,.css-1h1xzpn{display: none;}',
-    //   };
-    //   return cssObj[pfConfig.linkAnswerVideo || '0'];
-    // },
     vFontSizeContent: function() {
       const pfConfig = this.getConfig();
       const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle } = pfConfig;
@@ -2041,40 +2019,30 @@
       });
     }
   };
-  var myVideo = {
-    index: 0,
-    timeout: null,
-    init: function() {
-      this.timeout && clearTimeout(this.timeout);
-      if (this.index < 30) {
-        this.timeout = setTimeout(() => {
-          if (domA("#player video").length) {
-            this.index = 0;
-            domA("#player>div").forEach((even) => {
-              const elementDownload = domC("i", { className: "ctz-icon ctz-video-download", innerHTML: "&#xe608;" });
-              const elementLoading = domC("i", { className: "ctz-icon ctz-loading", innerHTML: "&#xe605;" });
-              elementDownload.onclick = () => {
-                const url = elementDownload.parentElement.parentElement.querySelector("video").src;
-                if (url) {
-                  elementDownload.style.display = "none";
-                  even.appendChild(elementLoading);
-                  const name = url.match(/(?<=\/)[\d\w-\.]+(?=\?)/)[0];
-                  videoDownload(url, name).then(() => {
-                    elementDownload.style.display = "block";
-                    elementLoading.remove();
-                  });
-                }
-              };
-              const nodeDownload = even.querySelector(".ctz-video-download");
-              nodeDownload && nodeDownload.remove();
-              even.appendChild(elementDownload);
-            });
-          } else {
-            this.init();
-            this.index++;
-          }
-        }, 500);
-      }
+  var initVideoDownload = (nodeFound) => {
+    const dom1 = nodeFound.querySelectorAll(".ZVideo-player>div");
+    const dom2 = nodeFound.querySelectorAll(".css-1h1xzpn");
+    const domVideos = dom1.length ? dom1 : dom2;
+    console.log("domVideos", domVideos);
+    for (let i = 0, len = domVideos.length; i < len; i++) {
+      const domVideoBox = domVideos[i];
+      const nDomDownload = domC("i", { className: "ctz-icon ctz-video-download", innerHTML: "&#xe608;" });
+      const nDomLoading = domC("i", { className: "ctz-icon ctz-loading", innerHTML: "&#xe605;" });
+      nDomDownload.onclick = () => {
+        const srcVideo = domVideoBox.querySelector("video").src;
+        if (srcVideo) {
+          nDomDownload.style.display = "none";
+          domVideoBox.appendChild(nDomLoading);
+          videoDownload(srcVideo, `video${+/* @__PURE__ */ new Date()}`).then(() => {
+            nDomDownload.style.display = "block";
+            nDomLoading.remove();
+          });
+        }
+      };
+      const nodeDownload = domVideoBox.querySelector(".ctz-video-download");
+      nodeDownload && nodeDownload.remove();
+      domVideoBox.style.cssText += `position: relative;`;
+      domVideoBox.appendChild(nDomDownload);
     }
   };
   var videoDownload = async (url, name) => {
@@ -2098,19 +2066,17 @@
       return originalPlay.apply(this, arguments);
     };
   };
-  var itemVideoUseLink = (nodeAnswerItem) => {
+  var itemVideoUseLink = (nodeFound) => {
     const { videoUseLink } = store.getConfig();
     if (!videoUseLink)
       return;
     const classNameForVideoBox = ".css-1h1xzpn";
     const classNameVideoLink = "ctz-video-link";
     const classNameVideoCommit = "ctz-video-commit";
-    const domVideos = nodeAnswerItem.querySelectorAll(classNameForVideoBox);
+    const domVideos = nodeFound.querySelectorAll(classNameForVideoBox);
     for (let i = 0, len = domVideos.length; i < len; i++) {
       const domVideoBox = domVideos[i];
       const domVideoBoxParent = domVideoBox.parentElement;
-      if (!domVideoBoxParent)
-        continue;
       domVideoBox.style.display = "none";
       domVideoBoxParent.style.textAlign = "center";
       if (domVideoBoxParent.querySelector(`.${classNameVideoLink}`))
@@ -2166,6 +2132,7 @@
           addButtonForArticleExportPDF(nodeItem);
         }
         itemVideoUseLink(nodeItem);
+        initVideoDownload(nodeItem);
       };
       addFnInNodeItem(dom(".QuestionAnswer-content"));
       const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
@@ -2481,6 +2448,7 @@
           updateItemTime(nodeContentItem);
           showBlockUser && myBlack.addButton(nodeContentItem.parentElement);
           itemVideoUseLink(nodeContentItem);
+          initVideoDownload(nodeContentItem);
           if (topExportContent) {
             addButtonForAnswerExportPDF(nodeContentItem.parentElement);
             addButtonForArticleExportPDF(nodeContentItem.parentElement);
@@ -2520,7 +2488,6 @@
       question: () => {
         myListenSelect.init();
       },
-      video: () => myVideo.init(),
       collection: () => myCollectionExport.init()
     });
     globalTitle !== document.title && changeTitle();
@@ -2708,10 +2675,6 @@
         myListenListItem.restart();
       },
       articleCreateTimeToTop: addArticleCreateTimeToTop
-      // linkAnswerVideo: () => {
-      //   myVersion.change();
-      //   zoomVideos();
-      // },
     };
     await myStorage.configUpdateItem(name, type === "checkbox" ? checked : value);
     const nodeName = domById(name);
@@ -3106,7 +3069,6 @@
             nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
             initInviteOnce();
           },
-          video: () => myVideo.init(),
           filter: () => myPageFilterSetting.init(),
           collection: () => myCollectionExport.init(),
           following: () => myFollowRemove.init(),
@@ -3119,6 +3081,7 @@
           if (nodeArticle) {
             itemVideoUseLink(nodeArticle);
             addButtonForArticleExportPDF(nodeArticle);
+            initVideoDownload(nodeArticle);
           }
         }
         fnLog(
@@ -3148,8 +3111,15 @@
         const nodeArticle = dom(".Post-content");
         if (nodeArticle) {
           itemVideoUseLink(nodeArticle);
+          initVideoDownload(nodeArticle);
         }
       }
+      pathnameHasFn({
+        zvideo: () => {
+          const domFind = dom(".ZVideo-mainColumn");
+          domFind && initVideoDownload(domFind);
+        }
+      });
     });
     window.addEventListener("keydown", (event) => {
       const { hotKey } = getConfig();
