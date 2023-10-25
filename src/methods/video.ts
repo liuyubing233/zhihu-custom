@@ -6,8 +6,6 @@ export const initVideoDownload = (nodeFound: HTMLElement) => {
   const dom1 = nodeFound.querySelectorAll('.ZVideo-player>div');
   const dom2 = nodeFound.querySelectorAll('.css-1h1xzpn');
   const domVideos = dom1.length ? dom1 : dom2;
-  console.log('domVideos', domVideos);
-
   for (let i = 0, len = domVideos.length; i < len; i++) {
     const domVideoBox = domVideos[i] as HTMLElement;
     const nDomDownload = domC('i', { className: 'ctz-icon ctz-video-download', innerHTML: '&#xe608;' });
