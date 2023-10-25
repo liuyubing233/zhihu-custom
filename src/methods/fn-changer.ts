@@ -9,7 +9,6 @@ import { changeICO } from './page-title';
 import { cacheHeader, changeSuspensionTab } from './suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './time';
 import { myVersion } from './version';
-import { zoomVideos } from './video';
 
 /** 更改编辑器方法 */
 export const fnChanger = async (ev: HTMLInputElement) => {
@@ -59,10 +58,6 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       myListenListItem.restart();
     },
     articleCreateTimeToTop: addArticleCreateTimeToTop,
-    linkAnswerVideo: () => {
-      myVersion.change();
-      zoomVideos();
-    },
   };
   await myStorage.configUpdateItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);

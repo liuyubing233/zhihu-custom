@@ -153,9 +153,9 @@ export const CONFIG_SIMPLE: IPfConfig = {
   questionCreatedAndModifiedTime: true,
   articleCreateTimeToTop: true,
   linkShopping: '1',
-  linkAnswerVideo: '1',
   hiddenAnswerItemActions: true,
   hiddenAnswerItemTime: true,
+  videoUseLink: true,
 };
 
 /** 缓存的历史记录数量 */

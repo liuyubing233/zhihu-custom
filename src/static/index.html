@@ -72,7 +72,7 @@
                 <div class="ctz-flex-wrap">
                   <div class="ctz-label">自定义图片尺寸</div>
                   <input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" />
-                  <span id="zoomImageSize" style="margin:0 8px;">0</span>
+                  <span id="zoomImageSize" style="margin: 0 8px">0</span>
                   <span class="ctz-commit">滚动条范围: 0 ~ 1000</span>
                 </div>
               </div>
@@ -123,7 +123,7 @@
 
         <div id="CTZ_BASIS_SHOW_CONTENT">
           <div class="ctz-set-title">
-            <span>显示修改<span class="ctz-desc" style="color: red;">修改后刷新页面生效</span></span>
+            <span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span>
           </div>
           <div class="ctz-set-content">
             <label class="ctz-flex-wrap">
@@ -141,6 +141,10 @@
             <label class="ctz-flex-wrap">
               <span class="ctz-label">文档或回答顶部显示导出当前内容/回答按钮</span>
               <input class="ctz-i" name="topExportContent" type="checkbox" value="on" />
+            </label>
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">回答和文章中的视频替换为链接</span>
+              <input class="ctz-i" name="videoUseLink" type="checkbox" value="on" />
             </label>
           </div>
         </div>
@@ -215,7 +219,7 @@
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">列表版心宽度</div>
                 <input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" />
-                <span id="versionHome" style="margin: 0 8px;">0</span>
+                <span id="versionHome" style="margin: 0 8px">0</span>
                 <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
               </div>
             </div>
@@ -273,7 +277,7 @@
               <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM">
                 <div class="ctz-flex-wrap">
                   <input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" />
-                  <span id="zoomListVideoSize" style="margin:0 8px">0</span>
+                  <span id="zoomListVideoSize" style="margin: 0 8px">0</span>
                   <span class="ctz-commit">滚动条范围: 0 ~ 1000</span>
                 </div>
               </div>
@@ -320,14 +324,14 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
-                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />
+                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />
                 的内容
               </div>
             </div>
 
             <div class="ctz-filter-word">
               <div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div>
-              <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" style="margin: 4px 0;width: 100%;" />
+              <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" style="margin: 4px 0; width: 100%" />
               <div id="CTZ_FILTER_WORDS"></div>
             </div>
           </div>
@@ -359,7 +363,7 @@
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">回答版心宽度</div>
                 <input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" />
-                <span id="versionAnswer" style="margin:0 8px">0</span>
+                <span id="versionAnswer" style="margin: 0 8px">0</span>
                 <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
               </div>
             </div>
@@ -382,12 +386,6 @@
               <label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label>
             </div>
             <div class="ctz-flex-wrap">
-              <span class="ctz-label">回答视频显示设置</span>
-              <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="0" />默认</label>
-              <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="1" />仅链接</label>
-              <label><input class="ctz-i" name="linkAnswerVideo" type="radio" value="2" />隐藏</label>
-            </div>
-            <div class="ctz-flex-wrap">
               <span class="ctz-label">回答内容标准文字大小</span>
               <input type="number" name="fontSizeForAnswer" class="ctz-i-change" />
             </div>
@@ -396,7 +394,7 @@
 
         <div id="CTZ_ANSWER_FILTER" class="ctz-filter-block">
           <div class="ctz-set-title">
-            <span>屏蔽内容 <span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
+            <span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span>
           </div>
           <div class="ctz-set-content">
             <div class="ctz-filter-defail-who">
@@ -434,7 +432,7 @@
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后问题详情页将屏蔽点赞量少于
-                <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px;margin: 0 4px;" />
+                <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />
                 的回答
               </div>
             </div>
@@ -474,7 +472,7 @@
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">文章版心宽度</div>
                 <input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" />
-                <span id="versionArticle" style="margin: 0 8px;">0</span>
+                <span id="versionArticle" style="margin: 0 8px">0</span>
                 <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
               </div>
             </div>

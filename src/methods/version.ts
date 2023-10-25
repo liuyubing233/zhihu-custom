@@ -17,7 +17,7 @@ export const myVersion = {
         this.vFixedListMore() +
         this.vHighlightListItem() +
         this.vShoppingLink() +
-        this.vAnswerVideo() +
+        // this.vAnswerVideo() +
         this.vFontSizeContent() +
         this.vListVideoSize()
     );
@@ -172,26 +172,6 @@ export const myVersion = {
         '{display: none!important;}',
     };
     return cssObj[pfConfig.linkShopping || '0'];
-  },
-  vAnswerVideo: function () {
-    const pfConfig = this.getConfig();
-    // 回答内视频缩放CSS
-    const cssObj = {
-      0: '',
-      1:
-        `.VideoAnswerPlayer-video{display: none;}` +
-        `.VideoAnswerPlayer .VideoAnswerPlayer-stateBar::before{content: '视频链接';color: #f77a2d;margin-right: 12px}` +
-        `.VideoAnswerPlayer:hover{opacity: 0.8}` +
-        `.ZVideoLinkCard-playerContainer, .VideoContributionAnswer-video,.css-ujtn9j` +
-        `,.ZVideoLinkCard-info{display: none;}` +
-        `.RichText-video .VideoCard{opacity: 0;height: 1px;overflow:hidden;}` +
-        `.ZVideoLinkCard::before,.VideoContributionAnswer-container::before,.RichText-video::before` +
-        `{content:'「视频 - 点击播放」';color: #f77a2d;cursor:pointer;}` +
-        `.ZVideoLinkCard,.VideoContributionAnswer-container{cursor:pointer;padding: 4px 0}` +
-        `.ZVideoLinkCard:hover,.VideoContributionAnswer-container:hover{background: #eee}`,
-      2: '.VideoAnswerPlayer,.RichText-video{display: none;}',
-    };
-    return cssObj[pfConfig.linkAnswerVideo || '0'];
   },
   vFontSizeContent: function () {
     const pfConfig = this.getConfig();

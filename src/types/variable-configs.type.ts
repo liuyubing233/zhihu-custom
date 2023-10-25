@@ -289,8 +289,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   articleCreateTimeToTop?: boolean;
   /** 购物链接显示设置 0 1 2 */
   linkShopping?: '0' | '1' | '2';
-  /** 回答视频显示设置  0 1 2 */
-  linkAnswerVideo?: '0' | '1' | '2';
   /** 列表内容标准文字大小 */
   fontSizeForList?: number;
   /** 回答内容标准文字大小 */
@@ -319,4 +317,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   topVote?: boolean;
   /** 文档或回答顶部显示导出当前内容/回答按钮 */
   topExportContent?: boolean;
+  /** 回答内容中的视频回答替换为视频链接 */
+  videoUseLink?: boolean;
 }
