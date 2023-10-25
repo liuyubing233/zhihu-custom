@@ -2019,11 +2019,17 @@
       });
     }
   };
+  var findDoms = (nodeFound, domNames) => {
+    const doms = domNames.map((i) => nodeFound.querySelectorAll(i));
+    for (let i = 0, len = doms.length; i < len; i++) {
+      if (doms[i].length) {
+        return doms[i];
+      }
+    }
+    return doms[doms.length - 1];
+  };
   var initVideoDownload = (nodeFound) => {
-    const dom1 = nodeFound.querySelectorAll(".ZVideo-player>div");
-    const dom2 = nodeFound.querySelectorAll(".css-1h1xzpn");
-    const domVideos = dom1.length ? dom1 : dom2;
-    console.log("domVideos", domVideos);
+    const domVideos = findDoms(nodeFound, [".ZVideo-player>div", ".css-1h1xzpn", ".VideoAnswerPlayer-video"]);
     for (let i = 0, len = domVideos.length; i < len; i++) {
       const domVideoBox = domVideos[i];
       const nDomDownload = domC("i", { className: "ctz-icon ctz-video-download", innerHTML: "&#xe608;" });
@@ -2066,14 +2072,13 @@
       return originalPlay.apply(this, arguments);
     };
   };
-  var itemVideoUseLink = (nodeFound) => {
+  var itemVideoUseLink = (nodeFound, index = 0) => {
     const { videoUseLink } = store.getConfig();
     if (!videoUseLink)
       return;
-    const classNameForVideoBox = ".css-1h1xzpn";
     const classNameVideoLink = "ctz-video-link";
     const classNameVideoCommit = "ctz-video-commit";
-    const domVideos = nodeFound.querySelectorAll(classNameForVideoBox);
+    const domVideos = findDoms(nodeFound, [".css-1h1xzpn", ".VideoAnswerPlayer-video"]);
     for (let i = 0, len = domVideos.length; i < len; i++) {
       const domVideoBox = domVideos[i];
       const domVideoBoxParent = domVideoBox.parentElement;

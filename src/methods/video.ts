@@ -1,11 +1,19 @@
 import { domC } from '../commons/tools';
 import { store } from '../store';
 
+const findDoms = (nodeFound: HTMLElement, domNames: string[]): NodeListOf<Element> => {
+  const doms = domNames.map((i) => nodeFound.querySelectorAll(i));
+  for (let i = 0, len = doms.length; i < len; i++) {
+    if (doms[i].length) {
+      return doms[i];
+    }
+  }
+  return doms[doms.length - 1];
+};
+
 /** 加载视频下载方法 */
 export const initVideoDownload = (nodeFound: HTMLElement) => {
-  const dom1 = nodeFound.querySelectorAll('.ZVideo-player>div');
-  const dom2 = nodeFound.querySelectorAll('.css-1h1xzpn');
-  const domVideos = dom1.length ? dom1 : dom2;
+  const domVideos = findDoms(nodeFound, ['.ZVideo-player>div', '.css-1h1xzpn', '.VideoAnswerPlayer-video']);
   for (let i = 0, len = domVideos.length; i < len; i++) {
     const domVideoBox = domVideos[i] as HTMLElement;
     const nDomDownload = domC('i', { className: 'ctz-icon ctz-video-download', innerHTML: '&#xe608;' });
@@ -15,7 +23,6 @@ export const initVideoDownload = (nodeFound: HTMLElement) => {
       if (srcVideo) {
         nDomDownload.style.display = 'none';
         domVideoBox.appendChild(nDomLoading);
-        // const name = srcVideo.match(/(?<=\/)[\d\w-\.]+(?=\?)/)![0];
         videoDownload(srcVideo, `video${+new Date()}`).then(() => {
           nDomDownload.style.display = 'block';
           nDomLoading.remove();
@@ -62,13 +69,12 @@ export const fixVideoAutoPlay = () => {
 };
 
 /** 视频内容替换为视频链接 */
-export const itemVideoUseLink = (nodeFound: HTMLElement) => {
+export const itemVideoUseLink = (nodeFound: HTMLElement, index = 0) => {
   const { videoUseLink } = store.getConfig();
   if (!videoUseLink) return;
-  const classNameForVideoBox = '.css-1h1xzpn'; // 回答中视频盒子的类名（后续可能会更改）
   const classNameVideoLink = 'ctz-video-link';
   const classNameVideoCommit = 'ctz-video-commit';
-  const domVideos = nodeFound.querySelectorAll(classNameForVideoBox);
+  const domVideos = findDoms(nodeFound, ['.css-1h1xzpn', '.VideoAnswerPlayer-video']);
   for (let i = 0, len = domVideos.length; i < len; i++) {
     const domVideoBox = domVideos[i] as HTMLElement;
     const domVideoBoxParent = domVideoBox.parentElement as HTMLElement;
