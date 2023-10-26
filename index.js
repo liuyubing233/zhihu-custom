@@ -2029,27 +2029,29 @@
     return doms[doms.length - 1];
   };
   var initVideoDownload = (nodeFound) => {
-    const domVideos = findDoms(nodeFound, [".ZVideo-player>div", ".css-1h1xzpn", ".VideoAnswerPlayer-video"]);
-    for (let i = 0, len = domVideos.length; i < len; i++) {
-      const domVideoBox = domVideos[i];
-      const nDomDownload = domC("i", { className: "ctz-icon ctz-video-download", innerHTML: "&#xe608;" });
-      const nDomLoading = domC("i", { className: "ctz-icon ctz-loading", innerHTML: "&#xe605;" });
-      nDomDownload.onclick = () => {
-        const srcVideo = domVideoBox.querySelector("video").src;
-        if (srcVideo) {
-          nDomDownload.style.display = "none";
-          domVideoBox.appendChild(nDomLoading);
-          videoDownload(srcVideo, `video${+/* @__PURE__ */ new Date()}`).then(() => {
-            nDomDownload.style.display = "block";
-            nDomLoading.remove();
-          });
-        }
-      };
-      const nodeDownload = domVideoBox.querySelector(".ctz-video-download");
-      nodeDownload && nodeDownload.remove();
-      domVideoBox.style.cssText += `position: relative;`;
-      domVideoBox.appendChild(nDomDownload);
-    }
+    setTimeout(() => {
+      const domVideos = findDoms(nodeFound, [".ZVideo-player>div", ".css-1h1xzpn", ".VideoAnswerPlayer-video"]);
+      for (let i = 0, len = domVideos.length; i < len; i++) {
+        const domVideoBox = domVideos[i];
+        const nDomDownload = domC("i", { className: "ctz-icon ctz-video-download", innerHTML: "&#xe608;" });
+        const nDomLoading = domC("i", { className: "ctz-icon ctz-loading", innerHTML: "&#xe605;" });
+        nDomDownload.onclick = () => {
+          const srcVideo = domVideoBox.querySelector("video").src;
+          if (srcVideo) {
+            nDomDownload.style.display = "none";
+            domVideoBox.appendChild(nDomLoading);
+            videoDownload(srcVideo, `video${+/* @__PURE__ */ new Date()}`).then(() => {
+              nDomDownload.style.display = "block";
+              nDomLoading.remove();
+            });
+          }
+        };
+        const nodeDownload = domVideoBox.querySelector(".ctz-video-download");
+        nodeDownload && nodeDownload.remove();
+        domVideoBox.style.cssText += `position: relative;`;
+        domVideoBox.appendChild(nDomDownload);
+      }
+    }, 100);
   };
   var videoDownload = async (url, name) => {
     return fetch(url).then((res) => res.blob()).then((blob) => {
@@ -2072,42 +2074,49 @@
       return originalPlay.apply(this, arguments);
     };
   };
-  var itemVideoUseLink = (nodeFound, index = 0) => {
-    const { videoUseLink } = store.getConfig();
-    if (!videoUseLink)
-      return;
-    const classNameVideoLink = "ctz-video-link";
-    const classNameVideoCommit = "ctz-video-commit";
-    const domVideos = findDoms(nodeFound, [".css-1h1xzpn", ".VideoAnswerPlayer-video"]);
-    for (let i = 0, len = domVideos.length; i < len; i++) {
-      const domVideoBox = domVideos[i];
-      const domVideoBoxParent = domVideoBox.parentElement;
-      domVideoBox.style.display = "none";
-      domVideoBoxParent.style.textAlign = "center";
-      if (domVideoBoxParent.querySelector(`.${classNameVideoLink}`))
-        continue;
-      const domVideo = domVideoBox.querySelector("video");
-      const domImgCover = domVideoBox.querySelector("img");
-      const domVideoCommit = domVideoBoxParent.querySelector(`.${classNameVideoCommit}`);
-      domVideoCommit && domVideoCommit.remove();
-      if (domVideo) {
-        const srcVideo = domVideo.src;
-        const srcCoverImg = domImgCover ? domImgCover.src : "";
-        const nDomVideoLink = domC("a", {
-          href: srcVideo,
-          className: classNameVideoLink,
-          target: "_blank",
-          innerHTML: `${srcCoverImg ? `<img src="${srcCoverImg}" />` : ""}<span>视频链接，点击跳转查看</span>`
-        });
-        domVideoBoxParent.appendChild(nDomVideoLink);
-      } else {
-        const nDomVideoCommit = domC("span", {
-          innerText: "视频资源加载中...",
-          className: classNameVideoCommit
-        });
-        domVideoBoxParent.appendChild(nDomVideoCommit);
+  var itemVideoUseLink = (nodeFound, prevVideoSrc = "") => {
+    setTimeout(() => {
+      const { videoUseLink } = store.getConfig();
+      if (!videoUseLink)
+        return;
+      const classNameVideoLink = "ctz-video-link";
+      const classNameVideoCommit = "ctz-video-commit";
+      const domVideos = findDoms(nodeFound, [".css-1h1xzpn", ".VideoAnswerPlayer-video"]);
+      for (let i = 0, len = domVideos.length; i < len; i++) {
+        const domVideoBox = domVideos[i];
+        const domVideoBoxParent = domVideoBox.parentElement;
+        domVideoBox.style.display = "none";
+        domVideoBoxParent.style.textAlign = "center";
+        if (domVideoBoxParent.querySelector(`.${classNameVideoLink}`))
+          continue;
+        const domVideo = domVideoBox.querySelector("video");
+        const domImgCover = domVideoBox.querySelector("img");
+        const domVideoCommit = domVideoBoxParent.querySelector(`.${classNameVideoCommit}`);
+        domVideoCommit && domVideoCommit.remove();
+        if (domVideo) {
+          const srcVideo = domVideo.src;
+          if (prevVideoSrc === srcVideo)
+            continue;
+          const srcCoverImg = domImgCover ? domImgCover.src : "";
+          const nDomVideoLink = domC("a", {
+            href: srcVideo,
+            className: classNameVideoLink,
+            target: "_blank",
+            innerHTML: `${srcCoverImg ? `<img src="${srcCoverImg}" />` : ""}<span>视频链接，点击跳转查看</span>`
+          });
+          domVideoBoxParent.appendChild(nDomVideoLink);
+          setTimeout(() => {
+            itemVideoUseLink(nodeFound, srcVideo);
+          }, 2e3);
+        } else {
+          const nDomVideoCommit = domC("span", {
+            innerText: "视频资源加载中...",
+            className: classNameVideoCommit
+          });
+          domVideoBoxParent.appendChild(nDomVideoCommit);
+        }
       }
-    }
+    }, 100);
   };
   var myListenAnswerItem = {
     index: 0,
