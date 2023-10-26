@@ -29,6 +29,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'zoomListVideoType',
     'zoomListVideoSize',
     'commitModalSizeSameVersion',
+    'videoUseLink',
   ];
   const { name, value, checked, type } = ev;
   const changeBackground = () => {

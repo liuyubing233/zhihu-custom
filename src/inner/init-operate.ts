@@ -13,7 +13,7 @@ import { store } from '../store';
 import { IKeyofHistory, IPfConfig } from '../types';
 import { initData } from './init-data';
 import { onInitStyleExtra } from './init-style-extra';
-import { initTopStoryRecommendEvent } from './init-top-story-recommend';
+import { initRootEvent, initTopStoryRecommendEvent } from './init-top-event-listener';
 
 /** 加载设置弹窗绑定方法 */
 export const initOperate = () => {
@@ -64,6 +64,7 @@ export const initOperate = () => {
   nodeOpenButton && (nodeOpenButton.onclick = myDialog.open);
   nodeCloseDialog && (nodeCloseDialog.onclick = myDialog.hide);
   initTopStoryRecommendEvent();
+  initRootEvent();
 };
 
 /** 编辑器按钮点击事件集合 */
