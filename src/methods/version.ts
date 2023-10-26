@@ -33,22 +33,22 @@ export const myVersion = {
     this.initAfterLoad();
     this.init();
   },
-  /** 版心大小修改 */
+  /** 页面内容宽度修改 */
   versionWidth: function () {
     const pfConfig = this.getConfig();
-    // 首页列表版心
+    // 首页列表页面内容宽度
     const versionHome =
       `.Topstory-mainColumn,.Search-container{width: ${pfConfig.versionHome || '1000'}px!important;}` +
       `.SearchMain{flex: 1}` +
       `.Topstory-container,.css-knqde{width: fit-content!important;}`;
-    // 回答详情版心
+    // 回答详情页面内容宽度
     const versionAnswer =
       `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
       `.Question-main .Question-sideColumn{margin-left: 12px;}` +
       `.QuestionHeader .QuestionHeader-content{margin: 0 auto;padding: 0;max-width: initial!important;}` +
       `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${pfConfig.versionAnswer || '1000'}px!important;}` +
       `.Question-main .List-item{border-bottom: 1px dashed #ddd;}`;
-    // 文章版心
+    // 文章页面内容宽度
     const versionArticle =
       `.zhuanlan .AuthorInfo{max-width: initial;}` +
       `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div` +

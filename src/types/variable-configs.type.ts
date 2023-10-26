@@ -253,11 +253,11 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   filterKeywords?: string[];
   /** 列表用户名后显示「屏蔽用户」按钮 */
   showBlockUser?: boolean;
-  /** 列表版心宽度 */
+  /** 列表页面内容宽度 */
   versionHome?: string;
-  /** 回答版心宽度 */
+  /** 回答页面内容宽度 */
   versionAnswer?: string;
-  /** 文章版心宽度 */
+  /** 文章页面内容宽度 */
   versionArticle?: string;
   /** 图片尺寸自定义类型 0 1 2 */
   zoomImageType?: '0' | '1' | '2';
