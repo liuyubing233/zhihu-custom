@@ -156,6 +156,7 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenAnswerItemActions: true,
   hiddenAnswerItemTime: true,
   videoUseLink: true,
+  commitModalSizeSameVersion: true,
 };
 
 /** 缓存的历史记录数量 */

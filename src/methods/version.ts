@@ -35,26 +35,34 @@ export const myVersion = {
   },
   /** 页面内容宽度修改 */
   versionWidth: function () {
-    const pfConfig = this.getConfig();
+    const { commitModalSizeSameVersion, versionHome, versionAnswer, versionArticle } = this.getConfig();
+    const cssModal = '.css-1aq8hf9';
+    const sizeModalInAnswer = fnReturnStr(`${cssModal}{width: ${versionAnswer || '1000'}px!important;}`, location.pathname.includes('question'));
+    const sizeModal = fnReturnStr(
+      `.Topstory-body ${cssModal}{width: ${versionHome || '1000'}px!important;}` +
+        sizeModalInAnswer +
+        `.PostIndex-body ${cssModal}{width: ${versionArticle || '1000'}px!important;}`,
+      commitModalSizeSameVersion
+    );
+
     // 首页列表页面内容宽度
-    const versionHome =
-      `.Topstory-mainColumn,.Search-container{width: ${pfConfig.versionHome || '1000'}px!important;}` +
+    const sizeHome =
+      `.Topstory-mainColumn,.Search-container{width: ${versionHome || '1000'}px!important;}` +
       `.SearchMain{flex: 1}` +
       `.Topstory-container,.css-knqde{width: fit-content!important;}`;
     // 回答详情页面内容宽度
-    const versionAnswer =
+    const sizeAnswer =
       `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
       `.Question-main .Question-sideColumn{margin-left: 12px;}` +
       `.QuestionHeader .QuestionHeader-content{margin: 0 auto;padding: 0;max-width: initial!important;}` +
-      `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${pfConfig.versionAnswer || '1000'}px!important;}` +
+      `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${versionAnswer || '1000'}px!important;}` +
       `.Question-main .List-item{border-bottom: 1px dashed #ddd;}`;
     // 文章页面内容宽度
-    const versionArticle =
+    const sizeArticle =
       `.zhuanlan .AuthorInfo{max-width: initial;}` +
-      `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div` +
-      `{width: ${pfConfig.versionArticle || '690'}px!important;}` +
-      `.zhuanlan .Post-SideActions{right: calc(50vw - ${+(pfConfig.versionArticle || '690') / 2 + 150}px)}`;
-    return versionHome + versionAnswer + versionArticle;
+      `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div{width: ${versionArticle || '1000'}px!important;}` +
+      `.zhuanlan .Post-SideActions{right: calc(50vw - ${+(versionArticle || '1000') / 2 + 150}px)}`;
+    return sizeHome + sizeAnswer + sizeArticle + sizeModal;
   },
   /** 图片尺寸修改 */
   vImgSize: function () {
