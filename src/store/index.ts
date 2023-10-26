@@ -30,7 +30,7 @@ class Store {
     showBlockUser: true,
     versionHome: '1000',
     versionAnswer: '1000',
-    versionArticle: '690',
+    versionArticle: '1000',
     zoomImageType: '0',
     zoomImageSize: '600',
     showGIFinDialog: true,
@@ -56,6 +56,7 @@ class Store {
     themeLight: EThemeLight.默认,
     themeDark: EThemeDark.夜间护眼一,
     colorText1: '',
+    commitModalSizeSameVersion: true,
   };
 
   /** 缓存浏览历史记录 */

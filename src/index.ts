@@ -28,7 +28,7 @@ import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './methods/time';
 import { myVersion } from './methods/version';
-import { fixVideoAutoPlay, initVideoDownload, itemVideoUseLink } from './methods/video';
+import { fixVideoAutoPlay, initVideoDownload } from './methods/video';
 import { store } from './store';
 import { INNER_CSS } from './web-resources';
 
@@ -151,7 +151,6 @@ import { INNER_CSS } from './web-resources';
         addArticleCreateTimeToTop();
         const nodeArticle = dom('.Post-content');
         if (nodeArticle) {
-          itemVideoUseLink(nodeArticle);
           addButtonForArticleExportPDF(nodeArticle);
           initVideoDownload(nodeArticle)
         }
@@ -192,7 +191,6 @@ import { INNER_CSS } from './web-resources';
     if (host === 'zhuanlan.zhihu.com') {
       const nodeArticle = dom('.Post-content');
       if (nodeArticle) {
-        itemVideoUseLink(nodeArticle);
         initVideoDownload(nodeArticle)
       }
     }

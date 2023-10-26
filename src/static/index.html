@@ -18,8 +18,9 @@
     <div id="CTZ_BASIS" style="display: none">
       <div class="ctz-content-left">
         <a href="#CTZ_BASIS_DEFAULT">基本设置</a>
-        <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
+        <a href="#CTZ_BASIS_SIZE">页面尺寸</a>
         <a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a>
+        <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
         <a href="#CTZ_BASIS_HIDDEN">模块隐藏</a>
         <a href="#CTZ_BASIS_COLOR">颜色设置</a>
         <a href="#CTZ_BASIS_CONFIG">配置操作</a>
@@ -48,7 +49,7 @@
             </div>
 
             <div>
-              <div class="ctz-label">全局修改网页标题</div>
+              <div class="ctz-label">修改网页标题</div>
               <div class="ctz-flex-wrap">
                 <input type="text" name="globalTitle" style="width: 250px" />
                 <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button>
@@ -57,8 +58,49 @@
             </div>
 
             <div>
-              <div class="ctz-label">全局修改网页标题图片（图标可能会因为网络问题丢失）</div>
+              <div class="ctz-label">修改网页标题图片（图标可能会因为网络问题丢失）</div>
               <div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="CTZ_BASIS_SIZE">
+          <div class="ctz-set-title"><span>页面尺寸</span></div>
+          <div class="ctz-set-content">
+            <div class="ctz-flex-wrap">
+              <div class="ctz-label">列表页内容宽度</div>
+              <input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" />
+              <span id="versionHome" style="margin: 0 8px">0</span>
+              <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
+            </div>
+            <div class="ctz-flex-wrap">
+              <div class="ctz-label">回答页内容宽度</div>
+              <input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" />
+              <span id="versionAnswer" style="margin: 0 8px">0</span>
+              <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
+            </div>
+            <div class="ctz-flex-wrap">
+              <div class="ctz-label">文章页内容宽度</div>
+              <input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" />
+              <span id="versionArticle" style="margin: 0 8px">0</span>
+              <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
+            </div>
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">评论弹窗宽度匹配页面宽度</span>
+              <input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" />
+            </label>
+
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">列表内容标准文字大小</span>
+              <input type="number" name="fontSizeForList" class="ctz-i-change" />
+            </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">回答内容标准文字大小</span>
+              <input type="number" name="fontSizeForAnswer" class="ctz-i-change" />
+            </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">文章内容标准文字大小</span>
+              <input type="number" name="fontSizeForArticle" class="ctz-i-change" />
             </div>
 
             <div>
@@ -77,10 +119,51 @@
                 </div>
               </div>
             </div>
-
             <label class="ctz-flex-wrap">
               <span class="ctz-label">使用弹窗打开动图</span>
               <input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" />
+            </label>
+            <div>
+              <div class="ctz-flex-wrap">
+                <div class="ctz-label">列表视频回答的视频内容尺寸</div>
+                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label>
+                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label>
+              </div>
+              <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM">
+                <div class="ctz-flex-wrap">
+                  <input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" />
+                  <span id="zoomListVideoSize" style="margin: 0 8px">0</span>
+                  <span class="ctz-commit">滚动条范围: 0 ~ 1000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="CTZ_BASIS_SHOW_CONTENT">
+          <div class="ctz-set-title">
+            <span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span>
+          </div>
+          <div class="ctz-set-content">
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">赞同按钮仅显示数字</span>
+              <input class="ctz-i" name="justVoteNum" type="checkbox" value="on" />
+            </label>
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">评论按钮仅显示数字</span>
+              <input class="ctz-i" name="justCommitNum" type="checkbox" value="on" />
+            </label>
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">内容顶部显示赞同数</span>
+              <input class="ctz-i" name="topVote" type="checkbox" value="on" />
+            </label>
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">文档或回答顶部显示导出当前内容/回答按钮</span>
+              <input class="ctz-i" name="topExportContent" type="checkbox" value="on" />
+            </label>
+            <label class="ctz-flex-wrap">
+              <span class="ctz-label">回答和文章中的视频替换为链接</span>
+              <input class="ctz-i" name="videoUseLink" type="checkbox" value="on" />
             </label>
           </div>
         </div>
@@ -118,34 +201,6 @@
                 </label>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div id="CTZ_BASIS_SHOW_CONTENT">
-          <div class="ctz-set-title">
-            <span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span>
-          </div>
-          <div class="ctz-set-content">
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">赞同按钮仅显示数字</span>
-              <input class="ctz-i" name="justVoteNum" type="checkbox" value="on" />
-            </label>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">评论按钮仅显示数字</span>
-              <input class="ctz-i" name="justCommitNum" type="checkbox" value="on" />
-            </label>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">内容顶部显示赞同数</span>
-              <input class="ctz-i" name="topVote" type="checkbox" value="on" />
-            </label>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">文档或回答顶部显示导出当前内容/回答按钮</span>
-              <input class="ctz-i" name="topExportContent" type="checkbox" value="on" />
-            </label>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">回答和文章中的视频替换为链接</span>
-              <input class="ctz-i" name="videoUseLink" type="checkbox" value="on" />
-            </label>
           </div>
         </div>
 
@@ -215,14 +270,6 @@
         <div id="CTZ_LIST_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
-            <div>
-              <div class="ctz-flex-wrap">
-                <div class="ctz-label">列表页面内容宽度</div>
-                <input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" />
-                <span id="versionHome" style="margin: 0 8px">0</span>
-                <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
-              </div>
-            </div>
             <div class="ctz-flex-wrap">
               <label>
                 <span class="ctz-label">
@@ -263,24 +310,6 @@
                 <span class="ctz-label">列表内容显示发布时间和最后修改时间</span>
                 <input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" />
               </label>
-            </div>
-            <div class="ctz-flex-wrap">
-              <span class="ctz-label">列表内容标准文字大小</span>
-              <input type="number" name="fontSizeForList" class="ctz-i-change" />
-            </div>
-            <div>
-              <div class="ctz-flex-wrap">
-                <div class="ctz-label">列表视频回答内容尺寸</div>
-                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label>
-                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label>
-              </div>
-              <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM">
-                <div class="ctz-flex-wrap">
-                  <input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" />
-                  <span id="zoomListVideoSize" style="margin: 0 8px">0</span>
-                  <span class="ctz-commit">滚动条范围: 0 ~ 1000</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -359,14 +388,6 @@
         <div id="CTZ_ANSWER_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
-            <div>
-              <div class="ctz-flex-wrap">
-                <div class="ctz-label">回答页面内容宽度</div>
-                <input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" />
-                <span id="versionAnswer" style="margin: 0 8px">0</span>
-                <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
-              </div>
-            </div>
             <div class="ctz-flex-wrap">
               <label>
                 <span class="ctz-label">问题详情显示创建时间和最后修改时间</span>
@@ -384,10 +405,6 @@
               <label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label>
               <label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label>
               <label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label>
-            </div>
-            <div class="ctz-flex-wrap">
-              <span class="ctz-label">回答内容标准文字大小</span>
-              <input type="number" name="fontSizeForAnswer" class="ctz-i-change" />
             </div>
           </div>
         </div>
@@ -468,23 +485,11 @@
         <div id="CTZ_ARTICLE_DEFAULT">
           <div class="ctz-set-title"><span>基础设置</span></div>
           <div class="ctz-set-content">
-            <div>
-              <div class="ctz-flex-wrap">
-                <div class="ctz-label">文章页面内容宽度宽度</div>
-                <input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" />
-                <span id="versionArticle" style="margin: 0 8px">0</span>
-                <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
-              </div>
-            </div>
             <div class="ctz-flex-wrap">
               <label>
                 <span class="ctz-label">文章发布时间置顶</span>
                 <input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" />
               </label>
-            </div>
-            <div class="ctz-flex-wrap">
-              <span class="ctz-label">文章内容标准文字大小</span>
-              <input type="number" name="fontSizeForArticle" class="ctz-i-change" />
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ export const FOOTER_HTML =
 export const DEFAULT_FUNCTION = [
   '外链直接打开<div class="ctz-commit">知乎里所有外部链接的重定向去除，可以直接访问</div>',
   '移除登录提示弹窗',
-  '一键移除所有屏蔽选项，点击「话题黑名单」编辑按钮出现按钮<div class="ctz-commit">知乎屏蔽标签每次只显示部分，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽标签</div><a href="/settings/filter" target="_blank">前往屏蔽页</a>',
+  '一键移除所有屏蔽选项，点击「话题黑名单」编辑按钮出现按钮<div class="ctz-commit">知乎<a href="https://www.zhihu.com/settings/filter" target="_blank">屏蔽页面</a>每次只显示部分内容，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽标签</div>',
   '回答视频下载<div class="ctz-commit">回答内容视频左上角会生成一个下载按钮，点击即可下载视频</div>',
   '收藏夹内容导出为 PDF<div class="ctz-commit">点击收藏夹名称上方「生成PDF」按钮，可导出当前页码的收藏夹详细内容</div>',
   '当前回答和文章导出为 PDF 功能<div class="ctz-commit">对应为内容上方的「导出当前回答」「导出当前文章」按钮</div>',

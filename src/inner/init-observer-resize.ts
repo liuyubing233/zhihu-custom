@@ -10,7 +10,7 @@ import { changeTitle } from '../methods/page-title';
 import { store } from '../store';
 import { initImagePreview } from './init-image-preview';
 import { initLinkChanger } from './init-link-changer';
-import { initTopStoryRecommendEvent } from './init-top-story-recommend';
+import { initTopStoryRecommendEvent } from './init-top-event-listener';
 
 /** 使用 ResizeObserver 监听body高度 */
 export const initResizeObserver = () => {

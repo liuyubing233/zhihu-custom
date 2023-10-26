@@ -97,7 +97,7 @@ const myBackground = {
   doSetCSS: function (background: string, background2: string): string {
     const cssBg = `${this.cssNamesBackground1}{background-color: ${background}!important;}`;
     const cssBg2 = `${this.cssNamesBackground2}{background-color:${background2}!important;background:${background2}!important;}`;
-    const cssBgTransparent = `${this.cssNamesBackgroundTransparent}{background-color: transparent!important;}`;
+    const cssBgTransparent = `${this.cssNamesBackgroundTransparent}{background-color: transparent!important;background: transparent!important;}`;
     const input = `.SignContainer-content input:-webkit-autofill{-webkit-box-shadow: inset 0 0 0 30px ${background2}!important;}`;
     return cssBg + cssBg2 + cssBgTransparent + input;
   },
@@ -134,13 +134,13 @@ const myBackground = {
     `,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike` +
     `,.Popover-content,.Notifications-footer,::-webkit-scrollbar,.Messages-footer,.Popover-arrow:after` +
     `,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div)` +
-    `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm` +
-    `,.ListShortcut>div:not(.Question-mainColumn)` +
+    `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6` +
+    `,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu` +
     `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask`,
   /** 背景色透明的元素名称 */
   cssNamesBackgroundTransparent:
     `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
-    `,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button`,
+    `,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`,
   cssNamesColorUserBackground1: `.css-z0izby`,
 };
 

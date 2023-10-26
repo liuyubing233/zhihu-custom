@@ -1,6 +1,13 @@
 import { domC } from '../commons/tools';
 import { store } from '../store';
 
+/** 视频回答的包裹元素1 */
+export const CLASS_VIDEO_ONE = '.css-1h1xzpn';
+/** 视频回答的包裹元素2 */
+export const CLASS_VIDEO_TWO = '.VideoAnswerPlayer-video';
+/** 需要转链接的视频元素类名 */
+const NEED_LINK_CLASS = [CLASS_VIDEO_ONE, CLASS_VIDEO_TWO];
+
 const findDoms = (nodeFound: HTMLElement, domNames: string[]): NodeListOf<Element> => {
   const doms = domNames.map((i) => nodeFound.querySelectorAll(i));
   for (let i = 0, len = doms.length; i < len; i++) {
@@ -13,7 +20,13 @@ const findDoms = (nodeFound: HTMLElement, domNames: string[]): NodeListOf<Elemen
 
 /** 加载视频下载方法 */
 export const initVideoDownload = (nodeFound: HTMLElement) => {
-  const domVideos = findDoms(nodeFound, ['.ZVideo-player>div', '.css-1h1xzpn', '.VideoAnswerPlayer-video']);
+  const { videoUseLink } = store.getConfig();
+  const domVideos = findDoms(
+    nodeFound,
+    ['.ZVideo-player>div', CLASS_VIDEO_ONE, CLASS_VIDEO_TWO].filter((i) => {
+      return videoUseLink ? !NEED_LINK_CLASS.includes(i) : true;
+    })
+  );
   for (let i = 0, len = domVideos.length; i < len; i++) {
     const domVideoBox = domVideos[i] as HTMLElement;
     const nDomDownload = domC('i', { className: 'ctz-icon ctz-video-download', innerHTML: '&#xe608;' });
@@ -66,41 +79,4 @@ export const fixVideoAutoPlay = () => {
     // 否则正常执行 video.play() 指令
     return originalPlay.apply(this, arguments);
   };
-};
-
-/** 视频内容替换为视频链接 */
-export const itemVideoUseLink = (nodeFound: HTMLElement, index = 0) => {
-  const { videoUseLink } = store.getConfig();
-  if (!videoUseLink) return;
-  const classNameVideoLink = 'ctz-video-link';
-  const classNameVideoCommit = 'ctz-video-commit';
-  const domVideos = findDoms(nodeFound, ['.css-1h1xzpn', '.VideoAnswerPlayer-video']);
-  for (let i = 0, len = domVideos.length; i < len; i++) {
-    const domVideoBox = domVideos[i] as HTMLElement;
-    const domVideoBoxParent = domVideoBox.parentElement as HTMLElement;
-    domVideoBox.style.display = 'none';
-    domVideoBoxParent.style.textAlign = 'center';
-    if (domVideoBoxParent.querySelector(`.${classNameVideoLink}`)) continue;
-    const domVideo = domVideoBox.querySelector('video');
-    const domImgCover = domVideoBox.querySelector('img');
-    const domVideoCommit = domVideoBoxParent.querySelector(`.${classNameVideoCommit}`);
-    domVideoCommit && domVideoCommit.remove();
-    if (domVideo) {
-      const srcVideo = domVideo.src;
-      const srcCoverImg = domImgCover ? domImgCover.src : '';
-      const nDomVideoLink = domC('a', {
-        href: srcVideo,
-        className: classNameVideoLink,
-        target: '_blank',
-        innerHTML: `${srcCoverImg ? `<img src="${srcCoverImg}" />` : ''}<span>视频链接，点击跳转查看</span>`,
-      });
-      domVideoBoxParent.appendChild(nDomVideoLink);
-    } else {
-      const nDomVideoCommit = domC('span', {
-        innerText: '视频资源加载中...',
-        className: classNameVideoCommit,
-      });
-      domVideoBoxParent.appendChild(nDomVideoCommit);
-    }
-  }
 };
