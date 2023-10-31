@@ -40,7 +40,7 @@ const myBackground = {
   dark: function (darkKey: EThemeDark) {
     const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
     const cssColor1 =
-      `#CTZ_DIALOG_MAIN,.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON` +
+      `#CTZ_DIALOG_MAIN,.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article` +
       `,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button` +
       `,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button` +
       `,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div` +
@@ -55,6 +55,7 @@ const myBackground = {
 
     const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
     const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path{color: ${background2}!important}`;
+    const cssColorLink = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link{color: deepskyblue;}.css-1tu59u4{fill: deepskyblue}`; // 超链接颜色，解决黑夜模式下看不清的问题
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-menu-top>a.target{border-bottom: 4px solid ${color};color: ${color};}`;
     const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
@@ -71,7 +72,9 @@ const myBackground = {
       `.TopNavBar-fixMode-qXKMs,.index-tabWrap-4Smyx,.index-bannerItem-3o3D7,.LearningRouteCard-pathContent-j3jVv{background: ${background}!important;}` +
       `.LearningRouteCard-pathItem-xin1f .LearningRouteCard-content-kw2RW .LearningRouteCard-title-do7ND{color: ${color}!important;}`;
 
-    return addPrefix(this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1);
+    return addPrefix(
+      this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink
+    );
   },
   light: function (lightKey: EThemeLight) {
     const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
@@ -106,7 +109,7 @@ const myBackground = {
     `.ctz-content-right>div:nth-of-type(2n)` +
     `,body,.Input-wrapper,.toolbar-section button:hover` +
     `,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
-    `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div` +
+    `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +
     `,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem` +
     `,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active` +
     `,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after` +
@@ -135,7 +138,7 @@ const myBackground = {
     `,.Popover-content,.Notifications-footer,::-webkit-scrollbar,.Messages-footer,.Popover-arrow:after` +
     `,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div)` +
     `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6` +
-    `,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu` +
+    `,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main` +
     `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask`,
   /** 背景色透明的元素名称 */
   cssNamesBackgroundTransparent:
