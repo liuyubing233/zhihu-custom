@@ -65,7 +65,10 @@ const myBackground = {
       i
         .split(',')
         .map((i) => `html[data-theme=dark] ${i}`)
-        .join(',');
+        .join(',')
+        .split('}')
+        .map((i) => `html[data-theme=dark] ${i}`)
+        .join('}');
 
     // 知学堂、会员
     const pageLearning =
@@ -114,7 +117,8 @@ const myBackground = {
     `,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active` +
     `,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after` +
     `,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover` +
-    `,.Popover-content button:hover,::-webkit-scrollbar-thumb,.ZVideoComment .css-kt4t4n,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp`,
+    `,.Popover-content button:hover,::-webkit-scrollbar-thumb,.ZVideoComment .css-kt4t4n,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp` +
+    `,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
     `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,#CTZ_OPEN_BUTTON` +
@@ -139,7 +143,8 @@ const myBackground = {
     `,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div)` +
     `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6` +
     `,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root` +
-    `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask`,
+    `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask` +
+    `,.Topstory-container .TopstoryTabs>a::after`,
   /** 背景色透明的元素名称 */
   cssNamesBackgroundTransparent:
     `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
