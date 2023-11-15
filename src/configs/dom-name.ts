@@ -1,8 +1,6 @@
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
 /** 设置弹窗 */
 export const ID_DIALOG = 'CTZ_DIALOG_MAIN';
-/** 屏蔽词 ID */
-export const ID_FILTER_WORDS = 'CTZ_FILTER_WORDS';
 /** 黑名单列表 ID */
 export const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
 /** 同步黑名单 按钮 ID */

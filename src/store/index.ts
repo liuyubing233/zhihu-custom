@@ -27,6 +27,7 @@ class Store {
     customizeCss: '',
     answerOpen: '',
     filterKeywords: [],
+    blockWordsAnswer: [],
     showBlockUser: true,
     versionHome: '1000',
     versionAnswer: '1000',

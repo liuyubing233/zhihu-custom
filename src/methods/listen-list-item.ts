@@ -1,4 +1,3 @@
-import { doFetchNotInterested } from '../commons/fetch';
 import { fnHiddenDom, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { domA, domC, domP } from '../commons/tools';
@@ -15,6 +14,7 @@ export const myListenListItem = {
     const pfConfig = getConfig();
     const {
       filterKeywords = [],
+      blockWordsAnswer = [],
       removeItemAboutVideo,
       removeItemAboutArticle,
       removeLessVote,
@@ -88,22 +88,11 @@ export const myListenListItem = {
           }
         }
       }
+      !message && (message = this.replaceBlockWord(title, nodeItemContent, filterKeywords, title, '标题'));
       if (!message) {
-        let matchedWord = ''; // 匹配到的内容, 仅匹配第一个
-        for (let itemWord of filterKeywords) {
-          const rep = new RegExp(itemWord.toLowerCase());
-          if (rep.test(title.toLowerCase())) {
-            matchedWord += `「${itemWord}」`;
-            break;
-          }
-        }
-        // 匹配到屏蔽词, 屏蔽词过滤
-        if (matchedWord) {
-          const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-          const routeURL = elementItemProp && elementItemProp.getAttribute('content');
-          doFetchNotInterested({ id: String(itemId), type });
-          message = `屏蔽列表内容: ${title},匹配屏蔽词：${matchedWord}, 链接：${routeURL}`;
-        }
+        const domRichContent = nodeItem.querySelector('.RichContent');
+        const innerText = domRichContent ? (domRichContent as HTMLElement).innerText : '';
+        message = this.replaceBlockWord(innerText, nodeItemContent, blockWordsAnswer, title, '内容');
       }
       // 高亮原创
       const userNameE = nodeItem.querySelector('.FeedSource-firstline .UserLink-link') as HTMLElement;
@@ -148,5 +137,23 @@ export const myListenListItem = {
   restart: function () {
     this.reset();
     this.init();
+  },
+  replaceBlockWord: function (innerText: string, nodeItemContent: Element, blockWords: string[], title: string, byWhat: string) {
+    if (innerText) {
+      let matchedWord = '';
+      for (let word of blockWords) {
+        const rep = new RegExp(word.toLowerCase());
+        if (rep.test(innerText.toLowerCase())) {
+          matchedWord += `「${word}」`;
+          break;
+        }
+      }
+      if (matchedWord) {
+        const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+        const routeURL = elementItemProp && elementItemProp.getAttribute('content');
+        return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+      }
+    }
+    return '';
   },
 };

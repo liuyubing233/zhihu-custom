@@ -9,8 +9,9 @@
     <a href="#CTZ_LIST">首页列表</a>
     <a href="#CTZ_ANSWER">回答详情</a>
     <a href="#CTZ_ARTICLE">文章专栏</a>
-    <a href="#CTZ_HISTORY">历史记录</a>
+    <a href="#CTZ_BLOCK_WORD">屏蔽词设置</a>
     <a href="#CTZ_BLACKLIST">黑名单设置</a>
+    <a href="#CTZ_HISTORY">历史记录</a>
     <a href="#CTZ_DEFAULT">默认功能</a>
   </div>
   <div class="ctz-content">
@@ -357,12 +358,6 @@
                 的内容
               </div>
             </div>
-
-            <div class="ctz-filter-word">
-              <div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div>
-              <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" style="margin: 4px 0; width: 100%" />
-              <div id="CTZ_FILTER_WORDS"></div>
-            </div>
           </div>
         </div>
 
@@ -503,26 +498,28 @@
       </div>
     </div>
 
-    <!-- 历史记录 -->
-    <div id="CTZ_HISTORY" style="display: none">
+    <!-- 屏蔽词设置 -->
+    <div id="CTZ_BLOCK_WORD" style="display: none">
       <div class="ctz-content-left">
-        <a href="#CTZ_HISTORY_LIST">推荐列表缓存</a>
-        <a href="#CTZ_HISTORY_VIEW">浏览历史记录</a>
+        <a href="#CTZ_BLOCK_WORD_LIST">标题屏蔽词</a>
+        <a href="#CTZ_BLOCK_WORD_CONTENT">内容屏蔽词</a>
       </div>
       <div class="ctz-content-right">
-        <div id="CTZ_HISTORY_LIST">
+        <div id="CTZ_BLOCK_WORD_LIST">
           <div class="ctz-set-title">
-            <span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span>
+            <span>标题屏蔽词</span>
+            <span class="ctz-desc">匹配位置：「关注页、推荐页」列表<b>标题</b></span>
           </div>
-          <button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button>
-          <div class="ctz-set-content"></div>
+          <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" />
+          <div class="ctz-block-words-content"></div>
         </div>
-        <div id="CTZ_HISTORY_VIEW">
+        <div id="CTZ_BLOCK_WORD_CONTENT">
           <div class="ctz-set-title">
-            <span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span>
+            <span>内容屏蔽词</span>
+            <span class="ctz-desc">匹配位置：「关注页、推荐页」列表<b>内容</b>，回答页<b>回答内容</b></span>
           </div>
-          <button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button>
-          <div class="ctz-set-content"></div>
+          <input name="inputBlockWordsAnswer" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" />
+          <div class="ctz-block-words-content"></div>
         </div>
       </div>
     </div>
@@ -554,6 +551,30 @@
               <div id="CTZ-BLOCK-LIST"></div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 历史记录 -->
+    <div id="CTZ_HISTORY" style="display: none">
+      <div class="ctz-content-left">
+        <a href="#CTZ_HISTORY_LIST">推荐列表缓存</a>
+        <a href="#CTZ_HISTORY_VIEW">浏览历史记录</a>
+      </div>
+      <div class="ctz-content-right">
+        <div id="CTZ_HISTORY_LIST">
+          <div class="ctz-set-title">
+            <span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span>
+          </div>
+          <button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button>
+          <div class="ctz-set-content"></div>
+        </div>
+        <div id="CTZ_HISTORY_VIEW">
+          <div class="ctz-set-title">
+            <span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span>
+          </div>
+          <button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button>
+          <div class="ctz-set-content"></div>
         </div>
       </div>
     </div>

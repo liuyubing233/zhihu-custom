@@ -250,7 +250,10 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   customizeCss?: string;
   /** 知乎默认 | 自动展开所有回答 | 默认收起所有长回答 */
   answerOpen?: '' | 'on' | 'off';
+  /** 屏蔽词方法：列表标题屏蔽 */
   filterKeywords?: string[];
+  /** 屏蔽词方法：回答内容屏蔽 */
+  blockWordsAnswer?: string[];
   /** 列表用户名后显示「屏蔽用户」按钮 */
   showBlockUser?: boolean;
   /** 列表页面内容宽度 */
