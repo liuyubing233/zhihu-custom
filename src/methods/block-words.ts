@@ -4,7 +4,7 @@ import { ID_FILTER_WORDS } from '../configs';
 import { store } from '../store';
 
 /** 屏蔽词方法 */
-export const myFilterWord = {
+export const myBlockWords = {
   /** 添加屏蔽词 */
   add: async function (target: HTMLInputElement) {
     const word = target.value;
