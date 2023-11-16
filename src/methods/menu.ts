@@ -16,11 +16,12 @@ export const myMenu = {
     this.click({ target: dom('a[href="#CTZ_BASIS"]') });
   },
   click: function ({ target }: any) {
-    if (!(target.hash && target.tagName === 'A')) return;
-    const isThis = target.hash.replace(/#/, '');
+    const targetForA = target.tagName === 'A' ? target : target.parentElement
+    if (!(targetForA.hash && targetForA.tagName === 'A')) return;
+    const isThis = targetForA.hash.replace(/#/, '');
     if (!isThis) return;
     domA('.ctz-menu-top>a').forEach((itemA) => itemA.classList.remove('target'));
-    target.classList.add('target');
+    targetForA.classList.add('target');
     domA('.ctz-content>div').forEach((item) => (item.style.display = isThis === item.id ? 'flex' : 'none'));
   },
 };

@@ -3,9 +3,9 @@
 @text45: rgba(0, 0, 0, 0.45);
 @hover: #1677ff;
 @border: 1px solid #b0b0b0;
-
 @primary: #1677ff;
 @primary-hover: #e6f4ff;
+@gray: #f5f5f5;
 
 @font-face {
   font-family: 'tp-icon';
@@ -40,7 +40,7 @@
   line-height: 48px;
   text-align: center;
   width: 48px;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 12px 12px 0;
   background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   user-select: none;
@@ -60,9 +60,9 @@
   transform: translate(-50%, -50%);
   width: 800px;
   height: 600px;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  background: #fff;
+  background: @gray;
   z-index: 201;
   flex-direction: column;
   font-size: 14px;
@@ -117,11 +117,19 @@
   }
 }
 
+.ctz-center {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  overflow: hidden;
+}
+
 .ctz-header {
   font-weight: 600;
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
+  margin-bottom: 12px;
 }
 
 .ctz-version {
@@ -154,22 +162,59 @@
 }
 
 .ctz-menu-top {
-  height: 46px;
-  border-bottom: @border;
+  height: 36px;
   display: flex;
-  a {
+
+  & > a {
+    border-radius: 12px 12px 0 0;
     flex: 1;
-    line-height: 46px;
     text-align: center;
     cursor: pointer;
-    border-bottom: 4px solid transparent;
-    transition: all 0.2s;
+    transition: initial !important;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+      border-radius: 8px;
+      transition: all 0.3s;
+      margin: 0 6px;
+      flex: 1;
+      box-sizing: border-box;
+      align-items: center;
+      line-height: 26px;
+    }
     &:hover {
-      color: #1677ff !important;
-      border-bottom-color: #1677ff !important;
+      span {
+        background: #fff;
+      }
     }
     &.target {
-      border-bottom-color: #121212;
+      background: #fff;
+      &::after,
+      &::before {
+        position: absolute;
+        bottom: -12px;
+        content: ' ';
+        background: radial-gradient(circle at top left, transparent 12px, #fff 0) top left,
+          radial-gradient(circle at top right, transparent 12px, #fff 0) top right,
+          radial-gradient(circle at bottom right, transparent 12px, #fff 0) bottom right,
+          radial-gradient(circle at bottom left, transparent 12px, #fff 0) bottom left;
+        background-size: 50% 50%;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+      }
+
+      &::before {
+        left: -12px;
+        z-index: -1;
+      }
+
+      &::after {
+        right: -12px;
+        z-index: -1;
+      }
     }
   }
 }
@@ -178,6 +223,8 @@
   flex: 1;
   display: flex;
   overflow: hidden;
+  background: #fff;
+  border-radius: 12px;
   & > div {
     width: 100%;
   }
@@ -190,7 +237,6 @@
     border-radius: 0;
   }
   ::-webkit-scrollbar-thumb {
-    border-radius: 0;
     background: #bbb;
     transition: all 0.2s;
     border-radius: 8px;
@@ -205,13 +251,13 @@
   border-right: @border;
   a {
     transition: all 0.2s;
-    margin: 2px 0;
+    margin: 2px 5px;
     padding-left: 16px;
     height: 40px;
     line-height: 40px;
     display: flex;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 12px;
     &:hover {
       background: #e6f4ff;
       color: #1677ff !important;
@@ -224,11 +270,10 @@
   scroll-behavior: smooth;
   padding: 0 8px;
   & > div:nth-of-type(2n) {
-    background: #efefef;
     padding: 0 8px;
     margin: 0 -8px;
     box-shadow: rgb(153, 153, 153) 0px 0px 5px inset;
-    border-radius: 8px;
+    border-radius: 0 12px 12px 0;
   }
 }
 
@@ -258,10 +303,8 @@
 }
 
 .ctz-footer {
-  border-top: @border;
-  height: 40px;
-  line-height: 40px;
-  font-size: 16px;
+  font-size: 14px;
+  margin-top: 12px;
   a {
     margin-right: 16px;
     .hover-style();
@@ -276,7 +319,6 @@
 
 .ctz-desc,
 .ctz-commit {
-  color: #666;
   font-size: 12px;
 }
 .ctz-desc {
@@ -294,7 +336,7 @@
   line-height: 36px;
   background-color: #fff2f0;
   border: 1px solid #ffccc7;
-  border-radius: 8px;
+  border-radius: 12px;
   margin: 4px 0;
 }
 
@@ -348,11 +390,9 @@
       margin-right: 8px;
     }
   }
-  .ctz-content {
-    textarea {
-      margin-right: 8px;
-      flex: 1;
-    }
+  textarea {
+    margin-right: 8px;
+    flex: 1;
   }
 }
 

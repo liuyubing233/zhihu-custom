@@ -6,7 +6,7 @@
 
 请先确认已安装 <a href="https://www.tampermonkey.net/" target="_blank">tampermonkey</a> 脚本管理器后，再安装本助手
 
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">功能添加日志</a>
 
 <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md" target="_blank">部分问题解答</a>
 

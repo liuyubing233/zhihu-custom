@@ -1,5 +1,5 @@
 import { dom, domById, domC } from '../commons/tools';
-import { DEFAULT_FUNCTION, FOOTER_HTML, HIDDEN_DIRECTION, ICO_URL } from '../configs';
+import { DEFAULT_FUNCTION, FOOTER_HTML, HEADER, HIDDEN_DIRECTION, ICO_URL } from '../configs';
 import { addBackgroundElements } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { myMenu } from '../methods/menu';
@@ -9,18 +9,13 @@ import { INNER_HTML } from '../web-resources';
 /** 加载基础元素及绑定方法 */
 export const initHTML = () => {
   const { getUserinfo } = store;
-
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
+  dom('.ctz-version')!.innerText = `version: ${GM_info.script.version}`;
+  dom('.ctz-footer')!.innerHTML = FOOTER_HTML;
+  dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
+
   myBlack.init();
   myMenu.init();
-
-  const nodeCTZVersion = dom('.ctz-version');
-  nodeCTZVersion && (nodeCTZVersion.innerText = `version: ${GM_info.script.version}`);
-
-  // 添加弹窗底部信息
-  const nodeCTZFooter = dom('.ctz-footer');
-  nodeCTZFooter && (nodeCTZFooter.innerHTML = FOOTER_HTML);
-
   addBackgroundElements();
 
   for (let key in HIDDEN_DIRECTION) {
