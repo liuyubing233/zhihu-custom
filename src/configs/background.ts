@@ -5,7 +5,7 @@ import {
   EThemeLight,
   IThemeConfigDark,
   IThemeConfigLight
-} from '../types/variable-background.type';
+} from '../types/background.type';
 
 export const THEMES = [
   { label: '浅色', value: ETheme.浅色, background: '#fff', color: '#000' },

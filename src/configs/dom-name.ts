@@ -31,6 +31,7 @@ export const HEADER = [
   { href: '#CTZ_LIST', value: '首页列表' },
   { href: '#CTZ_ANSWER', value: '回答详情' },
   { href: '#CTZ_ARTICLE', value: '文章专栏' },
+  { href: '#CTZ_HIDDEN', value: '隐藏内容设置' },
   { href: '#CTZ_BLOCK_WORD', value: '屏蔽词设置' },
   { href: '#CTZ_BLACKLIST', value: '黑名单设置' },
   { href: '#CTZ_HISTORY', value: '历史记录' },

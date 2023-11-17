@@ -51,3 +51,15 @@ export interface IThemeValueDark {
   /** 第二背景色 */
   background2: string;
 }
+
+export type IHiddenArray = IHiddenItem[];
+export interface IHiddenItem {
+  key: string;
+  name: string;
+  desc: string;
+  content: IContentItem[][];
+}
+export interface IContentItem {
+  label: string;
+  value: string;
+}

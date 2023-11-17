@@ -1,5 +1,5 @@
+import { IPfConfig } from './configs.type';
 import { IMyElement } from './dom.type';
-import { IPfConfig } from './variable-configs.type';
 
 /** 查找到的元素内容 */
 export interface IFindEvent {

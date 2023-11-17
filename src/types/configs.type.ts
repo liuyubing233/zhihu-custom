@@ -1,4 +1,4 @@
-import { ETheme, EThemeDark, EThemeLight } from './variable-background.type';
+import { ETheme, EThemeDark, EThemeLight } from './background.type';
 
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {

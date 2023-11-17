@@ -1,10 +1,24 @@
 import { dom, domById, domC } from '../commons/tools';
-import { DEFAULT_FUNCTION, FOOTER_HTML, HEADER, HIDDEN_DIRECTION, ICO_URL } from '../configs';
+import { DEFAULT_FUNCTION, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL } from '../configs';
 import { addBackgroundElements } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { myMenu } from '../methods/menu';
 import { store } from '../store';
+import { IContentItem } from '../types';
 import { INNER_HTML } from '../web-resources';
+
+const createHiddenItemLabel = (item: IContentItem[] = []) => {
+  return (
+    item
+      .map(({ label, value }) => `<label style="display: inline-block;"><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`)
+      .join('') + `<br>`
+  );
+};
+
+const createHiddenItem = (arrHidden: IContentItem[][]) => {
+  if (!arrHidden || !arrHidden.length) return;
+  return `<div class="ctz-set-content">${arrHidden.map((i) => createHiddenItemLabel(i)).join('')}</div>`;
+};
 
 /** 加载基础元素及绑定方法 */
 export const initHTML = () => {
@@ -18,19 +32,11 @@ export const initHTML = () => {
   myMenu.init();
   addBackgroundElements();
 
-  for (let key in HIDDEN_DIRECTION) {
-    const arrHidden = HIDDEN_DIRECTION[key];
-    if (!arrHidden || !arrHidden.length) continue;
-    const nodeItem = dom(`#${key}_HIDDEN>.ctz-set-content`);
-    nodeItem &&
-      (nodeItem.innerHTML = arrHidden
-        .map(
-          (i) =>
-            `${i.map(({ label, value }) => `<label><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`).join('')}` +
-            `<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
-        )
-        .join(''));
-  }
+  domById('CTZ_HIDDEN')!.innerHTML =
+    `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('')}</div>` +
+    `<div class="ctz-content-right">${HIDDEN_ARRAY.map(
+      (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span class="ctz-desc">${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
+    ).join('')}</div>`;
 
   // 添加修改网页标题图片
   const nodeCTZIcon = domById('CTZ_TITLE_ICO');

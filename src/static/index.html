@@ -14,7 +14,6 @@
           <a href="#CTZ_BASIS_SIZE">页面尺寸</a>
           <a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a>
           <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
-          <a href="#CTZ_BASIS_HIDDEN">模块隐藏</a>
           <a href="#CTZ_BASIS_COLOR">颜色设置</a>
           <a href="#CTZ_BASIS_CONFIG">配置操作</a>
         </div>
@@ -197,13 +196,6 @@
             </div>
           </div>
 
-          <div id="CTZ_BASIS_HIDDEN">
-            <div class="ctz-set-title">
-              <span>模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
-            </div>
-            <div class="ctz-set-content ctz-flex-wrap"></div>
-          </div>
-
           <div id="CTZ_BASIS_COLOR">
             <div class="ctz-set-title"><span>颜色设置</span></div>
             <div class="ctz-set-content">
@@ -233,7 +225,7 @@
                   <button class="ctz-button" name="configExport">导出配置</button>
                   <button class="ctz-button" name="configReset">恢复默认配置</button>
                 </div>
-                <div style="display: flex;">
+                <div style="display: flex">
                   <textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea>
                   <button class="ctz-button" name="configImport">导 入</button>
                 </div>
@@ -241,7 +233,7 @@
 
               <div class="ctz-customize-css">
                 <div class="ctz-label">自定义样式</div>
-                <div style="display: flex;">
+                <div style="display: flex">
                   <textarea name="textStyleCustom" placeholder="格式为CSS"></textarea>
                   <button class="ctz-button" name="styleCustom">确 定</button>
                 </div>
@@ -256,7 +248,6 @@
         <div class="ctz-content-left">
           <a href="#CTZ_LIST_DEFAULT">基础设置</a>
           <a href="#CTZ_LIST_FILTER">屏蔽内容</a>
-          <a href="#CTZ_LIST_HIDDEN">隐藏模块</a>
         </div>
         <div class="ctz-content-right">
           <div class="ctz-alert-red">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div>
@@ -352,13 +343,6 @@
               </div>
             </div>
           </div>
-
-          <div id="CTZ_LIST_HIDDEN">
-            <div class="ctz-set-title">
-              <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
-            </div>
-            <div class="ctz-set-content ctz-flex-wrap"></div>
-          </div>
         </div>
       </div>
 
@@ -367,7 +351,6 @@
         <div class="ctz-content-left">
           <a href="#CTZ_ANSWER_DEFAULT">基础设置</a>
           <a href="#CTZ_ANSWER_FILTER">屏蔽内容</a>
-          <a href="#CTZ_ANSWER_HIDDEN">隐藏模块</a>
           <a href="#CTZ_ANSWER_OPEN">回答展开收起</a>
         </div>
         <div class="ctz-content-right">
@@ -442,14 +425,6 @@
               </div>
             </div>
           </div>
-
-          <div id="CTZ_ANSWER_HIDDEN">
-            <div class="ctz-set-title">
-              <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
-            </div>
-            <div class="ctz-set-content ctz-flex-wrap"></div>
-          </div>
-
           <div id="CTZ_ANSWER_OPEN">
             <div class="ctz-set-title"><span>回答展开收起</span></div>
             <div class="ctz-set-content ctz-flex-wrap">
@@ -465,7 +440,6 @@
       <div id="CTZ_ARTICLE" style="display: none">
         <div class="ctz-content-left">
           <a href="#CTZ_ARTICLE_DEFAULT">基础设置</a>
-          <a href="#CTZ_ARTICLE_HIDDEN">隐藏模块</a>
         </div>
         <div class="ctz-content-right">
           <div class="ctz-alert-red">当前设置完成后在专栏文章页面生效</div>
@@ -480,15 +454,11 @@
               </div>
             </div>
           </div>
-
-          <div id="CTZ_ARTICLE_HIDDEN">
-            <div class="ctz-set-title">
-              <span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span>
-            </div>
-            <div class="ctz-set-content ctz-flex-wrap"></div>
-          </div>
         </div>
       </div>
+
+      <!-- 隐藏模块设置 -->
+      <div id="CTZ_HIDDEN" style="display: none"></div>
 
       <!-- 屏蔽词设置 -->
       <div id="CTZ_BLOCK_WORD" style="display: none">
