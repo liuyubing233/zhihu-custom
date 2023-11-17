@@ -1,8 +1,6 @@
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
 /** 设置弹窗 */
 export const ID_DIALOG = 'CTZ_DIALOG_MAIN';
-/** 屏蔽词 ID */
-export const ID_FILTER_WORDS = 'CTZ_FILTER_WORDS';
 /** 黑名单列表 ID */
 export const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
 /** 同步黑名单 按钮 ID */
@@ -27,3 +25,13 @@ export const EXTRA_CLASS_HTML: Record<string, string> = {
   'zhuanlan.zhihu.com': 'zhuanlan',
   'www.zhihu.com': 'zhihu',
 };
+
+export const HEADER = [
+  { href: '#CTZ_BASIS', value: '基础设置' },
+  { href: '#CTZ_HIDDEN', value: '隐藏模块设置' },
+  { href: '#CTZ_FILTER', value: '屏蔽内容设置' },
+  { href: '#CTZ_BLOCK_WORD', value: '屏蔽词设置' },
+  { href: '#CTZ_BLACKLIST', value: '黑名单设置' },
+  { href: '#CTZ_HISTORY', value: '历史记录' },
+  { href: '#CTZ_DEFAULT', value: '默认功能' },
+];

@@ -1,6 +1,7 @@
 import { dom, domById, fnInitDomStyle } from '../commons/tools';
 import {
   CLASS_INPUT_CLICK,
+  ID_BLOCK_LIST,
   ID_DIALOG,
   INPUT_NAME_THEME,
   INPUT_NAME_THEME_DARK,
@@ -40,7 +41,7 @@ const myBackground = {
   dark: function (darkKey: EThemeDark) {
     const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
     const cssColor1 =
-      `#CTZ_DIALOG_MAIN,.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article` +
+      `#${ID_DIALOG},.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article` +
       `,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button` +
       `,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button` +
       `,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div` +
@@ -55,9 +56,9 @@ const myBackground = {
 
     const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
     const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path{color: ${background2}!important}`;
-    const cssColorLink = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link{color: deepskyblue;}.css-1tu59u4{fill: deepskyblue}`; // 超链接颜色，解决黑夜模式下看不清的问题
+    const cssColorLink = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link{color: deepskyblue!important;}.css-1tu59u4{fill: deepskyblue!important;}`; // 超链接颜色，解决黑夜模式下看不清的问题
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
-    const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-menu-top>a.target{border-bottom: 4px solid ${color};color: ${color};}`;
+    const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}`;
     const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
 
     // 添加 html[data-theme=dark] 前缀
@@ -71,9 +72,13 @@ const myBackground = {
     const pageLearning =
       `.TopNavBar-fixMode-qXKMs,.index-tabWrap-4Smyx,.index-bannerItem-3o3D7,.LearningRouteCard-pathContent-j3jVv{background: ${background}!important;}` +
       `.LearningRouteCard-pathItem-xin1f .LearningRouteCard-content-kw2RW .LearningRouteCard-title-do7ND{color: ${color}!important;}`;
-
-    return addPrefix(
-      this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink
+    const menuTopBeforeAfter = `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(
+      background2
+    )}}`;
+    return (
+      addPrefix(
+        this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink
+      ) + menuTopBeforeAfter
     );
   },
   light: function (lightKey: EThemeLight) {
@@ -89,7 +94,8 @@ const myBackground = {
       headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : '.AppHeader'
     }{background-color:${background2}!important;background:${background2}!important;}`;
     const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
-    return this.doSetCSS(background, background2) + borderColor + cssHeader + cssColorUseBg1;
+    const menuTopBeforeAfter = `.ctz-menu-top>a.target::before,.ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}`;
+    return this.doSetCSS(background, background2) + borderColor + cssHeader + cssColorUseBg1 + menuTopBeforeAfter;
   },
   /** 设置字体颜色 */
   text: function () {
@@ -106,7 +112,7 @@ const myBackground = {
   },
   /** 使用背景色1的元素名称 */
   cssNamesBackground1:
-    `.ctz-content-right>div:nth-of-type(2n)` +
+    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover` +
     `,body,.Input-wrapper,.toolbar-section button:hover` +
     `,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
     `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +
@@ -114,10 +120,11 @@ const myBackground = {
     `,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active` +
     `,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after` +
     `,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover` +
-    `,.Popover-content button:hover,::-webkit-scrollbar-thumb,.ZVideoComment .css-kt4t4n,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp`,
+    `,.Popover-content button:hover,.ZVideoComment .css-kt4t4n,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp` +
+    `,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
-    `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,#CTZ_OPEN_BUTTON` +
+    `#${ID_BLOCK_LIST},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,.ctz-black-item,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
     `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
@@ -135,16 +142,23 @@ const myBackground = {
     ',.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div' +
     `,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white` +
     `,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike` +
-    `,.Popover-content,.Notifications-footer,::-webkit-scrollbar,.Messages-footer,.Popover-arrow:after` +
+    `,.Popover-content,.Notifications-footer,.Messages-footer,.Popover-arrow:after` +
     `,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div)` +
     `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6` +
     `,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root` +
-    `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask`,
+    `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask` +
+    `,.Topstory-container .TopstoryTabs>a::after`,
   /** 背景色透明的元素名称 */
   cssNamesBackgroundTransparent:
     `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
     `,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`,
   cssNamesColorUserBackground1: `.css-z0izby`,
+  menuBeforeAfter: (color: string, size = '12px') => `background: radial-gradient(circle at top left, transparent ${size}, ${color} 0) top left,
+  radial-gradient(circle at top right, transparent ${size}, ${color} 0) top right,
+  radial-gradient(circle at bottom right, transparent ${size}, ${color} 0) bottom right,
+  radial-gradient(circle at bottom left, transparent ${size}, ${color} 0) bottom left;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;`,
 };
 
 /** 自定义样式方法 */

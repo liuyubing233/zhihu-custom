@@ -1,14 +1,16 @@
 # 知乎修改器
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211382&authkey=%21AB2XtbDvZUaLvMw&width=1373&height=964" width="1373" />
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211389&authkey=%21AJiXKOSkouRtZkc&width=1024" width="1024" />
 
-快捷键 >（Shift + .）唤起修改器弹窗
+快捷键 >（Shift + .）唤起修改器弹窗, 或鼠标放置到页面左侧齿轮按钮等弹出后点击唤起弹窗
 
 请先确认已安装 <a href="https://www.tampermonkey.net/" target="_blank">tampermonkey</a> 脚本管理器后，再安装本助手
 
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/docs/feature.md" target="_blank">功能添加日志</a>
 
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md" target="_blank">部分问题解答</a>
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/docs/changelog.md" target="_blank">系统更新日志</a>
+
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/docs/Q%26A.md" target="_blank">部分问题解答</a>
 
 <a href="https://github.com/liuyubing233/zhihu-custom/tree/main" target="_blank">Github</a>
 
@@ -43,54 +45,44 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 	- [静态图片弹窗观看点击键盘左右直接切换到上一张或下一张](#静态图片弹窗观看点击键盘左右直接切换到上一张或下一张)
 	- [用户主页导出当前页回答和当前页文章功能](#用户主页导出当前页回答和当前页文章功能)
 - [基础设置](#基础设置)
-	- [基础设置 - 基本设置](#基础设置---基本设置)
+	- [基本设置](#基本设置)
 		- [更改网页和标题](#更改网页和标题)
-		- [自定义回答和文章图片尺寸](#自定义回答和文章图片尺寸)
-		- [使用弹窗打开动图](#使用弹窗打开动图)
-	- [基础设置 - 悬浮模块](#基础设置---悬浮模块)
-		- [回答「收起」按钮悬浮](#回答收起按钮悬浮)
-		- [信息模块悬浮](#信息模块悬浮)
-	- [基础设置 - 黑名单设置](#基础设置---黑名单设置)
-	- [基础设置 - 通用模块隐藏](#基础设置---通用模块隐藏)
-	- [基础设置 - 颜色设置](#基础设置---颜色设置)
-	- [基础设置 - 配置操作](#基础设置---配置操作)
-	- [基础设置 - 默认功能](#基础设置---默认功能)
-- [首页列表设置](#首页列表设置)
-	- [首页列表设置 - 基础设置](#首页列表设置---基础设置)
-		- [列表版心宽度](#列表版心宽度)
+	- [显示设置](#显示设置)
 		- [内容标题添加类别显示](#内容标题添加类别显示)
 		- [推荐列表显示「不感兴趣」按钮](#推荐列表显示不感兴趣按钮)
 		- [列表更多「···」按钮移动到题目右侧](#列表更多按钮移动到题目右侧)
 		- [关注列表高亮原创内容](#关注列表高亮原创内容)
 		- [列表内容点击高亮边框](#列表内容点击高亮边框)
 		- [列表内容显示发布时间和最后修改时间](#列表内容显示发布时间和最后修改时间)
-		- [列表内容标准文字大小调整](#列表内容标准文字大小调整)
-	- [首页列表设置 - 屏蔽内容](#首页列表设置---屏蔽内容)
-		- [关注列表关注人操作屏蔽](#关注列表关注人操作屏蔽)
-		- [列表类别屏蔽](#列表类别屏蔽)
-		- [列表低赞内容屏蔽](#列表低赞内容屏蔽)
-		- [列表屏蔽词](#列表屏蔽词)
-	- [首页列表设置 - 隐藏模块](#首页列表设置---隐藏模块)
-- [回答详情设置](#回答详情设置)
-	- [回答详情设置 - 基础设置](#回答详情设置---基础设置)
-		- [回答版心宽度](#回答版心宽度)
 		- [问题详情显示创建时间和最后修改时间](#问题详情显示创建时间和最后修改时间)
 		- [回答内容显示创建时间与最后修改时间](#回答内容显示创建时间与最后修改时间)
 		- [购物链接显示设置](#购物链接显示设置)
 		- [回答视频显示设置](#回答视频显示设置)
-	- [回答详情设置 - 屏蔽内容](#回答详情设置---屏蔽内容)
+		- [回答详情设置 - 回答展开收起](#回答详情设置---回答展开收起)
+	- [页面尺寸](#页面尺寸)
+		- [列表、回答、文章内容宽度](#列表回答文章内容宽度)
+		- [页面文字大小](#页面文字大小)
+		- [自定义回答和文章图片尺寸](#自定义回答和文章图片尺寸)
+		- [使用弹窗打开动图](#使用弹窗打开动图)
+	- [悬浮模块](#悬浮模块)
+		- [回答「收起」按钮悬浮](#回答收起按钮悬浮)
+		- [信息模块悬浮](#信息模块悬浮)
+	- [颜色设置](#颜色设置)
+	- [配置操作](#配置操作)
+- [屏蔽内容设置](#屏蔽内容设置)
+	- [列表内容屏蔽](#列表内容屏蔽)
+		- [关注列表关注人操作屏蔽](#关注列表关注人操作屏蔽)
+		- [列表类别屏蔽](#列表类别屏蔽)
+		- [列表低赞内容屏蔽](#列表低赞内容屏蔽)
+	- [回答内容屏蔽](#回答内容屏蔽)
 		- [屏蔽官方账号的回答](#屏蔽官方账号的回答)
+		- [屏蔽匿名用户的回答](#屏蔽匿名用户的回答)
 		- [屏蔽带有标签的回答](#屏蔽带有标签的回答)
 		- [详情低赞回答屏蔽](#详情低赞回答屏蔽)
-		- [回答内容标准文字大小调整](#回答内容标准文字大小调整)
-	- [回答详情设置 - 隐藏模块](#回答详情设置---隐藏模块)
-	- [回答详情设置 - 回答展开收起](#回答详情设置---回答展开收起)
-- [文章专栏设置](#文章专栏设置)
-	- [文章专栏设置 - 基础设置](#文章专栏设置---基础设置)
-		- [文章版心宽度](#文章版心宽度)
-		- [文章发布时间置顶](#文章发布时间置顶)
-		- [文章内容标准文字大小调整](#文章内容标准文字大小调整)
-	- [文章专栏设置 - 隐藏模块](#文章专栏设置---隐藏模块)
+- [屏蔽词设置](#屏蔽词设置)
+	- [标题屏蔽词](#标题屏蔽词)
+	- [内容屏蔽词](#内容屏蔽词)
+- [黑名单设置](#黑名单设置)
 
 ### 默认功能
 
@@ -182,87 +174,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 ### 基础设置
 
-#### 基础设置 - 基本设置
+#### 基本设置
 
 ##### 更改网页和标题
 
 <img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=1024&height=639&cropmode=none" width="1024" />
 
-##### 自定义回答和文章图片尺寸
-
-设置此项可以将回答和专栏内图片按照所设置的大小进行缩放，并且在缩放模式下添加了所有的图片弹窗预览。
-
-「使用弹窗打开动图」在图片缩放模式下极为好用
-
-<img src="https://bnz06pap004files.storage.live.com/y4mn0WCV4AeRizRJggESO-70r0GlJjeCiIyL6JHU_Kckfsff2ET3CoNsyWRisLZE2kn0kORbuQ6p0OaEjt_djhASBwV_QQe5Iub6i5ddsIyqa1HNyphDDMOM07hE5RPhTp9fh3j94ca1RxbBVH47s5hv2ULOQ3gSTw2ymIHwE0DOBfsaMFTHAfta4nqm0U2R0vD?width=660&height=641&cropmode=none" width="660" />
-
-##### 使用弹窗打开动图
-
-勾选此项所有的动图点击会以弹窗方式打开
-
-#### 基础设置 - 悬浮模块
-
-##### 回答「收起」按钮悬浮
-
-将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。
-
-##### 信息模块悬浮
-
-悬浮模块，可以拖动自定义位置
-
-<img src="https://bnz06pap004files.storage.live.com/y4mwNoK1snkbOYlJF0WsGJSucfKh_SMEgcRkoXUqYJ8RsQknOM4oZi6F2d5c9opZ8xc2eYrkpec1BUTp9Y4R-OQXz8N6rByTF5drwU-PTSvvFeNFj1jd-jZJvewwlZNyXapIUpfF2DuubPqWM0S50dhlVR2CY0T1OX3oXcnK0np9GJDae0t5GXjDyPIbIr0l3YS?width=1024&height=560&cropmode=none" width="1024" />
-
-#### 基础设置 - 黑名单设置
-
-在使用该功能前，请先点击「同步黑名单」按钮同步黑名单内容（黑名单内容仅为演示）
-
-开启该选项后，在问答详情中将会过滤该用户的回答内容
-
-<img src="https://bnz06pap004files.storage.live.com/y4mliXAXchX2uoVjwENCG3MYLKL-fYIIM9XPUtsZnptt6DokVzVd08x2hPz--WK3jfc6Ia7yMQwMQ_6uIsY41Djattqhf2Y6Bn0fd_S_3SW6b4p_--_vYmr3M29FaoH4FXsjQWajFeLZn4-Sko_BtkM3T4Nuu0-DPlDVE-5u-iL3Q0vPXoWUyjhwsqZwasCPZ1c?width=660&height=654&cropmode=none" width="660"  />
-
-点击已屏蔽用户了列表后方的 x 可以进行移出黑名单操作，跟知乎移除黑名单操作一致，不过如果是在知乎设置页里进行了「移除屏蔽」操作，需要手动运行同步黑名单。
-
-列表用户名后显示「屏蔽用户」按钮开启后，在回答页面用户后将显示「屏蔽用户」按钮，点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
-
-回答列表页面添加「屏蔽用户并隐藏该回答」及屏蔽用户后的解除屏蔽按钮
-
-<img src="https://bnz06pap004files.storage.live.com/y4mycVRs_iN0ljlYMudcDJ_GkK8_nP7l5zGVNoNwW9bmH2sGHlpHKdJpL6VyUtLu-HjVZ9Lio8bAP2v86_rE6-z4tsDmkZtPOtWcwoqdqVZiGJZxDX9zTVCQPm8uZ6uLMyRcT3IljXPQMD7zFjZf34FRUUQO5JpWm59XupoxHS8qSNmEgZvp-eoMcNvzbaxrXQY?width=1024&height=616&cropmode=none" width="1024"  />
-
-点击屏蔽后（或未开启过滤屏蔽用户回答）
-
-<img src="https://bnz06pap004files.storage.live.com/y4mM7EyuAgRFTiMUPdPsoprp8CbJfsqm11QzOabFh8Vhe9lOh1bPOC94RtoFOPHD36Qt4X87ogfjMeDcfyabtSUA9lZJByCieedZdduTo7n8iexYwe0FeO-CRxmVo0qfoOQCCuONAosYOtpi-F9724ZlGEF2-UOYcasyYTjCmKjF0Hg0-YTOwWlhbmabEJjYZX6?width=1024&height=664&cropmode=none" width="1024"  />
-
-#### 基础设置 - 通用模块隐藏
-
-通用模块，比如首页顶部操作栏和滚动操作顶部可隐藏
-
-广告模块隐藏
-
-所有的回答操作文字可进行隐藏
-
-#### 基础设置 - 颜色设置
-
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211355&authkey=%21AO8NCx0TYnqsdk8&width=1024" width="1024" height="auto" />
-
-设置为自动时，背景色可跟随浏览器颜色变化
-
-#### 基础设置 - 配置操作
-
-这里可以导出当前配置，导入配置时将导出的配置内容复制进来再点击【导入】按钮即可完成导入
-
-此部分将自己定义的 css 样式写入即可生效
-
-#### 基础设置 - 默认功能
-
-此模块为修改器自带功能的提示
-
-### 首页列表设置
-
-#### 首页列表设置 - 基础设置
-
-##### 列表版心宽度
-
-单独设置列表的版心宽度
+#### 显示设置
 
 ##### 内容标题添加类别显示
 
@@ -284,11 +202,71 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 ##### 列表内容显示发布时间和最后修改时间
 
-##### 列表内容标准文字大小调整
+##### 问题详情显示创建时间和最后修改时间
 
-可自由调节列表内容文字大小
+<img src="https://bnz06pap004files.storage.live.com/y4mjXltdYptJVGNdPMnfauYAeOd0BfKuoF7xFvNlqtn_NjGN6RqjdmypGjJqsPyLvKec5M-1pCRJyt4ocCE1vtnQQNFX-mflRWhTPmzgzbjY-Fq7ufpuXg71sb4Md_1152KIK1egHXzRElqUnQnkNaMV-TJ_0_m35Hndb6_nU23yW46BKnz2D7dQQ9MY0fi4Wkx?width=660&height=377&cropmode=none" width="660" />
 
-#### 首页列表设置 - 屏蔽内容
+##### 回答内容显示创建时间与最后修改时间
+
+##### 购物链接显示设置
+
+可以设置回答和专栏里的购物链接只显示文字还是隐藏。
+
+##### 回答视频显示设置
+
+可以设置是仅显示链接还是隐藏，优化浏览体验
+
+##### 回答详情设置 - 回答展开收起
+
+自动展开所有回答：通过推荐页进入问答详情时默认会收起长回答，选择此项后进入页面会自动展开所有收起的回答。
+
+默认收起所有长回答：选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览。
+
+#### 页面尺寸
+
+##### 列表、回答、文章内容宽度
+
+##### 页面文字大小
+
+##### 自定义回答和文章图片尺寸
+
+设置此项可以将回答和专栏内图片按照所设置的大小进行缩放，并且在缩放模式下添加了所有的图片弹窗预览。
+
+「使用弹窗打开动图」在图片缩放模式下极为好用
+
+<img src="https://bnz06pap004files.storage.live.com/y4mn0WCV4AeRizRJggESO-70r0GlJjeCiIyL6JHU_Kckfsff2ET3CoNsyWRisLZE2kn0kORbuQ6p0OaEjt_djhASBwV_QQe5Iub6i5ddsIyqa1HNyphDDMOM07hE5RPhTp9fh3j94ca1RxbBVH47s5hv2ULOQ3gSTw2ymIHwE0DOBfsaMFTHAfta4nqm0U2R0vD?width=660&height=641&cropmode=none" width="660" />
+
+##### 使用弹窗打开动图
+
+勾选此项所有的动图点击会以弹窗方式打开
+
+#### 悬浮模块
+
+##### 回答「收起」按钮悬浮
+
+将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。
+
+##### 信息模块悬浮
+
+悬浮模块，可以拖动自定义位置
+
+<img src="https://bnz06pap004files.storage.live.com/y4mwNoK1snkbOYlJF0WsGJSucfKh_SMEgcRkoXUqYJ8RsQknOM4oZi6F2d5c9opZ8xc2eYrkpec1BUTp9Y4R-OQXz8N6rByTF5drwU-PTSvvFeNFj1jd-jZJvewwlZNyXapIUpfF2DuubPqWM0S50dhlVR2CY0T1OX3oXcnK0np9GJDae0t5GXjDyPIbIr0l3YS?width=1024&height=560&cropmode=none" width="1024" />
+
+#### 颜色设置
+
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211355&authkey=%21AO8NCx0TYnqsdk8&width=1024" width="1024" height="auto" />
+
+设置为自动时，背景色可跟随浏览器颜色变化
+
+#### 配置操作
+
+这里可以导出当前配置，导入配置时将导出的配置内容复制进来再点击【导入】按钮即可完成导入
+
+此部分将自己定义的 css 样式写入即可生效
+
+### 屏蔽内容设置
+
+#### 列表内容屏蔽
 
 ##### 关注列表关注人操作屏蔽
 
@@ -310,43 +288,13 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 设置后，点赞量低于输入框中的「推荐页、搜索页」内容会被自动过滤
 
-##### 列表屏蔽词
-
-关注、推荐页面将屏蔽包含题目屏蔽词的内容。
-
-输入框输入后列表将会进行关键词过滤，可过滤多项，无上限。并在关键词过滤后自动调用“不感兴趣”的接口，防止在其他设备上出现同样内容
-
-#### 首页列表设置 - 隐藏模块
-
-首页列表和搜索列表可隐藏部分显示模块，前往编辑器查看更多
-
-### 回答详情设置
-
-#### 回答详情设置 - 基础设置
-
-##### 回答版心宽度
-
-单独设置回答页面的版心宽度
-
-##### 问题详情显示创建时间和最后修改时间
-
-<img src="https://bnz06pap004files.storage.live.com/y4mjXltdYptJVGNdPMnfauYAeOd0BfKuoF7xFvNlqtn_NjGN6RqjdmypGjJqsPyLvKec5M-1pCRJyt4ocCE1vtnQQNFX-mflRWhTPmzgzbjY-Fq7ufpuXg71sb4Md_1152KIK1egHXzRElqUnQnkNaMV-TJ_0_m35Hndb6_nU23yW46BKnz2D7dQQ9MY0fi4Wkx?width=660&height=377&cropmode=none" width="660" />
-
-##### 回答内容显示创建时间与最后修改时间
-
-##### 购物链接显示设置
-
-可以设置回答和专栏里的购物链接只显示文字还是隐藏。
-
-##### 回答视频显示设置
-
-可以设置是仅显示链接还是隐藏，优化浏览体验
-
-#### 回答详情设置 - 屏蔽内容
+#### 回答内容屏蔽
 
 ##### 屏蔽官方账号的回答
 
 屏蔽勾选的官方账号的回答
+
+##### 屏蔽匿名用户的回答
 
 ##### 屏蔽带有标签的回答
 
@@ -358,34 +306,36 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 选中后，点赞量低于输入框中的回答会被自动过滤
 
-##### 回答内容标准文字大小调整
+### 屏蔽词设置
 
-可自由调节回答内容文字大小，效果可参考列表文字大小调整
+#### 标题屏蔽词
 
-#### 回答详情设置 - 隐藏模块
+输入框输入后列表将会进行关键词过滤，可过滤多项，无上限。
 
-回答详情页面可隐藏部分显示模块，前往编辑器查看更多
+并在关键词过滤后自动调用「不感兴趣」的接口，防止在其他设备上出现同样内容
 
-#### 回答详情设置 - 回答展开收起
+#### 内容屏蔽词
 
-自动展开所有回答：通过推荐页进入问答详情时默认会收起长回答，选择此项后进入页面会自动展开所有收起的回答。
+输入框输入后列表将会进行关键词过滤，可过滤多项，无上限。
 
-默认收起所有长回答：选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览。
+将过滤列表中和回答详情内容中含有对应词语的回答。
 
-### 文章专栏设置
+### 黑名单设置
 
-#### 文章专栏设置 - 基础设置
+在使用该功能前，请先点击「同步黑名单」按钮同步黑名单内容（黑名单内容仅为演示）
 
-##### 文章版心宽度
+开启该选项后，在问答详情中将会过滤该用户的回答内容
 
-单独设置文章页面的版心宽度
+<img src="https://bnz06pap004files.storage.live.com/y4mliXAXchX2uoVjwENCG3MYLKL-fYIIM9XPUtsZnptt6DokVzVd08x2hPz--WK3jfc6Ia7yMQwMQ_6uIsY41Djattqhf2Y6Bn0fd_S_3SW6b4p_--_vYmr3M29FaoH4FXsjQWajFeLZn4-Sko_BtkM3T4Nuu0-DPlDVE-5u-iL3Q0vPXoWUyjhwsqZwasCPZ1c?width=660&height=654&cropmode=none" width="660"  />
 
-##### 文章发布时间置顶
+点击已屏蔽用户了列表后方的 x 可以进行移出黑名单操作，跟知乎移除黑名单操作一致，不过如果是在知乎设置页里进行了「移除屏蔽」操作，需要手动运行同步黑名单。
 
-##### 文章内容标准文字大小调整
+列表用户名后显示「屏蔽用户」按钮开启后，在回答页面用户后将显示「屏蔽用户」按钮，点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
 
-可自由调节文章内容文字大小，效果可参考列表文字大小调整
+回答列表页面添加「屏蔽用户并隐藏该回答」及屏蔽用户后的解除屏蔽按钮
 
-#### 文章专栏设置 - 隐藏模块
+<img src="https://bnz06pap004files.storage.live.com/y4mycVRs_iN0ljlYMudcDJ_GkK8_nP7l5zGVNoNwW9bmH2sGHlpHKdJpL6VyUtLu-HjVZ9Lio8bAP2v86_rE6-z4tsDmkZtPOtWcwoqdqVZiGJZxDX9zTVCQPm8uZ6uLMyRcT3IljXPQMD7zFjZf34FRUUQO5JpWm59XupoxHS8qSNmEgZvp-eoMcNvzbaxrXQY?width=1024&height=616&cropmode=none" width="1024"  />
 
-文章页面可隐藏部分显示模块，前往编辑器查看更多
+点击屏蔽后（或未开启过滤屏蔽用户回答）
+
+<img src="https://bnz06pap004files.storage.live.com/y4mM7EyuAgRFTiMUPdPsoprp8CbJfsqm11QzOabFh8Vhe9lOh1bPOC94RtoFOPHD36Qt4X87ogfjMeDcfyabtSUA9lZJByCieedZdduTo7n8iexYwe0FeO-CRxmVo0qfoOQCCuONAosYOtpi-F9724ZlGEF2-UOYcasyYTjCmKjF0Hg0-YTOwWlhbmabEJjYZX6?width=1024&height=664&cropmode=none" width="1024"  />

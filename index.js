@@ -185,6 +185,7 @@
         customizeCss: "",
         answerOpen: "",
         filterKeywords: [],
+        blockWordsAnswer: [],
         showBlockUser: true,
         versionHome: "1000",
         versionAnswer: "1000",
@@ -449,11 +450,11 @@
   ];
   var THEME_CONFIG_LIGHT = {
     ["0" /* 默认 */]: { name: "默认", background: "#ffffff", background2: "" },
-    ["1" /* 护眼红 */]: { name: "护眼红", background: "#ffe4c4", background2: "#fff4e7" },
-    ["2" /* 杏仁黄 */]: { name: "杏仁黄", background: "#faf9de", background2: "#fdfdf2" },
-    ["3" /* 青草绿 */]: { name: "青草绿", background: "#cce8cf", background2: "#e5f1e7" },
-    ["4" /* 极光灰 */]: { name: "极光灰", background: "#eaeaef", background2: "#f3f3f5" },
-    ["5" /* 葛巾紫 */]: { name: "葛巾紫", background: "#e9ebfe", background2: "#f2f3fb" }
+    ["1" /* 红 */]: { name: "红", background: "#ffe4c4", background2: "#fff4e7" },
+    ["2" /* 黄 */]: { name: "黄", background: "#faf9de", background2: "#fdfdf2" },
+    ["3" /* 绿 */]: { name: "绿", background: "#cce8cf", background2: "#e5f1e7" },
+    ["4" /* 灰 */]: { name: "灰", background: "#eaeaef", background2: "#f3f3f5" },
+    ["5" /* 紫 */]: { name: "紫", background: "#e9ebfe", background2: "#f2f3fb" }
   };
   var THEME_CONFIG_DARK = {
     ["0" /* 夜间模式默认 */]: { name: "默认", color: "#fff", color2: "#999", background: "#121212", background2: "#333333" },
@@ -466,7 +467,6 @@
   var INPUT_NAME_ThEME_LIGHT = "themeLight";
   var HTML_HOOTS = ["www.zhihu.com", "zhuanlan.zhihu.com"];
   var ID_DIALOG = "CTZ_DIALOG_MAIN";
-  var ID_FILTER_WORDS = "CTZ_FILTER_WORDS";
   var ID_BLOCK_LIST = "CTZ-BLOCK-LIST";
   var ID_BUTTON_SYNC_BLOCK = "CTZ-BUTTON-SYNC-BLOCK";
   var CLASS_INPUT_CLICK = "ctz-i";
@@ -481,128 +481,20 @@
     "zhuanlan.zhihu.com": "zhuanlan",
     "www.zhihu.com": "zhihu"
   };
+  var HEADER = [
+    { href: "#CTZ_BASIS", value: "基础设置" },
+    { href: "#CTZ_HIDDEN", value: "隐藏模块设置" },
+    { href: "#CTZ_FILTER", value: "屏蔽内容设置" },
+    { href: "#CTZ_BLOCK_WORD", value: "屏蔽词设置" },
+    { href: "#CTZ_BLACKLIST", value: "黑名单设置" },
+    { href: "#CTZ_HISTORY", value: "历史记录" },
+    { href: "#CTZ_DEFAULT", value: "默认功能" }
+  ];
   var FILTER_FOLLOWER_OPERATE = [
     { key: "removeFollowVoteAnswer", rep: "赞同了回答" },
     { key: "removeFollowVoteArticle", rep: "赞同了文章" },
     { key: "removeFollowFQuestion", rep: "关注了问题" }
   ];
-  var HIDDEN_DIRECTION = {
-    /** 基础设置 */
-    CTZ_BASIS: [
-      [{ value: "hiddenAD", label: "广告" }],
-      [{ value: "hiddenTopAD", label: "顶部推广（只能物理隐藏，会存在颜色错误）" }],
-      [
-        { value: "hiddenLogo", label: "logo" },
-        { value: "hiddenHeader", label: "顶部悬浮模块" },
-        { value: "hiddenHeaderScroll", label: "滚动顶部悬浮模块/问题名称" }
-      ],
-      [
-        { value: "hiddenAppHeaderTabHome", label: "发现模块-首页" },
-        { value: "hiddenAppHeaderTabZhi", label: "发现模块-知学堂" },
-        { value: "hiddenAppHeaderTabVIP", label: "发现模块-会员" },
-        { value: "hiddenAppHeaderTabFind", label: "发现模块-发现" },
-        { value: "hiddenAppHeaderTabWaitingForYou", label: "发现模块-等你来答" }
-      ],
-      [
-        { value: "hiddenAnswerText", label: "回答操作文字" },
-        { value: "hiddenWhoVoters", label: "回答隐藏用户信息下下赞同用户和「你赞同过」" }
-      ],
-      [
-        { value: "hiddenCommitReply", label: "评论「回复」按钮" },
-        { value: "hiddenCommitVote", label: "评论「点赞」按钮" },
-        { value: "hiddenCommitBottom", label: "评论底部信息" }
-      ]
-    ],
-    /** 首页列表设置 */
-    CTZ_LIST: [
-      [
-        { value: "hiddenHomeCreatorEntrance", label: "创作中心" },
-        { value: "hiddenHomeRecommendFollow", label: "推荐关注" },
-        { value: "hiddenHomeCategory", label: "分类圆桌" },
-        { value: "hiddenHomeCategoryMore", label: "更多分类" },
-        { value: "hiddenHomeFooter", label: "知乎指南" }
-      ],
-      [
-        { value: "hiddenHomeListTab", label: "首页列表切换模块" },
-        { value: "hiddenHomeListTabFollow", label: "首页列表切换 - 关注" },
-        { value: "hiddenHomeListTabRecommend", label: "首页列表切换 - 推荐" },
-        { value: "hiddenHomeListTabHot", label: "首页列表切换 - 热榜" },
-        { value: "hiddenHomeListTabVideo", label: "首页列表切换 - 视频" }
-      ],
-      [
-        { value: "hiddenHotItemIndex", label: "热门排序编号" },
-        { value: "hiddenHotItemLabel", label: '热门"新"元素' },
-        { value: "hiddenHotItemMetrics", label: "热门热度值" }
-      ],
-      [
-        { value: "hiddenAnswers", label: "列表回答内容" },
-        { value: "hiddenListVideoContent", label: "列表视频回答的内容" },
-        { value: "hiddenItemActions", label: "列表回答操作" },
-        { value: "hiddenListImg", label: "列表图片" },
-        { value: "hiddenReadMoreText", label: "问题列表阅读全文文字" },
-        { value: "hiddenListAnswerInPerson", label: "列表「亲自答」标签" }
-      ],
-      [
-        { value: "hiddenFollowAction", label: "关注列表关注人操作栏" },
-        { value: "hiddenFollowChooseUser", label: "关注列表用户信息" }
-      ],
-      [
-        { value: "hiddenSearchBoxTopSearch", label: "搜索栏知乎热搜" },
-        { value: "hiddenSearchPageTopSearch", label: "搜索页知乎热搜" },
-        { value: "hiddenSearchPageFooter", label: "搜索页知乎指南" }
-      ]
-    ],
-    /** 回答详情设置 */
-    CTZ_ANSWER: [
-      [
-        { value: "hiddenQuestionTag", label: "问题话题" },
-        { value: "hiddenQuestionShare", label: "问题分享" },
-        { value: "hiddenQuestionGoodQuestion", label: "「好问题」按钮" },
-        { value: "hiddenQuestionComment", label: "添加评论" },
-        { value: "hiddenQuestionMore", label: "问题更多「...」按钮" },
-        { value: "hiddenQuestionActions", label: "问题操作栏" },
-        { value: "hiddenQuestionSpecial", label: "问题专题收录标签" },
-        { value: "hiddenQuestionFollowing", label: "问题关注按钮" },
-        { value: "hiddenQuestionAnswer", label: "问题写回答按钮" },
-        { value: "hiddenQuestionInvite", label: "问题邀请回答按钮" }
-      ],
-      [
-        { value: "hiddenDetailAvatar", label: "回答人头像" },
-        { value: "hiddenDetailName", label: "回答人姓名" },
-        { value: "hiddenDetailBadge", label: "回答人简介" },
-        { value: "hiddenDetailFollow", label: "回答人关注按钮" },
-        // { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
-        { value: "hiddenQuestionSide", label: "问题关注和被浏览数" },
-        { value: "hiddenFixedActions", label: "回答悬浮操作栏" },
-        { value: "hiddenAnswerItemActions", label: "回答内容操作栏" },
-        { value: "hiddenAnswerItemTime", label: "回答底部发布编辑时间" },
-        { value: "hiddenReward", label: "赞赏按钮" },
-        { value: "hidden618HongBao", label: "618红包链接" }
-      ],
-      [
-        { value: "hiddenAnswerRightFooter", label: "详情右侧信息栏" },
-        { value: "hiddenAnswerRightFooterAnswerAuthor", label: "信息栏关于作者" },
-        { value: "hiddenAnswerRightFooterFavorites", label: "信息栏被收藏次数" },
-        { value: "hiddenAnswerRightFooterRelatedQuestions", label: "信息栏相关问题" },
-        { value: "hiddenAnswerRightFooterContentList", label: "信息栏相关推荐" },
-        { value: "hiddenAnswerRightFooterFooter", label: "信息栏知乎指南" }
-      ]
-    ],
-    /** 文章专栏设置 */
-    CTZ_ARTICLE: [
-      [
-        { value: "hiddenZhuanlanTag", label: "文章关联话题" },
-        { value: "hiddenZhuanlanActions", label: "文章操作条" },
-        { value: "hiddenZhuanlanTitleImage", label: "文章标题图片" },
-        { value: "hiddenZhuanlanShare", label: "文章悬浮分享按钮" },
-        { value: "hiddenZhuanlanVoters", label: "文章悬浮赞同按钮" },
-        { value: "hiddenZhuanlanAvatarWrapper", label: "文章作者头像" },
-        { value: "hiddenZhuanlanAuthorInfoHead", label: "文章作者姓名" },
-        { value: "hiddenZhuanlanAuthorInfoDetail", label: "文章作者简介" },
-        { value: "hiddenZhuanlanFollowButton", label: "文章作者关注按钮" }
-      ]
-    ]
-  };
   var HIDDEN_ANSWER_TAG = {
     removeFromYanxuan: "盐选专栏",
     removeUnrealAnswer: "虚构创作"
@@ -613,6 +505,139 @@
     removeYanxuanRecommend: "盐选推荐",
     removeYanxuanCPRecommend: "盐选测评室"
   };
+  var HIDDEN_ARRAY = [
+    {
+      key: "CTZ_HIDDEN_COMMON",
+      name: "通用模块隐藏",
+      desc: "",
+      content: [
+        [{ value: "hiddenAD", label: "广告" }],
+        [{ value: "hiddenTopAD", label: "顶部推广（只能物理隐藏，会存在颜色错误）" }],
+        [
+          { value: "hiddenLogo", label: "logo" },
+          { value: "hiddenHeader", label: "顶部悬浮模块" },
+          { value: "hiddenHeaderScroll", label: "滚动顶部悬浮模块/问题名称" }
+        ],
+        [
+          { value: "hiddenAppHeaderTabHome", label: "发现模块-首页" },
+          { value: "hiddenAppHeaderTabZhi", label: "发现模块-知学堂" },
+          { value: "hiddenAppHeaderTabVIP", label: "发现模块-会员" },
+          { value: "hiddenAppHeaderTabFind", label: "发现模块-发现" },
+          { value: "hiddenAppHeaderTabWaitingForYou", label: "发现模块-等你来答" }
+        ],
+        [
+          { value: "hiddenAnswerText", label: "回答操作文字" },
+          { value: "hiddenWhoVoters", label: "回答隐藏用户信息下下赞同用户和「你赞同过」" }
+        ],
+        [
+          { value: "hiddenCommitReply", label: "评论「回复」按钮" },
+          { value: "hiddenCommitVote", label: "评论「点赞」按钮" },
+          { value: "hiddenCommitBottom", label: "评论底部信息" }
+        ]
+      ]
+    },
+    {
+      key: "CTZ_HIDDEN_LIST",
+      name: "列表模块隐藏",
+      desc: "只在列表中隐藏相应内容",
+      content: [
+        [
+          { value: "hiddenHomeCreatorEntrance", label: "创作中心" },
+          { value: "hiddenHomeRecommendFollow", label: "推荐关注" },
+          { value: "hiddenHomeCategory", label: "分类圆桌" },
+          { value: "hiddenHomeCategoryMore", label: "更多分类" },
+          { value: "hiddenHomeFooter", label: "知乎指南" }
+        ],
+        [
+          { value: "hiddenHomeListTab", label: "首页列表切换模块" },
+          { value: "hiddenHomeListTabFollow", label: "首页列表切换 - 关注" },
+          { value: "hiddenHomeListTabRecommend", label: "首页列表切换 - 推荐" },
+          { value: "hiddenHomeListTabHot", label: "首页列表切换 - 热榜" },
+          { value: "hiddenHomeListTabVideo", label: "首页列表切换 - 视频" }
+        ],
+        [
+          { value: "hiddenHotItemIndex", label: "热门排序编号" },
+          { value: "hiddenHotItemLabel", label: '热门"新"元素' },
+          { value: "hiddenHotItemMetrics", label: "热门热度值" }
+        ],
+        [
+          { value: "hiddenAnswers", label: "列表回答内容" },
+          { value: "hiddenListVideoContent", label: "列表视频回答的内容" },
+          { value: "hiddenItemActions", label: "列表回答操作" },
+          { value: "hiddenListImg", label: "列表图片" },
+          { value: "hiddenReadMoreText", label: "问题列表阅读全文文字" },
+          { value: "hiddenListAnswerInPerson", label: "列表「亲自答」标签" }
+        ],
+        [
+          { value: "hiddenFollowAction", label: "关注列表关注人操作栏" },
+          { value: "hiddenFollowChooseUser", label: "关注列表用户信息" }
+        ],
+        [
+          { value: "hiddenSearchBoxTopSearch", label: "搜索栏知乎热搜" },
+          { value: "hiddenSearchPageTopSearch", label: "搜索页知乎热搜" },
+          { value: "hiddenSearchPageFooter", label: "搜索页知乎指南" }
+        ]
+      ]
+    },
+    {
+      key: "CTZ_HIDDEN_ANSWER",
+      name: "回答模块隐藏",
+      desc: "只在回答页面中隐藏相应内容",
+      content: [
+        [
+          { value: "hiddenQuestionTag", label: "问题话题" },
+          { value: "hiddenQuestionShare", label: "问题分享" },
+          { value: "hiddenQuestionGoodQuestion", label: "「好问题」按钮" },
+          { value: "hiddenQuestionComment", label: "添加评论" },
+          { value: "hiddenQuestionMore", label: "问题更多「...」按钮" },
+          { value: "hiddenQuestionActions", label: "问题操作栏" },
+          { value: "hiddenQuestionSpecial", label: "问题专题收录标签" },
+          { value: "hiddenQuestionFollowing", label: "问题关注按钮" },
+          { value: "hiddenQuestionAnswer", label: "问题写回答按钮" },
+          { value: "hiddenQuestionInvite", label: "问题邀请回答按钮" }
+        ],
+        [
+          { value: "hiddenDetailAvatar", label: "回答人头像" },
+          { value: "hiddenDetailName", label: "回答人姓名" },
+          { value: "hiddenDetailBadge", label: "回答人简介" },
+          { value: "hiddenDetailFollow", label: "回答人关注按钮" },
+          // { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
+          { value: "hiddenQuestionSide", label: "问题关注和被浏览数" },
+          { value: "hiddenFixedActions", label: "回答悬浮操作栏" },
+          { value: "hiddenAnswerItemActions", label: "回答内容操作栏" },
+          { value: "hiddenAnswerItemTime", label: "回答底部发布编辑时间" },
+          { value: "hiddenReward", label: "赞赏按钮" },
+          { value: "hidden618HongBao", label: "618红包链接" }
+        ],
+        [
+          { value: "hiddenAnswerRightFooter", label: "详情右侧信息栏" },
+          { value: "hiddenAnswerRightFooterAnswerAuthor", label: "信息栏关于作者" },
+          { value: "hiddenAnswerRightFooterFavorites", label: "信息栏被收藏次数" },
+          { value: "hiddenAnswerRightFooterRelatedQuestions", label: "信息栏相关问题" },
+          { value: "hiddenAnswerRightFooterContentList", label: "信息栏相关推荐" },
+          { value: "hiddenAnswerRightFooterFooter", label: "信息栏知乎指南" }
+        ]
+      ]
+    },
+    {
+      key: "CTZ_HIDDEN_ARTICLE",
+      name: "文章模块隐藏",
+      desc: "只在文章页面中隐藏相应内容",
+      content: [
+        [
+          { value: "hiddenZhuanlanTag", label: "文章关联话题" },
+          { value: "hiddenZhuanlanActions", label: "文章操作条" },
+          { value: "hiddenZhuanlanTitleImage", label: "文章标题图片" },
+          { value: "hiddenZhuanlanShare", label: "文章悬浮分享按钮" },
+          { value: "hiddenZhuanlanVoters", label: "文章悬浮赞同按钮" },
+          { value: "hiddenZhuanlanAvatarWrapper", label: "文章作者头像" },
+          { value: "hiddenZhuanlanAuthorInfoHead", label: "文章作者姓名" },
+          { value: "hiddenZhuanlanAuthorInfoDetail", label: "文章作者简介" },
+          { value: "hiddenZhuanlanFollowButton", label: "文章作者关注按钮" }
+        ]
+      ]
+    }
+  ];
   var FOOTER_HTML = `<a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>`;
   var DEFAULT_FUNCTION = [
     '外链直接打开<div class="ctz-commit">知乎里所有外部链接的重定向去除，可以直接访问</div>',
@@ -707,6 +732,56 @@
       await this.set("pfHistory", JSON.stringify(pfHistory));
     }
   };
+  var BLOCK_WORDS_LIST = `#CTZ_BLOCK_WORD_LIST .ctz-block-words-content`;
+  var BLOCK_WORDS_ANSWER = `#CTZ_BLOCK_WORD_CONTENT .ctz-block-words-content`;
+  var NAME_BY_KEY = {
+    filterKeywords: BLOCK_WORDS_LIST,
+    blockWordsAnswer: BLOCK_WORDS_ANSWER
+  };
+  var createHTMLAboutBlockText = (w) => `<span data-title="${w}">${createHTMLAboutBlockTextContent(w)}</span>`;
+  var createHTMLAboutBlockTextContent = (w) => `<span>${w}</span><i class="ctz-icon ctz-filter-word-remove">&#xe602;</i>`;
+  var onRemove = (e, key) => {
+    const target = e.target;
+    if (!target.classList.contains("ctz-filter-word-remove"))
+      return;
+    const domItem = target.parentElement;
+    const title = domItem.dataset.title;
+    const config = store.getConfig();
+    domItem.remove();
+    myStorage.configUpdateItem(
+      key,
+      (config[key] || []).filter((i) => i !== title)
+    );
+  };
+  var onAddWord = async (target, key) => {
+    const word = target.value;
+    const configThis = store.getConfig()[key];
+    if (!Array.isArray(configThis))
+      return;
+    configThis.push(word);
+    await myStorage.configUpdateItem(key, configThis);
+    const domItem = domC("span", { innerHTML: createHTMLAboutBlockTextContent(word) });
+    domItem.dataset.title = word;
+    const nodeFilterWords = dom(NAME_BY_KEY[key]);
+    nodeFilterWords && nodeFilterWords.appendChild(domItem);
+    target.value = "";
+  };
+  var initBlockWords = () => {
+    const config = store.getConfig();
+    const arr = [
+      { domFind: dom(BLOCK_WORDS_LIST), name: "filterKeywords", domInput: dom('[name="inputFilterWord"]') },
+      { domFind: dom(BLOCK_WORDS_ANSWER), name: "blockWordsAnswer", domInput: dom('[name="inputBlockWordsAnswer"]') }
+    ];
+    for (let i = 0, len = arr.length; i < len; i++) {
+      const { domFind, name, domInput } = arr[i];
+      if (domFind) {
+        const children = (config[name] || []).map((i2) => createHTMLAboutBlockText(i2)).join("");
+        domFind.innerHTML = children || "";
+        domFind.onclick = (e) => onRemove(e, name);
+      }
+      domInput && (domInput.onchange = (e) => onAddWord(e.target, name));
+    }
+  };
   var echoData = () => {
     const pfConfig = store.getConfig();
     const textSameName = {
@@ -790,18 +865,21 @@
     default: () => ".GlobalSideBar-navList{background: #fff}",
     dark: function(darkKey) {
       const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
-      const cssColor1 = `#CTZ_DIALOG_MAIN,.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div{color: ${color}!important}`;
+      const cssColor1 = `#${ID_DIALOG},.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div{color: ${color}!important}`;
       const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
       const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path{color: ${background2}!important}`;
-      const cssColorLink = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link{color: deepskyblue;}.css-1tu59u4{fill: deepskyblue}`;
+      const cssColorLink = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link{color: deepskyblue!important;}.css-1tu59u4{fill: deepskyblue!important;}`;
       const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
-      const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-menu-top>a.target{border-bottom: 4px solid ${color};color: ${color};}`;
+      const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}`;
       const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
       const addPrefix = (i) => i.split(",").map((i2) => `html[data-theme=dark] ${i2}`).join(",");
       const pageLearning = `.TopNavBar-fixMode-qXKMs,.index-tabWrap-4Smyx,.index-bannerItem-3o3D7,.LearningRouteCard-pathContent-j3jVv{background: ${background}!important;}.LearningRouteCard-pathItem-xin1f .LearningRouteCard-content-kw2RW .LearningRouteCard-title-do7ND{color: ${color}!important;}`;
+      const menuTopBeforeAfter = `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(
+        background2
+      )}}`;
       return addPrefix(
         this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink
-      );
+      ) + menuTopBeforeAfter;
     },
     light: function(lightKey) {
       const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
@@ -813,7 +891,8 @@
       const headerBelongAd = haveTopAD ? elementHC[elementHC.length - 1] : "";
       const cssHeader = `${headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : ".AppHeader"}{background-color:${background2}!important;background:${background2}!important;}`;
       const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
-      return this.doSetCSS(background, background2) + borderColor + cssHeader + cssColorUseBg1;
+      const menuTopBeforeAfter = `.ctz-menu-top>a.target::before,.ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}`;
+      return this.doSetCSS(background, background2) + borderColor + cssHeader + cssColorUseBg1 + menuTopBeforeAfter;
     },
     /** 设置字体颜色 */
     text: function() {
@@ -829,12 +908,18 @@
       return cssBg + cssBg2 + cssBgTransparent + input;
     },
     /** 使用背景色1的元素名称 */
-    cssNamesBackground1: `.ctz-content-right>div:nth-of-type(2n),body,.Input-wrapper,.toolbar-section button:hover,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover,.Popover-content button:hover,::-webkit-scrollbar-thumb,.ZVideoComment .css-kt4t4n,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp`,
+    cssNamesBackground1: `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,body,.Input-wrapper,.toolbar-section button:hover,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover,.Popover-content button:hover,.ZVideoComment .css-kt4t4n,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar`,
     /** 使用背景色2的元素名称 */
-    cssNamesBackground2: `#${ID_DIALOG},#CTZ-BLOCK-LIST .ctz-black-item,#CTZ_OPEN_BUTTON,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ,.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ContentItem-actions.ZVideoToolbar,.List-item .ZVideoToolbar button,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5),.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer,.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike,.Popover-content,.Notifications-footer,::-webkit-scrollbar,.Messages-footer,.Popover-arrow:after,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div),.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask`,
+    cssNamesBackground2: `#${ID_BLOCK_LIST},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,.ctz-black-item,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ,.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ContentItem-actions.ZVideoToolbar,.List-item .ZVideoToolbar button,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5),.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer,.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike,.Popover-content,.Notifications-footer,.Messages-footer,.Popover-arrow:after,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div),.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask,.Topstory-container .TopstoryTabs>a::after`,
     /** 背景色透明的元素名称 */
     cssNamesBackgroundTransparent: `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`,
-    cssNamesColorUserBackground1: `.css-z0izby`
+    cssNamesColorUserBackground1: `.css-z0izby`,
+    menuBeforeAfter: (color, size = "12px") => `background: radial-gradient(circle at top left, transparent ${size}, ${color} 0) top left,
+  radial-gradient(circle at top right, transparent ${size}, ${color} 0) top right,
+  radial-gradient(circle at bottom right, transparent ${size}, ${color} 0) bottom right,
+  radial-gradient(circle at bottom left, transparent ${size}, ${color} 0) bottom left;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;`
   };
   var myCustomStyle = {
     init: function() {
@@ -1309,12 +1394,12 @@
     changeSuspensionTab();
   };
   var initHistoryView = async () => {
-    const { href, origin, pathname } = location;
+    const { href, origin, pathname, hash } = location;
     const { getHistory } = store;
     const question = "www.zhihu.com/question/";
     const article = "zhuanlan.zhihu.com/p/";
     const video = "www.zhihu.com/zvideo/";
-    let name = href;
+    let name = href.replace(hash, "");
     setTimeout(() => {
       if (!href.includes(question) && !href.includes(article) && !href.includes(video))
         return;
@@ -1322,8 +1407,7 @@
       href.includes(article) && dom(".Post-Title") && (name = dom(".Post-Title").innerText);
       href.includes(video) && dom(".ZVideo .ZVideo-title") && (name = dom(".ZVideo .ZVideo-title").innerText);
       const nA = `<a href="${origin + pathname}" target="_blank">${name}</a>`;
-      const browseHistory = getHistory();
-      const { view } = browseHistory;
+      const { view } = getHistory();
       if (!view.includes(nA)) {
         view.unshift(nA);
         myStorage.historyUpdate("view", view);
@@ -1338,8 +1422,7 @@
       const elementBlock = domById(ID_BLOCK_LIST);
       if (!elementBlock)
         return;
-      const { getConfig } = store;
-      const { removeBlockUserContentList = [] } = getConfig();
+      const { removeBlockUserContentList = [] } = store.getConfig();
       elementBlock.innerHTML = removeBlockUserContentList.map((i) => this.createItem(i)).join("");
       elementBlock.onclick = (event) => {
         const target = event.target;
@@ -1377,8 +1460,7 @@
       const userId = aContent.author_member_hash_id || "";
       if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, ""))
         return;
-      const { getConfig } = store;
-      const { removeBlockUserContentList = [] } = getConfig();
+      const { removeBlockUserContentList = [] } = store.getConfig();
       const isAlreadyBlack = removeBlockUserContentList.findIndex((i) => i.id === userId) >= 0;
       const message = `是否要屏蔽${userName}？
 屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。
@@ -1426,8 +1508,7 @@
     },
     /** 添加屏蔽用户 */
     addBlackItem: function(info) {
-      const { getConfig } = store;
-      const pfConfig = getConfig();
+      const pfConfig = store.getConfig();
       const nL = pfConfig.removeBlockUserContentList || [];
       nL.push(info);
       myStorage.configUpdateItem("removeBlockUserContentList", nL);
@@ -1498,10 +1579,7 @@
         }
       });
     },
-    getHeaders: () => {
-      const { getStorageConfigItem } = store;
-      return getStorageConfigItem("fetchHeaders");
-    }
+    getHeaders: () => store.getStorageConfigItem("fetchHeaders")
   };
   var myMenu = {
     init: function() {
@@ -1514,44 +1592,44 @@
         this.click({ target: dom(`a[href="${chooseId}"]`) });
         return;
       }
-      this.click({ target: dom('a[href="#CTZ_BASIS"]') });
+      this.click({ target: dom(`a[href="${HEADER[0].href}"]`) });
     },
     click: function({ target }) {
-      if (!(target.hash && target.tagName === "A"))
+      const targetForA = target.tagName === "A" ? target : target.parentElement;
+      if (!(targetForA.hash && targetForA.tagName === "A"))
         return;
-      const isThis = target.hash.replace(/#/, "");
+      const isThis = targetForA.hash.replace(/#/, "");
       if (!isThis)
         return;
       domA(".ctz-menu-top>a").forEach((itemA) => itemA.classList.remove("target"));
-      target.classList.add("target");
+      targetForA.classList.add("target");
       domA(".ctz-content>div").forEach((item) => item.style.display = isThis === item.id ? "flex" : "none");
     }
   };
-  var INNER_HTML = `<div id="CTZ_DIALOG_MAIN" style="display: none"><div class="ctz-header"><span>修改器</span><span class="ctz-version"></span><button id="CTZ_CLOSE_DIALOG"><i class="ctz-icon">&#xe61b;</i></button></div><div class="ctz-menu-top"><a href="#CTZ_BASIS">基础设置</a><a href="#CTZ_LIST">首页列表</a><a href="#CTZ_ANSWER">回答详情</a><a href="#CTZ_ARTICLE">文章专栏</a><a href="#CTZ_HISTORY">历史记录</a><a href="#CTZ_BLACKLIST">黑名单设置</a><a href="#CTZ_DEFAULT">默认功能</a></div><div class="ctz-content"><div id="CTZ_BASIS" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_DEFAULT">基本设置</a><a href="#CTZ_BASIS_SIZE">页面尺寸</a><a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a><a href="#CTZ_BASIS_FLOAT">悬浮模块</a><a href="#CTZ_BASIS_HIDDEN">模块隐藏</a><a href="#CTZ_BASIS_COLOR">颜色设置</a><a href="#CTZ_BASIS_CONFIG">配置操作</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置为通用设置，设置完成后在所有页面生效</div><div id="CTZ_BASIS_DEFAULT"><div class="ctz-set-title"><span>基本设置</span></div><div class="ctz-set-content"><div><label><span class="ctz-label">不显示修改器唤醒图标<span class="ctz-icon" style="margin: 0 6px">&#xe603;</span></span><input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" /></label></div><div><label><span class="ctz-label">快捷键唤起编辑器<span class="key-shadow">></span>(<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)</span><input class="ctz-i" name="hotKey" type="checkbox" value="on" /></label></div><div><div class="ctz-label">修改网页标题</div><div class="ctz-flex-wrap"><input type="text" name="globalTitle" style="width: 250px" /><button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button><button class="ctz-button" name="buttonResetTitle">还原</button></div></div><div><div class="ctz-label">修改网页标题图片（图标可能会因为网络问题丢失）</div><div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div></div></div></div><div id="CTZ_BASIS_SIZE"><div class="ctz-set-title"><span>页面尺寸</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><div class="ctz-label">列表页内容宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" /><span id="versionHome" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div><div class="ctz-flex-wrap"><div class="ctz-label">回答页内容宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" /><span id="versionAnswer" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div><div class="ctz-flex-wrap"><div class="ctz-label">文章页内容宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" /><span id="versionArticle" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div><label class="ctz-flex-wrap"><span class="ctz-label">评论弹窗宽度匹配页面宽度</span><input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" /></label><div class="ctz-flex-wrap"><span class="ctz-label">列表内容标准文字大小</span><input type="number" name="fontSizeForList" class="ctz-i-change" /></div><div class="ctz-flex-wrap"><span class="ctz-label">回答内容标准文字大小</span><input type="number" name="fontSizeForAnswer" class="ctz-i-change" /></div><div class="ctz-flex-wrap"><span class="ctz-label">文章内容标准文字大小</span><input type="number" name="fontSizeForArticle" class="ctz-i-change" /></div><div><div class="ctz-flex-wrap"><div class="ctz-label">回答和文章图片尺寸</div><label><input class="ctz-i" name="zoomImageType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label></div><div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none"><div class="ctz-flex-wrap"><div class="ctz-label">自定义图片尺寸</div><input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" /><span id="zoomImageSize" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div><label class="ctz-flex-wrap"><span class="ctz-label">使用弹窗打开动图</span><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></label><div><div class="ctz-flex-wrap"><div class="ctz-label">列表视频回答的视频内容尺寸</div><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label></div><div id="CTZ_LIST_VIDEO_SIZE_CUSTOM"><div class="ctz-flex-wrap"><input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" /><span id="zoomListVideoSize" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div></div></div><div id="CTZ_BASIS_SHOW_CONTENT"><div class="ctz-set-title"><span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span></div><div class="ctz-set-content"><label class="ctz-flex-wrap"><span class="ctz-label">赞同按钮仅显示数字</span><input class="ctz-i" name="justVoteNum" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">评论按钮仅显示数字</span><input class="ctz-i" name="justCommitNum" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">内容顶部显示赞同数</span><input class="ctz-i" name="topVote" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">文档或回答顶部显示导出当前内容/回答按钮</span><input class="ctz-i" name="topExportContent" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">回答和文章中的视频替换为链接</span><input class="ctz-i" name="videoUseLink" type="checkbox" value="on" /></label></div></div><div id="CTZ_BASIS_FLOAT"><div class="ctz-set-title"><span>悬浮模块</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容「收起」按钮悬浮</span><input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" /></label></div><div><div class="ctz-label">信息模块悬浮</div><div class="ctz-commit">拖动悬浮模块定位位置</div><div class="ctz-commit">鼠标放置显示解锁按钮解锁即可拖动<i class="ctz-icon" style="margin-left: 4px">&#xe688;</i></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />首页列表切换</label><label><input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />顶部发现模块</label><label><input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />个人中心模块</label><label><input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />搜索栏模块</label></div></div></div></div><div id="CTZ_BASIS_HIDDEN"><div class="ctz-set-title"><span>模块隐藏<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_BASIS_COLOR"><div class="ctz-set-title"><span>颜色设置</span></div><div class="ctz-set-content"><div class="ctz-set-background"><div id="CTZ_BACKGROUND"></div><div class="ctz-commit">浅色颜色选择:</div><div id="CTZ_BACKGROUND_LIGHT"></div><div class="ctz-commit">深色颜色选择:</div><div id="CTZ_BACKGROUND_DARK"></div></div><div class="ctz-set-color ctz-flex-wrap"><div class="ctz-label">修改文字颜色（例: #f7f9f9）</div><input type="text" class="ctz-i" name="colorText1" style="width: 200px" /></div></div></div><div id="CTZ_BASIS_CONFIG"><div class="ctz-set-title"><span>配置操作</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><button class="ctz-button" name="useSimple">启用极简模式</button></div><div class="ctz-config-import-export"><div class="ctz-label">配置导出导入</div><div class="ctz-config-buttons"><button class="ctz-button" name="configExport">导出配置</button><button class="ctz-button" name="configReset">恢复默认配置</button></div><div class="ctz-content"><textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea><button class="ctz-button" name="configImport">导 入</button></div></div><div class="ctz-customize-css"><div class="ctz-label">自定义样式</div><div class="ctz-content"><textarea name="textStyleCustom" placeholder="格式为CSS"></textarea><button class="ctz-button" name="styleCustom">确 定</button></div></div></div></div></div></div><div id="CTZ_LIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_LIST_DEFAULT">基础设置</a><a href="#CTZ_LIST_FILTER">屏蔽内容</a><a href="#CTZ_LIST_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div><div id="CTZ_LIST_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">内容标题添加类别显示<span class="ctz-label-tag ctz-label-tag-Answer">问答</span><span class="ctz-label-tag ctz-label-tag-Article">文章</span><span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span></span><input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">推荐列表显示「不感兴趣」按钮</span><input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表更多「···」按钮移动到题目右侧</span><input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">关注列表高亮原创内容</span><input type="checkbox" name="highlightOriginal" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容点击高亮边框</span><input type="checkbox" name="highlightListItem" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">列表内容显示发布时间和最后修改时间</span><input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div></div></div><div id="CTZ_LIST_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-follow"><div class="ctz-label">关注列表关注人操作屏蔽</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />赞同回答</label><label><input class="ctz-i" name="removeFollowVoteArticle" type="checkbox" value="on" />赞同文章</label><label><input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />关注问题</label></div></div><div class="ctz-filter-me"><label style="display: flex; align-items: center"><span class="ctz-label">关注列表屏蔽自己的操作</span><input class="ctz-i" name="removeMyOperateAtFollow" type="checkbox" value="on" /></label></div><div class="ctz-filter-type"><div class="ctz-label">列表类别屏蔽</div><div class="ctz-commit" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />邀请回答</label><label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label><label><input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label><label><input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label></div></div><div class="ctz-filter-list-vote"><label style="display: flex; align-items: center"><span class="ctz-label">列表低赞内容屏蔽</span><input class="ctz-i" name="removeLessVote" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后「关注、推荐、搜索」列表屏蔽点赞量少于<input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />的内容</div></div><div class="ctz-filter-word"><div class="ctz-label">列表屏蔽词，[关注、推荐]将屏蔽包含题目屏蔽词的内容</div><input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" style="margin: 4px 0; width: 100%" /><div id="CTZ_FILTER_WORDS"></div></div></div></div><div id="CTZ_LIST_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_ANSWER" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ANSWER_DEFAULT">基础设置</a><a href="#CTZ_ANSWER_FILTER">屏蔽内容</a><a href="#CTZ_ANSWER_HIDDEN">隐藏模块</a><a href="#CTZ_ANSWER_OPEN">回答展开收起</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后问答内容页面生效</div><div id="CTZ_ANSWER_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">问题详情显示创建时间和最后修改时间</span><input type="checkbox" name="questionCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容显示创建时间与最后修改时间</span><input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label></div><div class="ctz-flex-wrap"><span class="ctz-label">购物链接显示设置</span><label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label><label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label></div></div></div><div id="CTZ_ANSWER_FILTER" class="ctz-filter-block"><div class="ctz-set-title"><span>屏蔽内容<span class="ctz-desc" style="color: red">此部分更改后请重新刷新页面</span></span></div><div class="ctz-set-content"><div class="ctz-filter-defail-who"><div class="ctz-label">屏蔽以下官方账号的回答</div><div style="margin-bottom: 8px; border-bottom: 1px solid #ebebeb; padding-bottom: 4px"><label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />所有知乎官方账号</label></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label><label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label><label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label><label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽「匿名用户」回答</span><input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" /></label></div><div class="ctz-filter-defail-tag"><div class="ctz-label">屏蔽带有以下标签的回答</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏</label><label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label></div></div><div class="ctz-filter-detail-vote"><label style="display: flex; align-items: center"><span class="ctz-label">详情低赞回答屏蔽</span><input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后问题详情页将屏蔽点赞量少于<input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />的回答</div></div></div></div><div id="CTZ_ANSWER_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div><div id="CTZ_ANSWER_OPEN"><div class="ctz-set-title"><span>回答展开收起</span></div><div class="ctz-set-content ctz-flex-wrap"><label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label><label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label><label><input class="ctz-i" type="radio" name="answerOpen" value="off" />默认收起所有长回答</label></div></div></div></div><div id="CTZ_ARTICLE" style="display: none"><div class="ctz-content-left"><a href="#CTZ_ARTICLE_DEFAULT">基础设置</a><a href="#CTZ_ARTICLE_HIDDEN">隐藏模块</a></div><div class="ctz-content-right"><div class="ctz-alert-red">当前设置完成后在专栏文章页面生效</div><div id="CTZ_ARTICLE_DEFAULT"><div class="ctz-set-title"><span>基础设置</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">文章发布时间置顶</span><input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" /></label></div></div></div><div id="CTZ_ARTICLE_HIDDEN"><div class="ctz-set-title"><span>隐藏模块<span class="ctz-desc">勾选隐藏相应模块内容</span></span></div><div class="ctz-set-content ctz-flex-wrap"></div></div></div></div><div id="CTZ_HISTORY" style="display: none"><div class="ctz-content-left"><a href="#CTZ_HISTORY_LIST">推荐列表缓存</a><a href="#CTZ_HISTORY_VIEW">浏览历史记录</a></div><div class="ctz-content-right"><div id="CTZ_HISTORY_LIST"><div class="ctz-set-title"><span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span></div><button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button><div class="ctz-set-content"></div></div><div id="CTZ_HISTORY_VIEW"><div class="ctz-set-title"><span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span></div><button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button><div class="ctz-set-content"></div></div></div></div><div id="CTZ_BLACKLIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_BLOCK">黑名单设置</a></div><div class="ctz-content-right"><div id="CTZ_BASIS_BLOCK"><div class="ctz-set-title"><span>黑名单设置</span></div><div class="ctz-set-content"><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button><div class="ctz-flex-wrap"><label><span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span><input class="ctz-i" name="showBlockUser" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽黑名单用户发布的内容</span><input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" /></label></div><div><div class="ctz-label">黑名单列表</div><div id="CTZ-BLOCK-LIST"></div></div></div></div></div></div><div id="CTZ_DEFAULT" style="display: none"><div class="ctz-content-left"><a href="#CTZ_DEFAULT_CONTENT">默认功能</a></div><div class="ctz-content-right"><div id="CTZ_DEFAULT_CONTENT"><div class="ctz-set-title"><span>默认功能<span class="ctz-desc">此部分功能为编辑器默认功能，不需要额外开启</span></span></div><div class="ctz-set-content"><div id="CTZ_DEFAULT_SELF"></div><div class="ctz-zhihu-self"><div class="ctz-zhihu-key">更加方便的浏览，按<span class="key-shadow">?</span>（<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。<a href="/settings/preference" target="_blank">前往开启快捷键功能</a></div></div></div></div></div></div></div><div class="ctz-footer"></div></div><div id="CTZ_OPEN_BUTTON" class="ctz-icon">&#xe603;</div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE"><div><img src="" /></div></div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO"><div><video src="" autoplay loop></video></div></div><iframe class="ctz-pdf-box-content" style="display: none"></iframe>`;
-  var INNER_CSS = `@font-face{font-family:'tp-icon';src:url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.woff2?t=1670580424651') format('woff2'),url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.woff?t=1670580424651') format('woff'),url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.ttf?t=1670580424651') format('truetype')}.hover-style{cursor:pointer}.hover-style:hover{color:#1677ff !important}.ctz-icon{font-family:'tp-icon' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}#CTZ_OPEN_BUTTON{position:fixed;left:0;top:100px;font-size:18px;height:48px;line-height:48px;text-align:center;width:48px;border-radius:0 8px 8px 0;background:rgba(255,255,255,0.6);cursor:pointer;user-select:none;transform:translate(-30px);transition:transform .5s;z-index:200}#CTZ_OPEN_BUTTON:hover{transform:translate(0)}#CTZ_DIALOG_MAIN{position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);width:800px;height:600px;border-radius:8px;box-shadow:0 6px 16px 0 rgba(0,0,0,0.08),0 3px 6px -4px rgba(0,0,0,0.12),0 9px 28px 8px rgba(0,0,0,0.05);background:#fff;z-index:201;flex-direction:column;font-size:14px;padding:16px;transition:all .2s}#CTZ_DIALOG_MAIN input[type='text'],#CTZ_DIALOG_MAIN input[type='number']{box-sizing:border-box;margin:0;padding:4px 11px;font-size:14px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border-width:1px;border-style:solid;border-color:#d9d9d9;border-radius:6px;transition:all .2s}#CTZ_DIALOG_MAIN textarea{box-sizing:border-box;margin:0;padding:4px 11px;font-size:14px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border-width:1px;border-style:solid;border-color:#d9d9d9;border-radius:6px;transition:all .2s}#CTZ_DIALOG_MAIN label{cursor:pointer;transition:all .2s}#CTZ_DIALOG_MAIN label:hover{color:#1677ff !important}#CTZ_DIALOG_MAIN a{transition:all .2s;text-decoration:none;color:inherit}.ctz-header{font-weight:600;font-size:16px;line-height:1.5;word-wrap:break-word}.ctz-version{padding-left:8px;font-size:12px}#CTZ_CLOSE_DIALOG{float:right;padding:0;color:rgba(0,0,0,0.45);font-weight:600;line-height:1;text-decoration:none;background:transparent;border-radius:4px;width:22px;height:22px;border:0;outline:0;transition:all .2s}#CTZ_CLOSE_DIALOG i{font-size:14px}#CTZ_CLOSE_DIALOG:hover{color:rgba(0,0,0,0.88);background-color:rgba(0,0,0,0.06);text-decoration:none}.ctz-menu-top{height:46px;border-bottom:1px solid #b0b0b0;display:flex}.ctz-menu-top a{flex:1;line-height:46px;text-align:center;cursor:pointer;border-bottom:4px solid transparent;transition:all .2s}.ctz-menu-top a:hover{color:#1677ff !important;border-bottom-color:#1677ff !important}.ctz-menu-top a.target{border-bottom-color:#121212}.ctz-content{flex:1;display:flex;overflow:hidden}.ctz-content>div{width:100%}.ctz-content ::-webkit-scrollbar{width:8px;height:8px}.ctz-content ::-webkit-scrollbar-track{border-radius:0}.ctz-content ::-webkit-scrollbar-thumb{border-radius:0;background:#bbb;transition:all .2s;border-radius:8px}.ctz-content ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.ctz-content-left{width:130px;border-right:1px solid #b0b0b0}.ctz-content-left a{transition:all .2s;margin:2px 0;padding-left:16px;height:40px;line-height:40px;display:flex;font-size:14px;border-radius:8px}.ctz-content-left a:hover{background:#e6f4ff;color:#1677ff !important}.ctz-content-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 8px}.ctz-content-right>div:nth-of-type(2n){background:#efefef;padding:0 8px;margin:0 -8px;box-shadow:#999 0 0 5px inset;border-radius:8px}.ctz-set-title{font-weight:bold;height:36px;line-height:36px;font-size:16px;overflow:hidden;vertical-align:middle}.ctz-set-title>span{vertical-align:middle;display:inline-block}.ctz-set-content:not(.ctz-flex-wrap)>div,.ctz-set-content:not(.ctz-flex-wrap)>label{padding-bottom:8px;margin-bottom:8px;border-bottom:1px dashed #ddd}.ctz-set-content:not(.ctz-flex-wrap)>div:last-child,.ctz-set-content:not(.ctz-flex-wrap)>label:last-child{border-bottom:0}.ctz-footer{border-top:1px solid #b0b0b0;height:40px;line-height:40px;font-size:16px}.ctz-footer a{margin-right:16px;cursor:pointer}.ctz-footer a:hover{color:#1677ff !important}.ctz-dark{display:flex;height:28px;align-items:center}.ctz-desc,.ctz-commit{color:#666;font-size:12px}.ctz-desc{padding-left:4px}.ctz-alert-red{text-align:center;font-size:16px;color:red;height:36px;line-height:36px;background-color:#fff2f0;border:1px solid #ffccc7;border-radius:8px;margin:4px 0}.ctz-label{font-size:14px;line-height:24px}.ctz-label::after{content:'：'}#CTZ_BACKGROUND,#CTZ_BACKGROUND_LIGHT,#CTZ_BACKGROUND_DARK{display:grid;grid-template-columns:30% 30% 30%;gap:8px}#CTZ_BACKGROUND>label,#CTZ_BACKGROUND_LIGHT>label,#CTZ_BACKGROUND_DARK>label{position:relative}#CTZ_BACKGROUND>label input,#CTZ_BACKGROUND_LIGHT>label input,#CTZ_BACKGROUND_DARK>label input{position:absolute;visibility:hidden}#CTZ_BACKGROUND>label input:checked+div,#CTZ_BACKGROUND_LIGHT>label input:checked+div,#CTZ_BACKGROUND_DARK>label input:checked+div{border:4px solid #1677ff;margin:0 !important}#CTZ_BACKGROUND>label div,#CTZ_BACKGROUND_LIGHT>label div,#CTZ_BACKGROUND_DARK>label div{font-size:14px;border-radius:8px;line-height:50px;padding-left:30px;margin:4px}.ctz-set-background .ctz-commit{line-height:24px;font-size:14px}#CTZ_BASIS_CONFIG .ctz-config-buttons{padding:8px 0}#CTZ_BASIS_CONFIG .ctz-config-buttons button{margin-right:8px}#CTZ_BASIS_CONFIG .ctz-content textarea{margin-right:8px;flex:1}[name='inputFilterWord']{height:24px;width:300px;border-radius:4px}#CTZ_FILTER_WORDS{display:flex;flex-wrap:wrap;cursor:default}#CTZ_FILTER_WORDS>span{padding:2px 8px;border-radius:4px;font-size:12px;background-color:#909090;margin:4px 4px 0 0;color:#fff;display:flex;align-items:center}#CTZ_FILTER_WORDS>span>i{font-size:14px;margin-left:2px;cursor:pointer}#CTZ_FILTER_WORDS>span>i:hover{color:#1677ff !important}.ctz-flex-wrap{display:flex;flex-wrap:wrap;line-height:24px}.ctz-flex-wrap label{margin-right:4px;display:flex;align-items:center}.ctz-flex-wrap label input[type='radio']{margin:0 4px 0 0}.ctz-button{outline:none;position:relative;display:inline-block;font-weight:400;white-space:nowrap;text-align:center;border:1px solid transparent;cursor:pointer;transition:all .2s cubic-bezier(.645, .045, .355, 1);user-select:none;touch-action:manipulation;line-height:1.5;font-size:14px;height:32px;padding:4px 15px;border-radius:6px;background-color:#ffffff;border-color:#d9d9d9;color:rgba(0,0,0,0.88);box-shadow:0 2px 0 rgba(0,0,0,0.02)}.ctz-button:hover{color:#4096ff;border-color:#4096ff}.ctz-not-interested{color:#999;font-size:12px;border:1px solid #999;border-radius:4px;padding:0 4px;margin-left:6px}.ctz-not-interested:hover{border-color:#1677ff !important;color:#1677ff !important}.ctz-video-download,.ctz-loading{position:absolute;top:20px;left:20px;font-size:24px;color:rgba(255,255,255,0.9);cursor:pointer}.ctz-loading{animation:loadingAnimation 2s infinite}@keyframes loadingAnimation{from{transform:rotate(0)}to{transform:rotate(360deg)}}#CTZ-BLOCK-LIST{display:flex;flex-wrap:wrap;margin:0 -8px;padding:8px}.ctz-black-item{height:30px;line-height:30px;box-sizing:content-box;padding:4px 8px;margin:0 8px 8px 0;display:flex;align-items:center;background:#fff;border-radius:8px;border:1px solid #b0b0b0}.ctz-black-item img{width:30px;height:30px;margin-right:4px}.ctz-black-item .ctz-remove-block:hover,.ctz-black-item a:hover{color:#1677ff;transition:all .2s}.ctz-black-item .ctz-remove-block{width:30px;height:30px;text-align:center;border-radius:8px}.ctz-black-item .ctz-remove-block:hover{background:#d9d9d9}.ctz-block-box>button,.ctz-button-block{padding:2px 8px;color:#666;border:1px solid #666;border-radius:4px;font-size:12px;margin-left:12px}.ctz-block-box>button:hover,.ctz-button-block:hover{border-color:#0461cf;color:#0461cf}.ctz-button-red{color:#e55353 !important;border:1px solid #e55353 !important}.ctz-button-red:hover{color:#ec7259 !important;border:1px solid #ec7259 !important}.ctz-preview{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;overflow-y:auto;z-index:200;background-color:rgba(18,18,18,0.4)}.ctz-preview div{display:flex;justify-content:center;align-items:center;min-height:100%;width:100%}.ctz-preview div img{cursor:zoom-out;user-select:none}#CTZ_TITLE_ICO label{margin:0 4px 4px 0}#CTZ_TITLE_ICO label input{display:none}#CTZ_TITLE_ICO label input:checked+img{border:4px solid #0461cf;border-radius:4px}#CTZ_TITLE_ICO label img{width:40px;height:40px;border:4px solid transparent}.ctz-label-tag{font-weight:normal;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff;margin:0 2px}.ctz-label-tag-Answer{background:#ec7259}.ctz-label-tag-ZVideo{background:#12c2e9}.ctz-label-tag-Article{background:#00965e}.ctz-question-time{color:#999 !important;font-size:14px !important;font-weight:normal !important;line-height:24px}.ctz-stop-scroll{height:100% !important;overflow:hidden !important}#CTZ_DEFAULT_SELF>div{line-height:24px;margin-bottom:4px}#CTZ_DEFAULT_SELF>div .ctz-commit{font-weight:normal}#CTZ_DEFAULT_SELF>div a{color:#1677ff}#CTZ_DEFAULT_SELF>div a:hover{color:#bbb}.ctz-export-collection-box{float:right;text-align:right}.ctz-export-collection-box button{font-size:16px}.ctz-export-collection-box p{font-size:14px;color:#666;margin:4px 0}.ctz-pdf-dialog-item{padding:12px;border-bottom:1px solid #eee;margin:12px;background:#ffffff}.ctz-pdf-dialog-title{margin:0 0 1.4em;font-size:20px;font-weight:bold}.ctz-pdf-box-content{width:100%;background:#ffffff}.ctz-pdf-view{width:100%;background:#ffffff;word-break:break-all;white-space:pre-wrap;font-size:14px;overflow-x:hidden}.ctz-pdf-view a{color:#0066ff}.ctz-pdf-view img{max-width:100%}.ctz-pdf-view p{margin:1.4em 0}.ctz-unlock,.ctz-lock,.ctz-lock-mask{display:none;color:#999;cursor:pointer}.ctz-unlock,.ctz-lock{margin:4px}.ctz-lock-mask{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:198}.position-suspensionSearch,.position-suspensionFind,.position-suspensionUser{position:fixed;z-index:100}.position-suspensionSearch:hover .ctz-unlock,.position-suspensionFind:hover .ctz-unlock,.position-suspensionUser:hover .ctz-unlock,.Topstory-container .TopstoryTabs:hover .ctz-unlock{display:block}.position-suspensionSearch.ctz-move-this .ctz-unlock,.position-suspensionFind.ctz-move-this .ctz-unlock,.position-suspensionUser.ctz-move-this .ctz-unlock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-unlock{display:none !important}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock,.position-suspensionSearch.ctz-move-this .ctz-lock-mask,.position-suspensionFind.ctz-move-this .ctz-lock-mask,.position-suspensionUser.ctz-move-this .ctz-lock-mask,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock-mask{display:block}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock{z-index:199;color:#cccccc}.position-suspensionFind{display:flex;flex-direction:column;margin:0 !important}.position-suspensionFind .Tabs-item{padding:0 !important;margin-bottom:4px}.position-suspensionFind .Tabs-item .Tabs-link{padding:8px !important;border-radius:4px}.position-suspensionFind .Tabs-item .Tabs-link::after{content:'' !important;display:none !important}.position-suspensionUser{width:fit-content !important;margin:0 !important;display:flex;flex-direction:column}.position-suspensionUser .AppHeader-messages,.position-suspensionUser .AppHeader-notifications{margin-right:0 !important;margin-bottom:12px}.position-suspensionUser .AppHeader-login,.position-suspensionUser .AppHeader-login~button{display:none}.SearchBar{flex:1}.position-suspensionSearch{line-height:30px;border-radius:16px;width:20px;transition:width .5s}.position-suspensionSearch .SearchBar-input-focus .ctz-search-pick-up{display:none}.position-suspensionSearch.focus{width:300px}.position-suspensionSearch.focus>form,.position-suspensionSearch.focus>button,.position-suspensionSearch.focus .ctz-search-pick-up{display:block}.position-suspensionSearch.focus .ctz-search-icon{display:none}.position-suspensionSearch.focus:hover{width:324px}.position-suspensionSearch .ctz-search-icon,.position-suspensionSearch .ctz-search-pick-up{cursor:pointer;color:#0066ff}.position-suspensionSearch .ctz-search-icon:hover,.position-suspensionSearch .ctz-search-pick-up:hover{color:#005ce6}.position-suspensionSearch .ctz-search-pick-up{font-size:24px;margin-left:4px}.position-suspensionSearch>form,.position-suspensionSearch>button,.position-suspensionSearch .ctz-search-pick-up{display:none}.position-suspensionSearch .ctz-search-icon{display:block}.key-shadow{border:1px solid #e0e0e0;border-radius:4px;box-shadow:rgba(0,0,0,0.06) 0 1px 1px 0;font-weight:600;min-width:26px;height:26px;padding:0px 6px;text-align:center}.ContentItem-title div{display:inline}#CTZ_HISTORY_LIST .ctz-set-content,#CTZ_HISTORY_VIEW .ctz-set-content{word-break:break-all}#CTZ_HISTORY_LIST .ctz-set-content a,#CTZ_HISTORY_VIEW .ctz-set-content a{cursor:pointer}#CTZ_HISTORY_LIST .ctz-set-content a:hover,#CTZ_HISTORY_VIEW .ctz-set-content a:hover{color:#1677ff !important}[name='button_history_clear'],[name='button_history_clear'],#CTZ-BUTTON-SYNC-BLOCK{min-width:88px;margin-bottom:8px}[name='button_history_clear'] i,[name='button_history_clear'] i,#CTZ-BUTTON-SYNC-BLOCK i{top:0px;left:28px;color:#909090}.ctz-zhihu-key a{color:#1677ff !important}.ctz-zhihu-key a:hover{color:#bbb !important}#root .css-1liaddi{margin-right:0}.ctz-video-link{border:1px solid #ccc;display:inline-block;height:98px;width:fit-content;border-radius:4px;box-sizing:border-box;overflow:hidden;transition:all .3s}.ctz-video-link img{width:98px;height:98px;vertical-align:bottom}.ctz-video-link span{padding:4px 12px;display:inline-block}.ctz-video-link:hover{border-color:#005ce6;color:#005ce6}`;
+  var INNER_HTML = `<div id="CTZ_DIALOG_MAIN" style="display: none"><div class="ctz-header"><span>修改器</span><span class="ctz-version"></span><button id="CTZ_CLOSE_DIALOG"><i class="ctz-icon">&#xe61b;</i></button></div><div class="ctz-center"><div class="ctz-menu-top"></div><div class="ctz-content"><div id="CTZ_BASIS" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_DEFAULT">基本设置</a><a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a><a href="#CTZ_BASIS_SIZE">页面尺寸</a><a href="#CTZ_BASIS_FLOAT">悬浮模块</a><a href="#CTZ_BASIS_COLOR">颜色设置</a><a href="#CTZ_BASIS_CONFIG">配置操作</a></div><div class="ctz-content-right"><div id="CTZ_BASIS_DEFAULT"><div class="ctz-set-title"><span>基本设置</span></div><div class="ctz-set-content"><div><label><span class="ctz-label">不显示修改器唤醒图标<span class="ctz-icon" style="margin: 0 6px">&#xe612;</span></span><input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" /></label></div><div><label><span class="ctz-label">快捷键唤起编辑器<span class="key-shadow">></span>(<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)</span><input class="ctz-i" name="hotKey" type="checkbox" value="on" /></label></div><div><div class="ctz-label">修改网页标题</div><div class="ctz-flex-wrap"><input type="text" name="globalTitle" style="width: 250px" /><button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button><button class="ctz-button" name="buttonResetTitle">还原</button></div></div><div><div class="ctz-label">修改网页标题图片（图标可能会因为网络问题丢失）</div><div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div></div></div></div><div id="CTZ_BASIS_SHOW_CONTENT"><div class="ctz-set-title"><span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span></div><div class="ctz-set-content"><label class="ctz-flex-wrap"><span class="ctz-label">赞同按钮仅显示数字</span><input class="ctz-i" name="justVoteNum" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">评论按钮仅显示数字</span><input class="ctz-i" name="justCommitNum" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">内容顶部显示赞同数</span><input class="ctz-i" name="topVote" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">文档或回答顶部显示导出当前内容/回答按钮</span><input class="ctz-i" name="topExportContent" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">回答和文章中的视频替换为链接</span><input class="ctz-i" name="videoUseLink" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">内容标题添加类别显示<span class="ctz-label-tag ctz-label-tag-Answer">问答</span><span class="ctz-label-tag ctz-label-tag-Article">文章</span><span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span></span><input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">推荐列表显示「不感兴趣」按钮</span><input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">列表更多「···」按钮移动到题目右侧</span><input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">关注列表高亮原创内容</span><input type="checkbox" name="highlightOriginal" class="ctz-i" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">列表内容点击高亮边框</span><input type="checkbox" name="highlightListItem" class="ctz-i" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">列表内容显示发布时间和最后修改时间</span><input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">问题详情显示创建时间和最后修改时间</span><input type="checkbox" name="questionCreatedAndModifiedTime" class="ctz-i" value="on" /></label><label class="ctz-flex-wrap"><span class="ctz-label">回答内容显示创建时间与最后修改时间</span><input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" /></label><div class="ctz-flex-wrap"><span class="ctz-label">购物链接显示设置</span><label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label><label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label><label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label></div><div class="ctz-flex-wrap"><span class="ctz-label">回答内容展开/收起</span><label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label><label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label><label><input class="ctz-i" type="radio" name="answerOpen" value="off" />默认收起所有长回答</label></div><label class="ctz-flex-wrap"><span class="ctz-label">文章发布时间置顶</span><input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" /></label></div></div><div id="CTZ_BASIS_SIZE"><div class="ctz-set-title"><span>页面尺寸</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><div class="ctz-label">列表页内容宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" /><span id="versionHome" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div><div class="ctz-flex-wrap"><div class="ctz-label">回答页内容宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" /><span id="versionAnswer" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div><div class="ctz-flex-wrap"><div class="ctz-label">文章页内容宽度</div><input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" /><span id="versionArticle" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 600 ~ 1500</span></div><label class="ctz-flex-wrap"><span class="ctz-label">评论弹窗宽度匹配页面宽度</span><input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" /></label><div class="ctz-flex-wrap"><span class="ctz-label">列表内容标准文字大小</span><input type="number" name="fontSizeForList" class="ctz-i-change" /></div><div class="ctz-flex-wrap"><span class="ctz-label">回答内容标准文字大小</span><input type="number" name="fontSizeForAnswer" class="ctz-i-change" /></div><div class="ctz-flex-wrap"><span class="ctz-label">文章内容标准文字大小</span><input type="number" name="fontSizeForArticle" class="ctz-i-change" /></div><div><div class="ctz-flex-wrap"><div class="ctz-label">回答和文章图片尺寸</div><label><input class="ctz-i" name="zoomImageType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label><label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label></div><div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none"><div class="ctz-flex-wrap"><div class="ctz-label">自定义图片尺寸</div><input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" /><span id="zoomImageSize" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div><label class="ctz-flex-wrap"><span class="ctz-label">使用弹窗打开动图</span><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></label><div><div class="ctz-flex-wrap"><div class="ctz-label">列表视频回答的视频内容尺寸</div><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label><label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label></div><div id="CTZ_LIST_VIDEO_SIZE_CUSTOM"><div class="ctz-flex-wrap"><input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" /><span id="zoomListVideoSize" style="margin: 0 8px">0</span><span class="ctz-commit">滚动条范围: 0 ~ 1000</span></div></div></div></div></div><div id="CTZ_BASIS_FLOAT"><div class="ctz-set-title"><span>悬浮模块</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><label><span class="ctz-label">回答内容「收起」按钮悬浮</span><input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" /></label></div><div><div class="ctz-label">信息模块悬浮</div><div class="ctz-commit">拖动悬浮模块定位位置</div><div class="ctz-commit">鼠标放置显示解锁按钮解锁即可拖动<i class="ctz-icon" style="margin-left: 4px">&#xe688;</i></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />首页列表切换</label><label><input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />顶部发现模块</label><label><input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />个人中心模块</label><label><input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />搜索栏模块</label></div></div></div></div><div id="CTZ_BASIS_COLOR"><div class="ctz-set-title"><span>颜色设置</span></div><div class="ctz-set-content"><div class="ctz-set-background"><div id="CTZ_BACKGROUND"></div><div class="ctz-commit">浅色颜色选择:</div><div id="CTZ_BACKGROUND_LIGHT"></div><div class="ctz-commit">深色颜色选择:</div><div id="CTZ_BACKGROUND_DARK"></div></div><div class="ctz-set-color ctz-flex-wrap"><div class="ctz-label">修改文字颜色（例: #f7f9f9）</div><input type="text" class="ctz-i" name="colorText1" style="width: 200px" /></div></div></div><div id="CTZ_BASIS_CONFIG"><div class="ctz-set-title"><span>配置操作</span></div><div class="ctz-set-content"><div class="ctz-flex-wrap"><button class="ctz-button" name="useSimple">启用极简模式</button></div><div class="ctz-config-import-export"><div class="ctz-label">配置导出导入</div><div class="ctz-config-buttons"><button class="ctz-button" name="configExport">导出配置</button><button class="ctz-button" name="configReset">恢复默认配置</button></div><div style="display: flex"><textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea><button class="ctz-button" name="configImport">导 入</button></div></div><div class="ctz-customize-css"><div class="ctz-label">自定义样式</div><div style="display: flex"><textarea name="textStyleCustom" placeholder="格式为CSS"></textarea><button class="ctz-button" name="styleCustom">确 定</button></div></div></div></div></div></div><div id="CTZ_FILTER" style="display: none"><div class="ctz-content-left"><a href="#CTZ_FILTER_LIST">列表内容屏蔽</a><a href="#CTZ_FILTER_ANSWER">回答内容屏蔽</a></div><div class="ctz-content-right"><div class="ctz-alert-red">此部分更改后请重新刷新页面</div><div id="CTZ_FILTER_LIST" class="ctz-filter-block"><div class="ctz-set-title">列表内容屏蔽</div><div class="ctz-set-content"><div class="ctz-filter-follow"><div class="ctz-label">关注列表关注人操作屏蔽</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />赞同回答</label><label><input class="ctz-i" name="removeFollowVoteArticle" type="checkbox" value="on" />赞同文章</label><label><input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />关注问题</label></div></div><div class="ctz-filter-me"><label style="display: flex; align-items: center"><span class="ctz-label">关注列表屏蔽自己的操作</span><input class="ctz-i" name="removeMyOperateAtFollow" type="checkbox" value="on" /></label></div><div class="ctz-filter-type"><div class="ctz-label">列表类别屏蔽</div><div class="ctz-commit" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />邀请回答</label><label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label><label><input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label><label><input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label></div></div><div class="ctz-filter-list-vote"><label style="display: flex; align-items: center"><span class="ctz-label">列表低赞内容屏蔽</span><input class="ctz-i" name="removeLessVote" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后「关注、推荐、搜索」列表屏蔽点赞量少于<input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />的内容</div></div></div></div><div id="CTZ_FILTER_ANSWER" class="ctz-filter-block"><div class="ctz-set-title">回答内容屏蔽</div><div class="ctz-set-content"><div class="ctz-filter-defail-who"><div class="ctz-label">屏蔽以下官方账号的回答</div><div style="margin: 4px 0; border-bottom: 1px solid #ebebeb; padding-bottom: 4px"><label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />所有知乎官方账号</label></div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label><label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label><label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label><label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label></div></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽「匿名用户」回答</span><input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" /></label></div><div class="ctz-filter-defail-tag"><div class="ctz-label">屏蔽带有以下标签的回答</div><div class="ctz-flex-wrap"><label><input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏</label><label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label></div></div><div class="ctz-filter-detail-vote"><label style="display: flex; align-items: center"><span class="ctz-label">回答内容低赞回答屏蔽</span><input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" /></label><div style="font-size: 12px; color: #999; line-height: 22px">勾选后问题详情页将屏蔽点赞量少于<input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />的回答</div></div></div></div></div></div><div id="CTZ_HIDDEN" style="display: none"></div><div id="CTZ_BLOCK_WORD" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BLOCK_WORD_LIST">标题屏蔽词</a><a href="#CTZ_BLOCK_WORD_CONTENT">内容屏蔽词</a></div><div class="ctz-content-right"><div id="CTZ_BLOCK_WORD_LIST"><div class="ctz-set-title"><span>标题屏蔽词</span><span class="ctz-desc">匹配位置：「关注页、推荐页」列表<b>标题</b></span></div><input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" /><div class="ctz-block-words-content"></div></div><div id="CTZ_BLOCK_WORD_CONTENT"><div class="ctz-set-title"><span>内容屏蔽词</span><span class="ctz-desc">匹配位置：「关注页、推荐页」列表<b>内容</b>，回答页<b>回答内容</b></span></div><input name="inputBlockWordsAnswer" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" /><div class="ctz-block-words-content"></div></div></div></div><div id="CTZ_BLACKLIST" style="display: none"><div class="ctz-content-left"><a href="#CTZ_BASIS_BLOCK">黑名单设置</a></div><div class="ctz-content-right"><div id="CTZ_BASIS_BLOCK"><div class="ctz-set-title"><span>黑名单设置</span></div><div class="ctz-set-content"><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button><div class="ctz-flex-wrap"><label><span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span><input class="ctz-i" name="showBlockUser" type="checkbox" value="on" /></label></div><div class="ctz-flex-wrap"><label><span class="ctz-label">屏蔽黑名单用户发布的内容</span><input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" /></label></div><div><div class="ctz-label">黑名单列表</div><div id="CTZ-BLOCK-LIST"></div></div></div></div></div></div><div id="CTZ_HISTORY" style="display: none"><div class="ctz-content-left"><a href="#CTZ_HISTORY_LIST">推荐列表缓存</a><a href="#CTZ_HISTORY_VIEW">浏览历史记录</a></div><div class="ctz-content-right"><div id="CTZ_HISTORY_LIST"><div class="ctz-set-title"><span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span></div><button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button><div class="ctz-set-content"></div></div><div id="CTZ_HISTORY_VIEW"><div class="ctz-set-title"><span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span></div><button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button><div class="ctz-set-content"></div></div></div></div><div id="CTZ_DEFAULT" style="display: none"><div class="ctz-content-left"><a href="#CTZ_DEFAULT_CONTENT">默认功能</a></div><div class="ctz-content-right"><div id="CTZ_DEFAULT_CONTENT"><div class="ctz-set-title"><span>默认功能<span class="ctz-desc">此部分功能为编辑器默认功能，不需要额外开启</span></span></div><div class="ctz-set-content"><div id="CTZ_DEFAULT_SELF"></div><div class="ctz-zhihu-self"><div class="ctz-zhihu-key">更加方便的浏览，按<span class="key-shadow">?</span>（<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。<a href="/settings/preference" target="_blank">前往开启快捷键功能</a></div></div></div></div></div></div></div></div><div class="ctz-footer"></div></div><div id="CTZ_OPEN_BUTTON" class="ctz-icon">&#xe612;</div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE"><div><img src="" /></div></div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO"><div><video src="" autoplay loop></video></div></div><iframe class="ctz-pdf-box-content" style="display: none"></iframe>`;
+  var INNER_CSS = `@font-face{font-family:'tp-icon';src:url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.woff2?t=1670580424651') format('woff2'),url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.woff?t=1670580424651') format('woff'),url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.ttf?t=1670580424651') format('truetype')}.hover-style{cursor:pointer}.hover-style:hover{color:#1677ff !important}.ctz-icon{font-family:'tp-icon' !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}#CTZ_OPEN_BUTTON{position:fixed;left:0;top:100px;font-size:28px;color:rgba(0,0,0,0.8);height:48px;line-height:48px;text-align:center;width:48px;border-radius:0 12px 12px 0;background:rgba(255,255,255,0.6);box-shadow:8px 8px 16px #d0d4d6,8px -8px 16px #e6eaec;cursor:pointer;user-select:none;transform:translate(-30px);transition:transform .5s;z-index:200}#CTZ_OPEN_BUTTON:hover{transform:translate(0)}#CTZ_DIALOG_MAIN{position:fixed;top:50%;left:50%;transform:translate(-50%, -50%);width:800px;height:600px;border-radius:12px;box-shadow:0 6px 16px 0 rgba(0,0,0,0.08),0 3px 6px -4px rgba(0,0,0,0.12),0 9px 28px 8px rgba(0,0,0,0.05);background:#f5f5f5;z-index:201;flex-direction:column;font-size:14px;padding:16px;transition:all .2s}#CTZ_DIALOG_MAIN input[type='text'],#CTZ_DIALOG_MAIN input[type='number']{box-sizing:border-box;margin:0;padding:4px 11px;font-size:14px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border-width:1px;border-style:solid;border-color:#d9d9d9;border-radius:6px;transition:all .2s}#CTZ_DIALOG_MAIN textarea{box-sizing:border-box;margin:0;padding:4px 11px;font-size:14px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border-width:1px;border-style:solid;border-color:#d9d9d9;border-radius:6px;transition:all .2s}#CTZ_DIALOG_MAIN label{cursor:pointer;transition:all .2s}#CTZ_DIALOG_MAIN label:hover{color:#1677ff !important}#CTZ_DIALOG_MAIN a{transition:all .2s;text-decoration:none;color:inherit}.ctz-center{flex:1;flex-direction:column;display:flex;overflow:hidden}.ctz-header{font-size:16px;line-height:1.5;margin-bottom:12px}.ctz-version{padding-left:8px;font-size:12px}#CTZ_CLOSE_DIALOG{float:right;color:rgba(0,0,0,0.45);font-weight:600;line-height:18px;background:transparent;border-radius:6px;width:22px;height:22px;transition:all .2s}#CTZ_CLOSE_DIALOG i{font-size:8px}#CTZ_CLOSE_DIALOG:hover{background-color:#fff;text-decoration:none}.ctz-menu-top{height:36px;display:flex}.ctz-menu-top>a{border-radius:12px 12px 0 0;flex:1;text-align:center;cursor:pointer;transition:initial !important;position:relative;display:flex;align-items:center;justify-content:center}.ctz-menu-top>a span{border-radius:8px;transition:all .3s;margin:0 6px;flex:1;box-sizing:border-box;align-items:center;line-height:26px}.ctz-menu-top>a:hover span{background:#fff}.ctz-menu-top>a.target{background:#fff}.ctz-menu-top>a.target::after,.ctz-menu-top>a.target::before{position:absolute;bottom:-12px;content:' ';background:radial-gradient(circle at top left, transparent 12px, #fff 0) top left,radial-gradient(circle at top right, transparent 12px, #fff 0) top right,radial-gradient(circle at bottom right, transparent 12px, #fff 0) bottom right,radial-gradient(circle at bottom left, transparent 12px, #fff 0) bottom left;background-size:50% 50%;background-repeat:no-repeat;width:24px;height:24px}.ctz-menu-top>a.target::before{left:-12px;z-index:-1}.ctz-menu-top>a.target::after{right:-12px;z-index:-1}.ctz-content{flex:1;display:flex;overflow:hidden;background:#fff;border-radius:12px;padding:8px 0}.ctz-content>div{width:100%}.ctz-content ::-webkit-scrollbar{width:8px;height:8px}.ctz-content ::-webkit-scrollbar-track{border-radius:0}.ctz-content ::-webkit-scrollbar-thumb{background:#bbb;transition:all .2s;border-radius:8px}.ctz-content ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}.ctz-content-left{width:130px;border-right:1px solid #e0e0e0}.ctz-content-left a{transition:all .2s;margin:2px 5px;height:40px;line-height:40px;display:block;font-size:14px;border-radius:12px;padding-left:24px}.ctz-content-left a:hover{background:#f5f5f5}.ctz-content-right{flex:1;overflow-y:auto;scroll-behavior:smooth;padding:0 8px}.ctz-content-right>div:nth-of-type(2n){padding:0 8px;margin:0 -8px;box-shadow:#999 0 0 5px inset;border-radius:0 12px 12px 0}.ctz-set-title{font-weight:bold;height:36px;line-height:36px;font-size:16px;overflow:hidden;vertical-align:middle}.ctz-set-title>span{vertical-align:middle;display:inline-block}.ctz-set-content:not(.ctz-flex-wrap)>div,.ctz-set-content:not(.ctz-flex-wrap)>label{padding-bottom:8px;margin-bottom:8px;border-bottom:1px dashed #ddd}.ctz-set-content:not(.ctz-flex-wrap)>div:last-child,.ctz-set-content:not(.ctz-flex-wrap)>label:last-child{border-bottom:0}.ctz-footer{font-size:14px;margin-top:12px}.ctz-footer a{margin-right:16px;cursor:pointer}.ctz-footer a:hover{color:#1677ff !important}.ctz-dark{display:flex;height:28px;align-items:center}.ctz-desc,.ctz-commit{font-size:12px;color:#999}.ctz-desc{padding-left:4px}.ctz-desc b{color:red}.ctz-alert-red{text-align:center;font-size:14px;color:red;height:24px;line-height:24px;background-color:#fff2f0;border:1px solid #ffccc7;border-radius:12px;margin:4px 0}.ctz-label{font-size:14px;line-height:24px}.ctz-label::after{content:'：'}#CTZ_BACKGROUND,#CTZ_BACKGROUND_LIGHT,#CTZ_BACKGROUND_DARK{display:grid;grid-template-columns:30% 30% 30%;gap:8px}#CTZ_BACKGROUND>label,#CTZ_BACKGROUND_LIGHT>label,#CTZ_BACKGROUND_DARK>label{position:relative}#CTZ_BACKGROUND>label input,#CTZ_BACKGROUND_LIGHT>label input,#CTZ_BACKGROUND_DARK>label input{position:absolute;visibility:hidden}#CTZ_BACKGROUND>label input:checked+div,#CTZ_BACKGROUND_LIGHT>label input:checked+div,#CTZ_BACKGROUND_DARK>label input:checked+div{border:4px solid #1677ff;margin:0 !important}#CTZ_BACKGROUND>label div,#CTZ_BACKGROUND_LIGHT>label div,#CTZ_BACKGROUND_DARK>label div{font-size:14px;border-radius:12px;line-height:50px;padding-left:30px;margin:4px}.ctz-set-background .ctz-commit{line-height:24px;font-size:14px}#CTZ_BASIS_CONFIG .ctz-config-buttons{padding:8px 0}#CTZ_BASIS_CONFIG .ctz-config-buttons button{margin-right:8px}#CTZ_BASIS_CONFIG textarea{margin-right:8px;flex:1}#CTZ_BLOCK_WORD .ctz-content-right>div{padding-bottom:12px}#CTZ_BLOCK_WORD input{height:24px;width:300px;margin:4px 0;width:100%}.ctz-block-words-content{display:flex;flex-wrap:wrap;cursor:default}.ctz-block-words-content>span{padding:2px 8px;border-radius:4px;font-size:12px;background:#fafafa;border:1px solid #d9d9d9;margin:4px 4px 0 0;color:rgba(0,0,0,0.88) !important;display:flex;align-items:center}.ctz-block-words-content>span>i{font-size:8px;margin-left:2px;cursor:pointer}.ctz-block-words-content>span>i:hover{color:#1677ff !important}.ctz-flex-wrap{display:flex;flex-wrap:wrap;line-height:24px}.ctz-flex-wrap label{margin-right:4px;display:flex;align-items:center}.ctz-flex-wrap label input[type='radio']{margin:0 4px 0 0}.ctz-button{outline:none;position:relative;display:inline-block;font-weight:400;white-space:nowrap;text-align:center;border:1px solid transparent;cursor:pointer;transition:all .2s cubic-bezier(.645, .045, .355, 1);user-select:none;touch-action:manipulation;line-height:1.5;font-size:14px;height:32px;padding:4px 15px;border-radius:6px;background-color:#ffffff;border-color:#d9d9d9;color:rgba(0,0,0,0.88);box-shadow:0 2px 0 rgba(0,0,0,0.02)}.ctz-button:hover{color:#4096ff;border-color:#4096ff}.ctz-not-interested{color:#999;font-size:12px;border:1px solid #999;border-radius:4px;padding:0 4px;margin-left:6px}.ctz-not-interested:hover{border-color:#1677ff !important;color:#1677ff !important}.ctz-video-download,.ctz-loading{position:absolute;top:20px;left:20px;font-size:24px;color:rgba(255,255,255,0.9);cursor:pointer}.ctz-loading{animation:loadingAnimation 2s infinite}@keyframes loadingAnimation{from{transform:rotate(0)}to{transform:rotate(360deg)}}#CTZ-BLOCK-LIST{display:flex;flex-wrap:wrap;margin:0 -8px;padding:8px}.ctz-black-item{height:30px;line-height:30px;box-sizing:content-box;padding:4px 8px;margin:0 8px 8px 0;display:flex;align-items:center;background:#fff;border-radius:8px;border:1px solid #e0e0e0}.ctz-black-item img{width:30px;height:30px;margin-right:4px}.ctz-black-item .ctz-remove-block:hover,.ctz-black-item a:hover{color:#1677ff;transition:all .2s}.ctz-black-item .ctz-remove-block{width:30px;height:30px;text-align:center;border-radius:8px}.ctz-black-item .ctz-remove-block:hover{background:#d9d9d9}.ctz-block-box>button,.ctz-button-block{padding:2px 8px;color:#666;border:1px solid #666;border-radius:4px;font-size:12px;margin-left:12px}.ctz-block-box>button:hover,.ctz-button-block:hover{border-color:#0461cf;color:#0461cf}.ctz-button-red{color:#e55353 !important;border:1px solid #e55353 !important}.ctz-button-red:hover{color:#ec7259 !important;border:1px solid #ec7259 !important}.ctz-preview{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;overflow-y:auto;z-index:200;background-color:rgba(18,18,18,0.4)}.ctz-preview div{display:flex;justify-content:center;align-items:center;min-height:100%;width:100%}.ctz-preview div img{cursor:zoom-out;user-select:none}#CTZ_TITLE_ICO label{margin:0 4px 4px 0}#CTZ_TITLE_ICO label input{display:none}#CTZ_TITLE_ICO label input:checked+img{border:4px solid #0461cf;border-radius:12px}#CTZ_TITLE_ICO label img{width:40px;height:40px;border:4px solid transparent}.ctz-label-tag{font-weight:normal;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff;margin:0 2px}.ctz-label-tag-Answer{background:#ec7259}.ctz-label-tag-ZVideo{background:#12c2e9}.ctz-label-tag-Article{background:#00965e}.ctz-question-time{color:#999 !important;font-size:14px !important;font-weight:normal !important;line-height:24px}.ctz-stop-scroll{height:100% !important;overflow:hidden !important}#CTZ_DEFAULT_SELF>div{line-height:24px;margin-bottom:4px}#CTZ_DEFAULT_SELF>div .ctz-commit{font-weight:normal}#CTZ_DEFAULT_SELF>div a{color:#1677ff}#CTZ_DEFAULT_SELF>div a:hover{color:#bbb}.ctz-export-collection-box{float:right;text-align:right}.ctz-export-collection-box button{font-size:16px}.ctz-export-collection-box p{font-size:14px;color:#666;margin:4px 0}.ctz-pdf-dialog-item{padding:12px;border-bottom:1px solid #eee;margin:12px;background:#ffffff}.ctz-pdf-dialog-title{margin:0 0 1.4em;font-size:20px;font-weight:bold}.ctz-pdf-box-content{width:100%;background:#ffffff}.ctz-pdf-view{width:100%;background:#ffffff;word-break:break-all;white-space:pre-wrap;font-size:14px;overflow-x:hidden}.ctz-pdf-view a{color:#0066ff}.ctz-pdf-view img{max-width:100%}.ctz-pdf-view p{margin:1.4em 0}.ctz-unlock,.ctz-lock,.ctz-lock-mask{display:none;color:#999;cursor:pointer}.ctz-unlock,.ctz-lock{margin:4px}.ctz-lock-mask{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:198}.position-suspensionSearch,.position-suspensionFind,.position-suspensionUser{position:fixed;z-index:100}.position-suspensionSearch:hover .ctz-unlock,.position-suspensionFind:hover .ctz-unlock,.position-suspensionUser:hover .ctz-unlock,.Topstory-container .TopstoryTabs:hover .ctz-unlock{display:block}.position-suspensionSearch.ctz-move-this .ctz-unlock,.position-suspensionFind.ctz-move-this .ctz-unlock,.position-suspensionUser.ctz-move-this .ctz-unlock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-unlock{display:none !important}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock,.position-suspensionSearch.ctz-move-this .ctz-lock-mask,.position-suspensionFind.ctz-move-this .ctz-lock-mask,.position-suspensionUser.ctz-move-this .ctz-lock-mask,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock-mask{display:block}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock{z-index:199;color:#cccccc}.position-suspensionFind{display:flex;flex-direction:column;margin:0 !important}.position-suspensionFind .Tabs-item{padding:0 !important;margin-bottom:4px}.position-suspensionFind .Tabs-item .Tabs-link{padding:8px !important;border-radius:4px}.position-suspensionFind .Tabs-item .Tabs-link::after{content:'' !important;display:none !important}.position-suspensionUser{width:fit-content !important;margin:0 !important;display:flex;flex-direction:column}.position-suspensionUser .AppHeader-messages,.position-suspensionUser .AppHeader-notifications{margin-right:0 !important;margin-bottom:12px}.position-suspensionUser .AppHeader-login,.position-suspensionUser .AppHeader-login~button{display:none}.SearchBar{flex:1}.position-suspensionSearch{line-height:30px;border-radius:16px;width:20px;transition:width .5s}.position-suspensionSearch .SearchBar-input-focus .ctz-search-pick-up{display:none}.position-suspensionSearch.focus{width:300px}.position-suspensionSearch.focus>form,.position-suspensionSearch.focus>button,.position-suspensionSearch.focus .ctz-search-pick-up{display:block}.position-suspensionSearch.focus .ctz-search-icon{display:none}.position-suspensionSearch.focus:hover{width:324px}.position-suspensionSearch .ctz-search-icon,.position-suspensionSearch .ctz-search-pick-up{cursor:pointer;color:#0066ff}.position-suspensionSearch .ctz-search-icon:hover,.position-suspensionSearch .ctz-search-pick-up:hover{color:#005ce6}.position-suspensionSearch .ctz-search-pick-up{font-size:24px;margin-left:4px}.position-suspensionSearch>form,.position-suspensionSearch>button,.position-suspensionSearch .ctz-search-pick-up{display:none}.position-suspensionSearch .ctz-search-icon{display:block}.key-shadow{border:1px solid #e0e0e0;border-radius:4px;box-shadow:rgba(0,0,0,0.06) 0 1px 1px 0;font-weight:600;min-width:26px;height:26px;padding:0px 6px;text-align:center}.ContentItem-title div{display:inline}#CTZ_HISTORY_LIST .ctz-set-content,#CTZ_HISTORY_VIEW .ctz-set-content{word-break:break-all}#CTZ_HISTORY_LIST .ctz-set-content a,#CTZ_HISTORY_VIEW .ctz-set-content a{cursor:pointer}#CTZ_HISTORY_LIST .ctz-set-content a:hover,#CTZ_HISTORY_VIEW .ctz-set-content a:hover{color:#1677ff !important}[name='button_history_clear'],[name='button_history_clear'],#CTZ-BUTTON-SYNC-BLOCK{min-width:88px;margin-bottom:8px}[name='button_history_clear'] i,[name='button_history_clear'] i,#CTZ-BUTTON-SYNC-BLOCK i{top:0px;left:28px;color:#909090}.ctz-zhihu-key a{color:#1677ff !important}.ctz-zhihu-key a:hover{color:#bbb !important}#root .css-1liaddi{margin-right:0}.ctz-video-link{border:1px solid #ccc;display:inline-block;height:98px;width:fit-content;border-radius:4px;box-sizing:border-box;overflow:hidden;transition:all .3s}.ctz-video-link img{width:98px;height:98px;vertical-align:bottom}.ctz-video-link span{padding:4px 12px;display:inline-block}.ctz-video-link:hover{border-color:#005ce6;color:#005ce6}`;
+  var createHiddenItemLabel = (item = []) => {
+    return item.map(({ label, value }) => `<label style="display: inline-block;"><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`).join("") + `<br>`;
+  };
+  var createHiddenItem = (arrHidden) => {
+    if (!arrHidden || !arrHidden.length)
+      return;
+    return `<div class="ctz-set-content">${arrHidden.map((i) => createHiddenItemLabel(i)).join("")}</div>`;
+  };
   var initHTML = () => {
     const { getUserinfo } = store;
     document.body.appendChild(domC("div", { id: "CTZ_MAIN", innerHTML: INNER_HTML }));
+    dom(".ctz-version").innerText = `version: ${GM_info.script.version}`;
+    dom(".ctz-footer").innerHTML = FOOTER_HTML;
+    dom(".ctz-menu-top").innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join("");
     myBlack.init();
     myMenu.init();
-    const nodeCTZVersion = dom(".ctz-version");
-    nodeCTZVersion && (nodeCTZVersion.innerText = `version: ${GM_info.script.version}`);
-    const nodeCTZFooter = dom(".ctz-footer");
-    nodeCTZFooter && (nodeCTZFooter.innerHTML = FOOTER_HTML);
     addBackgroundElements();
-    for (let key in HIDDEN_DIRECTION) {
-      const arrHidden = HIDDEN_DIRECTION[key];
-      if (!arrHidden || !arrHidden.length)
-        continue;
-      const nodeItem = dom(`#${key}_HIDDEN>.ctz-set-content`);
-      nodeItem && (nodeItem.innerHTML = arrHidden.map(
-        (i) => `${i.map(({ label, value }) => `<label><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`).join("")}<span style="width: 100%; margin: 8px 0; background: #ddd; height: 1px; display:block"></span>`
-      ).join(""));
-    }
-    const nodeCTZIcon = domById("CTZ_TITLE_ICO");
-    nodeCTZIcon && (nodeCTZIcon.innerHTML = Object.keys(ICO_URL).map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`).join(""));
-    const nodeCTZSelf = domById("CTZ_DEFAULT_SELF");
-    nodeCTZSelf && (nodeCTZSelf.innerHTML = DEFAULT_FUNCTION.map((elementItem, index) => `<div>${index + 1}. ${elementItem}</div>`).join(""));
+    domById("CTZ_HIDDEN").innerHTML = `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join("")}</div><div class="ctz-content-right">${HIDDEN_ARRAY.map(
+      (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span class="ctz-desc">${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
+    ).join("")}</div>`;
+    domById("CTZ_TITLE_ICO").innerHTML = Object.keys(ICO_URL).map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`).join("");
+    domById("CTZ_DEFAULT_SELF").innerHTML = DEFAULT_FUNCTION.map((elementItem, index) => `<div>${index + 1}. ${elementItem}</div>`).join("");
     const userinfo = getUserinfo();
     if (!userinfo)
       return;
@@ -1563,8 +1641,7 @@
       target: "_blank",
       innerText: "个人主页"
     });
-    const nodeCTZLeft = dom("#CTZ_BASIS .ctz-content-left");
-    nodeCTZLeft && nodeCTZLeft.appendChild(homeLink);
+    dom("#CTZ_BASIS .ctz-content-left").appendChild(homeLink);
   };
   var initInviteOnce = () => {
     const domInvitation = dom(".QuestionInvitation");
@@ -2108,7 +2185,8 @@
         removeBlockUserContentList,
         showBlockUser,
         removeAnonymousAnswer,
-        topExportContent
+        topExportContent,
+        blockWordsAnswer = []
       } = conf;
       const addFnInNodeItem = (nodeItem, initThis) => {
         if (!nodeItem)
@@ -2170,6 +2248,23 @@
           const userName = nodeItem.querySelector('[itemprop="name"]').content;
           userName === "匿名用户" && (message = `已屏蔽一条「匿名用户」回答`);
         }
+        if (!message) {
+          const domRichContent = nodeItem.querySelector(".RichContent");
+          const innerText = domRichContent ? domRichContent.innerText : "";
+          if (innerText) {
+            let matchedWord = "";
+            for (let itemWord of blockWordsAnswer) {
+              const rep = new RegExp(itemWord.toLowerCase());
+              if (rep.test(innerText.toLowerCase())) {
+                matchedWord += `「${itemWord}」`;
+                break;
+              }
+            }
+            if (matchedWord) {
+              message = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
+            }
+          }
+        }
         if (!message && answerOpen) {
           const unFoldButton = nodeItem.querySelector(".ContentItem-expandButton");
           const foldButton = nodeItem.querySelector(".RichContent-collapsedText");
@@ -2212,6 +2307,7 @@
       const pfConfig = getConfig();
       const {
         filterKeywords = [],
+        blockWordsAnswer = [],
         removeItemAboutVideo,
         removeItemAboutArticle,
         removeLessVote,
@@ -2282,21 +2378,11 @@
             }
           }
         }
+        !message && (message = this.replaceBlockWord(title, nodeItemContent, filterKeywords, title, "标题"));
         if (!message) {
-          let matchedWord = "";
-          for (let itemWord of filterKeywords) {
-            const rep = new RegExp(itemWord.toLowerCase());
-            if (rep.test(title.toLowerCase())) {
-              matchedWord += `「${itemWord}」`;
-              break;
-            }
-          }
-          if (matchedWord) {
-            const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-            const routeURL = elementItemProp && elementItemProp.getAttribute("content");
-            doFetchNotInterested({ id: String(itemId), type });
-            message = `屏蔽列表内容: ${title},匹配屏蔽词：${matchedWord}, 链接：${routeURL}`;
-          }
+          const domRichContent = nodeItem.querySelector(".RichContent");
+          const innerText = domRichContent ? domRichContent.innerText : "";
+          message = this.replaceBlockWord(innerText, nodeItemContent, blockWordsAnswer, title, "内容");
         }
         const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
         const userName = userNameE ? userNameE.innerText : "";
@@ -2332,6 +2418,24 @@
     restart: function() {
       this.reset();
       this.init();
+    },
+    replaceBlockWord: function(innerText, nodeItemContent, blockWords, title, byWhat) {
+      if (innerText) {
+        let matchedWord = "";
+        for (let word of blockWords) {
+          const rep = new RegExp(word.toLowerCase());
+          if (rep.test(innerText.toLowerCase())) {
+            matchedWord += `「${word}」`;
+            break;
+          }
+        }
+        if (matchedWord) {
+          const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+          const routeURL = elementItemProp && elementItemProp.getAttribute("content");
+          return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+        }
+      }
+      return "";
     }
   };
   var myListenSearchListItem = {
@@ -2852,49 +2956,6 @@
       window.close();
     }
   };
-  var myFilterWord = {
-    /** 添加屏蔽词 */
-    add: async function(target) {
-      const word = target.value;
-      const { filterKeywords = [] } = store.getConfig();
-      filterKeywords.push(word);
-      await myStorage.configUpdateItem("filterKeywords", filterKeywords);
-      const item = domC("span", { innerHTML: this.evenText(word) });
-      item.dataset.title = word;
-      const nodeFilterWords = domById(ID_FILTER_WORDS);
-      nodeFilterWords && nodeFilterWords.appendChild(item);
-      target.value = "";
-    },
-    /** 删除屏蔽词 */
-    remove: (event) => {
-      const title = event.dataset.title;
-      const { filterKeywords = [] } = store.getConfig();
-      event.remove();
-      myStorage.configUpdateItem(
-        "filterKeywords",
-        filterKeywords.filter((i) => i !== title)
-      );
-    },
-    /** 初始化 */
-    init: function() {
-      const { filterKeywords = [] } = store.getConfig();
-      const children = (filterKeywords || []).map((i) => this.evenTextBlock(i)).join("");
-      const nodeFilterWords = domById(ID_FILTER_WORDS);
-      if (nodeFilterWords) {
-        nodeFilterWords.innerHTML = children || "";
-        nodeFilterWords.onclick = (e) => {
-          const target = e.target;
-          target.classList.contains("ctz-filter-word-remove") && this.remove(target.parentElement);
-        };
-      }
-      const nodeInput = dom('[name="inputFilterWord"]');
-      nodeInput && (nodeInput.onchange = (e) => this.add.call(this, e.target));
-    },
-    evenText: (w) => `<span>${w}</span><i class="ctz-icon ctz-filter-word-remove">&#xe602;</i>`,
-    evenTextBlock: function(w) {
-      return `<span data-title="${w}">${this.evenText(w)}</span>`;
-    }
-  };
   var myFollowRemove = {
     init: function() {
       const me = this;
@@ -3053,7 +3114,7 @@
           loadBackground();
           myVersion.initAfterLoad();
           myCustomStyle.init();
-          myFilterWord.init();
+          initBlockWords();
           initResizeObserver();
           myCtzTypeOperation.init();
           echoHistory();

@@ -16,7 +16,7 @@ import {
   IStorageConfig,
   IZhihuUserinfo,
 } from '../types';
-import { IPfConfig } from '../types/variable-configs.type';
+import { IPfConfig } from '../types/configs.type';
 
 class Store {
   /** 修改器配置 */
@@ -27,6 +27,7 @@ class Store {
     customizeCss: '',
     answerOpen: '',
     filterKeywords: [],
+    blockWordsAnswer: [],
     showBlockUser: true,
     versionHome: '1000',
     versionAnswer: '1000',

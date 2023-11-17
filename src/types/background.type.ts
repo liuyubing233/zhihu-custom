@@ -8,11 +8,11 @@ export enum ETheme {
 /** 主题风格 - 浅色 */
 export enum EThemeLight {
   默认 = '0',
-  护眼红 = '1',
-  杏仁黄 = '2',
-  青草绿 = '3',
-  极光灰 = '4',
-  葛巾紫 = '5',
+  红 = '1',
+  黄 = '2',
+  绿 = '3',
+  灰 = '4',
+  紫 = '5',
 }
 
 /** 主题风格 - 深色 */
@@ -50,4 +50,16 @@ export interface IThemeValueDark {
   background: string;
   /** 第二背景色 */
   background2: string;
+}
+
+export type IHiddenArray = IHiddenItem[];
+export interface IHiddenItem {
+  key: string;
+  name: string;
+  desc: string;
+  content: IContentItem[][];
+}
+export interface IContentItem {
+  label: string;
+  value: string;
 }

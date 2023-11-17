@@ -27,6 +27,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       showBlockUser,
       removeAnonymousAnswer,
       topExportContent,
+      blockWordsAnswer = [],
     } = conf;
 
     /** 添加功能 */
@@ -39,7 +40,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
         addButtonForAnswerExportPDF(nodeItem);
         addButtonForArticleExportPDF(nodeItem);
       }
-      initVideoDownload(nodeItem)
+      initVideoDownload(nodeItem);
     };
 
     addFnInNodeItem(dom('.QuestionAnswer-content'));
@@ -94,6 +95,24 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       if (removeAnonymousAnswer && !message) {
         const userName = (nodeItem.querySelector('[itemprop="name"]') as IMyElement).content;
         userName === '匿名用户' && (message = `已屏蔽一条「匿名用户」回答`);
+      }
+      // 屏蔽词
+      if (!message) {
+        const domRichContent = nodeItem.querySelector('.RichContent');
+        const innerText = domRichContent ? (domRichContent as HTMLElement).innerText : '';
+        if (innerText) {
+          let matchedWord = '';
+          for (let itemWord of blockWordsAnswer) {
+            const rep = new RegExp(itemWord.toLowerCase());
+            if (rep.test(innerText.toLowerCase())) {
+              matchedWord += `「${itemWord}」`;
+              break;
+            }
+          }
+          if (matchedWord) {
+            message = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
+          }
+        }
       }
       // 自动展开回答 和 默认收起长回答
       if (!message && answerOpen) {

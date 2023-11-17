@@ -40,7 +40,6 @@ export const initTopStoryRecommendEvent = () => {
         updateTopVote(nodeContentItem);
         updateItemTime(nodeContentItem);
         showBlockUser && myBlack.addButton(nodeContentItem.parentElement!);
-        // itemVideoUseLink(nodeContentItem);
         initVideoDownload(nodeContentItem);
         if (topExportContent) {
           addButtonForAnswerExportPDF(nodeContentItem.parentElement!);

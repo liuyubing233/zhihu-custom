@@ -1,4 +1,4 @@
-import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from "../types/variable-configs.type";
+import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from "../types/configs.type";
 
 /** 隐藏内容模块默认为 true 的配置 */
 export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {

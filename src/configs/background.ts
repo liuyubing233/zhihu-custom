@@ -5,7 +5,7 @@ import {
   EThemeLight,
   IThemeConfigDark,
   IThemeConfigLight
-} from '../types/variable-background.type';
+} from '../types/background.type';
 
 export const THEMES = [
   { label: '浅色', value: ETheme.浅色, background: '#fff', color: '#000' },
@@ -15,11 +15,11 @@ export const THEMES = [
 
 export const THEME_CONFIG_LIGHT: IThemeConfigLight = {
   [EThemeLight.默认]: { name: '默认', background: '#ffffff', background2: '' },
-  [EThemeLight.护眼红]: { name: '护眼红', background: '#ffe4c4', background2: '#fff4e7' },
-  [EThemeLight.杏仁黄]: { name: '杏仁黄', background: '#faf9de', background2: '#fdfdf2' },
-  [EThemeLight.青草绿]: { name: '青草绿', background: '#cce8cf', background2: '#e5f1e7' },
-  [EThemeLight.极光灰]: { name: '极光灰', background: '#eaeaef', background2: '#f3f3f5' },
-  [EThemeLight.葛巾紫]: { name: '葛巾紫', background: '#e9ebfe', background2: '#f2f3fb' },
+  [EThemeLight.红]: { name: '红', background: '#ffe4c4', background2: '#fff4e7' },
+  [EThemeLight.黄]: { name: '黄', background: '#faf9de', background2: '#fdfdf2' },
+  [EThemeLight.绿]: { name: '绿', background: '#cce8cf', background2: '#e5f1e7' },
+  [EThemeLight.灰]: { name: '灰', background: '#eaeaef', background2: '#f3f3f5' },
+  [EThemeLight.紫]: { name: '紫', background: '#e9ebfe', background2: '#f2f3fb' },
 };
 
 export const THEME_CONFIG_DARK: IThemeConfigDark = {
