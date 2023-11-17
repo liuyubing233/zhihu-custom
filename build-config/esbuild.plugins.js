@@ -7,14 +7,14 @@ const envInnerResources = {
   name: 'envInnerResources',
   setup(build) {
     build.onLoad({ filter: /web-resources.ts/ }, async (args) => {
-      const contentLess = fs.readFileSync(path.join(__dirname, '/src/static/index.less'), 'utf-8');
+      const contentLess = fs.readFileSync(path.join(__dirname, '../src/static/index.less'), 'utf-8');
       const res = await less.render(contentLess, { compress: true });
       if (!res.css) {
         throw Error('less转css失败');
       }
       const NAME_HTML = 'INNER_HTML';
       const NAME_CSS = 'INNER_CSS';
-      const pathHTML = path.join(__dirname, '/src/static/index.html');
+      const pathHTML = path.join(__dirname, '../src/static/index.html');
       const REGEXP_REPLACE = /\s*\n\s*/g; // 删除回车及前后空格
       const REGEXP_REPLACE_COMMIT = /\<\!\-\-[^(\<\!)]*\-\-\>/g; // 删除HTML注释
       const strHTML = fs.readFileSync(pathHTML).toString();
@@ -34,11 +34,11 @@ const envEnd = {
   name: 'envEnd',
   setup(build) {
     build.onEnd(() => {
-      const pathIndex = path.join(__dirname, '/dist/index.js');
+      const pathIndex = path.join(__dirname, '../dist/index.js');
       const strIndexDist = fs.readFileSync(pathIndex).toString();
       if (!strIndexDist) return;
       const regCommit = /\s*\/\/\ssrc[^\n]*\n/g; // 匹配路径注释
-      fs.writeFileSync(path.join(__dirname, 'index.js'), strIndexDist.replace(regCommit, '\n'));
+      fs.writeFileSync(path.join(__dirname, '../index.js'), strIndexDist.replace(regCommit, '\n'));
     });
   },
 };

@@ -22,15 +22,18 @@ if (!changeVersion[status]) {
 
 const nVersion = changeVersion[status];
 const regExpVersion = new RegExp(`("version":\\s*")([\\d\\.]+)(")`);
-const pathPackageJson = path.join(__dirname, '/package.json');
+const pathPackageJson = path.join(__dirname, '../package.json');
 const packageJson = fs.readFileSync(pathPackageJson).toString();
 fs.writeFileSync(pathPackageJson, packageJson.replace(regExpVersion, `$1${nVersion}$3`));
 echo(`package.json 文件版本号修改完成。\r\n原版本号: ${prevVersion}，新版本号: ${nVersion}`);
 
-const pathChangelog = path.join(__dirname, '/CHANGELOG.md');
+const pathChangelog = path.join(__dirname, '../docs/changelog.md');
+const pathFeature = path.join(__dirname, '../docs/feature.md');
 const changelogJson = fs.readFileSync(pathChangelog).toString();
+const featureJson = fs.readFileSync(pathFeature).toString();
 fs.writeFileSync(pathChangelog, changelogJson.replace('$version', nVersion))
-echo(`CHANGELOG.md 版本号修改完成。`)
+fs.writeFileSync(pathFeature, featureJson.replace('$version', nVersion))
+echo(`changelog & feature 版本号修改完成。`)
 
 const doExec = async (commit) => {
   const res = exec(commit);
