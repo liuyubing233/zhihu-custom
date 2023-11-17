@@ -1394,12 +1394,12 @@
     changeSuspensionTab();
   };
   var initHistoryView = async () => {
-    const { href, origin, pathname } = location;
+    const { href, origin, pathname, hash } = location;
     const { getHistory } = store;
     const question = "www.zhihu.com/question/";
     const article = "zhuanlan.zhihu.com/p/";
     const video = "www.zhihu.com/zvideo/";
-    let name = href;
+    let name = href.replace(hash, "");
     setTimeout(() => {
       if (!href.includes(question) && !href.includes(article) && !href.includes(video))
         return;

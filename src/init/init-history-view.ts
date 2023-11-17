@@ -4,12 +4,12 @@ import { store } from '../store';
 
 /** 添加浏览历史 */
 export const initHistoryView = async () => {
-  const { href, origin, pathname } = location;
+  const { href, origin, pathname, hash } = location;
   const { getHistory } = store;
   const question = 'www.zhihu.com/question/';
   const article = 'zhuanlan.zhihu.com/p/';
   const video = 'www.zhihu.com/zvideo/';
-  let name = href;
+  let name = href.replace(hash, '');
   setTimeout(() => {
     if (!href.includes(question) && !href.includes(article) && !href.includes(video)) return;
     href.includes(question) && dom('.QuestionPage [itemprop="name"]') && (name = dom('.QuestionPage [itemprop="name"]')!.content);
