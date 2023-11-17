@@ -11,14 +11,13 @@
       <div id="CTZ_BASIS" style="display: none">
         <div class="ctz-content-left">
           <a href="#CTZ_BASIS_DEFAULT">基本设置</a>
-          <a href="#CTZ_BASIS_SIZE">页面尺寸</a>
           <a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a>
+          <a href="#CTZ_BASIS_SIZE">页面尺寸</a>
           <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
           <a href="#CTZ_BASIS_COLOR">颜色设置</a>
           <a href="#CTZ_BASIS_CONFIG">配置操作</a>
         </div>
         <div class="ctz-content-right">
-          <div class="ctz-alert-red">当前设置为通用设置，设置完成后在所有页面生效</div>
           <div id="CTZ_BASIS_DEFAULT">
             <div class="ctz-set-title"><span>基本设置</span></div>
             <div class="ctz-set-content">
@@ -53,6 +52,90 @@
                 <div class="ctz-label">修改网页标题图片（图标可能会因为网络问题丢失）</div>
                 <div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div>
               </div>
+            </div>
+          </div>
+
+          <div id="CTZ_BASIS_SHOW_CONTENT">
+            <div class="ctz-set-title">
+              <span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span>
+            </div>
+            <div class="ctz-set-content">
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">赞同按钮仅显示数字</span>
+                <input class="ctz-i" name="justVoteNum" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">评论按钮仅显示数字</span>
+                <input class="ctz-i" name="justCommitNum" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">内容顶部显示赞同数</span>
+                <input class="ctz-i" name="topVote" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">文档或回答顶部显示导出当前内容/回答按钮</span>
+                <input class="ctz-i" name="topExportContent" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">回答和文章中的视频替换为链接</span>
+                <input class="ctz-i" name="videoUseLink" type="checkbox" value="on" />
+              </label>
+
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">
+                  内容标题添加类别显示
+                  <span class="ctz-label-tag ctz-label-tag-Answer">问答</span>
+                  <span class="ctz-label-tag ctz-label-tag-Article">文章</span>
+                  <span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span>
+                </span>
+                <input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">推荐列表显示「不感兴趣」按钮</span>
+                <input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">列表更多「···」按钮移动到题目右侧</span>
+                <input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">关注列表高亮原创内容</span>
+                <input type="checkbox" name="highlightOriginal" class="ctz-i" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">列表内容点击高亮边框</span>
+                <input type="checkbox" name="highlightListItem" class="ctz-i" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">列表内容显示发布时间和最后修改时间</span>
+                <input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" />
+              </label>
+
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">问题详情显示创建时间和最后修改时间</span>
+                <input type="checkbox" name="questionCreatedAndModifiedTime" class="ctz-i" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">回答内容显示创建时间与最后修改时间</span>
+                <input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" />
+              </label>
+              <div class="ctz-flex-wrap">
+                <span class="ctz-label">购物链接显示设置</span>
+                <label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label>
+                <label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label>
+                <label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label>
+              </div>
+              <div class="ctz-flex-wrap">
+                <span class="ctz-label">回答内容展开/收起</span>
+                <label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label>
+                <label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label>
+                <label><input class="ctz-i" type="radio" name="answerOpen" value="off" />默认收起所有长回答</label>
+              </div>
+
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">文章发布时间置顶</span>
+                <input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" />
+              </label>
             </div>
           </div>
 
@@ -129,34 +212,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div id="CTZ_BASIS_SHOW_CONTENT">
-            <div class="ctz-set-title">
-              <span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span>
-            </div>
-            <div class="ctz-set-content">
-              <label class="ctz-flex-wrap">
-                <span class="ctz-label">赞同按钮仅显示数字</span>
-                <input class="ctz-i" name="justVoteNum" type="checkbox" value="on" />
-              </label>
-              <label class="ctz-flex-wrap">
-                <span class="ctz-label">评论按钮仅显示数字</span>
-                <input class="ctz-i" name="justCommitNum" type="checkbox" value="on" />
-              </label>
-              <label class="ctz-flex-wrap">
-                <span class="ctz-label">内容顶部显示赞同数</span>
-                <input class="ctz-i" name="topVote" type="checkbox" value="on" />
-              </label>
-              <label class="ctz-flex-wrap">
-                <span class="ctz-label">文档或回答顶部显示导出当前内容/回答按钮</span>
-                <input class="ctz-i" name="topExportContent" type="checkbox" value="on" />
-              </label>
-              <label class="ctz-flex-wrap">
-                <span class="ctz-label">回答和文章中的视频替换为链接</span>
-                <input class="ctz-i" name="videoUseLink" type="checkbox" value="on" />
-              </label>
             </div>
           </div>
 
@@ -246,57 +301,10 @@
       <!-- 首页列表设置 -->
       <div id="CTZ_LIST" style="display: none">
         <div class="ctz-content-left">
-          <a href="#CTZ_LIST_DEFAULT">基础设置</a>
           <a href="#CTZ_LIST_FILTER">屏蔽内容</a>
         </div>
         <div class="ctz-content-right">
           <div class="ctz-alert-red">当前设置完成后在问题列表、关注列表、热搜列表、搜索列表页面生效</div>
-          <div id="CTZ_LIST_DEFAULT">
-            <div class="ctz-set-title"><span>基础设置</span></div>
-            <div class="ctz-set-content">
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">
-                    内容标题添加类别显示
-                    <span class="ctz-label-tag ctz-label-tag-Answer">问答</span>
-                    <span class="ctz-label-tag ctz-label-tag-Article">文章</span>
-                    <span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span>
-                  </span>
-                  <input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">推荐列表显示「不感兴趣」按钮</span>
-                  <input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">列表更多「···」按钮移动到题目右侧</span>
-                  <input class="ctz-i" name="fixedListItemMore" type="checkbox" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">关注列表高亮原创内容</span>
-                  <input type="checkbox" name="highlightOriginal" class="ctz-i" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">列表内容点击高亮边框</span>
-                  <input type="checkbox" name="highlightListItem" class="ctz-i" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">列表内容显示发布时间和最后修改时间</span>
-                  <input type="checkbox" name="listItemCreatedAndModifiedTime" class="ctz-i" value="on" />
-                </label>
-              </div>
-            </div>
-          </div>
 
           <div id="CTZ_LIST_FILTER" class="ctz-filter-block">
             <div class="ctz-set-title">
@@ -349,35 +357,10 @@
       <!-- 回答详情设置 -->
       <div id="CTZ_ANSWER" style="display: none">
         <div class="ctz-content-left">
-          <a href="#CTZ_ANSWER_DEFAULT">基础设置</a>
           <a href="#CTZ_ANSWER_FILTER">屏蔽内容</a>
-          <a href="#CTZ_ANSWER_OPEN">回答展开收起</a>
         </div>
         <div class="ctz-content-right">
           <div class="ctz-alert-red">当前设置完成后问答内容页面生效</div>
-          <div id="CTZ_ANSWER_DEFAULT">
-            <div class="ctz-set-title"><span>基础设置</span></div>
-            <div class="ctz-set-content">
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">问题详情显示创建时间和最后修改时间</span>
-                  <input type="checkbox" name="questionCreatedAndModifiedTime" class="ctz-i" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">回答内容显示创建时间与最后修改时间</span>
-                  <input type="checkbox" name="answerItemCreatedAndModifiedTime" class="ctz-i" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">购物链接显示设置</span>
-                <label><input class="ctz-i" name="linkShopping" type="radio" value="0" />默认</label>
-                <label><input class="ctz-i" name="linkShopping" type="radio" value="1" />仅文字</label>
-                <label><input class="ctz-i" name="linkShopping" type="radio" value="2" />隐藏</label>
-              </div>
-            </div>
-          </div>
 
           <div id="CTZ_ANSWER_FILTER" class="ctz-filter-block">
             <div class="ctz-set-title">
@@ -425,39 +408,10 @@
               </div>
             </div>
           </div>
-          <div id="CTZ_ANSWER_OPEN">
-            <div class="ctz-set-title"><span>回答展开收起</span></div>
-            <div class="ctz-set-content ctz-flex-wrap">
-              <label><input class="ctz-i" type="radio" name="answerOpen" value="" />知乎默认</label>
-              <label><input class="ctz-i" type="radio" name="answerOpen" value="on" />自动展开所有回答</label>
-              <label><input class="ctz-i" type="radio" name="answerOpen" value="off" />默认收起所有长回答</label>
-            </div>
-          </div>
         </div>
       </div>
 
-      <!-- 文章专栏设置 -->
-      <div id="CTZ_ARTICLE" style="display: none">
-        <div class="ctz-content-left">
-          <a href="#CTZ_ARTICLE_DEFAULT">基础设置</a>
-        </div>
-        <div class="ctz-content-right">
-          <div class="ctz-alert-red">当前设置完成后在专栏文章页面生效</div>
-          <div id="CTZ_ARTICLE_DEFAULT">
-            <div class="ctz-set-title"><span>基础设置</span></div>
-            <div class="ctz-set-content">
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">文章发布时间置顶</span>
-                  <input type="checkbox" name="articleCreateTimeToTop" class="ctz-i" value="on" />
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 隐藏模块设置 -->
+      <!-- 隐藏内容设置 -->
       <div id="CTZ_HIDDEN" style="display: none"></div>
 
       <!-- 屏蔽词设置 -->

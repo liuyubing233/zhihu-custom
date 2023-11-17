@@ -18,7 +18,7 @@ export const HIDDEN_ANSWER_ACCOUNT: Record<string, string> = {
 export const HIDDEN_ARRAY: IHiddenArray = [
   {
     key: 'CTZ_HIDDEN_COMMON',
-    name: '通用内容隐藏',
+    name: '通用模块隐藏',
     desc: '',
     content: [
       [{ value: 'hiddenAD', label: '广告' }],
@@ -48,7 +48,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
   },
   {
     key: 'CTZ_HIDDEN_LIST',
-    name: '列表内容隐藏',
+    name: '列表模块隐藏',
     desc: '只在列表中隐藏相应内容',
     content: [
       [
@@ -91,7 +91,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
   },
   {
     key: 'CTZ_HIDDEN_ANSWER',
-    name: '回答内容隐藏',
+    name: '回答模块隐藏',
     desc: '只在回答页面中隐藏相应内容',
     content: [
       [
@@ -131,7 +131,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
   },
   {
     key: 'CTZ_HIDDEN_ARTICLE',
-    name: '文章内容隐藏',
+    name: '文章模块隐藏',
     desc: '只在文章页面中隐藏相应内容',
     content: [
       [
