@@ -124,7 +124,7 @@ const myBackground = {
     `,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
-    `#${ID_BLOCK_LIST},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,.ctz-black-item,#CTZ_OPEN_BUTTON` +
+    `#${ID_BLOCK_LIST},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,.ctz-black-item,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
     `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
