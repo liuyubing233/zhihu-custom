@@ -39,15 +39,12 @@ export const initHTML = () => {
     ).join('')}</div>`;
 
   // 添加修改网页标题图片
-  const nodeCTZIcon = domById('CTZ_TITLE_ICO');
-  nodeCTZIcon &&
-    (nodeCTZIcon.innerHTML = Object.keys(ICO_URL)
-      .map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`)
-      .join(''));
+  domById('CTZ_TITLE_ICO')!.innerHTML = Object.keys(ICO_URL)
+    .map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`)
+    .join('');
 
   // 添加更多默认设置
-  const nodeCTZSelf = domById('CTZ_DEFAULT_SELF');
-  nodeCTZSelf && (nodeCTZSelf.innerHTML = DEFAULT_FUNCTION.map((elementItem, index) => `<div>${index + 1}. ${elementItem}</div>`).join(''));
+  domById('CTZ_DEFAULT_SELF')!.innerHTML = DEFAULT_FUNCTION.map((elementItem, index) => `<div>${index + 1}. ${elementItem}</div>`).join('');
 
   // 保存个人主页位置
   const userinfo = getUserinfo();
@@ -59,6 +56,5 @@ export const initHTML = () => {
     target: '_blank',
     innerText: '个人主页',
   });
-  const nodeCTZLeft = dom('#CTZ_BASIS .ctz-content-left');
-  nodeCTZLeft && nodeCTZLeft.appendChild(homeLink);
+  dom('#CTZ_BASIS .ctz-content-left')!.appendChild(homeLink);
 };
