@@ -112,7 +112,7 @@ const myBackground = {
   },
   /** 使用背景色1的元素名称 */
   cssNamesBackground1:
-    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n)` +
+    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover` +
     `,body,.Input-wrapper,.toolbar-section button:hover` +
     `,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
     `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +

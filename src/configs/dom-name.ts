@@ -28,8 +28,9 @@ export const EXTRA_CLASS_HTML: Record<string, string> = {
 
 export const HEADER = [
   { href: '#CTZ_BASIS', value: '基础设置' },
-  { href: '#CTZ_LIST', value: '首页列表' },
-  { href: '#CTZ_ANSWER', value: '回答详情' },
+  // { href: '#CTZ_LIST', value: '首页列表' },
+  // { href: '#CTZ_ANSWER', value: '回答详情' },
+  { href: '#CTZ_FILTER', value: '屏蔽内容设置' },
   { href: '#CTZ_HIDDEN', value: '隐藏模块设置' },
   { href: '#CTZ_BLOCK_WORD', value: '屏蔽词设置' },
   { href: '#CTZ_BLACKLIST', value: '黑名单设置' },
