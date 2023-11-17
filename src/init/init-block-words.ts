@@ -43,29 +43,25 @@ const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
   await myStorage.configUpdateItem(key, configThis);
   const domItem = domC('span', { innerHTML: createHTMLAboutBlockTextContent(word) });
   domItem.dataset.title = word;
-  const name = NAME_BY_KEY[key];
-  const nodeFilterWords = dom(name);
+  const nodeFilterWords = dom(NAME_BY_KEY[key]);
   nodeFilterWords && nodeFilterWords.appendChild(domItem);
   target.value = '';
 };
 
 /** 加载屏蔽词 */
 export const initBlockWords = () => {
-  const { filterKeywords = [], blockWordsAnswer } = store.getConfig();
-  const children = (filterKeywords || []).map((i) => createHTMLAboutBlockText(i)).join('');
-  const childrenAnswer = (blockWordsAnswer || []).map((i) => createHTMLAboutBlockText(i)).join('');
-  const domBlockWordsList = dom(BLOCK_WORDS_LIST);
-  const domBlockWordsAnswer = dom(BLOCK_WORDS_ANSWER);
-  if (domBlockWordsList) {
-    domBlockWordsList.innerHTML = children || '';
-    domBlockWordsList.onclick = (e) => onRemove(e, 'filterKeywords');
+  const config = store.getConfig();
+  const arr = [
+    { domFind: dom(BLOCK_WORDS_LIST), name: 'filterKeywords', domInput: dom('[name="inputFilterWord"]') },
+    { domFind: dom(BLOCK_WORDS_ANSWER), name: 'blockWordsAnswer', domInput: dom('[name="inputBlockWordsAnswer"]') },
+  ];
+  for (let i = 0, len = arr.length; i < len; i++) {
+    const { domFind, name, domInput } = arr[i];
+    if (domFind) {
+      const children = (config[name] || []).map((i: string) => createHTMLAboutBlockText(i)).join('');
+      domFind.innerHTML = children || '';
+      domFind.onclick = (e) => onRemove(e, name as IKeyofDomName);
+    }
+    domInput && (domInput.onchange = (e) => onAddWord(e.target as HTMLInputElement, name as IKeyofDomName));
   }
-  if (domBlockWordsAnswer) {
-    domBlockWordsAnswer.innerHTML = childrenAnswer || '';
-    domBlockWordsAnswer.onclick = (e) => onRemove(e, 'blockWordsAnswer');
-  }
-  const domInputList = dom('[name="inputFilterWord"]');
-  const domInputAnswer = dom('[name="inputBlockWordsAnswer"]');
-  domInputList && (domInputList.onchange = (e) => onAddWord(e.target as HTMLInputElement, 'filterKeywords'));
-  domInputAnswer && (domInputAnswer.onchange = (e) => onAddWord(e.target as HTMLInputElement, 'blockWordsAnswer'));
 };

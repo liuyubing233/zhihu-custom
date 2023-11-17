@@ -16,8 +16,7 @@ export const initHistoryView = async () => {
     href.includes(article) && dom('.Post-Title') && (name = dom('.Post-Title')!.innerText);
     href.includes(video) && dom('.ZVideo .ZVideo-title') && (name = dom('.ZVideo .ZVideo-title')!.innerText);
     const nA = `<a href="${origin + pathname}" target="_blank">${name}</a>`;
-    const browseHistory = getHistory();
-    const { view } = browseHistory;
+    const { view } = getHistory();
     if (!view.includes(nA)) {
       view.unshift(nA);
       myStorage.historyUpdate('view', view);

@@ -1,5 +1,6 @@
 /** 页面操作 */
 import { dom, domA } from '../commons/tools';
+import { HEADER } from '../configs';
 
 /** 设置菜单方法 */
 export const myMenu = {
@@ -13,10 +14,10 @@ export const myMenu = {
       this.click({ target: dom(`a[href="${chooseId}"]`) });
       return;
     }
-    this.click({ target: dom('a[href="#CTZ_BASIS"]') });
+    this.click({ target: dom(`a[href="${HEADER[0].href}"]`) });
   },
   click: function ({ target }: any) {
-    const targetForA = target.tagName === 'A' ? target : target.parentElement
+    const targetForA = target.tagName === 'A' ? target : target.parentElement;
     if (!(targetForA.hash && targetForA.tagName === 'A')) return;
     const isThis = targetForA.hash.replace(/#/, '');
     if (!isThis) return;
