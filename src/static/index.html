@@ -142,55 +142,14 @@
           <div id="CTZ_BASIS_SIZE">
             <div class="ctz-set-title"><span>页面尺寸</span></div>
             <div class="ctz-set-content">
-              <div class="ctz-flex-wrap">
-                <div class="ctz-label">列表页内容宽度</div>
-                <input class="ctz-i" type="range" min="600" max="1500" name="versionHome" style="width: 300px" />
-                <span id="versionHome" style="margin: 0 8px">0</span>
-                <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
-              </div>
-              <div class="ctz-flex-wrap">
-                <div class="ctz-label">回答页内容宽度</div>
-                <input class="ctz-i" type="range" min="600" max="1500" name="versionAnswer" style="width: 300px" />
-                <span id="versionAnswer" style="margin: 0 8px">0</span>
-                <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
-              </div>
-              <div class="ctz-flex-wrap">
-                <div class="ctz-label">文章页内容宽度</div>
-                <input class="ctz-i" type="range" min="600" max="1500" name="versionArticle" style="width: 300px" />
-                <span id="versionArticle" style="margin: 0 8px">0</span>
-                <span class="ctz-commit">滚动条范围: 600 ~ 1500</span>
-              </div>
+              <!-- 页面内容宽度 -->
+              <div id="CTZ_VERSION_RANGE_ZHIHU"></div>
               <label class="ctz-flex-wrap">
-                <span class="ctz-label">评论弹窗宽度匹配页面宽度</span>
+                <span class="ctz-label">评论弹窗匹配页面宽度</span>
                 <input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" />
               </label>
-
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">列表标题文字大小</span>
-                <input type="number" name="fontSizeForListTitle" class="ctz-i-change" />
-              </div>
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">列表内容标准文字大小</span>
-                <input type="number" name="fontSizeForList" class="ctz-i-change" />
-              </div>
-
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">回答标题文字大小</span>
-                <input type="number" name="fontSizeForAnswerTitle" class="ctz-i-change" />
-              </div>
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">回答内容标准文字大小</span>
-                <input type="number" name="fontSizeForAnswer" class="ctz-i-change" />
-              </div>
-
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">文章标题文字大小</span>
-                <input type="number" name="fontSizeForArticleTitle" class="ctz-i-change" />
-              </div>
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">文章内容标准文字大小</span>
-                <input type="number" name="fontSizeForArticle" class="ctz-i-change" />
-              </div>
+              <!-- 页面字体大小 -->
+              <div id="CTZ_FONT_SIZE_IN_ZHIHU"></div>
 
               <div>
                 <div class="ctz-flex-wrap">
@@ -199,14 +158,7 @@
                   <label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label>
                   <label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label>
                 </div>
-                <div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none">
-                  <div class="ctz-flex-wrap">
-                    <div class="ctz-label">自定义图片尺寸</div>
-                    <input class="ctz-i" type="range" min="0" max="1000" name="zoomImageSize" style="width: 300px" />
-                    <span id="zoomImageSize" style="margin: 0 8px">0</span>
-                    <span class="ctz-commit">滚动条范围: 0 ~ 1000</span>
-                  </div>
-                </div>
+                <div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none"></div>
               </div>
               <label class="ctz-flex-wrap">
                 <span class="ctz-label">使用弹窗打开动图</span>
@@ -218,13 +170,7 @@
                   <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label>
                   <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label>
                 </div>
-                <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM">
-                  <div class="ctz-flex-wrap">
-                    <input class="ctz-i" type="range" min="0" max="1000" name="zoomListVideoSize" style="width: 300px" />
-                    <span id="zoomListVideoSize" style="margin: 0 8px">0</span>
-                    <span class="ctz-commit">滚动条范围: 0 ~ 1000</span>
-                  </div>
-                </div>
+                <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM"></div>
               </div>
             </div>
           </div>

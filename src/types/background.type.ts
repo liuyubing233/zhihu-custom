@@ -1,3 +1,5 @@
+import { IOptionItem } from "./common.type";
+
 /** 主题风格 */
 export enum ETheme {
   浅色 = '0',
@@ -57,9 +59,5 @@ export interface IHiddenItem {
   key: string;
   name: string;
   desc: string;
-  content: IContentItem[][];
-}
-export interface IContentItem {
-  label: string;
-  value: string;
+  content: IOptionItem[][];
 }
