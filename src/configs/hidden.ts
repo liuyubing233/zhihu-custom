@@ -37,7 +37,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         { value: 'hiddenAnswerText', label: '回答操作文字' },
-        { value: 'hiddenWhoVoters', label: '回答隐藏用户信息下下赞同用户和「你赞同过」' },
+        { value: 'hiddenWhoVoters', label: '回答隐藏用户信息下的附加信息，例如：「你赞同过」' },
       ],
       [
         { value: 'hiddenCommitReply', label: '评论「回复」按钮' },
