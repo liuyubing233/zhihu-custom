@@ -292,6 +292,12 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   articleCreateTimeToTop?: boolean;
   /** 购物链接显示设置 0 1 2 */
   linkShopping?: '0' | '1' | '2';
+  /** 列表标题文字大小 */
+  fontSizeForListTitle?: number;
+  /** 回答标题文字大小 */
+  fontSizeForAnswerTitle?: number;
+  /** 文章标题文字大小 */
+  fontSizeForArticleTitle?: number;
   /** 列表内容标准文字大小 */
   fontSizeForList?: number;
   /** 回答内容标准文字大小 */

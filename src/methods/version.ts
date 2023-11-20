@@ -184,14 +184,17 @@ export const myVersion = {
   },
   vFontSizeContent: function () {
     // 调整文字大小
-    const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle } = store.getConfig();
+    const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle, fontSizeForListTitle, fontSizeForAnswerTitle, fontSizeForArticleTitle } = store.getConfig();
     const list =
       `.Topstory-body .RichContent-inner,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
-      `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent` +
+      `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent,.HotItem-excerpt--multiLine` +
       `{font-size: ${fontSizeForList}px!important;}`;
     const answer = `.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent{font-size: ${fontSizeForAnswer}px}`;
     const article = `.zhuanlan .Post-RichTextContainer,.zhuanlan .ctz-article-create-time,.zhuanlan .CommentContent{font-size: ${fontSizeForArticle}px}`;
-    return list + answer + article;
+    const articleTitle = `.zhuanlan .Post-Main .Post-Title{font-size: ${fontSizeForArticleTitle}px;}`;
+    const listTitle = `.ContentItem-title,.HotItem-title{font-size: ${fontSizeForListTitle}px!important;}`;
+    const answerTitle = `.QuestionHeader-title{font-size: ${fontSizeForAnswerTitle}px!important;}`;
+    return list + answer + article + articleTitle + listTitle + answerTitle;
   },
   vVideoLink: () => {
     // 视频是否只显示链接
