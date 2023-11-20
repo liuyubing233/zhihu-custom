@@ -3,6 +3,8 @@ const path = require('path');
 const shell = require('shelljs');
 const { exec, echo } = shell;
 
+const VERSION_TAG = '$version';
+
 const status = process.argv[process.argv.length - 1];
 const prevVersion = process.env.npm_package_version;
 const [vMajor, vMinor, vRevision] = prevVersion.split('.');
@@ -31,9 +33,9 @@ const pathChangelog = path.join(__dirname, '../docs/changelog.md');
 const pathFeature = path.join(__dirname, '../docs/feature.md');
 const changelogJson = fs.readFileSync(pathChangelog).toString();
 const featureJson = fs.readFileSync(pathFeature).toString();
-fs.writeFileSync(pathChangelog, changelogJson.replace('$version', nVersion))
-fs.writeFileSync(pathFeature, featureJson.replace('$version', nVersion))
-echo(`changelog & feature 版本号修改完成。`)
+fs.writeFileSync(pathChangelog, changelogJson.replace(VERSION_TAG, nVersion));
+fs.writeFileSync(pathFeature, featureJson.replace(VERSION_TAG, nVersion));
+echo(`changelog & feature 版本号修改完成。`);
 
 const doExec = async (commit) => {
   const res = exec(commit);
@@ -49,6 +51,6 @@ const doExec = async (commit) => {
   await doExec('git add .');
   await doExec(`git commit -m "docs: v${nVersion}"`);
   await doExec(`git push`);
-  await doExec(`git tag v${nVersion}`)
-  await doExec(`git push --tag`)
+  await doExec(`git tag v${nVersion}`);
+  await doExec(`git push --tag`);
 })();
