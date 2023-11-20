@@ -60,6 +60,7 @@ const myBackground = {
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}`;
     const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
+    const extraBackground1 = `.ztext pre,.ztext code{background: ${background}!important;}`
 
     // 添加 html[data-theme=dark] 前缀
     const addPrefix = (i: string) =>
@@ -77,7 +78,7 @@ const myBackground = {
     )}}`;
     return (
       addPrefix(
-        this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink
+        this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink + extraBackground1
       ) + menuTopBeforeAfter
     );
   },
@@ -112,7 +113,7 @@ const myBackground = {
   },
   /** 使用背景色1的元素名称 */
   cssNamesBackground1:
-    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover` +
+    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span` +
     `,body,.Input-wrapper,.toolbar-section button:hover` +
     `,.ContentItem-actions.ZVideoToolbar,.ZVideoToolbar button,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
     `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +
@@ -124,7 +125,7 @@ const myBackground = {
     `,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
-    `#${ID_BLOCK_LIST},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,.ctz-black-item,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
+    `#${ID_BLOCK_LIST},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
     `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +

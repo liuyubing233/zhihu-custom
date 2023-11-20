@@ -50,7 +50,7 @@ export interface IConfigHidden {
   hiddenDetailBadge?: boolean;
   // /** 隐藏详情回答人下赞同数 */
   // hiddenDetailVoters?: boolean;
-  /** 回答隐藏用户信息下下赞同用户和「你赞同过」 */
+  /** 回答隐藏用户信息下的附加信息，例如：「你赞同过」 */
   hiddenWhoVoters?: boolean;
   /** 隐藏详情回答人姓名 */
   hiddenDetailName?: boolean;
@@ -292,6 +292,12 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   articleCreateTimeToTop?: boolean;
   /** 购物链接显示设置 0 1 2 */
   linkShopping?: '0' | '1' | '2';
+  /** 列表标题文字大小 */
+  fontSizeForListTitle?: number;
+  /** 回答标题文字大小 */
+  fontSizeForAnswerTitle?: number;
+  /** 文章标题文字大小 */
+  fontSizeForArticleTitle?: number;
   /** 列表内容标准文字大小 */
   fontSizeForList?: number;
   /** 回答内容标准文字大小 */

@@ -1,3 +1,5 @@
+import { IOptionItem } from './common.type';
+
 /** 自定义元素类型 */
 export type IMyElement = HTMLAnchorElement &
   HTMLAreaElement &
@@ -73,3 +75,8 @@ export type IMyElement = HTMLAnchorElement &
   HTMLElement & {
     [key: string]: any;
   };
+
+export interface IRangeItem extends IOptionItem {
+  min: number;
+  max: number;
+}

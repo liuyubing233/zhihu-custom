@@ -1,23 +1,43 @@
 import { dom, domById, domC } from '../commons/tools';
-import { DEFAULT_FUNCTION, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL } from '../configs';
+import { DEFAULT_FUNCTION, FONT_SIZE_INPUT, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL, VERSION_RANGE } from '../configs';
 import { addBackgroundElements } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { myMenu } from '../methods/menu';
 import { store } from '../store';
-import { IContentItem } from '../types';
+import { IOptionItem, IRangeItem } from '../types';
 import { INNER_HTML } from '../web-resources';
 
-const createHiddenItemLabel = (item: IContentItem[] = []) => {
-  return (
-    item
-      .map(({ label, value }) => `<label style="display: inline-block;"><input class="ctz-i" name="${value}" type="checkbox" value="on" />${label}</label>`)
-      .join('') + `<br>`
-  );
+const createHiddenItem = (arrHidden: IOptionItem[][]) => {
+  if (!arrHidden || !arrHidden.length) return;
+  const itemLabel = (item: IOptionItem[] = []) => {
+    return (
+      item
+        .map(
+          ({ label, value }) =>
+            `<label style="display: inline-flex; algin-item: center;">` +
+            `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` +
+            label +
+            `</label>`
+        )
+        .join('') + `<br>`
+    );
+  };
+  return `<div class="ctz-set-content">${arrHidden.map((i) => itemLabel(i)).join('')}</div>`;
 };
 
-const createHiddenItem = (arrHidden: IContentItem[][]) => {
-  if (!arrHidden || !arrHidden.length) return;
-  return `<div class="ctz-set-content">${arrHidden.map((i) => createHiddenItemLabel(i)).join('')}</div>`;
+/** 加载滑动条输入框 */
+const initInputRange = () => {
+  const createRangeInnerHTML = ({ label, value, min, max }: IRangeItem) =>
+    `<div class="ctz-flex-wrap">` +
+    `${label ? `<div class="ctz-label">${label}</div>` : ''}` +
+    `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${value}" style="width: 300px" />` +
+    `<span id="${value}" style="margin: 0 8px">0</span>` +
+    `<span class="ctz-commit">滑动条范围: ${min} ~ ${max}</span>` +
+    `</div>`;
+
+  domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map((item) => createRangeInnerHTML(item)).join('');
+  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML({ label: '', value: 'zoomImageSize', min: 0, max: 1000 });
+  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML({ label: '', value: 'zoomListVideoSize', min: 0, max: 1000 });
 };
 
 /** 加载基础元素及绑定方法 */
@@ -31,7 +51,23 @@ export const initHTML = () => {
   myBlack.init();
   myMenu.init();
   addBackgroundElements();
+  initInputRange();
 
+  // 文字大小调节
+  domById('CTZ_FONT_SIZE_IN_ZHIHU')!.innerHTML = FONT_SIZE_INPUT.map(
+    (item) =>
+      `<div class="ctz-flex-wrap">` +
+      item
+        .map(
+          (i, index) =>
+            `<span class="ctz-label" style="margin-left: ${index !== 0 ? '24px' : '0'};">${i.label}</span>` +
+            `<input type="number" name="${i.value}" class="ctz-i-change" style="width: 80px;" />`
+        )
+        .join('') +
+      `</div>`
+  ).join('');
+
+  // 隐藏元素部分
   domById('CTZ_HIDDEN')!.innerHTML =
     `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('')}</div>` +
     `<div class="ctz-content-right">${HIDDEN_ARRAY.map(
