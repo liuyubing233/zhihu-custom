@@ -872,13 +872,14 @@
       const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
       const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}`;
       const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
+      const extraBackground1 = `.ztext pre,.ztext code{background: ${background}!important;}`;
       const addPrefix = (i) => i.split(",").map((i2) => `html[data-theme=dark] ${i2}`).join(",");
       const pageLearning = `.TopNavBar-fixMode-qXKMs,.index-tabWrap-4Smyx,.index-bannerItem-3o3D7,.LearningRouteCard-pathContent-j3jVv{background: ${background}!important;}.LearningRouteCard-pathItem-xin1f .LearningRouteCard-content-kw2RW .LearningRouteCard-title-do7ND{color: ${color}!important;}`;
       const menuTopBeforeAfter = `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(
         background2
       )}}`;
       return addPrefix(
-        this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink
+        this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink + extraBackground1
       ) + menuTopBeforeAfter;
     },
     light: function(lightKey) {
