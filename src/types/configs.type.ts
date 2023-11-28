@@ -197,6 +197,8 @@ export interface IConfigFilter {
   removeItemAboutArticle?: boolean;
   /** 屏蔽视频 */
   removeItemAboutVideo?: boolean;
+  /** 列表屏蔽想法 */
+  removeItemAboutPin?: boolean;
   /** 屏蔽列表提问 */
   removeItemQuestionAsk?: boolean;
   /** 关注列表过滤低于以下赞的内容 */

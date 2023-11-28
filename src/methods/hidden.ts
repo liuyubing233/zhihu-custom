@@ -47,7 +47,8 @@ export const myHidden: IMyHidden = {
     hiddenQuestionActions: '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}',
     hiddenReward: '.Reward{display: none!important;}',
     hiddenZhuanlanTag: '.Post-topicsAndReviewer{display: none!important;}',
-    hiddenListImg: `.RichContent-cover,.HotItem-img{display:none!important;}` + `.HotItem-metrics--bottom{position: initial!important;}`,
+    hiddenListImg:
+      `.RichContent-cover,.HotItem-img,.TopstoryItem .Image-Wrapper-Preview{display:none!important;}` + `.HotItem-metrics--bottom{position: initial!important;}`,
     hiddenReadMoreText: '.ContentItem-more{font-size:0!important;}',
     hiddenAD: '.TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}',
     hiddenAnswers:

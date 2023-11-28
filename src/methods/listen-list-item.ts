@@ -16,6 +16,7 @@ export const myListenListItem = {
       filterKeywords = [],
       blockWordsAnswer = [],
       removeItemAboutVideo,
+      removeItemAboutPin,
       removeItemAboutArticle,
       removeLessVote,
       lessVoteNumber = 0,
@@ -65,7 +66,8 @@ export const myListenListItem = {
       // 列表种类过滤
       const haveVideo = nodeItemContent.classList.contains('ZVideoItem') && removeItemAboutVideo;
       const haveArticle = nodeItemContent.classList.contains('ArticleItem') && removeItemAboutArticle;
-      (haveVideo || haveArticle) && !message && (message = '列表种类屏蔽');
+      const haveTip = nodeItemContent.classList.contains('PinItem') && removeItemAboutPin;
+      (haveVideo || haveArticle || haveTip) && !message && (message = `列表种类屏蔽，${nodeItemContent.classList.value}`);
       // 屏蔽低赞内容
       if (removeLessVote && !message) {
         (cardContent['upvote_num'] || 0) < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num']}`);
