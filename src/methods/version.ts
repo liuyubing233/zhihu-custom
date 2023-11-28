@@ -93,9 +93,10 @@ export const myVersion = {
   /** 内容标题添加类别显示 */
   vQuestionTitleTag: function () {
     const pfConfig = store.getConfig();
+    const cssTag = 'margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff';
     return fnReturnStr(
       `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}` +
-        `.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}` +
+        `.TopstoryItem .PinItem::before{content:'想法';background:#9c27b0;${cssTag}}.PinItem>.ContentItem-title{margin-top:4px;}` +
         `.ZvideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}` +
         `.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}` +
         `.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}` +
