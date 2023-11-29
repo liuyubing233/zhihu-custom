@@ -22,6 +22,25 @@ if (!changeVersion[status]) {
   return;
 }
 
+/** 时间格式化 */
+const timeFormatter = (formatter = 'YYYY-MM-DD') => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const min = date.getMinutes();
+  const sec = date.getSeconds();
+  const preArr = (num) => (String(num).length !== 2 ? '0' + String(num) : String(num));
+  return formatter
+    .replace(/YYYY/g, String(year))
+    .replace(/MM/g, preArr(month))
+    .replace(/DD/g, preArr(day))
+    .replace(/HH/g, preArr(hour))
+    .replace(/mm/g, preArr(min))
+    .replace(/ss/g, preArr(sec));
+};
+
 const nVersion = changeVersion[status];
 const regExpVersion = new RegExp(`("version":\\s*")([\\d\\.]+)(")`);
 const pathPackageJson = path.join(__dirname, '../package.json');
@@ -29,13 +48,10 @@ const packageJson = fs.readFileSync(pathPackageJson).toString();
 fs.writeFileSync(pathPackageJson, packageJson.replace(regExpVersion, `$1${nVersion}$3`));
 echo(`package.json 文件版本号修改完成。\r\n原版本号: ${prevVersion}，新版本号: ${nVersion}`);
 
-const pathChangelog = path.join(__dirname, '../docs/changelog.md');
-const pathFeature = path.join(__dirname, '../docs/feature.md');
+const pathChangelog = path.join(__dirname, '../CHANGELOG.md');
 const changelogJson = fs.readFileSync(pathChangelog).toString();
-const featureJson = fs.readFileSync(pathFeature).toString();
-fs.writeFileSync(pathChangelog, changelogJson.replace(VERSION_TAG, nVersion));
-fs.writeFileSync(pathFeature, featureJson.replace(VERSION_TAG, nVersion));
-echo(`changelog & feature 版本号修改完成。`);
+fs.writeFileSync(pathChangelog, changelogJson.replace(VERSION_TAG, nVersion + '\n\n`' + timeFormatter() + '`'));
+echo(`CHANGELOG 内容修改完成。`);
 
 const doExec = async (commit) => {
   const res = exec(commit);

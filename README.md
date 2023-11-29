@@ -6,9 +6,7 @@
 
 请先确认已安装 <a href="https://www.tampermonkey.net/" target="_blank">tampermonkey</a> 脚本管理器后，再安装本助手
 
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/docs/feature.md" target="_blank">功能添加日志</a>
-
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/docs/changelog.md" target="_blank">系统更新日志</a>
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
 
 <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/docs/Q%26A.md" target="_blank">部分问题解答</a>
 
@@ -138,7 +136,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 #### 个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注
 
-***注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面***
+**_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面_**
 
 <img src="https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none" width="1024" />
 
