@@ -8,7 +8,7 @@
 
 <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
 
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/docs/Q%26A.md" target="_blank">部分问题解答</a>
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md" target="_blank">部分问题解答</a>
 
 <a href="https://github.com/liuyubing233/zhihu-custom/tree/main" target="_blank">Github</a>
 
