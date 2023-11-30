@@ -27,17 +27,28 @@ const createHiddenItem = (arrHidden: IOptionItem[][]) => {
 
 /** 加载滑动条输入框 */
 const initInputRange = () => {
-  const createRangeInnerHTML = ({ label, value, min, max }: IRangeItem) =>
-    `<div class="ctz-flex-wrap">` +
+  const createRangeInnerHTML = (label: string, value: string, min: number, max: number) =>
+    `<div class="ctz-flex-wrap ctz-range-${value}">` +
     `${label ? `<div class="ctz-label">${label}</div>` : ''}` +
     `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${value}" style="width: 300px" />` +
     `<span id="${value}" style="margin: 0 8px">0</span>` +
     `<span class="ctz-commit">滑动条范围: ${min} ~ ${max}</span>` +
     `</div>`;
 
-  domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map((item) => createRangeInnerHTML(item)).join('');
-  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML({ label: '', value: 'zoomImageSize', min: 0, max: 1000 });
-  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML({ label: '', value: 'zoomListVideoSize', min: 0, max: 1000 });
+  const versionCallback = (item: IRangeItem, index: number) => {
+    return (
+      createRangeInnerHTML(item.label, item.value, item.min, item.max) +
+      createRangeInnerHTML(item.percentLabel, item.percentValue, item.percentMin, item.percentMax) +
+      `<label class="ctz-flex-wrap">
+        <span class="ctz-label">${item.percentChooseLabel}</span>
+        <input class="ctz-i" name="${item.percentChooseValue}" type="checkbox" value="on" />
+      </label>` +
+      `<div class="ctz-commit" style="${index < VERSION_RANGE.length - 1 ? 'border-bottom: 1px solid #e0e0e0;' : 'margin:0;'}padding:8px 0;"><b>${item.desc}</b></div>`
+    );
+  };
+  domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(versionCallback).join('');
+  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML('', 'zoomImageSize', 0, 1000);
+  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML('', 'zoomListVideoSize', 0, 1000);
 };
 
 /** 加载基础元素及绑定方法 */

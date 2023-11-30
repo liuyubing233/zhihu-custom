@@ -260,10 +260,22 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   showBlockUser?: boolean;
   /** 列表页面内容宽度 */
   versionHome?: string;
+  /** 列表页面内容宽度是否使用百分比 */
+  versionHomeIsPercent?: boolean;
+  /** 列表页面内容宽度百分比内容 */
+  versionHomePercent?: string;
   /** 回答页面内容宽度 */
   versionAnswer?: string;
+  /** 回答页面内容宽度是否使用百分比 */
+  versionAnswerIsPercent?: boolean;
+  /** 回答页面内容宽度百分比内容 */
+  versionAnswerPercent?: string;
   /** 文章页面内容宽度 */
   versionArticle?: string;
+  /** 文章页面内容宽度是否使用百分比 */
+  versionArticleIsPercent?: boolean;
+  /** 文章页面内容宽度百分比内容 */
+  versionArticlePercent?: string;
   /** 图片尺寸自定义类型 0 1 2 */
   zoomImageType?: '0' | '1' | '2';
   /** 图片尺寸自定义大小 */

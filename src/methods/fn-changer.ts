@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { domById } from '../commons/tools';
+import { dom, domById } from '../commons/tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
 import { loadBackground, onUseThemeDark } from './background';
 import { myHidden } from './hidden';
@@ -23,6 +23,9 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'versionHome',
     'versionAnswer',
     'versionArticle',
+    'versionHomePercent',
+    'versionAnswerPercent',
+    'versionArticlePercent',
     'fontSizeForListTitle',
     'fontSizeForAnswerTitle',
     'fontSizeForArticleTitle',
@@ -41,6 +44,19 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     myListenListItem.restart();
     onUseThemeDark();
   };
+
+  const rangeChoosePercent = () => {
+    const rangeName = name.replace('IsPercent', '');
+    const rangeNamePercent = `${rangeName}Percent`;
+    const domRange = dom(`.ctz-range-${rangeName}`);
+    const domRangePercent = dom(`.ctz-range-${rangeNamePercent}`);
+    if (domRange && domRangePercent) {
+      domRange.style.display = checked ? 'none' : 'flex';
+      domRangePercent.style.display = !checked ? 'none' : 'flex';
+    }
+    myVersion.change();
+  }
+
   const ob: Record<string, Function> = {
     [INPUT_NAME_THEME]: changeBackground,
     [INPUT_NAME_ThEME_LIGHT]: changeBackground,
@@ -63,6 +79,9 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       myListenListItem.restart();
     },
     articleCreateTimeToTop: addArticleCreateTimeToTop,
+    versionHomeIsPercent: rangeChoosePercent,
+    versionAnswerIsPercent: rangeChoosePercent,
+    versionArticleIsPercent: rangeChoosePercent,
   };
   await myStorage.configUpdateItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);

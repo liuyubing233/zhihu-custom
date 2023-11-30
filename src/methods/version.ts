@@ -1,5 +1,5 @@
 import { domById, fnInitDomStyle, fnReturnStr } from '../commons/tools';
-import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
+import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, VERSION_MIN_WIDTH } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight } from '../types';
 import { isDark } from './background';
@@ -36,19 +36,38 @@ export const myVersion = {
   },
   /** 页面内容宽度修改 */
   versionWidth: function () {
-    const { commitModalSizeSameVersion, versionHome, versionAnswer, versionArticle } = store.getConfig();
-    const cssModal = '.css-1aq8hf9';
-    const sizeModalInAnswer = fnReturnStr(`${cssModal}{width: ${versionAnswer || '1000'}px!important;}`, location.pathname.includes('question'));
+    const {
+      commitModalSizeSameVersion,
+      versionHome,
+      versionAnswer,
+      versionArticle,
+      versionHomeIsPercent,
+      versionHomePercent,
+      versionAnswerIsPercent,
+      versionAnswerPercent,
+      versionArticleIsPercent,
+      versionArticlePercent,
+    } = store.getConfig();
+
+    const widthHome = !versionHomeIsPercent ? `${versionHome || '1000'}px` : `${versionHomePercent || '70'}vw`;
+    const widthAnswer = !versionAnswerIsPercent ? `${versionAnswer || '1000'}px` : `${versionAnswerPercent || '70'}vw`;
+    const widthArticle = !versionArticleIsPercent ? `${versionArticle || '1000'}px` : `${versionArticlePercent || '70'}vw`;
+    const rightArticleActions = !versionArticleIsPercent
+      ? `calc(50vw - ${+(versionArticle || '1000') / 2 + 150}px)`
+      : `calc(50vw - ${+(versionArticlePercent || '70') / 2}vw + 150px)`;
+
+    const CLASS_MODAL = '.css-1aq8hf9';
+    const sizeModalInAnswer = fnReturnStr(`${CLASS_MODAL}{width: ${widthAnswer}!important;}`, location.pathname.includes('question'));
     const sizeModal = fnReturnStr(
-      `.Topstory-body ${cssModal}{width: ${versionHome || '1000'}px!important;}` +
+      `.Topstory-body ${CLASS_MODAL}{width: ${widthHome}!important;}` +
         sizeModalInAnswer +
-        `.PostIndex-body ${cssModal}{width: ${versionArticle || '1000'}px!important;}`,
+        `.PostIndex-body ${CLASS_MODAL}{width: ${widthArticle}!important;}`,
       commitModalSizeSameVersion
     );
 
     // 首页列表页面内容宽度
     const sizeHome =
-      `.Topstory-mainColumn,.Search-container{width: ${versionHome || '1000'}px!important;}` +
+      `.Topstory-mainColumn,.Search-container{width: ${widthHome}!important;}` +
       `.SearchMain{flex: 1}` +
       `.Topstory-container,.css-knqde{width: fit-content!important;}`;
     // 回答详情页面内容宽度
@@ -56,14 +75,20 @@ export const myVersion = {
       `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
       `.Question-main .Question-sideColumn{margin-left: 12px;}` +
       `.QuestionHeader .QuestionHeader-content{margin: 0 auto;padding: 0;max-width: initial!important;}` +
-      `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${versionAnswer || '1000'}px!important;}` +
+      `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${widthAnswer}!important;}` +
       `.Question-main .List-item{border-bottom: 1px dashed #ddd;}`;
     // 文章页面内容宽度
     const sizeArticle =
       `.zhuanlan .AuthorInfo{max-width: initial;}` +
-      `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div{width: ${versionArticle || '1000'}px!important;}` +
-      `.zhuanlan .Post-SideActions{right: calc(50vw - ${+(versionArticle || '1000') / 2 + 150}px)}`;
-    return sizeHome + sizeAnswer + sizeArticle + sizeModal;
+      `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div{width: ${widthArticle}!important;}` +
+      `.zhuanlan .Post-SideActions{right: ${rightArticleActions}}`;
+    /** 页面最小宽度 */
+    const sizeMinWidth =
+      `.Topstory-mainColumn,.Search-container,.Question-main,.QuestionHeader-footer-inner` +
+      `,.QuestionHeader .QuestionHeader-content,.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div` +
+      `,${CLASS_MODAL},.Topstory-body ${CLASS_MODAL},.PostIndex-body ${CLASS_MODAL}` +
+      `{min-width: ${VERSION_MIN_WIDTH}px!important;}`;
+    return sizeHome + sizeAnswer + sizeArticle + sizeModal + sizeMinWidth;
   },
   /** 图片尺寸修改 */
   vImgSize: function () {
