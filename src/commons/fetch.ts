@@ -1,5 +1,6 @@
 import { store } from '../store';
 import { IZhihuUserinfo } from '../types';
+import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 import { fnLog } from './tools';
 
 /** 调用「不感兴趣」接口 */
@@ -41,4 +42,20 @@ export const fetchGetUserinfo = (): Promise<IZhihuUserinfo> => {
         resolve(res);
       });
   });
+};
+
+/** 知乎列表内容接口 */
+export const REG_URL_FOR_ZHIHU_LIST = /\/api\/v3\/feed\/topstory\/recommend/;
+export const fetchSelf = (url: string, headers?: HeadersInit) => {
+  fetch(url, {
+    method: 'GET',
+    headers: new Headers(headers),
+  })
+    .then((response) => response.json())
+    .then((res: any) => {
+      if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
+        const nTargets = res.data.map((i: any) => i.target);
+        store.setZhihuListTargets(nTargets as IZhihuListTargetItem[]);
+      }
+    });
 };

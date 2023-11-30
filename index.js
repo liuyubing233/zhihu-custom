@@ -239,6 +239,8 @@
       };
       /** 用户页面列表接口缓存 */
       this.homeFetch = {};
+      /** 知乎列表接口或JSON内容缓存 */
+      this.zhihuListTargets = [];
       this.setConfig = this.setConfig.bind(this);
       this.getConfig = this.getConfig.bind(this);
       this.setHistory = this.setHistory.bind(this);
@@ -257,6 +259,9 @@
       this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
       this.getHomeFetch = this.getHomeFetch.bind(this);
       this.setHomeFetch = this.setHomeFetch.bind(this);
+      this.setZhihuListTargets = this.setZhihuListTargets.bind(this);
+      this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
+      this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
     }
     setConfig(inner) {
       this.pfConfig = inner;
@@ -311,6 +316,15 @@
     }
     setHomeFetch(key, content) {
       this.homeFetch[key] = content;
+    }
+    setZhihuListTargets(data) {
+      this.zhihuListTargets = this.zhihuListTargets.concat(data);
+    }
+    clearZhihuListTargets() {
+      this.zhihuListTargets = [];
+    }
+    getZhihuListTargets() {
+      return this.zhihuListTargets;
     }
   };
   var store = new Store();
@@ -415,6 +429,18 @@
       ).then((response) => response.json()).then((res) => {
         resolve(res);
       });
+    });
+  };
+  var REG_URL_FOR_ZHIHU_LIST = /\/api\/v3\/feed\/topstory\/recommend/;
+  var fetchSelf = (url, headers) => {
+    fetch(url, {
+      method: "GET",
+      headers: new Headers(headers)
+    }).then((response) => response.json()).then((res) => {
+      if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
+        const nTargets = res.data.map((i) => i.target);
+        store.setZhihuListTargets(nTargets);
+      }
     });
   };
   var fnHiddenDom = (lessNum, ev, log) => {
@@ -1244,7 +1270,7 @@
       const pfConfig = store.getConfig();
       const cssTag = "margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff";
       return fnReturnStr(
-        `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}.TopstoryItem .PinItem::before{content:'想法';background:#9c27b0;${cssTag}}.PinItem>.ContentItem-title{margin-top:4px;}.ZvideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}.TopstoryQuestionAskItem .ContentItem-title::before{content:'提问';background:#533b77}`,
+        `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}.TopstoryItem .PinItem::before{content:'想法';background:#9c27b0;${cssTag}}.PinItem>.ContentItem-title{margin-top:4px;}.ZvideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}.ZVideoItem .ContentItem-title::before{content:'视频';background:#12c2e9}.ArticleItem .ContentItem-title::before{content:'文章';background:#00965e}.ContentItem .ContentItem-title::before{margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff}.TopstoryQuestionAskItem .ContentItem-title::before{content:'提问';background:#533b77}`,
         pfConfig.questionTitleTag
       );
     },
@@ -2046,7 +2072,7 @@
       const btn = dom(classSelectButton);
       if (btn) {
         try {
-          this.observer?.disconnect();
+          this.observer && this.observer.disconnect();
         } catch {
         }
         const buConfig = { attribute: true, attributeFilter: ["aria-expanded"] };
@@ -2343,8 +2369,10 @@
   var myListenListItem = {
     index: 0,
     init: async function() {
-      const { getConfig, getHistory, getUserinfo } = store;
+      const { getConfig, getHistory, getUserinfo, getZhihuListTargets } = store;
       const pfConfig = getConfig();
+      const listTargets = getZhihuListTargets();
+      console.log("listTargets", listTargets);
       const {
         filterKeywords = [],
         blockWordsAnswer = [],
@@ -2460,6 +2488,18 @@
     restart: function() {
       this.reset();
       this.init();
+    },
+    getScriptData: function() {
+      try {
+        const initialData = JSON.parse(domById("js-initialData")?.innerHTML ?? "{}");
+        const answers = initialData.initialState.entities.answers;
+        const nTargets = [];
+        for (let key in answers) {
+          nTargets.push(answers[key]);
+        }
+        store.setZhihuListTargets(nTargets);
+      } catch (err) {
+      }
     },
     replaceBlockWord: function(innerText, nodeItemContent, blockWords, title, byWhat) {
       if (innerText) {
@@ -2700,7 +2740,7 @@
       hiddenZhuanlanTag: ".Post-topicsAndReviewer{display: none!important;}",
       hiddenListImg: `.RichContent-cover,.HotItem-img,.TopstoryItem .Image-Wrapper-Preview{display:none!important;}.HotItem-metrics--bottom{position: initial!important;}`,
       hiddenReadMoreText: ".ContentItem-more{font-size:0!important;}",
-      hiddenAD: ".TopstoryItem--advertCard,.Pc-card,.Pc-word{display: none!important;}",
+      hiddenAD: ".TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer{display: none!important;}",
       hiddenAnswers: `.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine,.TopstoryQuestionAskItem .RichContent .RichContent-inner,.HotItem-content .HotItem-excerpt,.Topstory-recommend .ZVideoItem-video, .Topstory-recommend .VideoAnswerPlayer{display: none;}`,
       hiddenListVideoContent: `.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}`,
       hiddenZhuanlanActions: ".RichContent-actions.is-fixed>.ContentItem-actions{display: none;}",
@@ -3132,10 +3172,13 @@
           });
         }
         if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
-          setHomeFetch("answer", { url, header: opt?.headers });
+          setHomeFetch("answer", { url, header: opt.headers });
         }
         if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
-          setHomeFetch("articles", { url, header: opt?.headers });
+          setHomeFetch("articles", { url, header: opt.headers });
+        }
+        if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
+          fetchSelf(url, opt.headers);
         }
         return originFetch(url, opt);
       };
@@ -3149,6 +3192,7 @@
     window.addEventListener(
       "DOMContentLoaded",
       async () => {
+        myListenListItem.getScriptData();
         if (!isHaveHeadWhenInit) {
           await onDocumentStart();
         }
