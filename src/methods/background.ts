@@ -47,7 +47,7 @@ const myBackground = {
       `,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div` +
       `,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon` +
       `,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1` +
-      `,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div` +
+      `,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.css-10ub9de,.css-1wbvd3d,.css-1f4cz9u,.css-y42e6l` +
       `,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span` +
       `,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2` +
       `,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1` +
@@ -55,12 +55,17 @@ const myBackground = {
       `{color: ${color}!important}`;
 
     const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
-    const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path{color: ${background2}!important}`;
-    const cssColorLink = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link{color: deepskyblue!important;}.css-1tu59u4{fill: deepskyblue!important;}`; // 超链接颜色，解决黑夜模式下看不清的问题
+    const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
+    const cssColorLink =
+      `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more` +
+      `,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a` +
+      `,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover` +
+      `{color: deepskyblue!important;}` +
+      `.css-1tu59u4{fill: deepskyblue!important;}`; // 超链接颜色，解决黑夜模式下看不清的问题
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}`;
     const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
-    const extraBackground1 = `.ztext pre,.ztext code{background: ${background}!important;}`
+    const extraBackground1 = `.ztext pre,.ztext code{background: ${background}!important;}`;
 
     // 添加 html[data-theme=dark] 前缀
     const addPrefix = (i: string) =>
@@ -78,7 +83,16 @@ const myBackground = {
     )}}`;
     return (
       addPrefix(
-        this.doSetCSS(background, background2) + cssColor1 + cssCB2 + cssC2 + cssBorderB + cssDialogBorder + pageLearning + cssColorUseBg1 + cssColorLink + extraBackground1
+        this.doSetCSS(background, background2) +
+          cssColor1 +
+          cssCB2 +
+          cssC2 +
+          cssBorderB +
+          cssDialogBorder +
+          pageLearning +
+          cssColorUseBg1 +
+          cssColorLink +
+          extraBackground1
       ) + menuTopBeforeAfter
     );
   },
@@ -143,7 +157,7 @@ const myBackground = {
     ',.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div' +
     `,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white` +
     `,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike` +
-    `,.Popover-content,.Notifications-footer,.Messages-footer,.Popover-arrow:after` +
+    `,.Popover-content,.Notifications-footer,.Messages-footer,.Popover-arrow:after,.css-97fdvh>div` +
     `,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div)` +
     `,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6` +
     `,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root` +
