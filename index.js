@@ -437,18 +437,6 @@
       });
     });
   };
-  var REG_URL_FOR_ZHIHU_LIST = /\/api\/v3\/feed\/topstory\/recommend/;
-  var fetchSelf = (url, headers) => {
-    fetch(url, {
-      method: "GET",
-      headers: new Headers(headers)
-    }).then((response) => response.json()).then((res) => {
-      if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
-        const nTargets = res.data.map((i) => i.target);
-        store.setZhihuListTargets(nTargets);
-      }
-    });
-  };
   var fnHiddenDom = (lessNum, ev, log) => {
     ev.style.display = "none";
     fnLog(log);
@@ -2445,8 +2433,6 @@
     init: async function() {
       const { getConfig, getHistory, getUserinfo, getZhihuListTargets } = store;
       const pfConfig = getConfig();
-      const listTargets = getZhihuListTargets();
-      console.log("listTargets", listTargets);
       const {
         filterKeywords = [],
         blockWordsAnswer = [],
@@ -3267,9 +3253,6 @@
         }
         if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
           setHomeFetch("articles", { url, header: opt.headers });
-        }
-        if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
-          fetchSelf(url, opt.headers);
         }
         return originFetch(url, opt);
       };

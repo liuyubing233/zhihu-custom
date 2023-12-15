@@ -13,9 +13,7 @@ export const myListenListItem = {
   init: async function () {
     const { getConfig, getHistory, getUserinfo, getZhihuListTargets } = store;
     const pfConfig = getConfig();
-    const listTargets = getZhihuListTargets();
-    console.log('listTargets', listTargets);
-
+    // const listTargets = getZhihuListTargets();
     const {
       filterKeywords = [],
       blockWordsAnswer = [],

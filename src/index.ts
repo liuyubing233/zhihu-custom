@@ -1,4 +1,4 @@
-import { REG_URL_FOR_ZHIHU_LIST, fetchGetUserinfo, fetchSelf } from './commons/fetch';
+import { fetchGetUserinfo } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domA, domById, fnInitDomStyle, fnLog, pathnameHasFn, throttle } from './commons/tools';
@@ -86,9 +86,9 @@ import { INNER_CSS } from './web-resources';
         setHomeFetch('articles', { url, header: opt!.headers! });
       }
 
-      if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
-        fetchSelf(url, opt!.headers!);
-      }
+      // if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
+      //   fetchSelf(url, opt!.headers!);
+      // }
 
       return originFetch(url, opt);
     };
