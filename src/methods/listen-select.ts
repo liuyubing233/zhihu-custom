@@ -38,7 +38,7 @@ export const myListenSelect: IMyListenSelect = {
     const btn = dom(classSelectButton);
     if (btn) {
       try {
-        this.observer?.disconnect();
+        this.observer && this.observer.disconnect();
       } catch {}
       const buConfig = { attribute: true, attributeFilter: ['aria-expanded'] };
       this.observer = new MutationObserver(() => {

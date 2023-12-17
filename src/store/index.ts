@@ -17,6 +17,7 @@ import {
   IZhihuUserinfo,
 } from '../types';
 import { IPfConfig } from '../types/configs.type';
+import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 
 class Store {
   /** 修改器配置 */
@@ -32,6 +33,12 @@ class Store {
     versionHome: '1000',
     versionAnswer: '1000',
     versionArticle: '1000',
+    versionHomeIsPercent: false,
+    versionHomePercent: '70',
+    versionAnswerIsPercent: false,
+    versionAnswerPercent: '70',
+    versionArticleIsPercent: false,
+    versionArticlePercent: '70',
     zoomImageType: '0',
     zoomImageSize: '600',
     showGIFinDialog: true,
@@ -86,7 +93,9 @@ class Store {
   };
 
   /** 用户页面列表接口缓存 */
-  homeFetch: IHomeFetch = {}
+  homeFetch: IHomeFetch = {};
+  /** 知乎列表接口或JSON内容缓存 */
+  zhihuListTargets: IZhihuListTargetItem[] = [];
 
   constructor() {
     // to fix this is undefined
@@ -106,8 +115,11 @@ class Store {
     this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
     this.getStorageConfig = this.getStorageConfig.bind(this);
     this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
-    this.getHomeFetch = this.getHomeFetch.bind(this)
-    this.setHomeFetch = this.setHomeFetch.bind(this)
+    this.getHomeFetch = this.getHomeFetch.bind(this);
+    this.setHomeFetch = this.setHomeFetch.bind(this);
+    this.setZhihuListTargets = this.setZhihuListTargets.bind(this);
+    this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
+    this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
   }
 
   setConfig(inner: IPfConfig) {
@@ -164,10 +176,20 @@ class Store {
   }
 
   getHomeFetch(key: IKeyofHomeFetch): IHomeFetchContent | undefined {
-    return this.homeFetch[key]
+    return this.homeFetch[key];
   }
   setHomeFetch(key: IKeyofHomeFetch, content: IHomeFetchContent) {
     this.homeFetch[key] = content;
+  }
+
+  setZhihuListTargets(data: IZhihuListTargetItem[]) {
+    this.zhihuListTargets = this.zhihuListTargets.concat(data);
+  }
+  clearZhihuListTargets() {
+    this.zhihuListTargets = []
+  }
+  getZhihuListTargets() {
+    return this.zhihuListTargets;
   }
 }
 

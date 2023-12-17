@@ -1,17 +1,19 @@
 import { fnHiddenDom, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { domA, domC, domP } from '../commons/tools';
+import { domA, domById, domC, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
+import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 import { isDark } from './background';
 
 /** 监听列表内容 - 过滤  */
 export const myListenListItem = {
   index: 0,
   init: async function () {
-    const { getConfig, getHistory, getUserinfo } = store;
+    const { getConfig, getHistory, getUserinfo, getZhihuListTargets } = store;
     const pfConfig = getConfig();
+    // const listTargets = getZhihuListTargets();
     const {
       filterKeywords = [],
       blockWordsAnswer = [],
@@ -135,10 +137,25 @@ export const myListenListItem = {
   },
   reset: function () {
     this.index = 0;
+    // if (store.getZhihuListTargets().length > 25) {
+    //   store.clearZhihuListTargets();
+    //   this.getScriptData();
+    // }
   },
   restart: function () {
     this.reset();
     this.init();
+  },
+  getScriptData: function () {
+    try {
+      const initialData = JSON.parse(domById('js-initialData')?.innerHTML ?? '{}');
+      const answers = initialData.initialState.entities.answers;
+      const nTargets = [];
+      for (let key in answers) {
+        nTargets.push(answers[key]);
+      }
+      store.setZhihuListTargets(nTargets as IZhihuListTargetItem[]);
+    } catch (err) {}
   },
   replaceBlockWord: function (innerText: string, nodeItemContent: Element, blockWords: string[], title: string, byWhat: string) {
     if (innerText) {

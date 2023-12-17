@@ -18,5 +18,7 @@
     "Zhuanlan"
   ],
   "prettier.printWidth": 160,
-  "editor.codeActionsOnSave": { "source.organizeImports": true }
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
 }

@@ -1,6 +1,6 @@
-import { dom, domA, domById } from "../commons/tools";
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from "../configs";
-import { store } from "../store";
+import { dom, domA, domById } from '../commons/tools';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, VERSION_RANGE } from '../configs';
+import { store } from '../store';
 
 /** 回填数据，供每次打开使用 */
 export const echoData = () => {
@@ -33,4 +33,14 @@ export const echoData = () => {
   domA(`.${CLASS_INPUT_CLICK}`).forEach(doEcho);
   domA(`.${CLASS_INPUT_CHANGE}`).forEach(doEcho);
   echo.text(dom('[name="globalTitle"]'));
+
+  VERSION_RANGE.forEach((item) => {
+    const isPercent = pfConfig[item.percentChooseValue];
+    const domRange = dom(`.ctz-range-${item.value}`);
+    const domRangePercent = dom(`.ctz-range-${item.percentValue}`);
+    if (domRange && domRangePercent) {
+      domRange.style.display = isPercent ? 'none' : 'flex';
+      domRangePercent.style.display = !isPercent ? 'none' : 'flex';
+    }
+  });
 };
