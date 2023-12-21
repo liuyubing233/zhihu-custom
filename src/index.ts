@@ -74,21 +74,21 @@ import { INNER_CSS } from './web-resources';
           ...prevHeaders,
           ...opt.headers,
         });
-      }
 
-      if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
-        // 如果为用户页面的 回答栏
-        setHomeFetch('answer', { url, header: opt!.headers! });
-      }
+        if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
+          // 如果为用户页面的 回答栏
+          setHomeFetch('answer', { url, header: opt.headers });
+        }
 
-      if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
-        // 如果为用户页面的 文章栏
-        setHomeFetch('articles', { url, header: opt!.headers! });
-      }
+        if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+          // 如果为用户页面的 文章栏
+          setHomeFetch('articles', { url, header: opt.headers });
+        }
 
-      // if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
-      //   fetchSelf(url, opt!.headers!);
-      // }
+        // if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
+        //   fetchSelf(url, opt!.headers!);
+        // }
+      }
 
       return originFetch(url, opt);
     };
@@ -105,7 +105,7 @@ import { INNER_CSS } from './web-resources';
   window.addEventListener(
     'DOMContentLoaded',
     async () => {
-      myListenListItem.getScriptData()
+      myListenListItem.getScriptData();
       // 如果脚本注入时 document.head 未加载完成则在页面渲染后重新进行加载
       if (!isHaveHeadWhenInit) {
         await onDocumentStart();
