@@ -1,4 +1,4 @@
-import { IHiddenArray } from "../types";
+import { IHiddenArray } from '../types';
 
 /** 屏蔽带有标签的回答 */
 export const HIDDEN_ANSWER_TAG: Record<string, string> = {
@@ -111,11 +111,11 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         { value: 'hiddenDetailName', label: '回答人姓名' },
         { value: 'hiddenDetailBadge', label: '回答人简介' },
         { value: 'hiddenDetailFollow', label: '回答人关注按钮' },
-        // { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
+        { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
         { value: 'hiddenQuestionSide', label: '问题关注和被浏览数' },
         { value: 'hiddenFixedActions', label: '回答悬浮操作栏' },
         { value: 'hiddenAnswerItemActions', label: '回答内容操作栏' },
-        { value: 'hiddenAnswerItemTime', label: '回答底部发布编辑时间' },
+        { value: 'hiddenAnswerItemTime', label: '回答底部发布编辑时间 · IP 属地' },
         { value: 'hiddenReward', label: '赞赏按钮' },
         { value: 'hidden618HongBao', label: '618红包链接' },
       ],
