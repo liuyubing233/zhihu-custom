@@ -22,7 +22,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
     desc: '',
     content: [
       [{ value: 'hiddenAD', label: '广告' }],
-      [{ value: 'hiddenTopAD', label: '顶部推广（只能物理隐藏，会存在颜色错误）' }],
+      // [{ value: 'hiddenTopAD', label: '顶部推广（只能物理隐藏，会存在颜色错误）' }],
       [
         { value: 'hiddenLogo', label: 'logo' },
         { value: 'hiddenHeader', label: '顶部悬浮模块' },

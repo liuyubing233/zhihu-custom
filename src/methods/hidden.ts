@@ -117,7 +117,7 @@ export const myHidden: IMyHidden = {
     hiddenQuestionComment: '.QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}',
     hiddenQuestionMore: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
     hiddenOpenButton: '#CTZ_OPEN_BUTTON{display: none;}',
-    hiddenTopAD: '.App-main .Topstory>div:first-of-type:not(.Topstory-container){display: none}',
+    // hiddenTopAD: '.App-main .Topstory>div:first-of-type:not(.Topstory-container){display: none}',
     hiddenCommitReply: '.Comments-container .css-140jo2 button:first-of-type{display:none;}',
     hiddenCommitVote: '.Comments-container .css-140jo2 button:last-of-type{display:none;}',
     hiddenCommitBottom: '.Comments-container .css-140jo2{display:none;}',

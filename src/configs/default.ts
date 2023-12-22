@@ -34,6 +34,7 @@ export const CONFIG_FILTER_DEFAULT: IConfigFilter = {
   lessVoteNumberDetail: 100,
   removeAnonymousAnswer: false,
   removeMyOperateAtFollow: false,
+  removeTopAD: true,
 };
 
 /** 悬浮模块默认配置 */
