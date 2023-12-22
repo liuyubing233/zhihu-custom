@@ -103,6 +103,7 @@ export const myHidden: IMyHidden = {
     hiddenHomeFooter: '.Topstory .Footer,.Topstory footer{display: none;}',
     hiddenAnswerItemActions: '.Question-main .ContentItem-actions{display: none;}',
     hiddenAnswerItemTime: '.Question-main .ContentItem-time{display: none;margin: 0;}',
+    hiddenAnswerItemTimeButHaveIP: '.Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}',
     hiddenAppHeaderTabHome: '.AppHeader-Tab:nth-of-type(1){display: none}',
     hiddenAppHeaderTabZhi: '.AppHeader-Tab:nth-of-type(2){display: none}',
     hiddenAppHeaderTabVIP: '.AppHeader-Tab:nth-of-type(3){display: none}',
