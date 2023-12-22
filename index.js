@@ -725,13 +725,18 @@
     '回答视频下载<div class="ctz-commit">回答内容视频左上角会生成一个下载按钮，点击即可下载视频</div>',
     '收藏夹内容导出为 PDF<div class="ctz-commit">点击收藏夹名称上方「生成PDF」按钮，可导出当前页码的收藏夹详细内容</div>',
     '当前回答和文章导出为 PDF 功能<div class="ctz-commit">对应为内容上方的「导出当前回答」「导出当前文章」按钮</div>',
-    '回答内容按照点赞数和评论数排序<div class="ctz-commit">6-1. 点击回答右上角的排序按钮，点击【点赞数排序】或【评论数排序】后，页面刷新等待排序完成；<br/>6-2. 因为知乎并没有开放点赞数和评论排序参数，所以只能每次加载后按照当前的数据进行页面排序；<br/>6-3. 为了防止页面错乱，只对前20条进行排序，后续新加载的数据不做排序处理</div>',
+    // '回答内容按照点赞数和评论数排序' +
+    //   '<div class="ctz-commit">' +
+    //   '6-1. 点击回答右上角的排序按钮，点击【点赞数排序】或【评论数排序】后，页面刷新等待排序完成；<br/>' +
+    //   '6-2. 因为知乎并没有开放点赞数和评论排序参数，所以只能每次加载后按照当前的数据进行页面排序；<br/>' +
+    //   '6-3. 为了防止页面错乱，只对前20条进行排序，后续新加载的数据不做排序处理' +
+    //   '</div>',
     '个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注<div class="ctz-commit">由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面</div>',
     "推荐页内容链接根据有新到旧进行缓存，可缓存 100 条；缓存内容在「编辑器 - 历史记录 - 推荐列表缓存」",
     "可保存 100 条浏览历史记录链接，内容为打开的问题、文章、视频；「编辑器 - 历史记录 - 浏览历史记录」",
     '静态图片弹窗观看点击键盘左右直接切换到上一张或下一张<div class="ctz-commit">查看图片点击预览大图时，如果当前回答或者文章中存在多个图片，可以使用键盘方向键左右切换图片显示</div>',
-    "用户页面回答栏导出当前页码用户回答的功能",
-    "用户页面文章栏导出当前页码用户文章的功能"
+    "用户主页-回答-导出当前页回答的功能",
+    "用户主页-文章-导出当前页文章的功能"
   ];
   var ICO_URL = {
     zhihu: "https://static.zhihu.com/heifetz/favicon.ico",
@@ -2100,90 +2105,6 @@
       }
     }
   };
-  var myListenSelect = {
-    isSortFirst: true,
-    observer: void 0,
-    keySort: "default",
-    /** 添加回答排序 */
-    answerSortIds: {
-      "Select1-0": { key: "default", name: "默认排序" },
-      "Select1-1": { key: "update", name: "按时间排序" },
-      "Select1-2": { key: "vote", name: "点赞数排序" },
-      "Select1-3": { key: "comment", name: "评论数排序" }
-    },
-    sortKeys: { vote: "点赞数排序", comment: "评论数排序" },
-    /** 加载监听问题详情里的.Select-button按钮 */
-    init: function() {
-      const classSelectButton = ".Select-button";
-      const { href } = location;
-      if (this.keySort === "vote" || this.keySort === "comment") {
-        const elementBtn = dom(classSelectButton);
-        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, this.sortKeys[this.keySort]));
-      }
-      const clickSort = (id) => {
-        myListenAnswerItem.reset();
-        const { key, name } = this.answerSortIds[id];
-        this.keySort = key;
-        const elementBtn = dom(classSelectButton);
-        elementBtn && (elementBtn.innerHTML = elementBtn.innerHTML.replace(/[\u4e00-\u9fa5]+(?=<svg)/, name));
-        if (key === "vote" || key === "comment") {
-          location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, "") + "?sort=" + key;
-        } else if (key === "default") {
-          /\?sort=/.test(href) && (location.href = href.replace(/(?<=question\/\d+)[?\/][\w\W]*/, ""));
-        }
-      };
-      const btn = dom(classSelectButton);
-      if (btn) {
-        try {
-          this.observer && this.observer.disconnect();
-        } catch {
-        }
-        const buConfig = { attribute: true, attributeFilter: ["aria-expanded"] };
-        this.observer = new MutationObserver(() => {
-          const elementSelect = dom(".Answers-select");
-          if (btn.getAttribute("aria-expanded") === "true" && elementSelect) {
-            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-2", innerHTML: "点赞数排序" }));
-            elementSelect.appendChild(domC("button", { className: "Select-option", tabindex: "-1", role: "option", id: "Select1-3", innerHTML: "评论数排序" }));
-            domA(".Select-option").forEach((ev) => {
-              ev.onclick = () => clickSort(ev.id);
-            });
-          }
-        });
-        this.observer.observe(btn, buConfig);
-      }
-    },
-    addSort: function() {
-      const keySort = this.keySort;
-      if ((keySort === "vote" || keySort === "comment") && this.isSortFirst) {
-        const element = dom(".List>div:nth-child(2)>div");
-        if (!element)
-          return;
-        const arrElement = Array.from(element.querySelectorAll(".List-item:not(.PlaceHolder)")).sort((a, b) => {
-          const answerItemA = a.querySelector(".AnswerItem");
-          const extraA = answerItemA ? answerItemA.getAttribute("data-za-extra-module") || "{}" : "{}";
-          const contentA = JSON.parse(extraA).card.content;
-          const answerItemB = b.querySelector(".AnswerItem");
-          const extraB = answerItemB ? answerItemB.getAttribute("data-za-extra-module") || "{}" : "{}";
-          const contentB = JSON.parse(extraB).card.content;
-          switch (keySort) {
-            case "vote":
-              return contentA.upvote_num - contentB.upvote_num;
-            case "comment":
-              return contentA.comment_num - contentB.comment_num;
-            default:
-              return 1;
-          }
-        });
-        const listItem = element.querySelector(".List-item:not(.PlaceHolder)");
-        listItem && listItem.remove();
-        const eleFirst = element.querySelector(":first-child");
-        arrElement.forEach((item, index) => {
-          element.insertBefore(item, index === 0 ? eleFirst : arrElement[index - 1]);
-        });
-        this.isSortFirst = false;
-      }
-    }
-  };
   var timeFormatter = (time, formatter = "YYYY-MM-DD HH:mm:ss") => {
     if (!time)
       return "";
@@ -2304,7 +2225,6 @@
     init: function() {
       const { getConfig } = store;
       const conf = getConfig();
-      myListenSelect.addSort();
       const {
         removeLessVoteDetail,
         lessVoteNumberDetail = 0,
@@ -2738,9 +2658,9 @@
     myListenSearchListItem.init();
     myListenAnswerItem.init();
     pathnameHasFn({
-      question: () => {
-        myListenSelect.init();
-      },
+      // question: () => {
+      //   myListenSelect.init();
+      // },
       collection: () => myCollectionExport.init()
     });
     globalTitle !== document.title && changeTitle();
@@ -3250,9 +3170,6 @@
       const prevHeaders = getStorageConfigItem("fetchHeaders");
       const originFetch = fetch;
       unsafeWindow.fetch = (url, opt) => {
-        if (/\/answers\?/.test(url) && (myListenSelect.keySort === "vote" || myListenSelect.keySort === "comment") && myListenSelect.isSortFirst) {
-          url = url.replace(/(?<=limit=)\d+(?=&)/, "20");
-        }
         if (opt && opt.headers) {
           setStorageConfigItem("fetchHeaders", {
             ...prevHeaders,
@@ -3267,10 +3184,6 @@
         }
         return originFetch(url, opt);
       };
-      const matched = search.match(/(?<=sort=)\w+/);
-      if (/\/question/.test(pathname) && matched) {
-        myListenSelect.keySort = matched[0];
-      }
       setUserinfo(await fetchGetUserinfo());
     }
     onDocumentStart();
@@ -3310,7 +3223,6 @@
         }
         pathnameHasFn({
           question: () => {
-            myListenSelect.init();
             addQuestionCreatedAndModifiedTime();
             const nodeQuestionAnswer = dom(".QuestionAnswer-content");
             nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
