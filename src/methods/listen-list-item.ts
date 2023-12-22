@@ -1,7 +1,7 @@
 import { fnHiddenDom, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { domA, domById, domC, domP } from '../commons/tools';
-import { CLASS_NOT_INTERESTED, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
+import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { IZhihuListTargetItem } from '../types/zhihu-list.type';
@@ -31,6 +31,7 @@ export const myListenListItem = {
       themeDark = EThemeDark.夜间护眼一,
       themeLight = EThemeLight.默认,
       removeMyOperateAtFollow,
+      listOutputToQuestion,
     } = pfConfig;
     const elements = domA('.TopstoryItem');
     let lessNum = 0;
@@ -44,17 +45,30 @@ export const myListenListItem = {
       const nodeItem = elements[i];
       const nodeItemContent = nodeItem.querySelector('.ContentItem');
       if (!nodeItem.scrollHeight || !nodeItemContent) continue;
+      /** 是否视频回答 */
+      const isVideo = nodeItemContent.classList.contains('ZVideoItem');
+      /** 是否文章 */
+      const isArticle = nodeItemContent.classList.contains('ArticleItem');
+      /** 是否想法 */
+      const isTip = nodeItemContent.classList.contains('PinItem');
+      const nodeContentItemTitle = nodeItem.querySelector('.ContentItem-title');
       // 列表外置不感兴趣按钮
       if (listOutPutNotInterested) {
-        const elementNotInterested = domC('button', { innerText: '不感兴趣', className: CLASS_NOT_INTERESTED });
-        const nodeContentItemTitle = nodeItem.querySelector('.ContentItem-title');
-        !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(elementNotInterested);
+        const nDomNotInterested = domC('button', { innerText: '不感兴趣', className: CLASS_NOT_INTERESTED });
+        !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(nDomNotInterested);
+      }
+      // 推荐列表显示「直达问题」按钮
+      if (listOutputToQuestion) {
+        const nDomToQuestion = domC('button', { innerText: '直达问题', className: CLASS_TO_QUESTION });
+        if (!isVideo && !isArticle && !isTip) {
+          !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(nDomToQuestion);
+        }
       }
       try {
         dataZop = JSON.parse(nodeItemContent.getAttribute('data-zop') || '{}');
         cardContent = JSON.parse(nodeItemContent.getAttribute('data-za-extra-module') || '{}').card.content;
       } catch {}
-      const { itemId = '', title = '', type = '' } = dataZop || {};
+      const { title = '' } = dataZop || {};
       // 关注列表屏蔽自己的操作
       if (removeMyOperateAtFollow && nodeItem.classList.contains('TopstoryItem-isFollow')) {
         try {
@@ -66,10 +80,9 @@ export const myListenListItem = {
         } catch {}
       }
       // 列表种类过滤
-      const haveVideo = nodeItemContent.classList.contains('ZVideoItem') && removeItemAboutVideo;
-      const haveArticle = nodeItemContent.classList.contains('ArticleItem') && removeItemAboutArticle;
-      const haveTip = nodeItemContent.classList.contains('PinItem') && removeItemAboutPin;
-      (haveVideo || haveArticle || haveTip) && !message && (message = `列表种类屏蔽，${nodeItemContent.classList.value}`);
+      ((isVideo && removeItemAboutVideo) || (isArticle && removeItemAboutArticle) || (isTip && removeItemAboutPin)) &&
+        !message &&
+        (message = `列表种类屏蔽，${nodeItemContent.classList.value}`);
       // 屏蔽低赞内容
       if (removeLessVote && !message) {
         (cardContent['upvote_num'] || 0) < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num']}`);

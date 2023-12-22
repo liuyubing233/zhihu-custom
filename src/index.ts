@@ -35,7 +35,7 @@ import { INNER_CSS } from './web-resources';
 (function () {
   if (needRedirect()) return;
   const T0 = performance.now();
-  const { pathname, hostname, host, search } = location;
+  const { hostname, host } = location;
   const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo, setHomeFetch } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */

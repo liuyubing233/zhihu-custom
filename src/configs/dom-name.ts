@@ -15,6 +15,8 @@ export const CLASS_INPUT_CHANGE = 'ctz-i-change';
 export const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** 不感兴趣外置按钮 */
 export const CLASS_NOT_INTERESTED = 'ctz-not-interested';
+/** 推荐列表显示「直达问题」按钮 */
+export const CLASS_TO_QUESTION = 'ctz-to-question';
 
 /** 回答收起展开插入的类名 */
 export const OB_CLASS_FOLD = {
