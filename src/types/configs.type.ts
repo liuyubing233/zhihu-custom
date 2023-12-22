@@ -213,6 +213,8 @@ export interface IConfigFilter {
   removeAnonymousAnswer?: boolean;
   /** 关注列表屏蔽自己的操作 */
   removeMyOperateAtFollow?: boolean;
+  /** 屏蔽顶部活动推广 */
+  removeTopAD?: boolean;
 }
 
 /** 悬浮模块默认配置 */

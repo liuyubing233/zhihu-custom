@@ -24,6 +24,7 @@ import { myListenAnswerItem } from './methods/listen-answer-item';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { myListenSelect } from './methods/listen-select';
+import { doEventClickElement } from './methods/mouse-events';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './methods/time';
@@ -61,9 +62,10 @@ import { INNER_CSS } from './web-resources';
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
 
     const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
+
     // 拦截 fetch 方法，获取接口内容，唯一
     const originFetch = fetch;
-    unsafeWindow.fetch = (url: string, opt) => {
+    unsafeWindow.fetch = (url: any, opt) => {
       if (/\/answers\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
         // 如果是自定义排序则回答页码增加到20条
         url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
@@ -112,6 +114,7 @@ import { INNER_CSS } from './web-resources';
       }
 
       if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
+        const { removeTopAD } = getConfig();
         // 不考虑在 iframe 中的情况
         initHTML();
         initOperate();
@@ -128,14 +131,18 @@ import { INNER_CSS } from './web-resources';
         dom('[name="useSimple"]')!.onclick = async function () {
           const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
           if (!isUse) return;
-          const config = getConfig();
           myStorage.configUpdate({
-            ...config,
+            ...getConfig(),
             ...CONFIG_SIMPLE,
           });
           onDocumentStart();
           initData();
         };
+
+        if (removeTopAD) {
+          // 模拟鼠标点击顶部活动推广关闭按钮
+          doEventClickElement(dom('svg.css-1p094v5'));
+        }
       }
 
       pathnameHasFn({
