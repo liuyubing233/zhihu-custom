@@ -36,7 +36,6 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 	- [屏蔽设置页面添加一键移除所有屏蔽选项](#屏蔽设置页面添加一键移除所有屏蔽选项)
 	- [移除登录弹窗](#移除登录弹窗)
 	- [收藏夹内容、回答、文章导出为 PDF](#收藏夹内容回答文章导出为-pdf)
-	- [回答内容按照点赞数和评论数排序](#回答内容按照点赞数和评论数排序)
 	- [个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注](#个人主页我关注的问题我关注的收藏可以一键移除或将移除的内容添加回关注)
 	- [一键邀请功能](#一键邀请功能)
 	- [复制代码块删除版权信息](#复制代码块删除版权信息)
@@ -124,7 +123,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 回答、文章也存在「导出当前回答」和「导出当前文章」按钮
 
-#### 回答内容按照点赞数和评论数排序
+<!-- #### 回答内容按照点赞数和评论数排序
 
 在页面加载完成后点击回答右上角的排序按钮，点击【点赞数排序】或【评论数排序】后，页面刷新等待排序完成。
 
@@ -132,7 +131,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <p style="color: red;">为了防止页面错乱，只对前20条进行排序，后续新加载的数据不做排序处理</p>
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211122&authkey=%21AA_kctRgW9tNjAQ&width=1024&height=999999" width="1024" height="auto" />
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211122&authkey=%21AA_kctRgW9tNjAQ&width=1024&height=999999" width="1024" height="auto" /> -->
 
 #### 个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注
 

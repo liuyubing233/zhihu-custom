@@ -5,7 +5,6 @@ import { store } from '../store';
 import { IMyElement, IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './export-PDF';
-import { myListenSelect } from './listen-select';
 import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
 import { initVideoDownload } from './video';
@@ -16,7 +15,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
   init: function () {
     const { getConfig } = store;
     const conf = getConfig();
-    myListenSelect.addSort();
+    // myListenSelect.addSort();
     const {
       removeLessVoteDetail,
       lessVoteNumberDetail = 0,

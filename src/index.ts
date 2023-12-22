@@ -23,7 +23,6 @@ import { keydownNextImage } from './methods/image';
 import { myListenAnswerItem } from './methods/listen-answer-item';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
-import { myListenSelect } from './methods/listen-select';
 import { doEventClickElement } from './methods/mouse-events';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
@@ -66,10 +65,10 @@ import { INNER_CSS } from './web-resources';
     // 拦截 fetch 方法，获取接口内容，唯一
     const originFetch = fetch;
     unsafeWindow.fetch = (url: any, opt) => {
-      if (/\/answers\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
-        // 如果是自定义排序则回答页码增加到20条
-        url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
-      }
+      // if (/\/v4\/questions\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
+      //   // 如果是自定义排序则回答页码增加到20条
+      //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
+      // }
       // 缓存 header
       if (opt && opt.headers) {
         setStorageConfigItem('fetchHeaders', {
@@ -95,10 +94,10 @@ import { INNER_CSS } from './web-resources';
       return originFetch(url, opt);
     };
 
-    const matched = search.match(/(?<=sort=)\w+/);
-    if (/\/question/.test(pathname) && matched) {
-      myListenSelect.keySort = matched[0];
-    }
+    // const matched = search.match(/(?<=sort=)\w+/);
+    // if (/\/question/.test(pathname) && matched) {
+    //   myListenSelect.keySort = matched[0];
+    // }
     setUserinfo(await fetchGetUserinfo());
   }
   onDocumentStart();
@@ -147,7 +146,7 @@ import { INNER_CSS } from './web-resources';
 
       pathnameHasFn({
         question: () => {
-          myListenSelect.init();
+          // myListenSelect.init();
           addQuestionCreatedAndModifiedTime();
           const nodeQuestionAnswer = dom('.QuestionAnswer-content');
           nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);

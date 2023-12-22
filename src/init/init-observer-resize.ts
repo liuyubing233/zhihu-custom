@@ -5,7 +5,6 @@ import { previewGIF } from '../methods/image';
 import { myListenAnswerItem } from '../methods/listen-answer-item';
 import { myListenListItem } from '../methods/listen-list-item';
 import { myListenSearchListItem } from '../methods/listen-search-list-item';
-import { myListenSelect } from '../methods/listen-select';
 import { changeTitle } from '../methods/page-title';
 import { store } from '../store';
 import { initImagePreview } from './init-image-preview';
@@ -44,9 +43,9 @@ function resizeFun() {
   myListenSearchListItem.init();
   myListenAnswerItem.init();
   pathnameHasFn({
-    question: () => {
-      myListenSelect.init();
-    },
+    // question: () => {
+    //   myListenSelect.init();
+    // },
     collection: () => myCollectionExport.init(),
   });
 
