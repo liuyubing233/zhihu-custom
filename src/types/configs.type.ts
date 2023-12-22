@@ -346,4 +346,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   videoUseLink?: boolean;
   /** 弹窗宽度匹配相应页面 */
   commitModalSizeSameVersion?: boolean;
+  /** 推荐列表显示「直达问题」按钮 */
+  listOutputToQuestion?: boolean;
 }

@@ -45,6 +45,7 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 	- [基本设置](#基本设置)
 		- [更改网页和标题](#更改网页和标题)
 	- [显示设置](#显示设置)
+		- [推荐列表显示「直达问题」按钮](#推荐列表显示直达问题按钮)
 		- [内容标题添加类别显示](#内容标题添加类别显示)
 		- [推荐列表显示「不感兴趣」按钮](#推荐列表显示不感兴趣按钮)
 		- [列表更多「···」按钮移动到题目右侧](#列表更多按钮移动到题目右侧)
@@ -178,6 +179,10 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 <img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=1024&height=639&cropmode=none" width="1024" />
 
 #### 显示设置
+
+##### 推荐列表显示「直达问题」按钮
+
+`基础设置-显示修改`添加`推荐列表显示「直达问题」按钮`，用以直接跳转到所有回答页，而不是仅仅的推荐回答页面。
 
 ##### 内容标题添加类别显示
 

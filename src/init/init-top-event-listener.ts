@@ -1,6 +1,6 @@
 import { doFetchNotInterested } from '../commons/fetch';
 import { dom, domP } from '../commons/tools';
-import { CLASS_NOT_INTERESTED } from '../configs';
+import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
 import { myBlack } from '../methods/black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from '../methods/export-PDF';
 import { updateItemTime } from '../methods/time';
@@ -25,15 +25,26 @@ export const initTopStoryRecommendEvent = () => {
     const target = event.target as HTMLElement;
     const nodeContentItem = domP(target, 'class', 'ContentItem');
     if (!nodeContentItem) return;
-    const { listOutPutNotInterested, showBlockUser, topExportContent } = store.getConfig();
+    const { showBlockUser, topExportContent } = store.getConfig();
     // 点击外置「不感兴趣」按钮
-    if (listOutPutNotInterested && target.classList.contains(CLASS_NOT_INTERESTED)) {
+    if (target.classList.contains(CLASS_NOT_INTERESTED)) {
       const dataZopJson = nodeContentItem.getAttribute('data-zop');
       const { itemId = '', type = '' } = JSON.parse(dataZopJson || '{}');
       doFetchNotInterested({ id: itemId, type });
       const nodeTopStoryItem = domP(target, 'class', 'TopstoryItem');
       nodeTopStoryItem && (nodeTopStoryItem.style.display = 'none');
     }
+
+    // 点击「直达问题」按钮
+    if (target.classList.contains(CLASS_TO_QUESTION)) {
+      const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
+      const pathAnswer = domUrl ? domUrl.getAttribute('content') || '' : '';
+      const pathQuestion = pathAnswer.replace(/\/answer[\W\w]+/, '');
+      if (pathQuestion) {
+        window.open(pathQuestion);
+      }
+    }
+
     // 列表内容展示更多
     if (canFindTargeted(target)) {
       setTimeout(() => {
