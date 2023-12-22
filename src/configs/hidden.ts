@@ -115,9 +115,12 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         { value: 'hiddenQuestionSide', label: '问题关注和被浏览数' },
         { value: 'hiddenFixedActions', label: '回答悬浮操作栏' },
         { value: 'hiddenAnswerItemActions', label: '回答内容操作栏' },
-        { value: 'hiddenAnswerItemTime', label: '回答底部发布编辑时间 · IP 属地' },
         { value: 'hiddenReward', label: '赞赏按钮' },
         { value: 'hidden618HongBao', label: '618红包链接' },
+      ],
+      [
+        { value: 'hiddenAnswerItemTime', label: '回答底部发布编辑时间和IP' },
+        { value: 'hiddenAnswerItemTimeButHaveIP', label: '回答底部发布编辑时间（保留IP）' },
       ],
       [
         { value: 'hiddenAnswerRightFooter', label: '详情右侧信息栏' },

@@ -120,6 +120,8 @@ export interface IConfigHidden {
   hiddenAnswerItemActions?: boolean;
   /** 隐藏回答下方发布编辑时间 */
   hiddenAnswerItemTime?: boolean;
+  /** 回答底部发布编辑时间（保留IP） */
+  hiddenAnswerItemTimeButHaveIP?: boolean;
   /** 发现模块-隐藏首页 */
   hiddenAppHeaderTabHome?: boolean;
   /** 发现模块-隐藏知学堂 */
