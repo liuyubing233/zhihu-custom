@@ -12,14 +12,14 @@ export const updateTopVote = (nodeItem?: HTMLElement) => {
   if (+vote === 0) return;
   const className = 'ctz-top-vote';
   const domVotePrev = nodeContentItemMeta.querySelector(`.${className}`);
-  const innerHTML = `${vote} 个赞`;
+  const innerHTML = `${vote} 人赞同了该回答`;
   if (domVotePrev) {
     domVotePrev.innerHTML = innerHTML;
   } else {
     const domVote = domC('div', {
       className,
       innerHTML,
-      style: 'font-size: 14px;padding-top: 2px;',
+      style: 'font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0;',
     });
     nodeContentItemMeta.appendChild(domVote);
     const metaObserver = new MutationObserver(() => {

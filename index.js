@@ -95,7 +95,7 @@
     hiddenHotItemLabel: true,
     hiddenDetailAvatar: true,
     hiddenDetailBadge: true,
-    // hiddenDetailVoters: true,
+    hiddenDetailVoters: false,
     hiddenWhoVoters: true,
     hiddenDetailName: true,
     hiddenDetailFollow: true,
@@ -682,11 +682,11 @@
           { value: "hiddenDetailName", label: "回答人姓名" },
           { value: "hiddenDetailBadge", label: "回答人简介" },
           { value: "hiddenDetailFollow", label: "回答人关注按钮" },
-          // { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
+          { value: "hiddenDetailVoters", label: "回答人下赞同数" },
           { value: "hiddenQuestionSide", label: "问题关注和被浏览数" },
           { value: "hiddenFixedActions", label: "回答悬浮操作栏" },
           { value: "hiddenAnswerItemActions", label: "回答内容操作栏" },
-          { value: "hiddenAnswerItemTime", label: "回答底部发布编辑时间" },
+          { value: "hiddenAnswerItemTime", label: "回答底部发布编辑时间 · IP 属地" },
           { value: "hiddenReward", label: "赞赏按钮" },
           { value: "hidden618HongBao", label: "618红包链接" }
         ],
@@ -2200,14 +2200,14 @@
       return;
     const className = "ctz-top-vote";
     const domVotePrev = nodeContentItemMeta.querySelector(`.${className}`);
-    const innerHTML = `${vote} 个赞`;
+    const innerHTML = `${vote} 人赞同了该回答`;
     if (domVotePrev) {
       domVotePrev.innerHTML = innerHTML;
     } else {
       const domVote = domC("div", {
         className,
         innerHTML,
-        style: "font-size: 14px;padding-top: 2px;"
+        style: "font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0;"
       });
       nodeContentItemMeta.appendChild(domVote);
       const metaObserver = new MutationObserver(() => {
@@ -2749,7 +2749,7 @@
       hiddenHotItemLabel: ".HotItem-label{display: none;}",
       hiddenDetailAvatar: ".AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}",
       hiddenDetailBadge: ".AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}",
-      // hiddenDetailVoters: '.AnswerItem .Voters button{display: none;}',
+      hiddenDetailVoters: ".AnswerItem .css-dvccr2{display: none;}",
       hiddenWhoVoters: ".css-1vqda4a{display: none!important;}",
       hiddenDetailName: ".AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}",
       hiddenDetailFollow: ".AnswerItem .AuthorInfo .FollowButton{display: none;}",

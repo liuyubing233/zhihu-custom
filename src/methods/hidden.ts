@@ -67,7 +67,7 @@ export const myHidden: IMyHidden = {
     hiddenDetailAvatar:
       '.AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}',
     hiddenDetailBadge: '.AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}',
-    // hiddenDetailVoters: '.AnswerItem .Voters button{display: none;}',
+    hiddenDetailVoters: '.AnswerItem .css-dvccr2{display: none;}',
     hiddenWhoVoters: '.css-1vqda4a{display: none!important;}',
     hiddenDetailName: '.AnswerItem .AuthorInfo .AuthorInfo-head{display: none;}',
     hiddenDetailFollow: '.AnswerItem .AuthorInfo .FollowButton{display: none;}',
