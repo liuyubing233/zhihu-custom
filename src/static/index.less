@@ -792,8 +792,10 @@
     display: none;
   }
 }
-.SearchBar {
-  flex: 1;
+
+// 原包裹 SearchBar 的 div, :empty 为内部没有元素
+.css-1acwmmj:empty {
+  display: none!important;
 }
 
 .position-suspensionSearch {
