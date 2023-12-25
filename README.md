@@ -24,6 +24,9 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 <img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211127&authkey=%21AMkK7HHwEAS2dXE&width=1024&height=999999" width="1024" height="auto" />
 
+**如果遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。**
+<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211390&authkey=%21APXxEgxXWKitgqs&width=824&height=116" width="824" height="116" />
+
 ## 插件目录
 
 插件目录跳转失效请移步<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">这里</a>查看
