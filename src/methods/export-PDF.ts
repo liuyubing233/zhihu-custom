@@ -49,6 +49,8 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, innerHTML: string, btn
 /** 收藏夹打印 */
 export const myCollectionExport = {
   init: function () {
+    const { fetchInterceptStatus } = store.getConfig();
+    if (!fetchInterceptStatus) return;
     const { pathname } = location;
     const elementBox = domC('div', { className: `${this.className}`, innerHTML: this.element });
     const nodeThis = dom(`.${this.className}`);
@@ -146,7 +148,7 @@ export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
 
 /** 文章添加导出为 PDF 按钮 */
 export const addButtonForArticleExportPDF = (nodeArticleItem: HTMLElement) => {
-  const {topExportContent} = store.getConfig()
+  const { topExportContent } = store.getConfig();
   const nClass = 'ctz-export-article';
   const prevButton = nodeArticleItem.querySelector(`.${nClass}`);
   prevButton && prevButton.remove();
@@ -194,9 +196,10 @@ const doHomeFetch = (url: string, headers: HeadersInit): Promise<any[]> => {
 
 /** 当前用户所有回答导出为PDF */
 export const addBtnForExportPeopleAnswer = () => {
+  const { fetchInterceptStatus } = store.getConfig();
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-answer-once');
-  if (!domListHeader || domButtonOnce) return;
+  if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
   const nDomButtonOnce = domC('button', {
     innerHTML: '导出当前页回答',
     className: `ctz-button ctz-people-export-answer-once`,
@@ -219,9 +222,10 @@ export const addBtnForExportPeopleAnswer = () => {
 
 /** 当前用户文章导出为PDF */
 export const addBtnForExportPeopleArticles = () => {
+  const { fetchInterceptStatus } = store.getConfig();
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-articles-once');
-  if (!domListHeader || domButtonOnce) return;
+  if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
   const nDomButtonOnce = domC('button', {
     innerHTML: '导出当前页文章',
     className: `ctz-button ctz-people-export-articles-once`,

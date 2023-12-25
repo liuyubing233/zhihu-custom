@@ -32,6 +32,7 @@ export const myListenListItem = {
       themeLight = EThemeLight.默认,
       removeMyOperateAtFollow,
       listOutputToQuestion,
+      fetchInterceptStatus,
     } = pfConfig;
     const elements = domA('.TopstoryItem');
     let lessNum = 0;
@@ -53,7 +54,7 @@ export const myListenListItem = {
       const isTip = nodeItemContent.classList.contains('PinItem');
       const nodeContentItemTitle = nodeItem.querySelector('.ContentItem-title');
       // 列表外置不感兴趣按钮
-      if (listOutPutNotInterested) {
+      if (listOutPutNotInterested && fetchInterceptStatus) {
         const nDomNotInterested = domC('button', { innerText: '不感兴趣', className: CLASS_NOT_INTERESTED });
         !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(nDomNotInterested);
       }
