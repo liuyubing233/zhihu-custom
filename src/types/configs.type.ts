@@ -252,6 +252,8 @@ export interface IConfigSuspension {
 /** 配置参数 */
 export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspension {
   [key: string]: any;
+  /** 是否开启接口拦截，默认开启 */
+  fetchInterceptStatus?: boolean;
   /** 自定义样式 */
   customizeCss?: string;
   /** 知乎默认 | 自动展开所有回答 | 默认收起所有长回答 */

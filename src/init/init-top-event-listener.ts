@@ -10,6 +10,7 @@ import { store } from '../store';
 
 /** 推荐列表最外层绑定事件 */
 export const initTopStoryRecommendEvent = () => {
+  const { fetchInterceptStatus } = store.getConfig();
   const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow');
   if (!nodeTopStoryRecommend) return;
   const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
@@ -25,9 +26,9 @@ export const initTopStoryRecommendEvent = () => {
     const target = event.target as HTMLElement;
     const nodeContentItem = domP(target, 'class', 'ContentItem');
     if (!nodeContentItem) return;
-    const { showBlockUser, topExportContent } = store.getConfig();
+    const { showBlockUser, topExportContent, fetchInterceptStatus } = store.getConfig();
     // 点击外置「不感兴趣」按钮
-    if (target.classList.contains(CLASS_NOT_INTERESTED)) {
+    if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
       const dataZopJson = nodeContentItem.getAttribute('data-zop');
       const { itemId = '', type = '' } = JSON.parse(dataZopJson || '{}');
       doFetchNotInterested({ id: itemId, type });
@@ -50,9 +51,9 @@ export const initTopStoryRecommendEvent = () => {
       setTimeout(() => {
         updateTopVote(nodeContentItem);
         updateItemTime(nodeContentItem);
-        showBlockUser && myBlack.addButton(nodeContentItem.parentElement!);
+        showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeContentItem.parentElement!);
         initVideoDownload(nodeContentItem);
-        if (topExportContent) {
+        if (topExportContent && fetchInterceptStatus) {
           addButtonForAnswerExportPDF(nodeContentItem.parentElement!);
           addButtonForArticleExportPDF(nodeContentItem.parentElement!);
         }

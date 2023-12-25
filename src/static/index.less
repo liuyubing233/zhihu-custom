@@ -123,8 +123,20 @@
 
 .ctz-header {
   font-size: 16px;
-  line-height: 1.5;
   margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.ctz-top-operate {
+  flex: 1;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+#CTZ_FETCH_STATUS {
+  padding-right: 8px;
+  font-weight: bold;
 }
 
 .ctz-version {
@@ -133,7 +145,6 @@
 }
 
 #CTZ_CLOSE_DIALOG {
-  float: right;
   color: rgba(0, 0, 0, 0.45);
   font-weight: 600;
   line-height: 18px;
@@ -365,6 +376,9 @@
     }
   }
 }
+#CTZ_BACKGROUND_LIGHT {
+  color: #000;
+}
 
 .ctz-set-background {
   .ctz-commit {
@@ -461,6 +475,12 @@
     color: #4096ff;
     border-color: #4096ff;
   }
+}
+
+.ctz-button[size='small'] {
+  padding: 2px 6px;
+  font-size: 12px;
+  height: 24px;
 }
 
 .ctz-not-interested,
@@ -795,7 +815,7 @@
 
 // 原包裹 SearchBar 的 div, :empty 为内部没有元素
 .css-1acwmmj:empty {
-  display: none!important;
+  display: none !important;
 }
 
 .position-suspensionSearch {
@@ -925,4 +945,34 @@
     align-items: center;
     margin-bottom: 8px;
   }
+}
+
+.ctz-fetch-intercept .ctz-need-fetch {
+  display: none;
+}
+
+.ctz-fetch-intercept.ctz-fetch-intercept-close {
+  color: #b0b0b0 !important;
+  cursor: not-allowed;
+  span.ctz-need-fetch {
+    display: inline;
+  }
+  div.ctz-need-fetch {
+    display: block;
+  }
+  .ctz-remove-block {
+    cursor: not-allowed !important;
+  }
+  .ctz-black-item .ctz-remove-block:hover,
+  .ctz-black-item a:hover {
+    background: transparent !important;
+    color: #b0b0b0 !important;
+  }
+}
+
+.ctz-button:disabled {
+  border-color: #d0d0d0;
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+  cursor: not-allowed;
 }

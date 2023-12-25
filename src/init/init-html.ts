@@ -2,6 +2,7 @@ import { dom, domById, domC } from '../commons/tools';
 import { DEFAULT_FUNCTION, FONT_SIZE_INPUT, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL, VERSION_RANGE } from '../configs';
 import { addBackgroundElements } from '../methods/background';
 import { myBlack } from '../methods/black';
+import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
 import { myMenu } from '../methods/menu';
 import { store } from '../store';
 import { IOptionItem, IRangeItem } from '../types';
@@ -55,6 +56,7 @@ const initInputRange = () => {
 export const initHTML = () => {
   const { getUserinfo } = store;
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
+  initFetchInterceptStatus()
   dom('.ctz-version')!.innerText = `version: ${GM_info.script.version}`;
   dom('.ctz-footer')!.innerHTML = FOOTER_HTML;
   dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');

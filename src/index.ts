@@ -50,6 +50,8 @@ import { INNER_CSS } from './web-resources';
       return;
     }
 
+    const { fetchInterceptStatus } = getConfig();
+
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
     const config = getConfig();
@@ -60,45 +62,46 @@ import { INNER_CSS } from './web-resources';
     onInitStyleExtra();
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
 
-    const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
-
-    // 拦截 fetch 方法，获取接口内容，唯一
-    const originFetch = fetch;
-    unsafeWindow.fetch = (url: any, opt) => {
-      // if (/\/v4\/questions\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
-      //   // 如果是自定义排序则回答页码增加到20条
-      //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
-      // }
-      // 缓存 header
-      if (opt && opt.headers) {
-        setStorageConfigItem('fetchHeaders', {
-          ...prevHeaders,
-          ...opt.headers,
-        });
-
-        if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
-          // 如果为用户页面的 回答栏
-          setHomeFetch('answer', { url, header: opt.headers });
-        }
-
-        if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
-          // 如果为用户页面的 文章栏
-          setHomeFetch('articles', { url, header: opt.headers });
-        }
-
-        // if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
-        //   fetchSelf(url, opt!.headers!);
+    if (fetchInterceptStatus) {
+      const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
+      // 拦截 fetch 方法，获取接口内容，唯一
+      const originFetch = fetch;
+      unsafeWindow.fetch = (url: any, opt) => {
+        // if (/\/v4\/questions\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
+        //   // 如果是自定义排序则回答页码增加到20条
+        //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
         // }
-      }
+        // 缓存 header
+        if (opt && opt.headers) {
+          setStorageConfigItem('fetchHeaders', {
+            ...prevHeaders,
+            ...opt.headers,
+          });
 
-      return originFetch(url, opt);
-    };
+          if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
+            // 如果为用户页面的 回答栏
+            setHomeFetch('answer', { url, header: opt.headers });
+          }
 
-    // const matched = search.match(/(?<=sort=)\w+/);
-    // if (/\/question/.test(pathname) && matched) {
-    //   myListenSelect.keySort = matched[0];
-    // }
-    setUserinfo(await fetchGetUserinfo());
+          if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+            // 如果为用户页面的 文章栏
+            setHomeFetch('articles', { url, header: opt.headers });
+          }
+
+          // if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
+          //   fetchSelf(url, opt!.headers!);
+          // }
+        }
+
+        return originFetch(url, opt);
+      };
+
+      // const matched = search.match(/(?<=sort=)\w+/);
+      // if (/\/question/.test(pathname) && matched) {
+      //   myListenSelect.keySort = matched[0];
+      // }
+      setUserinfo(await fetchGetUserinfo());
+    }
   }
   onDocumentStart();
 

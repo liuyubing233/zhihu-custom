@@ -25,6 +25,7 @@ class Store {
     ...CONFIG_HIDDEN_DEFAULT,
     ...CONFIG_FILTER_DEFAULT,
     ...CONFIG_SUSPENSION,
+    fetchInterceptStatus: true,
     customizeCss: '',
     answerOpen: '',
     filterKeywords: [],

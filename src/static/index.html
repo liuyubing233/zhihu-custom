@@ -2,6 +2,10 @@
   <div class="ctz-header">
     <span>修改器</span>
     <span class="ctz-version"></span>
+    <div class="ctz-top-operate">
+      <span id="CTZ_FETCH_STATUS">状态获取中...</span>
+      <button class="ctz-button" id="CTZ_CHANGE_FETCH" size="small">切换接口拦截</button>
+    </div>
     <button id="CTZ_CLOSE_DIALOG"><i class="ctz-icon">&#xe61b;</i></button>
   </div>
   <div class="ctz-center">
@@ -90,8 +94,11 @@
                 </span>
                 <input class="ctz-i" name="questionTitleTag" type="checkbox" value="on" />
               </label>
-              <label class="ctz-flex-wrap">
-                <span class="ctz-label">推荐列表显示「不感兴趣」按钮</span>
+              <label class="ctz-flex-wrap ctz-fetch-intercept">
+                <span class="ctz-label">
+                  推荐列表显示「不感兴趣」按钮
+                  <span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>
+                </span>
                 <input class="ctz-i" name="listOutPutNotInterested" type="checkbox" value="on" />
               </label>
               <label class="ctz-flex-wrap">
@@ -401,7 +408,8 @@
         <div class="ctz-content-left">
           <a href="#CTZ_BASIS_BLOCK">黑名单设置</a>
         </div>
-        <div class="ctz-content-right">
+        <div class="ctz-content-right ctz-fetch-intercept">
+          <div class="ctz-alert-red ctz-need-fetch">接口拦截已关闭，此部分功能无法使用</div>
           <div id="CTZ_BASIS_BLOCK">
             <div class="ctz-set-title"><span>黑名单设置</span></div>
             <div class="ctz-set-content">

@@ -27,6 +27,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       removeAnonymousAnswer,
       topExportContent,
       blockWordsAnswer = [],
+      fetchInterceptStatus,
     } = conf;
 
     /** 添加功能 */
@@ -34,8 +35,8 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       if (!nodeItem) return;
       updateTopVote(nodeItem);
       updateItemTime(nodeItem);
-      showBlockUser && myBlack.addButton(nodeItem, initThis);
-      if (topExportContent) {
+      showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeItem, initThis);
+      if (topExportContent && fetchInterceptStatus) {
         addButtonForAnswerExportPDF(nodeItem);
         addButtonForArticleExportPDF(nodeItem);
       }
