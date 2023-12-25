@@ -50,8 +50,6 @@ import { INNER_CSS } from './web-resources';
       return;
     }
 
-    const { fetchInterceptStatus } = getConfig();
-
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
     const config = getConfig();
@@ -62,7 +60,10 @@ import { INNER_CSS } from './web-resources';
     onInitStyleExtra();
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
 
+    // 获取最新的配置需要在此以后
+    const { fetchInterceptStatus } = getConfig();
     if (fetchInterceptStatus) {
+      fnLog('已开启 fetch 接口拦截')
       const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
       // 拦截 fetch 方法，获取接口内容，唯一
       const originFetch = fetch;

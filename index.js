@@ -2629,7 +2629,6 @@
     });
   };
   var initTopStoryRecommendEvent = () => {
-    const { fetchInterceptStatus } = store.getConfig();
     const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow");
     if (!nodeTopStoryRecommend)
       return;
@@ -2646,8 +2645,8 @@
       const nodeContentItem = domP(target, "class", "ContentItem");
       if (!nodeContentItem)
         return;
-      const { showBlockUser, topExportContent, fetchInterceptStatus: fetchInterceptStatus2 } = store.getConfig();
-      if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus2) {
+      const { showBlockUser, topExportContent, fetchInterceptStatus } = store.getConfig();
+      if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
         const dataZopJson = nodeContentItem.getAttribute("data-zop");
         const { itemId = "", type = "" } = JSON.parse(dataZopJson || "{}");
         doFetchNotInterested({ id: itemId, type });
@@ -2666,9 +2665,9 @@
         setTimeout(() => {
           updateTopVote(nodeContentItem);
           updateItemTime(nodeContentItem);
-          showBlockUser && fetchInterceptStatus2 && myBlack.addButton(nodeContentItem.parentElement);
+          showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeContentItem.parentElement);
           initVideoDownload(nodeContentItem);
-          if (topExportContent && fetchInterceptStatus2) {
+          if (topExportContent && fetchInterceptStatus) {
             addButtonForAnswerExportPDF(nodeContentItem.parentElement);
             addButtonForArticleExportPDF(nodeContentItem.parentElement);
           }
@@ -3224,7 +3223,6 @@
         isHaveHeadWhenInit = false;
         return;
       }
-      const { fetchInterceptStatus } = getConfig();
       fixVideoAutoPlay();
       fnInitDomStyle("CTZ_STYLE", INNER_CSS);
       const config = getConfig();
@@ -3234,7 +3232,9 @@
       initHistoryView();
       onInitStyleExtra();
       EXTRA_CLASS_HTML[host] && dom("html").classList.add(EXTRA_CLASS_HTML[host]);
+      const { fetchInterceptStatus } = getConfig();
       if (fetchInterceptStatus) {
+        fnLog("已开启 fetch 接口拦截");
         const prevHeaders = getStorageConfigItem("fetchHeaders");
         const originFetch = fetch;
         unsafeWindow.fetch = (url, opt) => {

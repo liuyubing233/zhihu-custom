@@ -10,7 +10,6 @@ import { store } from '../store';
 
 /** 推荐列表最外层绑定事件 */
 export const initTopStoryRecommendEvent = () => {
-  const { fetchInterceptStatus } = store.getConfig();
   const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow');
   if (!nodeTopStoryRecommend) return;
   const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
