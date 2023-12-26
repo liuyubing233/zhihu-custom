@@ -1,249 +1,279 @@
-# 知乎修改器
+# 知乎修改器，一款可以自定义知乎页面结构的脚本
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211389&authkey=%21AJiXKOSkouRtZkc&width=1024" width="1024" />
+![脚本样式](https://pic.imgdb.cn/item/658a6b57c458853aefa44014.png)
 
 快捷键 >（Shift + .）唤起修改器弹窗, 或鼠标放置到页面左侧齿轮按钮等弹出后点击唤起弹窗
 
-请先确认已安装 <a href="https://www.tampermonkey.net/" target="_blank">tampermonkey</a> 脚本管理器后，再安装本助手
+请先确认已安装 [tampermonkey](https://www.tampermonkey.net/) 脚本管理器后，再安装本助手
 
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
+[更新日志](https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md) ｜ [部分问题解答](https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md) ｜ [Github](https://github.com/liuyubing233/zhihu-custom/tree/main) ｜ [GreasyFork](https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8)
 
-<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md" target="_blank">部分问题解答</a>
-
-<a href="https://github.com/liuyubing233/zhihu-custom/tree/main" target="_blank">Github</a>
-
-<a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
-
-发现问题和想要添加的内容请反馈给我，感谢！！！
+发现问题和想要添加的内容请反馈给我，感谢！
 
 Safari 浏览器下在[知乎](www.zhihu.com)使用 TamperMonkey 会报错，导致插件无法使用，暂时没有解决头绪...
+![Safari错误](https://pic.imgdb.cn/item/658a6dddc458853aefaf3f88.png)
 
 ```text
 Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does not appear in the script-src directive of the Content Security Policy.
 ```
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211127&authkey=%21AMkK7HHwEAS2dXE&width=1024&height=999999" width="1024" height="auto" />
+**如果遇到知乎页面无法显示数据的情况请尝试关闭接口拦截**
+![接口拦截](https://pic.imgdb.cn/item/658a6bbbc458853aefa5f465.png)
 
-**如果遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。**
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211390&authkey=%21APXxEgxXWKitgqs&width=824&height=116" width="824" height="116" />
+---
 
-## 插件目录
+## 目录简介
 
-插件目录跳转失效请移步<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">这里</a>查看
+**遇到目录无法跳转的情况请前往 [Github](https://github.com/liuyubing233/zhihu-custom) 查看。4.X 版本的详细更新内容在 [更新日志](https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md) ，简介会存在更新不及时的情况。**
 
-- [默认功能](#默认功能)
-	- [推荐页内容缓存](#推荐页内容缓存)
-	- [保存浏览历史记录](#保存浏览历史记录)
-	- [外链直接打开](#外链直接打开)
-	- [视频下载](#视频下载)
-	- [屏蔽设置页面添加一键移除所有屏蔽选项](#屏蔽设置页面添加一键移除所有屏蔽选项)
-	- [移除登录弹窗](#移除登录弹窗)
-	- [收藏夹内容、回答、文章导出为 PDF](#收藏夹内容回答文章导出为-pdf)
-	- [个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注](#个人主页我关注的问题我关注的收藏可以一键移除或将移除的内容添加回关注)
-	- [一键邀请功能](#一键邀请功能)
-	- [复制代码块删除版权信息](#复制代码块删除版权信息)
-	- [静态图片弹窗观看点击键盘左右直接切换到上一张或下一张](#静态图片弹窗观看点击键盘左右直接切换到上一张或下一张)
-	- [用户主页导出当前页回答和当前页文章功能](#用户主页导出当前页回答和当前页文章功能)
-- [基础设置](#基础设置)
+- [一. 默认功能（脚本自带功能，不需设置）](#一-默认功能脚本自带功能不需设置)
+	- [1. 推荐列表缓存 \& 浏览历史记录](#1-推荐列表缓存--浏览历史记录)
+	- [2. 外链直接打开](#2-外链直接打开)
+	- [3. 视频下载](#3-视频下载)
+	- [4. 屏蔽设置页一键移除所有屏蔽选项](#4-屏蔽设置页一键移除所有屏蔽选项)
+	- [5. 移除登录弹窗，未登陆状态下自动移除登陆弹窗](#5-移除登录弹窗未登陆状态下自动移除登陆弹窗)
+	- [6. 收藏夹内容导出，用户主页当前页回答和当前页文章导出（需开启接口拦截）](#6-收藏夹内容导出用户主页当前页回答和当前页文章导出需开启接口拦截)
+	- [7. 个人主页 `我关注的问题`、`我关注的收藏` 一键移除功能](#7-个人主页-我关注的问题我关注的收藏-一键移除功能)
+	- [8. 一键邀请推荐的所有人](#8-一键邀请推荐的所有人)
+	- [9. 复制代码删除版权信息](#9-复制代码删除版权信息)
+	- [10. 静态图片弹窗观看点击键盘左右切换到上一张或下一张](#10-静态图片弹窗观看点击键盘左右切换到上一张或下一张)
+- [二. 自定义部分 - 基础设置](#二-自定义部分---基础设置)
 	- [基本设置](#基本设置)
-		- [更改网页和标题](#更改网页和标题)
+		- [1. 修改网站图标](#1-修改网站图标)
+		- [2. 修改网页标题](#2-修改网页标题)
+		- [3. 是否显示唤起图标](#3-是否显示唤起图标)
+		- [4. 是否开启快捷键唤起编辑器](#4-是否开启快捷键唤起编辑器)
 	- [显示设置](#显示设置)
-		- [推荐列表显示「直达问题」按钮](#推荐列表显示直达问题按钮)
-		- [内容标题添加类别显示](#内容标题添加类别显示)
-		- [推荐列表显示「不感兴趣」按钮](#推荐列表显示不感兴趣按钮)
-		- [列表更多「···」按钮移动到题目右侧](#列表更多按钮移动到题目右侧)
-		- [关注列表高亮原创内容](#关注列表高亮原创内容)
-		- [列表内容点击高亮边框](#列表内容点击高亮边框)
-		- [列表内容显示发布时间和最后修改时间](#列表内容显示发布时间和最后修改时间)
-		- [问题详情显示创建时间和最后修改时间](#问题详情显示创建时间和最后修改时间)
-		- [回答内容显示创建时间与最后修改时间](#回答内容显示创建时间与最后修改时间)
-		- [购物链接显示设置](#购物链接显示设置)
-		- [回答视频显示设置](#回答视频显示设置)
-		- [回答详情设置 - 回答展开收起](#回答详情设置---回答展开收起)
+		- [1. 赞同按钮仅显示数字，生效于列表和问答页、文章页](#1-赞同按钮仅显示数字生效于列表和问答页文章页)
+		- [2. 评论按钮仅显示数字，生效于列表和问答页、文章页](#2-评论按钮仅显示数字生效于列表和问答页文章页)
+		- [3. 回答内容顶部显示赞同人数](#3-回答内容顶部显示赞同人数)
+		- [4. 文档或回答顶部显示导出当前内容/回答按钮（需开启接口拦截）](#4-文档或回答顶部显示导出当前内容回答按钮需开启接口拦截)
+		- [5. 回答和文章中的视频替换为链接](#5-回答和文章中的视频替换为链接)
+		- [6. 内容标题添加类别显示](#6-内容标题添加类别显示)
+		- [7. 推荐列表显示「不感兴趣」按钮（需开启接口拦截）](#7-推荐列表显示不感兴趣按钮需开启接口拦截)
+		- [8. 推荐列表显示「直达问题」按钮](#8-推荐列表显示直达问题按钮)
+		- [9. 列表更多「···」按钮移动到题目右侧](#9-列表更多按钮移动到题目右侧)
+		- [10. 关注列表高亮原创内容](#10-关注列表高亮原创内容)
+		- [11. 列表内容点击高亮边框](#11-列表内容点击高亮边框)
+		- [12. 列表内容显示发布时间和最后修改时间](#12-列表内容显示发布时间和最后修改时间)
+		- [13. 问题详情显示创建时间和最后修改时间](#13-问题详情显示创建时间和最后修改时间)
+		- [14. 回答内容显示创建时间与最后修改时间](#14-回答内容显示创建时间与最后修改时间)
+		- [15. 购物链接显示设置](#15-购物链接显示设置)
+		- [16. 回答内容展开/收起](#16-回答内容展开收起)
+		- [17. 文章发布时间置顶](#17-文章发布时间置顶)
 	- [页面尺寸](#页面尺寸)
-		- [列表、回答、文章内容宽度](#列表回答文章内容宽度)
-		- [页面文字大小](#页面文字大小)
-		- [自定义回答和文章图片尺寸](#自定义回答和文章图片尺寸)
-		- [使用弹窗打开动图](#使用弹窗打开动图)
+		- [1. 列表、回答、文章页面内容宽度](#1-列表回答文章页面内容宽度)
+		- [2. 页面的标题和内容文字大小](#2-页面的标题和内容文字大小)
+		- [3. 自定义回答和文章图片尺寸](#3-自定义回答和文章图片尺寸)
+		- [4. 使用弹窗打开动图](#4-使用弹窗打开动图)
+		- [5. 列表视频回答的视频内容尺寸](#5-列表视频回答的视频内容尺寸)
 	- [悬浮模块](#悬浮模块)
 		- [回答「收起」按钮悬浮](#回答收起按钮悬浮)
 		- [信息模块悬浮](#信息模块悬浮)
 	- [颜色设置](#颜色设置)
+		- [1. 背景色设置](#1-背景色设置)
+		- [2. 修改文字颜色](#2-修改文字颜色)
 	- [配置操作](#配置操作)
-- [屏蔽内容设置](#屏蔽内容设置)
+- [三. 自定义部分 - 隐藏模块设置](#三-自定义部分---隐藏模块设置)
+- [四. 自定义部分 - 屏蔽内容设置](#四-自定义部分---屏蔽内容设置)
 	- [列表内容屏蔽](#列表内容屏蔽)
-		- [关注列表关注人操作屏蔽](#关注列表关注人操作屏蔽)
-		- [列表类别屏蔽](#列表类别屏蔽)
-		- [列表低赞内容屏蔽](#列表低赞内容屏蔽)
+		- [1. 屏蔽顶部活动推广](#1-屏蔽顶部活动推广)
+		- [2. 关注列表关注人操作屏蔽](#2-关注列表关注人操作屏蔽)
+		- [3. 列表类别屏蔽](#3-列表类别屏蔽)
+		- [4. 列表低赞内容屏蔽](#4-列表低赞内容屏蔽)
 	- [回答内容屏蔽](#回答内容屏蔽)
-		- [屏蔽官方账号的回答](#屏蔽官方账号的回答)
-		- [屏蔽匿名用户的回答](#屏蔽匿名用户的回答)
-		- [屏蔽带有标签的回答](#屏蔽带有标签的回答)
-		- [详情低赞回答屏蔽](#详情低赞回答屏蔽)
-- [屏蔽词设置](#屏蔽词设置)
+		- [1. 屏蔽官方账号的回答](#1-屏蔽官方账号的回答)
+		- [2. 屏蔽匿名用户的回答](#2-屏蔽匿名用户的回答)
+		- [3. 屏蔽带有标签的回答](#3-屏蔽带有标签的回答)
+		- [4. 详情低赞回答屏蔽](#4-详情低赞回答屏蔽)
+- [五. 自定义部分 - 屏蔽词设置](#五-自定义部分---屏蔽词设置)
 	- [标题屏蔽词](#标题屏蔽词)
 	- [内容屏蔽词](#内容屏蔽词)
-- [黑名单设置](#黑名单设置)
+- [六. 自定义部分 - 黑名单设置（需开启接口拦截）](#六-自定义部分---黑名单设置需开启接口拦截)
+	- [1. 回答列表用户名后显示「屏蔽用户」按钮](#1-回答列表用户名后显示屏蔽用户按钮)
+	- [2. 屏蔽黑名单用户发布的内容](#2-屏蔽黑名单用户发布的内容)
 
-### 默认功能
+---
 
-#### 推荐页内容缓存
+## 功能简介
 
-推荐页内容链接根据有新到旧进行缓存，可缓存 100 条；「编辑器 - 历史记录 - 推荐列表缓存」
+### 一. 默认功能（脚本自带功能，不需设置）
 
-<img src="https://bnz06pap004files.storage.live.com/y4m57E4fziLSLmLGt_Nz-CNFucYHkMaCEIzfY4AWXed2sCxKtAt1X7WGZK0dtzP7fQCZz6jHvYrm6tvVgmBPjwQEQVgcnxOCBe27O20fJYx7vbFeuwqFRHjFV8nY3UlLO3MZ6TyHckmIzLowb5eETwMD_YiEOdteGFlMMCUsFzGWzlF40KsZ6vFRk_AqwpuS06Y?width=1024&height=612&cropmode=none" width="1024" />
+#### 1. 推荐列表缓存 & 浏览历史记录
 
-#### 保存浏览历史记录
+默认缓存 500 条，点击标题可跳转。
 
-可保存 100 条浏览历史记录链接，内容为打开的问题、文章、视频；「编辑器 - 历史记录 - 浏览历史记录」
+![历史记录](https://pic.imgdb.cn/item/658a711fc458853aefbb6148.png)
 
-<img src="https://bnz06pap004files.storage.live.com/y4mX6wlaBERlQTa9hfLa6IxfVrb2MdcX0kOR59JdAsHyC4v58PeZhGBWAL4ux_gokKhLJccmuwkEfdwJ6DXUnU3Ssl5LlfCdy4EaTAYvLOAZyMxt7hecrCGe1MNIuSFSmgzKjLDAwvserMiIAspx68oI6qeGoFASch-Mog8DdF4-vx7LikpLenvYEL1UhxUpehu?width=1024&height=772&cropmode=none" width="1024" />
+---
 
-#### 外链直接打开
+#### 2. 外链直接打开
 
-将知乎里所有外部链接的重定向去除，可以直接访问。
+将知乎里所有链接的重定向去除，外部链接可以直接跳转到对应网址，不再出现跳转提示。
 
-#### 视频下载
+---
+
+#### 3. 视频下载
 
 知乎视频现在在左上角会生成一个下载按钮，点击即可下载视频。
 
-<img src="https://bnz06pap004files.storage.live.com/y4m2EzgtXbvKwB3h1e9gIjMYH5Fv9sR6L36SxnwuYAVxgJPnbIuiY8wG9D9eZVJuJpQZCa3KTG8D-MY9Bhe3G_Dd8-jcbZ-WaFA1oCrUexwHQ4dyFKFTJhcmWCyPtb1QSQnEoXCcm_-RJzaCyqz94byREznrjJBJb9PuPbOlKzif_oQ4f3uYDVBx51rEcEMM-7A?width=1024&height=565&cropmode=none" width="1024"  />
+![视频下载](https://bnz06pap004files.storage.live.com/y4m2EzgtXbvKwB3h1e9gIjMYH5Fv9sR6L36SxnwuYAVxgJPnbIuiY8wG9D9eZVJuJpQZCa3KTG8D-MY9Bhe3G_Dd8-jcbZ-WaFA1oCrUexwHQ4dyFKFTJhcmWCyPtb1QSQnEoXCcm_-RJzaCyqz94byREznrjJBJb9PuPbOlKzif_oQ4f3uYDVBx51rEcEMM-7A?width=1024&height=565&cropmode=none)
 
-#### 屏蔽设置页面添加一键移除所有屏蔽选项
+---
 
-因为知乎屏蔽 TAG 每次只显示部分，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽 TAG。
+#### 4. 屏蔽设置页一键移除所有屏蔽选项
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211106&authkey=%21AFfEhvEzWvvWevk&width=1024&height=999999" width="1024" height="auto" />
+因为知乎屏蔽标签每次只显示部分，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽标签。
 
-#### 移除登录弹窗
+![一键移除屏蔽](https://pic.imgdb.cn/item/658a747bc458853aefc7cf23.png)
 
-未登录状态下问答和专栏移除登录弹窗
+---
 
-#### 收藏夹内容、回答、文章导出为 PDF
+#### 5. 移除登录弹窗，未登陆状态下自动移除登陆弹窗
 
-在收藏夹名称上方显示【生成 PDF】按钮，点击导出当前页码的收藏夹详细内容。
+---
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211114&authkey=%21AMrTLMx_Q0LHgDs&width=1024&height=999999" width="1024" height="auto" />
+#### 6. 收藏夹内容导出，用户主页当前页回答和当前页文章导出（需开启接口拦截）
 
-回答、文章也存在「导出当前回答」和「导出当前文章」按钮
+![收藏夹内容导出](https://pic.imgdb.cn/item/658a7c6bc458853aefe53b51.png)
 
-<!-- #### 回答内容按照点赞数和评论数排序
+![用户主页内容导出](https://pic.imgdb.cn/item/658a7cb5c458853aefe647d2.png)
 
-在页面加载完成后点击回答右上角的排序按钮，点击【点赞数排序】或【评论数排序】后，页面刷新等待排序完成。
+---
 
-因为知乎并没有开放点赞数和评论排序参数，所以只能每次加载后按照当前的数据进行页面排序
+#### 7. 个人主页 `我关注的问题`、`我关注的收藏` 一键移除功能
 
-<p style="color: red;">为了防止页面错乱，只对前20条进行排序，后续新加载的数据不做排序处理</p>
+_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击 `移除关注` 按钮将打开到对应页面，取消或关注后此页面自动关闭，脚本未加载请刷新页面_
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211122&authkey=%21AA_kctRgW9tNjAQ&width=1024&height=999999" width="1024" height="auto" /> -->
+![一键移除](https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none)
 
-#### 个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注
+---
 
-**_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面_**
+#### 8. 一键邀请推荐的所有人
 
-<img src="https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none" width="1024" />
-
-#### 一键邀请功能
-
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211312&authkey=%21AAASWfmg8Hhe7rE&width=1028&height=485" width="1028" height="485" />
+![一键邀请](https://pic.imgdb.cn/item/658a776fc458853aefd21447.png)
 
 添加一键邀请功能，点击即可邀请当前页面所有推荐用户
 
-#### 复制代码块删除版权信息
+---
 
-复制代码块内容删除烦人的版权信息
+#### 9. 复制代码删除版权信息
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211319&authkey=%21AE_fgVVOOid4wOU&width=1024&height=999999" width="1024" height="auto" />
+![移除版权信息](https://pic.imgdb.cn/item/658a77b5c458853aefd31b72.png)
 
-#### 静态图片弹窗观看点击键盘左右直接切换到上一张或下一张
+---
+
+#### 10. 静态图片弹窗观看点击键盘左右切换到上一张或下一张
 
 查看图片点击预览大图时，如果当前回答或者文章中存在多个图片，可以使用键盘方向键左右切换图片显示。
 
-#### 用户主页导出当前页回答和当前页文章功能
+---
 
-导出文章功能如图，回答同理
-
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211384&authkey=%21AFGeL5AlNzJ5PFo&width=660" width="660" />
-
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211383&authkey=%21AKCiVhLw6ualNoQ&width=660" width="660" />
-
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211385&authkey=%21ALMFwbmClmZ7uYI&width=660" width="660" />
-
-导出当前页下的文章：
-
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211386&authkey=%21AKgcVH3Lo-4G20k&width=1024" width="1024" height="auto" />
-
-### 基础设置
+### 二. 自定义部分 - 基础设置
 
 #### 基本设置
 
-##### 更改网页和标题
+![基本设置预览](https://pic.imgdb.cn/item/658a78eec458853aefd828aa.png)
 
-<img src="https://bnz06pap004files.storage.live.com/y4mwpJxepWLgAGAVohF0i_rh8p_LEgUn_wU_JeDlZB257vMzcrp_w8aZv5KROuzRA9zTApWrbeuvipODusa0SGxaSebTTAwAnm1cccJHwJarBJ_mmLfX928z2w9y-mMaAWKynYJyPapGooSszgdvCK2B0g8YBAf1eZ3RYK_OJ7VOiFKfs1BQcrgSRd6tLSFxQo8?width=1024&height=639&cropmode=none" width="1024" />
+##### 1. 修改网站图标
+
+##### 2. 修改网页标题
+
+##### 3. 是否显示唤起图标
+
+##### 4. 是否开启快捷键唤起编辑器
+
+---
 
 #### 显示设置
 
-##### 推荐列表显示「直达问题」按钮
+![显示设置预览](https://pic.imgdb.cn/item/658a7a04c458853aefdc96c0.png)
 
-`基础设置-显示修改`添加`推荐列表显示「直达问题」按钮`，用以直接跳转到所有回答页，而不是仅仅的推荐回答页面。
+##### 1. 赞同按钮仅显示数字，生效于列表和问答页、文章页
 
-##### 内容标题添加类别显示
+##### 2. 评论按钮仅显示数字，生效于列表和问答页、文章页
 
-列表内容标题前添加类别标签，直观区分【问答】、【文章】、【视频】、【提问】
+##### 3. 回答内容顶部显示赞同人数
 
-##### 推荐列表显示「不感兴趣」按钮
+此功能是为了解决知乎更新后顶部赞同人数消失的问题。
 
-推荐列表【不感兴趣】按钮可以设置是否外置，点击删除该条内容并且自动调用【不感兴趣】接口
+##### 4. 文档或回答顶部显示导出当前内容/回答按钮（需开启接口拦截）
 
-##### 列表更多「···」按钮移动到题目右侧
+![导出当前内容](https://pic.imgdb.cn/item/658a7d67c458853aefe92bb1.png)
 
-##### 关注列表高亮原创内容
+##### 5. 回答和文章中的视频替换为链接
 
-选择此项后关注列表里原创内容【发表回答】【发表文章】【提出问题】后将高亮显示，在所有颜色设置下生效
+![回答和文章中的视频替换为链接](https://pic.imgdb.cn/item/658a7dd6c458853aefeb0df2.png)
 
-##### 列表内容点击高亮边框
+##### 6. 内容标题添加类别显示
 
-设置此项后首页和回答详情列表在点击时边框高亮，同知乎原生快捷键 S 键
+![列表预览](https://pic.imgdb.cn/item/658a7e23c458853aefec44ca.png)
 
-##### 列表内容显示发布时间和最后修改时间
+##### 7. 推荐列表显示「不感兴趣」按钮（需开启接口拦截）
 
-##### 问题详情显示创建时间和最后修改时间
+点击不感兴趣隐藏当前问题并且自动调用知乎本身 `不感兴趣` 接口，防止出现重复推荐（知乎不感兴趣接口对内容推荐的时效性不是很强，如果点击不感兴趣后再次出现也是知乎本身的问题）
 
-<img src="https://bnz06pap004files.storage.live.com/y4mjXltdYptJVGNdPMnfauYAeOd0BfKuoF7xFvNlqtn_NjGN6RqjdmypGjJqsPyLvKec5M-1pCRJyt4ocCE1vtnQQNFX-mflRWhTPmzgzbjY-Fq7ufpuXg71sb4Md_1152KIK1egHXzRElqUnQnkNaMV-TJ_0_m35Hndb6_nU23yW46BKnz2D7dQQ9MY0fi4Wkx?width=660&height=377&cropmode=none" width="660" />
+##### 8. 推荐列表显示「直达问题」按钮
 
-##### 回答内容显示创建时间与最后修改时间
+用以直接跳转到所有回答，而不是仅仅的推荐回答页面。
 
-##### 购物链接显示设置
+##### 9. 列表更多「···」按钮移动到题目右侧
 
-可以设置回答和专栏里的购物链接只显示文字还是隐藏。
+##### 10. 关注列表高亮原创内容
 
-##### 回答视频显示设置
+勾选后关注列表里原创内容 `发表回答`、`发表文章`、`提出问题` 后将高亮显示，在所有颜色设置下均生效
 
-可以设置是仅显示链接还是隐藏，优化浏览体验
+##### 11. 列表内容点击高亮边框
 
-##### 回答详情设置 - 回答展开收起
+设置此项后首页和回答详情列表在点击时边框高亮，类似于知乎原生快捷键 S 键
 
-自动展开所有回答：通过推荐页进入问答详情时默认会收起长回答，选择此项后进入页面会自动展开所有收起的回答。
+##### 12. 列表内容显示发布时间和最后修改时间
 
-默认收起所有长回答：选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览。
+![时间](https://pic.imgdb.cn/item/658a7ff7c458853aeff39275.png)
+
+##### 13. 问题详情显示创建时间和最后修改时间
+
+##### 14. 回答内容显示创建时间与最后修改时间
+
+##### 15. 购物链接显示设置
+
+可以设置回答和文章里的购物链接样式：仅以文字显示、隐藏、不修改
+
+##### 16. 回答内容展开/收起
+
+- 自动展开所有回答：通过推荐页进入问答详情时原本为收起长回答，选择此项后进入页面会自动展开所有收起的回答；
+- 默认收起所有长回答：选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览。
+
+##### 17. 文章发布时间置顶
+
+将文章的发布时间从底部设置到最顶部
+
+---
 
 #### 页面尺寸
 
-##### 列表、回答、文章内容宽度
+![页面尺寸](https://pic.imgdb.cn/item/658a80f5c458853aeff795d6.png)
 
-##### 页面文字大小
+##### 1. 列表、回答、文章页面内容宽度
 
-##### 自定义回答和文章图片尺寸
+- 普通宽度设置，宽度为固定宽度；
+- 勾选百分比设置后，页面内容将根据浏览器宽度进行设置。
+
+##### 2. 页面的标题和内容文字大小
+
+##### 3. 自定义回答和文章图片尺寸
 
 设置此项可以将回答和专栏内图片按照所设置的大小进行缩放，并且在缩放模式下添加了所有的图片弹窗预览。
 
-「使用弹窗打开动图」在图片缩放模式下极为好用
-
-<img src="https://bnz06pap004files.storage.live.com/y4mn0WCV4AeRizRJggESO-70r0GlJjeCiIyL6JHU_Kckfsff2ET3CoNsyWRisLZE2kn0kORbuQ6p0OaEjt_djhASBwV_QQe5Iub6i5ddsIyqa1HNyphDDMOM07hE5RPhTp9fh3j94ca1RxbBVH47s5hv2ULOQ3gSTw2ymIHwE0DOBfsaMFTHAfta4nqm0U2R0vD?width=660&height=641&cropmode=none" width="660" />
-
-##### 使用弹窗打开动图
+##### 4. 使用弹窗打开动图
 
 勾选此项所有的动图点击会以弹窗方式打开
+
+##### 5. 列表视频回答的视频内容尺寸
+
+在未设置视频回答为隐藏或仅链接的情况可以使用此选项设置列表回答中的视频显示尺寸。
+
+---
 
 #### 悬浮模块
 
@@ -253,71 +283,95 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 ##### 信息模块悬浮
 
-悬浮模块，可以拖动自定义位置
+悬浮对应模块，可以拖动自定义位置
 
-<img src="https://bnz06pap004files.storage.live.com/y4mwNoK1snkbOYlJF0WsGJSucfKh_SMEgcRkoXUqYJ8RsQknOM4oZi6F2d5c9opZ8xc2eYrkpec1BUTp9Y4R-OQXz8N6rByTF5drwU-PTSvvFeNFj1jd-jZJvewwlZNyXapIUpfF2DuubPqWM0S50dhlVR2CY0T1OX3oXcnK0np9GJDae0t5GXjDyPIbIr0l3YS?width=1024&height=560&cropmode=none" width="1024" />
+![信息模块悬浮](https://bnz06pap004files.storage.live.com/y4mwNoK1snkbOYlJF0WsGJSucfKh_SMEgcRkoXUqYJ8RsQknOM4oZi6F2d5c9opZ8xc2eYrkpec1BUTp9Y4R-OQXz8N6rByTF5drwU-PTSvvFeNFj1jd-jZJvewwlZNyXapIUpfF2DuubPqWM0S50dhlVR2CY0T1OX3oXcnK0np9GJDae0t5GXjDyPIbIr0l3YS?width=1024&height=560&cropmode=none)
+
+---
 
 #### 颜色设置
 
-<img src="https://onedrive.live.com/embed?resid=DA8363D294AD6D2B%211355&authkey=%21AO8NCx0TYnqsdk8&width=1024" width="1024" height="auto" />
+![颜色设置](https://pic.imgdb.cn/item/658a8256c458853aeffd1975.png)
+
+##### 1. 背景色设置
 
 设置为自动时，背景色可跟随浏览器颜色变化
 
+##### 2. 修改文字颜色
+
+可以自定义修改文字颜色，颜色格式为前端代码可识别的格式。
+
+---
+
 #### 配置操作
 
-这里可以导出当前配置，导入配置时将导出的配置内容复制进来再点击【导入】按钮即可完成导入
+这里可以导出当前配置，导入配置时将导出的配置内容复制进来再点击 `导入` 按钮即可完成导入
 
 此部分将自己定义的 css 样式写入即可生效
 
-### 屏蔽内容设置
+---
+
+### 三. 自定义部分 - 隐藏模块设置
+
+![预览](https://pic.imgdb.cn/item/658a8462c458853aef0492e7.png)
+
+勾选后将隐藏对应的模块
+
+---
+
+### 四. 自定义部分 - 屏蔽内容设置
+
+![预览](https://pic.imgdb.cn/item/658a84c0c458853aef0599fe.png)
 
 #### 列表内容屏蔽
 
-##### 关注列表关注人操作屏蔽
+##### 1. 屏蔽顶部活动推广
 
-可以设置屏蔽关注人「赞同回答、赞同文章、关注问题」操作内容。
+勾选后将模拟点击方式关闭主页顶部活动推广，可解决物理隐藏下的颜色错误问题。
 
-##### 列表类别屏蔽
+##### 2. 关注列表关注人操作屏蔽
 
-通过列表类别过滤内容
+可以设置屏蔽关注人的 `赞同回答`、`赞同文章`、`关注问题` 操作。
 
-勾选「邀请回答」后推荐列表将不会显示邀请回答内容。
+##### 3. 列表类别屏蔽
 
-勾选「商业推广」后搜索列表将不会显示商业推广内容。
+- 勾选 `邀请回答` 后推荐列表将不会显示邀请回答内容。
+- 勾选 `商业推广` 后搜索列表将不会显示商业推广内容。
+- 勾选 `文章` 后推荐列表将不会再出现专栏文章。
+- 勾选 `视频` 后推荐列表中将不会再出现视频内容。
+- 勾选 `想法` 后推荐列表中将不会再出现想法内容。
 
-勾选「文章」后推荐列表将不会再出现专栏文章。
+##### 4. 列表低赞内容屏蔽
 
-勾选「视频」后推荐列表中将不会再出现视频内容。
-
-##### 列表低赞内容屏蔽
-
-设置后，点赞量低于输入框中的「推荐页、搜索页」内容会被自动过滤
+设置后，点赞量低于输入框中的 `推荐页`、`搜索页` 内容会被自动过滤
 
 #### 回答内容屏蔽
 
-##### 屏蔽官方账号的回答
+生效与回答页面
 
-屏蔽勾选的官方账号的回答
+##### 1. 屏蔽官方账号的回答
 
-##### 屏蔽匿名用户的回答
+##### 2. 屏蔽匿名用户的回答
 
-##### 屏蔽带有标签的回答
+##### 3. 屏蔽带有标签的回答
 
-屏蔽带有勾选标签的回答
+屏蔽带有勾选标签的回答，例如 `选自盐选专栏`。
 
-##### 详情低赞回答屏蔽
-
-<img src="https://bnz06pap004files.storage.live.com/y4mikY2myD2uBtMhPk5SAzOqYxTIZa8Iv2QXTtFI30LLnG7EQPtpkqynKz7m3YuVtyAKTwnlRvC22wiuMpkKoDwFS-ybSNPRoPgapkkPW9wDpXXoDcG1gvKSLNFTVuH7JwvNwiHpkLlSnh45-BjZic-08dgKWlfSNFkVntC5d70Wn80xKlJTANxkMjtgrC5ruVH?width=660&height=657&cropmode=none" width="660" />
+##### 4. 详情低赞回答屏蔽
 
 选中后，点赞量低于输入框中的回答会被自动过滤
 
-### 屏蔽词设置
+---
+
+### 五. 自定义部分 - 屏蔽词设置
+
+![预览](https://pic.imgdb.cn/item/658a8642c458853aef09d13f.png)
 
 #### 标题屏蔽词
 
 输入框输入后列表将会进行关键词过滤，可过滤多项，无上限。
 
-并在关键词过滤后自动调用「不感兴趣」的接口，防止在其他设备上出现同样内容
+并在关键词过滤后自动调用 `不感兴趣` 的接口，防止在其他设备上出现同样内容
 
 #### 内容屏蔽词
 
@@ -325,22 +379,18 @@ Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does
 
 将过滤列表中和回答详情内容中含有对应词语的回答。
 
-### 黑名单设置
+---
 
-在使用该功能前，请先点击「同步黑名单」按钮同步黑名单内容（黑名单内容仅为演示）
+### 六. 自定义部分 - 黑名单设置（需开启接口拦截）
 
-开启该选项后，在问答详情中将会过滤该用户的回答内容
+![预览](https://pic.imgdb.cn/item/658a86b2c458853aef0b08ea.png)
 
-<img src="https://bnz06pap004files.storage.live.com/y4mliXAXchX2uoVjwENCG3MYLKL-fYIIM9XPUtsZnptt6DokVzVd08x2hPz--WK3jfc6Ia7yMQwMQ_6uIsY41Djattqhf2Y6Bn0fd_S_3SW6b4p_--_vYmr3M29FaoH4FXsjQWajFeLZn4-Sko_BtkM3T4Nuu0-DPlDVE-5u-iL3Q0vPXoWUyjhwsqZwasCPZ1c?width=660&height=654&cropmode=none" width="660"  />
+在使用该功能前，请先点击 `同步黑名单` 按钮同步黑名单内容。
 
-点击已屏蔽用户了列表后方的 x 可以进行移出黑名单操作，跟知乎移除黑名单操作一致，不过如果是在知乎设置页里进行了「移除屏蔽」操作，需要手动运行同步黑名单。
+#### 1. 回答列表用户名后显示「屏蔽用户」按钮
 
-列表用户名后显示「屏蔽用户」按钮开启后，在回答页面用户后将显示「屏蔽用户」按钮，点击屏蔽用户将调用知乎本身的屏蔽接口，仅对应知乎原生的屏蔽用户功能。
+勾选后在回答内容中将添加 `屏蔽用户`、`屏蔽用户并隐藏该回答` 按钮，点击即可将对应用户拉入黑名单
 
-回答列表页面添加「屏蔽用户并隐藏该回答」及屏蔽用户后的解除屏蔽按钮
+#### 2. 屏蔽黑名单用户发布的内容
 
-<img src="https://bnz06pap004files.storage.live.com/y4mycVRs_iN0ljlYMudcDJ_GkK8_nP7l5zGVNoNwW9bmH2sGHlpHKdJpL6VyUtLu-HjVZ9Lio8bAP2v86_rE6-z4tsDmkZtPOtWcwoqdqVZiGJZxDX9zTVCQPm8uZ6uLMyRcT3IljXPQMD7zFjZf34FRUUQO5JpWm59XupoxHS8qSNmEgZvp-eoMcNvzbaxrXQY?width=1024&height=616&cropmode=none" width="1024"  />
-
-点击屏蔽后（或未开启过滤屏蔽用户回答）
-
-<img src="https://bnz06pap004files.storage.live.com/y4mM7EyuAgRFTiMUPdPsoprp8CbJfsqm11QzOabFh8Vhe9lOh1bPOC94RtoFOPHD36Qt4X87ogfjMeDcfyabtSUA9lZJByCieedZdduTo7n8iexYwe0FeO-CRxmVo0qfoOQCCuONAosYOtpi-F9724ZlGEF2-UOYcasyYTjCmKjF0Hg0-YTOwWlhbmabEJjYZX6?width=1024&height=664&cropmode=none" width="1024"  />
+勾选后，在问答详情中将会过滤黑名单用户的回答内容
