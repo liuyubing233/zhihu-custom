@@ -58,7 +58,7 @@ export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
   initFetchInterceptStatus()
   dom('.ctz-version')!.innerText = `version: ${GM_info.script.version}`;
-  dom('.ctz-footer')!.innerHTML = FOOTER_HTML;
+  dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
   dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
 
   myBlack.init();
@@ -103,7 +103,7 @@ export const initHTML = () => {
   const homeLink = domC('a', {
     href: hrefUser,
     target: '_blank',
-    innerText: '个人主页',
+    innerText: '前往个人主页>>',
   });
-  dom('#CTZ_BASIS .ctz-content-left')!.appendChild(homeLink);
+  dom('.ctz-footer-right')!.appendChild(homeLink);
 };
