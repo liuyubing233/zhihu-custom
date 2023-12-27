@@ -1,5 +1,6 @@
 import { dom, domById, domC } from '../commons/tools';
 import { DEFAULT_FUNCTION, FONT_SIZE_INPUT, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL, VERSION_RANGE } from '../configs';
+import { BASIC_SHOW_CONTENT } from '../configs/basic-show';
 import { addBackgroundElements } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
@@ -40,11 +41,13 @@ const initInputRange = () => {
     return (
       createRangeInnerHTML(item.label, item.value, item.min, item.max) +
       createRangeInnerHTML(item.percentLabel, item.percentValue, item.percentMin, item.percentMax) +
-      `<label class="ctz-flex-wrap">
-        <span class="ctz-label">${item.percentChooseLabel}</span>
-        <input class="ctz-i" name="${item.percentChooseValue}" type="checkbox" value="on" />
-      </label>` +
-      `<div class="ctz-commit" style="${index < VERSION_RANGE.length - 1 ? 'border-bottom: 1px solid #e0e0e0;' : 'margin:0;'}padding:8px 0;"><b>${item.desc}</b></div>`
+      `<label class="ctz-flex-wrap">` +
+      `<span class="ctz-label">${item.percentChooseLabel}</span>` +
+      `<input class="ctz-i" name="${item.percentChooseValue}" type="checkbox" value="on" />` +
+      `</label>` +
+      `<div class="ctz-commit" style="${index < VERSION_RANGE.length - 1 ? 'border-bottom: 1px solid #e0e0e0;' : 'margin:0;'}padding:8px 0;"><b>${
+        item.desc
+      }</b></div>`
     );
   };
   domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(versionCallback).join('');
@@ -56,13 +59,10 @@ const initInputRange = () => {
 export const initHTML = () => {
   const { getUserinfo } = store;
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
-  initFetchInterceptStatus()
   dom('.ctz-version')!.innerText = `version: ${GM_info.script.version}`;
   dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
   dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
 
-  myBlack.init();
-  myMenu.init();
   addBackgroundElements();
   initInputRange();
 
@@ -94,6 +94,19 @@ export const initHTML = () => {
 
   // 添加更多默认设置
   domById('CTZ_DEFAULT_SELF')!.innerHTML = DEFAULT_FUNCTION.map((elementItem, index) => `<div>${index + 1}. ${elementItem}</div>`).join('');
+
+  // 添加基础设置显示修改
+  dom('#CTZ_BASIS_SHOW_CONTENT .ctz-set-content')!.innerHTML += BASIC_SHOW_CONTENT.map(
+    ({ label, value, needFetch }) =>
+      `<label class="ctz-flex-wrap ${needFetch ? 'ctz-fetch-intercept' : ''}">` +
+      `<span class="ctz-label">${label}${needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : ''}</span>` +
+      `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` +
+      `</label>`
+  ).join('');
+
+  initFetchInterceptStatus();
+  myBlack.init();
+  myMenu.init();
 
   // 保存个人主页位置
   const userinfo = getUserinfo();
