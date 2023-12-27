@@ -156,6 +156,20 @@ export interface IConfigHidden {
   hiddenCommitVote?: boolean;
   /** 是否隐藏 - 评论底部信息 */
   hiddenCommitBottom?: boolean;
+  /** 用户主页付费咨询、认证和成就 */
+  hiddenUserHomeOtherCard?: boolean;
+  /** 用户主页出版作品 */
+  hiddenUserHomePublications?: boolean;
+  /** 用户主页创作中心 */
+  hiddenUserHomeCreateEntrance?: boolean;
+  /** 用户主页关注和关注者卡片 */
+  hiddenUserHomeFollow?: boolean;
+  /** 用户主页关注的内容和赞助 */
+  hiddenUserHomeLightList?: boolean;
+  /** 用户主页右侧屏蔽·举报用户、个人主页被浏览次数 */
+  hiddenUserHomeFooterOperate?: boolean;
+  /** 用户主页知乎指南 */
+  hiddenUserHomeFooter?: boolean;
 }
 
 /** 自定义黑名单列表内容 */

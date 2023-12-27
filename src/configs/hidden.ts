@@ -150,4 +150,20 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  {
+    key: 'CTZ_HIDDEN_USER_HOME',
+    name: '用户主页模块隐藏',
+    desc: '只在用户主页隐藏相应内容',
+    content: [
+      [
+        { value: 'hiddenUserHomeOtherCard', label: '用户主页付费咨询、认证和成就' },
+        { value: 'hiddenUserHomePublications', label: '用户主页出版作品' },
+        { value: 'hiddenUserHomeCreateEntrance', label: '用户主页创作中心' },
+        { value: 'hiddenUserHomeFollow', label: '用户主页关注和关注者卡片' },
+        { value: 'hiddenUserHomeLightList', label: '用户主页关注的内容和赞助' },
+        { value: 'hiddenUserHomeFooterOperate', label: '用户主页右侧屏蔽·举报用户、个人主页被浏览次数' },
+        { value: 'hiddenUserHomeFooter', label: '用户主页知乎指南' },
+      ],
+    ],
+  },
 ];

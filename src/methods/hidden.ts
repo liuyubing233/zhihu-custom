@@ -32,7 +32,7 @@ export const myHidden: IMyHidden = {
       `.TopstoryQuestionAskItem-hint{margin: 0!important;}` +
       `.Topstory .ContentItem-actions{padding: 0!important;}` +
       `.ContentItem-actions{display: none;}`,
-      // `.SearchResult-Card .ContentItem-actions{display: none;}`,
+    // `.SearchResult-Card .ContentItem-actions{display: none;}`,
     hiddenAnswerText:
       `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}` +
       `.ContentItem-action,.ContentItem-action button,.ContentItem-actions button` +
@@ -49,7 +49,8 @@ export const myHidden: IMyHidden = {
     hiddenReward: '.Reward{display: none!important;}',
     hiddenZhuanlanTag: '.Post-topicsAndReviewer{display: none!important;}',
     hiddenListImg:
-      `.RichContent-cover,.HotItem-img,.TopstoryItem .Image-Wrapper-Preview{display:none!important;}` + `.HotItem-metrics--bottom{position: initial!important;}`,
+      `.RichContent-cover,.HotItem-img,.TopstoryItem .Image-Wrapper-Preview{display:none!important;}` +
+      `.HotItem-metrics--bottom{position: initial!important;}`,
     hiddenReadMoreText: '.ContentItem-more{font-size:0!important;}',
     hiddenAD: '.TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer{display: none!important;}',
     hiddenAnswers:
@@ -123,8 +124,27 @@ export const myHidden: IMyHidden = {
     hiddenCommitReply: '.Comments-container .css-140jo2 button:first-of-type{display:none;}',
     hiddenCommitVote: '.Comments-container .css-140jo2 button:last-of-type{display:none;}',
     hiddenCommitBottom: '.Comments-container .css-140jo2{display:none;}',
+    hiddenUserHomeOtherCard: '.Profile-sideColumn .Card:not(.Publications):not(.FollowshipCard){display:none;}',
+    hiddenUserHomePublications: '.Profile-sideColumn .Card.Publications{display:none;}',
+    hiddenUserHomeCreateEntrance: '.Profile-sideColumn .CreatorEntrance{display:none;}',
+    hiddenUserHomeFollow: '.Profile-sideColumn .FollowshipCard{display:none;}',
+    hiddenUserHomeLightList: '.Profile-sideColumn .Profile-lightList{display:none;}',
+    hiddenUserHomeFooterOperate: '.Profile-sideColumn .Profile-footerOperations{display:none;}',
+    hiddenUserHomeFooter: '.Profile-sideColumn footer{display:none;}',
   },
   cssForKeysArray: [
+    {
+      keys: [
+        'hiddenUserHomeOtherCard',
+        'hiddenUserHomePublications',
+        'hiddenUserHomeCreateEntrance',
+        'hiddenUserHomeFollow',
+        'hiddenUserHomeLightList',
+        'hiddenUserHomeFooterOperate',
+        'hiddenUserHomeFooter',
+      ],
+      value: '.Profile-sideColumn{display: none}',
+    },
     {
       keys: ['hiddenSearchPageTopSearch', 'hiddenSearchPageFooter'],
       value: '.SearchSideBar{display: none}',
