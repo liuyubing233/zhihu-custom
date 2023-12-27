@@ -21,8 +21,16 @@ export const myMenu = {
     if (!(targetForA.hash && targetForA.tagName === 'A')) return;
     const isThis = targetForA.hash.replace(/#/, '');
     if (!isThis) return;
-    domA('.ctz-menu-top>a').forEach((itemA) => itemA.classList.remove('target'));
+    const nodesA = domA('.ctz-menu-top>a');
+    for (let i = 0, len = nodesA.length; i < len; i++) {
+      const itemA = nodesA[i];
+      itemA.classList.remove('target');
+    }
     targetForA.classList.add('target');
-    domA('.ctz-content>div').forEach((item) => (item.style.display = isThis === item.id ? 'flex' : 'none'));
+    const nodesDiv = domA('.ctz-content>div');
+    for (let i = 0, len = nodesDiv.length; i < len; i++) {
+      const item = nodesDiv[i];
+      item.style.display = isThis === item.id ? 'flex' : 'none';
+    }
   },
 };

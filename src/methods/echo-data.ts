@@ -30,8 +30,15 @@ export const echoData = () => {
   const doEcho = (item: HTMLInputElement) => {
     echo[item.type] && echo[item.type](item);
   };
-  domA(`.${CLASS_INPUT_CLICK}`).forEach(doEcho);
-  domA(`.${CLASS_INPUT_CHANGE}`).forEach(doEcho);
+  const nodeArrInputClick = domA(`.${CLASS_INPUT_CLICK}`);
+  for (let i = 0, len = nodeArrInputClick.length; i < len; i++) {
+    doEcho(nodeArrInputClick[i]);
+  }
+  const nodeArrInputChange = domA(`.${CLASS_INPUT_CHANGE}`);
+  for (let i = 0, len = nodeArrInputChange.length; i < len; i++) {
+    doEcho(nodeArrInputChange[i]);
+  }
+
   echo.text(dom('[name="globalTitle"]'));
 
   VERSION_RANGE.forEach((item) => {

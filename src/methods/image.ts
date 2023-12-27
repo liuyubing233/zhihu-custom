@@ -22,7 +22,11 @@ export function previewGIF() {
   const { showGIFinDialog } = store.getConfig();
   if (showGIFinDialog) {
     const config = { attributes: true, attributeFilter: ['class'] };
-    domA('.GifPlayer').forEach((event) => observerGIF.observe(event, config));
+    const gifPlayers = domA('.GifPlayer');
+    for (let i = 0, len = gifPlayers.length; i < len; i++) {
+      const event = gifPlayers[i];
+      observerGIF.observe(event, config);
+    }
   } else {
     observerGIF.disconnect();
   }
