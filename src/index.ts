@@ -27,6 +27,7 @@ import { doEventClickElement } from './methods/mouse-events';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './methods/time';
+import { userHomeAnswers } from './methods/user-home-content';
 import { myVersion } from './methods/version';
 import { fixVideoAutoPlay, initVideoDownload } from './methods/video';
 import { store } from './store';
@@ -148,21 +149,7 @@ import { INNER_CSS } from './web-resources';
         }
       }
 
-      pathnameHasFn({
-        question: () => {
-          // myListenSelect.init();
-          addQuestionCreatedAndModifiedTime();
-          const nodeQuestionAnswer = dom('.QuestionAnswer-content');
-          nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
-          initInviteOnce();
-        },
-        filter: () => myPageFilterSetting.init(),
-        collection: () => myCollectionExport.init(),
-        following: () => myFollowRemove.init(),
-        answers: () => addBtnForExportPeopleAnswer(),
-        posts: () => addBtnForExportPeopleArticles(),
-      });
-
+      historyToChangePathname()
       if (host === 'zhuanlan.zhihu.com') {
         addArticleCreateTimeToTop();
         const nodeArticle = dom('.Post-content');
@@ -180,14 +167,32 @@ import { INNER_CSS } from './web-resources';
     false
   );
 
+  const historyToChangePathname = () => {
+    pathnameHasFn({
+      question: () => {
+        // myListenSelect.init();
+        addQuestionCreatedAndModifiedTime();
+        const nodeQuestionAnswer = dom('.QuestionAnswer-content');
+        nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
+        initInviteOnce();
+      },
+      filter: () => myPageFilterSetting.init(),
+      collection: () => myCollectionExport.init(),
+      following: () => myFollowRemove.init(),
+      answers: () => {
+        throttle(addBtnForExportPeopleAnswer)()
+        userHomeAnswers()
+      },
+      posts: () => {
+        throttle(addBtnForExportPeopleArticles)()
+        userHomeAnswers()
+      },
+    });
+  }
+
   /** 页面路由变化, 部分操作方法 */
   const changeHistory = () => {
-    pathnameHasFn({
-      filter: () => myPageFilterSetting.init(),
-      following: () => myFollowRemove.init(),
-      answers: throttle(addBtnForExportPeopleAnswer),
-      posts: throttle(addBtnForExportPeopleArticles),
-    });
+    historyToChangePathname()
     // 重置监听起点
     myListenListItem.reset();
     myListenSearchListItem.reset();

@@ -1,9 +1,10 @@
 import { dom, domC } from '../commons/tools';
+import { CLASS_TIME_ITEM } from '../configs';
 import { store } from '../store';
 import { IMyElement } from '../types';
 
 /** 时间格式化 */
-const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') => {
+export const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') => {
   if (!time) return '';
   const date = new Date(time);
   const year = date.getFullYear();
@@ -26,7 +27,6 @@ const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') => {
 export const updateItemTime = (event: IMyElement) => {
   const { listItemCreatedAndModifiedTime } = store.getConfig();
   if (!listItemCreatedAndModifiedTime) return;
-  const className = 'ctz-list-item-time';
   const nodeCreated = event.querySelector('[itemprop="dateCreated"]') as HTMLMetaElement;
   const nodePublished = event.querySelector('[itemprop="datePublished"]') as HTMLMetaElement;
   const nodeModified = event.querySelector('[itemprop="dateModified"]') as HTMLMetaElement;
@@ -38,13 +38,13 @@ export const updateItemTime = (event: IMyElement) => {
   const nodeContentItemMeta = event.querySelector('.ContentItem-meta');
   if (!timeCreated || !nodeContentItemMeta) return;
   const innerHTML = `<div>创建时间：${timeCreated}</div><div>最后修改时间：${timeModified}</div>`;
-  const domTime = event.querySelector(`.${className}`);
+  const domTime = event.querySelector(`.${CLASS_TIME_ITEM}`);
   if (domTime) {
     domTime.innerHTML = innerHTML;
   } else {
     nodeContentItemMeta.appendChild(
       domC('div', {
-        className,
+        className: CLASS_TIME_ITEM,
         innerHTML,
         style: 'line-height: 24px;padding-top: 2px;font-size: 14px;',
       })
