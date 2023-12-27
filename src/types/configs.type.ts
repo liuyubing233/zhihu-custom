@@ -352,4 +352,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   commitModalSizeSameVersion?: boolean;
   /** 推荐列表显示「直达问题」按钮 */
   listOutputToQuestion?: boolean;
+  /** 用户主页内容发布、修改时间置顶 */
+  userHomeContentTimeTop?: boolean;
 }

@@ -69,6 +69,8 @@ class Store {
     themeDark: EThemeDark.夜间护眼一,
     colorText1: '',
     commitModalSizeSameVersion: true,
+    listOutputToQuestion: false,
+    userHomeContentTimeTop: true,
   };
 
   /** 缓存浏览历史记录 */
@@ -187,7 +189,7 @@ class Store {
     this.zhihuListTargets = this.zhihuListTargets.concat(data);
   }
   clearZhihuListTargets() {
-    this.zhihuListTargets = []
+    this.zhihuListTargets = [];
   }
   getZhihuListTargets() {
     return this.zhihuListTargets;

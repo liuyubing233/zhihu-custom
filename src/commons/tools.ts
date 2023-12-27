@@ -28,6 +28,15 @@ export const domP = (node: any, attrName: string, attrValue: string): IMyElement
   return attrValueList.includes(attrValue) ? nodeP : domP(nodeP, attrName, attrValue);
 };
 
+export const insertAfter = (newElement: any, targetElement: any) => {
+  const parent = targetElement.parentNode;
+  if (parent.lastChild === targetElement) {
+    parent.appendChild(newElement);
+  } else {
+    parent.insertBefore(newElement, targetElement.nextSibling);
+  }
+};
+
 /** 判断是否返回空字符串 */
 export const fnReturnStr = (str: string, isHave = false, strFalse = '') => (isHave ? str : strFalse);
 
@@ -83,7 +92,7 @@ export const promisePercent = (requests: any[] = [], callback: (pro: IPromisePer
       callback({
         numberFinished: index,
         numberTotal: requests.length,
-        percent: Math.floor((index / requests.length) * 100) + '%'
+        percent: Math.floor((index / requests.length) * 100) + '%',
       });
     });
   });
