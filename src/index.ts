@@ -1,7 +1,7 @@
 import { fetchGetUserinfo } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
-import { dom, domA, domById, fnInitDomStyle, fnLog, pathnameHasFn, throttle } from './commons/tools';
+import { dom, domA, domById, fnInitDomStyle, fnLog, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_DIALOG } from './configs/dom-name';
 import { initBlockWords } from './init/init-block-words';
@@ -23,11 +23,10 @@ import { keydownNextImage } from './methods/image';
 import { myListenAnswerItem } from './methods/listen-answer-item';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
-import { doEventClickElement } from './methods/mouse-events';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
 import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './methods/time';
-import { userHomeAnswers } from './methods/user-home-content';
+import { topBlockUser, userHomeAnswers } from './methods/user-home-content';
 import { myVersion } from './methods/version';
 import { fixVideoAutoPlay, initVideoDownload } from './methods/video';
 import { store } from './store';
@@ -145,7 +144,7 @@ import { INNER_CSS } from './web-resources';
 
         if (removeTopAD) {
           // 模拟鼠标点击顶部活动推广关闭按钮
-          doEventClickElement(dom('svg.css-1p094v5'));
+          mouseEventClick(dom('svg.css-1p094v5'));
         }
       }
 
@@ -187,6 +186,9 @@ import { INNER_CSS } from './web-resources';
         throttle(addBtnForExportPeopleArticles)()
         userHomeAnswers()
       },
+      people: () => {
+        topBlockUser()
+      }
     });
   }
 

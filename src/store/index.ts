@@ -71,6 +71,7 @@ class Store {
     commitModalSizeSameVersion: true,
     listOutputToQuestion: false,
     userHomeContentTimeTop: true,
+    userHomeTopBlockUser: true,
   };
 
   /** 缓存浏览历史记录 */
