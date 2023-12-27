@@ -227,7 +227,8 @@
         colorText1: "",
         commitModalSizeSameVersion: true,
         listOutputToQuestion: false,
-        userHomeContentTimeTop: true
+        userHomeContentTimeTop: true,
+        userHomeTopBlockUser: true
       };
       /** 缓存浏览历史记录 */
       this.pfHistory = {
@@ -413,6 +414,16 @@
       });
     });
     return Promise.all(requests);
+  };
+  var mouseEventClick = (element) => {
+    if (!element)
+      return;
+    const event = new MouseEvent("click", {
+      view: unsafeWindow,
+      bubbles: true,
+      cancelable: true
+    });
+    element.dispatchEvent(event);
   };
   var doFetchNotInterested = ({ id, type }) => {
     const nHeader = store.getStorageConfigItem("fetchHeaders");
@@ -1581,11 +1592,12 @@
     { label: "列表更多「···」按钮移动到题目右侧", value: "fixedListItemMore" },
     { label: "关注列表高亮原创内容", value: "highlightOriginal" },
     { label: "列表内容点击高亮边框", value: "highlightListItem" },
-    { label: "列表内容显示发布时间和最后修改时间", value: "listItemCreatedAndModifiedTime" },
-    { label: "问题详情显示创建时间和最后修改时间", value: "questionCreatedAndModifiedTime" },
-    { label: "回答内容显示创建时间与最后修改时间", value: "answerItemCreatedAndModifiedTime" },
+    { label: "列表内容置顶发布时间和最后修改时间", value: "listItemCreatedAndModifiedTime" },
+    { label: "问题详情置顶创建时间和最后修改时间", value: "questionCreatedAndModifiedTime" },
+    { label: "回答内容置顶创建时间与最后修改时间", value: "answerItemCreatedAndModifiedTime" },
     { label: "文章发布时间置顶", value: "articleCreateTimeToTop" },
-    { label: "用户主页内容发布、修改时间置顶", value: "userHomeContentTimeTop" }
+    { label: "用户主页内容置顶发布、修改时间", value: "userHomeContentTimeTop" },
+    { label: "用户主页置顶「屏蔽用户」按钮", value: "userHomeTopBlockUser" }
   ];
   var myBlack = {
     messageCancel: "取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。",
@@ -3261,16 +3273,6 @@
     },
     timer: void 0
   };
-  var doEventClickElement = (element) => {
-    if (!element)
-      return;
-    const event = new MouseEvent("click", {
-      view: unsafeWindow,
-      bubbles: true,
-      cancelable: true
-    });
-    element.dispatchEvent(event);
-  };
   var myPageFilterSetting = {
     timeout: void 0,
     init: function() {
@@ -3344,6 +3346,41 @@
       const domList = domA(".List-item:not(.PlaceHolder)");
       !domPlaceHolder ? doContent(domList) : userHomeAnswers();
     }, 500);
+  };
+  var CLASS_TOP_BLOCK = "ctz-top-block-in-user-home";
+  var blockObserver;
+  var topBlockUser = () => {
+    const { userHomeTopBlockUser } = store.getConfig();
+    const nodeUserHeaderOperate = dom(".ProfileHeader-contentFooter .MemberButtonGroup");
+    const nodeFooterOperations = dom(".Profile-footerOperations");
+    if (!nodeUserHeaderOperate || !userHomeTopBlockUser || !nodeFooterOperations)
+      return;
+    const isMe = nodeUserHeaderOperate.innerText.includes("编辑个人资料");
+    if (isMe)
+      return;
+    const isBlocked = nodeUserHeaderOperate.innerText.includes("已屏蔽");
+    const domFind = dom(`.${CLASS_TOP_BLOCK}`);
+    domFind && domFind.remove();
+    const nDomButton = domC("button", {
+      className: `Button Button--primary Button--red ${CLASS_TOP_BLOCK}`,
+      innerText: isBlocked ? "解除屏蔽" : "屏蔽用户"
+    });
+    const domUnblock = nodeUserHeaderOperate.firstChild;
+    const domBlock = nodeFooterOperations.firstChild;
+    nDomButton.onclick = function() {
+      isBlocked ? domUnblock.click() : domBlock.click();
+    };
+    nodeUserHeaderOperate.insertBefore(nDomButton, domUnblock);
+    blockObserver = new MutationObserver(() => {
+      topBlockUser();
+    });
+    blockObserver.observe(nodeFooterOperations, {
+      attributes: false,
+      childList: true,
+      characterData: false,
+      characterDataOldValue: false,
+      subtree: true
+    });
   };
   (function() {
     if (needRedirect())
@@ -3424,7 +3461,7 @@
             initData();
           };
           if (removeTopAD) {
-            doEventClickElement(dom("svg.css-1p094v5"));
+            mouseEventClick(dom("svg.css-1p094v5"));
           }
         }
         historyToChangePathname();
@@ -3460,6 +3497,9 @@
         posts: () => {
           throttle(addBtnForExportPeopleArticles)();
           userHomeAnswers();
+        },
+        people: () => {
+          topBlockUser();
         }
       });
     };
