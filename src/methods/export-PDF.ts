@@ -21,7 +21,9 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, innerHTML: string, btn
 
   // 检测图片是否都加载完全 解决打印不全的情况
   const imgLoadPromises: Array<Promise<boolean>> = [];
-  doc.querySelectorAll('img').forEach((item) => {
+  const images = doc.querySelectorAll('img');
+  for (let i = 0, len = images.length; i < len; i++) {
+    const item = images[i];
     const realSrc = item.getAttribute('data-original') || item.getAttribute('data-actualsrc') || item.src;
     item.src = realSrc || '';
     imgLoadPromises.push(
@@ -31,7 +33,7 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, innerHTML: string, btn
         };
       })
     );
-  });
+  }
 
   const callbackLoadImg = (params: IPromisePercentCallbackParams) => {
     const { numberFinished, numberTotal, percent } = params;
