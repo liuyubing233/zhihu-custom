@@ -3,6 +3,7 @@ import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
 import { myBlack } from '../methods/black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from '../methods/export-PDF';
+import { addAnswerCopyLink } from '../methods/link';
 import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
 import { CLASS_VIDEO_ONE, initVideoDownload } from '../methods/video';
@@ -56,6 +57,7 @@ export const initTopStoryRecommendEvent = () => {
           addButtonForAnswerExportPDF(nodeContentItem.parentElement!);
           addButtonForArticleExportPDF(nodeContentItem.parentElement!);
         }
+        addAnswerCopyLink(nodeContentItem)
       }, 0);
     }
   });

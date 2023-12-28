@@ -2,13 +2,13 @@ import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/
 import { HTML_HOOTS } from '../configs';
 import { myCollectionExport } from '../methods/export-PDF';
 import { previewGIF } from '../methods/image';
+import { initLinkChanger } from '../methods/link';
 import { myListenAnswerItem } from '../methods/listen-answer-item';
 import { myListenListItem } from '../methods/listen-list-item';
 import { myListenSearchListItem } from '../methods/listen-search-list-item';
 import { changeTitle } from '../methods/page-title';
 import { store } from '../store';
 import { initImagePreview } from './init-image-preview';
-import { initLinkChanger } from './init-link-changer';
 import { initTopStoryRecommendEvent } from './init-top-event-listener';
 
 /** 使用 ResizeObserver 监听body高度 */

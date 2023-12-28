@@ -5,6 +5,7 @@ import { store } from '../store';
 import { IMyElement, IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './export-PDF';
+import { addAnswerCopyLink } from './link';
 import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
 import { initVideoDownload } from './video';
@@ -41,6 +42,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
         addButtonForArticleExportPDF(nodeItem);
       }
       initVideoDownload(nodeItem);
+      addAnswerCopyLink(nodeItem)
     };
 
     addFnInNodeItem(dom('.QuestionAnswer-content'));

@@ -1,6 +1,7 @@
 import { dom, domById, fnInitDomStyle } from '../commons/tools';
 import {
   CLASS_INPUT_CLICK,
+  CLASS_MESSAGE,
   ID_BLOCK_LIST,
   ID_DIALOG,
   INPUT_NAME_THEME,
@@ -41,7 +42,7 @@ const myBackground = {
   dark: function (darkKey: EThemeDark) {
     const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
     const cssColor1 =
-      `#${ID_DIALOG},.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article` +
+      `#${ID_DIALOG},.${CLASS_MESSAGE},.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article` +
       `,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button` +
       `,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button` +
       `,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div` +
@@ -131,7 +132,7 @@ const myBackground = {
   },
   /** 使用背景色1的元素名称 */
   cssNamesBackground1:
-    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span` +
+    `#${ID_DIALOG},.${CLASS_MESSAGE},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span` +
     `,body,.Input-wrapper,.toolbar-section button:hover` +
     `,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
     `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +

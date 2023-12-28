@@ -1,24 +1,28 @@
 import { IOptionItem, IRangeItem } from '../types';
 
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
-/** 设置弹窗 */
+/** id: 设置弹窗 */
 export const ID_DIALOG = 'CTZ_DIALOG_MAIN';
-/** 黑名单列表 ID */
+/** id: 黑名单列表 */
 export const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
-/** 同步黑名单 按钮 ID */
+/** id: 同步黑名单按钮 */
 export const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
-/** INPUT 点击元素类名 */
+/** class: INPUT 点击元素类名 */
 export const CLASS_INPUT_CLICK = 'ctz-i';
-/** INPUT 修改操作元素类名 */
+/** class: INPUT 修改操作元素类名 */
 export const CLASS_INPUT_CHANGE = 'ctz-i-change';
-/** 黑名单元素删除按钮类名 */
+/** class: 黑名单元素删除按钮类名 */
 export const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
-/** 不感兴趣外置按钮 */
+/** class: 不感兴趣外置按钮 */
 export const CLASS_NOT_INTERESTED = 'ctz-not-interested';
-/** 推荐列表显示「直达问题」按钮 */
+/** class: 推荐列表显示「直达问题」按钮 */
 export const CLASS_TO_QUESTION = 'ctz-to-question';
-/** 自定义的时间元素名称 */
+/** class: 自定义的时间元素名称 */
 export const CLASS_TIME_ITEM = 'ctz-list-item-time';
+
+/** class: 消息提示弹窗 */
+export const CLASS_MESSAGE = 'ctz-message';
+export const ID_MESSAGE_BOX = 'CTZ_MESSAGE_BOX';
 
 /** 回答收起展开插入的类名 */
 export const OB_CLASS_FOLD = {

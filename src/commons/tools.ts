@@ -1,3 +1,4 @@
+import { CLASS_MESSAGE, ID_MESSAGE_BOX } from '../configs';
 import { IMyElement, IPromisePercentCallbackParams } from '../types';
 
 /** 获取元素 */
@@ -111,4 +112,51 @@ export const mouseEventClick = (element?: HTMLElement) => {
     cancelable: true,
   });
   element.dispatchEvent(event);
+};
+
+/** 复制 */
+export const copy = async (value: string) => {
+  if (navigator.clipboard && navigator.permissions) {
+    await navigator.clipboard.writeText(value);
+  } else {
+    const domTextarea = domC('textArea', {
+      value,
+      style: 'width: 0px;position: fixed;left: -999px;top: 10px;',
+    });
+    domTextarea.setAttribute('readonly', 'readonly');
+    document.body.appendChild(domTextarea);
+    domTextarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(domTextarea);
+  }
+};
+
+const messageDoms: IMyElement[] = [];
+/**
+ * 信息提示框
+ * @param {string} value 信息内容
+ * @param {number} t 存在时间
+ */
+export const message = (value: string, t: number = 3000) => {
+  const time = +new Date();
+  const classTime = `ctz-message-${time}`;
+  const nDom = domC('div', {
+    innerHTML: value,
+    className: `${CLASS_MESSAGE} ${classTime}`,
+  });
+  const domBox = domById(ID_MESSAGE_BOX);
+  if (!domBox) return;
+  domBox.appendChild(nDom);
+  messageDoms.push(nDom);
+  if (messageDoms.length > 3) {
+    const prevDom = messageDoms.shift();
+    prevDom && domBox.removeChild(prevDom);
+  }
+  setTimeout(() => {
+    const nPrevDom = dom(`.${classTime}`);
+    if (nPrevDom) {
+      domById(ID_MESSAGE_BOX)!.removeChild(nPrevDom);
+      messageDoms.shift();
+    }
+  }, t);
 };
