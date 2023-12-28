@@ -1,4 +1,4 @@
-import { dom, domC, promisePercent } from '../commons/tools';
+import { createBtnSmallTran, dom, domC, promisePercent } from '../commons/tools';
 import { store } from '../store';
 import { IPromisePercentCallbackParams } from '../types';
 import { IZhihuArticlesDataItem } from '../types/zhihu-articles.type';
@@ -126,17 +126,11 @@ export const myCollectionExport = {
 
 /** 回答添加导出为 PDF 按钮 */
 export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
-  const nClass = 'ctz-export-answer';
-  const prevButton = nodeAnswerItem.querySelector(`.${nClass}`);
-  prevButton && prevButton.remove();
+  const prevButton = nodeAnswerItem.querySelector('.ctz-export-answer');
+  if (prevButton) return;
   const nodeUser = nodeAnswerItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nodeButton = domC('button', {
-    innerHTML: '导出当前回答',
-    className: `ctz-button ctz-button-small ${nClass}`,
-    style: 'margin-left: 8px;',
-  });
-
+  const nodeButton = createBtnSmallTran('导出当前回答', 'ctz-export-answer')
   nodeButton.onclick = function () {
     const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
     const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
@@ -149,17 +143,11 @@ export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
 /** 文章添加导出为 PDF 按钮 */
 export const addButtonForArticleExportPDF = (nodeArticleItem: HTMLElement) => {
   const { topExportContent } = store.getConfig();
-  const nClass = 'ctz-export-article';
-  const prevButton = nodeArticleItem.querySelector(`.${nClass}`);
-  prevButton && prevButton.remove();
+  const prevButton = nodeArticleItem.querySelector('.ctz-export-article');
+  if (prevButton) return;
   const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.Post-Header .AuthorInfo-content');
   if (!nodeUser || !topExportContent) return;
-  const nodeButton = domC('button', {
-    innerHTML: '导出当前文章',
-    className: `ctz-button ctz-button-small ${nClass}`,
-    style: 'margin-left: 8px;',
-  });
-
+  const nodeButton = createBtnSmallTran('导出当前文章', 'ctz-export-article')
   nodeButton.onclick = function () {
     const nodeAnswerUserLink = nodeArticleItem.querySelector('.AuthorInfo-name');
     const nodeAnswerContent = nodeArticleItem.querySelector('.RichContent-inner') || nodeArticleItem.querySelector('.Post-RichTextContainer');
@@ -200,12 +188,7 @@ export const addBtnForExportPeopleAnswer = () => {
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-answer-once');
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
-  const nDomButtonOnce = domC('button', {
-    innerHTML: '导出当前页回答',
-    className: `ctz-button ctz-button-small ctz-people-export-answer-once`,
-    style: 'margin-left: 8px',
-  });
-
+  const nDomButtonOnce = createBtnSmallTran('导出当前页回答', 'ctz-people-export-answer-once')
   nDomButtonOnce.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载回答内容中...';
@@ -216,7 +199,6 @@ export const addBtnForExportPeopleAnswer = () => {
     const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join('');
     loadIframeAndExport(eventBtn, content, '导出当前页回答');
   };
-
   domListHeader.appendChild(nDomButtonOnce);
 };
 
@@ -226,12 +208,7 @@ export const addBtnForExportPeopleArticles = () => {
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-articles-once');
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
-  const nDomButtonOnce = domC('button', {
-    innerHTML: '导出当前页文章',
-    className: `ctz-button ctz-button-small ctz-people-export-articles-once`,
-    style: 'margin-left: 8px',
-  });
-
+  const nDomButtonOnce = createBtnSmallTran('导出当前页文章', 'ctz-people-export-articles-once')
   nDomButtonOnce.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     const { search } = location;

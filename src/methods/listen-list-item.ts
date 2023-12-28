@@ -1,6 +1,6 @@
 import { fnHiddenDom, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { domA, domById, domC, domP } from '../commons/tools';
+import { createBtnSmallTran, domA, domById, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
@@ -55,12 +55,12 @@ export const myListenListItem = {
       const nodeContentItemTitle = nodeItem.querySelector('.ContentItem-title');
       // 列表外置不感兴趣按钮
       if (listOutPutNotInterested && fetchInterceptStatus) {
-        const nDomNotInterested = domC('button', { innerText: '不感兴趣', className: CLASS_NOT_INTERESTED });
+        const nDomNotInterested = createBtnSmallTran('不感兴趣', CLASS_NOT_INTERESTED);
         !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(nDomNotInterested);
       }
       // 推荐列表显示「直达问题」按钮
       if (listOutputToQuestion) {
-        const nDomToQuestion = domC('button', { innerText: '直达问题', className: CLASS_TO_QUESTION });
+        const nDomToQuestion = createBtnSmallTran('直达问题', CLASS_TO_QUESTION);
         if (!isVideo && !isArticle && !isTip) {
           !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(nDomToQuestion);
         }

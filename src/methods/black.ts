@@ -53,7 +53,7 @@ export const myBlack: IMyBlack = {
     const classBlackRemove = 'ctz-black-remove';
     const classBlackFilter = 'ctz-black-filter';
     const classJustFilter = 'ctz-just-filter';
-    const createClass = (value?: string) => `${value} ctz-button ctz-button-small`;
+    const createClass = (value?: string) => `${value} ctz-button ctz-button-small ctz-button-transparent`;
     const innerHTML = isAlreadyBlack
       ? `<button class="${createClass(classBlackRemove)}">解除屏蔽</button>` +
         fnReturnStr(`<button class="${createClass(classJustFilter)}">隐藏该回答</button>`, !!objMy)
