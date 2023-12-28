@@ -42,7 +42,7 @@ const myBackground = {
   dark: function (darkKey: EThemeDark) {
     const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
     const cssColor1 =
-      `#${ID_DIALOG},.${CLASS_MESSAGE},.ctz-block-box>button,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article` +
+      `#${ID_DIALOG},.${CLASS_MESSAGE},,#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,.ctz-export-answer,#CTZ_OPEN_BUTTON,.ctz-export-article,.ctz-export-collection-box p` +
       `,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button` +
       `,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button` +
       `,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div` +
@@ -55,7 +55,6 @@ const myBackground = {
       `,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r` +
       `,.css-10u695f,.css-wqf2py` +
       `{color: ${color}!important}`;
-
     const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
     const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
     const cssColorLink =
@@ -64,13 +63,15 @@ const myBackground = {
       `,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button` +
       `,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover` +
       `,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue` +
-      `,a.external` +
+      `,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title` +
       `{color: deepskyblue!important;}` +
       `.css-1tu59u4{fill: deepskyblue!important;}`; // 超链接颜色，解决黑夜模式下看不清的问题
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}`;
     const cssColorUseBg1 = `${this.cssNamesColorUserBackground1}{color: ${background}!important}`;
     const extraBackground1 = `.ztext pre,.ztext code{background: ${background}!important;}`;
+    // 暗黑模式下的自定义按钮颜色
+    const darkCtzButton = `.ctz-button{background: ${background2};border-color: ${color};color: ${color};}`;
 
     // 添加 html[data-theme=dark] 前缀
     const addPrefix = (i: string) =>
@@ -97,7 +98,8 @@ const myBackground = {
           pageLearning +
           cssColorUseBg1 +
           cssColorLink +
-          extraBackground1
+          extraBackground1 +
+          darkCtzButton
       ) + menuTopBeforeAfter
     );
   },
@@ -145,7 +147,7 @@ const myBackground = {
     `,.css-yoby3j`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
-    `#${ID_BLOCK_LIST},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
+    `#${ID_BLOCK_LIST},#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
     `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
