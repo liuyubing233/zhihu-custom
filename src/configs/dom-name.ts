@@ -3,8 +3,6 @@ import { IOptionItem, IRangeItem } from '../types';
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
 /** id: 设置弹窗 */
 export const ID_DIALOG = 'CTZ_DIALOG_MAIN';
-/** id: 黑名单列表 */
-export const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
 /** id: 同步黑名单按钮 */
 export const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
 /** class: INPUT 点击元素类名 */

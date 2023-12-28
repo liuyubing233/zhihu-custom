@@ -2,14 +2,13 @@ import { dom, domById, fnInitDomStyle } from '../commons/tools';
 import {
   CLASS_INPUT_CLICK,
   CLASS_MESSAGE,
-  ID_BLOCK_LIST,
   ID_DIALOG,
   INPUT_NAME_THEME,
   INPUT_NAME_THEME_DARK,
   INPUT_NAME_ThEME_LIGHT,
   THEMES,
   THEME_CONFIG_DARK,
-  THEME_CONFIG_LIGHT,
+  THEME_CONFIG_LIGHT
 } from '../configs';
 import { store } from '../store';
 import { ETheme, EThemeDark, EThemeLight } from '../types';
@@ -147,7 +146,7 @@ const myBackground = {
     `,.css-yoby3j`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
-    `#${ID_BLOCK_LIST},#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
+    `#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
     `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
