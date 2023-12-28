@@ -72,6 +72,7 @@ class Store {
     listOutputToQuestion: false,
     userHomeContentTimeTop: true,
     userHomeTopBlockUser: true,
+    copyAnswerLink: true,
   };
 
   /** 缓存浏览历史记录 */

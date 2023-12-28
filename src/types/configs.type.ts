@@ -370,4 +370,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   userHomeContentTimeTop?: boolean;
   /** 用户主页置顶「屏蔽用户」按钮 */
   userHomeTopBlockUser?: boolean;
+  /** 一键获取回答链接 */
+  copyAnswerLink?: boolean;
 }
