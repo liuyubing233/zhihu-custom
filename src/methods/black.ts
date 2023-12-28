@@ -1,8 +1,11 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById, domC, fnDomReplace, fnReturnStr } from '../commons/tools';
-import { CLASS_REMOVE_BLOCK, ID_BLOCK_LIST, ID_BUTTON_SYNC_BLOCK } from '../configs';
+import { CLASS_REMOVE_BLOCK, ID_BUTTON_SYNC_BLOCK } from '../configs';
 import { store } from '../store';
 import { IBlockUserItem, IMyElement, IMyListenAnswerItem, IZhihuCardContent } from '../types';
+
+/** id: 黑名单列表 */
+const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
 
 /** 黑名单用户操作方法 */
 export const myBlack: IMyBlack = {
@@ -34,7 +37,7 @@ export const myBlack: IMyBlack = {
     const me = this;
     const classBox = 'ctz-block-box';
     const nodeBlockBox = event.querySelector(`.${classBox}`);
-    nodeBlockBox && nodeBlockBox.remove();
+    if (nodeBlockBox) return;
     const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as IMyElement;
     if (!nodeUser || !nodeUser.offsetHeight) return;
     const userUrl = (nodeUser.querySelector('meta[itemprop="url"]') as IMyElement).content;
