@@ -170,6 +170,16 @@ export interface IConfigHidden {
   hiddenUserHomeFooterOperate?: boolean;
   /** 用户主页知乎指南 */
   hiddenUserHomeFooter?: boolean;
+  /** 收藏夹创作中心 */
+  hiddenCollectionsCreate?: boolean;
+  /** 收藏夹推荐关注 */
+  hiddenCollectionsRecommendFollow?: boolean;
+  /** 收藏夹圆桌入口 */
+  hiddenCollectionsCategory?: boolean;
+  /** 收藏夹更多分类 */
+  hiddenCollectionsComplementary?: boolean;
+  /** 收藏夹知乎指南 */
+  hiddenCollectionsFooter?: boolean;
 }
 
 /** 自定义黑名单列表内容 */

@@ -166,4 +166,18 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  {
+    key: 'CTZ_HIDDEN_USER_COLLECTIONS',
+    name: '我的收藏夹主页',
+    desc: '只在我的收藏夹主页隐藏相应内容',
+    content: [
+      [
+        { value: 'hiddenCollectionsCreate', label: '收藏夹创作中心' },
+        { value: 'hiddenCollectionsRecommendFollow', label: '收藏夹推荐关注' },
+        { value: 'hiddenCollectionsCategory', label: '收藏夹圆桌入口' },
+        { value: 'hiddenCollectionsComplementary', label: '收藏夹更多分类' },
+        { value: 'hiddenCollectionsFooter', label: '收藏夹知乎指南' },
+      ],
+    ],
+  },
 ];

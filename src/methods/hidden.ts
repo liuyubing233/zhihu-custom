@@ -131,6 +131,11 @@ export const myHidden: IMyHidden = {
     hiddenUserHomeLightList: '.Profile-sideColumn .Profile-lightList{display:none;}',
     hiddenUserHomeFooterOperate: '.Profile-sideColumn .Profile-footerOperations{display:none;}',
     hiddenUserHomeFooter: '.Profile-sideColumn footer{display:none;}',
+    hiddenCollectionsCreate: '.Collections-container .Card.CreatorEntrance{display:none;}',
+    hiddenCollectionsRecommendFollow: '.Collections-container [data-za-detail-view-path-module="RightSideBar"]>div:last-of-type>.Card{display:none;}',
+    hiddenCollectionsCategory: '.Collections-container .Card.GlobalSideBar-category{display:none;}',
+    hiddenCollectionsComplementary: '.Collections-container .Card[aria-label="更多分类入口"]{display:none;}',
+    hiddenCollectionsFooter: '.Collections-container footer{display:none;}',
   },
   cssForKeysArray: [
     {
