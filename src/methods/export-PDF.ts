@@ -7,8 +7,6 @@ import { INNER_CSS } from '../web-resources';
 /** 查找生成PDF的元素类名 */
 const QUERY_CLASS_PDF_IFRAME = '.ctz-pdf-box-content';
 
-const styleButton = 'margin-left: 8px;padding: 2px 8px;height: auto;font-size: 12px;background: transparent;';
-
 const loadIframeAndExport = (eventBtn: HTMLButtonElement, innerHTML: string, btnText: string) => {
   const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
   if (!iframe.contentWindow) return;
@@ -135,8 +133,8 @@ export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
   if (!nodeUser) return;
   const nodeButton = domC('button', {
     innerHTML: '导出当前回答',
-    className: `ctz-button ${nClass}`,
-    style: styleButton,
+    className: `ctz-button ctz-button-small ${nClass}`,
+    style: 'margin-left: 8px;',
   });
 
   nodeButton.onclick = function () {
@@ -158,8 +156,8 @@ export const addButtonForArticleExportPDF = (nodeArticleItem: HTMLElement) => {
   if (!nodeUser || !topExportContent) return;
   const nodeButton = domC('button', {
     innerHTML: '导出当前文章',
-    className: `ctz-button ${nClass}`,
-    style: styleButton,
+    className: `ctz-button ctz-button-small ${nClass}`,
+    style: 'margin-left: 8px;',
   });
 
   nodeButton.onclick = function () {
@@ -204,8 +202,8 @@ export const addBtnForExportPeopleAnswer = () => {
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
   const nDomButtonOnce = domC('button', {
     innerHTML: '导出当前页回答',
-    className: `ctz-button ctz-people-export-answer-once`,
-    style: styleButton,
+    className: `ctz-button ctz-button-small ctz-people-export-answer-once`,
+    style: 'margin-left: 8px',
   });
 
   nDomButtonOnce.onclick = async function () {
@@ -230,8 +228,8 @@ export const addBtnForExportPeopleArticles = () => {
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
   const nDomButtonOnce = domC('button', {
     innerHTML: '导出当前页文章',
-    className: `ctz-button ctz-people-export-articles-once`,
-    style: styleButton,
+    className: `ctz-button ctz-button-small ctz-people-export-articles-once`,
+    style: 'margin-left: 8px',
   });
 
   nDomButtonOnce.onclick = async function () {

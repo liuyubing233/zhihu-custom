@@ -53,9 +53,12 @@ export const myBlack: IMyBlack = {
     const classBlackRemove = 'ctz-black-remove';
     const classBlackFilter = 'ctz-black-filter';
     const classJustFilter = 'ctz-just-filter';
+    const createClass = (value?: string) => `${value} ctz-button ctz-button-small`;
     const innerHTML = isAlreadyBlack
-      ? `<button class="${classBlackRemove}">解除屏蔽</button>` + fnReturnStr(`<button class="${classJustFilter}">隐藏该回答</button>`, !!objMy)
-      : `<button class="${classBlack}">屏蔽用户</button>` + fnReturnStr(`<button class="${classBlackFilter}">屏蔽用户并隐藏该回答</button>`, !!objMy);
+      ? `<button class="${createClass(classBlackRemove)}">解除屏蔽</button>` +
+        fnReturnStr(`<button class="${createClass(classJustFilter)}">隐藏该回答</button>`, !!objMy)
+      : `<button class="${createClass(classBlack)}">屏蔽用户</button>` +
+        fnReturnStr(`<button class="${createClass(classBlackFilter)}">屏蔽用户并隐藏该回答</button>`, !!objMy);
     const nodeBox = domC('div', { className: classBox, innerHTML });
     nodeBox.onclick = function (ev) {
       const target = ev.target as IMyElement;
@@ -65,16 +68,19 @@ export const myBlack: IMyBlack = {
       if (target.classList.contains(classBlack)) {
         if (!confirm(message)) return;
         me.serviceAdd(urlToken, userName, userId, avatar);
-        fnDomReplace((this as IMyElement).querySelector(`.${classBlackFilter}`), { className: classJustFilter, innerText: '隐藏该回答' });
-        fnDomReplace(target, { className: classBlackRemove, innerText: '解除屏蔽' });
+        fnDomReplace((this as IMyElement).querySelector(`.${classBlackFilter}`), { className: createClass(classJustFilter), innerText: '隐藏该回答' });
+        fnDomReplace(target, { className: createClass(classBlackRemove), innerText: '解除屏蔽' });
         return;
       }
       // 解除屏蔽
       if (target.classList.contains(classBlackRemove)) {
         if (!confirm(me.messageCancel)) return;
         me.serviceRemove({ urlToken, id: userId, name: userName });
-        fnDomReplace(target, { className: classBlack, innerText: '屏蔽用户' });
-        fnDomReplace((this as IMyElement).querySelector(`.${classJustFilter}`), { className: classBlackFilter, innerText: '屏蔽用户并隐藏该回答' });
+        fnDomReplace(target, { className: createClass(classBlack), innerText: '屏蔽用户' });
+        fnDomReplace((this as IMyElement).querySelector(`.${classJustFilter}`), {
+          className: createClass(classBlackFilter),
+          innerText: '屏蔽用户并隐藏该回答',
+        });
         return;
       }
       // 屏蔽并隐藏回答
