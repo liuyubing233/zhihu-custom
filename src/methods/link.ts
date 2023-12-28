@@ -1,4 +1,4 @@
-import { copy, domA, domC, message } from '../commons/tools';
+import { copy, createBtnSmallTran, domA, message } from '../commons/tools';
 import { store } from '../store';
 import { IMyElement } from '../types';
 
@@ -36,18 +36,14 @@ export const addAnswerCopyLink = (nodeItem: HTMLElement) => {
   prevButton && prevButton.remove();
   const nodeUser = nodeItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nDomButton = domC('button', {
-    innerHTML: '一键获取回答链接',
-    className: `ctz-button ctz-button-small ${CLASS_COPY_LINK}`,
-    style: 'margin: 0 8px;',
-  });
+  const nDomButton = createBtnSmallTran('一键获取回答链接', CLASS_COPY_LINK)
   nDomButton.onclick = function () {
     const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
     if (!metaUrl) return;
     const link = metaUrl.getAttribute('content') || '';
     if (link) {
       copy(link);
-      message('链接复制成功！')
+      message('链接复制成功');
       return;
     }
   };

@@ -160,3 +160,16 @@ export const message = (value: string, t: number = 3000) => {
     }
   }, t);
 };
+
+/**
+ * 创建按钮，尺寸小，透明
+ * @param {string} innerHTML 按钮内容
+ * @param {string} extraCLass 按钮额外类名
+ * @returns {IMyElement} 元素
+ */
+export const createBtnSmallTran = (innerHTML: string, extraCLass: string = ''): IMyElement =>
+  domC('button', {
+    innerHTML,
+    className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
+    style: 'margin: 0 4px;',
+  });
