@@ -52,7 +52,7 @@ const myBackground = {
       `,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2` +
       `,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ChatListGroup-SectionTitle .Zi,.Qrcode-container>div,.Qrcode-guide-message>div,.signQr-leftContainer button,.signQr-leftContainer a` +
       `,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r` +
-      `,.css-10u695f,.css-wqf2py` +
+      `,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,` +
       `{color: ${color}!important}`;
     const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
     const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
@@ -62,7 +62,7 @@ const myBackground = {
       `,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button` +
       `,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover` +
       `,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue` +
-      `,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title` +
+      `,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content` +
       `{color: deepskyblue!important;}` +
       `.css-1tu59u4{fill: deepskyblue!important;}`; // 超链接颜色，解决黑夜模式下看不清的问题
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
@@ -143,7 +143,7 @@ const myBackground = {
     `,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover` +
     `,.Popover-content button:hover,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp` +
     `,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar,.TextMessage-sender,.ChatUserListItem--active` +
-    `,.css-yoby3j`,
+    `,.css-yoby3j,.css-wmwsyx,.css-wmwsyx button`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
     `#CTZ_MAIN input,#CTZ_MAIN textarea,.${CLASS_MESSAGE},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +

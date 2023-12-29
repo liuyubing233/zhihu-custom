@@ -9,13 +9,6 @@
     url('//at.alicdn.com/t/c/font_2324733_3w6h6fk5917.ttf?t=1670580424651') format('truetype');
 }
 
-.hover-style {
-  cursor: pointer;
-  &:hover {
-    color: @blue!important;
-  }
-}
-
 .ctz-icon {
   font-family: 'tp-icon' !important;
   font-size: 16px;
@@ -59,7 +52,7 @@
   height: 600px;
   border-radius: 12px;
   box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  background: @gray;
+  background: @gray1;
   z-index: 201;
   flex-direction: column;
   font-size: 14px;
@@ -78,7 +71,7 @@
     min-width: 0;
     border-width: 1px;
     border-style: solid;
-    border-color: #d9d9d9;
+    border-color: @gray2;
     border-radius: 6px;
     transition: all 0.2s;
   }
@@ -95,7 +88,7 @@
     min-width: 0;
     border-width: 1px;
     border-style: solid;
-    border-color: #d9d9d9;
+    border-color: @gray2;
     border-radius: 6px;
     transition: all 0.2s;
   }
@@ -104,7 +97,7 @@
     cursor: pointer;
     transition: all 0.2s;
     &:hover {
-      color: @blue!important;
+      color: @blue1!important;
     }
   }
   a {
@@ -261,7 +254,7 @@
     border-radius: 12px;
     padding-left: 24px;
     &:hover {
-      background: @gray;
+      background: @gray1;
     }
   }
 }
@@ -329,7 +322,7 @@
   font-size: 12px;
   color: #999;
   b {
-    color: red;
+    color: @red1;
   }
 }
 .ctz-desc {
@@ -339,11 +332,11 @@
 .ctz-alert-red {
   text-align: center;
   font-size: 14px;
-  color: red;
+  color: @red1;
   height: 24px;
   line-height: 24px;
-  background-color: #fff2f0;
-  border: 1px solid #ffccc7;
+  background-color: @red4;
+  border: 1px solid @red3;
   border-radius: 12px;
   margin: 0;
   font-weight: 400;
@@ -370,7 +363,7 @@
       position: absolute;
       visibility: hidden;
       &:checked + div {
-        border: 4px solid @blue;
+        border: 4px solid @blue1;
         margin: 0 !important;
       }
     }
@@ -430,7 +423,7 @@
     border-radius: 4px;
     font-size: 12px;
     background: #fafafa;
-    border: 1px solid #d9d9d9;
+    border: 1px solid @gray2;
     margin: 4px 4px 0 0;
     display: flex;
     align-items: center;
@@ -505,7 +498,7 @@
   .ctz-remove-block,
   a {
     &:hover {
-      color: @blue;
+      color: @blue1;
       transition: all 0.2s;
     }
   }
@@ -515,7 +508,7 @@
     text-align: center;
     border-radius: 8px;
     &:hover {
-      background: #d9d9d9;
+      background: @gray2;
     }
   }
 }
@@ -609,7 +602,7 @@
       font-weight: normal;
     }
     a {
-      color: @blue;
+      color: @blue1;
       &:hover {
         color: #bbb;
       }
@@ -832,7 +825,7 @@
 }
 
 .ctz-zhihu-key a {
-  color: @blue!important;
+  color: @blue1!important;
   &:hover {
     color: #bbb !important;
   }
