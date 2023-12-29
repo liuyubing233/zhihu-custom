@@ -25,23 +25,19 @@
           <div id="CTZ_BASIS_DEFAULT">
             <div class="ctz-set-title"><span>基本设置</span></div>
             <div class="ctz-set-content">
-              <div>
-                <label>
-                  <span class="ctz-label">不显示修改器唤醒图标<span class="ctz-icon" style="margin: 0 6px">&#xe612;</span></span>
-                  <input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" />
-                </label>
-              </div>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">不显示修改器唤醒图标<span class="ctz-icon" style="margin: 0 6px">&#xe612;</span></span>
+                <input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" />
+              </label>
 
-              <div>
-                <label>
-                  <span class="ctz-label">
-                    快捷键唤起编辑器
-                    <span class="key-shadow">></span>
-                    (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
-                  </span>
-                  <input class="ctz-i" name="hotKey" type="checkbox" value="on" />
-                </label>
-              </div>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">
+                  快捷键唤起编辑器
+                  <span class="key-shadow">></span>
+                  (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
+                </span>
+                <input class="ctz-i" name="hotKey" type="checkbox" value="on" />
+              </label>
 
               <div>
                 <div class="ctz-label">修改网页标题</div>
@@ -343,18 +339,14 @@
             <div class="ctz-set-title"><span>黑名单设置</span></div>
             <div class="ctz-set-content">
               <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span>
-                  <input class="ctz-i" name="showBlockUser" type="checkbox" value="on" />
-                </label>
-              </div>
-              <div class="ctz-flex-wrap">
-                <label>
-                  <span class="ctz-label">屏蔽黑名单用户发布的内容</span>
-                  <input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" />
-                </label>
-              </div>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span>
+                <input class="ctz-i" name="showBlockUser" type="checkbox" value="on" />
+              </label>
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">屏蔽黑名单用户发布的内容</span>
+                <input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" />
+              </label>
               <div>
                 <div class="ctz-label">黑名单列表</div>
                 <div id="CTZ-BLOCK-LIST"></div>
