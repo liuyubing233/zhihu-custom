@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { dom, domA, domById, domC } from '../commons/tools';
+import { dom, domA, domById, domC, message } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
 import { myBlack } from '../methods/black';
@@ -114,6 +114,7 @@ const myButtonOperation: Record<string, Function> = {
     const nodeTitle = dom('[name="globalTitle"]');
     await myStorage.configUpdateItem('globalTitle', nodeTitle ? nodeTitle.value : '');
     changeTitle();
+    message('网页标题修改成功');
   },
   /** 还原网页标题 */
   buttonResetTitle: async function () {
@@ -122,6 +123,7 @@ const myButtonOperation: Record<string, Function> = {
     nodeTitle && (nodeTitle.value = getStorageConfigItem('cacheTitle') as string);
     await myStorage.configUpdateItem('globalTitle', '');
     changeTitle();
+    message('网页标题已还原');
   },
 };
 

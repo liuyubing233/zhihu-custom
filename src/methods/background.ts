@@ -133,7 +133,7 @@ const myBackground = {
   },
   /** 使用背景色1的元素名称 */
   cssNamesBackground1:
-    `#${ID_DIALOG},.${CLASS_MESSAGE},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span` +
+    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span` +
     `,body,.Input-wrapper,.toolbar-section button:hover` +
     `,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
     `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +
@@ -146,7 +146,7 @@ const myBackground = {
     `,.css-yoby3j`,
   /** 使用背景色2的元素名称 */
   cssNamesBackground2:
-    `#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
+    `#CTZ_MAIN input,#CTZ_MAIN textarea,.${CLASS_MESSAGE},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
     `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +
