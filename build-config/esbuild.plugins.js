@@ -7,8 +7,9 @@ const envInnerResources = {
   name: 'envInnerResources',
   setup(build) {
     build.onLoad({ filter: /web-resources.ts/ }, async (args) => {
-      const contentLess = fs.readFileSync(path.join(__dirname, '../src/static/index.less'), 'utf-8');
-      const res = await less.render(contentLess, { compress: true });
+      const filenameLess = path.join(__dirname, '../src/styles/index.less');
+      const contentLess = fs.readFileSync(filenameLess, 'utf-8');
+      const res = await less.render(contentLess, { compress: true, filename: filenameLess });
       if (!res.css) {
         throw Error('less转css失败');
       }
