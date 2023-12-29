@@ -55,7 +55,7 @@ const myBackground = {
       `,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,` +
       `{color: ${color}!important}`;
     const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
-    const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
+    const cssCB2 = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
     const cssColorLink =
       `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more` +
       `,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a` +

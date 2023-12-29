@@ -464,7 +464,7 @@
   var HIDDEN_ARRAY = [
     {
       key: "CTZ_HIDDEN_COMMON",
-      name: "通用模块隐藏",
+      name: "通用隐藏",
       desc: "",
       content: [
         [{ value: "hiddenAD", label: "广告" }],
@@ -494,7 +494,7 @@
     },
     {
       key: "CTZ_HIDDEN_LIST",
-      name: "列表模块隐藏",
+      name: "列表",
       desc: "只在列表中隐藏相应内容",
       content: [
         [
@@ -537,7 +537,7 @@
     },
     {
       key: "CTZ_HIDDEN_ANSWER",
-      name: "回答模块隐藏",
+      name: "问答",
       desc: "只在回答页面中隐藏相应内容",
       content: [
         [
@@ -580,7 +580,7 @@
     },
     {
       key: "CTZ_HIDDEN_ARTICLE",
-      name: "文章模块隐藏",
+      name: "文章",
       desc: "只在文章页面中隐藏相应内容",
       content: [
         [
@@ -598,7 +598,7 @@
     },
     {
       key: "CTZ_HIDDEN_USER_HOME",
-      name: "用户主页模块隐藏",
+      name: "用户主页",
       desc: "只在用户主页隐藏相应内容",
       content: [
         [
@@ -614,7 +614,7 @@
     },
     {
       key: "CTZ_HIDDEN_USER_COLLECTIONS",
-      name: "我的收藏夹主页",
+      name: "收藏夹主页",
       desc: "只在我的收藏夹主页隐藏相应内容",
       content: [
         [
@@ -1070,7 +1070,7 @@
       const { background, background2, color, color2 } = THEME_CONFIG_DARK[darkKey];
       const cssColor1 = `#${ID_DIALOG},.${CLASS_MESSAGE},#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,#CTZ_OPEN_BUTTON,.ctz-export-collection-box p,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.FeedbackModal-title,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.css-10ub9de,.css-1wbvd3d,.css-1f4cz9u,.css-y42e6l,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ChatListGroup-SectionTitle .Zi,.Qrcode-container>div,.Qrcode-guide-message>div,.signQr-leftContainer button,.signQr-leftContainer a,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,{color: ${color}!important}`;
       const cssC2 = `.css-o7lu8j{color: ${color2}!important}`;
-      const cssCB2 = `css-1x3upj1,.ctz-content-left>a:hover,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
+      const cssCB2 = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
       const cssColorLink = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content{color: deepskyblue!important;}.css-1tu59u4{fill: deepskyblue!important;}`;
       const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
       const cssDialogBorder = `#${ID_DIALOG}{border: 1px solid ${background2}}`;
