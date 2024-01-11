@@ -142,7 +142,6 @@ export const CONFIG_SIMPLE: IPfConfig = {
   showBlockUser: false,
   zoomImageType: '2',
   zoomImageSize: '200',
-  showGIFinDialog: true,
   questionTitleTag: true,
   listOutPutNotInterested: true,
   fixedListItemMore: true,

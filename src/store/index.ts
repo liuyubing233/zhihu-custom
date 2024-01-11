@@ -42,7 +42,7 @@ class Store {
     versionArticlePercent: '70',
     zoomImageType: '0',
     zoomImageSize: '600',
-    showGIFinDialog: true,
+    showGIFinDialog: false,
     globalTitle: '',
     titleIco: '',
     questionTitleTag: true,
