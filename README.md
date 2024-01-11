@@ -10,8 +10,6 @@
 
 [Github](https://github.com/liuyubing233/zhihu-custom/tree/main) ｜ [GreasyFork](https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8)
 
-发现问题和想要添加的内容请反馈给我，感谢！
-
 <b style="color: red;">如果遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。</b>
 
 ![接口拦截](https://pic.imgdb.cn/item/658a6bbbc458853aefa5f465.png)

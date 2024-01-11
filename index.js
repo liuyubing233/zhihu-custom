@@ -158,7 +158,6 @@
     showBlockUser: false,
     zoomImageType: "2",
     zoomImageSize: "200",
-    showGIFinDialog: true,
     questionTitleTag: true,
     listOutPutNotInterested: true,
     fixedListItemMore: true,
@@ -199,7 +198,7 @@
         versionArticlePercent: "70",
         zoomImageType: "0",
         zoomImageSize: "600",
-        showGIFinDialog: true,
+        showGIFinDialog: false,
         globalTitle: "",
         titleIco: "",
         questionTitleTag: true,
@@ -1410,10 +1409,10 @@
         `.Topstory-body ${CLASS_MODAL}{width: ${widthHome}!important;}` + sizeModalInAnswer + `.PostIndex-body ${CLASS_MODAL}{width: ${widthArticle}!important;}`,
         commitModalSizeSameVersion
       );
-      const sizeHome = `.Topstory-mainColumn,.Search-container{width: ${widthHome}!important;}.SearchMain{flex: 1}.Topstory-container,.css-knqde{width: fit-content!important;}`;
+      const sizeHome = `.Topstory-mainColumn,.SearchMain{width: ${widthHome}!important;}.Topstory-container,.css-knqde,.Search-container{width: fit-content!important;}`;
       const sizeAnswer = `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}.Question-main .Question-sideColumn{margin-left: 12px;}.QuestionHeader .QuestionHeader-content{margin: 0 auto;padding: 0;max-width: initial!important;}.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${widthAnswer}!important;}.Question-main .List-item{border-bottom: 1px dashed #ddd;}`;
       const sizeArticle = `.zhuanlan .AuthorInfo{max-width: initial;}.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div{width: ${widthArticle}!important;}.zhuanlan .Post-SideActions{right: ${rightArticleActions}}`;
-      const sizeMinWidth = `.Topstory-mainColumn,.Search-container,.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content,.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,${CLASS_MODAL},.Topstory-body ${CLASS_MODAL},.PostIndex-body ${CLASS_MODAL}{min-width: ${VERSION_MIN_WIDTH}px!important;}`;
+      const sizeMinWidth = `.Topstory-mainColumn,.SearchMain,.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content,.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,${CLASS_MODAL},.Topstory-body ${CLASS_MODAL},.PostIndex-body ${CLASS_MODAL}{min-width: ${VERSION_MIN_WIDTH}px!important;}`;
       return sizeHome + sizeAnswer + sizeArticle + sizeModal + sizeMinWidth;
     },
     /** 图片尺寸修改 */

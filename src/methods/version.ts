@@ -67,9 +67,8 @@ export const myVersion = {
 
     // 首页列表页面内容宽度
     const sizeHome =
-      `.Topstory-mainColumn,.Search-container{width: ${widthHome}!important;}` +
-      `.SearchMain{flex: 1}` +
-      `.Topstory-container,.css-knqde{width: fit-content!important;}`;
+      `.Topstory-mainColumn,.SearchMain{width: ${widthHome}!important;}` +
+      `.Topstory-container,.css-knqde,.Search-container{width: fit-content!important;}`;
     // 回答详情页面内容宽度
     const sizeAnswer =
       `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
@@ -84,7 +83,7 @@ export const myVersion = {
       `.zhuanlan .Post-SideActions{right: ${rightArticleActions}}`;
     /** 页面最小宽度 */
     const sizeMinWidth =
-      `.Topstory-mainColumn,.Search-container,.Question-main,.QuestionHeader-footer-inner` +
+      `.Topstory-mainColumn,.SearchMain,.Question-main,.QuestionHeader-footer-inner` +
       `,.QuestionHeader .QuestionHeader-content,.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div` +
       `,${CLASS_MODAL},.Topstory-body ${CLASS_MODAL},.PostIndex-body ${CLASS_MODAL}` +
       `{min-width: ${VERSION_MIN_WIDTH}px!important;}`;
