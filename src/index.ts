@@ -239,7 +239,6 @@ import { INNER_CSS } from './web-resources';
     if (event.key === 'Escape') {
       myDialog.hide();
     }
-
     keydownNextImage(event);
   });
   unsafeWindow.openCtz = myDialog.open;
