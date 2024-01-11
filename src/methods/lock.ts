@@ -8,7 +8,7 @@ export const myLock = {
   append: function (e: IMyElement, name: string) {
     // 悬浮模块是否固定改为鼠标放置到模块上显示开锁图标 点击即可移动模块
     if (!e) return;
-    const { getConfig, setConfig } = store;
+    const { getConfig } = store;
     const lock = this.lock.class;
     const unlock = this.unlock.class;
     const lockMask = this.lockMask.class;
@@ -22,11 +22,11 @@ export const myLock = {
 
     const pfConfig = getConfig();
     (e.querySelector(lock) as HTMLButtonElement).onclick = async () => {
-      await myStorage.configUpdateItem(name + 'Fixed', true);
+      await myStorage.setConfigItem(name + 'Fixed', true);
       e.classList.remove(classRemove);
     };
     (e.querySelector(unlock) as HTMLButtonElement).onclick = async () => {
-      await myStorage.configUpdateItem(name + 'Fixed', false);
+      await myStorage.setConfigItem(name + 'Fixed', false);
       e.classList.add(classRemove);
     };
     // 如果进入页面的时候该项的 FIXED 为 false 则添加 class

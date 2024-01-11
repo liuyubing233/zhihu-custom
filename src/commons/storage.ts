@@ -1,13 +1,12 @@
 import { SAVE_HISTORY_NUMBER } from '../configs';
 import { store } from '../store';
-import { IPfConfig } from '../types';
+import { IPfConfig, IPfHistory } from '../types';
 
 /** 使用 localStorage + GM 存储，解决跨域存储配置不同的问题 */
 export const myStorage = {
-  set: async function (name: string, value: string) {
-    const valueParse = JSON.parse(value);
-    valueParse.t = +new Date();
-    const v = JSON.stringify(valueParse);
+  set: async function (name: string, value: Record<string, any>) {
+    value.t = +new Date();
+    const v = JSON.stringify(value);
     localStorage.setItem(name, v);
     await GM.setValue(name, v);
   },
@@ -26,16 +25,19 @@ export const myStorage = {
     const prevConfig = store.getConfig();
     const nConfig = await this.get('pfConfig');
     const c = nConfig ? JSON.parse(nConfig) : {};
-    return Promise.resolve({ ...prevConfig, ...c });
+    const configSave = { ...prevConfig, ...c };
+    store.setConfig(configSave);
+    return Promise.resolve(configSave);
   },
   initHistory: async function () {
     const prevHistory = store.getHistory();
     const nHistory = await myStorage.get('pfHistory');
     const h = nHistory ? JSON.parse(nHistory) : prevHistory;
+    store.setHistory(h);
     return Promise.resolve(h);
   },
   /** 修改配置中的值 */
-  configUpdateItem: async function (key: string | Record<string, any>, value?: any) {
+  setConfigItem: async function (key: string | Record<string, any>, value?: any) {
     const { getConfig, setConfig } = store;
     const prevConfig = getConfig();
     if (typeof key === 'string') {
@@ -46,18 +48,22 @@ export const myStorage = {
       }
     }
     setConfig(prevConfig);
-    await this.set('pfConfig', JSON.stringify(prevConfig));
+    await this.set('pfConfig',prevConfig);
   },
   /** 更新配置 */
-  configUpdate: async function (params: IPfConfig) {
+  setConfig: async function (params: IPfConfig) {
     store.setConfig(params);
-    await this.set('pfConfig', JSON.stringify(params));
+    await this.set('pfConfig', params);
   },
-  historyUpdate: async function (key: 'list' | 'view', params: string[]) {
+  setHistoryItem: async function (key: 'list' | 'view', params: string[]) {
     const { getHistory, setHistory } = store;
     const pfHistory = getHistory();
     pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
     setHistory(pfHistory);
-    await this.set('pfHistory', JSON.stringify(pfHistory));
+    await this.set('pfHistory', pfHistory);
   },
+  setHistory: async function (value: IPfHistory) {
+    store.setHistory(value);
+    this.set('pfHistory', value);
+  }
 };

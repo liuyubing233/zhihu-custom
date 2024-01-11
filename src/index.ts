@@ -36,7 +36,7 @@ import { INNER_CSS } from './web-resources';
   if (needRedirect()) return;
   const T0 = performance.now();
   const { hostname, host } = location;
-  const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo, setHomeFetch } = store;
+  const { setStorageConfigItem, getStorageConfigItem, getConfig, setUserinfo, setHomeFetch } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -54,8 +54,8 @@ import { INNER_CSS } from './web-resources';
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
     const config = getConfig();
     setStorageConfigItem('cachePfConfig', config);
-    setConfig(await myStorage.initConfig());
-    setHistory(await myStorage.initHistory());
+    await myStorage.initConfig();
+    await myStorage.initHistory();
     initHistoryView();
     onInitStyleExtra();
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
@@ -63,7 +63,7 @@ import { INNER_CSS } from './web-resources';
     // 获取最新的配置需要在此以后
     const { fetchInterceptStatus } = getConfig();
     if (fetchInterceptStatus) {
-      fnLog('已开启 fetch 接口拦截')
+      fnLog('已开启 fetch 接口拦截');
       const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
       // 拦截 fetch 方法，获取接口内容，唯一
       const originFetch = fetch;
@@ -134,7 +134,7 @@ import { INNER_CSS } from './web-resources';
         dom('[name="useSimple"]')!.onclick = async function () {
           const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
           if (!isUse) return;
-          myStorage.configUpdate({
+          myStorage.setConfig({
             ...getConfig(),
             ...CONFIG_SIMPLE,
           });
@@ -148,7 +148,7 @@ import { INNER_CSS } from './web-resources';
         }
       }
 
-      historyToChangePathname()
+      historyToChangePathname();
       if (host === 'zhuanlan.zhihu.com') {
         addArticleCreateTimeToTop();
         const nodeArticle = dom('.Post-content');
@@ -169,7 +169,6 @@ import { INNER_CSS } from './web-resources';
   const historyToChangePathname = () => {
     pathnameHasFn({
       question: () => {
-        // myListenSelect.init();
         addQuestionCreatedAndModifiedTime();
         const nodeQuestionAnswer = dom('.QuestionAnswer-content');
         nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
@@ -179,22 +178,22 @@ import { INNER_CSS } from './web-resources';
       collection: () => myCollectionExport.init(),
       following: () => myFollowRemove.init(),
       answers: () => {
-        throttle(addBtnForExportPeopleAnswer)()
-        userHomeAnswers()
+        throttle(addBtnForExportPeopleAnswer)();
+        userHomeAnswers();
       },
       posts: () => {
-        throttle(addBtnForExportPeopleArticles)()
-        userHomeAnswers()
+        throttle(addBtnForExportPeopleArticles)();
+        userHomeAnswers();
       },
       people: () => {
-        topBlockUser()
-      }
+        topBlockUser();
+      },
     });
-  }
+  };
 
   /** 页面路由变化, 部分操作方法 */
   const changeHistory = () => {
-    historyToChangePathname()
+    historyToChangePathname();
     // 重置监听起点
     myListenListItem.reset();
     myListenSearchListItem.reset();

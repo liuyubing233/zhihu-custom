@@ -1,79 +1,23 @@
-import { CONFIG_FILTER_DEFAULT, CONFIG_HIDDEN_DEFAULT, CONFIG_SUSPENSION } from '../configs/default';
+import { CONFIG_DEFAULT } from '../configs/default';
 import {
-  ETheme,
-  EThemeDark,
-  EThemeLight,
   IContentStorageConfig,
   IFindEvent,
   IFindEventEntries,
   IHomeFetch,
   IHomeFetchContent,
   IKeyofFindEvent,
-  IKeyofHistory,
   IKeyofHomeFetch,
   IKeyofStorageConfig,
   IPfHistory,
   IStorageConfig,
-  IZhihuUserinfo,
+  IZhihuUserinfo
 } from '../types';
 import { IPfConfig } from '../types/configs.type';
 import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 
 class Store {
   /** 修改器配置 */
-  pfConfig: IPfConfig = {
-    ...CONFIG_HIDDEN_DEFAULT,
-    ...CONFIG_FILTER_DEFAULT,
-    ...CONFIG_SUSPENSION,
-    fetchInterceptStatus: true,
-    customizeCss: '',
-    answerOpen: '',
-    filterKeywords: [],
-    blockWordsAnswer: [],
-    showBlockUser: true,
-    versionHome: '1000',
-    versionAnswer: '1000',
-    versionArticle: '1000',
-    versionHomeIsPercent: false,
-    versionHomePercent: '70',
-    versionAnswerIsPercent: false,
-    versionAnswerPercent: '70',
-    versionArticleIsPercent: false,
-    versionArticlePercent: '70',
-    zoomImageType: '0',
-    zoomImageSize: '600',
-    showGIFinDialog: false,
-    globalTitle: '',
-    titleIco: '',
-    questionTitleTag: true,
-    listOutPutNotInterested: false,
-    fixedListItemMore: false,
-    highlightOriginal: true,
-    highlightListItem: false,
-    listItemCreatedAndModifiedTime: true,
-    answerItemCreatedAndModifiedTime: true,
-    questionCreatedAndModifiedTime: true,
-    articleCreateTimeToTop: true,
-    linkShopping: '0',
-    fontSizeForList: 15,
-    fontSizeForAnswer: 15,
-    fontSizeForArticle: 16,
-    fontSizeForListTitle: 18,
-    fontSizeForAnswerTitle: 22,
-    fontSizeForArticleTitle: 24,
-    zoomListVideoType: '0',
-    zoomListVideoSize: '500',
-    hotKey: true,
-    theme: ETheme.自动,
-    themeLight: EThemeLight.默认,
-    themeDark: EThemeDark.夜间护眼一,
-    colorText1: '',
-    commitModalSizeSameVersion: true,
-    listOutputToQuestion: false,
-    userHomeContentTimeTop: true,
-    userHomeTopBlockUser: true,
-    copyAnswerLink: true,
-  };
+  pfConfig = CONFIG_DEFAULT;
 
   /** 缓存浏览历史记录 */
   pfHistory: IPfHistory = {
@@ -107,9 +51,7 @@ class Store {
     this.setConfig = this.setConfig.bind(this);
     this.getConfig = this.getConfig.bind(this);
     this.setHistory = this.setHistory.bind(this);
-    this.setHistoryItem = this.setHistoryItem.bind(this);
     this.getHistory = this.getHistory.bind(this);
-    this.getHistoryItem = this.getHistoryItem.bind(this);
     this.setUserinfo = this.setUserinfo.bind(this);
     this.getUserinfo = this.getUserinfo.bind(this);
     this.setFindEvent = this.setFindEvent.bind(this);
@@ -126,25 +68,19 @@ class Store {
     this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
     this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
   }
-
+  /** 仅在 commons/storage 文件中使用 */
   setConfig(inner: IPfConfig) {
     this.pfConfig = inner;
   }
   getConfig() {
     return this.pfConfig;
   }
-
+  /** 仅在 commons/storage 文件中使用 */
   setHistory(inner: IPfHistory) {
     this.pfHistory = inner;
   }
-  setHistoryItem(key: IKeyofHistory, content: string[]) {
-    this.pfHistory[key] = content;
-  }
   getHistory() {
     return this.pfHistory;
-  }
-  getHistoryItem(key: IKeyofHistory) {
-    return this.pfHistory[key];
   }
 
   setUserinfo(inner: IZhihuUserinfo) {

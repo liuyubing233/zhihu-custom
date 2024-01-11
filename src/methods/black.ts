@@ -106,7 +106,7 @@ export const myBlack: IMyBlack = {
     const pfConfig = store.getConfig();
     const nL = pfConfig.removeBlockUserContentList || [];
     nL.push(info);
-    myStorage.configUpdateItem('removeBlockUserContentList', nL);
+    myStorage.setConfigItem('removeBlockUserContentList', nL);
     const nodeBlackItem = domC('div', { className: `ctz-black-item ctz-black-id-${info.id}`, innerHTML: this.createItemContent(info) });
     nodeBlackItem.dataset.info = JSON.stringify(info);
     domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
@@ -146,7 +146,7 @@ export const myBlack: IMyBlack = {
         nL.splice(itemIndex, 1);
         const removeItem = dom(`.ctz-black-id-${id}`);
         removeItem && removeItem.remove();
-        myStorage.configUpdateItem('removeBlockUserContentList', nL);
+        myStorage.setConfigItem('removeBlockUserContentList', nL);
       }
     });
   },
@@ -170,7 +170,7 @@ export const myBlack: IMyBlack = {
         if (!paging.is_end) {
           this.sync((offset + 1) * limit, l);
         } else {
-          myStorage.configUpdateItem('removeBlockUserContentList', l);
+          myStorage.setConfigItem('removeBlockUserContentList', l);
           myBlack.init();
           fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '同步黑名单', disabled: false });
         }

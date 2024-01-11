@@ -53,7 +53,7 @@ export const initOperate = () => {
       const isClear = confirm(`是否清空${target.innerText}`);
       if (!isClear) return;
       prevHistory[dataId] = [];
-      await myStorage.set('pfHistory', JSON.stringify(prevHistory));
+      await myStorage.setHistory(prevHistory)
       echoHistory();
     };
   });
@@ -85,7 +85,7 @@ const myButtonOperation: Record<string, Function> = {
     const nodeImport = dom('[name=textConfigImport]');
     const configImport = nodeImport ? nodeImport.value : '{}';
     const nConfig = JSON.parse(configImport);
-    await myStorage.configUpdate(nConfig);
+    await myStorage.setConfig(nConfig);
     resetData();
   },
   configReset: async function () {
@@ -94,7 +94,7 @@ const myButtonOperation: Record<string, Function> = {
     const { getConfig, getStorageConfigItem } = store;
     const { filterKeywords = [], removeBlockUserContentList = [] } = getConfig();
     const cacheConfig = getStorageConfigItem('cachePfConfig') as IPfConfig;
-    await myStorage.configUpdate({
+    await myStorage.setConfig({
       ...cacheConfig,
       filterKeywords,
       removeBlockUserContentList,
@@ -105,14 +105,14 @@ const myButtonOperation: Record<string, Function> = {
   styleCustom: async function () {
     const nodeText = dom('[name="textStyleCustom"]');
     const value = nodeText ? nodeText.value : '';
-    await myStorage.configUpdateItem('customizeCss', value);
+    await myStorage.setConfigItem('customizeCss', value);
     myCustomStyle.change(value);
   },
   syncBlack: () => myBlack.sync(0),
   /** 确认更改网页标题 */
   buttonConfirmTitle: async function () {
     const nodeTitle = dom('[name="globalTitle"]');
-    await myStorage.configUpdateItem('globalTitle', nodeTitle ? nodeTitle.value : '');
+    await myStorage.setConfigItem('globalTitle', nodeTitle ? nodeTitle.value : '');
     changeTitle();
     message('网页标题修改成功');
   },
@@ -121,7 +121,7 @@ const myButtonOperation: Record<string, Function> = {
     const { getStorageConfigItem } = store;
     const nodeTitle = dom('[name="globalTitle"]') as HTMLInputElement;
     nodeTitle && (nodeTitle.value = getStorageConfigItem('cacheTitle') as string);
-    await myStorage.configUpdateItem('globalTitle', '');
+    await myStorage.setConfigItem('globalTitle', '');
     changeTitle();
     message('网页标题已还原');
   },
