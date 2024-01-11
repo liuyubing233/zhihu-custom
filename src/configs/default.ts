@@ -1,4 +1,5 @@
-import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from "../types/configs.type";
+import { ETheme, EThemeDark, EThemeLight } from '../types';
+import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from '../types/configs.type';
 
 /** 隐藏内容模块默认为 true 的配置 */
 export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
@@ -156,6 +157,61 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenAnswerItemTime: true,
   videoUseLink: true,
   commitModalSizeSameVersion: true,
+};
+
+/** 默认配置 */
+export const CONFIG_DEFAULT: IPfConfig = {
+  ...CONFIG_HIDDEN_DEFAULT,
+  ...CONFIG_FILTER_DEFAULT,
+  ...CONFIG_SUSPENSION,
+  fetchInterceptStatus: true,
+  customizeCss: '',
+  answerOpen: '',
+  filterKeywords: [],
+  blockWordsAnswer: [],
+  showBlockUser: true,
+  versionHome: '1000',
+  versionAnswer: '1000',
+  versionArticle: '1000',
+  versionHomeIsPercent: false,
+  versionHomePercent: '70',
+  versionAnswerIsPercent: false,
+  versionAnswerPercent: '70',
+  versionArticleIsPercent: false,
+  versionArticlePercent: '70',
+  zoomImageType: '0',
+  zoomImageSize: '600',
+  showGIFinDialog: false,
+  globalTitle: '',
+  titleIco: '',
+  questionTitleTag: true,
+  listOutPutNotInterested: false,
+  fixedListItemMore: false,
+  highlightOriginal: true,
+  highlightListItem: false,
+  listItemCreatedAndModifiedTime: true,
+  answerItemCreatedAndModifiedTime: true,
+  questionCreatedAndModifiedTime: true,
+  articleCreateTimeToTop: true,
+  linkShopping: '0',
+  fontSizeForList: 15,
+  fontSizeForAnswer: 15,
+  fontSizeForArticle: 16,
+  fontSizeForListTitle: 18,
+  fontSizeForAnswerTitle: 22,
+  fontSizeForArticleTitle: 24,
+  zoomListVideoType: '0',
+  zoomListVideoSize: '500',
+  hotKey: true,
+  theme: ETheme.自动,
+  themeLight: EThemeLight.默认,
+  themeDark: EThemeDark.夜间护眼一,
+  colorText1: '',
+  commitModalSizeSameVersion: true,
+  listOutputToQuestion: false,
+  userHomeContentTimeTop: true,
+  userHomeTopBlockUser: true,
+  copyAnswerLink: true,
 };
 
 /** 缓存的历史记录数量 */

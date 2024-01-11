@@ -23,7 +23,7 @@ export const initFetchInterceptStatus = () => {
   changeHTML(!!fetchInterceptStatus);
   domById(ID_FETCH_BUTTON)!.onclick = function () {
     if (confirm(fetchInterceptStatus ? messageToFalse : messageToTrue)) {
-      myStorage.configUpdateItem('fetchInterceptStatus', !fetchInterceptStatus);
+      myStorage.setConfigItem('fetchInterceptStatus', !fetchInterceptStatus);
       window.location.reload();
     }
   };

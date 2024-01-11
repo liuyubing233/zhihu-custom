@@ -1,13 +1,10 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, VERSION_RANGE } from '../configs';
-import { store } from '../store';
 
 /** 回填数据，供每次打开使用 */
 export const echoData = async () => {
   const pfConfig = await myStorage.initConfig();
-  store.setConfig(pfConfig)
-  // const pfConfig = store.getConfig();
   const textSameName: Record<string, Function> = {
     globalTitle: (e: HTMLInputElement) => (e.value = pfConfig.globalTitle || document.title),
     customizeCss: (e: HTMLInputElement) => (e.value = pfConfig.customizeCss || ''),

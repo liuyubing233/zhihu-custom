@@ -8,10 +8,9 @@ export const myMove: IMyMove = {
     const e = dom(eventName);
     // 保存当前元素点击事件
     if (e) {
-      const {getConfig, setConfig} = store;
       this.clicks[configName] = e.click;
       e.onmousedown = (ev) => {
-        const pfConfig = getConfig();
+        const pfConfig = store.getConfig();
         // 固定则跳出
         if (pfConfig[`${name}Fixed`]) return;
         const event: any = window.event || ev;
@@ -54,7 +53,7 @@ export const myMove: IMyMove = {
           this.timer[configName] && clearTimeout(this.timer[configName]);
           this.timer[configName] = setTimeout(async () => {
             clearTimeout(this.timer[configName]);
-            await myStorage.configUpdateItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`)
+            await myStorage.setConfigItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`);
           }, 500);
         };
 

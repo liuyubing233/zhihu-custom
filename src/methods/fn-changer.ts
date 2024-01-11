@@ -83,7 +83,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     versionAnswerIsPercent: rangeChoosePercent,
     versionArticleIsPercent: rangeChoosePercent,
   };
-  await myStorage.configUpdateItem(name, type === 'checkbox' ? checked : value);
+  await myStorage.setConfigItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);
   type === 'range' && nodeName && (nodeName.innerText = value);
   if (/^hidden/.test(name)) {

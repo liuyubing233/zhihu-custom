@@ -145,16 +145,12 @@ export const myListenListItem = {
       if (i + 1 === len) {
         const nI = i - lessNum >= 0 ? i - lessNum : 0;
         this.index = nI;
-        myStorage.historyUpdate('list', historyList);
+        myStorage.setHistoryItem('list', historyList);
       }
     }
   },
   reset: function () {
     this.index = 0;
-    // if (store.getZhihuListTargets().length > 25) {
-    //   store.clearZhihuListTargets();
-    //   this.getScriptData();
-    // }
   },
   restart: function () {
     this.reset();

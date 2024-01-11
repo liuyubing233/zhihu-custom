@@ -173,63 +173,64 @@
     videoUseLink: true,
     commitModalSizeSameVersion: true
   };
+  var CONFIG_DEFAULT = {
+    ...CONFIG_HIDDEN_DEFAULT,
+    ...CONFIG_FILTER_DEFAULT,
+    ...CONFIG_SUSPENSION,
+    fetchInterceptStatus: true,
+    customizeCss: "",
+    answerOpen: "",
+    filterKeywords: [],
+    blockWordsAnswer: [],
+    showBlockUser: true,
+    versionHome: "1000",
+    versionAnswer: "1000",
+    versionArticle: "1000",
+    versionHomeIsPercent: false,
+    versionHomePercent: "70",
+    versionAnswerIsPercent: false,
+    versionAnswerPercent: "70",
+    versionArticleIsPercent: false,
+    versionArticlePercent: "70",
+    zoomImageType: "0",
+    zoomImageSize: "600",
+    showGIFinDialog: false,
+    globalTitle: "",
+    titleIco: "",
+    questionTitleTag: true,
+    listOutPutNotInterested: false,
+    fixedListItemMore: false,
+    highlightOriginal: true,
+    highlightListItem: false,
+    listItemCreatedAndModifiedTime: true,
+    answerItemCreatedAndModifiedTime: true,
+    questionCreatedAndModifiedTime: true,
+    articleCreateTimeToTop: true,
+    linkShopping: "0",
+    fontSizeForList: 15,
+    fontSizeForAnswer: 15,
+    fontSizeForArticle: 16,
+    fontSizeForListTitle: 18,
+    fontSizeForAnswerTitle: 22,
+    fontSizeForArticleTitle: 24,
+    zoomListVideoType: "0",
+    zoomListVideoSize: "500",
+    hotKey: true,
+    theme: "2" /* 自动 */,
+    themeLight: "0" /* 默认 */,
+    themeDark: "1" /* 夜间护眼一 */,
+    colorText1: "",
+    commitModalSizeSameVersion: true,
+    listOutputToQuestion: false,
+    userHomeContentTimeTop: true,
+    userHomeTopBlockUser: true,
+    copyAnswerLink: true
+  };
   var SAVE_HISTORY_NUMBER = 500;
   var Store = class {
     constructor() {
       /** 修改器配置 */
-      this.pfConfig = {
-        ...CONFIG_HIDDEN_DEFAULT,
-        ...CONFIG_FILTER_DEFAULT,
-        ...CONFIG_SUSPENSION,
-        fetchInterceptStatus: true,
-        customizeCss: "",
-        answerOpen: "",
-        filterKeywords: [],
-        blockWordsAnswer: [],
-        showBlockUser: true,
-        versionHome: "1000",
-        versionAnswer: "1000",
-        versionArticle: "1000",
-        versionHomeIsPercent: false,
-        versionHomePercent: "70",
-        versionAnswerIsPercent: false,
-        versionAnswerPercent: "70",
-        versionArticleIsPercent: false,
-        versionArticlePercent: "70",
-        zoomImageType: "0",
-        zoomImageSize: "600",
-        showGIFinDialog: false,
-        globalTitle: "",
-        titleIco: "",
-        questionTitleTag: true,
-        listOutPutNotInterested: false,
-        fixedListItemMore: false,
-        highlightOriginal: true,
-        highlightListItem: false,
-        listItemCreatedAndModifiedTime: true,
-        answerItemCreatedAndModifiedTime: true,
-        questionCreatedAndModifiedTime: true,
-        articleCreateTimeToTop: true,
-        linkShopping: "0",
-        fontSizeForList: 15,
-        fontSizeForAnswer: 15,
-        fontSizeForArticle: 16,
-        fontSizeForListTitle: 18,
-        fontSizeForAnswerTitle: 22,
-        fontSizeForArticleTitle: 24,
-        zoomListVideoType: "0",
-        zoomListVideoSize: "500",
-        hotKey: true,
-        theme: "2" /* 自动 */,
-        themeLight: "0" /* 默认 */,
-        themeDark: "1" /* 夜间护眼一 */,
-        colorText1: "",
-        commitModalSizeSameVersion: true,
-        listOutputToQuestion: false,
-        userHomeContentTimeTop: true,
-        userHomeTopBlockUser: true,
-        copyAnswerLink: true
-      };
+      this.pfConfig = CONFIG_DEFAULT;
       /** 缓存浏览历史记录 */
       this.pfHistory = {
         view: [],
@@ -255,9 +256,7 @@
       this.setConfig = this.setConfig.bind(this);
       this.getConfig = this.getConfig.bind(this);
       this.setHistory = this.setHistory.bind(this);
-      this.setHistoryItem = this.setHistoryItem.bind(this);
       this.getHistory = this.getHistory.bind(this);
-      this.getHistoryItem = this.getHistoryItem.bind(this);
       this.setUserinfo = this.setUserinfo.bind(this);
       this.getUserinfo = this.getUserinfo.bind(this);
       this.setFindEvent = this.setFindEvent.bind(this);
@@ -274,23 +273,19 @@
       this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
       this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
     }
+    /** 仅在 commons/storage 文件中使用 */
     setConfig(inner) {
       this.pfConfig = inner;
     }
     getConfig() {
       return this.pfConfig;
     }
+    /** 仅在 commons/storage 文件中使用 */
     setHistory(inner) {
       this.pfHistory = inner;
     }
-    setHistoryItem(key, content) {
-      this.pfHistory[key] = content;
-    }
     getHistory() {
       return this.pfHistory;
-    }
-    getHistoryItem(key) {
-      return this.pfHistory[key];
     }
     setUserinfo(inner) {
       this.userinfo = inner;
@@ -859,9 +854,8 @@
   };
   var myStorage = {
     set: async function(name, value) {
-      const valueParse = JSON.parse(value);
-      valueParse.t = +/* @__PURE__ */ new Date();
-      const v = JSON.stringify(valueParse);
+      value.t = +/* @__PURE__ */ new Date();
+      const v = JSON.stringify(value);
       localStorage.setItem(name, v);
       await GM.setValue(name, v);
     },
@@ -884,16 +878,19 @@
       const prevConfig = store.getConfig();
       const nConfig = await this.get("pfConfig");
       const c = nConfig ? JSON.parse(nConfig) : {};
-      return Promise.resolve({ ...prevConfig, ...c });
+      const configSave = { ...prevConfig, ...c };
+      store.setConfig(configSave);
+      return Promise.resolve(configSave);
     },
     initHistory: async function() {
       const prevHistory = store.getHistory();
       const nHistory = await myStorage.get("pfHistory");
       const h = nHistory ? JSON.parse(nHistory) : prevHistory;
+      store.setHistory(h);
       return Promise.resolve(h);
     },
     /** 修改配置中的值 */
-    configUpdateItem: async function(key, value) {
+    setConfigItem: async function(key, value) {
       const { getConfig, setConfig } = store;
       const prevConfig = getConfig();
       if (typeof key === "string") {
@@ -904,19 +901,23 @@
         }
       }
       setConfig(prevConfig);
-      await this.set("pfConfig", JSON.stringify(prevConfig));
+      await this.set("pfConfig", prevConfig);
     },
     /** 更新配置 */
-    configUpdate: async function(params) {
+    setConfig: async function(params) {
       store.setConfig(params);
-      await this.set("pfConfig", JSON.stringify(params));
+      await this.set("pfConfig", params);
     },
-    historyUpdate: async function(key, params) {
+    setHistoryItem: async function(key, params) {
       const { getHistory, setHistory } = store;
       const pfHistory = getHistory();
       pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
       setHistory(pfHistory);
-      await this.set("pfHistory", JSON.stringify(pfHistory));
+      await this.set("pfHistory", pfHistory);
+    },
+    setHistory: async function(value) {
+      store.setHistory(value);
+      this.set("pfHistory", value);
     }
   };
   var BLOCK_WORDS_LIST = `#CTZ_BLOCK_WORD_LIST .ctz-block-words-content`;
@@ -935,7 +936,7 @@
     const title = domItem.dataset.title;
     const config = store.getConfig();
     domItem.remove();
-    myStorage.configUpdateItem(
+    myStorage.setConfigItem(
       key,
       (config[key] || []).filter((i) => i !== title)
     );
@@ -946,7 +947,7 @@
     if (!Array.isArray(configThis))
       return;
     configThis.push(word);
-    await myStorage.configUpdateItem(key, configThis);
+    await myStorage.setConfigItem(key, configThis);
     const domItem = domC("span", { innerHTML: createHTMLAboutBlockTextContent(word) });
     domItem.dataset.title = word;
     const nodeFilterWords = dom(NAME_BY_KEY[key]);
@@ -971,7 +972,6 @@
   };
   var echoData = async () => {
     const pfConfig = await myStorage.initConfig();
-    store.setConfig(pfConfig);
     const textSameName = {
       globalTitle: (e) => e.value = pfConfig.globalTitle || document.title,
       customizeCss: (e) => e.value = pfConfig.customizeCss || ""
@@ -1187,7 +1187,7 @@
     append: function(e, name) {
       if (!e)
         return;
-      const { getConfig, setConfig } = store;
+      const { getConfig } = store;
       const lock = this.lock.class;
       const unlock = this.unlock.class;
       const lockMask = this.lockMask.class;
@@ -1200,11 +1200,11 @@
       !e.querySelector(lockMask) && e.appendChild(dLockMask);
       const pfConfig = getConfig();
       e.querySelector(lock).onclick = async () => {
-        await myStorage.configUpdateItem(name + "Fixed", true);
+        await myStorage.setConfigItem(name + "Fixed", true);
         e.classList.remove(classRemove);
       };
       e.querySelector(unlock).onclick = async () => {
-        await myStorage.configUpdateItem(name + "Fixed", false);
+        await myStorage.setConfigItem(name + "Fixed", false);
         e.classList.add(classRemove);
       };
       if (pfConfig[name + "Fixed"] === false) {
@@ -1232,10 +1232,9 @@
     init: function(eventName, configName, name) {
       const e = dom(eventName);
       if (e) {
-        const { getConfig, setConfig } = store;
         this.clicks[configName] = e.click;
         e.onmousedown = (ev) => {
-          const pfConfig = getConfig();
+          const pfConfig = store.getConfig();
           if (pfConfig[`${name}Fixed`])
             return;
           const event = window.event || ev;
@@ -1273,7 +1272,7 @@
             this.timer[configName] && clearTimeout(this.timer[configName]);
             this.timer[configName] = setTimeout(async () => {
               clearTimeout(this.timer[configName]);
-              await myStorage.configUpdateItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`);
+              await myStorage.setConfigItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`);
             }, 500);
           };
           document.onmouseup = () => {
@@ -1635,7 +1634,7 @@
       const { view } = getHistory();
       if (!view.includes(nA)) {
         view.unshift(nA);
-        myStorage.historyUpdate("view", view);
+        myStorage.setHistoryItem("view", view);
       }
     }, 100);
   };
@@ -1765,7 +1764,7 @@
       const pfConfig = store.getConfig();
       const nL = pfConfig.removeBlockUserContentList || [];
       nL.push(info);
-      myStorage.configUpdateItem("removeBlockUserContentList", nL);
+      myStorage.setConfigItem("removeBlockUserContentList", nL);
       const nodeBlackItem = domC("div", { className: `ctz-black-item ctz-black-id-${info.id}`, innerHTML: this.createItemContent(info) });
       nodeBlackItem.dataset.info = JSON.stringify(info);
       domById(ID_BLOCK_LIST).appendChild(nodeBlackItem);
@@ -1805,7 +1804,7 @@
           nL.splice(itemIndex, 1);
           const removeItem = dom(`.ctz-black-id-${id}`);
           removeItem && removeItem.remove();
-          myStorage.configUpdateItem("removeBlockUserContentList", nL);
+          myStorage.setConfigItem("removeBlockUserContentList", nL);
         }
       });
     },
@@ -1827,7 +1826,7 @@
         if (!paging.is_end) {
           this.sync((offset + 1) * limit, l);
         } else {
-          myStorage.configUpdateItem("removeBlockUserContentList", l);
+          myStorage.setConfigItem("removeBlockUserContentList", l);
           myBlack.init();
           fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: "同步黑名单", disabled: false });
         }
@@ -1850,7 +1849,7 @@
     changeHTML(!!fetchInterceptStatus);
     domById(ID_FETCH_BUTTON).onclick = function() {
       if (confirm(fetchInterceptStatus ? messageToFalse : messageToTrue)) {
-        myStorage.configUpdateItem("fetchInterceptStatus", !fetchInterceptStatus);
+        myStorage.setConfigItem("fetchInterceptStatus", !fetchInterceptStatus);
         window.location.reload();
       }
     };
@@ -2695,7 +2694,7 @@
         if (i + 1 === len) {
           const nI = i - lessNum >= 0 ? i - lessNum : 0;
           this.index = nI;
-          myStorage.historyUpdate("list", historyList);
+          myStorage.setHistoryItem("list", historyList);
         }
       }
     },
@@ -2902,7 +2901,6 @@
   }
   var echoHistory = async () => {
     const history = await myStorage.initHistory();
-    store.setHistory(history);
     const { list, view } = history;
     const nodeList = dom("#CTZ_HISTORY_LIST .ctz-set-content");
     const nodeView = dom("#CTZ_HISTORY_VIEW .ctz-set-content");
@@ -3128,7 +3126,7 @@
       versionAnswerIsPercent: rangeChoosePercent,
       versionArticleIsPercent: rangeChoosePercent
     };
-    await myStorage.configUpdateItem(name, type === "checkbox" ? checked : value);
+    await myStorage.setConfigItem(name, type === "checkbox" ? checked : value);
     const nodeName = domById(name);
     type === "range" && nodeName && (nodeName.innerText = value);
     if (/^hidden/.test(name)) {
@@ -3183,7 +3181,7 @@
         if (!isClear)
           return;
         prevHistory[dataId] = [];
-        await myStorage.set("pfHistory", JSON.stringify(prevHistory));
+        await myStorage.setHistory(prevHistory);
         echoHistory();
       };
     });
@@ -3211,7 +3209,7 @@
       const nodeImport = dom("[name=textConfigImport]");
       const configImport = nodeImport ? nodeImport.value : "{}";
       const nConfig = JSON.parse(configImport);
-      await myStorage.configUpdate(nConfig);
+      await myStorage.setConfig(nConfig);
       resetData();
     },
     configReset: async function() {
@@ -3221,7 +3219,7 @@
       const { getConfig, getStorageConfigItem } = store;
       const { filterKeywords = [], removeBlockUserContentList = [] } = getConfig();
       const cacheConfig = getStorageConfigItem("cachePfConfig");
-      await myStorage.configUpdate({
+      await myStorage.setConfig({
         ...cacheConfig,
         filterKeywords,
         removeBlockUserContentList
@@ -3232,14 +3230,14 @@
     styleCustom: async function() {
       const nodeText = dom('[name="textStyleCustom"]');
       const value = nodeText ? nodeText.value : "";
-      await myStorage.configUpdateItem("customizeCss", value);
+      await myStorage.setConfigItem("customizeCss", value);
       myCustomStyle.change(value);
     },
     syncBlack: () => myBlack.sync(0),
     /** 确认更改网页标题 */
     buttonConfirmTitle: async function() {
       const nodeTitle = dom('[name="globalTitle"]');
-      await myStorage.configUpdateItem("globalTitle", nodeTitle ? nodeTitle.value : "");
+      await myStorage.setConfigItem("globalTitle", nodeTitle ? nodeTitle.value : "");
       changeTitle();
       message("网页标题修改成功");
     },
@@ -3248,7 +3246,7 @@
       const { getStorageConfigItem } = store;
       const nodeTitle = dom('[name="globalTitle"]');
       nodeTitle && (nodeTitle.value = getStorageConfigItem("cacheTitle"));
-      await myStorage.configUpdateItem("globalTitle", "");
+      await myStorage.setConfigItem("globalTitle", "");
       changeTitle();
       message("网页标题已还原");
     }
@@ -3479,7 +3477,7 @@
       return;
     const T0 = performance.now();
     const { hostname, host } = location;
-    const { setStorageConfigItem, getStorageConfigItem, getConfig, setConfig, setHistory, setUserinfo, setHomeFetch } = store;
+    const { setStorageConfigItem, getStorageConfigItem, getConfig, setUserinfo, setHomeFetch } = store;
     let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement)
@@ -3493,8 +3491,8 @@
       fnInitDomStyle("CTZ_STYLE", INNER_CSS);
       const config = getConfig();
       setStorageConfigItem("cachePfConfig", config);
-      setConfig(await myStorage.initConfig());
-      setHistory(await myStorage.initHistory());
+      await myStorage.initConfig();
+      await myStorage.initHistory();
       initHistoryView();
       onInitStyleExtra();
       EXTRA_CLASS_HTML[host] && dom("html").classList.add(EXTRA_CLASS_HTML[host]);
@@ -3545,7 +3543,7 @@
             const isUse = confirm("是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存");
             if (!isUse)
               return;
-            myStorage.configUpdate({
+            myStorage.setConfig({
               ...getConfig(),
               ...CONFIG_SIMPLE
             });

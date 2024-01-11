@@ -29,7 +29,7 @@ const onRemove = (e: MouseEvent, key: IKeyofDomName) => {
   const title = domItem.dataset.title;
   const config = store.getConfig();
   domItem.remove();
-  myStorage.configUpdateItem(
+  myStorage.setConfigItem(
     key,
     (config[key] || []).filter((i: string) => i !== title)
   );
@@ -40,7 +40,7 @@ const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
   const configThis = store.getConfig()[key];
   if (!Array.isArray(configThis)) return;
   configThis.push(word);
-  await myStorage.configUpdateItem(key, configThis);
+  await myStorage.setConfigItem(key, configThis);
   const domItem = domC('span', { innerHTML: createHTMLAboutBlockTextContent(word) });
   domItem.dataset.title = word;
   const nodeFilterWords = dom(NAME_BY_KEY[key]);
