@@ -382,4 +382,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   userHomeTopBlockUser?: boolean;
   /** 一键获取回答链接 */
   copyAnswerLink?: boolean;
+  /** 时间戳 */
+  t?: number;
 }

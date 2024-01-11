@@ -969,8 +969,9 @@
       domInput && (domInput.onchange = (e) => onAddWord(e.target, name));
     }
   };
-  var echoData = () => {
-    const pfConfig = store.getConfig();
+  var echoData = async () => {
+    const pfConfig = await myStorage.initConfig();
+    store.setConfig(pfConfig);
     const textSameName = {
       globalTitle: (e) => e.value = pfConfig.globalTitle || document.title,
       customizeCss: (e) => e.value = pfConfig.customizeCss || ""
@@ -2896,8 +2897,10 @@
       nodeSearchBarInput.placeholder = "";
     }
   }
-  var echoHistory = () => {
-    const { list, view } = store.getHistory();
+  var echoHistory = async () => {
+    const history = await myStorage.initHistory();
+    store.setHistory(history);
+    const { list, view } = history;
     const nodeList = dom("#CTZ_HISTORY_LIST .ctz-set-content");
     const nodeView = dom("#CTZ_HISTORY_VIEW .ctz-set-content");
     nodeList && (nodeList.innerHTML = list.join("<br/>"));
@@ -2908,10 +2911,8 @@
       const nodeDialog = domById(ID_DIALOG);
       nodeDialog && (nodeDialog.style.display = "flex");
       myScroll.stop();
-      const isChangeConfig = await myStorage.initConfig();
-      isChangeConfig && echoData();
-      const isChangeHistory = await myStorage.initHistory();
-      isChangeHistory && echoHistory();
+      echoData();
+      echoHistory();
     },
     hide: () => {
       const nodeDialog = domById(ID_DIALOG);
