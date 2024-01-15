@@ -241,6 +241,8 @@ export interface IConfigFilter {
   removeMyOperateAtFollow?: boolean;
   /** 屏蔽顶部活动推广 */
   removeTopAD?: boolean;
+  /** 屏蔽标签选自电子书的回答 */
+  removeFromEBook?: boolean;
 }
 
 /** 悬浮模块默认配置 */

@@ -18,6 +18,7 @@ export const CONFIG_FILTER_DEFAULT: IConfigFilter = {
   removeYanxuanRecommend: true,
   removeYanxuanCPRecommend: true,
   removeFromYanxuan: true,
+  removeFromEBook: true,
   removeUnrealAnswer: false,
   removeFollowVoteAnswer: false,
   removeFollowVoteArticle: false,
