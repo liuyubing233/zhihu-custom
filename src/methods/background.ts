@@ -62,7 +62,7 @@ const myBackground = {
       `,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button` +
       `,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover` +
       `,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue` +
-      `,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content` +
+      `,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a` +
       `{color: deepskyblue!important;}` +
       `.css-1tu59u4{fill: deepskyblue!important;}`; // 超链接颜色，解决黑夜模式下看不清的问题
     const cssBorderB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
