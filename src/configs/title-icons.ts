@@ -4,8 +4,6 @@ export const ICO_URL: Record<string, string> = {
   github: 'https://github.githubassets.com/pinned-octocat.svg',
   juejin: 'https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png',
   csdn: 'https://g.csdnimg.cn/static/logo/favicon32.ico',
-  runoob: 'https://static.runoob.com/images/favicon.ico',
-  vue: 'https://cli.vuejs.org/icons/apple-touch-icon-152x152.png',
   bilibili: 'https://www.bilibili.com/favicon.ico',
   lanhu: 'https://sso-cdn.lanhuapp.com/ssoweb/favicon.ico',
   yuque: 'https://mdn.alipayobjects.com/huamei_0prmtq/afts/img/A*vMxOQIh4KBMAAAAAAAAAAAAADvuFAQ/original',
