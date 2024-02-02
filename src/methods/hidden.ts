@@ -31,7 +31,7 @@ export const myHidden: IMyHidden = {
       `{visibility:hidden!important;height:0!important;padding:0!important;}` +
       `.TopstoryQuestionAskItem-hint{margin: 0!important;}` +
       `.Topstory .ContentItem-actions{padding: 0!important;}` +
-      `.ContentItem-actions{display: none;}`,
+      `.Topstory-body .ContentItem-actions{display: none;}`,
     // `.SearchResult-Card .ContentItem-actions{display: none;}`,
     hiddenAnswerText:
       `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}` +
