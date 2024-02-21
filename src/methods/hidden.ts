@@ -136,6 +136,7 @@ export const myHidden: IMyHidden = {
     hiddenCollectionsCategory: '.Collections-container .Card.GlobalSideBar-category{display:none;}',
     hiddenCollectionsComplementary: '.Collections-container .Card[aria-label="更多分类入口"]{display:none;}',
     hiddenCollectionsFooter: '.Collections-container footer{display:none;}',
+    hiddenZhihuZhiShop: '.RichText-EduCardContainer{display:none;}',
   },
   cssForKeysArray: [
     {

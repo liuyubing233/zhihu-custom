@@ -8,6 +8,7 @@ export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
   hiddenAD: true,
   hiddenDetailFollow: true,
   hidden618HongBao: true,
+  hiddenZhihuZhiShop: true,
 };
 
 /** 屏蔽内容模块默认配置 */
@@ -213,6 +214,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   userHomeContentTimeTop: true,
   userHomeTopBlockUser: true,
   copyAnswerLink: true,
+  contentRemoveKeywordSearch: false,
 };
 
 /** 缓存的历史记录数量 */

@@ -180,6 +180,8 @@ export interface IConfigHidden {
   hiddenCollectionsComplementary?: boolean;
   /** 收藏夹知乎指南 */
   hiddenCollectionsFooter?: boolean;
+  /** 知乎知学堂教育推广商品模块 */
+  hiddenZhihuZhiShop?: boolean;
 }
 
 /** 自定义黑名单列表内容 */
@@ -386,4 +388,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   copyAnswerLink?: boolean;
   /** 时间戳 */
   t?: number;
+  /** 回答、文章中去除热词点击搜索 */
+  contentRemoveKeywordSearch?: boolean;
 }
