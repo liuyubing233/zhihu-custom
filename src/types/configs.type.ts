@@ -388,6 +388,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   copyAnswerLink?: boolean;
   /** 时间戳 */
   t?: number;
-  /** 回答、文章中去除热词点击搜索 */
+  /** 去除热词点击搜索 */
   contentRemoveKeywordSearch?: boolean;
 }

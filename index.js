@@ -1642,6 +1642,7 @@
     }, 100);
   };
   var BASIC_SHOW_CONTENT = [
+    { label: "去除热词点击搜索", value: "contentRemoveKeywordSearch" },
     {
       label: `<b>列表</b>标题类别显示<span class="ctz-label-tag ctz-label-tag-Answer">问答</span><span class="ctz-label-tag ctz-label-tag-Article">文章</span><span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span><span class="ctz-label-tag ctz-label-tag-Pin">想法</span>`,
       value: "questionTitleTag"
@@ -1661,7 +1662,6 @@
     { label: "<b>文章</b>发布时间置顶", value: "articleCreateTimeToTop" },
     { label: "<b>回答、文章</b>顶部显示导出当前内容/回答按钮", value: "topExportContent" },
     { label: "<b>回答、文章</b>中视频替换为链接", value: "videoUseLink" },
-    { label: "<b>回答、文章</b>中去除热词点击搜索", value: "contentRemoveKeywordSearch" },
     { label: "<b>用户主页</b>内容置顶发布、修改时间", value: "userHomeContentTimeTop" },
     { label: "<b>用户主页</b>置顶「屏蔽用户」按钮", value: "userHomeTopBlockUser" }
   ];
