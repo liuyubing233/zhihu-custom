@@ -1,5 +1,6 @@
 /** 基础设置 - 显示设置部分 */
 export const BASIC_SHOW_CONTENT = [
+  { label: '去除热词点击搜索', value: 'contentRemoveKeywordSearch' },
   {
     label:
       `<b>列表</b>标题类别显示` +

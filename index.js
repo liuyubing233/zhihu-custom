@@ -28,7 +28,8 @@
     hiddenReadMoreText: true,
     hiddenAD: true,
     hiddenDetailFollow: true,
-    hidden618HongBao: true
+    hidden618HongBao: true,
+    hiddenZhihuZhiShop: true
   };
   var CONFIG_FILTER_DEFAULT = {
     removeZhihuOfficial: false,
@@ -225,7 +226,8 @@
     listOutputToQuestion: false,
     userHomeContentTimeTop: true,
     userHomeTopBlockUser: true,
-    copyAnswerLink: true
+    copyAnswerLink: true,
+    contentRemoveKeywordSearch: false
   };
   var SAVE_HISTORY_NUMBER = 500;
   var Store = class {
@@ -485,7 +487,8 @@
           { value: "hiddenCommitReply", label: "评论「回复」按钮" },
           { value: "hiddenCommitVote", label: "评论「点赞」按钮" },
           { value: "hiddenCommitBottom", label: "评论底部信息" }
-        ]
+        ],
+        [{ value: "hiddenZhihuZhiShop", label: "知乎知学堂教育推广商品模块" }]
       ]
     },
     {
@@ -1639,6 +1642,7 @@
     }, 100);
   };
   var BASIC_SHOW_CONTENT = [
+    { label: "去除热词点击搜索", value: "contentRemoveKeywordSearch" },
     {
       label: `<b>列表</b>标题类别显示<span class="ctz-label-tag ctz-label-tag-Answer">问答</span><span class="ctz-label-tag ctz-label-tag-Article">文章</span><span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span><span class="ctz-label-tag ctz-label-tag-Pin">想法</span>`,
       value: "questionTitleTag"
@@ -1993,6 +1997,18 @@
       const nodeTopBar = domInvitation.querySelector(".Topbar");
       nodeTopBar && nodeTopBar.appendChild(nButton);
     }, 500);
+  };
+  var fnContentRemoveKeywordSearch = (domFind) => {
+    const domKeywords = domFind.querySelectorAll(".RichContent-EntityWord");
+    for (let i = 0, len = domKeywords.length; i < len; i++) {
+      const domItem = domKeywords[i];
+      domItem.href = "javascript:;";
+      domItem.style.cssText += `color: inherit!important; cursor: default!important;`;
+      const domSvg = domItem.querySelector("svg");
+      if (domSvg) {
+        domSvg.style.display = "none";
+      }
+    }
   };
   var QUERY_CLASS_PDF_IFRAME = ".ctz-pdf-box-content";
   var loadIframeAndExport = (eventBtn, innerHTML, btnText) => {
@@ -2868,7 +2884,7 @@
     if (!HTML_HOOTS.includes(location.hostname))
       return;
     const { getStorageConfigItem, getConfig, setStorageConfigItem } = store;
-    const { globalTitle, hiddenSearchBoxTopSearch } = getConfig();
+    const { globalTitle, hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = getConfig();
     const nodeTopStoryC = domById("TopstoryContent");
     if (nodeTopStoryC) {
       const heightForList = getStorageConfigItem("heightForList");
@@ -2882,6 +2898,7 @@
       heightTopStoryContent < window.innerHeight && windowResize();
       setStorageConfigItem("heightForList", heightTopStoryContent);
     }
+    contentRemoveKeywordSearch && fnContentRemoveKeywordSearch(document.body);
     initLinkChanger();
     previewGIF();
     initImagePreview();
@@ -3028,7 +3045,8 @@
       hiddenCollectionsRecommendFollow: '.Collections-container [data-za-detail-view-path-module="RightSideBar"]>div:last-of-type>.Card{display:none;}',
       hiddenCollectionsCategory: ".Collections-container .Card.GlobalSideBar-category{display:none;}",
       hiddenCollectionsComplementary: '.Collections-container .Card[aria-label="更多分类入口"]{display:none;}',
-      hiddenCollectionsFooter: ".Collections-container footer{display:none;}"
+      hiddenCollectionsFooter: ".Collections-container footer{display:none;}",
+      hiddenZhihuZhiShop: ".RichText-EduCardContainer{display:none;}"
     },
     cssForKeysArray: [
       {

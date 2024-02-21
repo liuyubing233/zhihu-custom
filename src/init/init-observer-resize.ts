@@ -1,5 +1,6 @@
 import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/tools';
 import { HTML_HOOTS } from '../configs';
+import { fnContentRemoveKeywordSearch } from '../methods/content-remove-keyword-search';
 import { myCollectionExport } from '../methods/export-PDF';
 import { previewGIF } from '../methods/image';
 import { initLinkChanger } from '../methods/link';
@@ -20,7 +21,7 @@ export const initResizeObserver = () => {
 function resizeFun() {
   if (!HTML_HOOTS.includes(location.hostname)) return;
   const { getStorageConfigItem, getConfig, setStorageConfigItem } = store;
-  const { globalTitle, hiddenSearchBoxTopSearch } = getConfig();
+  const { globalTitle, hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = getConfig();
   // 比较列表缓存的高度是否大于当前高度，如果大于则是从 index = 0 遍历
   const nodeTopStoryC = domById('TopstoryContent');
   if (nodeTopStoryC) {
@@ -36,7 +37,7 @@ function resizeFun() {
     heightTopStoryContent < window.innerHeight && windowResize();
     setStorageConfigItem('heightForList', heightTopStoryContent);
   }
-
+  contentRemoveKeywordSearch && fnContentRemoveKeywordSearch(document.body);
   initLinkChanger();
   previewGIF();
   initImagePreview();

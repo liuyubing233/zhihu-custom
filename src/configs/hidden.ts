@@ -45,6 +45,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         { value: 'hiddenCommitVote', label: '评论「点赞」按钮' },
         { value: 'hiddenCommitBottom', label: '评论底部信息' },
       ],
+      [{ value: 'hiddenZhihuZhiShop', label: '知乎知学堂教育推广商品模块' }],
     ],
   },
   {
