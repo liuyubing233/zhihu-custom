@@ -4,7 +4,7 @@
 
 ---
 
-**移动端脚本正在开发中，[可以在这里提出移动端的一些需求 >>>](https://github.com/liuyubing233/zhihu-custom-mobile/issues)**
+**移动端脚本正在开发中，[可以在这里提出移动端的一些需求 >>>](https://github.com/liuyubing233/zhihu-custom-mobile/issues/new)**
 
 **在空余时间开发，开发进度并不会很快**
 
