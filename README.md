@@ -2,6 +2,14 @@
 
 ![脚本样式](https://pic.imgdb.cn/item/658a6b57c458853aefa44014.png)
 
+---
+
+**移动端脚本正在开发中，[可以在这里提出移动端的一些需求 >>>](https://github.com/liuyubing233/zhihu-custom-mobile/issues)**
+
+**在空余时间开发，开发进度并不会很快**
+
+---
+
 快捷键 >（Shift + .）唤起修改器弹窗, 或鼠标放置到页面左侧齿轮按钮等弹出后点击唤起弹窗。
 
 请先确认已安装 [tampermonkey](https://www.tampermonkey.net/) 脚本管理器后，再安装本助手。
