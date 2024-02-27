@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      4.13.0
+// @version      4.13.1
 // @description  页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，视频下载，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及夜间模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容、回答、文章导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -2361,9 +2361,6 @@
     return formatter.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
   };
   var updateItemTime = (event) => {
-    const { listItemCreatedAndModifiedTime } = store.getConfig();
-    if (!listItemCreatedAndModifiedTime)
-      return;
     const nodeCreated = event.querySelector('[itemprop="dateCreated"]');
     const nodePublished = event.querySelector('[itemprop="datePublished"]');
     const nodeModified = event.querySelector('[itemprop="dateModified"]');
@@ -2477,13 +2474,14 @@
         removeAnonymousAnswer,
         topExportContent,
         blockWordsAnswer = [],
-        fetchInterceptStatus
+        fetchInterceptStatus,
+        answerItemCreatedAndModifiedTime
       } = conf;
       const addFnInNodeItem = (nodeItem, initThis) => {
         if (!nodeItem)
           return;
         updateTopVote(nodeItem);
-        updateItemTime(nodeItem);
+        answerItemCreatedAndModifiedTime && updateItemTime(nodeItem);
         showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeItem, initThis);
         if (topExportContent && fetchInterceptStatus) {
           addButtonForAnswerExportPDF(nodeItem);
@@ -2826,7 +2824,7 @@
       const nodeContentItem = domP(target, "class", "ContentItem");
       if (!nodeContentItem)
         return;
-      const { showBlockUser, topExportContent, fetchInterceptStatus } = store.getConfig();
+      const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = store.getConfig();
       if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
         const dataZopJson = nodeContentItem.getAttribute("data-zop");
         const { itemId = "", type = "" } = JSON.parse(dataZopJson || "{}");
@@ -2845,7 +2843,7 @@
       if (canFindTargeted(target)) {
         setTimeout(() => {
           updateTopVote(nodeContentItem);
-          updateItemTime(nodeContentItem);
+          listItemCreatedAndModifiedTime && updateItemTime(nodeContentItem);
           showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeContentItem.parentElement);
           initVideoDownload(nodeContentItem);
           if (topExportContent && fetchInterceptStatus) {
