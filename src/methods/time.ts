@@ -25,8 +25,6 @@ export const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') =
 
 /** 问题添加时间 */
 export const updateItemTime = (event: IMyElement) => {
-  const { listItemCreatedAndModifiedTime } = store.getConfig();
-  if (!listItemCreatedAndModifiedTime) return;
   const nodeCreated = event.querySelector('[itemprop="dateCreated"]') as HTMLMetaElement;
   const nodePublished = event.querySelector('[itemprop="datePublished"]') as HTMLMetaElement;
   const nodeModified = event.querySelector('[itemprop="dateModified"]') as HTMLMetaElement;

@@ -29,13 +29,14 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       topExportContent,
       blockWordsAnswer = [],
       fetchInterceptStatus,
+      answerItemCreatedAndModifiedTime
     } = conf;
 
     /** 添加功能 */
     const addFnInNodeItem = (nodeItem?: IMyElement, initThis?: any) => {
       if (!nodeItem) return;
       updateTopVote(nodeItem);
-      updateItemTime(nodeItem);
+      answerItemCreatedAndModifiedTime && updateItemTime(nodeItem);
       showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeItem, initThis);
       if (topExportContent && fetchInterceptStatus) {
         addButtonForAnswerExportPDF(nodeItem);

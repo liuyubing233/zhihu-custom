@@ -26,7 +26,7 @@ export const initTopStoryRecommendEvent = () => {
     const target = event.target as HTMLElement;
     const nodeContentItem = domP(target, 'class', 'ContentItem');
     if (!nodeContentItem) return;
-    const { showBlockUser, topExportContent, fetchInterceptStatus } = store.getConfig();
+    const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = store.getConfig();
     // 点击外置「不感兴趣」按钮
     if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
       const dataZopJson = nodeContentItem.getAttribute('data-zop');
@@ -50,7 +50,7 @@ export const initTopStoryRecommendEvent = () => {
     if (canFindTargeted(target)) {
       setTimeout(() => {
         updateTopVote(nodeContentItem);
-        updateItemTime(nodeContentItem);
+        listItemCreatedAndModifiedTime && updateItemTime(nodeContentItem);
         showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeContentItem.parentElement!);
         initVideoDownload(nodeContentItem);
         if (topExportContent && fetchInterceptStatus) {
