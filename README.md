@@ -4,9 +4,8 @@
 
 ---
 
-**移动端脚本正在开发中，[可以在这里提出移动端的一些需求 >>>](https://github.com/liuyubing233/zhihu-custom-mobile/issues/new)**
+移动版脚本：[Github](https://github.com/liuyubing233/zhihu-custom-mobile/tree/main) ｜ [GreasyFork](https://greasyfork.org/zh-CN/scripts/488508-%E7%9F%A5%E4%B9%8E%E4%BF%AE%E6%94%B9%E5%99%A8%E7%A7%BB%E5%8A%A8%E7%89%88-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0)
 
-**在空余时间开发，开发进度并不会很快**
 
 ---
 
