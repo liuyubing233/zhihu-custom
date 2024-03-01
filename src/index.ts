@@ -34,6 +34,11 @@ import { INNER_CSS } from './web-resources';
 
 (function () {
   if (needRedirect()) return;
+
+  GM_registerMenuCommand('⚙️ 设置', () => {
+    myDialog.open();
+  });
+
   const T0 = performance.now();
   const { hostname, host } = location;
   const { setStorageConfigItem, getStorageConfigItem, getConfig, setUserinfo, setHomeFetch } = store;

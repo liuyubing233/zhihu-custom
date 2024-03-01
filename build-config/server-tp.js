@@ -11,6 +11,7 @@
 // @grant        GM_getValue
 // @grant        GM.getValue
 // @grant        GM.setValue
+// @grant        GM_registerMenuCommand
 // @run-at       document-start
 // @connect      127.0.0.1
 // ==/UserScript==

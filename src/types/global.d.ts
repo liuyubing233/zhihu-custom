@@ -7,6 +7,7 @@ declare const unsafeWindow: Window & {
   [key: string]: any;
 };
 declare const GM_info: ScriptGetInfo;
+declare const GM_registerMenuCommand: (menuName: string, callback?: () => void, options?: Record<string, any>) => void;
 
 type ScriptGetInfo = {
   downloadMode: string;

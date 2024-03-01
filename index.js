@@ -18,6 +18,7 @@
 // @grant        GM_getValue
 // @grant        GM.getValue
 // @grant        GM.setValue
+// @grant        GM_registerMenuCommand
 // @run-at       document-start
 // ==/UserScript==
 
@@ -3491,6 +3492,9 @@
   (function() {
     if (needRedirect())
       return;
+    GM_registerMenuCommand("⚙️ 设置", () => {
+      myDialog.open();
+    });
     const T0 = performance.now();
     const { hostname, host } = location;
     const { setStorageConfigItem, getStorageConfigItem, getConfig, setUserinfo, setHomeFetch } = store;
