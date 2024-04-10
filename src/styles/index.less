@@ -794,9 +794,17 @@
 
 #CTZ_HISTORY_LIST .ctz-set-content,
 #CTZ_HISTORY_VIEW .ctz-set-content {
-  word-break: break-all;
   a {
     .hover-style();
+    word-break: break-all;
+    display: block;
+    margin-bottom: 4px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    &:hover {
+      border-color: @blue1;
+    }
   }
 }
 
