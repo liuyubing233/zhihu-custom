@@ -135,7 +135,8 @@ export const myListenListItem = {
         if (nodeATitle) {
           const itemHref = nodeATitle.href;
           const itemTitle = nodeATitle.innerText;
-          const itemA = `<a href="${itemHref}" target="_blank">${itemTitle}</a>`;
+          const itemT = isVideo ? itemType.zvideo : isArticle ? itemType.article : isTip ? itemType.pin : itemType.answer;
+          const itemA = `<a href="${itemHref}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${itemTitle}</a>`;
           if (!historyList.includes(itemA)) {
             historyList.unshift(itemA);
           }
@@ -184,5 +185,24 @@ export const myListenListItem = {
       }
     }
     return '';
+  },
+};
+
+const itemType = {
+  answer: {
+    name: '问题',
+    style: 'color: #ec7259',
+  },
+  article: {
+    name: '文章',
+    style: 'color: #00965e',
+  },
+  zvideo: {
+    name: '视频',
+    style: 'color: #12c2e9',
+  },
+  pin: {
+    name: '想法',
+    style: 'color: #9c27b0',
   },
 };

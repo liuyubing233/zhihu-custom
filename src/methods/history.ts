@@ -7,6 +7,6 @@ export const echoHistory = async () => {
   const { list, view } = history;
   const nodeList = dom('#CTZ_HISTORY_LIST .ctz-set-content');
   const nodeView = dom('#CTZ_HISTORY_VIEW .ctz-set-content');
-  nodeList && (nodeList.innerHTML = list.join('<br/>'));
-  nodeView && (nodeView.innerHTML = view.join('<br/>'));
+  nodeList && (nodeList.innerHTML = list.join(''));
+  nodeView && (nodeView.innerHTML = view.join(''));
 };
