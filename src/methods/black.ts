@@ -30,7 +30,7 @@ export const myBlack: IMyBlack = {
     return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
   },
   createItemContent: ({ id, name, avatar }) => {
-    return `<img src="${avatar}"/><a href="/people/${id}" target="_blank">${name}</a><i class="ctz-icon ${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">&#xe607;</i>`;
+    return `<img src="${avatar}"/><a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
   },
   /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
   addButton: function (event, objMy) {
@@ -154,7 +154,7 @@ export const myBlack: IMyBlack = {
   sync: function (offset = 0, l = []) {
     const nodeList = domById(ID_BLOCK_LIST);
     !l.length && nodeList && (nodeList.innerHTML = '');
-    fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '<i class="ctz-icon ctz-loading">&#xe605;</i>', disabled: true });
+    fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
     const limit = 20;
     const headers = this.getHeaders();
     fetch(`https://www.zhihu.com/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {

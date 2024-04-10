@@ -20,7 +20,7 @@ const NAME_BY_KEY: IFindDomName = {
 };
 
 const createHTMLAboutBlockText = (w: string) => `<span data-title="${w}">${createHTMLAboutBlockTextContent(w)}</span>`;
-const createHTMLAboutBlockTextContent = (w: string) => `<span>${w}</span><i class="ctz-icon ctz-filter-word-remove">&#xe602;</i>`;
+const createHTMLAboutBlockTextContent = (w: string) => `<span>${w}</span><i class="ctz-filter-word-remove">✗</i>`;
 
 const onRemove = (e: MouseEvent, key: IKeyofDomName) => {
   const target = e.target as HTMLElement;
