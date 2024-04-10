@@ -28,7 +28,7 @@ export const myListenListItem = {
       removeFollowFQuestion,
       listOutPutNotInterested,
       highlightOriginal,
-      themeDark = EThemeDark.夜间护眼一,
+      themeDark = EThemeDark.深色护眼一,
       themeLight = EThemeLight.默认,
       removeMyOperateAtFollow,
       listOutputToQuestion,
@@ -119,7 +119,7 @@ export const myListenListItem = {
         const highlight = `background: ${
           isDark()
             ? `${THEME_CONFIG_DARK[themeDark].background2}!important;`
-            : themeLight === EThemeLight.默认
+            : +themeLight === EThemeLight.默认
             ? '#fff3d4!important;'
             : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`
         }`;

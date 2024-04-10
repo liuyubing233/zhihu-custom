@@ -16,26 +16,26 @@ import { ETheme, EThemeDark, EThemeLight } from '../types';
 /** 修改页面背景的 css */
 const myBackground = {
   init: function () {
-    const { themeDark = EThemeDark.夜间护眼一, themeLight = EThemeLight.默认 } = store.getConfig();
+    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = store.getConfig();
     const innerHTML = this.change(themeDark, themeLight);
     fnInitDomStyle('CTZ_STYLE_BACKGROUND', innerHTML);
   },
   change: function (themeDark: EThemeDark, themeLight: EThemeLight) {
     const getBackground = () => {
       if (this.isUseDark()) return this.dark(themeDark);
-      if (themeLight === EThemeLight.默认) return this.default();
+      if (+themeLight === EThemeLight.默认) return this.default();
       return this.light(themeLight);
     };
     return getBackground() + this.text();
   },
   isUseDark: () => {
     const { theme = ETheme.自动 } = store.getConfig();
-    if (theme === ETheme.自动) {
+    if (+theme === ETheme.自动) {
       // 获取浏览器颜色
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
       return prefersDarkScheme.matches;
     }
-    return theme === ETheme.深色;
+    return +theme === ETheme.深色;
   },
   default: () => '.GlobalSideBar-navList{background: #fff}',
   dark: function (darkKey: EThemeDark) {
@@ -224,7 +224,7 @@ export const loadBackground = () => {
   myBackground.init();
 };
 
-/** 是否使用夜间模式 */
+/** 是否使用深色模式 */
 export const isDark = () => {
   return myBackground.isUseDark();
 };

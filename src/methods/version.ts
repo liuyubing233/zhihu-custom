@@ -131,7 +131,7 @@ export const myVersion = {
   /** 首页问题列表切换模块悬浮 */
   vSusHomeTab: function () {
     const pfConfig = store.getConfig();
-    const { themeDark = EThemeDark.夜间护眼一, themeLight = EThemeLight.默认 } = pfConfig;
+    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = pfConfig;
     const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
     return fnReturnStr(
       `.Topstory-container .TopstoryTabs` +
@@ -154,7 +154,7 @@ export const myVersion = {
   /** 顶部三大块悬浮 */
   vSusHeader: function () {
     const pfConfig = store.getConfig();
-    const { themeDark = EThemeDark.夜间护眼一, themeLight = EThemeLight.默认 } = pfConfig;
+    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = pfConfig;
     const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
     return (
       `.position-suspensionFind{${pfConfig.suspensionFindPo}}` +
