@@ -13,8 +13,8 @@ export const myLock = {
     const unlock = this.unlock.class;
     const lockMask = this.lockMask.class;
     const classRemove = 'ctz-move-this';
-    const iLock = domC('i', { className: `ctz-icon ${this.lock.name}`, innerHTML: '&#xe700;' });
-    const iUnlock = domC('i', { className: `ctz-icon ${this.unlock.name}`, innerHTML: '&#xe688;' });
+    const iLock = domC('i', { className: `${this.lock.name}`, innerHTML: '☑︎' });
+    const iUnlock = domC('i', { className: `${this.unlock.name}`, innerHTML: '☒' });
     const dLockMask = domC('div', { className: this.lockMask.name });
     !e.querySelector(lock) && e.appendChild(iLock);
     !e.querySelector(unlock) && e.appendChild(iUnlock);

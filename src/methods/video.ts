@@ -29,8 +29,8 @@ export const initVideoDownload = (nodeFound: HTMLElement) => {
   );
   for (let i = 0, len = domVideos.length; i < len; i++) {
     const domVideoBox = domVideos[i] as HTMLElement;
-    const nDomDownload = domC('i', { className: 'ctz-icon ctz-video-download', innerHTML: '&#xe608;' });
-    const nDomLoading = domC('i', { className: 'ctz-icon ctz-loading', innerHTML: '&#xe605;' });
+    const nDomDownload = domC('i', { className: 'ctz-video-download', innerHTML: '⤓' });
+    const nDomLoading = domC('i', { className: 'ctz-loading', innerHTML: '↻' });
     nDomDownload.onclick = () => {
       const srcVideo = domVideoBox.querySelector('video')!.src;
       if (srcVideo) {

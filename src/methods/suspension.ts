@@ -89,8 +89,8 @@ export const cacheHeader = () => {
     if (pfConfig[name]) {
       // 如果是 suspensionSearch 则添加展开和收起按钮
       if (name === 'suspensionSearch') {
-        !dom(classIcon) && even.appendChild(domC('i', { className: 'ctz-icon ctz-search-icon', innerHTML: '&#xe600;' }));
-        !dom(classPickup) && even.appendChild(domC('i', { className: 'ctz-icon ctz-search-pick-up', innerHTML: '&#xe601;' }));
+        !dom(classIcon) && even.appendChild(domC('i', { className: 'ctz-search-icon', innerHTML: '⚲' }));
+        !dom(classPickup) && even.appendChild(domC('i', { className: 'ctz-search-pick-up', innerHTML: '⇤' }));
         dom(classIcon)!.onclick = () => even.classList.add(classNameFocus);
         dom(classPickup)!.onclick = () => even.classList.remove(classNameFocus);
       }
