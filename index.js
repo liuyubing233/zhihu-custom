@@ -219,9 +219,9 @@
     zoomListVideoType: "0",
     zoomListVideoSize: "500",
     hotKey: true,
-    theme: "2" /* 自动 */,
-    themeLight: "0" /* 默认 */,
-    themeDark: "1" /* 夜间护眼一 */,
+    theme: 2 /* 自动 */,
+    themeLight: 0 /* 默认 */,
+    themeDark: 1 /* 深色护眼一 */,
     colorText1: "",
     commitModalSizeSameVersion: true,
     listOutputToQuestion: false,
@@ -339,23 +339,27 @@
   };
   var store = new Store();
   var THEMES = [
-    { label: "浅色", value: "0" /* 浅色 */, background: "#fff", color: "#000" },
-    { label: "深色", value: "1" /* 深色 */, background: "#000", color: "#fff" },
-    { label: "自动", value: "2" /* 自动 */, background: "linear-gradient(to right, #fff, #000)", color: "#000" }
+    { label: "浅色", value: 0 /* 浅色 */, background: "#fff", color: "#000" },
+    { label: "深色", value: 1 /* 深色 */, background: "#000", color: "#fff" },
+    { label: "自动", value: 2 /* 自动 */, background: "linear-gradient(to right, #fff, #000)", color: "#000" }
   ];
   var THEME_CONFIG_LIGHT = {
-    ["0" /* 默认 */]: { name: "默认", background: "#ffffff", background2: "" },
-    ["1" /* 红 */]: { name: "红", background: "#ffe4c4", background2: "#fff4e7" },
-    ["2" /* 黄 */]: { name: "黄", background: "#faf9de", background2: "#fdfdf2" },
-    ["3" /* 绿 */]: { name: "绿", background: "#cce8cf", background2: "#e5f1e7" },
-    ["4" /* 灰 */]: { name: "灰", background: "#eaeaef", background2: "#f3f3f5" },
-    ["5" /* 紫 */]: { name: "紫", background: "#e9ebfe", background2: "#f2f3fb" }
+    [0 /* 默认 */]: { name: "默认", background: "#ffffff", background2: "" },
+    [1 /* 红 */]: { name: "红", background: "#ffe4c4", background2: "#fff4e7" },
+    [2 /* 黄 */]: { name: "黄", background: "#faf9de", background2: "#fdfdf2" },
+    [3 /* 绿 */]: { name: "绿", background: "#cce8cf", background2: "#e5f1e7" },
+    [4 /* 灰 */]: { name: "灰", background: "#eaeaef", background2: "#f3f3f5" },
+    [5 /* 紫 */]: { name: "紫", background: "#e9ebfe", background2: "#f2f3fb" },
+    [6 /* 落日黄 */]: { name: "落日黄", background: "#FFD39B", background2: "#ffe4c4" }
   };
   var THEME_CONFIG_DARK = {
-    ["0" /* 夜间模式默认 */]: { name: "默认", color: "#fff", color2: "#999", background: "#121212", background2: "#333333" },
-    ["1" /* 夜间护眼一 */]: { name: "夜间护眼一", color: "#f7f9f9", color2: "#161d23", background: "#15202b", background2: "#38444d" },
-    ["2" /* 夜间护眼二 */]: { name: "夜间护眼二", color: "#f7f9f9", color2: "#161d23", background: "#1f1f1f", background2: "#303030" },
-    ["3" /* 夜间护眼三 */]: { name: "夜间护眼三", color: "#f7f9f9", color2: "#161d23", background: "#272822", background2: "#383932" }
+    [0 /* 深色模式默认 */]: { name: "默认", color: "#fff", color2: "#999", background: "#121212", background2: "#333333" },
+    [1 /* 深色护眼一 */]: { name: "深色护眼一", color: "#f7f9f9", color2: "#161d23", background: "#15202b", background2: "#38444d" },
+    [2 /* 深色护眼二 */]: { name: "深色护眼二", color: "#f7f9f9", color2: "#161d23", background: "#1f1f1f", background2: "#303030" },
+    [3 /* 深色护眼三 */]: { name: "深色护眼三", color: "#f7f9f9", color2: "#161d23", background: "#272822", background2: "#383932" },
+    [4 /* 深色蓝 */]: { name: "深色蓝", color: "#f7f9f9", color2: "#161d23", background: "#1c0c59", background2: "#191970" },
+    [5 /* 深色红 */]: { name: "深色红", color: "#f7f9f9", color2: "#161d23", background: "#570D0D", background2: "#8B0000" },
+    [6 /* 深色绿 */]: { name: "深色绿", color: "#f7f9f9", color2: "#161d23", background: "#093333", background2: "#0c403f" }
   };
   var INPUT_NAME_THEME = "theme";
   var INPUT_NAME_THEME_DARK = "themeDark";
@@ -1047,7 +1051,7 @@
   };
   var myBackground = {
     init: function() {
-      const { themeDark = "1" /* 夜间护眼一 */, themeLight = "0" /* 默认 */ } = store.getConfig();
+      const { themeDark = 1 /* 深色护眼一 */, themeLight = 0 /* 默认 */ } = store.getConfig();
       const innerHTML = this.change(themeDark, themeLight);
       fnInitDomStyle("CTZ_STYLE_BACKGROUND", innerHTML);
     },
@@ -1055,19 +1059,19 @@
       const getBackground = () => {
         if (this.isUseDark())
           return this.dark(themeDark);
-        if (themeLight === "0" /* 默认 */)
+        if (+themeLight === 0 /* 默认 */)
           return this.default();
         return this.light(themeLight);
       };
       return getBackground() + this.text();
     },
     isUseDark: () => {
-      const { theme = "2" /* 自动 */ } = store.getConfig();
-      if (theme === "2" /* 自动 */) {
+      const { theme = 2 /* 自动 */ } = store.getConfig();
+      if (+theme === 2 /* 自动 */) {
         const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
         return prefersDarkScheme.matches;
       }
-      return theme === "1" /* 深色 */;
+      return +theme === 1 /* 深色 */;
     },
     default: () => ".GlobalSideBar-navList{background: #fff}",
     dark: function(darkKey) {
@@ -1453,7 +1457,7 @@
     /** 首页问题列表切换模块悬浮 */
     vSusHomeTab: function() {
       const pfConfig = store.getConfig();
-      const { themeDark = "1" /* 夜间护眼一 */, themeLight = "0" /* 默认 */ } = pfConfig;
+      const { themeDark = 1 /* 深色护眼一 */, themeLight = 0 /* 默认 */ } = pfConfig;
       const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
       return fnReturnStr(
         `.Topstory-container .TopstoryTabs{${pfConfig.suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}.Topstory-container .TopstoryTabs>a::after{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;border:1px solid #999999;color:#999999;background: ${background || "transparent"};}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link {margin:0!important}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{color:#0066ff!important;border-color:#0066ff!important;}.Topstory [aria-controls='Topstory-recommend']::after{content:'推';}.Topstory [aria-controls='Topstory-follow']::after{content:'关';border-top-left-radius:4px;border-top-right-radius:4px;}.Topstory [aria-controls='Topstory-hot']::after{content:'热';}.Topstory [aria-controls="Topstory-zvideo"]::after{content:'视';border-bottom-left-radius:4px;border-bottom-right-radius:4px}.Topstory-tabs{border-color: transparent!important;}`,
@@ -1463,7 +1467,7 @@
     /** 顶部三大块悬浮 */
     vSusHeader: function() {
       const pfConfig = store.getConfig();
-      const { themeDark = "1" /* 夜间护眼一 */, themeLight = "0" /* 默认 */ } = pfConfig;
+      const { themeDark = 1 /* 深色护眼一 */, themeLight = 0 /* 默认 */ } = pfConfig;
       const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
       return `.position-suspensionFind{${pfConfig.suspensionFindPo}}.position-suspensionUser{${pfConfig.suspensionUserPo}}.position-suspensionSearch{${pfConfig.suspensionSearchPo}}.position-suspensionFind .Tabs-link{border:1px solid #999999;color:#999999;background: ${background || "transparent"};}.position-suspensionFind .Tabs-link.is-active{color:#0066ff!important;border-color:#0066ff!important;}.position-suspensionUser .css-1m60na {display: none;}.position-suspensionUser .css-1n0eufo{margin-right: 0;}`;
     },
@@ -1504,7 +1508,7 @@
   };
   var suspensionPackUp = (elements) => {
     const RIGHT = 60;
-    const { themeLight = "0" /* 默认 */, themeDark = "1" /* 夜间护眼一 */ } = store.getConfig();
+    const { themeLight = 0 /* 默认 */, themeDark = 1 /* 深色护眼一 */ } = store.getConfig();
     for (let i = 0; i < elements.length; i++) {
       const even = elements[i];
       const evenPrev = i > 0 ? elements[i - 1] : null;
@@ -1515,7 +1519,7 @@
       if (!evenButton)
         continue;
       const needStyle = evenBottom > hST + window.innerHeight && evenPrevBottom < hST;
-      evenButton.style.cssText = needStyle ? `visibility:visible!important;position: fixed!important;bottom: 60px;right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + RIGHT}px;box-shadow: 0 1px 3px rgb(18 18 18 / 10%);height: 40px!important;padding: 0 12px!important;background: ${isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][themeLight !== "0" /* 默认 */ ? "background2" : "background"]}!important;` : "";
+      evenButton.style.cssText = needStyle ? `visibility:visible!important;position: fixed!important;bottom: 60px;right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + RIGHT}px;box-shadow: 0 1px 3px rgb(18 18 18 / 10%);height: 40px!important;padding: 0 12px!important;background: ${isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][+themeLight !== 0 /* 默认 */ ? "background2" : "background"]}!important;` : "";
     }
   };
   var changeSuspensionTab = () => {
@@ -2610,8 +2614,8 @@
         removeFollowFQuestion,
         listOutPutNotInterested,
         highlightOriginal,
-        themeDark = "1" /* 夜间护眼一 */,
-        themeLight = "0" /* 默认 */,
+        themeDark = 1 /* 深色护眼一 */,
+        themeLight = 0 /* 默认 */,
         removeMyOperateAtFollow,
         listOutputToQuestion,
         fetchInterceptStatus
@@ -2688,7 +2692,7 @@
         const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
         const userName = userNameE ? userNameE.innerText : "";
         if (highlightOriginal && dataZop && dataZop.authorName === userName && !message2) {
-          const highlight = `background: ${isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : themeLight === "0" /* 默认 */ ? "#fff3d4!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`}`;
+          const highlight = `background: ${isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "#fff3d4!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`}`;
           const nodeActions = nodeItem.querySelector(".ContentItem-actions");
           nodeItem.style.cssText = `${highlight}border: 1px solid #aaa;`;
           nodeActions && (nodeActions.style.cssText = highlight);

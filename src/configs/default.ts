@@ -207,7 +207,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   hotKey: true,
   theme: ETheme.自动,
   themeLight: EThemeLight.默认,
-  themeDark: EThemeDark.夜间护眼一,
+  themeDark: EThemeDark.深色护眼一,
   colorText1: '',
   commitModalSizeSameVersion: true,
   listOutputToQuestion: false,

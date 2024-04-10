@@ -10,7 +10,7 @@ import { myVersion } from './version';
 /** 漂浮收起按钮的方法 */
 export const suspensionPackUp = (elements: NodeListOf<IMyElement>) => {
   const RIGHT = 60;
-  const { themeLight = EThemeLight.默认, themeDark = EThemeDark.夜间护眼一 } = store.getConfig();
+  const { themeLight = EThemeLight.默认, themeDark = EThemeDark.深色护眼一 } = store.getConfig();
   for (let i = 0; i < elements.length; i++) {
     const even = elements[i];
     const evenPrev = i > 0 ? elements[i - 1] : null;
@@ -27,7 +27,7 @@ export const suspensionPackUp = (elements: NodeListOf<IMyElement>) => {
         `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
         `height: 40px!important;padding: 0 12px!important;` +
         `background: ${
-          isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][themeLight !== EThemeLight.默认 ? 'background2' : 'background']
+          isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][+themeLight !== EThemeLight.默认 ? 'background2' : 'background']
         }!important;`
       : '';
   }
