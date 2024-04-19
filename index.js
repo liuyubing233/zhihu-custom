@@ -1833,7 +1833,7 @@
           l.push({ id, name, avatar: avatar_url, userType: user_type, urlToken: url_token });
         });
         if (!paging.is_end) {
-          this.sync((offset + 1) * limit, l);
+          this.sync(offset + limit, l);
         } else {
           myStorage.setConfigItem("removeBlockUserContentList", l);
           myBlack.init();
