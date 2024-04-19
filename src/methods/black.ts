@@ -59,9 +59,9 @@ export const myBlack: IMyBlack = {
     const createClass = (value?: string) => `${value} ctz-button ctz-button-small ctz-button-transparent`;
     const innerHTML = isAlreadyBlack
       ? `<button class="${createClass(classBlackRemove)}">解除屏蔽</button>` +
-        fnReturnStr(`<button class="${createClass(classJustFilter)}">隐藏该回答</button>`, !!objMy)
+      fnReturnStr(`<button class="${createClass(classJustFilter)}">隐藏该回答</button>`, !!objMy)
       : `<button class="${createClass(classBlack)}">屏蔽用户</button>` +
-        fnReturnStr(`<button class="${createClass(classBlackFilter)}">屏蔽用户并隐藏该回答</button>`, !!objMy);
+      fnReturnStr(`<button class="${createClass(classBlackFilter)}">屏蔽用户并隐藏该回答</button>`, !!objMy);
     const nodeBox = domC('div', { className: classBox, innerHTML });
     nodeBox.onclick = function (ev) {
       const target = ev.target as IMyElement;
@@ -168,7 +168,7 @@ export const myBlack: IMyBlack = {
           l.push({ id, name, avatar: avatar_url, userType: user_type, urlToken: url_token });
         });
         if (!paging.is_end) {
-          this.sync((offset + 1) * limit, l);
+          this.sync(offset + limit, l);
         } else {
           myStorage.setConfigItem('removeBlockUserContentList', l);
           myBlack.init();
