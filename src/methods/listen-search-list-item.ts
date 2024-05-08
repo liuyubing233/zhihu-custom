@@ -19,14 +19,19 @@ export const myListenSearchListItem = {
       const haveArticle = removeItemAboutArticle && elementThis.querySelector('.ArticleItem');
       const haveVideo = removeItemAboutVideo && elementThis.querySelector('.ZvideoItem');
       (haveAD || haveArticle || haveVideo) && (message = '列表种类屏蔽');
+
       // 低赞内容过滤
       if (removeLessVote && !message) {
         const elementUpvote = elementThis.querySelector('.ContentItem-actions .VoteButton--up');
-        const ariaLabel = elementUpvote ? elementUpvote.getAttribute('aria-label') : '';
-        const upvoteText = ariaLabel ? ariaLabel.trim().replace(/\W+/, '') : '0';
-        const upvote = upvoteText.includes('万') ? +upvoteText.replace('万', '').trim() * 10000 : +upvoteText;
-        if (upvote > -1 && upvote < lessVoteNumber) {
-          message = `屏蔽低赞内容: ${upvote}赞`;
+        if (elementUpvote) {
+          const ariaLabel = elementUpvote.getAttribute('aria-label');
+          if (ariaLabel) {
+            const upvoteText = ariaLabel.trim().replace(/\W+/, '');
+            const upvote = upvoteText.includes('万') ? +upvoteText.replace('万', '').trim() * 10000 : +upvoteText;
+            if (upvote > -1 && upvote < lessVoteNumber) {
+              message = `屏蔽低赞内容: ${upvote}赞`;
+            }
+          }
         }
       }
       fnJustNum(elementThis);

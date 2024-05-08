@@ -2791,11 +2791,15 @@
         (haveAD || haveArticle || haveVideo) && (message2 = "列表种类屏蔽");
         if (removeLessVote && !message2) {
           const elementUpvote = elementThis.querySelector(".ContentItem-actions .VoteButton--up");
-          const ariaLabel = elementUpvote ? elementUpvote.getAttribute("aria-label") : "";
-          const upvoteText = ariaLabel ? ariaLabel.trim().replace(/\W+/, "") : "0";
-          const upvote = upvoteText.includes("万") ? +upvoteText.replace("万", "").trim() * 1e4 : +upvoteText;
-          if (upvote > -1 && upvote < lessVoteNumber) {
-            message2 = `屏蔽低赞内容: ${upvote}赞`;
+          if (elementUpvote) {
+            const ariaLabel = elementUpvote.getAttribute("aria-label");
+            if (ariaLabel) {
+              const upvoteText = ariaLabel.trim().replace(/\W+/, "");
+              const upvote = upvoteText.includes("万") ? +upvoteText.replace("万", "").trim() * 1e4 : +upvoteText;
+              if (upvote > -1 && upvote < lessVoteNumber) {
+                message2 = `屏蔽低赞内容: ${upvote}赞`;
+              }
+            }
           }
         }
         fnJustNum(elementThis);
