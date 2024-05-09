@@ -182,4 +182,16 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  {
+    key: 'CTZ_HIDDEN_TOPIC',
+    name: '话题',
+    desc: '只在话题隐藏相应内容',
+    content: [
+      [
+        { value: 'hiddenTopicRightNumberBoard', label: '话题主页右侧浏览/讨论量模块' },
+        { value: 'hiddenTopicRightParentChild', label: '话题主页右侧父子话题模块' },
+        { value: 'hiddenTopicRightFooter', label: '话题主页右侧知乎指南' },
+      ],
+    ],
+  },
 ];

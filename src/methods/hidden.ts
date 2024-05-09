@@ -137,6 +137,9 @@ export const myHidden: IMyHidden = {
     hiddenCollectionsComplementary: '.Collections-container .Card[aria-label="更多分类入口"]{display:none;}',
     hiddenCollectionsFooter: '.Collections-container footer{display:none;}',
     hiddenZhihuZhiShop: '.RichText-EduCardContainer{display:none;}',
+    hiddenTopicRightNumberBoard: '[data-za-detail-view-path-module="TopicItem"] .Card .NumberBoard{display:none;}',
+    hiddenTopicRightParentChild: '[data-za-detail-view-path-module="TopicItem"] .Card .Card-section{display:none;}',
+    hiddenTopicRightFooter: '[data-za-detail-view-path-module="TopicItem"] footer{display:none;}',
   },
   cssForKeysArray: [
     {
@@ -163,6 +166,10 @@ export const myHidden: IMyHidden = {
       keys: ['hiddenHomeListTabFollow', 'hiddenHomeListTabRecommend', 'hiddenHomeListTabHot', 'hiddenHomeListTabVideo'],
       value: '.Topstory-container .TopstoryTabs{display: none}',
     },
+    {
+      keys: ['hiddenTopicRightNumberBoard', 'hiddenTopicRightParentChild', 'hiddenTopicRightFooter'],
+      value: '[data-za-detail-view-path-module="TopicItem"]>div:nth-child(2){display: none;}'
+    }
   ],
 };
 

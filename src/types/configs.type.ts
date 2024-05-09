@@ -182,6 +182,12 @@ export interface IConfigHidden {
   hiddenCollectionsFooter?: boolean;
   /** 知乎知学堂教育推广商品模块 */
   hiddenZhihuZhiShop?: boolean;
+  /** 话题主页右侧浏览/讨论量模块 */
+  hiddenTopicRightNumberBoard?: boolean;
+  /** 话题主页右侧父子话题模块 */
+  hiddenTopicRightParentChild?: boolean;
+  /** 话题主页右侧知乎指南 */
+  hiddenTopicRightFooter?: boolean;
 }
 
 /** 自定义黑名单列表内容 */

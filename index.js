@@ -629,6 +629,18 @@
           { value: "hiddenCollectionsFooter", label: "收藏夹知乎指南" }
         ]
       ]
+    },
+    {
+      key: "CTZ_HIDDEN_TOPIC",
+      name: "话题",
+      desc: "只在话题隐藏相应内容",
+      content: [
+        [
+          { value: "hiddenTopicRightNumberBoard", label: "话题主页右侧浏览/讨论量模块" },
+          { value: "hiddenTopicRightParentChild", label: "话题主页右侧父子话题模块" },
+          { value: "hiddenTopicRightFooter", label: "话题主页右侧知乎指南" }
+        ]
+      ]
     }
   ];
   var FOOTER_HTML = `<a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>`;
@@ -3072,7 +3084,10 @@
       hiddenCollectionsCategory: ".Collections-container .Card.GlobalSideBar-category{display:none;}",
       hiddenCollectionsComplementary: '.Collections-container .Card[aria-label="更多分类入口"]{display:none;}',
       hiddenCollectionsFooter: ".Collections-container footer{display:none;}",
-      hiddenZhihuZhiShop: ".RichText-EduCardContainer{display:none;}"
+      hiddenZhihuZhiShop: ".RichText-EduCardContainer{display:none;}",
+      hiddenTopicRightNumberBoard: '[data-za-detail-view-path-module="TopicItem"] .Card .NumberBoard{display:none;}',
+      hiddenTopicRightParentChild: '[data-za-detail-view-path-module="TopicItem"] .Card .Card-section{display:none;}',
+      hiddenTopicRightFooter: '[data-za-detail-view-path-module="TopicItem"] footer{display:none;}'
     },
     cssForKeysArray: [
       {
@@ -3098,6 +3113,10 @@
       {
         keys: ["hiddenHomeListTabFollow", "hiddenHomeListTabRecommend", "hiddenHomeListTabHot", "hiddenHomeListTabVideo"],
         value: ".Topstory-container .TopstoryTabs{display: none}"
+      },
+      {
+        keys: ["hiddenTopicRightNumberBoard", "hiddenTopicRightParentChild", "hiddenTopicRightFooter"],
+        value: '[data-za-detail-view-path-module="TopicItem"]>div:nth-child(2){display: none;}'
       }
     ]
   };
