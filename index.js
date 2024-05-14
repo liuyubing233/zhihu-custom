@@ -9,10 +9,11 @@
 // @compatible   chrome Tampermonkey
 // @compatible   firefox Violentmonkey
 // @compatible   firefox Tampermonkey
+// @compatible   safari Violentmonkey
+// @compatible   safari Tampermonkey
 // @author       liuyubing
 // @license      MIT
 // @match        *://*.zhihu.com/*
-// @grant        unsafeWindow
 // @grant        GM_info
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -758,7 +759,7 @@
     if (!element)
       return;
     const event = new MouseEvent("click", {
-      view: unsafeWindow,
+      view: window,
       bubbles: true,
       cancelable: true
     });
@@ -3567,7 +3568,7 @@
         fnLog("已开启 fetch 接口拦截");
         const prevHeaders = getStorageConfigItem("fetchHeaders");
         const originFetch = fetch;
-        unsafeWindow.fetch = (url, opt) => {
+        window.fetch = (url, opt) => {
           if (opt && opt.headers) {
             setStorageConfigItem("fetchHeaders", {
               ...prevHeaders,
@@ -3586,55 +3587,60 @@
       }
     }
     onDocumentStart();
-    window.addEventListener(
-      "DOMContentLoaded",
-      async () => {
-        myListenListItem.getScriptData();
+    const timerLoadHead = () => {
+      setTimeout(() => {
         if (!isHaveHeadWhenInit) {
-          await onDocumentStart();
+          document.head ? onDocumentStart() : timerLoadHead();
         }
-        if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
-          const { removeTopAD } = getConfig();
-          initHTML();
-          initOperate();
+      }, 100);
+    };
+    timerLoadHead();
+    const timerLoadBody = () => {
+      setTimeout(() => {
+        document.body ? createLoad() : timerLoadBody();
+      }, 100);
+    };
+    timerLoadBody();
+    const createLoad = async () => {
+      myListenListItem.getScriptData();
+      if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
+        const { removeTopAD } = getConfig();
+        initHTML();
+        initOperate();
+        initData();
+        loadBackground();
+        myVersion.initAfterLoad();
+        myCustomStyle.init();
+        initBlockWords();
+        initResizeObserver();
+        myCtzTypeOperation.init();
+        echoHistory();
+        dom('[name="useSimple"]').onclick = async function() {
+          const isUse = confirm("是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存");
+          if (!isUse)
+            return;
+          myStorage.setConfig({
+            ...getConfig(),
+            ...CONFIG_SIMPLE
+          });
+          onDocumentStart();
           initData();
-          loadBackground();
-          myVersion.initAfterLoad();
-          myCustomStyle.init();
-          initBlockWords();
-          initResizeObserver();
-          myCtzTypeOperation.init();
-          echoHistory();
-          dom('[name="useSimple"]').onclick = async function() {
-            const isUse = confirm("是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存");
-            if (!isUse)
-              return;
-            myStorage.setConfig({
-              ...getConfig(),
-              ...CONFIG_SIMPLE
-            });
-            onDocumentStart();
-            initData();
-          };
-          if (removeTopAD) {
-            mouseEventClick(dom("svg.css-1p094v5"));
-          }
+        };
+        if (removeTopAD) {
+          mouseEventClick(dom("svg.css-1p094v5"));
         }
-        historyToChangePathname();
-        if (host === "zhuanlan.zhihu.com") {
-          addArticleCreateTimeToTop();
-          const nodeArticle = dom(".Post-content");
-          if (nodeArticle) {
-            addButtonForArticleExportPDF(nodeArticle);
-            initVideoDownload(nodeArticle);
-          }
+      }
+      historyToChangePathname();
+      if (host === "zhuanlan.zhihu.com") {
+        addArticleCreateTimeToTop();
+        const nodeArticle = dom(".Post-content");
+        if (nodeArticle) {
+          addButtonForArticleExportPDF(nodeArticle);
+          initVideoDownload(nodeArticle);
         }
-        fnLog(
-          `加载完毕, 加载时长: ${Math.floor((performance.now() - T0) / 10) / 100}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗，如果快捷键不生效可以在控制台使用 window.openCtz() 唤起`
-        );
-      },
-      false
-    );
+      }
+      fnLog(`加载完毕, 加载时长: ${Math.floor((performance.now() - T0) / 10) / 100}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗`);
+    };
     const historyToChangePathname = () => {
       pathnameHasFn({
         question: () => {
@@ -3697,7 +3703,6 @@
       }
       keydownNextImage(event);
     });
-    unsafeWindow.openCtz = myDialog.open;
     document.addEventListener("copy", function(event) {
       let clipboardData = event.clipboardData || window.clipboardData;
       if (!clipboardData)

@@ -3,9 +3,9 @@ declare const GM: {
   getValue: (key: string) => Promise<string>;
 };
 
-declare const unsafeWindow: Window & {
-  [key: string]: any;
-};
+// declare const window: Window & {
+//   [key: string]: any;
+// };
 declare const GM_info: ScriptGetInfo;
 declare const GM_registerMenuCommand: (menuName: string, callback?: () => void, options?: Record<string, any>) => void;
 

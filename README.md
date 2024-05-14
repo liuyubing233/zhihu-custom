@@ -6,7 +6,6 @@
 
 移动版脚本：[Github](https://github.com/liuyubing233/zhihu-custom-mobile/tree/main) ｜ [GreasyFork](https://greasyfork.org/zh-CN/scripts/488508-%E7%9F%A5%E4%B9%8E%E4%BF%AE%E6%94%B9%E5%99%A8%E7%A7%BB%E5%8A%A8%E7%89%88-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0)
 
-
 ---
 
 快捷键 >（Shift + .）唤起修改器弹窗, 或鼠标放置到页面左侧齿轮按钮等弹出后点击唤起弹窗。
@@ -26,17 +25,6 @@
 <b style="color: red;">如果遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。</b>
 
 ![接口拦截](https://pic.imgdb.cn/item/658a6bbbc458853aefa5f465.png)
-
----
-
-Safari 浏览器在[知乎](www.zhihu.com)无法使用 TamperMonkey 脚本，暂无解决方法。
-![Safari错误](https://pic.imgdb.cn/item/658a6dddc458853aefaf3f88.png)
-
-```text
-Refused to execute a script because its hash, its nonce, or 'unsafe-inline' does not appear in the script-src directive of the Content Security Policy.
-```
-
----
 
 ## 功能简介
 

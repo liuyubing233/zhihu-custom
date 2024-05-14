@@ -72,7 +72,7 @@ import { INNER_CSS } from './web-resources';
       const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
       // 拦截 fetch 方法，获取接口内容，唯一
       const originFetch = fetch;
-      unsafeWindow.fetch = (url: any, opt) => {
+      window.fetch = (url: any, opt) => {
         // if (/\/v4\/questions\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
         //   // 如果是自定义排序则回答页码增加到20条
         //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
@@ -111,65 +111,67 @@ import { INNER_CSS } from './web-resources';
   }
   onDocumentStart();
 
-  /** 页面加载完成（不包含资源） */
-  window.addEventListener(
-    'DOMContentLoaded',
-    async () => {
-      myListenListItem.getScriptData();
-      // 如果脚本注入时 document.head 未加载完成则在页面渲染后重新进行加载
+  const timerLoadHead = () => {
+    setTimeout(() => {
       if (!isHaveHeadWhenInit) {
-        await onDocumentStart();
+        document.head ? onDocumentStart() : timerLoadHead();
       }
+    }, 100);
+  };
+  timerLoadHead();
 
-      if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
-        const { removeTopAD } = getConfig();
-        // 不考虑在 iframe 中的情况
-        initHTML();
-        initOperate();
+  const timerLoadBody = () => {
+    setTimeout(() => {
+      document.body ? createLoad() : timerLoadBody();
+    }, 100);
+  };
+  timerLoadBody();
+
+  const createLoad = async () => {
+    myListenListItem.getScriptData();
+    if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
+      const { removeTopAD } = getConfig();
+      // 不考虑在 iframe 中的情况
+      initHTML();
+      initOperate();
+      initData();
+      // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
+      loadBackground();
+      myVersion.initAfterLoad();
+      myCustomStyle.init();
+      initBlockWords();
+      initResizeObserver();
+      myCtzTypeOperation.init();
+      echoHistory();
+
+      dom('[name="useSimple"]')!.onclick = async function () {
+        const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
+        if (!isUse) return;
+        myStorage.setConfig({
+          ...getConfig(),
+          ...CONFIG_SIMPLE,
+        });
+        onDocumentStart();
         initData();
-        // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
-        loadBackground();
-        myVersion.initAfterLoad();
-        myCustomStyle.init();
-        initBlockWords();
-        initResizeObserver();
-        myCtzTypeOperation.init();
-        echoHistory();
+      };
 
-        dom('[name="useSimple"]')!.onclick = async function () {
-          const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
-          if (!isUse) return;
-          myStorage.setConfig({
-            ...getConfig(),
-            ...CONFIG_SIMPLE,
-          });
-          onDocumentStart();
-          initData();
-        };
-
-        if (removeTopAD) {
-          // 模拟鼠标点击顶部活动推广关闭按钮
-          mouseEventClick(dom('svg.css-1p094v5'));
-        }
+      if (removeTopAD) {
+        // 模拟鼠标点击顶部活动推广关闭按钮
+        mouseEventClick(dom('svg.css-1p094v5'));
       }
+    }
 
-      historyToChangePathname();
-      if (host === 'zhuanlan.zhihu.com') {
-        addArticleCreateTimeToTop();
-        const nodeArticle = dom('.Post-content');
-        if (nodeArticle) {
-          addButtonForArticleExportPDF(nodeArticle);
-          initVideoDownload(nodeArticle);
-        }
+    historyToChangePathname();
+    if (host === 'zhuanlan.zhihu.com') {
+      addArticleCreateTimeToTop();
+      const nodeArticle = dom('.Post-content');
+      if (nodeArticle) {
+        addButtonForArticleExportPDF(nodeArticle);
+        initVideoDownload(nodeArticle);
       }
-      fnLog(
-        `加载完毕, 加载时长: ${
-          Math.floor((performance.now() - T0) / 10) / 100
-        }s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗，如果快捷键不生效可以在控制台使用 window.openCtz() 唤起`
-      );
-    },
-    false
-  );
+    }
+    fnLog(`加载完毕, 加载时长: ${Math.floor((performance.now() - T0) / 10) / 100}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗`);
+  };
 
   const historyToChangePathname = () => {
     pathnameHasFn({
@@ -245,8 +247,6 @@ import { INNER_CSS } from './web-resources';
     }
     keydownNextImage(event);
   });
-  unsafeWindow.openCtz = myDialog.open;
-
   // 复制代码块删除版权信息
   document.addEventListener('copy', function (event) {
     // @ts-ignore window.clipboardData 是存在于IE中

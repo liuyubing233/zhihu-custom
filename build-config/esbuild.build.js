@@ -15,10 +15,12 @@ const info =
   `// @compatible   chrome Tampermonkey\n` +
   `// @compatible   firefox Violentmonkey\n` +
   `// @compatible   firefox Tampermonkey\n` +
+  `// @compatible   safari Violentmonkey\n` +
+  `// @compatible   safari Tampermonkey\n` +
   `// @author       ${env.npm_package_author_name}\n` +
   `// @license      ${env.npm_package_license}\n` +
   '// @match        *://*.zhihu.com/*\n' +
-  `// @grant        unsafeWindow\n` +
+  // `// @grant        unsafeWindow\n` +
   `// @grant        GM_info\n` +
   `// @grant        GM_setValue\n` +
   `// @grant        GM_getValue\n` +
