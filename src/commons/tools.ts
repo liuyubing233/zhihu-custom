@@ -1,5 +1,5 @@
 import { CLASS_MESSAGE, ID_MESSAGE_BOX } from '../configs';
-import { IMyElement, IPromisePercentCallbackParams } from '../types';
+import { IMyElement } from '../types';
 
 /** 获取元素 */
 export const dom = (n: string): IMyElement | undefined => document.querySelector(n) as IMyElement;
@@ -85,16 +85,12 @@ export const windowResize = () => {
 };
 
 /** Promise.all 百分比进度 */
-export const promisePercent = (requests: any[] = [], callback: (pro: IPromisePercentCallbackParams) => void): Promise<any[]> => {
+export const promisePercent = (requests: any[] = [], callback: (index: number) => void): Promise<any[]> => {
   let index = 0;
   requests.forEach((item) => {
     item.then(() => {
       index++;
-      callback({
-        numberFinished: index,
-        numberTotal: requests.length,
-        percent: Math.floor((index / requests.length) * 100) + '%',
-      });
+      callback(index);
     });
   });
   return Promise.all(requests);

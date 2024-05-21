@@ -741,20 +741,6 @@
   var windowResize = () => {
     window.dispatchEvent(new Event("resize"));
   };
-  var promisePercent = (requests = [], callback) => {
-    let index = 0;
-    requests.forEach((item) => {
-      item.then(() => {
-        index++;
-        callback({
-          numberFinished: index,
-          numberTotal: requests.length,
-          percent: Math.floor(index / requests.length * 100) + "%"
-        });
-      });
-    });
-    return Promise.all(requests);
-  };
   var mouseEventClick = (element) => {
     if (!element)
       return;
@@ -2029,7 +2015,15 @@
     }
   };
   var QUERY_CLASS_PDF_IFRAME = ".ctz-pdf-box-content";
-  var loadIframeAndExport = (eventBtn, innerHTML, btnText) => {
+  var loadIframeAndExport = (eventBtn, arrHTML, btnText) => {
+    let imageNumberMax = 0;
+    let imageNumberFinish = 0;
+    let imageErrorsIndex = [];
+    let catchImageErrorIndex = [];
+    const innerHTML = arrHTML.join("");
+    const domTemporary = domC("div", { innerHTML });
+    imageNumberMax = domTemporary.querySelectorAll("img").length;
+    domTemporary.remove();
     const iframe = dom(QUERY_CLASS_PDF_IFRAME);
     if (!iframe.contentWindow)
       return;
@@ -2038,30 +2032,54 @@
     if (!doc.head.querySelector("style")) {
       doc.write(`<style type="text/css" id="ctz-css-own">${INNER_CSS}</style>`);
     }
-    doc.write(`<div class="ctz-pdf-view">${innerHTML}</div>`);
-    const imgLoadPromises = [];
-    const images = doc.querySelectorAll("img");
-    for (let i = 0, len = images.length; i < len; i++) {
-      const item = images[i];
-      const realSrc = item.getAttribute("data-original") || item.getAttribute("data-actualsrc") || item.src;
-      item.src = realSrc || "";
-      imgLoadPromises.push(
-        new Promise((resolve) => {
+    doc.write(`<div class="ctz-pdf-view"></div>`);
+    const nodePDFView = doc.querySelector(".ctz-pdf-view");
+    function drawContent(i, len, isDrawError = false) {
+      setTimeout(() => {
+        const indexReal = isDrawError ? catchImageErrorIndex[i] : i;
+        const className = `view-${indexReal}`;
+        let nextDom = null;
+        if (isDrawError) {
+          const prevDom = nodePDFView.querySelector(`.${className}`);
+          nextDom = prevDom.nextElementSibling;
+          prevDom.remove();
+        }
+        const nDom = domC("div", { innerHTML: arrHTML[indexReal], className });
+        nextDom ? nodePDFView.insertBefore(nDom, nextDom) : nodePDFView.appendChild(nDom);
+        const images = nDom.querySelectorAll("img");
+        let currentFinishNumber = 0;
+        for (let nIndex = 0, nLen = images.length; nIndex < nLen; nIndex++) {
+          const item = images[nIndex];
+          const realSrc = item.getAttribute("data-original") || item.getAttribute("data-actualsrc") || item.src;
+          item.src = realSrc || "";
           item.onload = function() {
-            resolve(true);
+            currentFinishNumber++;
+            currentFinishNumber === nLen && (imageNumberFinish += currentFinishNumber);
+            eventBtn.innerText = `资源加载进度 ${Math.floor(imageNumberFinish / imageNumberMax * 100)}%：${imageNumberFinish}/${imageNumberMax}`;
+            if (imageNumberFinish === imageNumberMax) {
+              eventBtn.innerText = btnText;
+              eventBtn.disabled = false;
+              iframe.contentWindow.print();
+            }
           };
-        })
-      );
+          item.onerror = function() {
+            !imageErrorsIndex.includes(indexReal) && imageErrorsIndex.push(indexReal);
+          };
+        }
+        if (i === len - 1 && imageErrorsIndex.length) {
+          catchImageErrorIndex = imageErrorsIndex;
+          imageErrorsIndex = [];
+          setTimeout(() => {
+            for (let nIndex = 0, nLen = catchImageErrorIndex.length; nIndex < nLen; nIndex++) {
+              drawContent(nIndex, nLen, true);
+            }
+          }, len * 100 + 100);
+        }
+      }, i * 100);
     }
-    const callbackLoadImg = (params) => {
-      const { numberFinished, numberTotal, percent } = params;
-      eventBtn.innerText = `资源加载进度 ${percent}：${numberFinished}/${numberTotal}`;
-    };
-    promisePercent(imgLoadPromises, callbackLoadImg).then(() => {
-      eventBtn.innerText = btnText;
-      eventBtn.disabled = false;
-      iframe.contentWindow.print();
-    });
+    for (let i = 0, len = arrHTML.length; i < len; i++) {
+      drawContent(i, len);
+    }
   };
   var myCollectionExport = {
     init: function() {
@@ -2102,8 +2120,7 @@
                 return `<div class="ctz-pdf-dialog-item"><div class="ctz-pdf-dialog-title">${elementTypeSpan(type)}${title || question.title}</div><div>内容链接：<a href="${url}" target="_blank">${url}</a></div><div>${content}</div></div>`;
             }
           });
-          const collectionsHTML = collectionsHTMLMap.join("");
-          loadIframeAndExport(me, collectionsHTML, "生成PDF");
+          loadIframeAndExport(me, collectionsHTMLMap, "生成PDF");
         });
       });
       const nodePageHeaderTitle = dom(".CollectionDetailPageHeader-title");
@@ -2189,7 +2206,7 @@
       if (!config)
         return;
       const data = await doHomeFetch(config.url, config.header);
-      const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join("");
+      const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
       loadIframeAndExport(eventBtn, content, "导出当前页回答");
     };
     domListHeader.appendChild(nDomButtonOnce);
@@ -2222,7 +2239,7 @@
       if (!config)
         return;
       const data = await doHomeFetch(config.url, config.header);
-      const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join("");
+      const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
       loadIframeAndExport(eventBtn, content, "导出当前页文章");
     };
     domListHeader.appendChild(nDomButtonOnce);

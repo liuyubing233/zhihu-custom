@@ -1,13 +1,22 @@
-import { createBtnSmallTran, dom, domC, promisePercent } from '../commons/tools';
+import { createBtnSmallTran, dom, domC } from '../commons/tools';
 import { store } from '../store';
-import { IPromisePercentCallbackParams } from '../types';
 import { IZhihuArticlesDataItem } from '../types/zhihu-articles.type';
 import { INNER_CSS } from '../web-resources';
 
 /** 查找生成PDF的元素类名 */
 const QUERY_CLASS_PDF_IFRAME = '.ctz-pdf-box-content';
 
-const loadIframeAndExport = (eventBtn: HTMLButtonElement, innerHTML: string, btnText: string) => {
+const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText: string) => {
+  let imageNumberMax = 0;
+  let imageNumberFinish = 0;
+  let imageErrorsIndex: number[] = [];
+  let catchImageErrorIndex: number[] = [];
+
+  const innerHTML = arrHTML.join('');
+  const domTemporary = domC('div', { innerHTML });
+  imageNumberMax = domTemporary.querySelectorAll('img').length;
+  domTemporary.remove();
+
   const iframe = dom(QUERY_CLASS_PDF_IFRAME) as HTMLIFrameElement;
   if (!iframe.contentWindow) return;
   const doc = iframe.contentWindow.document;
@@ -15,35 +24,85 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, innerHTML: string, btn
   if (!doc.head.querySelector('style')) {
     doc.write(`<style type="text/css" id="ctz-css-own">${INNER_CSS}</style>`);
   }
-  doc.write(`<div class="ctz-pdf-view">${innerHTML}</div>`);
+  doc.write(`<div class="ctz-pdf-view"></div>`);
+  const nodePDFView = doc.querySelector('.ctz-pdf-view')!;
 
-  // 检测图片是否都加载完全 解决打印不全的情况
-  const imgLoadPromises: Array<Promise<boolean>> = [];
-  const images = doc.querySelectorAll('img');
-  for (let i = 0, len = images.length; i < len; i++) {
-    const item = images[i];
-    const realSrc = item.getAttribute('data-original') || item.getAttribute('data-actualsrc') || item.src;
-    item.src = realSrc || '';
-    imgLoadPromises.push(
-      new Promise((resolve) => {
+  function drawContent(i: number, len: number, isDrawError = false) {
+    setTimeout(() => {
+      const indexReal = isDrawError ? catchImageErrorIndex[i] : i;
+      const className = `view-${indexReal}`;
+      let nextDom: Element | null = null;
+      if (isDrawError) {
+        const prevDom = nodePDFView.querySelector(`.${className}`)!;
+        nextDom = prevDom.nextElementSibling;
+        prevDom.remove();
+      }
+      const nDom = domC('div', { innerHTML: arrHTML[indexReal], className });
+      nextDom ? nodePDFView.insertBefore(nDom, nextDom) : nodePDFView.appendChild(nDom);
+      const images = nDom.querySelectorAll('img');
+      let currentFinishNumber = 0;
+      for (let nIndex = 0, nLen = images.length; nIndex < nLen; nIndex++) {
+        const item = images[nIndex];
+        const realSrc = item.getAttribute('data-original') || item.getAttribute('data-actualsrc') || item.src;
+        item.src = realSrc || '';
         item.onload = function () {
-          resolve(true);
+          currentFinishNumber++;
+          currentFinishNumber === nLen && (imageNumberFinish += currentFinishNumber);
+          eventBtn.innerText = `资源加载进度 ${Math.floor((imageNumberFinish / imageNumberMax) * 100)}%：${imageNumberFinish}/${imageNumberMax}`;
+          if (imageNumberFinish === imageNumberMax) {
+            eventBtn.innerText = btnText;
+            eventBtn.disabled = false;
+            iframe.contentWindow!.print();
+          }
         };
-      })
-    );
+
+        item.onerror = function () {
+          !imageErrorsIndex.includes(indexReal) && imageErrorsIndex.push(indexReal);
+        };
+      }
+
+      if (i === len - 1 && imageErrorsIndex.length) {
+        catchImageErrorIndex = imageErrorsIndex;
+        imageErrorsIndex = [];
+        setTimeout(() => {
+          for (let nIndex = 0, nLen = catchImageErrorIndex.length; nIndex < nLen; nIndex++) {
+            drawContent(nIndex, nLen, true);
+          }
+        }, len * 100 + 100);
+      }
+    }, i * 100);
   }
 
-  const callbackLoadImg = (params: IPromisePercentCallbackParams) => {
-    const { numberFinished, numberTotal, percent } = params;
-    eventBtn.innerText = `资源加载进度 ${percent}：${numberFinished}/${numberTotal}`;
-  };
+  for (let i = 0, len = arrHTML.length; i < len; i++) {
+    drawContent(i, len);
+  }
 
-  promisePercent(imgLoadPromises, callbackLoadImg).then(() => {
-    // 图片加载完成后调用打印方法
-    eventBtn.innerText = btnText;
-    eventBtn.disabled = false;
-    iframe.contentWindow!.print();
-  });
+  // doc.write(`<div class="ctz-pdf-view">${innerHTML}</div>`);
+
+  // 检测图片是否都加载完全 解决打印不全的情况
+  // const imgLoadPromises: Array<Promise<boolean>> = [];
+  // const images = doc.querySelectorAll('img');
+  // for (let i = 0, len = images.length; i < len; i++) {
+  //   const item = images[i];
+  //   const realSrc = item.getAttribute('data-original') || item.getAttribute('data-actualsrc') || item.src;
+  //   item.src = realSrc || '';
+  //   imgLoadPromises.push(
+  //     new Promise((resolve) => {
+  //       item.onload = function () {
+  //         resolve(true);
+  //       };
+  //     })
+  //   );
+  // }
+
+  // promisePercent(imgLoadPromises, (index) => {
+  //   eventBtn.innerText = `资源加载进度 ${Math.floor(index / arrHTML.length) * 100}%`;
+  // }).then(() => {
+  //   // 图片加载完成后调用打印方法
+  //   eventBtn.innerText = btnText;
+  //   eventBtn.disabled = false;
+  //   iframe.contentWindow!.print();
+  // });
 };
 
 /** 收藏夹打印 */
@@ -100,8 +159,7 @@ export const myCollectionExport = {
                   );
               }
             });
-            const collectionsHTML = collectionsHTMLMap.join('');
-            loadIframeAndExport(me, collectionsHTML, '生成PDF');
+            loadIframeAndExport(me, collectionsHTMLMap, '生成PDF');
           });
       });
 
@@ -130,7 +188,7 @@ export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
   if (prevButton) return;
   const nodeUser = nodeAnswerItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nodeButton = createBtnSmallTran('导出当前回答', 'ctz-export-answer')
+  const nodeButton = createBtnSmallTran('导出当前回答', 'ctz-export-answer');
   nodeButton.onclick = function () {
     const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
     const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
@@ -147,7 +205,7 @@ export const addButtonForArticleExportPDF = (nodeArticleItem: HTMLElement) => {
   if (prevButton) return;
   const nodeUser = nodeArticleItem.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || nodeArticleItem.querySelector('.Post-Header .AuthorInfo-content');
   if (!nodeUser || !topExportContent) return;
-  const nodeButton = createBtnSmallTran('导出当前文章', 'ctz-export-article')
+  const nodeButton = createBtnSmallTran('导出当前文章', 'ctz-export-article');
   nodeButton.onclick = function () {
     const nodeAnswerUserLink = nodeArticleItem.querySelector('.AuthorInfo-name');
     const nodeAnswerContent = nodeArticleItem.querySelector('.RichContent-inner') || nodeArticleItem.querySelector('.Post-RichTextContainer');
@@ -188,7 +246,7 @@ export const addBtnForExportPeopleAnswer = () => {
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-answer-once');
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
-  const nDomButtonOnce = createBtnSmallTran('导出当前页回答', 'ctz-people-export-answer-once')
+  const nDomButtonOnce = createBtnSmallTran('导出当前页回答', 'ctz-people-export-answer-once');
   nDomButtonOnce.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载回答内容中...';
@@ -196,7 +254,7 @@ export const addBtnForExportPeopleAnswer = () => {
     const config = store.getHomeFetch('answer');
     if (!config) return;
     const data = await doHomeFetch(config.url, config.header);
-    const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`).join('');
+    const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
     loadIframeAndExport(eventBtn, content, '导出当前页回答');
   };
   domListHeader.appendChild(nDomButtonOnce);
@@ -208,7 +266,7 @@ export const addBtnForExportPeopleArticles = () => {
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-articles-once');
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
-  const nDomButtonOnce = createBtnSmallTran('导出当前页文章', 'ctz-people-export-articles-once')
+  const nDomButtonOnce = createBtnSmallTran('导出当前页文章', 'ctz-people-export-articles-once');
   nDomButtonOnce.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     const { search } = location;
@@ -229,7 +287,7 @@ export const addBtnForExportPeopleArticles = () => {
     const config = store.getHomeFetch('articles');
     if (!config) return;
     const data = await doHomeFetch(config.url, config.header);
-    const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`).join('');
+    const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
     loadIframeAndExport(eventBtn, content, '导出当前页文章');
   };
   domListHeader.appendChild(nDomButtonOnce);
