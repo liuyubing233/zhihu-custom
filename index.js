@@ -229,7 +229,8 @@
     userHomeContentTimeTop: true,
     userHomeTopBlockUser: true,
     copyAnswerLink: true,
-    contentRemoveKeywordSearch: false
+    contentRemoveKeywordSearch: false,
+    topExportContent: true
   };
   var SAVE_HISTORY_NUMBER = 500;
   var Store = class {
@@ -2169,6 +2170,9 @@
       pdfExport(innerHTML);
     };
     nodeUser.appendChild(nodeButton);
+    setTimeout(() => {
+      addButtonForArticleExportPDF(nodeArticleItem);
+    }, 500);
   };
   var pdfExport = (content) => {
     const iframe = dom(QUERY_CLASS_PDF_IFRAME);
@@ -2695,7 +2699,7 @@
         }
         (isVideo && removeItemAboutVideo || isArticle && removeItemAboutArticle || isTip && removeItemAboutPin) && !message2 && (message2 = `列表种类屏蔽，${nodeItemContent.classList.value}`);
         if (removeLessVote && !message2) {
-          (cardContent["upvote_num"] || 0) < lessVoteNumber && (message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"]}`);
+          (cardContent["upvote_num"] || 0) < lessVoteNumber && (message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`);
         }
         const elementQuestionAsk = nodeItem.querySelector(".TopstoryQuestionAskItem");
         if (removeItemQuestionAsk && elementQuestionAsk && !message2) {
@@ -2827,7 +2831,7 @@
               const upvoteText = ariaLabel.trim().replace(/\W+/, "");
               const upvote = upvoteText.includes("万") ? +upvoteText.replace("万", "").trim() * 1e4 : +upvoteText;
               if (upvote > -1 && upvote < lessVoteNumber) {
-                message2 = `屏蔽低赞内容: ${upvote}赞`;
+                message2 = `屏蔽低赞内容: ${upvote || 0}赞`;
               }
             }
           }
@@ -3644,7 +3648,14 @@
           initData();
         };
         if (removeTopAD) {
-          mouseEventClick(dom("svg.css-1p094v5"));
+          setTimeout(() => {
+            try {
+              mouseEventClick(dom("svg.css-1p094v5"));
+            } catch {
+              const domTopstory = domP(dom("svg.css-1p094v5"), "class", "Topstory");
+              domTopstory.childNodes[0].style.cssText += "display: none;";
+            }
+          }, 500);
         }
       }
       historyToChangePathname();

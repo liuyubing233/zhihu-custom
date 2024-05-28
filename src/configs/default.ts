@@ -215,6 +215,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   userHomeTopBlockUser: true,
   copyAnswerLink: true,
   contentRemoveKeywordSearch: false,
+  topExportContent: true,
 };
 
 /** 缓存的历史记录数量 */

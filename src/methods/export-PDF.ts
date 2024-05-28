@@ -213,6 +213,10 @@ export const addButtonForArticleExportPDF = (nodeArticleItem: HTMLElement) => {
     pdfExport(innerHTML);
   };
   nodeUser.appendChild(nodeButton);
+  setTimeout(() => {
+    // 是为了解决页面内容被刷新的掉的问题
+    addButtonForArticleExportPDF(nodeArticleItem)
+  }, 500)
 };
 
 /** 直接打印元素内容为PDF */

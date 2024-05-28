@@ -19,7 +19,13 @@ export const domC = (name: string, attrObjs: Record<string, any>) => {
   return node;
 };
 
-/** 查找父级元素 */
+/**
+ * 查找父级元素
+ * @param node 元素名称
+ * @param attrName 例如 'class'
+ * @param attrValue 例如 class 名
+ * @returns IMyElement | undefined
+ */
 export const domP = (node: any, attrName: string, attrValue: string): IMyElement | undefined => {
   const nodeP = node.parentElement as IMyElement;
   if (!nodeP) return undefined;

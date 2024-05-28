@@ -1,7 +1,7 @@
 import { fetchGetUserinfo } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
-import { dom, domA, domById, fnInitDomStyle, fnLog, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
+import { dom, domA, domById, domP, fnInitDomStyle, fnLog, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_DIALOG } from './configs/dom-name';
 import { initBlockWords } from './init/init-block-words';
@@ -156,8 +156,14 @@ import { INNER_CSS } from './web-resources';
       };
 
       if (removeTopAD) {
-        // 模拟鼠标点击顶部活动推广关闭按钮
-        mouseEventClick(dom('svg.css-1p094v5'));
+        setTimeout(() => {
+          try {
+            mouseEventClick(dom('svg.css-1p094v5'));
+          } catch {
+            const domTopstory = domP(dom('svg.css-1p094v5'), 'class', 'Topstory')!;
+            (domTopstory.childNodes[0] as HTMLElement).style.cssText += 'display: none;';
+          }
+        }, 500);
       }
     }
 

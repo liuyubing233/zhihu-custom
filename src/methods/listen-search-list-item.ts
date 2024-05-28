@@ -29,7 +29,7 @@ export const myListenSearchListItem = {
             const upvoteText = ariaLabel.trim().replace(/\W+/, '');
             const upvote = upvoteText.includes('万') ? +upvoteText.replace('万', '').trim() * 10000 : +upvoteText;
             if (upvote > -1 && upvote < lessVoteNumber) {
-              message = `屏蔽低赞内容: ${upvote}赞`;
+              message = `屏蔽低赞内容: ${upvote || 0}赞`;
             }
           }
         }

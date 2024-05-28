@@ -86,7 +86,7 @@ export const myListenListItem = {
         (message = `列表种类屏蔽，${nodeItemContent.classList.value}`);
       // 屏蔽低赞内容
       if (removeLessVote && !message) {
-        (cardContent['upvote_num'] || 0) < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num']}`);
+        (cardContent['upvote_num'] || 0) < lessVoteNumber && (message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num'] || 0}`);
       }
       // 屏蔽邀请回答
       const elementQuestionAsk = nodeItem.querySelector('.TopstoryQuestionAskItem');
