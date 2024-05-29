@@ -742,11 +742,11 @@
   var windowResize = () => {
     window.dispatchEvent(new Event("resize"));
   };
-  var mouseEventClick = (element) => {
+  var mouseEventClick = (element, nWindow = window) => {
     if (!element)
       return;
     const event = new MouseEvent("click", {
-      view: window,
+      view: nWindow,
       bubbles: true,
       cancelable: true
     });
@@ -1577,8 +1577,12 @@
         if (name === "suspensionSearch") {
           !dom(classIcon) && even.appendChild(domC("i", { className: "ctz-search-icon", innerHTML: "⚲" }));
           !dom(classPickup) && even.appendChild(domC("i", { className: "ctz-search-pick-up", innerHTML: "⇤" }));
-          dom(classIcon).onclick = () => even.classList.add(classNameFocus);
-          dom(classPickup).onclick = () => even.classList.remove(classNameFocus);
+          if (dom(classIcon)) {
+            dom(classIcon).onclick = () => even.classList.add(classNameFocus);
+          }
+          if (dom(classPickup)) {
+            dom(classPickup).onclick = () => even.classList.remove(classNameFocus);
+          }
         }
         myLock.append(even, name);
         even.classList.add(`position-${name}`);
@@ -1620,10 +1624,12 @@
   var initData = () => {
     store.setStorageConfigItem("cacheTitle", document.title);
     echoData();
-    cacheHeader();
     changeICO();
     changeTitle();
     changeSuspensionTab();
+    setTimeout(() => {
+      cacheHeader();
+    }, 300);
   };
   var initHistoryView = async () => {
     const { href, origin, pathname, hash } = location;
@@ -3652,10 +3658,9 @@
             try {
               mouseEventClick(dom("svg.css-1p094v5"));
             } catch {
-              const domTopstory = domP(dom("svg.css-1p094v5"), "class", "Topstory");
-              domTopstory.childNodes[0].style.cssText += "display: none;";
+              mouseEventClick(dom("svg.css-1p094v5"), unsafeWindow);
             }
-          }, 500);
+          }, 300);
         }
       }
       historyToChangePathname();

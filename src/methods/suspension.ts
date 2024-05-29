@@ -91,8 +91,12 @@ export const cacheHeader = () => {
       if (name === 'suspensionSearch') {
         !dom(classIcon) && even.appendChild(domC('i', { className: 'ctz-search-icon', innerHTML: '⚲' }));
         !dom(classPickup) && even.appendChild(domC('i', { className: 'ctz-search-pick-up', innerHTML: '⇤' }));
-        dom(classIcon)!.onclick = () => even.classList.add(classNameFocus);
-        dom(classPickup)!.onclick = () => even.classList.remove(classNameFocus);
+        if (dom(classIcon)) {
+          dom(classIcon)!.onclick = () => even.classList.add(classNameFocus);
+        }
+        if (dom(classPickup)) {
+          dom(classPickup)!.onclick = () => even.classList.remove(classNameFocus);
+        }
       }
       myLock.append(even, name);
       even.classList.add(`position-${name}`);

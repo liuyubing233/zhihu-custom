@@ -1,7 +1,7 @@
 import { fetchGetUserinfo } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
-import { dom, domA, domById, domP, fnInitDomStyle, fnLog, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
+import { dom, domA, domById, fnInitDomStyle, fnLog, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_DIALOG } from './configs/dom-name';
 import { initBlockWords } from './init/init-block-words';
@@ -158,12 +158,14 @@ import { INNER_CSS } from './web-resources';
       if (removeTopAD) {
         setTimeout(() => {
           try {
+            // safari 浏览器等不支持 unsafeWindow 的内容
             mouseEventClick(dom('svg.css-1p094v5'));
           } catch {
-            const domTopstory = domP(dom('svg.css-1p094v5'), 'class', 'Topstory')!;
-            (domTopstory.childNodes[0] as HTMLElement).style.cssText += 'display: none;';
+            // 其他浏览器 chrome、edge 等
+            // @ts-ignore
+            mouseEventClick(dom('svg.css-1p094v5'), unsafeWindow);
           }
-        }, 500);
+        }, 300);
       }
     }
 

@@ -106,10 +106,10 @@ export const promisePercent = (requests: any[] = [], callback: (index: number) =
  * 模拟鼠标点击
  * @param {HTMLElement} element 需要点击的元素
  */
-export const mouseEventClick = (element?: HTMLElement) => {
+export const mouseEventClick = (element?: HTMLElement, nWindow = window) => {
   if (!element) return;
   const event = new MouseEvent('click', {
-    view: window,
+    view: nWindow,
     bubbles: true,
     cancelable: true,
   });
