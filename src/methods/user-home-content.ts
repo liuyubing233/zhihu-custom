@@ -1,7 +1,6 @@
 import { dom, domA, domC, insertAfter } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
 import { store } from '../store';
-import { IMyElement } from '../types';
 import { timeFormatter } from './time';
 
 let timer: NodeJS.Timeout | undefined = undefined;
@@ -11,7 +10,7 @@ export const userHomeAnswers = () => {
   const { userHomeContentTimeTop } = store.getConfig();
   if (!userHomeContentTimeTop) return;
 
-  const doContent = (domList: NodeListOf<IMyElement>) => {
+  const doContent = (domList: NodeListOf<HTMLElement>) => {
     for (let i = 0, len = domList.length; i < len; i++) {
       const nodeItem = domList[i];
       const nodeTitle = nodeItem.querySelector('.ContentItem-title');

@@ -1,14 +1,14 @@
 import { dom, domC } from '../commons/tools';
 import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
-import { EThemeDark, EThemeLight, IHeaderDoms, IMyElement } from '../types';
+import { EThemeDark, EThemeLight, IHeaderDoms } from '../types';
 import { isDark } from './background';
 import { myLock } from './lock';
 import { myMove } from './move';
 import { myVersion } from './version';
 
 /** 漂浮收起按钮的方法 */
-export const suspensionPackUp = (elements: NodeListOf<IMyElement>) => {
+export const suspensionPackUp = (elements: NodeListOf<HTMLElement>) => {
   const RIGHT = 60;
   const { themeLight = EThemeLight.默认, themeDark = EThemeDark.深色护眼一 } = store.getConfig();
   for (let i = 0; i < elements.length; i++) {

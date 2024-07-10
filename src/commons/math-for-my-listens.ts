@@ -1,9 +1,8 @@
 import { store } from '../store';
-import { IMyElement } from '../types';
 import { fnLog } from './tools';
 
 /** 监听过滤内容 */
-export const fnHiddenDom = (lessNum: number, ev: IMyElement, log: string) => {
+export const fnHiddenDom = (lessNum: number, ev: HTMLElement, log: string) => {
   ev.style.display = 'none';
   fnLog(log);
   return ++lessNum;
@@ -15,7 +14,7 @@ export const fnIndexMath = (index: number, i: number, len: number, lessNum: numb
 };
 
 /** 仅显示数字内容 */
-export const fnJustNum = (element: IMyElement) => {
+export const fnJustNum = (element: HTMLElement) => {
   if (!element) return;
   const { justVoteNum, justCommitNum } = store.getConfig();
   const nodeVoteUp = element.querySelector('.VoteButton--up') as HTMLButtonElement;

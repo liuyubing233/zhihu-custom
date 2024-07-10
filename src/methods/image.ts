@@ -1,6 +1,5 @@
 import { dom, domA, domP } from '../commons/tools';
 import { store } from '../store';
-import { IMyElement } from '../types';
 import { myPreview } from './preview';
 
 /** 预览动图回调 */
@@ -35,7 +34,7 @@ export function previewGIF() {
 /** 键盘点击下一张或上一张图片（仅静态图片） */
 export const keydownNextImage = (event: KeyboardEvent) => {
   const { key } = event;
-  const nodeImgDialog = dom('.css-ypb3io');
+  const nodeImgDialog = dom('.css-ypb3io') as HTMLImageElement;
   if ((key === 'ArrowRight' || key === 'ArrowLeft') && nodeImgDialog) {
     const src = nodeImgDialog.src;
     const nodeImage = dom(`img[src="${src}"]`);
@@ -47,7 +46,7 @@ export const keydownNextImage = (event: KeyboardEvent) => {
       // const nodesImageList = Array.from(nodeContentInner.querySelectorAll('.origin_image')) as HTMLImageElement[];
       const index = nodesImageList.findIndex((i) => i.src === src);
 
-      const dialogChange = (nodeDialog: IMyElement, nodeImage: HTMLImageElement) => {
+      const dialogChange = (nodeDialog: HTMLImageElement, nodeImage: HTMLImageElement) => {
         const { width, height, src } = nodeImage;
         const { innerWidth, innerHeight } = window;
         /** 网页宽高比 */

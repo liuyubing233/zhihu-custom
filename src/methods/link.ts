@@ -1,12 +1,11 @@
 import { copy, createBtnSmallTran, domA, message } from '../commons/tools';
 import { store } from '../store';
-import { IMyElement } from '../types';
 
 /** 知乎外链直接打开(修改外链内容，去除知乎重定向) */
 export const initLinkChanger = () => {
   const esName = ['a.external', 'a.LinkCard'];
   const operaLink = 'is-link-changed';
-  const hrefChanger = (item: IMyElement) => {
+  const hrefChanger = (item: HTMLAnchorElement) => {
     const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, '') || '';
     let href = '';
     // 解决 hrefFormat 格式已经是 decode 后的格式
@@ -22,7 +21,7 @@ export const initLinkChanger = () => {
     const name = esName[i];
     const links = domA(`${name}:not(.${operaLink})`);
     for (let index = 0, linkLen = links.length; index < linkLen; index++) {
-      hrefChanger(links[index]);
+      hrefChanger(links[index] as HTMLAnchorElement);
     }
   }
 };

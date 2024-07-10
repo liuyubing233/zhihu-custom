@@ -1,7 +1,6 @@
 import { dom, domC } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
 import { store } from '../store';
-import { IMyElement } from '../types';
 
 /** 时间格式化 */
 export const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') => {
@@ -24,7 +23,7 @@ export const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') =
 };
 
 /** 问题添加时间 */
-export const updateItemTime = (event: IMyElement) => {
+export const updateItemTime = (event: HTMLElement) => {
   const nodeCreated = event.querySelector('[itemprop="dateCreated"]') as HTMLMetaElement;
   const nodePublished = event.querySelector('[itemprop="datePublished"]') as HTMLMetaElement;
   const nodeModified = event.querySelector('[itemprop="dateModified"]') as HTMLMetaElement;
@@ -57,8 +56,8 @@ export const addQuestionCreatedAndModifiedTime = () => {
   const nodeTime = dom(`.${className}`);
   nodeTime && nodeTime.remove();
   const conf = getConfig();
-  const nodeCreated = dom('[itemprop="dateCreated"]');
-  const nodeModified = dom('[itemprop="dateModified"]');
+  const nodeCreated = dom('[itemprop="dateCreated"]') as HTMLMetaElement;
+  const nodeModified = dom('[itemprop="dateModified"]') as HTMLMetaElement;
   if (!(conf.questionCreatedAndModifiedTime && nodeCreated && nodeModified)) return;
   const created = timeFormatter(nodeCreated.content);
   const modified = timeFormatter(nodeModified.content);

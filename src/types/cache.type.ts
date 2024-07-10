@@ -1,5 +1,4 @@
 import { IPfConfig } from './configs.type';
-import { IMyElement } from './dom.type';
 
 /** 查找到的元素内容 */
 export interface IFindEvent {
@@ -38,7 +37,7 @@ export interface IHeaderDomEntries {
   /** 定位元素的类名 */
   class: string;
   /** 定位的元素 */
-  even: IMyElement;
+  even: HTMLElement;
   /** 元素位置 */
   index: number;
 }

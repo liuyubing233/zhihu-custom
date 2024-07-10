@@ -2,7 +2,7 @@ import { fnHiddenDom, fnIndexMath, fnJustNum } from '../commons/math-for-my-list
 import { dom, domA } from '../commons/tools';
 import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
 import { store } from '../store';
-import { IMyElement, IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
+import { IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './export-PDF';
 import { addAnswerCopyLink } from './link';
@@ -29,11 +29,11 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       topExportContent,
       blockWordsAnswer = [],
       fetchInterceptStatus,
-      answerItemCreatedAndModifiedTime
+      answerItemCreatedAndModifiedTime,
     } = conf;
 
     /** 添加功能 */
-    const addFnInNodeItem = (nodeItem?: IMyElement, initThis?: any) => {
+    const addFnInNodeItem = (nodeItem?: HTMLElement, initThis?: any) => {
       if (!nodeItem) return;
       updateTopVote(nodeItem);
       answerItemCreatedAndModifiedTime && updateItemTime(nodeItem);
@@ -43,7 +43,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
         addButtonForArticleExportPDF(nodeItem);
       }
       initVideoDownload(nodeItem);
-      addAnswerCopyLink(nodeItem)
+      addAnswerCopyLink(nodeItem);
     };
 
     addFnInNodeItem(dom('.QuestionAnswer-content'));
@@ -80,8 +80,8 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       let isHiddenTag = false;
       hiddenTags.forEach((i) => conf[i] && (isHiddenTag = true));
       if (isHiddenTag && !message) {
-        const nodeTag1 = nodeItem.querySelector('.KfeCollection-AnswerTopCard-Container') as IMyElement;
-        const nodeTag2 = nodeItem.querySelector('.LabelContainer-wrapper') as IMyElement;
+        const nodeTag1 = nodeItem.querySelector('.KfeCollection-AnswerTopCard-Container') as HTMLElement;
+        const nodeTag2 = nodeItem.querySelector('.LabelContainer-wrapper') as HTMLElement;
         const text1 = nodeTag1 ? nodeTag1.innerText : '';
         const text2 = nodeTag2 ? nodeTag2.innerText : '';
         const tagText = text1 + text2;
@@ -96,7 +96,7 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       hiddenUsers.length && !message && hiddenUsers.includes(dataZop.authorName || '') && (message = `已删除${dataZop.authorName}的回答`);
       // 屏蔽「匿名用户」回答
       if (removeAnonymousAnswer && !message) {
-        const userName = (nodeItem.querySelector('[itemprop="name"]') as IMyElement).content;
+        const userName = (nodeItem.querySelector('[itemprop="name"]') as HTMLMetaElement).content;
         userName === '匿名用户' && (message = `已屏蔽一条「匿名用户」回答`);
       }
       // 屏蔽词

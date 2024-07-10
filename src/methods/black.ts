@@ -2,7 +2,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domById, domC, fnDomReplace, fnReturnStr } from '../commons/tools';
 import { CLASS_REMOVE_BLOCK, ID_BUTTON_SYNC_BLOCK } from '../configs';
 import { store } from '../store';
-import { IBlockUserItem, IMyElement, IMyListenAnswerItem, IZhihuCardContent } from '../types';
+import { IBlockUserItem, IMyListenAnswerItem, IZhihuCardContent } from '../types';
 
 /** id: 黑名单列表 */
 const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
@@ -18,9 +18,9 @@ export const myBlack: IMyBlack = {
     const { removeBlockUserContentList = [] } = store.getConfig();
     elementBlock.innerHTML = removeBlockUserContentList.map((i) => this.createItem(i)).join('');
     elementBlock.onclick = (event) => {
-      const target = event.target as IMyElement;
+      const target = event.target as HTMLElement;
       if (!target || !target.classList.contains(CLASS_REMOVE_BLOCK)) return;
-      const item = target.parentElement as IMyElement;
+      const item = target.parentElement as HTMLElement;
       const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
       confirm(me.messageCancel) && me.serviceRemove(info);
     };
@@ -38,11 +38,11 @@ export const myBlack: IMyBlack = {
     const classBox = 'ctz-block-box';
     const nodeBlockBox = event.querySelector(`.${classBox}`);
     if (nodeBlockBox) return;
-    const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as IMyElement;
+    const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;
     if (!nodeUser || !nodeUser.offsetHeight) return;
-    const userUrl = (nodeUser.querySelector('meta[itemprop="url"]') as IMyElement).content;
-    const userName = (nodeUser.querySelector('meta[itemprop="name"]') as IMyElement).content;
-    const avatar = (nodeUser.querySelector('meta[itemprop="image"]') as IMyElement).content;
+    const userUrl = (nodeUser.querySelector('meta[itemprop="url"]') as HTMLMetaElement).content;
+    const userName = (nodeUser.querySelector('meta[itemprop="name"]') as HTMLMetaElement).content;
+    const avatar = (nodeUser.querySelector('meta[itemprop="image"]') as HTMLMetaElement).content;
     const nodeAnswerItem = event.querySelector('.AnswerItem');
     const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute('data-za-extra-module') || '{}' : '{}';
     if (!JSON.parse(mo).card) return;
@@ -64,14 +64,14 @@ export const myBlack: IMyBlack = {
       fnReturnStr(`<button class="${createClass(classBlackFilter)}">屏蔽用户并隐藏该回答</button>`, !!objMy);
     const nodeBox = domC('div', { className: classBox, innerHTML });
     nodeBox.onclick = function (ev) {
-      const target = ev.target as IMyElement;
+      const target = ev.target as HTMLElement;
       const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
       const urlToken = matched ? matched[0] : '';
       // 屏蔽用户
       if (target.classList.contains(classBlack)) {
         if (!confirm(message)) return;
         me.serviceAdd(urlToken, userName, userId, avatar);
-        fnDomReplace((this as IMyElement).querySelector(`.${classBlackFilter}`), { className: createClass(classJustFilter), innerText: '隐藏该回答' });
+        fnDomReplace((this as HTMLElement).querySelector(`.${classBlackFilter}`), { className: createClass(classJustFilter), innerText: '隐藏该回答' });
         fnDomReplace(target, { className: createClass(classBlackRemove), innerText: '解除屏蔽' });
         return;
       }
@@ -80,7 +80,7 @@ export const myBlack: IMyBlack = {
         if (!confirm(me.messageCancel)) return;
         me.serviceRemove({ urlToken, id: userId, name: userName });
         fnDomReplace(target, { className: createClass(classBlack), innerText: '屏蔽用户' });
-        fnDomReplace((this as IMyElement).querySelector(`.${classJustFilter}`), {
+        fnDomReplace((this as HTMLElement).querySelector(`.${classJustFilter}`), {
           className: createClass(classBlackFilter),
           innerText: '屏蔽用户并隐藏该回答',
         });
