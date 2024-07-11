@@ -84,15 +84,16 @@ import { INNER_CSS } from './web-resources';
             ...opt.headers,
           });
 
-          if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
-            // 如果为用户页面的 回答栏
-            setHomeFetch('answer', { url, header: opt.headers });
-          }
+          // if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
+          //   // 如果为用户页面的 回答栏
+          //   console.log('???')
+          //   setHomeFetch('answer', { url, header: opt.headers });
+          // }
 
-          if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
-            // 如果为用户页面的 文章栏
-            setHomeFetch('articles', { url, header: opt.headers });
-          }
+          // if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
+          //   // 如果为用户页面的 文章栏
+          //   setHomeFetch('articles', { url, header: opt.headers });
+          // }
 
           // if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
           //   fetchSelf(url, opt!.headers!);

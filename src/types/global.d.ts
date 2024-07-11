@@ -110,3 +110,5 @@ type WebRequestRule = {
           | string;
       };
 };
+
+declare module '*.js'

@@ -51,7 +51,7 @@ const onWatch = async () => {
     port: 5555,
     servedir: '.',
   });
-  console.log('Start success, port: ', res.port);
+  console.log('成功启动，端口号: ', res.port);
 };
 
 const onBuild = () => {
