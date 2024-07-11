@@ -2023,14 +2023,10 @@
   };
   var QUERY_CLASS_PDF_IFRAME = ".ctz-pdf-box-content";
   var loadIframeAndExport = (eventBtn, arrHTML, btnText) => {
-    let imageNumberMax = 0;
-    let imageNumberFinish = 0;
-    let imageErrorsIndex = [];
-    let catchImageErrorIndex = [];
+    let max = 0;
+    let finish = 0;
+    let error = 0;
     const innerHTML = arrHTML.join("");
-    const domTemporary = domC("div", { innerHTML });
-    imageNumberMax = domTemporary.querySelectorAll("img").length;
-    domTemporary.remove();
     const iframe = dom(QUERY_CLASS_PDF_IFRAME);
     if (!iframe.contentWindow)
       return;
@@ -2041,52 +2037,37 @@
     }
     doc.write(`<div class="ctz-pdf-view"></div>`);
     const nodePDFView = doc.querySelector(".ctz-pdf-view");
-    function drawContent(i, len, isDrawError = false) {
-      setTimeout(() => {
-        const indexReal = isDrawError ? catchImageErrorIndex[i] : i;
-        const className = `view-${indexReal}`;
-        let nextDom = null;
-        if (isDrawError) {
-          const prevDom = nodePDFView.querySelector(`.${className}`);
-          nextDom = prevDom.nextElementSibling;
-          prevDom.remove();
-        }
-        const nDom = domC("div", { innerHTML: arrHTML[indexReal], className });
-        nextDom ? nodePDFView.insertBefore(nDom, nextDom) : nodePDFView.appendChild(nDom);
-        const images = nDom.querySelectorAll("img");
-        let currentFinishNumber = 0;
-        for (let nIndex = 0, nLen = images.length; nIndex < nLen; nIndex++) {
-          const item = images[nIndex];
-          const realSrc = item.getAttribute("data-original") || item.getAttribute("data-actualsrc") || item.src;
-          item.src = realSrc || "";
-          item.onload = function() {
-            currentFinishNumber++;
-            currentFinishNumber === nLen && (imageNumberFinish += currentFinishNumber);
-            eventBtn.innerText = `资源加载进度 ${Math.floor(imageNumberFinish / imageNumberMax * 100)}%：${imageNumberFinish}/${imageNumberMax}`;
-            if (imageNumberFinish === imageNumberMax) {
-              eventBtn.innerText = btnText;
-              eventBtn.disabled = false;
-              iframe.contentWindow.print();
-            }
-          };
-          item.onerror = function() {
-            !imageErrorsIndex.includes(indexReal) && imageErrorsIndex.push(indexReal);
-          };
-        }
-        if (i === len - 1 && imageErrorsIndex.length) {
-          catchImageErrorIndex = imageErrorsIndex;
-          imageErrorsIndex = [];
-          setTimeout(() => {
-            for (let nIndex = 0, nLen = catchImageErrorIndex.length; nIndex < nLen; nIndex++) {
-              drawContent(nIndex, nLen, true);
-            }
-          }, len * 100 + 100);
-        }
-      }, i * 100);
-    }
-    for (let i = 0, len = arrHTML.length; i < len; i++) {
-      drawContent(i, len);
-    }
+    const domInner = domC("div", { innerHTML });
+    max = domInner.querySelectorAll("img").length;
+    domInner.querySelectorAll("img").forEach((imageItem) => {
+      const dataOriginal = imageItem.getAttribute("data-original");
+      if (!dataOriginal) {
+        imageItem.setAttribute("data-original", imageItem.src);
+      }
+      imageItem.src = "";
+    });
+    nodePDFView.appendChild(domInner);
+    const imageLoaded = () => {
+      eventBtn.innerText = `资源加载进度 ${Math.floor(finish / max * 100)}%：${finish}/${max}${error > 0 ? `，${error}张图片资源已失效` : ""}`;
+      if (finish + error === max) {
+        eventBtn.innerText = btnText;
+        eventBtn.disabled = false;
+        iframe.contentWindow.print();
+      }
+    };
+    nodePDFView.querySelectorAll("img").forEach((imageItem, index) => {
+      setTimeout(function() {
+        imageItem.src = imageItem.getAttribute("data-original");
+        imageItem.onload = function() {
+          finish++;
+          imageLoaded();
+        };
+        imageItem.onerror = function() {
+          error++;
+          imageLoaded();
+        };
+      }, Math.floor(index / 5) * 100);
+    });
   };
   var myCollectionExport = {
     init: function() {
@@ -2134,7 +2115,7 @@
       nodePageHeaderTitle && nodePageHeaderTitle.appendChild(elementBox);
     },
     className: "ctz-export-collection-box",
-    element: `<button class="ctz-button" name="ctz-export-collection">生成PDF</button><p>仅对当前页码收藏夹内容进行导出</p><p>图片内容过多时请耐心等待</p><p>如果点击没有生成PDF请刷新页面</p>`,
+    element: `<button class="ctz-button" name="ctz-export-collection">生成PDF</button><p>仅对当前页内容进行导出</p>`,
     elementTypeSpan: (type) => {
       const typeObj = {
         zvideo: '<span class="ctz-label-tag" style="color: #12c2e9;">视频</span>',
