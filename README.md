@@ -12,7 +12,9 @@
 
 请先确认已安装 [tampermonkey](https://www.tampermonkey.net/) 脚本管理器后，再安装本助手。
 
-[更新日志](https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md) ｜ [问题解答](https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md)
+## 提问题前先查看 [问题解答](https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md)
+
+[更新日志](https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md)
 
 [Github](https://github.com/liuyubing233/zhihu-custom/tree/main) ｜ [GreasyFork](https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8)
 
