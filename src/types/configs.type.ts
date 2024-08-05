@@ -188,6 +188,8 @@ export interface IConfigHidden {
   hiddenTopicRightParentChild?: boolean;
   /** 话题主页右侧知乎指南 */
   hiddenTopicRightFooter?: boolean;
+  /** 盐选作者平台 */
+  hiddenYanXuanWriter?: boolean;
 }
 
 /** 自定义黑名单列表内容 */

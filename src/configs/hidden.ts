@@ -59,6 +59,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         { value: 'hiddenHomeCategory', label: '分类圆桌' },
         { value: 'hiddenHomeCategoryMore', label: '更多分类' },
         { value: 'hiddenHomeFooter', label: '知乎指南' },
+        { value: 'hiddenYanXuanWriter', label: '盐选作者平台' },
       ],
       [
         { value: 'hiddenHomeListTab', label: '首页列表切换模块' },

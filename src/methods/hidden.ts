@@ -24,6 +24,7 @@ export const myHidden: IMyHidden = {
     hiddenLogo: `.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo{display: none!important;}`,
     hiddenHeader: `.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}.PubIndex-CategoriesHeader{top: 0!important;}`,
     hiddenHeaderScroll: `.AppHeader.is-fixed{display:none!important;}`,
+    hiddenYanXuanWriter: `.KfeCollection-CreateSaltCard{display:none!important;}`,
     hiddenItemActions:
       `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button` +
       `,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a` +
