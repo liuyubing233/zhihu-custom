@@ -2650,7 +2650,7 @@ background-repeat: no-repeat;`
       eventBtn.innerText = "加载回答内容中...";
       eventBtn.disabled = true;
       const { search, pathname } = location;
-      const matchPageArr = search.match(/page=(\d?)/);
+      const matchPageArr = search.match(/page=(\d+)?/);
       const page = matchPageArr && matchPageArr.length ? matchPageArr[1] : "1";
       const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
       const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : "";
@@ -2692,7 +2692,7 @@ background-repeat: no-repeat;`
           prevData.push(articles[key]);
         }
       }
-      const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
+      const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//) || pathname.match(/org\/([\W\w]+)\//);
       const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : "";
       if (!username)
         return;
@@ -2703,6 +2703,9 @@ background-repeat: no-repeat;`
       loadIframeAndExport(eventBtn, content, "导出当前页文章");
     };
     domListHeader.appendChild(nDomButtonOnce);
+    setTimeout(() => {
+      addBtnForExportPeopleArticles();
+    }, 500);
   };
   var myScroll = {
     stop: () => dom("body").classList.add("ctz-stop-scroll"),

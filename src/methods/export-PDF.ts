@@ -212,7 +212,7 @@ export const addBtnForExportPeopleAnswer = () => {
     eventBtn.disabled = true;
 
     const { search, pathname } = location;
-    const matchPageArr = search.match(/page=(\d?)/);
+    const matchPageArr = search.match(/page=(\d+)?/);
     const page = matchPageArr && matchPageArr.length ? matchPageArr[1] : '1';
     const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
     const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
@@ -222,10 +222,6 @@ export const addBtnForExportPeopleAnswer = () => {
       (+page - 1) * 20
     }&limit=20&sort_by=created`;
     const header = createCommentHeaders(requestUrl);
-    // const config = store.getHomeFetch('answer');
-    // console.log('config', config);
-    // if (!config) return;
-
     const data = await doHomeFetch(requestUrl, header);
     const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
     loadIframeAndExport(eventBtn, content, '导出当前页回答');
@@ -260,7 +256,7 @@ export const addBtnForExportPeopleArticles = () => {
         prevData.push(articles[key]);
       }
     }
-    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
+    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//) || pathname.match(/org\/([\W\w]+)\//);
     const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
     if (!username) return;
     const requestUrl = `https://www.zhihu.com/api/v4/members/${username}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${
@@ -272,4 +268,7 @@ export const addBtnForExportPeopleArticles = () => {
     loadIframeAndExport(eventBtn, content, '导出当前页文章');
   };
   domListHeader.appendChild(nDomButtonOnce);
+  setTimeout(() => {
+    addBtnForExportPeopleArticles();
+  }, 500);
 };
