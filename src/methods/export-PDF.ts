@@ -22,7 +22,6 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btn
   }
   doc.write(`<div class="ctz-pdf-view"></div>`);
   const nodePDFView = doc.querySelector('.ctz-pdf-view')!;
-
   const domInner = domC('div', { innerHTML });
   max = domInner.querySelectorAll('img').length;
   domInner.querySelectorAll('img').forEach((imageItem) => {
@@ -35,28 +34,34 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btn
   });
   nodePDFView.appendChild(domInner);
 
+  const doPrint = () => {
+    eventBtn.innerText = btnText;
+    eventBtn.disabled = false;
+    iframe.contentWindow!.print();
+  };
   const imageLoaded = () => {
     eventBtn.innerText = `资源加载进度 ${Math.floor((finish / max) * 100)}%：${finish}/${max}${error > 0 ? `，${error}张图片资源已失效` : ''}`;
     if (finish + error === max) {
-      eventBtn.innerText = btnText;
-      eventBtn.disabled = false;
-      iframe.contentWindow!.print();
+      doPrint();
     }
   };
-
-  nodePDFView.querySelectorAll('img').forEach((imageItem, index) => {
-    setTimeout(function () {
-      imageItem.src = imageItem.getAttribute('data-original')!;
-      imageItem.onload = function () {
-        finish++;
-        imageLoaded();
-      };
-      imageItem.onerror = function () {
-        error++;
-        imageLoaded();
-      };
-    }, Math.floor(index / 5) * 100); // 100ms加载6张图片一组加载，一次性加载太多会拦截
-  });
+  if (nodePDFView.querySelectorAll('img').length) {
+    nodePDFView.querySelectorAll('img').forEach((imageItem, index) => {
+      setTimeout(function () {
+        imageItem.src = imageItem.getAttribute('data-original')!;
+        imageItem.onload = function () {
+          finish++;
+          imageLoaded();
+        };
+        imageItem.onerror = function () {
+          error++;
+          imageLoaded();
+        };
+      }, Math.floor(index / 5) * 100); // 100ms加载6张图片一组加载，一次性加载太多会拦截
+    });
+  } else {
+    doPrint();
+  }
 };
 
 /** 收藏夹打印 */
@@ -208,25 +213,27 @@ export const addBtnForExportPeopleAnswer = () => {
 
     const { search, pathname } = location;
     const matchPageArr = search.match(/page=(\d?)/);
-    const page = matchPageArr && matchPageArr.length ? matchPageArr[1] : '1'
-    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//)
-    const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : ''
+    const page = matchPageArr && matchPageArr.length ? matchPageArr[1] : '1';
+    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
+    const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
     if (!username) return;
     const requestUrl = `
-/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${(+page - 1) * 20}&limit=20&sort_by=created`
-    const header = createCommentHeaders(requestUrl)
-
-
-
+/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${
+      (+page - 1) * 20
+    }&limit=20&sort_by=created`;
+    const header = createCommentHeaders(requestUrl);
     // const config = store.getHomeFetch('answer');
     // console.log('config', config);
-
     // if (!config) return;
+
     const data = await doHomeFetch(requestUrl, header);
     const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
     loadIframeAndExport(eventBtn, content, '导出当前页回答');
   };
   domListHeader.appendChild(nDomButtonOnce);
+  setTimeout(() => {
+    addBtnForExportPeopleAnswer();
+  }, 500);
 };
 
 /** 当前用户文章导出为PDF */
@@ -253,11 +260,13 @@ export const addBtnForExportPeopleArticles = () => {
         prevData.push(articles[key]);
       }
     }
-    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//)
-    const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : ''
+    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
+    const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
     if (!username) return;
-    const requestUrl = `https://www.zhihu.com/api/v4/members/${username}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${(+page - 1) * 20}&limit=20&sort_by=created`
-    const header = createCommentHeaders(requestUrl)
+    const requestUrl = `https://www.zhihu.com/api/v4/members/${username}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${
+      (+page - 1) * 20
+    }&limit=20&sort_by=created`;
+    const header = createCommentHeaders(requestUrl);
     const data = await doHomeFetch(requestUrl, header);
     const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
     loadIframeAndExport(eventBtn, content, '导出当前页文章');
