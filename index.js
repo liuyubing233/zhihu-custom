@@ -11,9 +11,10 @@
 // @compatible   firefox Tampermonkey
 // @compatible   safari Violentmonkey
 // @compatible   safari Tampermonkey
-// @author       liuyubing
+// @author       lyb233
 // @license      MIT
 // @match        *://*.zhihu.com/*
+// @grant        unsafeWindow
 // @grant        GM_info
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -1170,11 +1171,12 @@
   var windowResize = () => {
     window.dispatchEvent(new Event("resize"));
   };
-  var mouseEventClick = (element, nWindow = window) => {
+  var mouseEventClick = (element) => {
     if (!element)
       return;
+    const myWindow = isSafari ? window : unsafeWindow;
     const event = new MouseEvent("click", {
-      view: nWindow,
+      view: myWindow,
       bubbles: true,
       cancelable: true
     });
@@ -1225,6 +1227,17 @@
     className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
     style: "margin: 0 4px;"
   });
+  var judgeBrowserType = () => {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes("Firefox"))
+      return "Firefox";
+    if (userAgent.includes("Edg"))
+      return "Edge";
+    if (userAgent.includes("Safari"))
+      return "Safari";
+    return "Chrome";
+  };
+  var isSafari = judgeBrowserType() === "Safari";
   var createCommentHeaders = (url) => {
     function K() {
       var t2 = new RegExp("d_c0=([^;]+)").exec(document.cookie);
@@ -4049,7 +4062,8 @@ background-repeat: no-repeat;`
         fnLog("已开启 fetch 接口拦截");
         const prevHeaders = getStorageConfigItem("fetchHeaders");
         const originFetch = fetch;
-        window.fetch = (url, opt) => {
+        const myWindow = isSafari ? window : unsafeWindow;
+        myWindow.fetch = (url, opt) => {
           if (opt && opt.headers) {
             setStorageConfigItem("fetchHeaders", {
               ...prevHeaders,
@@ -4103,11 +4117,7 @@ background-repeat: no-repeat;`
         };
         if (removeTopAD) {
           setTimeout(() => {
-            try {
-              mouseEventClick(dom("svg.css-1p094v5"));
-            } catch {
-              mouseEventClick(dom("svg.css-1p094v5"), unsafeWindow);
-            }
+            mouseEventClick(dom("svg.css-1p094v5"));
           }, 300);
         }
       }

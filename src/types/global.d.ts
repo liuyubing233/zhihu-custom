@@ -112,3 +112,4 @@ type WebRequestRule = {
 };
 
 declare module '*.js'
+declare const unsafeWindow: Window;

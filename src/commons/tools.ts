@@ -106,10 +106,11 @@ export const promisePercent = (requests: any[] = [], callback: (index: number) =
  * 模拟鼠标点击
  * @param {HTMLElement} element 需要点击的元素
  */
-export const mouseEventClick = (element?: HTMLElement, nWindow = window) => {
+export const mouseEventClick = (element?: HTMLElement) => {
   if (!element) return;
+  const myWindow = isSafari ? window : unsafeWindow
   const event = new MouseEvent('click', {
-    view: nWindow,
+    view: myWindow,
     bubbles: true,
     cancelable: true,
   });
@@ -124,7 +125,7 @@ export const copy = async (value: string) => {
     const domTextarea = domC('textArea', {
       value,
       style: 'width: 0px;position: fixed;left: -999px;top: 10px;',
-    }) as HTMLInputElement
+    }) as HTMLInputElement;
     domTextarea.setAttribute('readonly', 'readonly');
     document.body.appendChild(domTextarea);
     domTextarea.select();
@@ -175,3 +176,13 @@ export const createBtnSmallTran = (innerHTML: string, extraCLass: string = ''): 
     className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
     style: 'margin: 0 4px;',
   });
+
+export const judgeBrowserType = () => {
+  const userAgent = navigator.userAgent;
+  if (userAgent.includes('Firefox')) return 'Firefox';
+  if (userAgent.includes('Edg')) return 'Edge';
+  if (userAgent.includes('Safari')) return 'Safari';
+  return 'Chrome';
+};
+
+export const isSafari = judgeBrowserType() === 'Safari';

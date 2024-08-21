@@ -6,9 +6,6 @@
   "prettier.semi": true,
   "search.followSymlinks": false,
   "emmet.triggerExpansionOnTab": true,
-  "less.compile": {
-    "compress": true //是否压缩
-  },
   "cSpell.words": [
     "liuyubing",
     "Tampermonkey",
@@ -20,5 +17,10 @@
   "prettier.printWidth": 180,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
-  }
+  },
+  "diffEditor.wordWrap": "inherit",
+  "markdown.extension.toc.slugifyMode": "github",
+  "[markdown]": {
+    "editor.wordWrap": "off",
+  },
 }
