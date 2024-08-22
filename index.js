@@ -1298,6 +1298,18 @@
       });
     });
   };
+  var doHomeFetch = (url, headers) => {
+    return new Promise((resolve) => {
+      if (!url) {
+        resolve([]);
+      } else {
+        fetch(url, {
+          method: "GET",
+          headers: new Headers(headers)
+        }).then((response) => response.json()).then((res) => resolve(res.data));
+      }
+    });
+  };
   var fnHiddenDom = (lessNum, ev, log) => {
     ev.style.display = "none";
     fnLog(log);
@@ -2499,6 +2511,7 @@ background-repeat: no-repeat;`
     }
     doc.write(`<div class="ctz-pdf-view"></div>`);
     const nodePDFView = doc.querySelector(".ctz-pdf-view");
+    console.log("nodePDFView", nodePDFView, eventBtn, arrHTML, btnText);
     const domInner = domC("div", { innerHTML });
     max = domInner.querySelectorAll("img").length;
     domInner.querySelectorAll("img").forEach((imageItem) => {
@@ -2606,58 +2619,38 @@ background-repeat: no-repeat;`
       const nodeAnswerUserLink = nodeAnswerItem.querySelector(".AuthorInfo-name");
       const nodeAnswerContent = nodeAnswerItem.querySelector(".RichContent-inner");
       const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ""}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ""}`;
-      pdfExport(innerHTML);
+      loadIframeAndExport(this, [innerHTML], "导出当前回答");
     };
     nodeUser.appendChild(nodeButton);
   };
-  var addButtonForArticleExportPDF = (nodeArticleItem) => {
+  var addButtonForArticleExportPDF = (e2) => {
     const { topExportContent } = store.getConfig();
-    const prevButton = nodeArticleItem.querySelector(".ctz-export-article");
+    const prevButton = e2.querySelector(".ctz-export-article");
     if (prevButton)
       return;
-    const nodeUser = nodeArticleItem.querySelector(".ArticleItem-authorInfo>.AuthorInfo") || nodeArticleItem.querySelector(".Post-Header .AuthorInfo-content");
+    const nodeUser = e2.querySelector(".ArticleItem-authorInfo>.AuthorInfo") || e2.querySelector(".Post-Header .AuthorInfo-content");
     if (!nodeUser || !topExportContent)
       return;
     const nodeButton = createBtnSmallTran("导出当前文章", "ctz-export-article");
     nodeButton.onclick = function() {
-      const nodeAnswerUserLink = nodeArticleItem.querySelector(".AuthorInfo-name");
-      const nodeAnswerContent = nodeArticleItem.querySelector(".RichContent-inner") || nodeArticleItem.querySelector(".Post-RichTextContainer");
+      const nodeAnswerUserLink = e2.querySelector(".AuthorInfo-name");
+      const nodeAnswerContent = e2.querySelector(".RichContent-inner") || e2.querySelector(".Post-RichTextContainer");
       const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ""}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ""}`;
-      pdfExport(innerHTML);
+      loadIframeAndExport(this, [innerHTML], "导出当前文章");
     };
     nodeUser.appendChild(nodeButton);
     setTimeout(() => {
-      addButtonForArticleExportPDF(nodeArticleItem);
+      addButtonForArticleExportPDF(e2);
     }, 500);
   };
-  var pdfExport = (content) => {
-    const iframe = dom(QUERY_CLASS_PDF_IFRAME);
-    if (!iframe.contentWindow || !content)
-      return;
-    const doc = iframe.contentWindow.document;
-    doc.body.innerHTML = "";
-    doc.write(content);
-    iframe.contentWindow.print();
-  };
-  var doHomeFetch = (url, headers) => {
-    return new Promise((resolve) => {
-      if (!url) {
-        resolve([]);
-      } else {
-        fetch(url, {
-          method: "GET",
-          headers: new Headers(headers)
-        }).then((response) => response.json()).then((res) => resolve(res.data));
-      }
-    });
-  };
+  var C_EXPORT_ANSWER = "ctz-people-export-answer-once";
   var addBtnForExportPeopleAnswer = () => {
     const { fetchInterceptStatus } = store.getConfig();
     const domListHeader = dom(".Profile-main .List-headerText");
-    const domButtonOnce = dom(".ctz-people-export-answer-once");
+    const domButtonOnce = dom(`.${C_EXPORT_ANSWER}`);
     if (!domListHeader || domButtonOnce || !fetchInterceptStatus)
       return;
-    const nDomButtonOnce = createBtnSmallTran("导出当前页回答", "ctz-people-export-answer-once");
+    const nDomButtonOnce = createBtnSmallTran("导出当前页回答", C_EXPORT_ANSWER);
     nDomButtonOnce.onclick = async function() {
       const eventBtn = this;
       eventBtn.innerText = "加载回答内容中...";
@@ -2669,8 +2662,7 @@ background-repeat: no-repeat;`
       const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : "";
       if (!username)
         return;
-      const requestUrl = `
-/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${(+page - 1) * 20}&limit=20&sort_by=created`;
+      const requestUrl = `/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${(+page - 1) * 20}&limit=20&sort_by=created`;
       const header = createCommentHeaders(requestUrl);
       const data = await doHomeFetch(requestUrl, header);
       const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);

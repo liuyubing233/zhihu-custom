@@ -93,3 +93,18 @@ export const fetchSelf = (url: string, headers?: HeadersInit) => {
       }
     });
 };
+
+export const doHomeFetch = (url: string, headers: HeadersInit): Promise<any[]> => {
+  return new Promise((resolve) => {
+    if (!url) {
+      resolve([]);
+    } else {
+      fetch(url, {
+        method: 'GET',
+        headers: new Headers(headers),
+      })
+        .then((response) => response.json())
+        .then((res) => resolve(res.data));
+    }
+  });
+};
