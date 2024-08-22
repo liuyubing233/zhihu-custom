@@ -25,7 +25,7 @@ import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { suspensionPackUp } from './methods/suspension';
-import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './methods/time';
+import { addArticleTime, addQuestionTime } from './methods/time';
 import { topBlockUser, userHomeAnswers } from './methods/user-home-content';
 import { myVersion } from './methods/version';
 import { fixVideoAutoPlay, initVideoDownload } from './methods/video';
@@ -166,7 +166,7 @@ import { INNER_CSS } from './web-resources';
 
     historyToChangePathname();
     if (host === 'zhuanlan.zhihu.com') {
-      addArticleCreateTimeToTop();
+      addArticleTime();
       const nodeArticle = dom('.Post-content');
       if (nodeArticle) {
         addButtonForArticleExportPDF(nodeArticle);
@@ -179,7 +179,7 @@ import { INNER_CSS } from './web-resources';
   const historyToChangePathname = () => {
     pathnameHasFn({
       question: () => {
-        addQuestionCreatedAndModifiedTime();
+        addQuestionTime();
         const nodeQuestionAnswer = dom('.QuestionAnswer-content');
         nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
         initInviteOnce();

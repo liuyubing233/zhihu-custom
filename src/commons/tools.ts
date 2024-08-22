@@ -2,16 +2,13 @@ import { CLASS_MESSAGE, ID_MESSAGE_BOX } from '../configs';
 
 /** 获取元素 */
 export const dom = (n: string): HTMLElement | undefined => document.querySelector(n) as HTMLElement;
-
 /** 使用 Id 获取元素 */
 export const domById = (id: string): HTMLElement | undefined => document.getElementById(id) as HTMLElement;
-
 /** 获取所有元素 */
 export const domA = (n: string): NodeListOf<HTMLElement> => document.querySelectorAll(n);
-
 /** 创建元素 */
 export const domC = (name: string, attrObjs: Record<string, any>) => {
-  const node = document.createElement(name) as HTMLElement;
+  const node = document.createElement(name);
   for (let key in attrObjs) {
     // @ts-ignore
     node[key] = attrObjs[key];
@@ -21,7 +18,7 @@ export const domC = (name: string, attrObjs: Record<string, any>) => {
 
 /**
  * 查找父级元素
- * @param node 元素名称
+ * @param node 元素
  * @param attrName 例如 'class'
  * @param attrValue 例如 class 名
  * @returns HTMLElement | undefined
@@ -108,7 +105,7 @@ export const promisePercent = (requests: any[] = [], callback: (index: number) =
  */
 export const mouseEventClick = (element?: HTMLElement) => {
   if (!element) return;
-  const myWindow = isSafari ? window : unsafeWindow
+  const myWindow = isSafari ? window : unsafeWindow;
   const event = new MouseEvent('click', {
     view: myWindow,
     bubbles: true,

@@ -2858,37 +2858,37 @@ background-repeat: no-repeat;`
     };
     nodeUser.appendChild(nDomButton);
   };
-  var timeFormatter = (time, formatter = "YYYY-MM-DD HH:mm:ss") => {
-    if (!time)
+  var formatTime = (t2, f = "YYYY-MM-DD HH:mm:ss") => {
+    if (!t2)
       return "";
-    const date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    const sec = date.getSeconds();
+    const d = new Date(t2);
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    const hour = d.getHours();
+    const min = d.getMinutes();
+    const sec = d.getSeconds();
     const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
-    return formatter.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
+    return f.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
   };
-  var updateItemTime = (event) => {
-    const nodeCreated = event.querySelector('[itemprop="dateCreated"]');
-    const nodePublished = event.querySelector('[itemprop="datePublished"]');
-    const nodeModified = event.querySelector('[itemprop="dateModified"]');
+  var updateItemTime = (e2) => {
+    const nodeCreated = e2.querySelector('[itemprop="dateCreated"]');
+    const nodePublished = e2.querySelector('[itemprop="datePublished"]');
+    const nodeModified = e2.querySelector('[itemprop="dateModified"]');
     const crTime = nodeCreated ? nodeCreated.content : "";
     const puTime = nodePublished ? nodePublished.content : "";
     const muTime = nodeModified ? nodeModified.content : "";
-    const timeCreated = timeFormatter(crTime || puTime);
-    const timeModified = timeFormatter(muTime);
-    const nodeContentItemMeta = event.querySelector(".ContentItem-meta");
-    if (!timeCreated || !nodeContentItemMeta)
+    const timeCreated = formatTime(crTime || puTime);
+    const timeModified = formatTime(muTime);
+    const nodeBox = e2.querySelector(".ContentItem-meta");
+    if (!timeCreated || !nodeBox)
       return;
     const innerHTML = `<div>创建时间：${timeCreated}</div><div>最后修改时间：${timeModified}</div>`;
-    const domTime = event.querySelector(`.${CLASS_TIME_ITEM}`);
+    const domTime = e2.querySelector(`.${CLASS_TIME_ITEM}`);
     if (domTime) {
       domTime.innerHTML = innerHTML;
     } else {
-      nodeContentItemMeta.appendChild(
+      nodeBox.appendChild(
         domC("div", {
           className: CLASS_TIME_ITEM,
           innerHTML,
@@ -2897,42 +2897,47 @@ background-repeat: no-repeat;`
       );
     }
   };
-  var addQuestionCreatedAndModifiedTime = () => {
-    const { getConfig } = store;
-    const className = "ctz-question-time";
-    const nodeTime = dom(`.${className}`);
-    nodeTime && nodeTime.remove();
-    const conf = getConfig();
+  var C_QUESTION_TIME = "ctz-question-time";
+  var addQuestionTime = () => {
+    const nodeT = dom(`.${C_QUESTION_TIME}`);
+    if (nodeT)
+      return;
+    const { questionCreatedAndModifiedTime } = store.getConfig();
     const nodeCreated = dom('[itemprop="dateCreated"]');
     const nodeModified = dom('[itemprop="dateModified"]');
-    if (!(conf.questionCreatedAndModifiedTime && nodeCreated && nodeModified))
+    const nodeBox = dom(".QuestionPage .QuestionHeader-title");
+    if (!questionCreatedAndModifiedTime || !nodeCreated || !nodeModified || !nodeBox)
       return;
-    const created = timeFormatter(nodeCreated.content);
-    const modified = timeFormatter(nodeModified.content);
-    const nodeTitle = dom(".QuestionPage .QuestionHeader-title");
-    nodeTitle && nodeTitle.appendChild(
+    nodeBox.appendChild(
       domC("div", {
-        className,
-        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`
+        className: C_QUESTION_TIME,
+        innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`
       })
     );
+    setTimeout(() => {
+      addQuestionTime();
+    }, 500);
   };
-  var addArticleCreateTimeToTop = () => {
+  var C_ARTICLE_TIME = "ctz-article-time";
+  var addArticleTime = () => {
     const { articleCreateTimeToTop } = store.getConfig();
-    const className = "ctz-article-create-time";
-    const nodeT = dom(`.${className}`);
-    nodeT && nodeT.remove();
-    const nodeContentTime = dom(".ContentItem-time");
-    const nodeHeader = dom(".Post-Header");
-    if (!(articleCreateTimeToTop && nodeContentTime && nodeHeader))
+    const nodeT = dom(`.${C_ARTICLE_TIME}`);
+    if (nodeT)
       return;
-    nodeHeader.appendChild(
+    const nodeContentTime = dom(".ContentItem-time");
+    const nodeBox = dom(".Post-Header");
+    if (!articleCreateTimeToTop || !nodeContentTime || !nodeBox)
+      return;
+    nodeBox.appendChild(
       domC("span", {
-        className,
+        className: C_ARTICLE_TIME,
         style: "color: #8590a6;line-height: 30px;",
         innerHTML: nodeContentTime.innerText || ""
       })
     );
+    setTimeout(() => {
+      addArticleTime();
+    }, 500);
   };
   var updateTopVote = (nodeItem) => {
     if (!nodeItem)
@@ -3233,7 +3238,7 @@ background-repeat: no-repeat;`
     },
     getScriptData: function() {
       try {
-        const initialData = JSON.parse(domById("js-initialData")?.innerHTML ?? "{}");
+        const initialData = JSON.parse(domById("js-initialData") && domById("js-initialData").innerHTML || "{}");
         const answers = initialData.initialState.entities.answers;
         const nTargets = [];
         for (let key in answers) {
@@ -3672,14 +3677,14 @@ background-repeat: no-repeat;`
       suspensionUser: cacheHeader,
       titleIco: changeICO,
       showGIFinDialog: previewGIF,
-      questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
+      questionCreatedAndModifiedTime: addQuestionTime,
       highlightOriginal: () => {
         myListenListItem.restart();
       },
       listOutPutNotInterested: () => {
         myListenListItem.restart();
       },
-      articleCreateTimeToTop: addArticleCreateTimeToTop,
+      articleCreateTimeToTop: addArticleTime,
       versionHomeIsPercent: rangeChoosePercent,
       versionAnswerIsPercent: rangeChoosePercent,
       versionArticleIsPercent: rangeChoosePercent
@@ -3965,17 +3970,17 @@ background-repeat: no-repeat;`
         let innerHTML = "";
         if (nodeDateCreate) {
           const dateCreate = nodeDateCreate.getAttribute("content") || "";
-          const dateCreateFormatter = timeFormatter(dateCreate);
+          const dateCreateFormatter = formatTime(dateCreate);
           innerHTML += `<div>创建时间：${dateCreateFormatter}</div>`;
         }
         if (nodeDatePublished) {
           const datePublished = nodeDatePublished.getAttribute("content") || "";
-          const datePublishedFormatter = timeFormatter(datePublished);
+          const datePublishedFormatter = formatTime(datePublished);
           innerHTML += `<div>发布时间：${datePublishedFormatter}</div>`;
         }
         if (nodeDateModified) {
           const dateModified = nodeDateModified.getAttribute("content") || "";
-          const dateModifiedFormatter = timeFormatter(dateModified);
+          const dateModifiedFormatter = formatTime(dateModified);
           innerHTML += `<div>最后修改时间：${dateModifiedFormatter}</div>`;
         }
         insertAfter(
@@ -4123,7 +4128,7 @@ background-repeat: no-repeat;`
       }
       historyToChangePathname();
       if (host === "zhuanlan.zhihu.com") {
-        addArticleCreateTimeToTop();
+        addArticleTime();
         const nodeArticle = dom(".Post-content");
         if (nodeArticle) {
           addButtonForArticleExportPDF(nodeArticle);
@@ -4135,7 +4140,7 @@ background-repeat: no-repeat;`
     const historyToChangePathname = () => {
       pathnameHasFn({
         question: () => {
-          addQuestionCreatedAndModifiedTime();
+          addQuestionTime();
           const nodeQuestionAnswer = dom(".QuestionAnswer-content");
           nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
           initInviteOnce();

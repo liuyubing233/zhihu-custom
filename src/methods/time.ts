@@ -3,17 +3,17 @@ import { CLASS_TIME_ITEM } from '../configs';
 import { store } from '../store';
 
 /** 时间格式化 */
-export const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') => {
-  if (!time) return '';
-  const date = new Date(time);
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const min = date.getMinutes();
-  const sec = date.getSeconds();
+export const formatTime = (t: string, f = 'YYYY-MM-DD HH:mm:ss') => {
+  if (!t) return '';
+  const d = new Date(t);
+  const year = d.getFullYear();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const hour = d.getHours();
+  const min = d.getMinutes();
+  const sec = d.getSeconds();
   const preArr = (num: number) => (String(num).length !== 2 ? '0' + String(num) : String(num));
-  return formatter
+  return f
     .replace(/YYYY/g, String(year))
     .replace(/MM/g, preArr(month))
     .replace(/DD/g, preArr(day))
@@ -23,23 +23,23 @@ export const timeFormatter = (time: string, formatter = 'YYYY-MM-DD HH:mm:ss') =
 };
 
 /** 问题添加时间 */
-export const updateItemTime = (event: HTMLElement) => {
-  const nodeCreated = event.querySelector('[itemprop="dateCreated"]') as HTMLMetaElement;
-  const nodePublished = event.querySelector('[itemprop="datePublished"]') as HTMLMetaElement;
-  const nodeModified = event.querySelector('[itemprop="dateModified"]') as HTMLMetaElement;
+export const updateItemTime = (e: HTMLElement) => {
+  const nodeCreated = e.querySelector('[itemprop="dateCreated"]') as HTMLMetaElement;
+  const nodePublished = e.querySelector('[itemprop="datePublished"]') as HTMLMetaElement;
+  const nodeModified = e.querySelector('[itemprop="dateModified"]') as HTMLMetaElement;
   const crTime = nodeCreated ? nodeCreated.content : '';
   const puTime = nodePublished ? nodePublished.content : '';
   const muTime = nodeModified ? nodeModified.content : '';
-  const timeCreated = timeFormatter(crTime || puTime);
-  const timeModified = timeFormatter(muTime);
-  const nodeContentItemMeta = event.querySelector('.ContentItem-meta');
-  if (!timeCreated || !nodeContentItemMeta) return;
+  const timeCreated = formatTime(crTime || puTime);
+  const timeModified = formatTime(muTime);
+  const nodeBox = e.querySelector('.ContentItem-meta');
+  if (!timeCreated || !nodeBox) return;
   const innerHTML = `<div>创建时间：${timeCreated}</div><div>最后修改时间：${timeModified}</div>`;
-  const domTime = event.querySelector(`.${CLASS_TIME_ITEM}`);
+  const domTime = e.querySelector(`.${CLASS_TIME_ITEM}`);
   if (domTime) {
     domTime.innerHTML = innerHTML;
   } else {
-    nodeContentItemMeta.appendChild(
+    nodeBox.appendChild(
       domC('div', {
         className: CLASS_TIME_ITEM,
         innerHTML,
@@ -49,42 +49,46 @@ export const updateItemTime = (event: HTMLElement) => {
   }
 };
 
+const C_QUESTION_TIME = 'ctz-question-time';
 /** 问题详情添加时间 */
-export const addQuestionCreatedAndModifiedTime = () => {
-  const { getConfig } = store;
-  const className = 'ctz-question-time';
-  const nodeTime = dom(`.${className}`);
-  nodeTime && nodeTime.remove();
-  const conf = getConfig();
+export const addQuestionTime = () => {
+  const nodeT = dom(`.${C_QUESTION_TIME}`);
+  if (nodeT) return;
+  const { questionCreatedAndModifiedTime } = store.getConfig();
   const nodeCreated = dom('[itemprop="dateCreated"]') as HTMLMetaElement;
   const nodeModified = dom('[itemprop="dateModified"]') as HTMLMetaElement;
-  if (!(conf.questionCreatedAndModifiedTime && nodeCreated && nodeModified)) return;
-  const created = timeFormatter(nodeCreated.content);
-  const modified = timeFormatter(nodeModified.content);
-  const nodeTitle = dom('.QuestionPage .QuestionHeader-title');
-  nodeTitle &&
-    nodeTitle.appendChild(
-      domC('div', {
-        className,
-        innerHTML: `<div>创建时间：${created}</div><div>最后修改时间：${modified}</div>`,
-      })
-    );
+  const nodeBox = dom('.QuestionPage .QuestionHeader-title');
+  if (!questionCreatedAndModifiedTime || !nodeCreated || !nodeModified || !nodeBox) return;
+  nodeBox.appendChild(
+    domC('div', {
+      className: C_QUESTION_TIME,
+      innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,
+    })
+  );
+  setTimeout(() => {
+    // 解决页面重载问题
+    addQuestionTime();
+  }, 500);
 };
 
+const C_ARTICLE_TIME = 'ctz-article-time';
 /** 文章发布时间置顶 */
-export const addArticleCreateTimeToTop = () => {
+export const addArticleTime = () => {
   const { articleCreateTimeToTop } = store.getConfig();
-  const className = 'ctz-article-create-time';
-  const nodeT = dom(`.${className}`);
-  nodeT && nodeT.remove();
+  const nodeT = dom(`.${C_ARTICLE_TIME}`);
+  if (nodeT) return;
   const nodeContentTime = dom('.ContentItem-time');
-  const nodeHeader = dom('.Post-Header');
-  if (!(articleCreateTimeToTop && nodeContentTime && nodeHeader)) return;
-  nodeHeader.appendChild(
+  const nodeBox = dom('.Post-Header');
+  if (!articleCreateTimeToTop || !nodeContentTime || !nodeBox) return;
+  nodeBox.appendChild(
     domC('span', {
-      className,
+      className: C_ARTICLE_TIME,
       style: 'color: #8590a6;line-height: 30px;',
       innerHTML: nodeContentTime.innerText || '',
     })
   );
+  setTimeout(() => {
+    // 解决页面重载问题
+    addArticleTime();
+  }, 500);
 };

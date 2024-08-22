@@ -7,7 +7,7 @@ import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO } from './page-title';
 import { cacheHeader, changeSuspensionTab } from './suspension';
-import { addArticleCreateTimeToTop, addQuestionCreatedAndModifiedTime } from './time';
+import { addArticleTime, addQuestionTime } from './time';
 import { myVersion } from './version';
 
 /** 更改编辑器方法 */
@@ -71,14 +71,14 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     suspensionUser: cacheHeader,
     titleIco: changeICO,
     showGIFinDialog: previewGIF,
-    questionCreatedAndModifiedTime: addQuestionCreatedAndModifiedTime,
+    questionCreatedAndModifiedTime: addQuestionTime,
     highlightOriginal: () => {
       myListenListItem.restart();
     },
     listOutPutNotInterested: () => {
       myListenListItem.restart();
     },
-    articleCreateTimeToTop: addArticleCreateTimeToTop,
+    articleCreateTimeToTop: addArticleTime,
     versionHomeIsPercent: rangeChoosePercent,
     versionAnswerIsPercent: rangeChoosePercent,
     versionArticleIsPercent: rangeChoosePercent,

@@ -8,7 +8,7 @@ export const initInviteOnce = () => {
     const nButton = domC('button', {
       className: 'ctz-button ctz-invite-once',
       innerHTML: '一键邀请',
-      style: 'margin-left: 12px;'
+      style: 'margin-left: 12px;',
     });
     nButton.onclick = () => {
       const fnToMore = () => {
@@ -24,7 +24,7 @@ export const initInviteOnce = () => {
       };
 
       const fnToInviteAll = () => {
-        const nodeInvites = domA('.QuestionInvitation .ContentItem-extra button');
+        const nodeInvites = domA('.QuestionInvitation .ContentItem-extra button') as NodeListOf<HTMLButtonElement>;
         nodeInvites.forEach((item) => {
           !item.disabled && !item.classList.contains('AutoInviteItem-button--closed') && item.click();
         });

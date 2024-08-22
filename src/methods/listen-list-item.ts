@@ -159,7 +159,7 @@ export const myListenListItem = {
   },
   getScriptData: function () {
     try {
-      const initialData = JSON.parse(domById('js-initialData')?.innerHTML ?? '{}');
+      const initialData = JSON.parse(domById('js-initialData') && domById('js-initialData')!.innerHTML || '{}');
       const answers = initialData.initialState.entities.answers;
       const nTargets = [];
       for (let key in answers) {

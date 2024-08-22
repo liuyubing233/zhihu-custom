@@ -1,7 +1,7 @@
 import { dom, domA, domC, insertAfter } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
 import { store } from '../store';
-import { timeFormatter } from './time';
+import { formatTime } from './time';
 
 let timer: NodeJS.Timeout | undefined = undefined;
 
@@ -22,19 +22,19 @@ export const userHomeAnswers = () => {
       let innerHTML = '';
       if (nodeDateCreate) {
         const dateCreate = nodeDateCreate.getAttribute('content') || '';
-        const dateCreateFormatter = timeFormatter(dateCreate);
+        const dateCreateFormatter = formatTime(dateCreate);
         innerHTML += `<div>创建时间：${dateCreateFormatter}</div>`;
       }
 
       if (nodeDatePublished) {
         const datePublished = nodeDatePublished.getAttribute('content') || '';
-        const datePublishedFormatter = timeFormatter(datePublished);
+        const datePublishedFormatter = formatTime(datePublished);
         innerHTML += `<div>发布时间：${datePublishedFormatter}</div>`;
       }
 
       if (nodeDateModified) {
         const dateModified = nodeDateModified.getAttribute('content') || '';
-        const dateModifiedFormatter = timeFormatter(dateModified);
+        const dateModifiedFormatter = formatTime(dateModified);
         innerHTML += `<div>最后修改时间：${dateModifiedFormatter}</div>`;
       }
 
