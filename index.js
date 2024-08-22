@@ -1993,7 +1993,7 @@ background-repeat: no-repeat;`
       if (!evenButton)
         continue;
       const needStyle = evenBottom > hST + window.innerHeight && evenPrevBottom < hST;
-      evenButton.style.cssText = needStyle ? `visibility:visible!important;position: fixed!important;bottom: 60px;right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + RIGHT}px;box-shadow: 0 1px 3px rgb(18 18 18 / 10%);height: 40px!important;padding: 0 12px!important;background: ${isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][+themeLight !== 0 /* 默认 */ ? "background2" : "background"]}!important;` : "";
+      evenButton.style.cssText = needStyle ? `visibility:visible!important;position: fixed!important;bottom: 60px;z-index:999;right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + RIGHT}px;box-shadow: 0 1px 3px rgb(18 18 18 / 10%);height: 40px!important;padding: 0 12px!important;background: ${isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][+themeLight !== 0 /* 默认 */ ? "background2" : "background"]}!important;` : "";
     }
   };
   var changeSuspensionTab = () => {
@@ -3488,8 +3488,7 @@ background-repeat: no-repeat;`
       hiddenHeader: `.AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}.PubIndex-CategoriesHeader{top: 0!important;}`,
       hiddenHeaderScroll: `.AppHeader.is-fixed{display:none!important;}`,
       hiddenYanXuanWriter: `.KfeCollection-CreateSaltCard{display:none!important;}`,
-      hiddenItemActions: `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint{visibility:hidden!important;height:0!important;padding:0!important;}.TopstoryQuestionAskItem-hint{margin: 0!important;}.Topstory .ContentItem-actions{padding: 0!important;}.Topstory-body .ContentItem-actions{display: none;}`,
-      // `.SearchResult-Card .ContentItem-actions{display: none;}`,
+      hiddenItemActions: `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint{visibility:hidden!important;height:0!important;padding:0!important;}.TopstoryQuestionAskItem-hint{margin: 0!important;}.Topstory .ContentItem-actions{padding: 0!important;}`,
       hiddenAnswerText: `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}.VoteButton{color: #8590a6!important; }.VoteButton.is-active{color: #056de8!important;}.ContentItem-action{margin-left:8px!important;}.Search-questionFollowButton{display: none}`,
       hiddenQuestionTag: ".QuestionHeader-tags{display: none!important;}",
       hiddenQuestionShare: ".zhihu .Popover.ShareMenu{display: none!important;}",
@@ -3543,7 +3542,7 @@ background-repeat: no-repeat;`
       hiddenHomeCategory: ".Topstory .GlobalSideBar-category{display: none;}",
       hiddenHomeCategoryMore: '.Topstory .Card[aria-label="更多分类入口"]{display:none;}',
       hiddenHomeFooter: ".Topstory .Footer,.Topstory footer{display: none;}",
-      hiddenAnswerItemActions: ".Question-main .ContentItem-actions{display: none;}",
+      hiddenAnswerItemActions: `.Question-main .ContentItem-actions>span,.Question-main .ContentItem-actions>button,.Question-main .ContentItem-actions>div,.Question-main .ContentItem-actions>a{visibility:hidden!important;height:0!important;padding:0!important;}`,
       hiddenAnswerItemTime: ".Question-main .ContentItem-time{display: none;margin: 0;}",
       hiddenAnswerItemTimeButHaveIP: ".Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}",
       hiddenAppHeaderTabHome: ".AppHeader-Tab:nth-of-type(1){display: none}",
@@ -3560,7 +3559,6 @@ background-repeat: no-repeat;`
       hiddenQuestionComment: ".QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}",
       hiddenQuestionMore: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
       hiddenOpenButton: "#CTZ_OPEN_BUTTON{display: none;}",
-      // hiddenTopAD: '.App-main .Topstory>div:first-of-type:not(.Topstory-container){display: none}',
       hiddenCommitReply: ".Comments-container .css-140jo2 button:first-of-type{display:none;}",
       hiddenCommitVote: ".Comments-container .css-140jo2 button:last-of-type{display:none;}",
       hiddenCommitBottom: ".Comments-container .css-140jo2{display:none;}",

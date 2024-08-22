@@ -9,9 +9,7 @@ export const myHidden: IMyHidden = {
   change: function () {
     const { getConfig } = store;
     const pfConfig = getConfig();
-    const cssHidden = Object.keys(this.cssForKey)
-      .map((key) => (pfConfig[key] ? this.cssForKey[key] : ''))
-      .join('');
+    const cssHidden = Object.keys(this.cssForKey).map((key) => (pfConfig[key] ? this.cssForKey[key] : '')).join('');
     let cssHiddenMore = '';
     this.cssForKeysArray.forEach(({ keys, value }) => {
       let trueNumber = 0;
@@ -31,9 +29,7 @@ export const myHidden: IMyHidden = {
       `,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint` +
       `{visibility:hidden!important;height:0!important;padding:0!important;}` +
       `.TopstoryQuestionAskItem-hint{margin: 0!important;}` +
-      `.Topstory .ContentItem-actions{padding: 0!important;}` +
-      `.Topstory-body .ContentItem-actions{display: none;}`,
-    // `.SearchResult-Card .ContentItem-actions{display: none;}`,
+      `.Topstory .ContentItem-actions{padding: 0!important;}`,
     hiddenAnswerText:
       `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}` +
       `.ContentItem-action,.ContentItem-action button,.ContentItem-actions button` +
@@ -49,9 +45,7 @@ export const myHidden: IMyHidden = {
     hiddenQuestionActions: '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}',
     hiddenReward: '.Reward{display: none!important;}',
     hiddenZhuanlanTag: '.Post-topicsAndReviewer{display: none!important;}',
-    hiddenListImg:
-      `.RichContent-cover,.HotItem-img,.TopstoryItem .Image-Wrapper-Preview{display:none!important;}` +
-      `.HotItem-metrics--bottom{position: initial!important;}`,
+    hiddenListImg: `.RichContent-cover,.HotItem-img,.TopstoryItem .Image-Wrapper-Preview{display:none!important;}` + `.HotItem-metrics--bottom{position: initial!important;}`,
     hiddenReadMoreText: '.ContentItem-more{font-size:0!important;}',
     hiddenAD: '.TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer,.Pc-Business-Card-PcTopFeedBanner{display: none!important;}',
     hiddenAnswers:
@@ -61,14 +55,12 @@ export const myHidden: IMyHidden = {
       `{display: none;}`,
     hiddenListVideoContent: `.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}`,
     hiddenZhuanlanActions: '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}',
-    hiddenZhuanlanTitleImage:
-      '.css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}',
+    hiddenZhuanlanTitleImage: '.css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}',
     hiddenFixedActions: `.ContentItem .RichContent-actions.is-fixed,.List-item .RichContent-actions.is-fixed{visibility: hidden!important;}`,
     hiddenHotItemMetrics: '.HotItem-content .HotItem-metrics{display: none;}',
     hiddenHotItemIndex: '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}',
     hiddenHotItemLabel: '.HotItem-label{display: none;}',
-    hiddenDetailAvatar:
-      '.AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}',
+    hiddenDetailAvatar: '.AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}',
     hiddenDetailBadge: '.AnswerItem .AuthorInfo .AuthorInfo-detail{display: none;}',
     hiddenDetailVoters: '.AnswerItem .css-dvccr2{display: none;}',
     hiddenWhoVoters: '.css-1vqda4a{display: none!important;}',
@@ -104,7 +96,10 @@ export const myHidden: IMyHidden = {
     hiddenHomeCategory: '.Topstory .GlobalSideBar-category{display: none;}',
     hiddenHomeCategoryMore: '.Topstory .Card[aria-label="更多分类入口"]{display:none;}',
     hiddenHomeFooter: '.Topstory .Footer,.Topstory footer{display: none;}',
-    hiddenAnswerItemActions: '.Question-main .ContentItem-actions{display: none;}',
+    hiddenAnswerItemActions:
+      `.Question-main .ContentItem-actions>span,.Question-main .ContentItem-actions>button` +
+      `,.Question-main .ContentItem-actions>div,.Question-main .ContentItem-actions>a` +
+      `{visibility:hidden!important;height:0!important;padding:0!important;}`,
     hiddenAnswerItemTime: '.Question-main .ContentItem-time{display: none;margin: 0;}',
     hiddenAnswerItemTimeButHaveIP: '.Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}',
     hiddenAppHeaderTabHome: '.AppHeader-Tab:nth-of-type(1){display: none}',
@@ -121,7 +116,6 @@ export const myHidden: IMyHidden = {
     hiddenQuestionComment: '.QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}',
     hiddenQuestionMore: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
     hiddenOpenButton: '#CTZ_OPEN_BUTTON{display: none;}',
-    // hiddenTopAD: '.App-main .Topstory>div:first-of-type:not(.Topstory-container){display: none}',
     hiddenCommitReply: '.Comments-container .css-140jo2 button:first-of-type{display:none;}',
     hiddenCommitVote: '.Comments-container .css-140jo2 button:last-of-type{display:none;}',
     hiddenCommitBottom: '.Comments-container .css-140jo2{display:none;}',
@@ -169,8 +163,8 @@ export const myHidden: IMyHidden = {
     },
     {
       keys: ['hiddenTopicRightNumberBoard', 'hiddenTopicRightParentChild', 'hiddenTopicRightFooter'],
-      value: '[data-za-detail-view-path-module="TopicItem"]>div:nth-child(2){display: none;}'
-    }
+      value: '[data-za-detail-view-path-module="TopicItem"]>div:nth-child(2){display: none;}',
+    },
   ],
 };
 

@@ -22,7 +22,7 @@ export const suspensionPackUp = (elements: NodeListOf<HTMLElement>) => {
     if (!evenButton) continue;
     const needStyle = evenBottom > hST + window.innerHeight && evenPrevBottom < hST;
     evenButton.style.cssText = needStyle
-      ? `visibility:visible!important;position: fixed!important;bottom: 60px;` +
+      ? `visibility:visible!important;position: fixed!important;bottom: 60px;z-index:999;` +
         `right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + RIGHT}px;` +
         `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
         `height: 40px!important;padding: 0 12px!important;` +
