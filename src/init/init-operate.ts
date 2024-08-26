@@ -82,7 +82,7 @@ const myButtonOperation: Record<string, Function> = {
   },
   /** 导入配置 */
   configImport: async function () {
-    const nodeImport = dom('[name=textConfigImport]');
+    const nodeImport = dom('[name=textConfigImport]') as HTMLInputElement;
     const configImport = nodeImport ? nodeImport.value : '{}';
     const nConfig = JSON.parse(configImport);
     await myStorage.setConfig(nConfig);
@@ -103,7 +103,7 @@ const myButtonOperation: Record<string, Function> = {
   },
   /** 自定义样式 */
   styleCustom: async function () {
-    const nodeText = dom('[name="textStyleCustom"]');
+    const nodeText = dom('[name="textStyleCustom"]') as HTMLInputElement;
     const value = nodeText ? nodeText.value : '';
     await myStorage.setConfigItem('customizeCss', value);
     myCustomStyle.change(value);
@@ -111,7 +111,7 @@ const myButtonOperation: Record<string, Function> = {
   syncBlack: () => myBlack.sync(0),
   /** 确认更改网页标题 */
   buttonConfirmTitle: async function () {
-    const nodeTitle = dom('[name="globalTitle"]');
+    const nodeTitle = dom('[name="globalTitle"]') as HTMLInputElement;
     await myStorage.setConfigItem('globalTitle', nodeTitle ? nodeTitle.value : '');
     changeTitle();
     message('网页标题修改成功');

@@ -11,7 +11,8 @@ import { store } from '../store';
 
 /** 推荐列表最外层绑定事件 */
 export const initTopStoryRecommendEvent = () => {
-  const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow');
+  const nodeTopStoryRecommend = document.body;
+  // const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow');
   if (!nodeTopStoryRecommend) return;
   const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
   const canFindTargeted = (e: HTMLElement) => {
@@ -57,7 +58,7 @@ export const initTopStoryRecommendEvent = () => {
           addButtonForAnswerExportPDF(nodeContentItem.parentElement!);
           addButtonForArticleExportPDF(nodeContentItem.parentElement!);
         }
-        addAnswerCopyLink(nodeContentItem)
+        addAnswerCopyLink(nodeContentItem);
       }, 0);
     }
   });

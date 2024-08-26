@@ -51,7 +51,7 @@ function resizeFun() {
   });
 
   globalTitle !== document.title && changeTitle();
-  const nodeSearchBarInput = dom('.SearchBar-input input');
+  const nodeSearchBarInput = dom('.SearchBar-input input') as HTMLInputElement;
   if (hiddenSearchBoxTopSearch && nodeSearchBarInput) {
     nodeSearchBarInput.placeholder = '';
   }

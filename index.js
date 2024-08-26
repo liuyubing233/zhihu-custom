@@ -3339,7 +3339,7 @@ background-repeat: no-repeat;`
     }
   };
   var initTopStoryRecommendEvent = () => {
-    const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow");
+    const nodeTopStoryRecommend = document.body;
     if (!nodeTopStoryRecommend)
       return;
     const classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon"];
