@@ -1,4 +1,3 @@
-import { fetchGetUserinfo } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domA, domById, fnInitDomStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
@@ -41,7 +40,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, host } = location;
-  const { setStorageConfigItem, getStorageConfigItem, getConfig, setUserinfo, setHomeFetch } = store;
+  const { setStorageConfigItem, getStorageConfigItem, getConfig, setUserinfo } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -107,7 +106,7 @@ import { INNER_CSS } from './web-resources';
       // if (/\/question/.test(pathname) && matched) {
       //   myListenSelect.keySort = matched[0];
       // }
-      setUserinfo(await fetchGetUserinfo());
+
     }
   }
   onDocumentStart();

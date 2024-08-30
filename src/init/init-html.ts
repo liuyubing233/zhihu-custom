@@ -1,3 +1,4 @@
+import { fetchGetUserinfo } from '../commons/fetch';
 import { dom, domById, domC } from '../commons/tools';
 import { DEFAULT_FUNCTION, FONT_SIZE_INPUT, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL, VERSION_RANGE } from '../configs';
 import { BASIC_SHOW_CONTENT } from '../configs/basic-show';
@@ -16,10 +17,7 @@ const createHiddenItem = (arrHidden: IOptionItem[][]) => {
       item
         .map(
           ({ label, value }) =>
-            `<label style="display: inline-flex; algin-item: center;">` +
-            `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` +
-            label +
-            `</label>`
+            `<label style="display: inline-flex; algin-item: center;">` + `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` + label + `</label>`
         )
         .join('') + `<br>`
     );
@@ -45,9 +43,7 @@ const initInputRange = () => {
       `<span class="ctz-label">${item.percentChooseLabel}</span>` +
       `<input class="ctz-i" name="${item.percentChooseValue}" type="checkbox" value="on" />` +
       `</label>` +
-      `<div class="ctz-commit" style="${index < VERSION_RANGE.length - 1 ? 'border-bottom: 1px solid #e0e0e0;' : 'margin:0;'}padding:8px 0;"><b>${
-        item.desc
-      }</b></div>`
+      `<div class="ctz-commit" style="${index < VERSION_RANGE.length - 1 ? 'border-bottom: 1px solid #e0e0e0;' : 'margin:0;'}padding:8px 0;"><b>${item.desc}</b></div>`
     );
   };
   domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(versionCallback).join('');
@@ -57,7 +53,6 @@ const initInputRange = () => {
 
 /** 加载基础元素及绑定方法 */
 export const initHTML = () => {
-  const { getUserinfo } = store;
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
   dom('.ctz-version')!.innerText = `version: ${GM_info.script.version}`;
   dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
@@ -108,9 +103,20 @@ export const initHTML = () => {
   myBlack.init();
   myMenu.init();
 
-  // 保存个人主页位置
-  const userinfo = getUserinfo();
-  if (!userinfo) return;
+  dom('.ctz-footer-right')!.appendChild(
+    domC('a', {
+      href: 'www.zhihu.com',
+      target: '_self',
+      innerText: '返回主页',
+    })
+  );
+  domAddUserinfo();
+};
+
+const domAddUserinfo = async () => {
+  const { setUserinfo } = store;
+  const userinfo = await fetchGetUserinfo();
+  setUserinfo(userinfo);
   const hrefUser = userinfo.url ? userinfo.url.replace('/api/v4', '') : '';
   if (!hrefUser) return;
   const homeLink = domC('a', {
