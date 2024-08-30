@@ -1,6 +1,7 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById } from '../commons/tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
+import { initImagePreview } from '../init/init-image-preview';
 import { loadBackground, onUseThemeDark } from './background';
 import { myHidden } from './hidden';
 import { previewGIF } from './image';
@@ -18,7 +19,6 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'fixedListItemMore',
     'linkShopping',
     'highlightListItem',
-    'zoomImageType',
     'zoomImageSize',
     'versionHome',
     'versionAnswer',
@@ -55,7 +55,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       domRangePercent.style.display = !checked ? 'none' : 'flex';
     }
     myVersion.change();
-  }
+  };
 
   const ob: Record<string, Function> = {
     [INPUT_NAME_THEME]: changeBackground,
@@ -82,6 +82,10 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     versionHomeIsPercent: rangeChoosePercent,
     versionAnswerIsPercent: rangeChoosePercent,
     versionArticleIsPercent: rangeChoosePercent,
+    zoomImageType: () => {
+      myVersion.change();
+      initImagePreview();
+    },
   };
   await myStorage.setConfigItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);

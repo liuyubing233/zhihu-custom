@@ -3622,7 +3622,6 @@ background-repeat: no-repeat;`
       "fixedListItemMore",
       "linkShopping",
       "highlightListItem",
-      "zoomImageType",
       "zoomImageSize",
       "versionHome",
       "versionAnswer",
@@ -3683,7 +3682,11 @@ background-repeat: no-repeat;`
       articleCreateTimeToTop: addArticleTime,
       versionHomeIsPercent: rangeChoosePercent,
       versionAnswerIsPercent: rangeChoosePercent,
-      versionArticleIsPercent: rangeChoosePercent
+      versionArticleIsPercent: rangeChoosePercent,
+      zoomImageType: () => {
+        myVersion.change();
+        initImagePreview();
+      }
     };
     await myStorage.setConfigItem(name, type === "checkbox" ? checked : value);
     const nodeName = domById(name);
