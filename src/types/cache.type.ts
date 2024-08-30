@@ -20,7 +20,7 @@ export interface IStorageConfig {
   /** 接口的 headers 内容, 获取下来以供使用 */
   fetchHeaders: HeadersInit;
   /** 列表缓存高度 */
-  heightForList: number;
+  // heightForList: number;
   /** header内元素 */
   headerDoms: IHeaderDoms;
 }

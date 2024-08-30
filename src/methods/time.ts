@@ -65,10 +65,7 @@ export const addQuestionTime = () => {
       innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,
     })
   );
-  setTimeout(() => {
-    // 解决页面重载问题
-    addQuestionTime();
-  }, 500);
+  setTimeout(addQuestionTime, 500)
 };
 
 const C_ARTICLE_TIME = 'ctz-article-time';

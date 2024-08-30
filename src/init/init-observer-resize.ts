@@ -20,14 +20,13 @@ export const initResizeObserver = () => {
 
 function resizeFun() {
   if (!HTML_HOOTS.includes(location.hostname)) return;
-  const { getStorageConfigItem, getConfig, setStorageConfigItem } = store;
-  const { globalTitle, hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = getConfig();
+  const { globalTitle, hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = store.getConfig();
   // 比较列表缓存的高度是否大于当前高度，如果大于则是从 index = 0 遍历
   const nodeTopStoryC = domById('TopstoryContent');
   if (nodeTopStoryC) {
-    const heightForList = getStorageConfigItem('heightForList') as number;
     const heightTopStoryContent = nodeTopStoryC.offsetHeight;
-    if (heightTopStoryContent < heightForList) {
+    if (heightTopStoryContent < 200) {
+      // 小于200为自动加载数据（其实初始值为141）
       myListenListItem.restart();
       initTopStoryRecommendEvent();
     } else {
@@ -35,7 +34,6 @@ function resizeFun() {
     }
     // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
     heightTopStoryContent < window.innerHeight && windowResize();
-    setStorageConfigItem('heightForList', heightTopStoryContent);
   }
   contentRemoveKeywordSearch && fnContentRemoveKeywordSearch(document.body);
   initLinkChanger();

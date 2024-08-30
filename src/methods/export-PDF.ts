@@ -22,7 +22,6 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btn
   }
   doc.write(`<div class="ctz-pdf-view"></div>`);
   const nodePDFView = doc.querySelector('.ctz-pdf-view')!;
-  console.log('nodePDFView', nodePDFView, eventBtn, arrHTML, btnText);
   const domInner = domC('div', { innerHTML });
   max = domInner.querySelectorAll('img').length;
   domInner.querySelectorAll('img').forEach((imageItem) => {

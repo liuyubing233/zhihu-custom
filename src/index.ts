@@ -87,7 +87,6 @@ import { INNER_CSS } from './web-resources';
 
           // if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
           //   // 如果为用户页面的 回答栏
-          //   console.log('???')
           //   setHomeFetch('answer', { url, header: opt.headers });
           // }
 

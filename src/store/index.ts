@@ -37,7 +37,7 @@ class Store {
     cachePfConfig: {},
     cacheTitle: '',
     fetchHeaders: {},
-    heightForList: 0,
+    // heightForList: 0,
     headerDoms: {},
   };
 

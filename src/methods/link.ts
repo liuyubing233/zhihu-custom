@@ -4,7 +4,7 @@ import { store } from '../store';
 /** 知乎外链直接打开(修改外链内容，去除知乎重定向) */
 export const initLinkChanger = () => {
   const esName = ['a.external', 'a.LinkCard'];
-  const operaLink = 'is-link-changed';
+  const operaLink = 'ctz-link-changed';
   const hrefChanger = (item: HTMLAnchorElement) => {
     const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, '') || '';
     let href = '';
@@ -17,6 +17,7 @@ export const initLinkChanger = () => {
     item.href = href;
     item.classList.add(operaLink);
   };
+
   for (let i = 0, len = esName.length; i < len; i++) {
     const name = esName[i];
     const links = domA(`${name}:not(.${operaLink})`);

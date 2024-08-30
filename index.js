@@ -253,7 +253,7 @@
         cachePfConfig: {},
         cacheTitle: "",
         fetchHeaders: {},
-        heightForList: 0,
+        // heightForList: 0,
         headerDoms: {}
       };
       /** 用户页面列表接口缓存 */
@@ -2487,6 +2487,9 @@ background-repeat: no-repeat;`
     const domKeywords = domFind.querySelectorAll(".RichContent-EntityWord");
     for (let i2 = 0, len = domKeywords.length; i2 < len; i2++) {
       const domItem = domKeywords[i2];
+      if (domItem.href === "javascript:;") {
+        continue;
+      }
       domItem.href = "javascript:;";
       domItem.style.cssText += `color: inherit!important; cursor: default!important;`;
       const domSvg = domItem.querySelector("svg");
@@ -2511,7 +2514,6 @@ background-repeat: no-repeat;`
     }
     doc.write(`<div class="ctz-pdf-view"></div>`);
     const nodePDFView = doc.querySelector(".ctz-pdf-view");
-    console.log("nodePDFView", nodePDFView, eventBtn, arrHTML, btnText);
     const domInner = domC("div", { innerHTML });
     max = domInner.querySelectorAll("img").length;
     domInner.querySelectorAll("img").forEach((imageItem) => {
@@ -2806,7 +2808,7 @@ background-repeat: no-repeat;`
   };
   var initLinkChanger = () => {
     const esName = ["a.external", "a.LinkCard"];
-    const operaLink = "is-link-changed";
+    const operaLink = "ctz-link-changed";
     const hrefChanger = (item) => {
       const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
       let href = "";
@@ -2906,9 +2908,7 @@ background-repeat: no-repeat;`
         innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`
       })
     );
-    setTimeout(() => {
-      addQuestionTime();
-    }, 500);
+    setTimeout(addQuestionTime, 500);
   };
   var C_ARTICLE_TIME = "ctz-article-time";
   var addArticleTime = () => {
@@ -3338,53 +3338,62 @@ background-repeat: no-repeat;`
       }
     }
   };
+  var classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon"];
+  var canFindTargeted = (e2) => {
+    let isFind = false;
+    classTarget.forEach((item) => {
+      (e2.classList.contains(item) || e2.parentElement.classList.contains(item)) && (isFind = true);
+    });
+    return isFind;
+  };
+  var callbackEventListener = (event) => {
+    const target = event.target;
+    const domContent = domP(target, "class", "ContentItem");
+    if (!domContent)
+      return;
+    const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = store.getConfig();
+    if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
+      const dataZopJson = domContent.getAttribute("data-zop");
+      const { itemId = "", type = "" } = JSON.parse(dataZopJson || "{}");
+      doFetchNotInterested({ id: itemId, type });
+      const nodeTopStoryItem = domP(target, "class", "TopstoryItem");
+      nodeTopStoryItem && (nodeTopStoryItem.style.display = "none");
+    }
+    if (target.classList.contains(CLASS_TO_QUESTION)) {
+      const domUrl = domContent.querySelector('[itemprop="url"]');
+      const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
+      const pathQuestion = pathAnswer.replace(/\/answer[\W\w]+/, "");
+      if (pathQuestion) {
+        window.open(pathQuestion);
+      }
+    }
+    if (canFindTargeted(target)) {
+      setTimeout(() => {
+        updateTopVote(domContent);
+        listItemCreatedAndModifiedTime && updateItemTime(domContent);
+        showBlockUser && fetchInterceptStatus && myBlack.addButton(domContent.parentElement);
+        initVideoDownload(domContent);
+        if (topExportContent && fetchInterceptStatus) {
+          addButtonForAnswerExportPDF(domContent.parentElement);
+          addButtonForArticleExportPDF(domContent.parentElement);
+        }
+        addAnswerCopyLink(domContent);
+      }, 0);
+    }
+  };
+  var indexTopStoryInit = 0;
   var initTopStoryRecommendEvent = () => {
-    const nodeTopStoryRecommend = document.body;
+    const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow");
     if (!nodeTopStoryRecommend)
       return;
-    const classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon"];
-    const canFindTargeted = (e2) => {
-      let isFind = false;
-      classTarget.forEach((item) => {
-        (e2.classList.contains(item) || e2.parentElement.classList.contains(item)) && (isFind = true);
-      });
-      return isFind;
-    };
-    nodeTopStoryRecommend.addEventListener("click", function(event) {
-      const target = event.target;
-      const nodeContentItem = domP(target, "class", "ContentItem");
-      if (!nodeContentItem)
-        return;
-      const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = store.getConfig();
-      if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
-        const dataZopJson = nodeContentItem.getAttribute("data-zop");
-        const { itemId = "", type = "" } = JSON.parse(dataZopJson || "{}");
-        doFetchNotInterested({ id: itemId, type });
-        const nodeTopStoryItem = domP(target, "class", "TopstoryItem");
-        nodeTopStoryItem && (nodeTopStoryItem.style.display = "none");
-      }
-      if (target.classList.contains(CLASS_TO_QUESTION)) {
-        const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
-        const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
-        const pathQuestion = pathAnswer.replace(/\/answer[\W\w]+/, "");
-        if (pathQuestion) {
-          window.open(pathQuestion);
-        }
-      }
-      if (canFindTargeted(target)) {
-        setTimeout(() => {
-          updateTopVote(nodeContentItem);
-          listItemCreatedAndModifiedTime && updateItemTime(nodeContentItem);
-          showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeContentItem.parentElement);
-          initVideoDownload(nodeContentItem);
-          if (topExportContent && fetchInterceptStatus) {
-            addButtonForAnswerExportPDF(nodeContentItem.parentElement);
-            addButtonForArticleExportPDF(nodeContentItem.parentElement);
-          }
-          addAnswerCopyLink(nodeContentItem);
-        }, 0);
-      }
-    });
+    nodeTopStoryRecommend.removeEventListener("click", callbackEventListener);
+    nodeTopStoryRecommend.addEventListener("click", callbackEventListener);
+    if (indexTopStoryInit === 0) {
+      indexTopStoryInit = 1;
+      setTimeout(initTopStoryRecommendEvent, 500);
+    } else {
+      indexTopStoryInit = 0;
+    }
   };
   var initRootEvent = () => {
     const domRoot = dom("#root");
@@ -3412,20 +3421,17 @@ background-repeat: no-repeat;`
   function resizeFun() {
     if (!HTML_HOOTS.includes(location.hostname))
       return;
-    const { getStorageConfigItem, getConfig, setStorageConfigItem } = store;
-    const { globalTitle, hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = getConfig();
+    const { globalTitle, hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = store.getConfig();
     const nodeTopStoryC = domById("TopstoryContent");
     if (nodeTopStoryC) {
-      const heightForList = getStorageConfigItem("heightForList");
       const heightTopStoryContent = nodeTopStoryC.offsetHeight;
-      if (heightTopStoryContent < heightForList) {
+      if (heightTopStoryContent < 200) {
         myListenListItem.restart();
         initTopStoryRecommendEvent();
       } else {
         myListenListItem.init();
       }
       heightTopStoryContent < window.innerHeight && windowResize();
-      setStorageConfigItem("heightForList", heightTopStoryContent);
     }
     contentRemoveKeywordSearch && fnContentRemoveKeywordSearch(document.body);
     initLinkChanger();
