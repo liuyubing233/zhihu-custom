@@ -65,8 +65,8 @@ export const initTopStoryRecommendEvent = () => {
   if (!nodeTopStoryRecommend) return;
   nodeTopStoryRecommend.removeEventListener('click', callbackEventListener);
   nodeTopStoryRecommend.addEventListener('click', callbackEventListener);
-  if (indexTopStoryInit === 0) {
-    indexTopStoryInit = 1;
+  if (indexTopStoryInit < 5) {
+    indexTopStoryInit++;
     setTimeout(initTopStoryRecommendEvent, 500);
   } else {
     indexTopStoryInit = 0;
