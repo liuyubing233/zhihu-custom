@@ -807,9 +807,9 @@
       return "Firefox";
     if (userAgent.includes("Edg"))
       return "Edge";
-    if (userAgent.includes("Safari"))
-      return "Safari";
-    return "Chrome";
+    if (userAgent.includes("Chrome"))
+      return "Chrome";
+    return "Safari";
   };
   var isSafari = judgeBrowserType() === "Safari";
   var fnHiddenDom = (lessNum, ev, log) => {
