@@ -283,6 +283,8 @@ export interface IConfigSuspension {
   suspensionUserFixed?: boolean;
   /** 长回答和列表收起按钮*/
   suspensionPickUp?: boolean;
+  /** 悬浮收起按钮位置，数字越大离右侧越远 */
+  suspensionPickupRight?: number;
 }
 
 /** 配置参数 */

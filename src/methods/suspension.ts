@@ -9,8 +9,7 @@ import { myVersion } from './version';
 
 /** 漂浮收起按钮的方法 */
 export const suspensionPackUp = (elements: NodeListOf<HTMLElement>) => {
-  const RIGHT = 60;
-  const { themeLight = EThemeLight.默认, themeDark = EThemeDark.深色护眼一 } = store.getConfig();
+  const { themeLight = EThemeLight.默认, themeDark = EThemeDark.深色护眼一, suspensionPickupRight = 60 } = store.getConfig();
   for (let i = 0; i < elements.length; i++) {
     const even = elements[i];
     const evenPrev = i > 0 ? elements[i - 1] : null;
@@ -22,8 +21,8 @@ export const suspensionPackUp = (elements: NodeListOf<HTMLElement>) => {
     if (!evenButton) continue;
     const needStyle = evenBottom > hST + window.innerHeight && evenPrevBottom < hST;
     evenButton.style.cssText = needStyle
-      ? `visibility:visible!important;position: fixed!important;bottom: 60px;z-index:999;` +
-        `right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + RIGHT}px;` +
+      ? `visibility:visible!important;position: fixed!important;bottom: 60px;z-index:200;` +
+        `right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + +suspensionPickupRight}px;` +
         `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
         `height: 40px!important;padding: 0 12px!important;` +
         `background: ${
