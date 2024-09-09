@@ -105,7 +105,7 @@ export const initHTML = () => {
 
   dom('.ctz-footer-right')!.appendChild(
     domC('a', {
-      href: 'www.zhihu.com',
+      href: 'https://www.zhihu.com',
       target: '_self',
       innerText: '返回主页',
     })
