@@ -59,16 +59,12 @@ export const myVersion = {
     const CLASS_MODAL = '.css-1aq8hf9';
     const sizeModalInAnswer = fnReturnStr(`${CLASS_MODAL}{width: ${widthAnswer}!important;}`, location.pathname.includes('question'));
     const sizeModal = fnReturnStr(
-      `.Topstory-body ${CLASS_MODAL}{width: ${widthHome}!important;}` +
-        sizeModalInAnswer +
-        `.PostIndex-body ${CLASS_MODAL}{width: ${widthArticle}!important;}`,
+      `.Topstory-body ${CLASS_MODAL}{width: ${widthHome}!important;}` + sizeModalInAnswer + `.PostIndex-body ${CLASS_MODAL}{width: ${widthArticle}!important;}`,
       commitModalSizeSameVersion
     );
 
     // 首页列表页面内容宽度
-    const sizeHome =
-      `.Topstory-mainColumn,.SearchMain{width: ${widthHome}!important;}` +
-      `.Topstory-container,.css-knqde,.Search-container{width: fit-content!important;}`;
+    const sizeHome = `.Topstory-mainColumn,.SearchMain{width: ${widthHome}!important;}` + `.Topstory-container,.css-knqde,.Search-container{width: fit-content!important;}`;
     // 回答详情页面内容宽度
     const sizeAnswer =
       `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
@@ -92,10 +88,7 @@ export const myVersion = {
   /** 图片尺寸修改 */
   vImgSize: function () {
     const pfConfig = store.getConfig();
-    const nContent = fnReturnStr(
-      `width: ${pfConfig.zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;`,
-      pfConfig.zoomImageType === '2'
-    );
+    const nContent = fnReturnStr(`width: ${pfConfig.zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;`, pfConfig.zoomImageType === '2');
     return (
       `.GifPlayer.isPlaying img {cursor:pointer!important;}` +
       `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${nContent}}`
@@ -138,9 +131,7 @@ export const myVersion = {
         `{${pfConfig.suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}` +
         `.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}` +
         `.Topstory-container .TopstoryTabs>a::after` +
-        `{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;border:1px solid #999999;color:#999999;background: ${
-          background || 'transparent'
-        };}` +
+        `{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;border:1px solid #999999;color:#999999;background: ${background || 'transparent'};}` +
         `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link {margin:0!important}` +
         `.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{color:#0066ff!important;border-color:#0066ff!important;}` +
         `.Topstory [aria-controls='Topstory-recommend']::after{content:'推';}` +
@@ -167,11 +158,9 @@ export const myVersion = {
   },
   /** 列表内容点击高亮边框 */
   vHighlightListItem: function () {
-    const pfConfig = store.getConfig();
-    return fnReturnStr(
-      `.List-item:focus,.TopstoryItem:focus,.HotItem:focus{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(0, 102, 255, 0.3)!important;outline:none!important;transition:box-shadow 0.3s!important;}`,
-      pfConfig.highlightListItem
-    );
+    return store.getConfig().highlightListItem
+      ? `.List-item:focus,.TopstoryItem:focus,.HotItem:focus{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(0, 102, 255, 0.3)!important;outline:none!important;transition:box-shadow 0.3s!important;}`
+      : `.List-item:focus,.Card:focus::before{box-shadow: none!important;}`;
   },
   vShoppingLink: function () {
     const pfConfig = store.getConfig();
@@ -200,10 +189,7 @@ export const myVersion = {
         ',.CPSCommonCard-title::before,.RedPacketCard-title::before' +
         '{content: "购物链接："}' +
         '.MCNLinkCard-title{color: #fd8d55!important;}',
-      2:
-        'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box' +
-        ',.RichText-MCNLinkCardContainer' +
-        '{display: none!important;}',
+      2: 'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box' + ',.RichText-MCNLinkCardContainer' + '{display: none!important;}',
     };
     return cssObj[pfConfig.linkShopping || '0'];
   },
