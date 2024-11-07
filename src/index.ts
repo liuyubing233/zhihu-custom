@@ -11,6 +11,7 @@ import { initInviteOnce } from './init/init-invite-once';
 import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
 import { onInitStyleExtra } from './init/init-style-extra';
+import { initialization } from './init/initialization';
 import { needRedirect } from './init/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
@@ -53,6 +54,7 @@ import { INNER_CSS } from './web-resources';
       isHaveHeadWhenInit = false;
       return;
     }
+    initialization()
 
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);

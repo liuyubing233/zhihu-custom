@@ -2,12 +2,30 @@ import { dom, domById, domC } from '../commons/tools';
 import { ICO_URL } from '../configs';
 import { store } from '../store';
 
+const regexpMessage = /^\([^()]+\)/;
+
 /** 修改网页标题 */
 export const changeTitle = () => {
-  const { getConfig, getStorageConfigItem } = store;
-  const conf = getConfig();
+  const { getConfig, getStorageConfigItem, setStorageConfigItem } = store;
+  const { globalTitle, globalTitleRemoveMessage } = getConfig();
   const cacheTitle = getStorageConfigItem('cacheTitle') as string;
-  document.title = conf.globalTitle || cacheTitle;
+  const prev = document.title;
+  if (globalTitle) {
+    document.title = globalTitle;
+    return;
+  }
+
+  if (globalTitleRemoveMessage) {
+    if (regexpMessage.test(prev)) {
+      const nTitle = prev.replace(regexpMessage, '').trim();
+      if (nTitle === cacheTitle) return;
+      document.title = nTitle;
+      setStorageConfigItem('cacheTitle', nTitle);
+      return;
+    }
+  }
+  if (prev === cacheTitle) return;
+  document.title = cacheTitle;
 };
 
 /** 修改网页标题图片 */

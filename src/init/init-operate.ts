@@ -17,28 +17,23 @@ import { initRootEvent, initTopStoryRecommendEvent } from './init-top-event-list
 
 /** 加载设置弹窗绑定方法 */
 export const initOperate = () => {
-  const myOperation: Record<string, Function> = {
-    [CLASS_INPUT_CLICK]: fnChanger,
-    [CLASS_INPUT_CHANGE]: fnChanger,
-    'ctz-button': (even: HTMLButtonElement) => {
-      myButtonOperation[even.name] && myButtonOperation[even.name]();
-    },
-  };
-  const operation = (even: Event) => {
-    const target = even.target as HTMLElement;
-    const classList = target.classList;
-    for (let key in myOperation) {
-      classList.contains(key) && myOperation[key](even.target);
+  const nodeContent = dom('.ctz-content')!;
+  nodeContent.onclick = (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains(CLASS_INPUT_CLICK)) {
+      fnChanger(target as HTMLInputElement);
     }
   };
-
-  const nodeCTZContent = dom('.ctz-content');
-  if (nodeCTZContent) {
-    nodeCTZContent.onclick = operation;
-    nodeCTZContent.onchange = operation;
-  }
-  const nodeMenuTop = dom('.ctz-menu-top');
-  nodeMenuTop && (nodeMenuTop.onclick = myMenu.click);
+  nodeContent.onchange = (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains(CLASS_INPUT_CHANGE)) {
+      fnChanger(target as HTMLInputElement);
+    }
+    if (target.classList.contains('ctz-button')) {
+      myButtonOperation[(target as HTMLButtonElement).name] && myButtonOperation[(target as HTMLButtonElement).name]();
+    }
+  };
+  dom('.ctz-menu-top')!.onclick = myMenu.click;
   domA('.ctz-preview').forEach((item) => {
     item.onclick = function () {
       myPreview.hide(this);
@@ -53,7 +48,7 @@ export const initOperate = () => {
       const isClear = confirm(`是否清空${target.innerText}`);
       if (!isClear) return;
       prevHistory[dataId] = [];
-      await myStorage.setHistory(prevHistory)
+      await myStorage.setHistory(prevHistory);
       echoHistory();
     };
   });

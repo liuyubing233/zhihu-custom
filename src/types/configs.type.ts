@@ -400,4 +400,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   t?: number;
   /** 去除热词点击搜索 */
   contentRemoveKeywordSearch?: boolean;
+  /** 去除浏览器标签上XX条私信/未读消息的提示 */
+  globalTitleRemoveMessage?: boolean;
 }

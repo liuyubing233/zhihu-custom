@@ -40,13 +40,18 @@
               </label>
 
               <div>
-                <div class="ctz-label">修改网页标题</div>
+                <div class="ctz-label">修改浏览器标签</div>
                 <div class="ctz-flex-wrap">
                   <input type="text" name="globalTitle" style="width: 250px" />
                   <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button>
                   <button class="ctz-button" name="buttonResetTitle">还原</button>
                 </div>
               </div>
+
+              <label class="ctz-flex-wrap">
+                <span class="ctz-label">去除浏览器标签上<b>XX条私信/未读消息</b>的提示</span>
+                <input class="ctz-i" name="globalTitleRemoveMessage" type="checkbox" value="on" />
+              </label>
 
               <div>
                 <div class="ctz-label">修改网页标题图片（图标可能会因为网络问题丢失）</div>
@@ -120,9 +125,9 @@
                   <input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" />
                 </label>
               </div>
-              <div class="ctz-flex-wrap" style="align-items: center;">
+              <div class="ctz-flex-wrap" style="align-items: center">
                 <span>悬浮收起按钮位置，数字越大离右侧越远：</span>
-                <input name="suspensionPickupRight" type="number"  class="ctz-i-change" />
+                <input name="suspensionPickupRight" type="number" class="ctz-i-change" />
               </div>
               <div>
                 <div class="ctz-label">信息模块悬浮</div>

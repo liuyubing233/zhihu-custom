@@ -19,7 +19,7 @@ export const echoData = async () => {
     number: echoText,
     range: (even: HTMLInputElement) => {
       const nValue = pfConfig[even.name];
-      const nodeRange = dom(`[name="${even.name}"]`);
+      const nodeRange = dom(`[name="${even.name}"]`) as HTMLInputElement;
       const min = nodeRange && nodeRange.min;
       const rangeNum = isNaN(+nValue) || !(+nValue > 0) ? min : nValue;
       even.value = rangeNum;
@@ -32,11 +32,11 @@ export const echoData = async () => {
   };
   const nodeArrInputClick = domA(`.${CLASS_INPUT_CLICK}`);
   for (let i = 0, len = nodeArrInputClick.length; i < len; i++) {
-    doEcho(nodeArrInputClick[i]);
+    doEcho(nodeArrInputClick[i] as HTMLInputElement);
   }
   const nodeArrInputChange = domA(`.${CLASS_INPUT_CHANGE}`);
   for (let i = 0, len = nodeArrInputChange.length; i < len; i++) {
-    doEcho(nodeArrInputChange[i]);
+    doEcho(nodeArrInputChange[i] as HTMLInputElement);
   }
 
   echo.text(dom('[name="globalTitle"]'));

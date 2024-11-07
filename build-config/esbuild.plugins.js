@@ -15,7 +15,7 @@ const envInnerResources = {
       }
       const NAME_HTML = 'INNER_HTML';
       const NAME_CSS = 'INNER_CSS';
-      const pathHTML = path.join(__dirname, '../src/static/index.html');
+      const pathHTML = path.join(__dirname, '../src/index.html');
       const REGEXP_REPLACE = /\s*\n\s*/g; // 删除回车及前后空格
       const REGEXP_REPLACE_COMMIT = /\<\!\-\-[^(\<\!)]*\-\-\>/g; // 删除HTML注释
       const strHTML = fs.readFileSync(pathHTML).toString();

@@ -7,7 +7,6 @@ import { initLinkChanger } from '../methods/link';
 import { myListenAnswerItem } from '../methods/listen-answer-item';
 import { myListenListItem } from '../methods/listen-list-item';
 import { myListenSearchListItem } from '../methods/listen-search-list-item';
-import { changeTitle } from '../methods/page-title';
 import { store } from '../store';
 import { initImagePreview } from './init-image-preview';
 import { initTopStoryRecommendEvent } from './init-top-event-listener';
@@ -20,7 +19,7 @@ export const initResizeObserver = () => {
 
 function resizeFun() {
   if (!HTML_HOOTS.includes(location.hostname)) return;
-  const { globalTitle, hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = store.getConfig();
+  const { hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = store.getConfig();
   // 比较列表缓存的高度是否大于当前高度，如果大于则是从 index = 0 遍历
   const nodeTopStoryC = domById('TopstoryContent');
   if (nodeTopStoryC) {
@@ -48,7 +47,6 @@ function resizeFun() {
     collection: () => myCollectionExport.init(),
   });
 
-  globalTitle !== document.title && changeTitle();
   const nodeSearchBarInput = dom('.SearchBar-input input') as HTMLInputElement;
   if (hiddenSearchBoxTopSearch && nodeSearchBarInput) {
     nodeSearchBarInput.placeholder = '';

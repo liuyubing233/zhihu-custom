@@ -6,13 +6,15 @@ import { loadBackground, onUseThemeDark } from './background';
 import { myHidden } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
-import { changeICO } from './page-title';
+import { changeICO, changeTitle } from './page-title';
 import { cacheHeader, changeSuspensionTab } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
 import { myVersion } from './version';
 
 /** 更改编辑器方法 */
 export const fnChanger = async (ev: HTMLInputElement) => {
+  console.log('fnChangerfnChangerfnChanger');
+
   // onchange 时只调用 myVersion 的 name
   const doCssVersion = [
     'questionTitleTag',
@@ -86,6 +88,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       myVersion.change();
       initImagePreview();
     },
+    globalTitleRemoveMessage: changeTitle,
   };
   await myStorage.setConfigItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);
