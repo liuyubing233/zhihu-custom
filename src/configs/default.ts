@@ -217,6 +217,8 @@ export const CONFIG_DEFAULT: IPfConfig = {
   copyAnswerLink: true,
   contentRemoveKeywordSearch: false,
   topExportContent: true,
+  zoomImageHeight: '0',
+  zoomImageHeightSize: '100',
 };
 
 /** 缓存的历史记录数量 */

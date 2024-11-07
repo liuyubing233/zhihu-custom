@@ -402,4 +402,8 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   contentRemoveKeywordSearch?: boolean;
   /** 去除浏览器标签上XX条私信/未读消息的提示 */
   globalTitleRemoveMessage?: boolean;
+  /** 图片最大高度限制 */
+  zoomImageHeight?: '0' | '1';
+  /** 图片最大高度限制数 */
+  zoomImageHeightSize?: string;
 }

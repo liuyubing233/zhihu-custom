@@ -27,6 +27,8 @@ export const myVersion = {
     const pfConfig = store.getConfig();
     // 自定义图片尺寸大小 range 显隐
     domById('CTZ_IMAGE_SIZE_CUSTOM')!.style.display = pfConfig.zoomImageType === '2' ? 'block' : 'none';
+    // 自定义图片尺寸高度限制
+    domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.style.display = pfConfig.zoomImageHeight === '1' ? 'block' : 'none';
     // 自定义列表视频回答内容 range 显隐
     domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.style.display = pfConfig.zoomListVideoType === '2' ? 'block' : 'none';
   },
@@ -87,11 +89,15 @@ export const myVersion = {
   },
   /** 图片尺寸修改 */
   vImgSize: function () {
-    const pfConfig = store.getConfig();
-    const nContent = fnReturnStr(`width: ${pfConfig.zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;`, pfConfig.zoomImageType === '2');
+    const { zoomImageType, zoomImageHeight, zoomImageHeightSize, zoomImageSize } = store.getConfig();
+    const nContent =
+      zoomImageType === '2'
+        ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: ${zoomImageHeight === '1' ? `${zoomImageHeightSize}px` : '100%'}!important;`
+        : '';
+    const nHeight = zoomImageHeight === '1' ? `max-height: ${zoomImageHeightSize}px!important;` : '';
     return (
       `.GifPlayer.isPlaying img {cursor:pointer!important;}` +
-      `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${nContent}}`
+      `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${nContent}${nHeight}}`
     );
   },
   /** 列表视频回答内容尺寸修改 */

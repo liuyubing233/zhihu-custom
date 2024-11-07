@@ -48,6 +48,7 @@ const initInputRange = () => {
   };
   domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(versionCallback).join('');
   domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML('', 'zoomImageSize', 0, 1000);
+  domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = createRangeInnerHTML('', 'zoomImageHeightSize', 0, 1000);
   domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = createRangeInnerHTML('', 'zoomListVideoSize', 0, 1000);
 };
 

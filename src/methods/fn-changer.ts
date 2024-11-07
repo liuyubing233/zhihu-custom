@@ -13,8 +13,6 @@ import { myVersion } from './version';
 
 /** 更改编辑器方法 */
 export const fnChanger = async (ev: HTMLInputElement) => {
-  console.log('fnChangerfnChangerfnChanger');
-
   // onchange 时只调用 myVersion 的 name
   const doCssVersion = [
     'questionTitleTag',
@@ -22,6 +20,8 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'linkShopping',
     'highlightListItem',
     'zoomImageSize',
+    'zoomImageHeight',
+    'zoomImageHeightSize',
     'versionHome',
     'versionAnswer',
     'versionArticle',
