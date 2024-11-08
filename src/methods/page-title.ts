@@ -6,26 +6,17 @@ const regexpMessage = /^\([^()]+\)/;
 
 /** 修改网页标题 */
 export const changeTitle = () => {
-  const { getConfig, getStorageConfigItem, setStorageConfigItem } = store;
+  const { getConfig, getStorageConfigItem } = store;
   const { globalTitle, globalTitleRemoveMessage } = getConfig();
   const cacheTitle = getStorageConfigItem('cacheTitle') as string;
-  const prev = document.title;
-  if (globalTitle) {
-    document.title = globalTitle;
-    return;
-  }
+  let prevTitle = globalTitle || cacheTitle;
 
   if (globalTitleRemoveMessage) {
-    if (regexpMessage.test(prev)) {
-      const nTitle = prev.replace(regexpMessage, '').trim();
-      if (nTitle === cacheTitle) return;
-      document.title = nTitle;
-      setStorageConfigItem('cacheTitle', nTitle);
-      return;
+    if (regexpMessage.test(prevTitle)) {
+      prevTitle = prevTitle.replace(regexpMessage, '').trim();
     }
   }
-  if (prev === cacheTitle) return;
-  document.title = cacheTitle;
+  document.title = prevTitle;
 };
 
 /** 修改网页标题图片 */

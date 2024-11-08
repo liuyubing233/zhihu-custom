@@ -1008,27 +1008,16 @@
   };
   var regexpMessage = /^\([^()]+\)/;
   var changeTitle = () => {
-    const { getConfig, getStorageConfigItem, setStorageConfigItem } = store;
+    const { getConfig, getStorageConfigItem } = store;
     const { globalTitle, globalTitleRemoveMessage } = getConfig();
     const cacheTitle = getStorageConfigItem("cacheTitle");
-    const prev = document.title;
-    if (globalTitle) {
-      document.title = globalTitle;
-      return;
-    }
+    let prevTitle = globalTitle || cacheTitle;
     if (globalTitleRemoveMessage) {
-      if (regexpMessage.test(prev)) {
-        const nTitle = prev.replace(regexpMessage, "").trim();
-        if (nTitle === cacheTitle)
-          return;
-        document.title = nTitle;
-        setStorageConfigItem("cacheTitle", nTitle);
-        return;
+      if (regexpMessage.test(prevTitle)) {
+        prevTitle = prevTitle.replace(regexpMessage, "").trim();
       }
     }
-    if (prev === cacheTitle)
-      return;
-    document.title = cacheTitle;
+    document.title = prevTitle;
   };
   var changeICO = () => {
     const { getConfig } = store;
@@ -1612,8 +1601,10 @@ background-repeat: no-repeat;`
     }
   };
   var initData = () => {
+    store.setStorageConfigItem("cacheTitle", document.title);
     echoData();
     changeICO();
+    changeTitle();
     changeSuspensionTab();
     setTimeout(() => {
       cacheHeader();
@@ -3444,7 +3435,7 @@ background-repeat: no-repeat;`
   function resizeFun() {
     if (!HTML_HOOTS.includes(location.hostname))
       return;
-    const { hiddenSearchBoxTopSearch, contentRemoveKeywordSearch } = store.getConfig();
+    const { hiddenSearchBoxTopSearch, contentRemoveKeywordSearch, globalTitle } = store.getConfig();
     const nodeTopStoryC = domById("TopstoryContent");
     if (nodeTopStoryC) {
       const heightTopStoryContent = nodeTopStoryC.offsetHeight;
@@ -3468,6 +3459,7 @@ background-repeat: no-repeat;`
       // },
       collection: () => myCollectionExport.init()
     });
+    globalTitle !== document.title && changeTitle();
     const nodeSearchBarInput = dom(".SearchBar-input input");
     if (hiddenSearchBoxTopSearch && nodeSearchBarInput) {
       nodeSearchBarInput.placeholder = "";
@@ -3739,14 +3731,14 @@ background-repeat: no-repeat;`
       if (target.classList.contains(CLASS_INPUT_CLICK)) {
         fnChanger(target);
       }
+      if (target.classList.contains("ctz-button")) {
+        myButtonOperation[target.name] && myButtonOperation[target.name]();
+      }
     };
     nodeContent.onchange = (e2) => {
       const target = e2.target;
       if (target.classList.contains(CLASS_INPUT_CHANGE)) {
         fnChanger(target);
-      }
-      if (target.classList.contains("ctz-button")) {
-        myButtonOperation[target.name] && myButtonOperation[target.name]();
       }
     };
     dom(".ctz-menu-top").onclick = myMenu.click;
@@ -3838,16 +3830,6 @@ background-repeat: no-repeat;`
     onInitStyleExtra();
     initData();
     onUseThemeDark();
-  };
-  var observerTitle;
-  var initialization = () => {
-    store.setStorageConfigItem("cacheTitle", document.title);
-    changeTitle();
-    observerTitle && observerTitle.disconnect();
-    observerTitle = new MutationObserver((records) => {
-      changeTitle();
-    });
-    observerTitle.observe(document.querySelector("title"), { characterData: true, subtree: true, childList: true });
   };
   var needRedirect = () => {
     const { pathname, origin } = location;
@@ -4083,7 +4065,6 @@ background-repeat: no-repeat;`
         isHaveHeadWhenInit = false;
         return;
       }
-      initialization();
       fixVideoAutoPlay();
       fnInitDomStyle("CTZ_STYLE", INNER_CSS);
       const config = getConfig();

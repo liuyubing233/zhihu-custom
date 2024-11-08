@@ -11,7 +11,6 @@ import { initInviteOnce } from './init/init-invite-once';
 import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
 import { onInitStyleExtra } from './init/init-style-extra';
-import { initialization } from './init/initialization';
 import { needRedirect } from './init/redirect';
 import { loadBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
@@ -54,7 +53,6 @@ import { INNER_CSS } from './web-resources';
       isHaveHeadWhenInit = false;
       return;
     }
-    initialization()
 
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
@@ -73,7 +71,7 @@ import { INNER_CSS } from './web-resources';
       const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
       // 拦截 fetch 方法，获取接口内容，唯一
       const originFetch = fetch;
-      const myWindow = isSafari ? window : unsafeWindow
+      const myWindow = isSafari ? window : unsafeWindow;
       myWindow.fetch = (url: any, opt) => {
         // if (/\/v4\/questions\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
         //   // 如果是自定义排序则回答页码增加到20条
@@ -108,7 +106,6 @@ import { INNER_CSS } from './web-resources';
       // if (/\/question/.test(pathname) && matched) {
       //   myListenSelect.keySort = matched[0];
       // }
-
     }
   }
   onDocumentStart();

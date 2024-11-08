@@ -23,14 +23,14 @@ export const initOperate = () => {
     if (target.classList.contains(CLASS_INPUT_CLICK)) {
       fnChanger(target as HTMLInputElement);
     }
+    if (target.classList.contains('ctz-button')) {
+      myButtonOperation[(target as HTMLButtonElement).name] && myButtonOperation[(target as HTMLButtonElement).name]();
+    }
   };
   nodeContent.onchange = (e: Event) => {
     const target = e.target as HTMLElement;
     if (target.classList.contains(CLASS_INPUT_CHANGE)) {
       fnChanger(target as HTMLInputElement);
-    }
-    if (target.classList.contains('ctz-button')) {
-      myButtonOperation[(target as HTMLButtonElement).name] && myButtonOperation[(target as HTMLButtonElement).name]();
     }
   };
   dom('.ctz-menu-top')!.onclick = myMenu.click;
