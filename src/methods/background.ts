@@ -16,7 +16,7 @@ import { ETheme, EThemeDark, EThemeLight } from '../types';
 /** 修改页面背景的 css */
 const myBackground = {
   init: async function () {
-    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = await myStorage.getConfig()
+    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = await myStorage.getConfig();
     const innerHTML = await this.change(themeDark, themeLight);
     fnInitDomStyle('CTZ_STYLE_BACKGROUND', innerHTML);
   },
@@ -26,10 +26,10 @@ const myBackground = {
       if (+themeLight === EThemeLight.默认) return this.default();
       return this.light(themeLight);
     };
-    return await getBackground() + await this.text();
+    return (await getBackground()) + (await this.text());
   },
   isUseDark: async () => {
-    const { theme = ETheme.自动 } = await myStorage.getConfig()
+    const { theme = ETheme.自动 } = await myStorage.getConfig();
     if (+theme === ETheme.自动) {
       // 获取浏览器颜色
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -39,7 +39,7 @@ const myBackground = {
   },
   /** 设置字体颜色 */
   text: async function () {
-    const { colorText1 } = await myStorage.getConfig()
+    const { colorText1 } = await myStorage.getConfig();
     const styleColorText1 = `.ContentItem-title, body` + `{color: ${colorText1}!important;}`;
     return colorText1 ? styleColorText1 : '';
   },
@@ -81,6 +81,7 @@ const myBackground = {
       `,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r` +
       `,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,.CreatorSalt-personalInfo-name,.css-c3gbo3,.css-1ygg4xu blockquote,.css-r8ate4,.ant-collapse>.ant-collapse-item>.ant-collapse-header` +
       `,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-author-welfare .Creator-salt-author-welfare-card h1,.css-u56wtg,.css-1hrberl` +
+      `,.css-13e6wvn,.css-i0heim` +
       `{color: ${color}!important}`;
     const c2 = `.css-o7lu8j{color: ${color2}!important}`;
     const cB2 = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
@@ -172,7 +173,7 @@ export const myCustomStyle = {
   init: async function () {
     const nodeCustomStyle = dom('[name="textStyleCustom"]') as HTMLTextAreaElement;
     if (!nodeCustomStyle) return;
-    const { customizeCss = '' } = await myStorage.getConfig()
+    const { customizeCss = '' } = await myStorage.getConfig();
     nodeCustomStyle.value = customizeCss;
     this.change(customizeCss);
   },
@@ -181,7 +182,7 @@ export const myCustomStyle = {
 
 /** 启用知乎默认的黑暗模式 */
 export const onUseThemeDark = async () => {
-  const isDark = await myBackground.isUseDark()
+  const isDark = await myBackground.isUseDark();
   dom('html')!.setAttribute('data-theme', isDark ? 'dark' : 'light');
 };
 
