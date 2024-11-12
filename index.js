@@ -758,17 +758,9 @@
     return "Safari";
   };
   var isSafari = judgeBrowserType() === "Safari";
-  var fnHiddenDom = (lessNum, ev, log) => {
-    ev.style.display = "none";
-    fnLog(log);
-    return ++lessNum;
-  };
   var fnHidden = (ev, msg) => {
     ev.style.display = "none";
     fnLog(msg);
-  };
-  var fnIndexMath = (index, i2, len, lessNum) => {
-    return i2 + 1 === len ? i2 - lessNum >= 0 ? i2 - lessNum : 0 : index;
   };
   var fnJustNum = async (element) => {
     if (!element)
@@ -3231,12 +3223,13 @@ background-repeat: no-repeat;`
   var myListenSearchListItem = {
     index: 0,
     init: async function() {
+      const nodes = domA('.SearchResult-Card[role="listitem"]');
+      if (this.index + 1 === nodes.length)
+        return;
       const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = await myStorage.getConfig();
-      const elements = domA('.SearchResult-Card[role="listitem"]');
-      let lessNum = 0;
-      for (let i2 = this.index, len = elements.length; i2 < len; i2++) {
+      for (let i2 = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i2 < len; i2++) {
         let message2 = "";
-        const elementThis = elements[i2];
+        const elementThis = nodes[i2];
         if (!elementThis)
           continue;
         const haveAD = removeItemAboutAD && elementThis.querySelector(".KfeCollection-PcCollegeCard-root");
@@ -3257,8 +3250,10 @@ background-repeat: no-repeat;`
           }
         }
         fnJustNum(elementThis);
-        message2 && (lessNum = fnHiddenDom(lessNum, elementThis, message2));
-        this.index = fnIndexMath(this.index, i2, len, lessNum);
+        message2 && fnHidden(elementThis, message2);
+        if (i2 === len - 1) {
+          this.index = i2;
+        }
       }
     },
     reset: function() {

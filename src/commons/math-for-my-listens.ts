@@ -1,21 +1,9 @@
 import { myStorage } from './storage';
 import { fnLog } from './tools';
 
-/** 监听过滤内容 */
-export const fnHiddenDom = (lessNum: number, ev: HTMLElement, log: string) => {
-  ev.style.display = 'none';
-  fnLog(log);
-  return ++lessNum;
-};
-
 export const fnHidden = (ev: HTMLElement, msg: string) => {
   ev.style.display = 'none';
   fnLog(msg);
-};
-
-/** 计算过滤起始位置 */
-export const fnIndexMath = (index: number, i: number, len: number, lessNum: number) => {
-  return i + 1 === len ? (i - lessNum >= 0 ? i - lessNum : 0) : index;
 };
 
 /** 仅显示数字内容 */
