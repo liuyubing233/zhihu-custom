@@ -1,10 +1,10 @@
+import { myStorage } from '../commons/storage';
 import { domA } from '../commons/tools';
 import { myPreview } from '../methods/preview';
-import { store } from '../store';
 
 /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
-export const initImagePreview = () => {
-  const { zoomImageType } = store.getConfig();
+export const initImagePreview = async () => {
+  const { zoomImageType } = await myStorage.getConfig();
   const images = [domA('.TitleImage'), domA('.ArticleItem-image'), domA('.ztext figure .content_image')];
   for (let i = 0, imageLen = images.length; i < imageLen; i++) {
     const ev = images[i];

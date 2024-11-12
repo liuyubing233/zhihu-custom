@@ -1,3 +1,4 @@
+import { myStorage } from '../commons/storage';
 import { dom, domById, fnInitDomStyle } from '../commons/tools';
 import {
   CLASS_INPUT_CLICK,
@@ -10,13 +11,12 @@ import {
   THEME_CONFIG_DARK,
   THEME_CONFIG_LIGHT,
 } from '../configs';
-import { store } from '../store';
 import { ETheme, EThemeDark, EThemeLight } from '../types';
 
 /** 修改页面背景的 css */
 const myBackground = {
-  init: function () {
-    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = store.getConfig();
+  init: async function () {
+    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = await myStorage.getConfig()
     const innerHTML = this.change(themeDark, themeLight);
     fnInitDomStyle('CTZ_STYLE_BACKGROUND', innerHTML);
   },
@@ -28,8 +28,8 @@ const myBackground = {
     };
     return getBackground() + this.text();
   },
-  isUseDark: () => {
-    const { theme = ETheme.自动 } = store.getConfig();
+  isUseDark: async () => {
+    const { theme = ETheme.自动 } = await myStorage.getConfig()
     if (+theme === ETheme.自动) {
       // 获取浏览器颜色
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -38,8 +38,8 @@ const myBackground = {
     return +theme === ETheme.深色;
   },
   /** 设置字体颜色 */
-  text: function () {
-    const { colorText1 } = store.getConfig();
+  text: async function () {
+    const { colorText1 } = await myStorage.getConfig()
     const styleColorText1 = `.ContentItem-title, body` + `{color: ${colorText1}!important;}`;
     return colorText1 ? styleColorText1 : '';
   },
@@ -169,10 +169,10 @@ background-repeat: no-repeat;`,
 
 /** 自定义样式方法 */
 export const myCustomStyle = {
-  init: function () {
+  init: async function () {
     const nodeCustomStyle = dom('[name="textStyleCustom"]') as HTMLTextAreaElement;
     if (!nodeCustomStyle) return;
-    const { customizeCss = '' } = store.getConfig();
+    const { customizeCss = '' } = await myStorage.getConfig()
     nodeCustomStyle.value = customizeCss;
     this.change(customizeCss);
   },
@@ -180,8 +180,9 @@ export const myCustomStyle = {
 };
 
 /** 启用知乎默认的黑暗模式 */
-export const onUseThemeDark = () => {
-  dom('html')!.setAttribute('data-theme', myBackground.isUseDark() ? 'dark' : 'light');
+export const onUseThemeDark = async () => {
+  const isDark = await myBackground.isUseDark()
+  dom('html')!.setAttribute('data-theme', isDark ? 'dark' : 'light');
 };
 
 /** 查找是否使用主题 */
@@ -192,9 +193,9 @@ export const loadFindTheme = () => {
   const muConfig = { attribute: true, attributeFilter: ['data-theme'] };
   if (!elementHTML) return;
   // 监听 html 元素属性变化
-  const muCallback = function () {
+  const muCallback = async function () {
     const themeName = elementHTML.getAttribute('data-theme');
-    const isDark = myBackground.isUseDark();
+    const isDark = await myBackground.isUseDark();
     if ((themeName === 'dark' && !isDark) || (themeName === 'light' && isDark)) {
       onUseThemeDark();
     }

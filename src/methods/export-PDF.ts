@@ -1,4 +1,5 @@
 import { createCommentHeaders, doHomeFetch } from '../commons/fetch';
+import { myStorage } from '../commons/storage';
 import { createBtnSmallTran, dom, domC } from '../commons/tools';
 import { store } from '../store';
 import { IZhihuArticlesDataItem } from '../types/zhihu-articles.type';
@@ -66,8 +67,8 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btn
 
 /** 收藏夹打印 */
 export const myCollectionExport = {
-  init: function () {
-    const { fetchInterceptStatus } = store.getConfig();
+  init: async function () {
+    const { fetchInterceptStatus } = await myStorage.getConfig()
     if (!fetchInterceptStatus) return;
     const { pathname } = location;
     const elementBox = domC('div', { className: `${this.className}`, innerHTML: this.element });
@@ -154,8 +155,8 @@ export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
 };
 
 /** 文章添加导出为 PDF 按钮 */
-export const addButtonForArticleExportPDF = (e: HTMLElement) => {
-  const { topExportContent } = store.getConfig();
+export const addButtonForArticleExportPDF = async (e: HTMLElement) => {
+  const { topExportContent } = await myStorage.getConfig()
   const prevButton = e.querySelector('.ctz-export-article');
   if (prevButton) return;
   const nodeUser = e.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || e.querySelector('.Post-Header .AuthorInfo-content');
@@ -176,8 +177,8 @@ export const addButtonForArticleExportPDF = (e: HTMLElement) => {
 
 const C_EXPORT_ANSWER = 'ctz-people-export-answer-once';
 /** 当前用户所有回答导出为PDF */
-export const addBtnForExportPeopleAnswer = () => {
-  const { fetchInterceptStatus } = store.getConfig();
+export const addBtnForExportPeopleAnswer = async () => {
+  const { fetchInterceptStatus } = await myStorage.getConfig()
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom(`.${C_EXPORT_ANSWER}`);
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
@@ -207,8 +208,8 @@ export const addBtnForExportPeopleAnswer = () => {
 };
 
 /** 当前用户文章导出为PDF */
-export const addBtnForExportPeopleArticles = () => {
-  const { fetchInterceptStatus } = store.getConfig();
+export const addBtnForExportPeopleArticles = async () => {
+  const { fetchInterceptStatus } = await myStorage.getConfig()
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-articles-once');
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;

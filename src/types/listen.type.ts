@@ -1,6 +1,6 @@
 export interface IMyListenAnswerItem {
   index: number;
-  init: () => void;
+  init: () => Promise<void>;
   reset: () => void;
   restart: () => void;
 }

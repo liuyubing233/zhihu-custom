@@ -4,7 +4,7 @@ import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, VERSION_RANGE } from '../configs
 
 /** 回填数据，供每次打开使用 */
 export const echoData = async () => {
-  const pfConfig = await myStorage.initConfig();
+  const pfConfig = await myStorage.getConfig();
   const textSameName: Record<string, Function> = {
     globalTitle: (e: HTMLInputElement) => (e.value = pfConfig.globalTitle || document.title),
     customizeCss: (e: HTMLInputElement) => (e.value = pfConfig.customizeCss || ''),

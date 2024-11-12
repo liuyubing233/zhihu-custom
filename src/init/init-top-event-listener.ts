@@ -1,4 +1,5 @@
 import { doFetchNotInterested } from '../commons/fetch';
+import { myStorage } from '../commons/storage';
 import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
 import { myBlack } from '../methods/black';
@@ -7,7 +8,6 @@ import { addAnswerCopyLink } from '../methods/link';
 import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
 import { CLASS_VIDEO_ONE, initVideoDownload } from '../methods/video';
-import { store } from '../store';
 
 const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
 const canFindTargeted = (e: HTMLElement) => {
@@ -18,11 +18,11 @@ const canFindTargeted = (e: HTMLElement) => {
   return isFind;
 };
 
-const callbackEventListener = (event: Event) => {
+const callbackEventListener = async (event: Event) => {
   const target = event.target as HTMLElement;
   const domContent = domP(target, 'class', 'ContentItem');
   if (!domContent) return;
-  const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = store.getConfig();
+  const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = await myStorage.getConfig();
   // 点击外置「不感兴趣」按钮
   if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
     const dataZopJson = domContent.getAttribute('data-zop');
@@ -74,11 +74,11 @@ export const initTopStoryRecommendEvent = () => {
 };
 
 /** 绑定顶部ROOT元素 */
-export const initRootEvent = () => {
+export const initRootEvent = async () => {
   const domRoot = dom('#root');
   if (!domRoot) return;
   const classForVideoOne = CLASS_VIDEO_ONE.replace('.', '');
-  const { videoUseLink } = store.getConfig();
+  const { videoUseLink } = await myStorage.getConfig()
   domRoot.addEventListener('click', function (event) {
     const target = event.target as HTMLElement;
     if (videoUseLink) {

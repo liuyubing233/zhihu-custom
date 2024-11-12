@@ -1,12 +1,12 @@
 import { fnHiddenDom, fnIndexMath, fnJustNum } from '../commons/math-for-my-listens';
+import { myStorage } from '../commons/storage';
 import { domA } from '../commons/tools';
-import { store } from '../store';
 
 /** 监听搜索列表 - 过滤  */
 export const myListenSearchListItem = {
   index: 0,
-  init: function () {
-    const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = store.getConfig();
+  init: async function () {
+    const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = await myStorage.getConfig()
     const elements = domA('.SearchResult-Card[role="listitem"]');
     let lessNum = 0;
     for (let i = this.index, len = elements.length; i < len; i++) {

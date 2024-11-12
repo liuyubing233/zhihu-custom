@@ -1,6 +1,5 @@
 import { myStorage } from '../commons/storage';
 import { dom, domC } from '../commons/tools';
-import { store } from '../store';
 
 interface IFindDomName {
   /** 列表标题屏蔽词 */
@@ -22,12 +21,12 @@ const NAME_BY_KEY: IFindDomName = {
 const createHTMLAboutBlockText = (w: string) => `<span data-title="${w}">${createHTMLAboutBlockTextContent(w)}</span>`;
 const createHTMLAboutBlockTextContent = (w: string) => `<span>${w}</span><i class="ctz-filter-word-remove">✗</i>`;
 
-const onRemove = (e: MouseEvent, key: IKeyofDomName) => {
+const onRemove = async (e: MouseEvent, key: IKeyofDomName) => {
   const target = e.target as HTMLElement;
   if (!target.classList.contains('ctz-filter-word-remove')) return;
   const domItem = target.parentElement!;
   const title = domItem.dataset.title;
-  const config = store.getConfig();
+  const config = await myStorage.getConfig();
   domItem.remove();
   myStorage.setConfigItem(
     key,
@@ -37,7 +36,8 @@ const onRemove = (e: MouseEvent, key: IKeyofDomName) => {
 
 const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
   const word = target.value;
-  const configThis = store.getConfig()[key];
+  const config = await myStorage.getConfig();
+  const configThis = config[key]
   if (!Array.isArray(configThis)) return;
   configThis.push(word);
   await myStorage.setConfigItem(key, configThis);
@@ -49,8 +49,8 @@ const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
 };
 
 /** 加载屏蔽词 */
-export const initBlockWords = () => {
-  const config = store.getConfig();
+export const initBlockWords = async () => {
+  const config = await myStorage.getConfig();
   const arr = [
     { domFind: dom(BLOCK_WORDS_LIST), name: 'filterKeywords', domInput: dom('[name="inputFilterWord"]') },
     { domFind: dom(BLOCK_WORDS_ANSWER), name: 'blockWordsAnswer', domInput: dom('[name="inputBlockWordsAnswer"]') },

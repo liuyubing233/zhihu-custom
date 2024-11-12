@@ -1,5 +1,5 @@
+import { myStorage } from '../commons/storage';
 import { domC } from '../commons/tools';
-import { store } from '../store';
 
 /** 视频回答的包裹元素1 */
 export const CLASS_VIDEO_ONE = '.css-1h1xzpn';
@@ -19,8 +19,8 @@ const findDoms = (nodeFound: HTMLElement, domNames: string[]): NodeListOf<Elemen
 };
 
 /** 加载视频下载方法 */
-export const initVideoDownload = (nodeFound: HTMLElement) => {
-  const { videoUseLink } = store.getConfig();
+export const initVideoDownload = async (nodeFound: HTMLElement) => {
+  const { videoUseLink } = await myStorage.getConfig()
   const domVideos = findDoms(
     nodeFound,
     ['.ZVideo-player>div', CLASS_VIDEO_ONE, CLASS_VIDEO_TWO].filter((i) => {

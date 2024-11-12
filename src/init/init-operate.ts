@@ -86,8 +86,8 @@ const myButtonOperation: Record<string, Function> = {
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
-    const { getConfig, getStorageConfigItem } = store;
-    const { filterKeywords = [], removeBlockUserContentList = [] } = getConfig();
+    const { getStorageConfigItem } = store;
+    const { filterKeywords = [], removeBlockUserContentList = [] } = await myStorage.getConfig();
     const cacheConfig = getStorageConfigItem('cachePfConfig') as IPfConfig;
     await myStorage.setConfig({
       ...cacheConfig,

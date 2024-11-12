@@ -1,5 +1,5 @@
+import { myStorage } from '../commons/storage';
 import { copy, createBtnSmallTran, domA, message } from '../commons/tools';
-import { store } from '../store';
 
 /** 知乎外链直接打开(修改外链内容，去除知乎重定向) */
 export const initLinkChanger = () => {
@@ -29,8 +29,8 @@ export const initLinkChanger = () => {
 
 const CLASS_COPY_LINK = 'ctz-copy-answer-link';
 /** 回答内容意见分享 */
-export const addAnswerCopyLink = (nodeItem: HTMLElement) => {
-  const { copyAnswerLink } = store.getConfig();
+export const addAnswerCopyLink = async (nodeItem: HTMLElement) => {
+  const { copyAnswerLink } = await myStorage.getConfig()
   if (!copyAnswerLink) return;
   const prevButton = nodeItem.querySelector(`.${CLASS_COPY_LINK}`);
   prevButton && prevButton.remove();

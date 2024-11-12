@@ -1,4 +1,3 @@
-import { CONFIG_DEFAULT } from '../configs/default';
 import {
   IContentStorageConfig,
   IFindEvent,
@@ -10,15 +9,11 @@ import {
   IKeyofStorageConfig,
   IPfHistory,
   IStorageConfig,
-  IZhihuUserinfo
+  IZhihuUserinfo,
 } from '../types';
-import { IPfConfig } from '../types/configs.type';
 import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 
 class Store {
-  /** 修改器配置 */
-  pfConfig = CONFIG_DEFAULT;
-
   /** 缓存浏览历史记录 */
   pfHistory: IPfHistory = {
     view: [],
@@ -48,8 +43,6 @@ class Store {
 
   constructor() {
     // to fix this is undefined
-    this.setConfig = this.setConfig.bind(this);
-    this.getConfig = this.getConfig.bind(this);
     this.setHistory = this.setHistory.bind(this);
     this.getHistory = this.getHistory.bind(this);
     this.setUserinfo = this.setUserinfo.bind(this);
@@ -67,13 +60,6 @@ class Store {
     this.setZhihuListTargets = this.setZhihuListTargets.bind(this);
     this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
     this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
-  }
-  /** 仅在 commons/storage 文件中使用 */
-  setConfig(inner: IPfConfig) {
-    this.pfConfig = inner;
-  }
-  getConfig() {
-    return this.pfConfig;
   }
   /** 仅在 commons/storage 文件中使用 */
   setHistory(inner: IPfHistory) {

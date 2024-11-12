@@ -1,7 +1,7 @@
 import { fnHiddenDom, fnIndexMath, fnJustNum } from '../commons/math-for-my-listens';
+import { myStorage } from '../commons/storage';
 import { dom, domA } from '../commons/tools';
 import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
-import { store } from '../store';
 import { IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './export-PDF';
@@ -13,9 +13,8 @@ import { initVideoDownload } from './video';
 /** 监听详情回答 - 过滤 */
 export const myListenAnswerItem: IMyListenAnswerItem = {
   index: 0,
-  init: function () {
-    const { getConfig } = store;
-    const conf = getConfig();
+  init: async function () {
+    const conf = await myStorage.getConfig()
     // myListenSelect.addSort();
     const {
       removeLessVoteDetail,

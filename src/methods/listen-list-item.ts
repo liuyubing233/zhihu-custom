@@ -11,8 +11,8 @@ import { isDark } from './background';
 export const myListenListItem = {
   index: 0,
   init: async function () {
-    const { getConfig, getHistory, getUserinfo, getZhihuListTargets } = store;
-    const pfConfig = getConfig();
+    const { getHistory, getUserinfo, getZhihuListTargets } = store;
+    const pfConfig = await myStorage.getConfig();
     // const listTargets = getZhihuListTargets();
     const {
       filterKeywords = [],
@@ -116,8 +116,9 @@ export const myListenListItem = {
       const userNameE = nodeItem.querySelector('.FeedSource-firstline .UserLink-link') as HTMLElement;
       const userName = userNameE ? userNameE.innerText : '';
       if (highlightOriginal && dataZop && dataZop.authorName === userName && !message) {
+        const dark = await isDark();
         const highlight = `background: ${
-          isDark()
+          dark
             ? `${THEME_CONFIG_DARK[themeDark].background2}!important;`
             : +themeLight === EThemeLight.默认
             ? '#fff3d4!important;'
@@ -159,7 +160,7 @@ export const myListenListItem = {
   },
   getScriptData: function () {
     try {
-      const initialData = JSON.parse(domById('js-initialData') && domById('js-initialData')!.innerHTML || '{}');
+      const initialData = JSON.parse((domById('js-initialData') && domById('js-initialData')!.innerHTML) || '{}');
       const answers = initialData.initialState.entities.answers;
       const nTargets = [];
       for (let key in answers) {

@@ -1,3 +1,4 @@
+import { myStorage } from '../commons/storage';
 import { dom, domC } from '../commons/tools';
 import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
@@ -8,8 +9,8 @@ import { myMove } from './move';
 import { myVersion } from './version';
 
 /** 漂浮收起按钮的方法 */
-export const suspensionPackUp = (elements: NodeListOf<HTMLElement>) => {
-  const { themeLight = EThemeLight.默认, themeDark = EThemeDark.深色护眼一, suspensionPickupRight = 60 } = store.getConfig();
+export const suspensionPackUp = async (elements: NodeListOf<HTMLElement>) => {
+  const { themeLight = EThemeLight.默认, themeDark = EThemeDark.深色护眼一, suspensionPickupRight = 60 } = await myStorage.getConfig();
   for (let i = 0; i < elements.length; i++) {
     const even = elements[i];
     const evenPrev = i > 0 ? elements[i - 1] : null;
@@ -20,22 +21,23 @@ export const suspensionPackUp = (elements: NodeListOf<HTMLElement>) => {
     const evenButton = even.querySelector('.ContentItem-actions .ContentItem-rightButton') as HTMLButtonElement;
     if (!evenButton) continue;
     const needStyle = evenBottom > hST + window.innerHeight && evenPrevBottom < hST;
+    const dark = await isDark();
     evenButton.style.cssText = needStyle
       ? `visibility:visible!important;position: fixed!important;bottom: 60px;z-index:200;` +
         `right: ${(document.body.offsetWidth - even.offsetWidth) / 2 + +suspensionPickupRight}px;` +
         `box-shadow: 0 1px 3px rgb(18 18 18 / 10%);` +
         `height: 40px!important;padding: 0 12px!important;` +
         `background: ${
-          isDark() ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][+themeLight !== EThemeLight.默认 ? 'background2' : 'background']
+          dark ? THEME_CONFIG_DARK[themeDark].background2 : THEME_CONFIG_LIGHT[themeLight][+themeLight !== EThemeLight.默认 ? 'background2' : 'background']
         }!important;`
       : '';
   }
 };
 
 /** 改变列表切换TAB悬浮 */
-export const changeSuspensionTab = () => {
+export const changeSuspensionTab = async () => {
   const name = 'suspensionHomeTab';
-  const pfConfig = store.getConfig();
+  const pfConfig = await myStorage.getConfig()
   cSuspensionStyle(name);
   const even = dom('.Topstory-container .TopstoryTabs');
   if (!even) return;
@@ -43,10 +45,10 @@ export const changeSuspensionTab = () => {
 };
 
 /** 缓存顶部元素 */
-export const cacheHeader = () => {
+export const cacheHeader = async () => {
   const headerEventNames = ['suspensionFind', 'suspensionSearch', 'suspensionUser'];
-  const { getFindEventItem, setFindEventItem, setStorageConfigItem, getStorageConfigItem, getConfig } = store;
-  const pfConfig = getConfig();
+  const { getFindEventItem, setFindEventItem, setStorageConfigItem, getStorageConfigItem } = store;
+  const pfConfig = await myStorage.getConfig()
   const eventHeader = getFindEventItem('header');
   if (!eventHeader.isFind) {
     eventHeader.fun && clearTimeout(eventHeader.fun);
@@ -121,7 +123,7 @@ export const cacheHeader = () => {
 };
 
 /** 悬浮模块切换样式 */
-const cSuspensionStyle = (name: string) => {
+const cSuspensionStyle = async (name: string) => {
   const cssObj: Record<string, string> = {
     suspensionHomeTab: '.Topstory-container .TopstoryTabs',
     suspensionFind: '.AppHeader-Tabs',
@@ -129,7 +131,7 @@ const cSuspensionStyle = (name: string) => {
     suspensionUser: '.AppHeader-userInfo',
   };
   const nodeCTZName = dom(`.ctz-${name}`);
-  const pfConfig = store.getConfig();
+  const pfConfig = await myStorage.getConfig()
   nodeCTZName && (nodeCTZName.style.cssText = pfConfig[name] ? 'display: inline-block;' : 'display: none;');
   // 如果取消悬浮，则注销掉挂载的move方法
   if (cssObj[name]) {

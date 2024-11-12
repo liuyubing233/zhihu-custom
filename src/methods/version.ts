@@ -1,6 +1,6 @@
+import { myStorage } from '../commons/storage';
 import { domById, fnInitDomStyle, fnReturnStr } from '../commons/tools';
 import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, VERSION_MIN_WIDTH } from '../configs';
-import { store } from '../store';
 import { EThemeDark, EThemeLight } from '../types';
 import { isDark } from './background';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './video';
@@ -23,8 +23,8 @@ export const myVersion = {
         this.vVideoLink()
     );
   },
-  initAfterLoad: function () {
-    const pfConfig = store.getConfig();
+  initAfterLoad: async function () {
+    const pfConfig = await myStorage.getConfig();
     // 自定义图片尺寸大小 range 显隐
     domById('CTZ_IMAGE_SIZE_CUSTOM')!.style.display = pfConfig.zoomImageType === '2' ? 'block' : 'none';
     // 自定义图片尺寸高度限制
@@ -37,7 +37,7 @@ export const myVersion = {
     this.init();
   },
   /** 页面内容宽度修改 */
-  versionWidth: function () {
+  versionWidth: async function () {
     const {
       commitModalSizeSameVersion,
       versionHome,
@@ -49,7 +49,7 @@ export const myVersion = {
       versionAnswerPercent,
       versionArticleIsPercent,
       versionArticlePercent,
-    } = store.getConfig();
+    } = await myStorage.getConfig();
 
     const widthHome = !versionHomeIsPercent ? `${versionHome || '1000'}px` : `${versionHomePercent || '70'}vw`;
     const widthAnswer = !versionAnswerIsPercent ? `${versionAnswer || '1000'}px` : `${versionAnswerPercent || '70'}vw`;
@@ -88,8 +88,8 @@ export const myVersion = {
     return sizeHome + sizeAnswer + sizeArticle + sizeModal + sizeMinWidth;
   },
   /** 图片尺寸修改 */
-  vImgSize: function () {
-    const { zoomImageType, zoomImageHeight, zoomImageHeightSize, zoomImageSize } = store.getConfig();
+  vImgSize: async function () {
+    const { zoomImageType, zoomImageHeight, zoomImageHeightSize, zoomImageSize } = await myStorage.getConfig();
     const nContent =
       zoomImageType === '2'
         ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: ${zoomImageHeight === '1' ? `${zoomImageHeightSize}px` : '100%'}!important;`
@@ -101,21 +101,21 @@ export const myVersion = {
     );
   },
   /** 列表视频回答内容尺寸修改 */
-  vListVideoSize: function () {
-    const pfConfig = store.getConfig();
+  vListVideoSize: async function () {
+    const pfConfig = await myStorage.getConfig();
     return `.ZVideoItem>div:first-of-type{${fnReturnStr(`width: ${pfConfig.zoomListVideoSize}px!important;`, pfConfig.zoomListVideoType === '2')}}`;
   },
   /** 列表更多按钮移动至题目右侧 */
-  vFixedListMore: function () {
-    const pfConfig = store.getConfig();
+  vFixedListMore: async function () {
+    const pfConfig = await myStorage.getConfig();
     return fnReturnStr(
       `.Topstory-container .ContentItem-actions .ShareMenu ~ div.ContentItem-action{visibility: visible!important;position: absolute;top: 20px;right: 10px;}`,
       pfConfig.fixedListItemMore
     );
   },
   /** 内容标题添加类别显示 */
-  vQuestionTitleTag: function () {
-    const pfConfig = store.getConfig();
+  vQuestionTitleTag: async function () {
+    const pfConfig = await myStorage.getConfig();
     const cssTag = 'margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff';
     return fnReturnStr(
       `.AnswerItem .ContentItem-title::before{content:'问答';background:#ec7259}` +
@@ -128,10 +128,11 @@ export const myVersion = {
     );
   },
   /** 首页问题列表切换模块悬浮 */
-  vSusHomeTab: function () {
-    const pfConfig = store.getConfig();
+  vSusHomeTab: async function () {
+    const pfConfig = await myStorage.getConfig();
     const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = pfConfig;
-    const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
+    const dark = await isDark();
+    const background = dark ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
     return fnReturnStr(
       `.Topstory-container .TopstoryTabs` +
         `{${pfConfig.suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}` +
@@ -149,10 +150,11 @@ export const myVersion = {
     );
   },
   /** 顶部三大块悬浮 */
-  vSusHeader: function () {
-    const pfConfig = store.getConfig();
+  vSusHeader: async function () {
+    const pfConfig = await myStorage.getConfig();
     const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = pfConfig;
-    const background = isDark() ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
+    const dark = await isDark();
+    const background = dark ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
     return (
       `.position-suspensionFind{${pfConfig.suspensionFindPo}}` +
       `.position-suspensionUser{${pfConfig.suspensionUserPo}}` +
@@ -163,13 +165,14 @@ export const myVersion = {
     );
   },
   /** 列表内容点击高亮边框 */
-  vHighlightListItem: function () {
-    return store.getConfig().highlightListItem
+  vHighlightListItem: async function () {
+    const { highlightListItem } = await myStorage.getConfig();
+    return highlightListItem
       ? `.List-item:focus,.TopstoryItem:focus,.HotItem:focus{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(0, 102, 255, 0.3)!important;outline:none!important;transition:box-shadow 0.3s!important;}`
       : `.List-item:focus,.Card:focus::before{box-shadow: none!important;}`;
   },
-  vShoppingLink: function () {
-    const pfConfig = store.getConfig();
+  vShoppingLink: async function () {
+    const pfConfig = await myStorage.getConfig();
     // 购物链接CSS
     const cssObj = {
       0: '',
@@ -199,9 +202,9 @@ export const myVersion = {
     };
     return cssObj[pfConfig.linkShopping || '0'];
   },
-  vFontSizeContent: function () {
+  vFontSizeContent: async function () {
     // 调整文字大小
-    const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle, fontSizeForListTitle, fontSizeForAnswerTitle, fontSizeForArticleTitle } = store.getConfig();
+    const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle, fontSizeForListTitle, fontSizeForAnswerTitle, fontSizeForArticleTitle } = await myStorage.getConfig();
     const list =
       `.Topstory-body .RichContent-inner,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
       `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent,.HotItem-excerpt--multiLine` +
@@ -213,9 +216,9 @@ export const myVersion = {
     const answerTitle = `.QuestionHeader-title{font-size: ${fontSizeForAnswerTitle}px!important;}`;
     return list + answer + article + articleTitle + listTitle + answerTitle;
   },
-  vVideoLink: () => {
+  vVideoLink: async () => {
     // 视频是否只显示链接
-    const { videoUseLink } = store.getConfig();
+    const { videoUseLink } = await myStorage.getConfig();
     return fnReturnStr(
       `${CLASS_VIDEO_ONE}>div,${CLASS_VIDEO_ONE}>i{display: none;}` +
         `${CLASS_VIDEO_ONE}{padding: 0!important;height:24px!important;width: fit-content!important;}` +

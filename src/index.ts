@@ -40,7 +40,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, host } = location;
-  const { setStorageConfigItem, getStorageConfigItem, getConfig, setUserinfo } = store;
+  const { setStorageConfigItem, getStorageConfigItem } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -56,16 +56,16 @@ import { INNER_CSS } from './web-resources';
 
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-    const config = getConfig();
+    const config = await myStorage.getConfig();
+    // const config = getConfig();
     setStorageConfigItem('cachePfConfig', config);
-    await myStorage.initConfig();
     await myStorage.initHistory();
     initHistoryView();
     onInitStyleExtra();
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
 
     // 获取最新的配置需要在此以后
-    const { fetchInterceptStatus } = getConfig();
+    const { fetchInterceptStatus } = config;
     if (fetchInterceptStatus) {
       fnLog('已开启 fetch 接口拦截');
       const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
@@ -129,7 +129,7 @@ import { INNER_CSS } from './web-resources';
   const createLoad = async () => {
     myListenListItem.getScriptData();
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
-      const { removeTopAD } = getConfig();
+      const { removeTopAD } = await myStorage.getConfig();
       // 不考虑在 iframe 中的情况
       initHTML();
       initOperate();
@@ -146,8 +146,9 @@ import { INNER_CSS } from './web-resources';
       dom('[name="useSimple"]')!.onclick = async function () {
         const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
         if (!isUse) return;
+        const prevConfig = await myStorage.getConfig();
         myStorage.setConfig({
-          ...getConfig(),
+          ...prevConfig,
           ...CONFIG_SIMPLE,
         });
         onDocumentStart();
@@ -232,8 +233,8 @@ import { INNER_CSS } from './web-resources';
     });
   });
 
-  window.addEventListener('keydown', (event) => {
-    const { hotKey } = getConfig();
+  window.addEventListener('keydown', async (event) => {
+    const { hotKey } = await myStorage.getConfig();
     if (hotKey) {
       // shift + . 唤醒关闭修改器弹窗
       if (event.key === '>' || event.key === '》') {
@@ -263,8 +264,8 @@ import { INNER_CSS } from './web-resources';
   /** 页面滚动方法 */
   window.addEventListener(
     'scroll',
-    throttle(() => {
-      const { suspensionPickUp } = getConfig();
+    throttle(async () => {
+      const { suspensionPickUp } = await myStorage.getConfig();
       if (suspensionPickUp) {
         suspensionPackUp(domA('.List-item'));
         suspensionPackUp(domA('.TopstoryItem'));

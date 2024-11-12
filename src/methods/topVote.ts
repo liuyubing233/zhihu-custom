@@ -1,12 +1,12 @@
+import { myStorage } from '../commons/storage';
 import { domC } from '../commons/tools';
-import { store } from '../store';
 
 /** 内容顶部显示赞同数 nodeItem className: ContentItem-meta */
-export const updateTopVote = (nodeItem?: HTMLElement) => {
+export const updateTopVote = async (nodeItem?: HTMLElement) => {
   if (!nodeItem) return;
   const nodeContentItemMeta = nodeItem.querySelector('.ContentItem-meta');
   const nodeMetaVote = nodeItem.querySelector('[itemprop="upvoteCount"]') as HTMLMetaElement;
-  const { topVote } = store.getConfig();
+  const { topVote } = await myStorage.getConfig()
   if (!nodeMetaVote || !topVote || !nodeContentItemMeta) return;
   const vote = nodeMetaVote.content;
   if (+vote === 0) return;

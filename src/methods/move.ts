@@ -1,6 +1,5 @@
 import { myStorage } from '../commons/storage';
 import { dom } from '../commons/tools';
-import { store } from '../store';
 
 /** 绑定页面元素的点击拖动方法 */
 export const myMove: IMyMove = {
@@ -9,8 +8,8 @@ export const myMove: IMyMove = {
     // 保存当前元素点击事件
     if (e) {
       this.clicks[configName] = e.click;
-      e.onmousedown = (ev) => {
-        const pfConfig = store.getConfig();
+      e.onmousedown = async (ev) => {
+        const pfConfig = await myStorage.getConfig()
         // 固定则跳出
         if (pfConfig[`${name}Fixed`]) return;
         const event: any = window.event || ev;
@@ -34,7 +33,7 @@ export const myMove: IMyMove = {
           const evNX = eventN.clientX;
           let evenLeft = 0;
           let evenRight = 0;
-          const isR = this.useR.find((i) => i === name);
+          const isR = this.useR.find((i: string) => i === name);
           if (isR) {
             // 用 body 替代 window 获取宽度来解决右侧滚动条宽度不一致问题
             const right = bodyW - evNX - rx;
@@ -72,7 +71,9 @@ export const myMove: IMyMove = {
             }
           };
         };
+        // @ts-ignore
         if (e.preventDefault) {
+          // @ts-ignore
           e.preventDefault();
         } else {
           return false;

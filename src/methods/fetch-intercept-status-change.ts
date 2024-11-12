@@ -1,6 +1,5 @@
 import { myStorage } from '../commons/storage';
 import { domA, domById } from '../commons/tools';
-import { store } from '../store';
 
 /** id: 当前接口拦截是否开启显示文案 */
 const ID_FETCH_STATUS = 'CTZ_FETCH_STATUS';
@@ -18,8 +17,8 @@ const CLASS_OPERATE_INTERCEPT = 'ctz-fetch-intercept';
 const CLASS_CLOSE_INTERCEPT = 'ctz-fetch-intercept-close';
 
 /** 接口拦截开启关闭 */
-export const initFetchInterceptStatus = () => {
-  const { fetchInterceptStatus } = store.getConfig();
+export const initFetchInterceptStatus = async () => {
+  const { fetchInterceptStatus } = await myStorage.getConfig();
   changeHTML(!!fetchInterceptStatus);
   domById(ID_FETCH_BUTTON)!.onclick = function () {
     if (confirm(fetchInterceptStatus ? messageToFalse : messageToTrue)) {
@@ -36,11 +35,11 @@ const changeHTML = (status: boolean) => {
     domA(`.${CLASS_OPERATE_INTERCEPT}`).forEach((item) => {
       item.classList.add(CLASS_CLOSE_INTERCEPT);
       item.querySelectorAll('input').forEach((it) => {
-        it.disabled = true
-      })
+        it.disabled = true;
+      });
       item.querySelectorAll('button').forEach((it) => {
-        it.disabled = true
-      })
+        it.disabled = true;
+      });
     });
   }
 };

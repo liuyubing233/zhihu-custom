@@ -21,13 +21,9 @@ export const myStorage = {
     if (cParse.t < cLParse.t) return configLocal;
     return config;
   },
-  initConfig: async function () {
-    const prevConfig = store.getConfig();
+  getConfig: async function (): Promise<IPfConfig> {
     const nConfig = await this.get('pfConfig');
-    const c = nConfig ? JSON.parse(nConfig) : {};
-    const configSave = { ...prevConfig, ...c };
-    store.setConfig(configSave);
-    return Promise.resolve(configSave);
+    return Promise.resolve(nConfig ? JSON.parse(nConfig) : {});
   },
   initHistory: async function () {
     const prevHistory = store.getHistory();
@@ -38,21 +34,19 @@ export const myStorage = {
   },
   /** 修改配置中的值 */
   setConfigItem: async function (key: string | Record<string, any>, value?: any) {
-    const { getConfig, setConfig } = store;
-    const prevConfig = getConfig();
+    const nConfig = await this.get('pfConfig');
+    const c = nConfig ? JSON.parse(nConfig) : {};
     if (typeof key === 'string') {
-      prevConfig[key] = value;
+      c[key] = value;
     } else {
       for (let itemKey in key) {
-        prevConfig[itemKey] = key[itemKey];
+        c[itemKey] = key[itemKey];
       }
     }
-    setConfig(prevConfig);
-    await this.set('pfConfig',prevConfig);
+    await this.setConfig(c);
   },
   /** 更新配置 */
   setConfig: async function (params: IPfConfig) {
-    store.setConfig(params);
     await this.set('pfConfig', params);
   },
   setHistoryItem: async function (key: 'list' | 'view', params: string[]) {
@@ -65,5 +59,5 @@ export const myStorage = {
   setHistory: async function (value: IPfHistory) {
     store.setHistory(value);
     this.set('pfHistory', value);
-  }
+  },
 };

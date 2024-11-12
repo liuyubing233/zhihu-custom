@@ -1,17 +1,17 @@
+import { myStorage } from '../commons/storage';
 import { fnInitDomStyle } from '../commons/tools';
-import { store } from '../store';
 
 /** 隐藏元素的 css */
 export const myHidden: IMyHidden = {
-  init: function () {
-    fnInitDomStyle('CTZ_STYLE_HIDDEN', this.change() || '');
+  init: async function () {
+    const changeValue = await this.change()
+    fnInitDomStyle('CTZ_STYLE_HIDDEN',  changeValue || '');
   },
-  change: function () {
-    const { getConfig } = store;
-    const pfConfig = getConfig();
+  change: async function () {
+    const pfConfig = await myStorage.getConfig()
     const cssHidden = Object.keys(this.cssForKey).map((key) => (pfConfig[key] ? this.cssForKey[key] : '')).join('');
     let cssHiddenMore = '';
-    this.cssForKeysArray.forEach(({ keys, value }) => {
+    this.cssForKeysArray.forEach(({ keys, value }: ICssForKeys) => {
       let trueNumber = 0;
       keys.forEach((key) => pfConfig[key] && trueNumber++);
       trueNumber === keys.length && (cssHiddenMore += value);
@@ -170,7 +170,7 @@ export const myHidden: IMyHidden = {
 
 interface IMyHidden {
   init: () => void;
-  change: () => string;
+  change: () => Promise<string>;
   cssForKey: Record<string, string>;
   cssForKeysArray: ICssForKeys[];
 }

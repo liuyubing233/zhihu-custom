@@ -1,4 +1,4 @@
-import { store } from '../store';
+import { myStorage } from './storage';
 import { fnLog } from './tools';
 
 /** 监听过滤内容 */
@@ -14,9 +14,9 @@ export const fnIndexMath = (index: number, i: number, len: number, lessNum: numb
 };
 
 /** 仅显示数字内容 */
-export const fnJustNum = (element: HTMLElement) => {
+export const fnJustNum = async (element: HTMLElement) => {
   if (!element) return;
-  const { justVoteNum, justCommitNum } = store.getConfig();
+  const { justVoteNum, justCommitNum } = await myStorage.getConfig();
   const nodeVoteUp = element.querySelector('.VoteButton--up') as HTMLButtonElement;
   if (justVoteNum && nodeVoteUp) {
     nodeVoteUp.style.cssText = 'font-size: 14px!important;';
