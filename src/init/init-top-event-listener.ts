@@ -18,56 +18,57 @@ const canFindTargeted = (e: HTMLElement) => {
   return isFind;
 };
 
-const callbackEventListener = async (event: Event) => {
+const cbEventListener = async (event: Event) => {
   const target = event.target as HTMLElement;
-  const domContent = domP(target, 'class', 'ContentItem');
-  if (!domContent) return;
+  const nodeItem = domP(target, 'class', 'ContentItem');
+  if (!nodeItem) return;
   const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = await myStorage.getConfig();
   // 点击外置「不感兴趣」按钮
   if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
-    const dataZopJson = domContent.getAttribute('data-zop');
-    const { itemId = '', type = '' } = JSON.parse(dataZopJson || '{}');
-    doFetchNotInterested({ id: itemId, type });
+    // @ts-ignore 自添加属性
+    const { id, type } = target._params;
+    doFetchNotInterested({ id, type });
     const nodeTopStoryItem = domP(target, 'class', 'TopstoryItem');
     nodeTopStoryItem && (nodeTopStoryItem.style.display = 'none');
   }
 
   // 点击「直达问题」按钮
   if (target.classList.contains(CLASS_TO_QUESTION)) {
-    const domUrl = domContent.querySelector('[itemprop="url"]');
-    const pathAnswer = domUrl ? domUrl.getAttribute('content') || '' : '';
-    const pathQuestion = pathAnswer.replace(/\/answer[\W\w]+/, '');
-    if (pathQuestion) {
-      window.open(pathQuestion);
-    }
+    // @ts-ignore 自添加属性
+    const { path } = target._params;
+    path && window.open(path);
   }
 
   // 列表内容展示更多
   if (canFindTargeted(target)) {
     setTimeout(() => {
-      updateTopVote(domContent);
-      listItemCreatedAndModifiedTime && updateItemTime(domContent);
-      showBlockUser && fetchInterceptStatus && myBlack.addButton(domContent.parentElement!);
-      initVideoDownload(domContent);
-      if (topExportContent && fetchInterceptStatus) {
-        addButtonForAnswerExportPDF(domContent.parentElement!);
-        addButtonForArticleExportPDF(domContent.parentElement!);
+      updateTopVote(nodeItem);
+      listItemCreatedAndModifiedTime && updateItemTime(nodeItem);
+      initVideoDownload(nodeItem);
+      addAnswerCopyLink(nodeItem);
+      if (fetchInterceptStatus) {
+        showBlockUser && myBlack.addButton(nodeItem.parentElement!);
+        if (topExportContent) {
+          addButtonForAnswerExportPDF(nodeItem.parentElement!);
+          addButtonForArticleExportPDF(nodeItem.parentElement!);
+        }
       }
-      addAnswerCopyLink(domContent);
     }, 0);
   }
 };
 
+let recommendTimeout: NodeJS.Timeout;
 let indexTopStoryInit = 0;
 /** 推荐列表最外层绑定事件 */
 export const initTopStoryRecommendEvent = () => {
   const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow');
   if (!nodeTopStoryRecommend) return;
-  nodeTopStoryRecommend.removeEventListener('click', callbackEventListener);
-  nodeTopStoryRecommend.addEventListener('click', callbackEventListener);
+  nodeTopStoryRecommend.removeEventListener('click', cbEventListener);
+  nodeTopStoryRecommend.addEventListener('click', cbEventListener);
   if (indexTopStoryInit < 5) {
     indexTopStoryInit++;
-    setTimeout(initTopStoryRecommendEvent, 500);
+    clearTimeout(recommendTimeout);
+    recommendTimeout = setTimeout(initTopStoryRecommendEvent, 500);
   } else {
     indexTopStoryInit = 0;
   }
@@ -78,7 +79,7 @@ export const initRootEvent = async () => {
   const domRoot = dom('#root');
   if (!domRoot) return;
   const classForVideoOne = CLASS_VIDEO_ONE.replace('.', '');
-  const { videoUseLink } = await myStorage.getConfig()
+  const { videoUseLink } = await myStorage.getConfig();
   domRoot.addEventListener('click', function (event) {
     const target = event.target as HTMLElement;
     if (videoUseLink) {

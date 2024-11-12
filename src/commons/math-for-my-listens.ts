@@ -8,6 +8,13 @@ export const fnHiddenDom = (lessNum: number, ev: HTMLElement, log: string) => {
   return ++lessNum;
 };
 
+export const fnHidden = (ev: HTMLElement, msg: string) => {
+  if (msg) {
+    ev.style.display = 'none';
+    fnLog(msg);
+  }
+};
+
 /** 计算过滤起始位置 */
 export const fnIndexMath = (index: number, i: number, len: number, lessNum: number) => {
   return i + 1 === len ? (i - lessNum >= 0 ? i - lessNum : 0) : index;

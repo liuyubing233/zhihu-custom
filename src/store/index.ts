@@ -10,7 +10,6 @@ import {
   IStorageConfig,
   IZhihuUserinfo,
 } from '../types';
-import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 
 class Store {
   /** 用户信息 更改prev: userInfo */
@@ -31,8 +30,6 @@ class Store {
 
   /** 用户页面列表接口缓存 */
   homeFetch: IHomeFetch = {};
-  /** 知乎列表接口或JSON内容缓存 */
-  zhihuListTargets: IZhihuListTargetItem[] = [];
 
   constructor() {
     // to fix this is undefined
@@ -48,9 +45,6 @@ class Store {
     this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
     this.getHomeFetch = this.getHomeFetch.bind(this);
     this.setHomeFetch = this.setHomeFetch.bind(this);
-    this.setZhihuListTargets = this.setZhihuListTargets.bind(this);
-    this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
-    this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
   }
 
   setUserinfo(inner: IZhihuUserinfo) {
@@ -91,16 +85,6 @@ class Store {
   }
   setHomeFetch(key: IKeyofHomeFetch, content: IHomeFetchContent) {
     this.homeFetch[key] = content;
-  }
-
-  setZhihuListTargets(data: IZhihuListTargetItem[]) {
-    this.zhihuListTargets = this.zhihuListTargets.concat(data);
-  }
-  clearZhihuListTargets() {
-    this.zhihuListTargets = [];
-  }
-  getZhihuListTargets() {
-    return this.zhihuListTargets;
   }
 }
 

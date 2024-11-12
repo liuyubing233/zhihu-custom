@@ -92,10 +92,6 @@ import { INNER_CSS } from './web-resources';
           //   // 如果为用户页面的 文章栏
           //   setHomeFetch('articles', { url, header: opt.headers });
           // }
-
-          // if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
-          //   fetchSelf(url, opt!.headers!);
-          // }
         }
 
         return originFetch(url, opt);
@@ -126,7 +122,7 @@ import { INNER_CSS } from './web-resources';
   timerLoadBody();
 
   const createLoad = async () => {
-    myListenListItem.getScriptData();
+    // myListenListItem.getScriptData();
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
       const { removeTopAD } = await myStorage.getConfig();
       // 不考虑在 iframe 中的情况

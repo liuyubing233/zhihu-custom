@@ -170,11 +170,12 @@ export const message = (value: string, t: number = 3000) => {
  * @param {string} extraCLass 按钮额外类名
  * @returns {HTMLElement} 元素
  */
-export const createBtnSmallTran = (innerHTML: string, extraCLass: string = ''): HTMLElement =>
+export const createBtnSmallTran = (innerHTML: string, extraCLass: string = '', extra: Record<string, any> = {}): HTMLElement =>
   domC('button', {
     innerHTML,
     className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
     style: 'margin: 0 4px;',
+    ...extra
   });
 
 export const judgeBrowserType = () => {

@@ -741,10 +741,11 @@
       }
     }, t2);
   };
-  var createBtnSmallTran = (innerHTML, extraCLass = "") => domC("button", {
+  var createBtnSmallTran = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
     innerHTML,
     className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
-    style: "margin: 0 4px;"
+    style: "margin: 0 4px;",
+    ...extra
   });
   var judgeBrowserType = () => {
     const userAgent = navigator.userAgent;
@@ -761,6 +762,12 @@
     ev.style.display = "none";
     fnLog(log);
     return ++lessNum;
+  };
+  var fnHidden = (ev, msg) => {
+    if (msg) {
+      ev.style.display = "none";
+      fnLog(msg);
+    }
   };
   var fnIndexMath = (index, i2, len, lessNum) => {
     return i2 + 1 === len ? i2 - lessNum >= 0 ? i2 - lessNum : 0 : index;
@@ -899,8 +906,6 @@
       };
       /** 用户页面列表接口缓存 */
       this.homeFetch = {};
-      /** 知乎列表接口或JSON内容缓存 */
-      this.zhihuListTargets = [];
       this.setUserinfo = this.setUserinfo.bind(this);
       this.getUserinfo = this.getUserinfo.bind(this);
       this.setFindEvent = this.setFindEvent.bind(this);
@@ -913,9 +918,6 @@
       this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
       this.getHomeFetch = this.getHomeFetch.bind(this);
       this.setHomeFetch = this.setHomeFetch.bind(this);
-      this.setZhihuListTargets = this.setZhihuListTargets.bind(this);
-      this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
-      this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
     }
     setUserinfo(inner) {
       this.userinfo = inner;
@@ -952,15 +954,6 @@
     }
     setHomeFetch(key, content) {
       this.homeFetch[key] = content;
-    }
-    setZhihuListTargets(data) {
-      this.zhihuListTargets = this.zhihuListTargets.concat(data);
-    }
-    clearZhihuListTargets() {
-      this.zhihuListTargets = [];
-    }
-    getZhihuListTargets() {
-      return this.zhihuListTargets;
     }
   };
   var store = new Store();
@@ -2907,16 +2900,16 @@ background-repeat: no-repeat;`
   var updateTopVote = async (nodeItem) => {
     if (!nodeItem)
       return;
-    const nodeContentItemMeta = nodeItem.querySelector(".ContentItem-meta");
-    const nodeMetaVote = nodeItem.querySelector('[itemprop="upvoteCount"]');
+    const nodeItemMeta = nodeItem.querySelector(".ContentItem-meta");
+    const nodeVote = nodeItem.querySelector('[itemprop="upvoteCount"]');
     const { topVote } = await myStorage.getConfig();
-    if (!nodeMetaVote || !topVote || !nodeContentItemMeta)
+    if (!nodeVote || !topVote || !nodeItemMeta)
       return;
-    const vote = nodeMetaVote.content;
+    const vote = nodeVote.content;
     if (+vote === 0)
       return;
     const className = "ctz-top-vote";
-    const domVotePrev = nodeContentItemMeta.querySelector(`.${className}`);
+    const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
     const innerHTML = `${vote} 人赞同了该回答`;
     if (domVotePrev) {
       domVotePrev.innerHTML = innerHTML;
@@ -2926,11 +2919,11 @@ background-repeat: no-repeat;`
         innerHTML,
         style: "font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0;"
       });
-      nodeContentItemMeta.appendChild(domVote);
+      nodeItemMeta.appendChild(domVote);
       const metaObserver = new MutationObserver(() => {
         updateTopVote(nodeItem);
       });
-      metaObserver.observe(nodeMetaVote, {
+      metaObserver.observe(nodeVote, {
         attributes: true,
         childList: false,
         characterData: false,
@@ -3073,7 +3066,10 @@ background-repeat: no-repeat;`
   var myListenListItem = {
     index: 0,
     init: async function() {
-      const { getUserinfo, getZhihuListTargets } = store;
+      const nodes = domA(".TopstoryItem");
+      if (this.index + 1 === nodes.length)
+        return;
+      const userinfo = store.getUserinfo();
       const pfConfig = await myStorage.getConfig();
       const {
         filterKeywords = [],
@@ -3095,32 +3091,19 @@ background-repeat: no-repeat;`
         listOutputToQuestion,
         fetchInterceptStatus
       } = pfConfig;
-      const elements = domA(".TopstoryItem");
-      let lessNum = 0;
       const pfHistory = await myStorage.getHistory();
       const historyList = pfHistory.list;
-      for (let i2 = this.index, len = elements.length; i2 < len; i2++) {
-        let message2 = "";
-        let dataZop = {};
-        let cardContent = {};
-        const nodeItem = elements[i2];
+      for (let i2 = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i2 < len; i2++) {
+        const nodeItem = nodes[i2];
         const nodeItemContent = nodeItem.querySelector(".ContentItem");
         if (!nodeItem.scrollHeight || !nodeItemContent)
           continue;
+        let message2 = "";
+        let dataZop = {};
+        let cardContent = {};
         const isVideo = nodeItemContent.classList.contains("ZVideoItem");
         const isArticle = nodeItemContent.classList.contains("ArticleItem");
         const isTip = nodeItemContent.classList.contains("PinItem");
-        const nodeContentItemTitle = nodeItem.querySelector(".ContentItem-title");
-        if (listOutPutNotInterested && fetchInterceptStatus) {
-          const nDomNotInterested = createBtnSmallTran("不感兴趣", CLASS_NOT_INTERESTED);
-          !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(nDomNotInterested);
-        }
-        if (listOutputToQuestion) {
-          const nDomToQuestion = createBtnSmallTran("直达问题", CLASS_TO_QUESTION);
-          if (!isVideo && !isArticle && !isTip) {
-            !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`) && nodeContentItemTitle && nodeContentItemTitle.appendChild(nDomToQuestion);
-          }
-        }
         try {
           dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
           cardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
@@ -3129,24 +3112,22 @@ background-repeat: no-repeat;`
         const { title = "" } = dataZop || {};
         if (removeMyOperateAtFollow && nodeItem.classList.contains("TopstoryItem-isFollow")) {
           try {
-            const userinfo = getUserinfo();
-            const nodeUserLink = nodeItem.querySelector(".UserLink .UserLink-link");
-            const findUserId = nodeUserLink.href.match(/[^\/]+$/)[0];
+            const findUserId = nodeItem.querySelector(".UserLink .UserLink-link").href.match(/[^\/]+$/)[0];
             const myUserId = userinfo.url.match(/[^\/]+$/)[0];
             findUserId === myUserId && (message2 = "关注列表屏蔽自己的操作");
           } catch {
           }
         }
-        (isVideo && removeItemAboutVideo || isArticle && removeItemAboutArticle || isTip && removeItemAboutPin) && !message2 && (message2 = `列表种类屏蔽，${nodeItemContent.classList.value}`);
-        if (removeLessVote && !message2) {
-          (cardContent["upvote_num"] || 0) < lessVoteNumber && (message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`);
+        if (!message2 && (isVideo && removeItemAboutVideo || isArticle && removeItemAboutArticle || isTip && removeItemAboutPin)) {
+          message2 = `列表种类屏蔽，${nodeItemContent.classList.value}`;
         }
-        const elementQuestionAsk = nodeItem.querySelector(".TopstoryQuestionAskItem");
-        if (removeItemQuestionAsk && elementQuestionAsk && !message2) {
+        if (!message2 && removeLessVote && (cardContent["upvote_num"] || 0) < lessVoteNumber) {
+          message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`;
+        }
+        if (!message2 && removeItemQuestionAsk && nodeItem.querySelector(".TopstoryQuestionAskItem")) {
           message2 = "屏蔽邀请回答";
         }
-        const isFilterFollowerOperate = removeFollowVoteAnswer || removeFollowVoteArticle || removeFollowFQuestion;
-        if (isFilterFollowerOperate && !message2 && nodeItem.classList.contains("TopstoryItem-isFollow")) {
+        if (!message2 && (removeFollowVoteAnswer || removeFollowVoteArticle || removeFollowFQuestion) && nodeItem.classList.contains("TopstoryItem-isFollow")) {
           const nodeFirstLine = nodeItem.querySelector(".FeedSource-firstline");
           const textFollowerOperate = nodeFirstLine ? nodeFirstLine.innerText : "";
           for (let itemOperate of FILTER_FOLLOWER_OPERATE) {
@@ -3163,32 +3144,42 @@ background-repeat: no-repeat;`
           const innerText = domRichContent ? domRichContent.innerText : "";
           message2 = this.replaceBlockWord(innerText, nodeItemContent, blockWordsAnswer, title, "内容");
         }
-        const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
-        const userName = userNameE ? userNameE.innerText : "";
-        if (highlightOriginal && dataZop && dataZop.authorName === userName && !message2) {
-          const dark = await isDark();
-          const highlight = `background: ${dark ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "#fff3d4!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`}`;
-          const nodeActions = nodeItem.querySelector(".ContentItem-actions");
-          nodeItem.style.cssText = `${highlight}border: 1px solid #aaa;`;
-          nodeActions && (nodeActions.style.cssText = highlight);
-        }
-        message2 && (lessNum = fnHiddenDom(lessNum, nodeItem, message2));
-        if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
-          const nodeATitle = nodeItem.querySelector(".ContentItem-title a");
-          if (nodeATitle) {
-            const itemHref = nodeATitle.href;
-            const itemTitle = nodeATitle.innerText;
-            const itemT = isVideo ? itemType.zvideo : isArticle ? itemType.article : isTip ? itemType.pin : itemType.answer;
-            const itemA = `<a href="${itemHref}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${itemTitle}</a>`;
-            if (!historyList.includes(itemA)) {
-              historyList.unshift(itemA);
+        fnHidden(nodeItem, message2);
+        if (!message2) {
+          if (highlightOriginal) {
+            const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
+            const userName = userNameE ? userNameE.innerText : "";
+            if (dataZop && dataZop.authorName === userName) {
+              const dark = await isDark();
+              const highlight = `background: ${dark ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "#fff3d4!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`}`;
+              const nodeActions = nodeItem.querySelector(".ContentItem-actions");
+              nodeItem.style.cssText = `${highlight}border: 1px solid #aaa;`;
+              nodeActions && (nodeActions.style.cssText = highlight);
+            }
+          }
+          const nodeItemTitle = nodeItem.querySelector(".ContentItem-title");
+          if (nodeItemTitle) {
+            if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
+              nodeItemTitle.appendChild(createBtnSmallTran("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
+            }
+            if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
+              const domUrl = nodeItemContent.querySelector('[itemprop="url"]');
+              const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
+              nodeItemTitle.appendChild(createBtnSmallTran("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
             }
           }
         }
+        if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
+          const nodeA = nodeItem.querySelector(".ContentItem-title a");
+          if (nodeA) {
+            const itemT = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
+            const itemA = `<a href="${nodeA.href}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${nodeA.innerText}</a>`;
+            historyList.unshift(itemA);
+          }
+        }
         fnJustNum(nodeItem);
-        if (i2 + 1 === len) {
-          const nI = i2 - lessNum >= 0 ? i2 - lessNum : 0;
-          this.index = nI;
+        if (i2 === len - 1) {
+          this.index = i2;
           myStorage.setHistoryItem("list", historyList);
         }
       }
@@ -3199,18 +3190,6 @@ background-repeat: no-repeat;`
     restart: function() {
       this.reset();
       this.init();
-    },
-    getScriptData: function() {
-      try {
-        const initialData = JSON.parse(domById("js-initialData") && domById("js-initialData").innerHTML || "{}");
-        const answers = initialData.initialState.entities.answers;
-        const nTargets = [];
-        for (let key in answers) {
-          nTargets.push(answers[key]);
-        }
-        store.setZhihuListTargets(nTargets);
-      } catch (err) {
-      }
     },
     replaceBlockWord: function(innerText, nodeItemContent, blockWords, title, byWhat) {
       if (innerText) {
@@ -3231,7 +3210,7 @@ background-repeat: no-repeat;`
       return "";
     }
   };
-  var itemType = {
+  var RECOMMEND_TYPE = {
     answer: {
       name: "问题",
       style: "color: #ec7259"
@@ -3318,51 +3297,50 @@ background-repeat: no-repeat;`
     });
     return isFind;
   };
-  var callbackEventListener = async (event) => {
+  var cbEventListener = async (event) => {
     const target = event.target;
-    const domContent = domP(target, "class", "ContentItem");
-    if (!domContent)
+    const nodeItem = domP(target, "class", "ContentItem");
+    if (!nodeItem)
       return;
     const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = await myStorage.getConfig();
     if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
-      const dataZopJson = domContent.getAttribute("data-zop");
-      const { itemId = "", type = "" } = JSON.parse(dataZopJson || "{}");
-      doFetchNotInterested({ id: itemId, type });
+      const { id, type } = target._params;
+      doFetchNotInterested({ id, type });
       const nodeTopStoryItem = domP(target, "class", "TopstoryItem");
       nodeTopStoryItem && (nodeTopStoryItem.style.display = "none");
     }
     if (target.classList.contains(CLASS_TO_QUESTION)) {
-      const domUrl = domContent.querySelector('[itemprop="url"]');
-      const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
-      const pathQuestion = pathAnswer.replace(/\/answer[\W\w]+/, "");
-      if (pathQuestion) {
-        window.open(pathQuestion);
-      }
+      const { path } = target._params;
+      path && window.open(path);
     }
     if (canFindTargeted(target)) {
       setTimeout(() => {
-        updateTopVote(domContent);
-        listItemCreatedAndModifiedTime && updateItemTime(domContent);
-        showBlockUser && fetchInterceptStatus && myBlack.addButton(domContent.parentElement);
-        initVideoDownload(domContent);
-        if (topExportContent && fetchInterceptStatus) {
-          addButtonForAnswerExportPDF(domContent.parentElement);
-          addButtonForArticleExportPDF(domContent.parentElement);
+        updateTopVote(nodeItem);
+        listItemCreatedAndModifiedTime && updateItemTime(nodeItem);
+        initVideoDownload(nodeItem);
+        addAnswerCopyLink(nodeItem);
+        if (fetchInterceptStatus) {
+          showBlockUser && myBlack.addButton(nodeItem.parentElement);
+          if (topExportContent) {
+            addButtonForAnswerExportPDF(nodeItem.parentElement);
+            addButtonForArticleExportPDF(nodeItem.parentElement);
+          }
         }
-        addAnswerCopyLink(domContent);
       }, 0);
     }
   };
+  var recommendTimeout;
   var indexTopStoryInit = 0;
   var initTopStoryRecommendEvent = () => {
     const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow");
     if (!nodeTopStoryRecommend)
       return;
-    nodeTopStoryRecommend.removeEventListener("click", callbackEventListener);
-    nodeTopStoryRecommend.addEventListener("click", callbackEventListener);
+    nodeTopStoryRecommend.removeEventListener("click", cbEventListener);
+    nodeTopStoryRecommend.addEventListener("click", cbEventListener);
     if (indexTopStoryInit < 5) {
       indexTopStoryInit++;
-      setTimeout(initTopStoryRecommendEvent, 500);
+      clearTimeout(recommendTimeout);
+      recommendTimeout = setTimeout(initTopStoryRecommendEvent, 500);
     } else {
       indexTopStoryInit = 0;
     }
@@ -4064,7 +4042,6 @@ background-repeat: no-repeat;`
     };
     timerLoadBody();
     const createLoad = async () => {
-      myListenListItem.getScriptData();
       if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
         const { removeTopAD } = await myStorage.getConfig();
         initHTML();
