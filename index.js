@@ -764,10 +764,8 @@
     return ++lessNum;
   };
   var fnHidden = (ev, msg) => {
-    if (msg) {
-      ev.style.display = "none";
-      fnLog(msg);
-    }
+    ev.style.display = "none";
+    fnLog(msg);
   };
   var fnIndexMath = (index, i2, len, lessNum) => {
     return i2 + 1 === len ? i2 - lessNum >= 0 ? i2 - lessNum : 0 : index;
@@ -2935,7 +2933,10 @@ background-repeat: no-repeat;`
   var myListenAnswerItem = {
     index: 0,
     init: async function() {
-      const conf = await myStorage.getConfig();
+      const nodes = domA(".AnswersNavWrapper .List-item");
+      if (this.index + 1 === nodes.length)
+        return;
+      const config = await myStorage.getConfig();
       const {
         removeLessVoteDetail,
         lessVoteNumberDetail = 0,
@@ -2949,32 +2950,33 @@ background-repeat: no-repeat;`
         blockWordsAnswer = [],
         fetchInterceptStatus,
         answerItemCreatedAndModifiedTime
-      } = conf;
+      } = config;
       const addFnInNodeItem = (nodeItem, initThis) => {
         if (!nodeItem)
           return;
         updateTopVote(nodeItem);
         answerItemCreatedAndModifiedTime && updateItemTime(nodeItem);
-        showBlockUser && fetchInterceptStatus && myBlack.addButton(nodeItem, initThis);
-        if (topExportContent && fetchInterceptStatus) {
-          addButtonForAnswerExportPDF(nodeItem);
-          addButtonForArticleExportPDF(nodeItem);
-        }
         initVideoDownload(nodeItem);
         addAnswerCopyLink(nodeItem);
+        if (fetchInterceptStatus) {
+          showBlockUser && myBlack.addButton(nodeItem, initThis);
+          if (topExportContent) {
+            addButtonForAnswerExportPDF(nodeItem);
+            addButtonForArticleExportPDF(nodeItem);
+          }
+        }
       };
       addFnInNodeItem(dom(".QuestionAnswer-content"));
       const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
       let hiddenUsers = [];
       for (let i2 in HIDDEN_ANSWER_ACCOUNT) {
-        conf[i2] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i2]);
+        config[i2] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i2]);
       }
       removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i2) => i2.name || "")));
-      const elements = domA(".AnswersNavWrapper .List-item");
-      let lessNum = 0;
-      for (let i2 = this.index, len = elements.length; i2 < len; i2++) {
+      console.log(this.index, nodes.length);
+      for (let i2 = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i2 < len; i2++) {
         let message2 = "";
-        const nodeItem = elements[i2];
+        const nodeItem = nodes[i2];
         const nodeItemContent = nodeItem.querySelector(".ContentItem");
         if (!nodeItemContent)
           continue;
@@ -2986,28 +2988,26 @@ background-repeat: no-repeat;`
         } catch {
         }
         (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message2 = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
-        if (removeZhihuOfficial && !message2) {
+        if (!message2 && removeZhihuOfficial) {
           const labelE = nodeItem.querySelector(".AuthorInfo-name .css-n99yhz");
           const label = labelE ? labelE.getAttribute("aria-label") || "" : "";
           /知乎[\s]*官方帐号/.test(label) && (message2 = "已删除一条知乎官方帐号的回答");
         }
-        let isHiddenTag = false;
-        hiddenTags.forEach((i3) => conf[i3] && (isHiddenTag = true));
-        if (isHiddenTag && !message2) {
+        if (!message2) {
           const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
           const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
-          const text1 = nodeTag1 ? nodeTag1.innerText : "";
-          const text2 = nodeTag2 ? nodeTag2.innerText : "";
-          const tagText = text1 + text2;
-          hiddenTags.forEach((i3) => {
-            if (conf[i3]) {
+          const tagNames = (nodeTag1 ? nodeTag1.innerText : "") + (nodeTag2 ? nodeTag2.innerText : "");
+          for (let i3 of hiddenTags) {
+            if (config[i3]) {
               const nReg = new RegExp(HIDDEN_ANSWER_TAG[i3]);
-              nReg.test(tagText) && (message2 = `已删除一条标签${HIDDEN_ANSWER_TAG[i3]}的回答`);
+              nReg.test(tagNames) && (message2 = `已删除一条标签${HIDDEN_ANSWER_TAG[i3]}的回答`);
             }
-          });
+          }
         }
-        hiddenUsers.length && !message2 && hiddenUsers.includes(dataZop.authorName || "") && (message2 = `已删除${dataZop.authorName}的回答`);
-        if (removeAnonymousAnswer && !message2) {
+        if (!message2) {
+          hiddenUsers.length && hiddenUsers.includes(dataZop.authorName || "") && (message2 = `已删除${dataZop.authorName}的回答`);
+        }
+        if (!message2 && removeAnonymousAnswer) {
           const userName = nodeItem.querySelector('[itemprop="name"]').content;
           userName === "匿名用户" && (message2 = `已屏蔽一条「匿名用户」回答`);
         }
@@ -3028,31 +3028,31 @@ background-repeat: no-repeat;`
             }
           }
         }
-        if (!message2 && answerOpen) {
-          const unFoldButton = nodeItem.querySelector(".ContentItem-expandButton");
-          const foldButton = nodeItem.querySelector(".RichContent-collapsedText");
-          const isNotOpen = !nodeItem.classList.contains(OB_CLASS_FOLD.on);
-          const isNotClose = !nodeItem.classList.contains(OB_CLASS_FOLD.off);
-          if (answerOpen === "on" && isNotOpen) {
-            unFoldButton && unFoldButton.click();
-            nodeItem.classList.add(OB_CLASS_FOLD.on);
-            lessNum++;
-          }
-          const isF = foldButton && nodeItem.offsetHeight > 939;
-          const isFC = unFoldButton;
-          if (answerOpen === "off" && isNotClose && (isF || isFC)) {
-            nodeItem.classList.add(OB_CLASS_FOLD.off);
-            isF && foldButton && foldButton.click();
-            lessNum++;
-          }
-        }
-        fnJustNum(nodeItem);
         if (message2) {
-          lessNum = fnHiddenDom(lessNum, nodeItem, message2);
+          fnHidden(nodeItem, message2);
         } else {
           addFnInNodeItem(nodeItem, this);
+          fnJustNum(nodeItem);
+          if (answerOpen) {
+            const unFoldButton = nodeItem.querySelector(".ContentItem-expandButton");
+            const foldButton = nodeItem.querySelector(".RichContent-collapsedText");
+            const isNotOpen = !nodeItem.classList.contains(OB_CLASS_FOLD.on);
+            const isNotClose = !nodeItem.classList.contains(OB_CLASS_FOLD.off);
+            if (answerOpen === "on" && isNotOpen) {
+              unFoldButton && unFoldButton.click();
+              nodeItem.classList.add(OB_CLASS_FOLD.on);
+            }
+            const isF = foldButton && nodeItem.offsetHeight > 939;
+            const isFC = unFoldButton;
+            if (answerOpen === "off" && isNotClose && (isF || isFC)) {
+              nodeItem.classList.add(OB_CLASS_FOLD.off);
+              isF && foldButton && foldButton.click();
+            }
+          }
         }
-        this.index = fnIndexMath(this.index, i2, len, lessNum);
+        if (i2 === len - 1) {
+          this.index = i2;
+        }
       }
     },
     reset: function() {
@@ -3144,8 +3144,9 @@ background-repeat: no-repeat;`
           const innerText = domRichContent ? domRichContent.innerText : "";
           message2 = this.replaceBlockWord(innerText, nodeItemContent, blockWordsAnswer, title, "内容");
         }
-        fnHidden(nodeItem, message2);
-        if (!message2) {
+        if (message2) {
+          fnHidden(nodeItem, message2);
+        } else {
           if (highlightOriginal) {
             const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
             const userName = userNameE ? userNameE.innerText : "";
@@ -3173,8 +3174,7 @@ background-repeat: no-repeat;`
           const nodeA = nodeItem.querySelector(".ContentItem-title a");
           if (nodeA) {
             const itemT = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
-            const itemA = `<a href="${nodeA.href}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${nodeA.innerText}</a>`;
-            historyList.unshift(itemA);
+            historyList.unshift(`<a href="${nodeA.href}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${nodeA.innerText}</a>`);
           }
         }
         fnJustNum(nodeItem);

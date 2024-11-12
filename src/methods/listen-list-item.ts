@@ -97,10 +97,11 @@ export const myListenListItem = {
         message = this.replaceBlockWord(innerText, nodeItemContent, blockWordsAnswer, title, '内容');
       }
 
-      // 最后信息 & 起点位置处理
-      fnHidden(nodeItem, message);
-      // 未隐藏的元素需添加的内容
-      if (!message) {
+      if (message) {
+        // 是否需要隐藏元素
+        fnHidden(nodeItem, message);
+      } else {
+        // 未隐藏的元素需添加的内容
         // 高亮原创
         if (highlightOriginal) {
           const userNameE = nodeItem.querySelector('.FeedSource-firstline .UserLink-link') as HTMLElement;
@@ -139,15 +140,11 @@ export const myListenListItem = {
         const nodeA = nodeItem.querySelector('.ContentItem-title a') as HTMLAnchorElement;
         if (nodeA) {
           const itemT = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
-          const itemA = `<a href="${nodeA.href}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${nodeA.innerText}</a>`;
-          // if (!historyList.includes(itemA)) {
-          historyList.unshift(itemA);
-          // }
+          historyList.unshift(`<a href="${nodeA.href}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${nodeA.innerText}</a>`);
         }
       }
       fnJustNum(nodeItem);
       if (i === len - 1) {
-        // const nI = i - lessNum >= 0 ? i - lessNum : 0;
         this.index = i;
         myStorage.setHistoryItem('list', historyList);
       }

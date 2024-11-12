@@ -9,10 +9,8 @@ export const fnHiddenDom = (lessNum: number, ev: HTMLElement, log: string) => {
 };
 
 export const fnHidden = (ev: HTMLElement, msg: string) => {
-  if (msg) {
-    ev.style.display = 'none';
-    fnLog(msg);
-  }
+  ev.style.display = 'none';
+  fnLog(msg);
 };
 
 /** 计算过滤起始位置 */
