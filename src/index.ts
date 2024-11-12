@@ -57,7 +57,6 @@ import { INNER_CSS } from './web-resources';
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
     const config = await myStorage.getConfig();
-    // const config = getConfig();
     setStorageConfigItem('cachePfConfig', config);
     await myStorage.getHistory();
     initHistoryView();

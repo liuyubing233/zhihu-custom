@@ -17,16 +17,16 @@ import { ETheme, EThemeDark, EThemeLight } from '../types';
 const myBackground = {
   init: async function () {
     const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认 } = await myStorage.getConfig()
-    const innerHTML = this.change(themeDark, themeLight);
+    const innerHTML = await this.change(themeDark, themeLight);
     fnInitDomStyle('CTZ_STYLE_BACKGROUND', innerHTML);
   },
-  change: function (themeDark: EThemeDark, themeLight: EThemeLight) {
-    const getBackground = () => {
-      if (this.isUseDark()) return this.dark(themeDark);
+  change: async function (themeDark: EThemeDark, themeLight: EThemeLight) {
+    const getBackground = async () => {
+      if (await this.isUseDark()) return this.dark(themeDark);
       if (+themeLight === EThemeLight.默认) return this.default();
       return this.light(themeLight);
     };
-    return getBackground() + this.text();
+    return await getBackground() + await this.text();
   },
   isUseDark: async () => {
     const { theme = ETheme.自动 } = await myStorage.getConfig()

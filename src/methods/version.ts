@@ -7,20 +7,20 @@ import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './video';
 
 /** 修改版心的 css */
 export const myVersion = {
-  init: function () {
+  init: async function () {
     fnInitDomStyle(
       'CTZ_STYLE_VERSION',
-      this.versionWidth() +
-        this.vImgSize() +
-        this.vQuestionTitleTag() +
-        this.vSusHomeTab() +
-        this.vSusHeader() +
-        this.vFixedListMore() +
-        this.vHighlightListItem() +
-        this.vShoppingLink() +
-        this.vFontSizeContent() +
-        this.vListVideoSize() +
-        this.vVideoLink()
+      await this.versionWidth() +
+        await this.vImgSize() +
+        await this.vQuestionTitleTag() +
+        await this.vSusHomeTab() +
+        await this.vSusHeader() +
+        await this.vFixedListMore() +
+        await this.vHighlightListItem() +
+        await this.vShoppingLink() +
+        await this.vFontSizeContent() +
+        await this.vListVideoSize() +
+        await this.vVideoLink()
     );
   },
   initAfterLoad: async function () {
