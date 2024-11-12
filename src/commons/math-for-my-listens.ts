@@ -25,10 +25,10 @@ export const fnJustNum = async (element: HTMLElement) => {
   if (justCommitNum) {
     const buttons = element.querySelectorAll('.ContentItem-actions button');
     for (let i = 0; i < buttons.length; i++) {
-      const buttonThis = buttons[i] as HTMLButtonElement;
-      if (buttonThis.innerHTML.includes('条评论')) {
-        buttonThis.style.cssText = 'font-size: 14px!important;margin-top:-5px;';
-        buttonThis.innerHTML = buttonThis.innerHTML.replace('条评论', '');
+      const btn = buttons[i] as HTMLButtonElement;
+      if (btn.innerHTML.includes('条评论')) {
+        btn.style.cssText = 'font-size: 14px!important;margin-top:-5px;';
+        btn.innerHTML = btn.innerHTML.replace('条评论', '');
       }
     }
   }

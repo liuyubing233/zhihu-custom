@@ -6,7 +6,10 @@ export const dom = (n: string): HTMLElement | undefined => document.querySelecto
 export const domById = (id: string): HTMLElement | undefined => document.getElementById(id) as HTMLElement;
 /** 获取所有元素 */
 export const domA = (n: string): NodeListOf<HTMLElement> => document.querySelectorAll(n);
-/** 创建元素 */
+/**
+ * 创建元素
+ * attrObjs - className
+ */
 export const domC = (name: string, attrObjs: Record<string, any>) => {
   const node = document.createElement(name);
   for (let key in attrObjs) {

@@ -5,7 +5,7 @@ import md5 from './third/md5.js';
 import zhihu_enc from './third/zhihu-enc.js';
 import { fnLog } from './tools';
 
-export const createCommentHeaders = (url: string) => {
+export const createHeaders = (url: string) => {
   function K() {
     var t = new RegExp('d_c0=([^;]+)').exec(document.cookie);
     return t && t[1];
@@ -79,7 +79,7 @@ export const fetchGetUserinfo = (): Promise<IZhihuUserinfo> => {
 };
 
 /** 知乎列表内容接口 */
-export const REG_URL_FOR_ZHIHU_LIST = /\/api\/v3\/feed\/topstory\/recommend/;
+export const REGEXP_RECOMMEND = /\/api\/v3\/feed\/topstory\/recommend/;
 export const fetchSelf = (url: string, headers?: HeadersInit) => {
   fetch(url, {
     method: 'GET',
@@ -87,7 +87,7 @@ export const fetchSelf = (url: string, headers?: HeadersInit) => {
   })
     .then((response) => response.json())
     .then((res: any) => {
-      if (REG_URL_FOR_ZHIHU_LIST.test(url)) {
+      if (REGEXP_RECOMMEND.test(url)) {
         const nTargets = res.data.map((i: any) => i.target);
         store.setZhihuListTargets(nTargets as IZhihuListTargetItem[]);
       }

@@ -2,7 +2,8 @@ import { myStorage } from '../commons/storage';
 import { dom, domById, domC, fnDomReplace, fnReturnStr } from '../commons/tools';
 import { CLASS_REMOVE_BLOCK, ID_BUTTON_SYNC_BLOCK } from '../configs';
 import { store } from '../store';
-import { IBlockUserItem, IMyListenAnswerItem, IZhihuCardContent } from '../types';
+import { IBlockUserItem, IZhihuCardContent } from '../types';
+import { IMyListenAnswerItem } from './listen-answer-item';
 
 /** id: 黑名单列表 */
 const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
@@ -15,7 +16,7 @@ export const myBlack: IMyBlack = {
     const me = this;
     const elementBlock = domById(ID_BLOCK_LIST);
     if (!elementBlock) return;
-    const { removeBlockUserContentList = [] } = await myStorage.getConfig()
+    const { removeBlockUserContentList = [] } = await myStorage.getConfig();
     elementBlock.innerHTML = removeBlockUserContentList.map((i) => this.createItem(i)).join('');
     elementBlock.onclick = (event) => {
       const target = event.target as HTMLElement;
@@ -49,7 +50,7 @@ export const myBlack: IMyBlack = {
     const aContent: IZhihuCardContent = JSON.parse(mo).card.content;
     const userId = aContent.author_member_hash_id || '';
     if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;
-    const { removeBlockUserContentList = [] } = await myStorage.getConfig()
+    const { removeBlockUserContentList = [] } = await myStorage.getConfig();
     const isAlreadyBlack = removeBlockUserContentList.findIndex((i) => i.id === userId) >= 0;
     const message = `是否要屏蔽${userName}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。\n如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`;
     const classBlack = 'ctz-black';
@@ -58,10 +59,8 @@ export const myBlack: IMyBlack = {
     const classJustFilter = 'ctz-just-filter';
     const createClass = (value?: string) => `${value} ctz-button ctz-button-small ctz-button-transparent`;
     const innerHTML = isAlreadyBlack
-      ? `<button class="${createClass(classBlackRemove)}">解除屏蔽</button>` +
-      fnReturnStr(`<button class="${createClass(classJustFilter)}">隐藏该回答</button>`, !!objMy)
-      : `<button class="${createClass(classBlack)}">屏蔽用户</button>` +
-      fnReturnStr(`<button class="${createClass(classBlackFilter)}">屏蔽用户并隐藏该回答</button>`, !!objMy);
+      ? `<button class="${createClass(classBlackRemove)}">解除屏蔽</button>` + fnReturnStr(`<button class="${createClass(classJustFilter)}">隐藏该回答</button>`, !!objMy)
+      : `<button class="${createClass(classBlack)}">屏蔽用户</button>` + fnReturnStr(`<button class="${createClass(classBlackFilter)}">屏蔽用户并隐藏该回答</button>`, !!objMy);
     const nodeBox = domC('div', { className: classBox, innerHTML });
     nodeBox.onclick = function (ev) {
       const target = ev.target as HTMLElement;
@@ -103,7 +102,7 @@ export const myBlack: IMyBlack = {
   },
   /** 添加屏蔽用户 */
   addBlackItem: async function (info) {
-    const pfConfig = await myStorage.getConfig()
+    const pfConfig = await myStorage.getConfig();
     const nL = pfConfig.removeBlockUserContentList || [];
     nL.push(info);
     myStorage.setConfigItem('removeBlockUserContentList', nL);
@@ -137,8 +136,8 @@ export const myBlack: IMyBlack = {
         'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)![0] || '',
       }),
       credentials: 'include',
-    }).then( async() => {
-      const pfConfig = await myStorage.getConfig()
+    }).then(async () => {
+      const pfConfig = await myStorage.getConfig();
       const nL = pfConfig.removeBlockUserContentList || [];
       const itemIndex = nL.findIndex((i) => i.id === info.id);
       if (itemIndex >= 0) {
@@ -178,15 +177,13 @@ export const myBlack: IMyBlack = {
   getHeaders: () => store.getStorageConfigItem('fetchHeaders') as HeadersInit,
 };
 
-type IObjMy = IMyListenAnswerItem;
-
 interface IMyBlack {
   messageCancel: string;
   init: () => void;
   createItem: (info: IBlockUserItem) => void;
   createItemContent: (info: IBlockUserItem) => void;
   /** 添加「屏蔽用户」按钮 */
-  addButton: (event: HTMLElement, objMy?: IObjMy) => void;
+  addButton: (event: HTMLElement, objMy?: IMyListenAnswerItem) => void;
   addBlackItem: (info: IBlockUserItem) => void;
   serviceAdd: (urlToken: string, userName: string, userId: string, avatar: string) => void;
   serviceRemove: (info: IBlockUserItem) => void;

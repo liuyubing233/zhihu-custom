@@ -2,7 +2,7 @@ import { fnHiddenDom, fnIndexMath, fnJustNum } from '../commons/math-for-my-list
 import { myStorage } from '../commons/storage';
 import { dom, domA } from '../commons/tools';
 import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
-import { IMyListenAnswerItem, IZhihuCardContent, IZhihuDataZop } from '../types';
+import { IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
 import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './export-PDF';
 import { addAnswerCopyLink } from './link';
@@ -14,7 +14,7 @@ import { initVideoDownload } from './video';
 export const myListenAnswerItem: IMyListenAnswerItem = {
   index: 0,
   init: async function () {
-    const conf = await myStorage.getConfig()
+    const conf = await myStorage.getConfig();
     // myListenSelect.addSort();
     const {
       removeLessVoteDetail,
@@ -155,3 +155,10 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
     this.init();
   },
 };
+
+export interface IMyListenAnswerItem {
+  index: number;
+  init: () => Promise<void>;
+  reset: () => void;
+  restart: () => void;
+}

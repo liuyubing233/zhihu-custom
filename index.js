@@ -550,13 +550,6 @@
     '一键移除所有屏蔽选项，点击「话题黑名单」编辑按钮出现按钮<div class="ctz-commit">知乎<a href="https://www.zhihu.com/settings/filter" target="_blank">屏蔽页面</a>每次只显示部分内容，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽标签</div>',
     '回答视频下载<div class="ctz-commit">回答内容视频左上角会生成一个下载按钮，点击即可下载视频</div>',
     '收藏夹内容导出为 PDF（需开启接口拦截）<div class="ctz-commit">点击收藏夹名称上方「生成PDF」按钮，可导出当前页码的收藏夹详细内容</div>',
-    // '当前回答和文章导出为 PDF 功能（需开启接口拦截）<div class="ctz-commit">对应为内容上方的「导出当前回答」「导出当前文章」按钮</div>',
-    // '回答内容按照点赞数和评论数排序' +
-    //   '<div class="ctz-commit">' +
-    //   '6-1. 点击回答右上角的排序按钮，点击【点赞数排序】或【评论数排序】后，页面刷新等待排序完成；<br/>' +
-    //   '6-2. 因为知乎并没有开放点赞数和评论排序参数，所以只能每次加载后按照当前的数据进行页面排序；<br/>' +
-    //   '6-3. 为了防止页面错乱，只对前20条进行排序，后续新加载的数据不做排序处理' +
-    //   '</div>',
     '个人主页「我关注的问题」、「我关注的收藏」可以一键移除或将移除的内容添加回关注<div class="ctz-commit">由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击「移除关注」按钮将打开页面到对应页面，取消或关注后此页面自动关闭，如果脚本未加载请刷新页面</div>',
     "推荐页内容链接根据有新到旧进行缓存，可缓存 100 条；缓存内容在「编辑器 - 历史记录 - 推荐列表缓存」",
     "可保存 100 条浏览历史记录链接，内容为打开的问题、文章、视频；「编辑器 - 历史记录 - 浏览历史记录」",
@@ -784,10 +777,10 @@
     if (justCommitNum) {
       const buttons = element.querySelectorAll(".ContentItem-actions button");
       for (let i2 = 0; i2 < buttons.length; i2++) {
-        const buttonThis = buttons[i2];
-        if (buttonThis.innerHTML.includes("条评论")) {
-          buttonThis.style.cssText = "font-size: 14px!important;margin-top:-5px;";
-          buttonThis.innerHTML = buttonThis.innerHTML.replace("条评论", "");
+        const btn = buttons[i2];
+        if (btn.innerHTML.includes("条评论")) {
+          btn.style.cssText = "font-size: 14px!important;margin-top:-5px;";
+          btn.innerHTML = btn.innerHTML.replace("条评论", "");
         }
       }
     }
@@ -798,8 +791,8 @@
     filterKeywords: BLOCK_WORDS_LIST,
     blockWordsAnswer: BLOCK_WORDS_ANSWER
   };
-  var createHTMLAboutBlockText = (w2) => `<span data-title="${w2}">${createHTMLAboutBlockTextContent(w2)}</span>`;
-  var createHTMLAboutBlockTextContent = (w2) => `<span>${w2}</span><i class="ctz-filter-word-remove">✗</i>`;
+  var createHTMLBlockText = (w2) => `<span data-title="${w2}">${createHTMLBlockTextContent(w2)}</span>`;
+  var createHTMLBlockTextContent = (w2) => `<span>${w2}</span><i class="ctz-filter-word-remove">✗</i>`;
   var onRemove = async (e2, key) => {
     const target = e2.target;
     if (!target.classList.contains("ctz-filter-word-remove"))
@@ -821,7 +814,7 @@
       return;
     configThis.push(word);
     await myStorage.setConfigItem(key, configThis);
-    const domItem = domC("span", { innerHTML: createHTMLAboutBlockTextContent(word) });
+    const domItem = domC("span", { innerHTML: createHTMLBlockTextContent(word) });
     domItem.dataset.title = word;
     const nodeFilterWords = dom(NAME_BY_KEY[key]);
     nodeFilterWords && nodeFilterWords.appendChild(domItem);
@@ -836,7 +829,7 @@
     for (let i2 = 0, len = arr.length; i2 < len; i2++) {
       const { domFind, name, domInput } = arr[i2];
       if (domFind) {
-        const children = (config[name] || []).map((i3) => createHTMLAboutBlockText(i3)).join("");
+        const children = (config[name] || []).map((i3) => createHTMLBlockText(i3)).join("");
         domFind.innerHTML = children || "";
         domFind.onclick = (e2) => onRemove(e2, name);
       }
@@ -2025,7 +2018,7 @@ background-repeat: no-repeat;`
     f1(void 0, o);
     return o.ZP(s);
   }
-  var createCommentHeaders = (url) => {
+  var createHeaders = (url) => {
     function K() {
       var t2 = new RegExp("d_c0=([^;]+)").exec(document.cookie);
       return t2 && t2[1];
@@ -2478,13 +2471,13 @@ background-repeat: no-repeat;`
       }
     }
   };
-  var QUERY_CLASS_PDF_IFRAME = ".ctz-pdf-box-content";
+  var CLASS_PDF_CONTENT = ".ctz-pdf-box-content";
   var loadIframeAndExport = (eventBtn, arrHTML, btnText) => {
     let max = 0;
     let finish = 0;
     let error = 0;
     const innerHTML = arrHTML.join("");
-    const iframe = dom(QUERY_CLASS_PDF_IFRAME);
+    const iframe = dom(CLASS_PDF_CONTENT);
     if (!iframe.contentWindow)
       return;
     const doc = iframe.contentWindow.document;
@@ -2645,7 +2638,7 @@ background-repeat: no-repeat;`
       if (!username)
         return;
       const requestUrl = `/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${(+page - 1) * 20}&limit=20&sort_by=created`;
-      const header = createCommentHeaders(requestUrl);
+      const header = createHeaders(requestUrl);
       const data = await doHomeFetch(requestUrl, header);
       const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
       loadIframeAndExport(eventBtn, content, "导出当前页回答");
@@ -2684,7 +2677,7 @@ background-repeat: no-repeat;`
       if (!username)
         return;
       const requestUrl = `https://www.zhihu.com/api/v4/members/${username}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${(+page - 1) * 20}&limit=20&sort_by=created`;
-      const header = createCommentHeaders(requestUrl);
+      const header = createHeaders(requestUrl);
       const data = await doHomeFetch(requestUrl, header);
       const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
       loadIframeAndExport(eventBtn, content, "导出当前页文章");
