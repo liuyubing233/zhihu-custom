@@ -11,7 +11,7 @@ import { isDark } from './background';
 export const myListenListItem = {
   index: 0,
   init: async function () {
-    const { getHistory, getUserinfo, getZhihuListTargets } = store;
+    const { getUserinfo, getZhihuListTargets } = store;
     const pfConfig = await myStorage.getConfig();
     // const listTargets = getZhihuListTargets();
     const {
@@ -36,8 +36,7 @@ export const myListenListItem = {
     } = pfConfig;
     const elements = domA('.TopstoryItem');
     let lessNum = 0;
-    await myStorage.initHistory();
-    const pfHistory = getHistory();
+    const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
     for (let i = this.index, len = elements.length; i < len; i++) {
       let message = ''; // 屏蔽信息

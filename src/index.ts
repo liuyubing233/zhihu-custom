@@ -59,7 +59,7 @@ import { INNER_CSS } from './web-resources';
     const config = await myStorage.getConfig();
     // const config = getConfig();
     setStorageConfigItem('cachePfConfig', config);
-    await myStorage.initHistory();
+    await myStorage.getHistory();
     initHistoryView();
     onInitStyleExtra();
     EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);

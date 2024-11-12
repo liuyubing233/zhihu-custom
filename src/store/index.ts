@@ -7,19 +7,12 @@ import {
   IKeyofFindEvent,
   IKeyofHomeFetch,
   IKeyofStorageConfig,
-  IPfHistory,
   IStorageConfig,
   IZhihuUserinfo,
 } from '../types';
 import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 
 class Store {
-  /** 缓存浏览历史记录 */
-  pfHistory: IPfHistory = {
-    view: [],
-    list: [],
-  };
-
   /** 用户信息 更改prev: userInfo */
   userinfo: IZhihuUserinfo | undefined = undefined;
 
@@ -43,8 +36,6 @@ class Store {
 
   constructor() {
     // to fix this is undefined
-    this.setHistory = this.setHistory.bind(this);
-    this.getHistory = this.getHistory.bind(this);
     this.setUserinfo = this.setUserinfo.bind(this);
     this.getUserinfo = this.getUserinfo.bind(this);
     this.setFindEvent = this.setFindEvent.bind(this);
@@ -60,13 +51,6 @@ class Store {
     this.setZhihuListTargets = this.setZhihuListTargets.bind(this);
     this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
     this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
-  }
-  /** 仅在 commons/storage 文件中使用 */
-  setHistory(inner: IPfHistory) {
-    this.pfHistory = inner;
-  }
-  getHistory() {
-    return this.pfHistory;
   }
 
   setUserinfo(inner: IZhihuUserinfo) {

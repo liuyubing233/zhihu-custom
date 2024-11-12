@@ -42,7 +42,7 @@ export const initOperate = () => {
 
   domA('[name="button_history_clear"]').forEach((item) => {
     item.onclick = async (event) => {
-      const prevHistory = store.getHistory();
+      const prevHistory = await myStorage.getHistory()
       const target = event.target as HTMLElement;
       const dataId = target.getAttribute('data-id') as IKeyofHistory;
       const isClear = confirm(`是否清空${target.innerText}`);
