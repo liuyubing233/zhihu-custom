@@ -11,7 +11,7 @@ import { updateTopVote } from './topVote';
 import { initVideoDownload } from './video';
 
 /** 监听详情回答 - 过滤 */
-export const myListenAnswerItem: IMyListenAnswerItem = {
+export const myListenAnswerItem = {
   index: 0,
   init: async function () {
     const nodes = domA('.AnswersNavWrapper .List-item');
@@ -57,8 +57,6 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
       config[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
     }
     removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i) => i.name || '')));
-    console.log(this.index, nodes.length);
-
     for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];
@@ -157,10 +155,3 @@ export const myListenAnswerItem: IMyListenAnswerItem = {
     this.init();
   },
 };
-
-export interface IMyListenAnswerItem {
-  index: number;
-  init: () => Promise<void>;
-  reset: () => void;
-  restart: () => void;
-}

@@ -3,13 +3,12 @@ import { dom, domById, domC, fnDomReplace, fnReturnStr } from '../commons/tools'
 import { CLASS_REMOVE_BLOCK, ID_BUTTON_SYNC_BLOCK } from '../configs';
 import { store } from '../store';
 import { IBlockUserItem, IZhihuCardContent } from '../types';
-import { IMyListenAnswerItem } from './listen-answer-item';
 
 /** id: 黑名单列表 */
 const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
 
 /** 黑名单用户操作方法 */
-export const myBlack: IMyBlack = {
+export const myBlack = {
   messageCancel: '取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。',
   /** 初始化黑名单列表 */
   init: async function () {
@@ -27,14 +26,14 @@ export const myBlack: IMyBlack = {
     };
   },
   /** 黑名单元素 */
-  createItem: function (info) {
+  createItem: function (info: IBlockUserItem) {
     return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
   },
-  createItemContent: ({ id, name, avatar }) => {
+  createItemContent: ({ id, name, avatar }: IBlockUserItem) => {
     return `<img src="${avatar}"/><a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
   },
   /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
-  addButton: async function (event, objMy) {
+  addButton: async function (event: HTMLElement, objMy: any) {
     const me = this;
     const classBox = 'ctz-block-box';
     const nodeBlockBox = event.querySelector(`.${classBox}`);
@@ -101,7 +100,7 @@ export const myBlack: IMyBlack = {
     nodeUser.appendChild(nodeBox);
   },
   /** 添加屏蔽用户 */
-  addBlackItem: async function (info) {
+  addBlackItem: async function (info: IBlockUserItem) {
     const pfConfig = await myStorage.getConfig();
     const nL = pfConfig.removeBlockUserContentList || [];
     nL.push(info);
@@ -111,7 +110,7 @@ export const myBlack: IMyBlack = {
     domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
   },
   /** 调用「屏蔽用户」接口 */
-  serviceAdd: function (urlToken, userName, userId, avatar) {
+  serviceAdd: function (urlToken: string, userName: string, userId: string, avatar: string) {
     const me = this;
     const headers = this.getHeaders();
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
@@ -126,7 +125,7 @@ export const myBlack: IMyBlack = {
     });
   },
   /** 解除拉黑用户接口 */
-  serviceRemove: function (info) {
+  serviceRemove: function (info: IBlockUserItem) {
     const { urlToken, id } = info;
     const headers = this.getHeaders();
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
@@ -149,7 +148,7 @@ export const myBlack: IMyBlack = {
     });
   },
   /** 同步黑名单列表 */
-  sync: function (offset = 0, l = []) {
+  sync: function (offset = 0, l: IBlockUserItem[] = []) {
     const nodeList = domById(ID_BLOCK_LIST);
     !l.length && nodeList && (nodeList.innerHTML = '');
     fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
@@ -176,17 +175,3 @@ export const myBlack: IMyBlack = {
   },
   getHeaders: () => store.getStorageConfigItem('fetchHeaders') as HeadersInit,
 };
-
-interface IMyBlack {
-  messageCancel: string;
-  init: () => void;
-  createItem: (info: IBlockUserItem) => void;
-  createItemContent: (info: IBlockUserItem) => void;
-  /** 添加「屏蔽用户」按钮 */
-  addButton: (event: HTMLElement, objMy?: IMyListenAnswerItem) => void;
-  addBlackItem: (info: IBlockUserItem) => void;
-  serviceAdd: (urlToken: string, userName: string, userId: string, avatar: string) => void;
-  serviceRemove: (info: IBlockUserItem) => void;
-  sync: (offset?: number, l?: IBlockUserItem[]) => void;
-  getHeaders: () => HeadersInit;
-}

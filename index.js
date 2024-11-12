@@ -2965,7 +2965,6 @@ background-repeat: no-repeat;`
         config[i2] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i2]);
       }
       removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i2) => i2.name || "")));
-      console.log(this.index, nodes.length);
       for (let i2 = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i2 < len; i2++) {
         let message2 = "";
         const nodeItem = nodes[i2];
