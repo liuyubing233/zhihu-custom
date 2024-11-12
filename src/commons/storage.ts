@@ -31,16 +31,15 @@ export const myStorage = {
   },
   /** 修改配置中的值 */
   setConfigItem: async function (key: string | Record<string, any>, value?: any) {
-    const nConfig = await this.getConfig();
-    const c = nConfig ? JSON.parse(nConfig) : {};
+    const config = await this.getConfig();
     if (typeof key === 'string') {
-      c[key] = value;
+      config[key] = value;
     } else {
       for (let itemKey in key) {
-        c[itemKey] = key[itemKey];
+        config[itemKey] = key[itemKey];
       }
     }
-    await this.setConfig(c);
+    await this.setConfig(config);
   },
   /** 更新配置 */
   setConfig: async function (params: IPfConfig) {

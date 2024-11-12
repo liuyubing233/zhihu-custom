@@ -604,16 +604,15 @@
     },
     /** 修改配置中的值 */
     setConfigItem: async function(key, value) {
-      const nConfig = await this.getConfig();
-      const c2 = nConfig ? JSON.parse(nConfig) : {};
+      const config = await this.getConfig();
       if (typeof key === "string") {
-        c2[key] = value;
+        config[key] = value;
       } else {
         for (let itemKey in key) {
-          c2[itemKey] = key[itemKey];
+          config[itemKey] = key[itemKey];
         }
       }
-      await this.setConfig(c2);
+      await this.setConfig(config);
     },
     /** 更新配置 */
     setConfig: async function(params) {
