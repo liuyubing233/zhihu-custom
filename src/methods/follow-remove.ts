@@ -1,7 +1,7 @@
 import { domA, domC, domP, pathnameHasFn } from '../commons/tools';
 
 /** 关注的内容一键移除 */
-export const myFollowRemove: IMyFollowRemove = {
+export const myFollowRemove = {
   init: function () {
     const me = this;
     clearTimeout(me.timer);
@@ -13,7 +13,7 @@ export const myFollowRemove: IMyFollowRemove = {
       });
     }, 500);
   },
-  addButtons: function (initTypeOb) {
+  addButtons: function (initTypeOb: IClassObEntries) {
     const me = this;
     const { classNameItem, classHref, ctzType } = initTypeOb;
     domA(`.${classNameItem}`).forEach((item) => {
@@ -67,15 +67,6 @@ export const myFollowRemove: IMyFollowRemove = {
   },
   timer: undefined,
 };
-
-interface IMyFollowRemove {
-  init: () => void;
-  addButtons: (params: IClassObEntries) => void;
-  className: string;
-  classNameRemove: string;
-  classOb: Record<string, IClassObEntries>;
-  timer?: NodeJS.Timeout;
-}
 
 interface IClassObEntries {
   classNameItem: string;

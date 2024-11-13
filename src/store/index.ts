@@ -1,4 +1,3 @@
-import { CONFIG_DEFAULT } from '../configs/default';
 import {
   IContentStorageConfig,
   IFindEvent,
@@ -8,23 +7,11 @@ import {
   IKeyofFindEvent,
   IKeyofHomeFetch,
   IKeyofStorageConfig,
-  IPfHistory,
   IStorageConfig,
-  IZhihuUserinfo
+  IZhihuUserinfo,
 } from '../types';
-import { IPfConfig } from '../types/configs.type';
-import { IZhihuListTargetItem } from '../types/zhihu-list.type';
 
 class Store {
-  /** 修改器配置 */
-  pfConfig = CONFIG_DEFAULT;
-
-  /** 缓存浏览历史记录 */
-  pfHistory: IPfHistory = {
-    view: [],
-    list: [],
-  };
-
   /** 用户信息 更改prev: userInfo */
   userinfo: IZhihuUserinfo | undefined = undefined;
 
@@ -43,15 +30,9 @@ class Store {
 
   /** 用户页面列表接口缓存 */
   homeFetch: IHomeFetch = {};
-  /** 知乎列表接口或JSON内容缓存 */
-  zhihuListTargets: IZhihuListTargetItem[] = [];
 
   constructor() {
     // to fix this is undefined
-    this.setConfig = this.setConfig.bind(this);
-    this.getConfig = this.getConfig.bind(this);
-    this.setHistory = this.setHistory.bind(this);
-    this.getHistory = this.getHistory.bind(this);
     this.setUserinfo = this.setUserinfo.bind(this);
     this.getUserinfo = this.getUserinfo.bind(this);
     this.setFindEvent = this.setFindEvent.bind(this);
@@ -64,23 +45,6 @@ class Store {
     this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
     this.getHomeFetch = this.getHomeFetch.bind(this);
     this.setHomeFetch = this.setHomeFetch.bind(this);
-    this.setZhihuListTargets = this.setZhihuListTargets.bind(this);
-    this.getZhihuListTargets = this.getZhihuListTargets.bind(this);
-    this.clearZhihuListTargets = this.clearZhihuListTargets.bind(this);
-  }
-  /** 仅在 commons/storage 文件中使用 */
-  setConfig(inner: IPfConfig) {
-    this.pfConfig = inner;
-  }
-  getConfig() {
-    return this.pfConfig;
-  }
-  /** 仅在 commons/storage 文件中使用 */
-  setHistory(inner: IPfHistory) {
-    this.pfHistory = inner;
-  }
-  getHistory() {
-    return this.pfHistory;
   }
 
   setUserinfo(inner: IZhihuUserinfo) {
@@ -121,16 +85,6 @@ class Store {
   }
   setHomeFetch(key: IKeyofHomeFetch, content: IHomeFetchContent) {
     this.homeFetch[key] = content;
-  }
-
-  setZhihuListTargets(data: IZhihuListTargetItem[]) {
-    this.zhihuListTargets = this.zhihuListTargets.concat(data);
-  }
-  clearZhihuListTargets() {
-    this.zhihuListTargets = [];
-  }
-  getZhihuListTargets() {
-    return this.zhihuListTargets;
   }
 }
 

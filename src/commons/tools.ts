@@ -6,7 +6,10 @@ export const dom = (n: string): HTMLElement | undefined => document.querySelecto
 export const domById = (id: string): HTMLElement | undefined => document.getElementById(id) as HTMLElement;
 /** 获取所有元素 */
 export const domA = (n: string): NodeListOf<HTMLElement> => document.querySelectorAll(n);
-/** 创建元素 */
+/**
+ * 创建元素
+ * attrObjs - className
+ */
 export const domC = (name: string, attrObjs: Record<string, any>) => {
   const node = document.createElement(name);
   for (let key in attrObjs) {
@@ -167,11 +170,12 @@ export const message = (value: string, t: number = 3000) => {
  * @param {string} extraCLass 按钮额外类名
  * @returns {HTMLElement} 元素
  */
-export const createBtnSmallTran = (innerHTML: string, extraCLass: string = ''): HTMLElement =>
+export const createBtnSmallTran = (innerHTML: string, extraCLass: string = '', extra: Record<string, any> = {}): HTMLElement =>
   domC('button', {
     innerHTML,
     className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
     style: 'margin: 0 4px;',
+    ...extra
   });
 
 export const judgeBrowserType = () => {

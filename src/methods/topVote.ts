@@ -1,17 +1,17 @@
+import { myStorage } from '../commons/storage';
 import { domC } from '../commons/tools';
-import { store } from '../store';
 
 /** 内容顶部显示赞同数 nodeItem className: ContentItem-meta */
-export const updateTopVote = (nodeItem?: HTMLElement) => {
+export const updateTopVote = async (nodeItem?: HTMLElement) => {
   if (!nodeItem) return;
-  const nodeContentItemMeta = nodeItem.querySelector('.ContentItem-meta');
-  const nodeMetaVote = nodeItem.querySelector('[itemprop="upvoteCount"]') as HTMLMetaElement;
-  const { topVote } = store.getConfig();
-  if (!nodeMetaVote || !topVote || !nodeContentItemMeta) return;
-  const vote = nodeMetaVote.content;
+  const nodeItemMeta = nodeItem.querySelector('.ContentItem-meta');
+  const nodeVote = nodeItem.querySelector('[itemprop="upvoteCount"]') as HTMLMetaElement;
+  const { topVote } = await myStorage.getConfig()
+  if (!nodeVote || !topVote || !nodeItemMeta) return;
+  const vote = nodeVote.content;
   if (+vote === 0) return;
   const className = 'ctz-top-vote';
-  const domVotePrev = nodeContentItemMeta.querySelector(`.${className}`);
+  const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
   const innerHTML = `${vote} 人赞同了该回答`;
   if (domVotePrev) {
     domVotePrev.innerHTML = innerHTML;
@@ -21,11 +21,11 @@ export const updateTopVote = (nodeItem?: HTMLElement) => {
       innerHTML,
       style: 'font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0;',
     });
-    nodeContentItemMeta.appendChild(domVote);
+    nodeItemMeta.appendChild(domVote);
     const metaObserver = new MutationObserver(() => {
       updateTopVote(nodeItem);
     });
-    metaObserver.observe(nodeMetaVote, {
+    metaObserver.observe(nodeVote, {
       attributes: true,
       childList: false,
       characterData: false,

@@ -1,13 +1,11 @@
 import { myStorage } from '../commons/storage';
 import { domC } from '../commons/tools';
-import { store } from '../store';
 
 /** 悬浮模块开关锁添加移除方法 */
 export const myLock = {
-  append: function (e: HTMLElement, name: string) {
+  append: async function (e: HTMLElement, name: string) {
     // 悬浮模块是否固定改为鼠标放置到模块上显示开锁图标 点击即可移动模块
     if (!e) return;
-    const { getConfig } = store;
     const lock = this.lock.class;
     const unlock = this.unlock.class;
     const lockMask = this.lockMask.class;
@@ -19,7 +17,7 @@ export const myLock = {
     !e.querySelector(unlock) && e.appendChild(iUnlock);
     !e.querySelector(lockMask) && e.appendChild(dLockMask);
 
-    const pfConfig = getConfig();
+    const pfConfig = await myStorage.getConfig();
     (e.querySelector(lock) as HTMLButtonElement).onclick = async () => {
       await myStorage.setConfigItem(name + 'Fixed', true);
       e.classList.remove(classRemove);

@@ -18,19 +18,19 @@ import { initRootEvent, initTopStoryRecommendEvent } from './init-top-event-list
 /** 加载设置弹窗绑定方法 */
 export const initOperate = () => {
   const nodeContent = dom('.ctz-content')!;
-  nodeContent.onclick = (e: Event) => {
-    const target = e.target as HTMLElement;
+  nodeContent.onclick = (e) => {
+    const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CLICK)) {
-      fnChanger(target as HTMLInputElement);
+      fnChanger(target);
     }
     if (target.classList.contains('ctz-button')) {
-      myButtonOperation[(target as HTMLButtonElement).name] && myButtonOperation[(target as HTMLButtonElement).name]();
+      myButtonOperation[target.name] && myButtonOperation[target.name]();
     }
   };
-  nodeContent.onchange = (e: Event) => {
-    const target = e.target as HTMLElement;
+  nodeContent.onchange = (e) => {
+    const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CHANGE)) {
-      fnChanger(target as HTMLInputElement);
+      fnChanger(target);
     }
   };
   dom('.ctz-menu-top')!.onclick = myMenu.click;
@@ -42,7 +42,7 @@ export const initOperate = () => {
 
   domA('[name="button_history_clear"]').forEach((item) => {
     item.onclick = async (event) => {
-      const prevHistory = store.getHistory();
+      const prevHistory = await myStorage.getHistory();
       const target = event.target as HTMLElement;
       const dataId = target.getAttribute('data-id') as IKeyofHistory;
       const isClear = confirm(`是否清空${target.innerText}`);
@@ -86,8 +86,8 @@ const myButtonOperation: Record<string, Function> = {
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
-    const { getConfig, getStorageConfigItem } = store;
-    const { filterKeywords = [], removeBlockUserContentList = [] } = getConfig();
+    const { getStorageConfigItem } = store;
+    const { filterKeywords = [], removeBlockUserContentList = [] } = await myStorage.getConfig();
     const cacheConfig = getStorageConfigItem('cachePfConfig') as IPfConfig;
     await myStorage.setConfig({
       ...cacheConfig,

@@ -1,13 +1,13 @@
+import { myStorage } from '../commons/storage';
 import { dom, domA, domC, insertAfter } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
-import { store } from '../store';
 import { formatTime } from './time';
 
 let timer: NodeJS.Timeout | undefined = undefined;
 
 /** 用户主页回答内容修改、用户主页文章内容修改 */
-export const userHomeAnswers = () => {
-  const { userHomeContentTimeTop } = store.getConfig();
+export const userHomeAnswers = async () => {
+  const { userHomeContentTimeTop } = await myStorage.getConfig()
   if (!userHomeContentTimeTop) return;
 
   const doContent = (domList: NodeListOf<HTMLElement>) => {
@@ -61,8 +61,8 @@ const CLASS_TOP_BLOCK = 'ctz-top-block-in-user-home';
 let blockObserver: MutationObserver | undefined;
 
 /** 用户主页置顶「屏蔽用户」按钮 */
-export const topBlockUser = () => {
-  const { userHomeTopBlockUser } = store.getConfig();
+export const topBlockUser = async () => {
+  const { userHomeTopBlockUser } = await myStorage.getConfig()
   const nodeUserHeaderOperate = dom('.ProfileHeader-contentFooter .MemberButtonGroup');
   const nodeFooterOperations = dom('.Profile-footerOperations');
   if (!nodeUserHeaderOperate || !userHomeTopBlockUser || !nodeFooterOperations) return;

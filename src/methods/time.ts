@@ -1,6 +1,6 @@
+import { myStorage } from '../commons/storage';
 import { dom, domC } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
-import { store } from '../store';
 
 /** 时间格式化 */
 export const formatTime = (t: string, f = 'YYYY-MM-DD HH:mm:ss') => {
@@ -51,10 +51,10 @@ export const updateItemTime = (e: HTMLElement) => {
 
 const C_QUESTION_TIME = 'ctz-question-time';
 /** 问题详情添加时间 */
-export const addQuestionTime = () => {
+export const addQuestionTime = async () => {
   const nodeT = dom(`.${C_QUESTION_TIME}`);
   if (nodeT) return;
-  const { questionCreatedAndModifiedTime } = store.getConfig();
+  const { questionCreatedAndModifiedTime } = await myStorage.getConfig()
   const nodeCreated = dom('[itemprop="dateCreated"]') as HTMLMetaElement;
   const nodeModified = dom('[itemprop="dateModified"]') as HTMLMetaElement;
   const nodeBox = dom('.QuestionPage .QuestionHeader-title');
@@ -70,8 +70,8 @@ export const addQuestionTime = () => {
 
 const C_ARTICLE_TIME = 'ctz-article-time';
 /** 文章发布时间置顶 */
-export const addArticleTime = () => {
-  const { articleCreateTimeToTop } = store.getConfig();
+export const addArticleTime = async () => {
+  const { articleCreateTimeToTop } = await myStorage.getConfig()
   const nodeT = dom(`.${C_ARTICLE_TIME}`);
   if (nodeT) return;
   const nodeContentTime = dom('.ContentItem-time');
