@@ -42,9 +42,6 @@ async function resizeFun() {
   myListenSearchListItem.init();
   myListenAnswerItem.init();
   pathnameHasFn({
-    // question: () => {
-    //   myListenSelect.init();
-    // },
     collection: () => myCollectionExport.init(),
   });
   globalTitle !== document.title && changeTitle();

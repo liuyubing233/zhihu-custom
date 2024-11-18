@@ -74,12 +74,8 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     titleIco: changeICO,
     showGIFinDialog: previewGIF,
     questionCreatedAndModifiedTime: addQuestionTime,
-    highlightOriginal: () => {
-      myListenListItem.restart();
-    },
-    listOutPutNotInterested: () => {
-      myListenListItem.restart();
-    },
+    highlightOriginal: myListenListItem.restart,
+    listOutPutNotInterested: myListenListItem.restart,
     articleCreateTimeToTop: addArticleTime,
     versionHomeIsPercent: rangeChoosePercent,
     versionAnswerIsPercent: rangeChoosePercent,

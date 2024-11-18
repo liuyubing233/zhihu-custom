@@ -81,16 +81,6 @@ import { INNER_CSS } from './web-resources';
             ...prevHeaders,
             ...opt.headers,
           });
-
-          // if (/\/api\/v4\/members\/[\w\W]+\/answers/.test(url)) {
-          //   // 如果为用户页面的 回答栏
-          //   setHomeFetch('answer', { url, header: opt.headers });
-          // }
-
-          // if (/\/api\/v4\/members\/[\w\W]+\/articles/.test(url)) {
-          //   // 如果为用户页面的 文章栏
-          //   setHomeFetch('articles', { url, header: opt.headers });
-          // }
         }
 
         return originFetch(url, opt);
@@ -176,9 +166,9 @@ import { INNER_CSS } from './web-resources';
         nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
         initInviteOnce();
       },
-      filter: () => myPageFilterSetting.init(),
-      collection: () => myCollectionExport.init(),
-      following: () => myFollowRemove.init(),
+      filter: myPageFilterSetting.init,
+      collection: myCollectionExport.init,
+      following: myFollowRemove.init,
       answers: () => {
         throttle(addBtnForExportPeopleAnswer)();
         userHomeAnswers();
@@ -187,9 +177,7 @@ import { INNER_CSS } from './web-resources';
         throttle(addBtnForExportPeopleArticles)();
         userHomeAnswers();
       },
-      people: () => {
-        topBlockUser();
-      },
+      people: topBlockUser,
     });
   };
 

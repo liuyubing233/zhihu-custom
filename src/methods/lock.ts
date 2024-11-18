@@ -33,12 +33,9 @@ export const myLock = {
   },
   remove: function (e: HTMLElement) {
     if (!e) return;
-    const lock = this.lock.class;
-    const unlock = this.unlock.class;
-    const lockMask = this.lockMask.class;
-    const nodeLock = e.querySelector(lock);
-    const nodeUnlock = e.querySelector(unlock);
-    const nodeLockMask = e.querySelector(lockMask);
+    const nodeLock = e.querySelector(this.lock.class);
+    const nodeUnlock = e.querySelector(this.unlock.class);
+    const nodeLockMask = e.querySelector(this.lockMask.class);
     nodeLock && nodeLock.remove();
     nodeUnlock && nodeUnlock.remove();
     nodeLockMask && nodeLockMask.remove();

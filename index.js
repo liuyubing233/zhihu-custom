@@ -889,20 +889,12 @@
         fetchHeaders: {},
         headerDoms: {}
       };
-      /** 用户页面列表接口缓存 */
-      this.homeFetch = {};
       this.setUserinfo = this.setUserinfo.bind(this);
       this.getUserinfo = this.getUserinfo.bind(this);
-      this.setFindEvent = this.setFindEvent.bind(this);
       this.setFindEventItem = this.setFindEventItem.bind(this);
-      this.getFindEvent = this.getFindEvent.bind(this);
       this.getFindEventItem = this.getFindEventItem.bind(this);
-      this.setStorageConfig = this.setStorageConfig.bind(this);
       this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
-      this.getStorageConfig = this.getStorageConfig.bind(this);
       this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
-      this.getHomeFetch = this.getHomeFetch.bind(this);
-      this.setHomeFetch = this.setHomeFetch.bind(this);
     }
     setUserinfo(inner) {
       this.userinfo = inner;
@@ -910,35 +902,17 @@
     getUserinfo() {
       return this.userinfo;
     }
-    setFindEvent(inner) {
-      this.findEvent = inner;
-    }
     setFindEventItem(key, content) {
       this.findEvent[key] = content;
-    }
-    getFindEvent() {
-      return this.findEvent;
     }
     getFindEventItem(key) {
       return this.findEvent[key];
     }
-    setStorageConfig(inner) {
-      this.storageConfig = inner;
-    }
     setStorageConfigItem(key, content) {
       this.storageConfig[key] = content;
     }
-    getStorageConfig() {
-      return this.storageConfig;
-    }
     getStorageConfigItem(key) {
       return this.storageConfig[key];
-    }
-    getHomeFetch(key) {
-      return this.homeFetch[key];
-    }
-    setHomeFetch(key, content) {
-      this.homeFetch[key] = content;
     }
   };
   var store = new Store();
@@ -1096,12 +1070,9 @@
     remove: function(e2) {
       if (!e2)
         return;
-      const lock = this.lock.class;
-      const unlock = this.unlock.class;
-      const lockMask = this.lockMask.class;
-      const nodeLock = e2.querySelector(lock);
-      const nodeUnlock = e2.querySelector(unlock);
-      const nodeLockMask = e2.querySelector(lockMask);
+      const nodeLock = e2.querySelector(this.lock.class);
+      const nodeUnlock = e2.querySelector(this.unlock.class);
+      const nodeLockMask = e2.querySelector(this.lockMask.class);
       nodeLock && nodeLock.remove();
       nodeUnlock && nodeUnlock.remove();
       nodeLockMask && nodeLockMask.remove();
@@ -2218,32 +2189,24 @@
     },
     getHeaders: () => store.getStorageConfigItem("fetchHeaders")
   };
-  var ID_FETCH_STATUS = "CTZ_FETCH_STATUS";
-  var ID_FETCH_BUTTON = "CTZ_CHANGE_FETCH";
-  var commitStatusTrue = '<b style="color: green;">已开启接口拦截</b>，如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截';
-  var commitStatusFalse = '<b style="color: red;">已关闭接口拦截</b>，部分功能不可用';
-  var buttonContentTrue = "关闭接口拦截";
-  var buttonContentFalse = "开启接口拦截";
-  var messageToTrue = "开启接口拦截，确认后将刷新页面。\n如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。";
-  var messageToFalse = "关闭接口拦截，确认后将刷新页面。\n「黑名单设置；外置不感兴趣；快速屏蔽用户；回答、文章和收藏夹导出」功能将不可用。";
-  var CLASS_OPERATE_INTERCEPT = "ctz-fetch-intercept";
-  var CLASS_CLOSE_INTERCEPT = "ctz-fetch-intercept-close";
   var initFetchInterceptStatus = async () => {
     const { fetchInterceptStatus } = await myStorage.getConfig();
     changeHTML(!!fetchInterceptStatus);
-    domById(ID_FETCH_BUTTON).onclick = function() {
-      if (confirm(fetchInterceptStatus ? messageToFalse : messageToTrue)) {
+    domById("CTZ_CHANGE_FETCH").onclick = function() {
+      if (confirm(
+        fetchInterceptStatus ? "关闭接口拦截，确认后将刷新页面。\n「黑名单设置；外置不感兴趣；快速屏蔽用户；回答、文章和收藏夹导出」功能将不可用。" : "开启接口拦截，确认后将刷新页面。\n如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。"
+      )) {
         myStorage.setConfigItem("fetchInterceptStatus", !fetchInterceptStatus);
         window.location.reload();
       }
     };
   };
   var changeHTML = (status) => {
-    domById(ID_FETCH_STATUS).innerHTML = status ? commitStatusTrue : commitStatusFalse;
-    domById(ID_FETCH_BUTTON).innerHTML = status ? buttonContentTrue : buttonContentFalse;
+    domById("CTZ_FETCH_STATUS").innerHTML = status ? '<b style="color: green;">已开启接口拦截</b>，如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截' : '<b style="color: red;">已关闭接口拦截</b>，部分功能不可用';
+    domById("CTZ_CHANGE_FETCH").innerHTML = status ? "关闭接口拦截" : "开启接口拦截";
     if (!status) {
-      domA(`.${CLASS_OPERATE_INTERCEPT}`).forEach((item) => {
-        item.classList.add(CLASS_CLOSE_INTERCEPT);
+      domA(".ctz-fetch-intercept").forEach((item) => {
+        item.classList.add("ctz-fetch-intercept-close");
         item.querySelectorAll("input").forEach((it) => {
           it.disabled = true;
         });
@@ -3340,9 +3303,6 @@
     myListenSearchListItem.init();
     myListenAnswerItem.init();
     pathnameHasFn({
-      // question: () => {
-      //   myListenSelect.init();
-      // },
       collection: () => myCollectionExport.init()
     });
     globalTitle !== document.title && changeTitle();
@@ -3575,12 +3535,8 @@
       titleIco: changeICO,
       showGIFinDialog: previewGIF,
       questionCreatedAndModifiedTime: addQuestionTime,
-      highlightOriginal: () => {
-        myListenListItem.restart();
-      },
-      listOutPutNotInterested: () => {
-        myListenListItem.restart();
-      },
+      highlightOriginal: myListenListItem.restart,
+      listOutPutNotInterested: myListenListItem.restart,
       articleCreateTimeToTop: addArticleTime,
       versionHomeIsPercent: rangeChoosePercent,
       versionAnswerIsPercent: rangeChoosePercent,
@@ -3825,7 +3781,7 @@
   var myPageFilterSetting = {
     timeout: void 0,
     init: function() {
-      this.timeout && clearTimeout(this.timeout);
+      clearTimeout(this.timeout);
       if (/\/settings\/filter/.test(location.pathname)) {
         this.timeout = setTimeout(() => {
           this.addHTML();
@@ -3834,17 +3790,17 @@
       }
     },
     addHTML: () => {
-      const elementButton = domC("button", {
+      const nButton = domC("button", {
         className: "ctz-button",
         style: "margin-left: 12px;",
         innerHTML: "移除当前页所有屏蔽话题"
       });
-      elementButton.onclick = () => {
+      nButton.onclick = () => {
         domA(".Tag button").forEach((item) => item.click());
       };
       domA(".css-j2uawy").forEach((item) => {
         if (/已屏蔽话题/.test(item.innerText) && !item.querySelector(".ctz-button")) {
-          item.appendChild(elementButton);
+          item.appendChild(nButton);
         }
       });
     }
@@ -4038,9 +3994,9 @@
           nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
           initInviteOnce();
         },
-        filter: () => myPageFilterSetting.init(),
-        collection: () => myCollectionExport.init(),
-        following: () => myFollowRemove.init(),
+        filter: myPageFilterSetting.init,
+        collection: myCollectionExport.init,
+        following: myFollowRemove.init,
         answers: () => {
           throttle(addBtnForExportPeopleAnswer)();
           userHomeAnswers();
@@ -4049,9 +4005,7 @@
           throttle(addBtnForExportPeopleArticles)();
           userHomeAnswers();
         },
-        people: () => {
-          topBlockUser();
-        }
+        people: topBlockUser
       });
     };
     const changeHistory = () => {

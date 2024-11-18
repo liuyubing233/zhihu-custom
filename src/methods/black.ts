@@ -33,7 +33,7 @@ export const myBlack = {
     return `<img src="${avatar}"/><a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
   },
   /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
-  addButton: async function (event: HTMLElement, objMy: any) {
+  addButton: async function (event: HTMLElement, objMy?: any) {
     const me = this;
     const classBox = 'ctz-block-box';
     const nodeBlockBox = event.querySelector(`.${classBox}`);

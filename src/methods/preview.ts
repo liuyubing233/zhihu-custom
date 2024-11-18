@@ -1,5 +1,5 @@
-import { myScroll } from "../commons/scroll-stop-on";
-import { dom, domById } from "../commons/tools";
+import { myScroll } from '../commons/scroll-stop-on';
+import { dom, domById } from '../commons/tools';
 
 /** 自定义预览方法 */
 export const myPreview = {
@@ -7,7 +7,7 @@ export const myPreview = {
   open: function (src: string, even?: any, isVideo?: boolean) {
     const nameDom = isVideo ? this.evenPathVideo : this.evenPathImg;
     const idDom = isVideo ? this.idVideo : this.idImg;
-    const nodeName = dom(nameDom);
+    const nodeName = dom(nameDom) as HTMLImageElement;
     const nodeId = domById(idDom);
     nodeName && (nodeName.src = src);
     nodeId && (nodeId.style.display = 'block');
@@ -23,8 +23,8 @@ export const myPreview = {
       this.even = null;
     }
     pEvent.style.display = 'none';
-    const nodeImg = dom(this.evenPathImg);
-    const nodeVideo = dom(this.evenPathVideo);
+    const nodeImg = dom(this.evenPathImg) as HTMLImageElement;
+    const nodeVideo = dom(this.evenPathVideo) as HTMLVideoElement;
     nodeImg && (nodeImg.src = '');
     nodeVideo && (nodeVideo.src = '');
     myScroll.on();

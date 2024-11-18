@@ -48,18 +48,3 @@ export type IKeyofHistory = keyof IPfHistory;
 export type IKeyofFindEvent = keyof IFindEvent;
 export type IKeyofStorageConfig = keyof IStorageConfig;
 export type IContentStorageConfig = string | number | IPfConfig | HeadersInit | IHeaderDoms;
-
-/** 用户页面列表接口缓存 */
-export interface IHomeFetch {
-  /** 回答 */
-  answer?: IHomeFetchContent;
-  /** 文章 */
-  articles?: IHomeFetchContent;
-}
-
-export interface IHomeFetchContent {
-  url: string;
-  header: HeadersInit;
-}
-
-export type IKeyofHomeFetch = keyof IHomeFetch;
