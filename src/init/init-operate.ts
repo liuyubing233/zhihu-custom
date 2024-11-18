@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC, message } from '../commons/tools';
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../configs';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CONFIG_DEFAULT } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { myDialog } from '../methods/dialog-open-close';
@@ -10,7 +10,7 @@ import { myMenu } from '../methods/menu';
 import { changeTitle } from '../methods/page-title';
 import { myPreview } from '../methods/preview';
 import { store } from '../store';
-import { IKeyofHistory, IPfConfig } from '../types';
+import { IKeyofHistory } from '../types';
 import { initData } from './init-data';
 import { onInitStyleExtra } from './init-style-extra';
 import { initRootEvent, initTopStoryRecommendEvent } from './init-top-event-listener';
@@ -86,11 +86,9 @@ const myButtonOperation: Record<string, Function> = {
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
-    const { getStorageConfigItem } = store;
     const { filterKeywords = [], removeBlockUserContentList = [] } = await myStorage.getConfig();
-    const cacheConfig = getStorageConfigItem('cachePfConfig') as IPfConfig;
     await myStorage.setConfig({
-      ...cacheConfig,
+      ...CONFIG_DEFAULT,
       filterKeywords,
       removeBlockUserContentList,
     });

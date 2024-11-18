@@ -57,7 +57,6 @@ import { INNER_CSS } from './web-resources';
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
     const config = await myStorage.getConfig();
-    setStorageConfigItem('cachePfConfig', config);
     await myStorage.getHistory();
     initHistoryView();
     onInitStyleExtra();
@@ -203,8 +202,8 @@ import { INNER_CSS } from './web-resources';
     myListenAnswerItem.reset();
   };
   /** history 变化 */
-  window.addEventListener('popstate', changeHistory);
-  window.addEventListener('pushState', changeHistory);
+  window.addEventListener('popstate', throttle(changeHistory));
+  window.addEventListener('pushState', throttle(changeHistory));
 
   /** 页面资源加载完成 */
   window.addEventListener('load', () => {

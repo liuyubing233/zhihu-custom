@@ -5,16 +5,13 @@ import { store } from '../store';
 import { IZhihuArticlesDataItem } from '../types/zhihu-articles.type';
 import { INNER_CSS } from '../web-resources';
 
-/** 查找生成PDF的元素类名 */
-const CLASS_PDF_CONTENT = '.ctz-pdf-box-content';
-
 const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText: string) => {
   let max = 0;
   let finish = 0;
   let error = 0;
   const innerHTML = arrHTML.join('');
 
-  const iframe = dom(CLASS_PDF_CONTENT) as HTMLIFrameElement;
+  const iframe = dom('.ctz-pdf-box-content') as HTMLIFrameElement;
   if (!iframe.contentWindow) return;
   const doc = iframe.contentWindow.document;
   doc.body.innerHTML = '';

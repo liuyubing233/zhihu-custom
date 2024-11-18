@@ -68,9 +68,8 @@ export const fnDomReplace = (node: any, attrObjs: Record<string, any>) => {
 export function throttle(fn: Function, time = 300) {
   let tout: NodeJS.Timeout | undefined = undefined;
   return function () {
-    if (tout) return;
+    clearTimeout(tout)
     tout = setTimeout(() => {
-      tout = undefined;
       // @ts-ignore
       fn.apply(this, arguments);
     }, time);

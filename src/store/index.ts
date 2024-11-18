@@ -21,10 +21,8 @@ class Store {
 
   /** 脚本内配置缓存 */
   storageConfig: IStorageConfig = {
-    cachePfConfig: {},
     cacheTitle: '',
     fetchHeaders: {},
-    // heightForList: 0,
     headerDoms: {},
   };
 

@@ -49,29 +49,42 @@ export const updateItemTime = (e: HTMLElement) => {
   }
 };
 
-const C_QUESTION_TIME = 'ctz-question-time';
+let questionTimeout: NodeJS.Timeout;
+let questionFindIndex = 0;
+const resetQuestionTime = () => {
+  if (questionFindIndex > 5 || !dom('.ctz-question-time')) {
+    return;
+  }
+  questionFindIndex++;
+  clearTimeout(questionTimeout);
+  questionTimeout = setTimeout(addQuestionTime, 500);
+};
+
 /** 问题详情添加时间 */
 export const addQuestionTime = async () => {
-  const nodeT = dom(`.${C_QUESTION_TIME}`);
-  if (nodeT) return;
-  const { questionCreatedAndModifiedTime } = await myStorage.getConfig()
+  const nodeTime = dom('.ctz-question-time');
+  nodeTime && nodeTime.remove();
+  const { questionCreatedAndModifiedTime } = await myStorage.getConfig();
   const nodeCreated = dom('[itemprop="dateCreated"]') as HTMLMetaElement;
   const nodeModified = dom('[itemprop="dateModified"]') as HTMLMetaElement;
   const nodeBox = dom('.QuestionPage .QuestionHeader-title');
-  if (!questionCreatedAndModifiedTime || !nodeCreated || !nodeModified || !nodeBox) return;
-  nodeBox.appendChild(
+  if (!questionCreatedAndModifiedTime || !nodeCreated || !nodeModified || !nodeBox) {
+    resetQuestionTime();
+    return;
+  }
+  nodeBox?.appendChild(
     domC('div', {
-      className: C_QUESTION_TIME,
+      className: 'ctz-question-time',
       innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,
     })
   );
-  setTimeout(addQuestionTime, 500)
+  resetQuestionTime();
 };
 
 const C_ARTICLE_TIME = 'ctz-article-time';
 /** 文章发布时间置顶 */
 export const addArticleTime = async () => {
-  const { articleCreateTimeToTop } = await myStorage.getConfig()
+  const { articleCreateTimeToTop } = await myStorage.getConfig();
   const nodeT = dom(`.${C_ARTICLE_TIME}`);
   if (nodeT) return;
   const nodeContentTime = dom('.ContentItem-time');

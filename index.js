@@ -672,10 +672,8 @@
   function throttle(fn, time = 300) {
     let tout = void 0;
     return function() {
-      if (tout)
-        return;
+      clearTimeout(tout);
       tout = setTimeout(() => {
-        tout = void 0;
         fn.apply(this, arguments);
       }, time);
     };
@@ -887,10 +885,8 @@
       };
       /** 脚本内配置缓存 */
       this.storageConfig = {
-        cachePfConfig: {},
         cacheTitle: "",
         fetchHeaders: {},
-        // heightForList: 0,
         headerDoms: {}
       };
       /** 用户页面列表接口缓存 */
@@ -2453,13 +2449,12 @@ background-repeat: no-repeat;`
       }
     }
   };
-  var CLASS_PDF_CONTENT = ".ctz-pdf-box-content";
   var loadIframeAndExport = (eventBtn, arrHTML, btnText) => {
     let max = 0;
     let finish = 0;
     let error = 0;
     const innerHTML = arrHTML.join("");
-    const iframe = dom(CLASS_PDF_CONTENT);
+    const iframe = dom(".ctz-pdf-box-content");
     if (!iframe.contentWindow)
       return;
     const doc = iframe.contentWindow.document;
@@ -2846,24 +2841,34 @@ background-repeat: no-repeat;`
       );
     }
   };
-  var C_QUESTION_TIME = "ctz-question-time";
-  var addQuestionTime = async () => {
-    const nodeT = dom(`.${C_QUESTION_TIME}`);
-    if (nodeT)
+  var questionTimeout;
+  var questionFindIndex = 0;
+  var resetQuestionTime = () => {
+    if (questionFindIndex > 5 || !dom(".ctz-question-time")) {
       return;
+    }
+    questionFindIndex++;
+    clearTimeout(questionTimeout);
+    questionTimeout = setTimeout(addQuestionTime, 500);
+  };
+  var addQuestionTime = async () => {
+    const nodeTime = dom(".ctz-question-time");
+    nodeTime && nodeTime.remove();
     const { questionCreatedAndModifiedTime } = await myStorage.getConfig();
     const nodeCreated = dom('[itemprop="dateCreated"]');
     const nodeModified = dom('[itemprop="dateModified"]');
     const nodeBox = dom(".QuestionPage .QuestionHeader-title");
-    if (!questionCreatedAndModifiedTime || !nodeCreated || !nodeModified || !nodeBox)
+    if (!questionCreatedAndModifiedTime || !nodeCreated || !nodeModified || !nodeBox) {
+      resetQuestionTime();
       return;
-    nodeBox.appendChild(
+    }
+    nodeBox?.appendChild(
       domC("div", {
-        className: C_QUESTION_TIME,
+        className: "ctz-question-time",
         innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`
       })
     );
-    setTimeout(addQuestionTime, 500);
+    resetQuestionTime();
   };
   var C_ARTICLE_TIME = "ctz-article-time";
   var addArticleTime = async () => {
@@ -3720,11 +3725,9 @@ background-repeat: no-repeat;`
       const isUse = confirm("是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存");
       if (!isUse)
         return;
-      const { getStorageConfigItem } = store;
       const { filterKeywords = [], removeBlockUserContentList = [] } = await myStorage.getConfig();
-      const cacheConfig = getStorageConfigItem("cachePfConfig");
       await myStorage.setConfig({
-        ...cacheConfig,
+        ...CONFIG_DEFAULT,
         filterKeywords,
         removeBlockUserContentList
       });
@@ -3997,7 +4000,6 @@ background-repeat: no-repeat;`
       fixVideoAutoPlay();
       fnInitDomStyle("CTZ_STYLE", INNER_CSS);
       const config = await myStorage.getConfig();
-      setStorageConfigItem("cachePfConfig", config);
       await myStorage.getHistory();
       initHistoryView();
       onInitStyleExtra();
@@ -4106,8 +4108,8 @@ background-repeat: no-repeat;`
       myListenSearchListItem.reset();
       myListenAnswerItem.reset();
     };
-    window.addEventListener("popstate", changeHistory);
-    window.addEventListener("pushState", changeHistory);
+    window.addEventListener("popstate", throttle(changeHistory));
+    window.addEventListener("pushState", throttle(changeHistory));
     window.addEventListener("load", () => {
       const nodeSignModal = dom(".signFlowModal");
       const nodeSignClose = nodeSignModal && nodeSignModal.querySelector(".Modal-closeButton");

@@ -13,14 +13,10 @@ export interface IFindEventEntries {
 
 /** 脚本内配置缓存 */
 export interface IStorageConfig {
-  /** 缓存初始配置 */
-  cachePfConfig: IPfConfig;
   /** 缓存页面原标题 */
   cacheTitle: string;
   /** 接口的 headers 内容, 获取下来以供使用 */
   fetchHeaders: HeadersInit;
-  /** 列表缓存高度 */
-  // heightForList: number;
   /** header内元素 */
   headerDoms: IHeaderDoms;
 }
@@ -48,12 +44,10 @@ export interface IPfHistory {
   view: string[];
 }
 
-
 export type IKeyofHistory = keyof IPfHistory;
 export type IKeyofFindEvent = keyof IFindEvent;
 export type IKeyofStorageConfig = keyof IStorageConfig;
 export type IContentStorageConfig = string | number | IPfConfig | HeadersInit | IHeaderDoms;
-
 
 /** 用户页面列表接口缓存 */
 export interface IHomeFetch {
