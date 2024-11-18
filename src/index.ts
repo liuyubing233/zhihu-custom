@@ -12,7 +12,7 @@ import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
 import { onInitStyleExtra } from './init/init-style-extra';
 import { needRedirect } from './init/redirect';
-import { loadBackground, myCustomStyle } from './methods/background';
+import { myBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
 import { addBtnForExportPeopleAnswer, addBtnForExportPeopleArticles, addButtonForArticleExportPDF, myCollectionExport } from './methods/export-PDF';
@@ -129,7 +129,7 @@ import { INNER_CSS } from './web-resources';
       initOperate();
       initData();
       // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
-      loadBackground();
+      myBackground.init();
       myVersion.initAfterLoad();
       myCustomStyle.init();
       initBlockWords();

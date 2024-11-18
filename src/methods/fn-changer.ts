@@ -2,7 +2,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domById } from '../commons/tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
 import { initImagePreview } from '../init/init-image-preview';
-import { loadBackground, onUseThemeDark } from './background';
+import { myBackground, onUseThemeDark } from './background';
 import { myHidden } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
@@ -42,7 +42,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   const { name, value, checked, type } = ev;
   const changeBackground = () => {
     myVersion.change();
-    loadBackground();
+    myBackground.init();
     myListenListItem.restart();
     onUseThemeDark();
   };

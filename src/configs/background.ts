@@ -1,5 +1,5 @@
 /** 背景色设置 */
-import { ETheme, EThemeDark, EThemeLight, IThemeConfigDark, IThemeConfigLight } from '../types/background.type';
+import { ETheme, EThemeDark, EThemeLight, IThemeConfigLight } from '../types/background.type';
 
 export const THEMES = [
   { label: '浅色', value: ETheme.浅色, background: '#fff', color: '#000' },
@@ -17,14 +17,14 @@ export const THEME_CONFIG_LIGHT: IThemeConfigLight = {
   [EThemeLight.落日黄]: { name: '落日黄', background: '#FFD39B', background2: '#ffe4c4' },
 };
 
-export const THEME_CONFIG_DARK: IThemeConfigDark = {
-  [EThemeDark.深色模式默认]: { name: '默认', color: '#fff', color2: '#999', background: '#121212', background2: '#333333' },
-  [EThemeDark.深色护眼一]: { name: '深色护眼一', color: '#f7f9f9', color2: '#161d23', background: '#15202b', background2: '#38444d' },
-  [EThemeDark.深色护眼二]: { name: '深色护眼二', color: '#f7f9f9', color2: '#161d23', background: '#1f1f1f', background2: '#303030' },
-  [EThemeDark.深色护眼三]: { name: '深色护眼三', color: '#f7f9f9', color2: '#161d23', background: '#272822', background2: '#383932' },
-  [EThemeDark.深色蓝]: { name: '深色蓝', color: '#f7f9f9', color2: '#161d23', background: '#1c0c59', background2: '#191970' },
-  [EThemeDark.深色红]: { name: '深色红', color: '#f7f9f9', color2: '#161d23', background: '#570D0D', background2: '#8B0000' },
-  [EThemeDark.深色绿]: { name: '深色绿', color: '#f7f9f9', color2: '#161d23', background: '#093333', background2: '#0c403f' },
+export const THEME_CONFIG_DARK: IThemeConfigLight = {
+  [EThemeDark.深色模式默认]: { name: '默认',  background: '#121212', background2: '#333333' },
+  [EThemeDark.深色护眼一]: { name: '深色护眼一',  background: '#15202b', background2: '#38444d' },
+  [EThemeDark.深色护眼二]: { name: '深色护眼二',  background: '#1f1f1f', background2: '#303030' },
+  [EThemeDark.深色护眼三]: { name: '深色护眼三',  background: '#272822', background2: '#383932' },
+  [EThemeDark.深色蓝]: { name: '深色蓝',  background: '#1c0c59', background2: '#191970' },
+  [EThemeDark.深色红]: { name: '深色红',  background: '#570D0D', background2: '#8B0000' },
+  [EThemeDark.深色绿]: { name: '深色绿',  background: '#093333', background2: '#0c403f' },
 };
 
 export const INPUT_NAME_THEME = 'theme';

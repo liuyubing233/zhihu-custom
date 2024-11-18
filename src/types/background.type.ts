@@ -1,4 +1,4 @@
-import { IOptionItem } from "./common.type";
+import { IOptionItem } from './common.type';
 
 /** 主题风格 */
 export enum ETheme {
@@ -30,28 +30,14 @@ export enum EThemeDark {
 }
 
 /** 浅色主题色配置 */
-export type IThemeConfigLight = Record<EThemeLight, IThemeValueLight>;
-
-export interface IThemeValueLight {
-  /** 名称 */
-  name: string;
-  /** 字体颜色 */
-  color?: string;
-  /** 背景色 */
-  background: string;
-  /** 第二背景色 */
-  background2: string;
-}
+export type IThemeConfigLight = Record<EThemeLight, IThemeValue>;
 
 /** 深色主题色配置 */
-export type IThemeConfigDark = Record<EThemeDark, IThemeValueDark>;
-export interface IThemeValueDark {
+export type IThemeConfigDark = Record<EThemeDark, IThemeValue>;
+
+export interface IThemeValue {
   /** 名称 */
   name: string;
-  /** 字体颜色 */
-  color: string;
-  /** 第二字体色 */
-  color2: string;
   /** 背景色 */
   background: string;
   /** 第二背景色 */
