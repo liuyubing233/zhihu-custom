@@ -13,7 +13,7 @@ export const echoData = async () => {
     textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name]);
   };
   const echo: Record<string, Function> = {
-    radio: (even: HTMLInputElement) => pfConfig.hasOwnProperty(even.name) && even.value === pfConfig[even.name] && (even.checked = true),
+    radio: (even: HTMLInputElement) => pfConfig.hasOwnProperty(even.name) && String(even.value) === String(pfConfig[even.name]) && (even.checked = true),
     checkbox: (even: HTMLInputElement) => (even.checked = pfConfig[even.name] || false),
     text: echoText,
     number: echoText,

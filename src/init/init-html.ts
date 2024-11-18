@@ -2,7 +2,7 @@ import { fetchGetUserinfo } from '../commons/fetch';
 import { dom, domById, domC } from '../commons/tools';
 import { DEFAULT_FUNCTION, FONT_SIZE_INPUT, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL, VERSION_RANGE } from '../configs';
 import { BASIC_SHOW_CONTENT } from '../configs/basic-show';
-import { addBackgroundElements } from '../methods/background';
+import { addBackgroundSetting } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
 import { myMenu } from '../methods/menu';
@@ -14,12 +14,8 @@ const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return;
   const itemLabel = (item: IOptionItem[] = []) => {
     return (
-      item
-        .map(
-          ({ label, value }) =>
-            `<label style="display: inline-flex; algin-item: center;">` + `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` + label + `</label>`
-        )
-        .join('') + `<br>`
+      item.map((i) => `<label style="display: inline-flex; algin-item: center;"><input class="ctz-i" name="${i.value}" type="checkbox" value="on" />${i.label}</label>`).join('') +
+      `<br>`
     );
   };
   return `<div class="ctz-set-content">${arrHidden.map((i) => itemLabel(i)).join('')}</div>`;
@@ -59,7 +55,7 @@ export const initHTML = () => {
   dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
   dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
 
-  addBackgroundElements();
+  addBackgroundSetting();
   initInputRange();
 
   // 文字大小调节

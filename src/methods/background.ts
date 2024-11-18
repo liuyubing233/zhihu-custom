@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { dom, domById, fnInitDomStyle } from '../commons/tools';
+import { dom, fnInitDomStyle } from '../commons/tools';
 import {
   CLASS_INPUT_CLICK,
   CLASS_MESSAGE,
@@ -32,8 +32,7 @@ const myBackground = {
     const { theme = ETheme.自动 } = await myStorage.getConfig();
     if (+theme === ETheme.自动) {
       // 获取浏览器颜色
-      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-      return prefersDarkScheme.matches;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
     return +theme === ETheme.深色;
   },
@@ -127,7 +126,8 @@ const myBackground = {
     `,.Popover-content button:hover,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp` +
     `,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar,.TextMessage-sender,.ChatUserListItem--active` +
     `,.css-yoby3j,.css-wmwsyx,.css-wmwsyx button,.css-82b621,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover` +
-    `,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-item:hover`,
+    `,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-item:hover,.index-learnPath-dfrcu .index-learnContainer-9QR37 .index-learnShow-p3yvw .index-learnCard-vuCza,.index-courseCard-ebw4r` +
+    ``,
   /** 使用背景色2的元素名称 */
   useBG2:
     `#CTZ_MAIN input,#CTZ_MAIN textarea,.${CLASS_MESSAGE},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
@@ -154,7 +154,9 @@ const myBackground = {
     `,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root,.CreatorSalt-sideBar-wrapper,.ant-menu` +
     `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask,.Write-school-search-bar .CreatorSalt-management-search,.CreatorSalt-Content-Management-Index` +
     `,.Topstory-container .TopstoryTabs>a::after,.ZVideo,.KfeCollection-CreateSaltCard,.CreatorSalt-personalInfo,.CreatorSalt-sideBar-item,.css-d1sc5t,.css-1gvsmgz,.css-u56wtg,.css-1hrberl` +
-    `,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-header,.ant-table-tbody>tr>td,.CreatorSalt-management-wrapper .CreatorSalt-management-search,.ant-table-thead .ant-table-cell`,
+    `,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-header,.ant-table-tbody>tr>td,.CreatorSalt-management-wrapper .CreatorSalt-management-search,.ant-table-thead .ant-table-cell` +
+    `,.TopNavBar-root-oL4f5,.App-root-9n77J,.CourseConsultation-corner-mddzk,.CourseConsultation-corner-mddzk .CourseConsultation-cornerButton-7ycYw,.CornerButtonToTop-cornerButton-thbFX,.LearningRouteCard-pathContent-j3jVv` +
+    `,.index-item-u9evS`,
   /** 背景色透明的元素名称 */
   useBGTran:
     `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
@@ -211,50 +213,22 @@ export const loadBackground = () => {
 };
 
 /** 是否使用深色模式 */
-export const isDark = () => {
-  return myBackground.isUseDark();
-};
+export const isDark = () => myBackground.isUseDark();
+
+const radioBackground = (name: string, value: string | number, background: string, color: string, label: string) =>
+  `<label><input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div style="background: ${background};color: ${color}">${label}</div></label>`;
+
+const themeToRadio = (o: Record<string, any>, className: string) =>
+  Object.keys(o)
+    .map((key) => radioBackground(className, key, o[key].background, o[key].color || '#000', o[key].name))
+    .join('');
 
 /** 添加背景色选择元素 */
-export const addBackgroundElements = () => {
-  const nodeCTZBackground = domById('CTZ_BACKGROUND');
-  const nodeLight = domById('CTZ_BACKGROUND_LIGHT');
-  const nodeDark = domById('CTZ_BACKGROUND_DARK');
-  if (!nodeCTZBackground || !nodeLight || !nodeDark) return;
-  // 主题选择
-  const themeInner = THEMES.map(
-    ({ label, value, background, color }) =>
-      `<label>` +
-      `<input class="${CLASS_INPUT_CLICK}" name="${INPUT_NAME_THEME}" type="radio" value="${value}"/>` +
-      `<div style="background: ${background};color: ${color}">${label}</div>` +
-      `</label>`
-  ).join('');
-
-  const themeLight = Object.keys(THEME_CONFIG_LIGHT)
-    .map((key) => {
-      const { background, color, name } = THEME_CONFIG_LIGHT[key as unknown as EThemeLight];
-      return (
-        `<label>` +
-        `<input class="${CLASS_INPUT_CLICK}" name="${INPUT_NAME_ThEME_LIGHT}" type="radio" value="${key}"/>` +
-        `<div style="background: ${background};color: ${color}">${name}</div>` +
-        `</label>`
-      );
-    })
-    .join('');
-
-  const themeDark = Object.keys(THEME_CONFIG_DARK)
-    .map((key) => {
-      const { background, color, name } = THEME_CONFIG_DARK[key as unknown as EThemeDark];
-      return (
-        `<label>` +
-        `<input class="${CLASS_INPUT_CLICK}" name="${INPUT_NAME_THEME_DARK}" type="radio" value="${key}"/>` +
-        `<div style="background: ${background};color: ${color}">${name}</div>` +
-        `</label>`
-      );
-    })
-    .join('');
-
-  nodeCTZBackground.innerHTML = themeInner;
-  nodeLight.innerHTML = themeLight;
-  nodeDark.innerHTML = themeDark;
+export const addBackgroundSetting = () => {
+  dom('.ctz-set-background')!.innerHTML =
+    `<div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label)).join('')}</div>` +
+    `<div class="ctz-commit">浅色颜色选择:</div>` +
+    `<div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT)}</div>` +
+    `<div class="ctz-commit">深色颜色选择:</div>` +
+    `<div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK)}</div>`;
 };
