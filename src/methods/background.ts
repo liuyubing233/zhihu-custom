@@ -13,6 +13,11 @@ import {
 } from '../configs';
 import { ETheme, EThemeDark, EThemeLight } from '../types';
 
+const appendClassStart = (str: string) => appendPrefix(str, (i) => `[class|="${i}"]`);
+
+/** 样式名逗号分隔批量添加前缀 */
+const appendPrefix = (str: string, mapCB: (i: string) => string) => str.split(',').map(mapCB).join(',');
+
 /** 修改页面背景的 css */
 export const myBackground = {
   init: async function () {
@@ -74,7 +79,8 @@ export const myBackground = {
       `,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r` +
       `,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,.CreatorSalt-personalInfo-name,.css-c3gbo3,.css-1ygg4xu blockquote,.css-r8ate4,.ant-collapse>.ant-collapse-item>.ant-collapse-header` +
       `,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-author-welfare .Creator-salt-author-welfare-card h1,.css-u56wtg,.css-1hrberl` +
-      `,.css-13e6wvn,.css-i0heim,.LearningRouteCard-pathItem-xin1f .LearningRouteCard-content-kw2RW .LearningRouteCard-title-do7ND` +
+      `,.css-13e6wvn,.css-i0heim,.CommentContent` +
+      `,${appendClassStart('index-title,CourseConsultation-tip,index-text,index-number,CourseDescription-playCount,LecturerList-title,LearningRouteCard-title,index-tabItemLabel,VideoCourseCard-module,TextTruncation-module')}` +
       `{color: #f7f9f9!important}`;
     // 黑色字体
     const blankText = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
@@ -89,31 +95,21 @@ export const myBackground = {
       `,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore` +
       `{color: deepskyblue!important;}` +
       `.css-1tu59u4,.ZDI,.ZDI--PencilCircleFill24,.Zi,.Zi--ArrowDown{fill: deepskyblue!important;}`; // 超链接颜色，解决黑夜模式下看不清的问题
-    // const cBB = `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
     // 存在于深夜模式下的额外的背景色1
     const extraBG1 = `.ztext pre,.ztext code{background: ${background}!important;}`;
-    // 添加 html[data-theme=dark] 前缀
-    const addPrefix = (i: string) =>
-      i
-        .split(',')
-        .map((i) => `html[data-theme=dark] ${i}`)
-        .join(',');
-    // 知学堂、会员
-    // const pageLearning = `.TopNavBar-fixMode-qXKMs,.index-tabWrap-4Smyx,.index-bannerItem-3o3D7,.LearningRouteCard-pathContent-j3jVv{background: ${background}!important;}`;
     return (
       // 这里不使用 addPrefix 添加前缀是因为 menuBeforeAfter 方法里背景色存在逗号
       `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}` +
-      addPrefix(
+      appendPrefix(
         this.doSetCSS(background, background2) +
           whiteText +
           blankText +
           linkText +
           extraBG1 +
-          // cBB +
-          // pageLearning +
           `#${ID_DIALOG}{border: 1px solid ${background2}}` +
           // 暗黑模式下的自定义按钮颜色
-          `.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`
+          `.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
+        (i) => `html[data-theme=dark] ${i}` // 添加 html[data-theme=dark] 前缀
       )
     );
   },
@@ -127,11 +123,11 @@ export const myBackground = {
     `,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active` +
     `,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after` +
     `,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover` +
-    `,.Popover-content button:hover,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp` +
+    `,.Popover-content button:hover,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp,.index-videoCardItem-bzeJ1` +
     `,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar,.TextMessage-sender,.ChatUserListItem--active` +
     `,.css-yoby3j,.css-wmwsyx,.css-wmwsyx button,.css-82b621,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover` +
     `,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-item:hover,.index-learnPath-dfrcu .index-learnContainer-9QR37 .index-learnShow-p3yvw .index-learnCard-vuCza,.index-courseCard-ebw4r` +
-    ``,
+    `,${appendClassStart('Tabs-container,EpisodeList-sectionItem')}`,
   /** 使用背景色2的元素名称 */
   cssBG2:
     `#CTZ_MAIN input,#CTZ_MAIN textarea,.${CLASS_MESSAGE},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
@@ -159,8 +155,12 @@ export const myBackground = {
     `,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask,.Write-school-search-bar .CreatorSalt-management-search,.CreatorSalt-Content-Management-Index` +
     `,.Topstory-container .TopstoryTabs>a::after,.ZVideo,.KfeCollection-CreateSaltCard,.CreatorSalt-personalInfo,.CreatorSalt-sideBar-item,.css-d1sc5t,.css-1gvsmgz,.css-u56wtg,.css-1hrberl` +
     `,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-header,.ant-table-tbody>tr>td,.CreatorSalt-management-wrapper .CreatorSalt-management-search,.ant-table-thead .ant-table-cell` +
-    `,.TopNavBar-root-oL4f5,.App-root-9n77J,.CourseConsultation-corner-mddzk,.CourseConsultation-corner-mddzk .CourseConsultation-cornerButton-7ycYw,.CornerButtonToTop-cornerButton-thbFX,.LearningRouteCard-pathContent-j3jVv` +
-    `,.index-item-u9evS`,
+    `,.QuestionWaiting-typesTopper` +
+    `,${appendClassStart(
+      'App-root,PcContent-root,TopNavBar-root,CourseConsultation-corner,CourseConsultation-cornerButton,CornerButtonToTop-cornerButton,LearningRouteCard-pathContent,index-item,index-hoverCard,ShelfTopNav-root' +
+        ',ProductCard-root,NewOrderedLayout-root,Tabs-tabHeader,ButtonBar-root,WebPage-root,LearningPathWayCard-pathItem,VideoCourseList-title,Article-header,PcContent-coverFix,index-module,TopNavBar-module,PcContent-module,CourseRecord-module' +
+        ',Learned-module,Tab-module,PcContentBought-module,Media-module'
+    )}`,
   /** 背景色透明的元素名称 */
   cssBGTransparent:
     `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
