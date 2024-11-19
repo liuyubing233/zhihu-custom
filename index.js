@@ -2976,8 +2976,16 @@
   var myListenListItem = {
     index: 0,
     init: async function() {
-      const nodes = domA(".TopstoryItem");
-      if (this.index + 1 === nodes.length)
+      await this.traversal(domA(".TopstoryItem"));
+      setTimeout(() => {
+        this.traversal(domA(".TopstoryItem:not(.ctz-listened)"), false);
+      }, 500);
+    },
+    traversal: async function(nodes, needIndex = true) {
+      const index = needIndex ? this.index : 0;
+      if (!nodes.length)
+        return;
+      if (needIndex && index + 1 === nodes.length)
         return;
       const userinfo = store.getUserinfo();
       const pfConfig = await myStorage.getConfig();
@@ -3003,8 +3011,9 @@
       } = pfConfig;
       const pfHistory = await myStorage.getHistory();
       const historyList = pfHistory.list;
-      for (let i2 = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i2 < len; i2++) {
+      for (let i2 = index === 0 ? 0 : index + 1, len = nodes.length; i2 < len; i2++) {
         const nodeItem = nodes[i2];
+        nodeItem.classList.add("ctz-listened");
         const nodeItemContent = nodeItem.querySelector(".ContentItem");
         if (!nodeItem.scrollHeight || !nodeItemContent)
           continue;
@@ -3089,7 +3098,7 @@
         }
         fnJustNum(nodeItem);
         if (i2 === len - 1) {
-          this.index = i2;
+          needIndex && (this.index = i2);
           myStorage.setHistoryItem("list", historyList);
         }
       }

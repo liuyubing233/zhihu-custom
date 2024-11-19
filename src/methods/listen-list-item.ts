@@ -10,8 +10,15 @@ import { isDark } from './background';
 export const myListenListItem = {
   index: 0,
   init: async function () {
-    const nodes = domA('.TopstoryItem');
-    if (this.index + 1 === nodes.length) return;
+    await this.traversal(domA('.TopstoryItem'));
+    setTimeout(() => {
+      this.traversal(domA('.TopstoryItem:not(.ctz-listened)'), false); // 每次执行后检测未检测到的项，解决内容重载的问题
+    }, 500)
+  },
+  traversal: async function (nodes: HTMLElement[], needIndex = true) {
+    const index = needIndex ? this.index : 0;
+    if (!nodes.length) return;
+    if (needIndex && index + 1 === nodes.length) return;
     const userinfo = store.getUserinfo();
     const pfConfig = await myStorage.getConfig();
     const {
@@ -38,8 +45,9 @@ export const myListenListItem = {
     const historyList = pfHistory.list;
     // 如果 this.index 为 0 则从第 0 位开始
     // 否则则从 this.index + 1 位开始，解决上一次遍历末尾跟这次便利开始重复的问题
-    for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
+    for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
+      nodeItem.classList.add('ctz-listened');
       const nodeItemContent = nodeItem.querySelector('.ContentItem');
       if (!nodeItem.scrollHeight || !nodeItemContent) continue;
       let message = ''; // 屏蔽信息
@@ -145,7 +153,7 @@ export const myListenListItem = {
       }
       fnJustNum(nodeItem);
       if (i === len - 1) {
-        this.index = i;
+        needIndex && (this.index = i);
         myStorage.setHistoryItem('list', historyList);
       }
     }

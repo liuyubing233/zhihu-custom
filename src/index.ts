@@ -111,7 +111,6 @@ import { INNER_CSS } from './web-resources';
   timerLoadBody();
 
   const createLoad = async () => {
-    // myListenListItem.getScriptData();
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
       const { removeTopAD } = await myStorage.getConfig();
       // 不考虑在 iframe 中的情况
