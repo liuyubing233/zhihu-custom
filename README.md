@@ -1,24 +1,14 @@
 # 知乎修改器，一个可以自定义知乎的脚本
 
-![脚本样式](https://pic.imgdb.cn/item/658a6b57c458853aefa44014.png)
-
----
-
 ### <p style="color: red;">提问前请先点击<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md">这里</a>看下能否解决对应问题</p>
 
 ### 注意事项：
 
 1. safari 浏览器（苹果浏览器）用户请手动删除代码头部的 `// @grant        unsafeWindow` 一行，否则无法正常运行。
-   ![safari浏览器用户删除内容](https://s1.imagehub.cc/images/2024/08/26/df9b5eccd3f2fc27d5bfb4f785627a70.png)
+   ![safari浏览器用户删除内容](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/safari-use.png)
 2. `使用弹窗打开动图` 设置与修改图片类型的脚本或插件冲突，如果有使用修改图片的脚本不要打开此项设置。
 3. 如果遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。
-   ![接口拦截](https://s1.imagehub.cc/images/2024/08/26/5c62709c69a0336c4298c872108ed266.png)
-
----
-
-移动版脚本地址：[GreasyFork](https://greasyfork.org/zh-CN/scripts/488508-%E7%9F%A5%E4%B9%8E%E4%BF%AE%E6%94%B9%E5%99%A8%E7%A7%BB%E5%8A%A8%E7%89%88-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0) ｜ [Github](https://github.com/liuyubing233/zhihu-custom-mobile/tree/main)
-
----
+   ![接口拦截](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/not-fetch.png)
 
 快捷键 >（Shift + .）唤起修改器弹窗, 或鼠标放置到页面左侧齿轮按钮等弹出后点击唤起弹窗。
 
@@ -28,9 +18,17 @@
 
 [Github](https://github.com/liuyubing233/zhihu-custom/tree/main) ｜ [GreasyFork](https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8)
 
+---
+
+移动版脚本地址：[GreasyFork](https://greasyfork.org/zh-CN/scripts/488508-%E7%9F%A5%E4%B9%8E%E4%BF%AE%E6%94%B9%E5%99%A8%E7%A7%BB%E5%8A%A8%E7%89%88-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0) ｜ [Github](https://github.com/liuyubing233/zhihu-custom-mobile/tree/main)
+
+---
+
 ## 功能简介
 
-4.X 版本的详细更新内容在 [更新日志](https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md)。
+![脚本样式](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/theme.png)
+
+---
 
 ### 推荐列表缓存 & 浏览历史记录
 
@@ -62,13 +60,13 @@
 
 ### 收藏夹内容导出，用户主页当前页回答和当前页文章导出（需开启接口拦截）
 
-![收藏夹内容导出](https://pic.imgdb.cn/item/658a7c6bc458853aefe53b51.png)
+![收藏夹内容导出](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/export-collect.png)
 
-![用户主页内容导出](https://pic.imgdb.cn/item/658a7cb5c458853aefe647d2.png)
+![用户主页内容导出](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/export-home.png)
 
 文档或回答顶部显示导出当前内容/回答按钮，需要勾选 `显示设置 - 文档或回答顶部显示导出当前内容/回答按钮`
 
-![导出当前内容](https://pic.imgdb.cn/item/658a7d67c458853aefe92bb1.png)
+![导出当前内容](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/export-content.png)
 
 ---
 
@@ -76,13 +74,13 @@
 
 _注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击 `移除关注` 按钮将打开到对应页面，取消或关注后此页面自动关闭，脚本未加载请刷新页面_
 
-![一键移除](https://bnz06pap004files.storage.live.com/y4mbZNPw7OZA5zbinGMfYhJN2Yb1vThLOpqM096m8bnSEm3Hi77OyazOeR7cjFbUfLvzVYpyNpihoGRArUTBYCTlI6BFqwSxXmVhU_m1PXci6tSo_r0_XvRnZW3fMgLnahIBoVUrjpeDBnqySRAjqqezw88shAdrOOb8ao7Xep9MBfXBHBAnNCelaTbz6l14KSy?width=1024&height=469&cropmode=none)
+![一键移除](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/remove-item.png)
 
 ---
 
 ### 一键邀请推荐的所有人
 
-![一键邀请](https://pic.imgdb.cn/item/658a776fc458853aefd21447.png)
+![一键邀请](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/invite.png)
 
 添加一键邀请功能，点击即可邀请当前页面所有推荐用户
 
@@ -90,7 +88,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 复制内容删除版权信息
 
-![移除版权信息](https://pic.imgdb.cn/item/658a77b5c458853aefd31b72.png)
+![移除版权信息](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/remove-message.png)
 
 ---
 
@@ -102,11 +100,11 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 修改网页标题、图标
 
-![基本设置预览](https://pic.imgdb.cn/item/658a78eec458853aefd828aa.png)
+![基本设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/change-title.png)
 
 ---
 
-![显示设置预览](https://pic.imgdb.cn/item/658a7a04c458853aefdc96c0.png)
+![显示设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/show-setting.png)
 
 ### 赞同、评论按钮仅显示数字
 
@@ -120,13 +118,13 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 回答和文章中的视频替换为链接
 
-![回答和文章中的视频替换为链接](https://pic.imgdb.cn/item/658a7dd6c458853aefeb0df2.png)
+![回答和文章中的视频替换为链接](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/video-link.png)
 
 ---
 
 ### 列表标题添加显示类别
 
-![列表预览](https://pic.imgdb.cn/item/658a7e23c458853aefec44ca.png)
+![列表预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/list-type.png)
 
 ---
 
@@ -152,7 +150,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 列表内容、 问题详情、回答内容显示发布时间和最后修改时间，文章发布时间置顶
 
-![时间](https://pic.imgdb.cn/item/658a7ff7c458853aeff39275.png)
+![时间](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/item-date.png)
 
 ---
 
@@ -171,7 +169,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 页面尺寸内容修改
 
-![页面尺寸](https://pic.imgdb.cn/item/658a80f5c458853aeff795d6.png)
+![页面尺寸](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/size.png)
 
 1. 列表、回答、文章页面内容宽度
 
@@ -203,7 +201,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 背景色和文字颜色修改
 
-![颜色设置](https://pic.imgdb.cn/item/658a8256c458853aeffd1975.png)
+![颜色设置](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/background.png)
 
 设置为自动时，背景色可跟随浏览器颜色变化
 
@@ -223,13 +221,13 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 勾选后将隐藏对应的模块
 
-![预览](https://pic.imgdb.cn/item/658a8462c458853aef0492e7.png)
+![预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/hidden.png)
 
 ---
 
 ### 屏蔽内容设置
 
-![预览](https://pic.imgdb.cn/item/658a84c0c458853aef0599fe.png)
+![预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/filter.png)
 
 1. 屏蔽顶部活动推广
 
@@ -251,7 +249,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 屏蔽词设置
 
-![预览](https://pic.imgdb.cn/item/658a8642c458853aef09d13f.png)
+![预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/filter-word.png)
 
 1. 标题屏蔽词
    - 输入框输入后列表将会进行关键词过滤。可过滤多项，无上限。并在关键词过滤后自动调用 `不感兴趣` 的接口，防止在其他设备上出现同样内容
@@ -262,7 +260,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 黑名单设置（需开启接口拦截）
 
-![预览](https://pic.imgdb.cn/item/658a86b2c458853aef0b08ea.png)
+![预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/block.png)
 
 在使用该功能前，请先点击 `同步黑名单` 按钮同步黑名单内容。
 
