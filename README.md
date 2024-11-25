@@ -1,6 +1,8 @@
 # 知乎修改器，一个可以自定义知乎的脚本
 
-### <p style="color: red;">提问前请先点击<a href="https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md">这里</a>看下能否解决对应问题</p>
+### <a style="color: red;" href="https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md">提问前请先查看问题解答，已存在解答的内容不做回复</a>
+
+[问题解答](https://github.com/liuyubing233/zhihu-custom/blob/main/Q%26A.md)
 
 ### 注意事项：
 
