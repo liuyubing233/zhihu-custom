@@ -47,7 +47,7 @@
 
 遇到这种情况请尝试关闭接口拦截。[issue >>](https://github.com/liuyubing233/zhihu-custom/issues/82)
 
-![接口拦截](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/not-fetch.png)
+![接口拦截](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/not-fetch.png)
 
 ### 8. 点击 `不感兴趣` 后推荐列表仍会推荐相关内容
 
@@ -60,4 +60,4 @@
 ### 10. Safari 浏览器无法运行
 
 safari 浏览器（苹果浏览器）用户请手动删除代码头部的 `// @grant        unsafeWindow` 一行，否则无法正常运行。
-![safari浏览器用户删除内容](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/safari-use.png)
+![safari浏览器用户删除内容](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/safari-use.png)
