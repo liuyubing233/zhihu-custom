@@ -9,7 +9,14 @@ export const myCtzTypeOperation = {
   },
   /** 移除、关注问题并关闭网页 */
   '1': function () {
-    this.clickAndClose('.QuestionButtonGroup button');
+    const domQuestion = dom('.QuestionPage');
+    if (domQuestion && domQuestion.getAttribute('data-za-extra-module')) {
+      this.clickAndClose('.QuestionButtonGroup button');
+    } else {
+      setTimeout(() => {
+        this['1']();
+      }, 500);
+    }
   },
   /** 移除、关注话题并关闭网页 */
   '2': function () {
@@ -17,11 +24,22 @@ export const myCtzTypeOperation = {
   },
   /** 移除、关注收藏夹并关闭网页 */
   '3': function () {
-    this.clickAndClose('.CollectionDetailPageHeader-actions .FollowButton');
+    const domQuestion = dom('.CollectionsDetailPage');
+    if (domQuestion && domQuestion.getAttribute('data-za-extra-module')) {
+      this.clickAndClose('.CollectionDetailPageHeader-actions .FollowButton');
+    } else {
+      setTimeout(() => {
+        this['3']();
+      }, 500);
+    }
   },
-  clickAndClose: (eventname: string) => {
+  clickAndClose: function (eventname: string) {
     const nodeItem = dom(eventname);
-    nodeItem && nodeItem.click();
-    window.close();
+    if (nodeItem) {
+      nodeItem.click();
+      setTimeout(() => {
+        window.close();
+      }, 300);
+    }
   },
 };

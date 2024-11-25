@@ -1,26 +1,30 @@
-import { domA, domC, domP, pathnameHasFn } from '../commons/tools';
+import { dom, domA, domC, domP, pathnameHasFn } from '../commons/tools';
 
 /** 关注的内容一键移除 */
 export const myFollowRemove = {
   init: function () {
-    const me = this;
-    clearTimeout(me.timer);
-    me.timer = setTimeout(() => {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
       pathnameHasFn({
-        questions: () => me.addButtons(this.classOb.questions),
-        // topics: () => me.addButtons(this.classOb.topics), // 话题跳转页面内会重定向，暂时隐藏
-        collections: () => me.addButtons(this.classOb.collections),
+        questions: () => this.addButtons(this.classOb.questions),
+        // topics: () => this.addButtons(this.classOb.topics), // 话题跳转页面内会重定向，暂时隐藏
+        collections: () => this.addButtons(this.classOb.collections),
       });
     }, 500);
   },
   addButtons: function (initTypeOb: IClassObEntries) {
     const me = this;
     const { classNameItem, classHref, ctzType } = initTypeOb;
+    if (dom(`div.PlaceHolder.${classNameItem}`)) {
+      this.init();
+      return;
+    }
+
     domA(`.${classNameItem}`).forEach((item) => {
       const elementButton = domC('button', {
-        className: `${me.className} ${me.classNameRemove} ctz-button-block`,
+        className: `${me.className} ${me.classNameRemove} ctz-button-block ctz-button`,
         innerText: '移除关注',
-        style: 'height: 28px;position: absolute;right: 16px;bottom: 16px;',
+        style: 'position: absolute;right: 16px;bottom: 16px;background: transparent;',
       });
       elementButton.onclick = function () {
         const nodeThis = this as HTMLButtonElement;
