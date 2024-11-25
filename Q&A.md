@@ -1,7 +1,7 @@
 # 部分问题解答
 
 - [1. 极简模式打开后如何恢复默认？](#1-极简模式打开后如何恢复默认)
-- [2. 在列表页还能看到「盐选」等已经屏蔽的内容？](#2-在列表页还能看到盐选等已经屏蔽的内容)
+- [2. 在推荐列表还能看到「盐选」等已经屏蔽的内容？](#2-在推荐列表还能看到盐选等已经屏蔽的内容)
 - [3. 拉黑按钮无效：拉黑并同步，该用户和其文章，依然能被搜索到](#3-拉黑按钮无效拉黑并同步该用户和其文章依然能被搜索到)
 - [4. 搜索页面、列表页面内容闪烁](#4-搜索页面列表页面内容闪烁)
 - [5. 问题回答页面内容闪烁，有时候浏览时候回答消失](#5-问题回答页面内容闪烁有时候浏览时候回答消失)
@@ -17,7 +17,7 @@
 
 或在使用极简模式前点击 `导出配置` 将配置导出备份，再将配置导入（将导出的 txt 文件内容复制进入输入框再点击右侧导入按钮）即可恢复到导入的配置内容
 
-### 2. 在列表页还能看到「盐选」等已经屏蔽的内容？
+### 2. 在推荐列表还能看到「盐选」等已经屏蔽的内容？
 
 盐选内容屏只屏蔽回答页面的内容，列表页面内容不会进行屏蔽。
 
@@ -47,7 +47,7 @@
 
 遇到这种情况请尝试关闭接口拦截。[issue >>](https://github.com/liuyubing233/zhihu-custom/issues/82)
 
-![接口拦截](https://s1.imagehub.cc/images/2024/08/26/5c62709c69a0336c4298c872108ed266.png)
+![接口拦截](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/not-fetch.png)
 
 ### 8. 点击 `不感兴趣` 后推荐列表仍会推荐相关内容
 
@@ -60,4 +60,4 @@
 ### 10. Safari 浏览器无法运行
 
 safari 浏览器（苹果浏览器）用户请手动删除代码头部的 `// @grant        unsafeWindow` 一行，否则无法正常运行。
-![safari浏览器用户删除内容](https://s1.imagehub.cc/images/2024/08/26/df9b5eccd3f2fc27d5bfb4f785627a70.png)
+![safari浏览器用户删除内容](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/safari-use.png)
