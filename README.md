@@ -26,7 +26,7 @@
 
 ## 功能简介
 
-![脚本样式](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/theme.png)
+![脚本样式](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/home.png)
 
 ---
 
@@ -100,11 +100,11 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 修改网页标题、图标
 
-![基本设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/change-title.png)
+![基本设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/setting-default.png)
 
 ---
 
-![显示设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/show-setting.png)
+![显示设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/setting-show.png)
 
 ### 赞同、评论按钮仅显示数字
 
@@ -124,7 +124,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 列表标题添加显示类别
 
-![列表预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/list-type.png)
+![列表预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/item-type.png)
 
 ---
 
@@ -169,7 +169,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 页面尺寸内容修改
 
-![页面尺寸](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/size.png)
+![页面尺寸](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/setting-size.png)
 
 1. 列表、回答、文章页面内容宽度
 
@@ -201,7 +201,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 背景色和文字颜色修改
 
-![颜色设置](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/background.png)
+![颜色设置](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/setting-background.png)
 
 设置为自动时，背景色可跟随浏览器颜色变化
 
@@ -249,7 +249,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 ### 屏蔽词设置
 
-![预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/filter-word.png)
+![预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/feature/readme-static/static/filter-words.png)
 
 1. 标题屏蔽词
    - 输入框输入后列表将会进行关键词过滤。可过滤多项，无上限。并在关键词过滤后自动调用 `不感兴趣` 的接口，防止在其他设备上出现同样内容
