@@ -165,9 +165,9 @@ import { INNER_CSS } from './web-resources';
         nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
         initInviteOnce();
       },
-      filter: myPageFilterSetting.init,
-      collection: myCollectionExport.init,
-      following: myFollowRemove.init,
+      filter: () => myPageFilterSetting.init(),
+      collection: () => myCollectionExport.init(),
+      following: () => myFollowRemove.init(),
       answers: () => {
         throttle(addBtnForExportPeopleAnswer)();
         userHomeAnswers();
