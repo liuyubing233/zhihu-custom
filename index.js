@@ -2649,15 +2649,14 @@
       printArticle(e2);
     }, 500);
   };
-  var C_EXPORT_ANSWER = "ctz-people-export-answer-once";
-  var addBtnForExportPeopleAnswer = async () => {
+  var printPeopleAnswer = async () => {
     const { fetchInterceptStatus } = await myStorage.getConfig();
-    const domListHeader = dom(".Profile-main .List-headerText");
-    const domButtonOnce = dom(`.${C_EXPORT_ANSWER}`);
-    if (!domListHeader || domButtonOnce || !fetchInterceptStatus)
+    const nodeListHeader = dom(".Profile-main .List-headerText");
+    const prevButton = dom(`.ctz-people-answer-print`);
+    if (!nodeListHeader || prevButton || !fetchInterceptStatus)
       return;
-    const nDomButtonOnce = createBtnSmallTran("导出当前页回答", C_EXPORT_ANSWER);
-    nDomButtonOnce.onclick = async function() {
+    const nButton = createBtnSmallTran("导出当前页回答", "ctz-people-answer-print");
+    nButton.onclick = async function() {
       const eventBtn = this;
       eventBtn.innerText = "加载回答内容中...";
       eventBtn.disabled = true;
@@ -2674,19 +2673,19 @@
       const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
       loadIframePrint(eventBtn, content, "导出当前页回答");
     };
-    domListHeader.appendChild(nDomButtonOnce);
+    nodeListHeader.appendChild(nButton);
     setTimeout(() => {
-      addBtnForExportPeopleAnswer();
+      printPeopleAnswer();
     }, 500);
   };
-  var addBtnForExportPeopleArticles = async () => {
+  var printPeopleArticles = async () => {
     const { fetchInterceptStatus } = await myStorage.getConfig();
-    const domListHeader = dom(".Profile-main .List-headerText");
-    const domButtonOnce = dom(".ctz-people-export-articles-once");
-    if (!domListHeader || domButtonOnce || !fetchInterceptStatus)
+    const nodeListHeader = dom(".Profile-main .List-headerText");
+    const prevButton = dom(".ctz-people-export-articles-once");
+    if (!nodeListHeader || prevButton || !fetchInterceptStatus)
       return;
-    const nDomButtonOnce = createBtnSmallTran("导出当前页文章", "ctz-people-export-articles-once");
-    nDomButtonOnce.onclick = async function() {
+    const nButton = createBtnSmallTran("导出当前页文章", "ctz-people-export-articles-once");
+    nButton.onclick = async function() {
       const eventBtn = this;
       const { search, pathname } = location;
       const page = search.replace("?page=", "") || "1";
@@ -2713,9 +2712,9 @@
       const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
       loadIframePrint(eventBtn, content, "导出当前页文章");
     };
-    domListHeader.appendChild(nDomButtonOnce);
+    nodeListHeader.appendChild(nButton);
     setTimeout(() => {
-      addBtnForExportPeopleArticles();
+      printPeopleArticles();
     }, 500);
   };
   var formatTime = (t2, f = "YYYY-MM-DD HH:mm:ss") => {
@@ -4051,11 +4050,11 @@
         collection: () => myCollectionExport.init(),
         following: () => myFollowRemove.init(),
         answers: () => {
-          throttle(addBtnForExportPeopleAnswer)();
+          throttle(printPeopleAnswer)();
           userHomeAnswers();
         },
         posts: () => {
-          throttle(addBtnForExportPeopleArticles)();
+          throttle(printPeopleArticles)();
           userHomeAnswers();
         },
         people: topBlockUser

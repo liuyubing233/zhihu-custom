@@ -22,7 +22,7 @@ import { myListenAnswerItem } from './methods/listen-answer-item';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { myPageFilterSetting } from './methods/page-filter-setting';
-import { addBtnForExportPeopleAnswer, addBtnForExportPeopleArticles, myCollectionExport, printArticle } from './methods/print';
+import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './methods/print';
 import { suspensionPackUp } from './methods/suspension';
 import { addArticleTime, addQuestionTime } from './methods/time';
 import { topBlockUser, userHomeAnswers } from './methods/user-home-content';
@@ -176,11 +176,11 @@ import { INNER_CSS } from './web-resources';
       collection: () => myCollectionExport.init(),
       following: () => myFollowRemove.init(),
       answers: () => {
-        throttle(addBtnForExportPeopleAnswer)();
+        throttle(printPeopleAnswer)();
         userHomeAnswers();
       },
       posts: () => {
-        throttle(addBtnForExportPeopleArticles)();
+        throttle(printPeopleArticles)();
         userHomeAnswers();
       },
       people: topBlockUser,

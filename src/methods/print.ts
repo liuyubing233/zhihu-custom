@@ -173,15 +173,14 @@ export const printArticle = async (e: HTMLElement) => {
   }, 500);
 };
 
-const C_EXPORT_ANSWER = 'ctz-people-export-answer-once';
-/** 当前用户所有回答导出为PDF */
-export const addBtnForExportPeopleAnswer = async () => {
+/** 用户主页 - 导出当前页回答 */
+export const printPeopleAnswer = async () => {
   const { fetchInterceptStatus } = await myStorage.getConfig();
-  const domListHeader = dom('.Profile-main .List-headerText');
-  const domButtonOnce = dom(`.${C_EXPORT_ANSWER}`);
-  if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
-  const nDomButtonOnce = createBtnSmallTran('导出当前页回答', C_EXPORT_ANSWER);
-  nDomButtonOnce.onclick = async function () {
+  const nodeListHeader = dom('.Profile-main .List-headerText');
+  const prevButton = dom(`.ctz-people-answer-print`);
+  if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
+  const nButton = createBtnSmallTran('导出当前页回答', 'ctz-people-answer-print');
+  nButton.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载回答内容中...';
     eventBtn.disabled = true;
@@ -199,20 +198,20 @@ export const addBtnForExportPeopleAnswer = async () => {
     const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
     loadIframePrint(eventBtn, content, '导出当前页回答');
   };
-  domListHeader.appendChild(nDomButtonOnce);
+  nodeListHeader.appendChild(nButton);
   setTimeout(() => {
-    addBtnForExportPeopleAnswer();
+    printPeopleAnswer();
   }, 500);
 };
 
 /** 当前用户文章导出为PDF */
-export const addBtnForExportPeopleArticles = async () => {
+export const printPeopleArticles = async () => {
   const { fetchInterceptStatus } = await myStorage.getConfig();
-  const domListHeader = dom('.Profile-main .List-headerText');
-  const domButtonOnce = dom('.ctz-people-export-articles-once');
-  if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
-  const nDomButtonOnce = createBtnSmallTran('导出当前页文章', 'ctz-people-export-articles-once');
-  nDomButtonOnce.onclick = async function () {
+  const nodeListHeader = dom('.Profile-main .List-headerText');
+  const prevButton = dom('.ctz-people-export-articles-once');
+  if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
+  const nButton = createBtnSmallTran('导出当前页文章', 'ctz-people-export-articles-once');
+  nButton.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     const { search, pathname } = location;
     const page = search.replace('?page=', '') || '1';
@@ -240,8 +239,8 @@ export const addBtnForExportPeopleArticles = async () => {
     const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
     loadIframePrint(eventBtn, content, '导出当前页文章');
   };
-  domListHeader.appendChild(nDomButtonOnce);
+  nodeListHeader.appendChild(nButton);
   setTimeout(() => {
-    addBtnForExportPeopleArticles();
+    printPeopleArticles();
   }, 500);
 };
