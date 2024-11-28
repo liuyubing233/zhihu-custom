@@ -29,6 +29,7 @@ export const myHidden = {
       `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button` +
       `,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a` +
       `,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint` +
+      `,.zhuanlan .ContentItem .ContentItem-actions` +
       `{visibility:hidden!important;height:0!important;padding:0!important;}` +
       `.TopstoryQuestionAskItem-hint{margin: 0!important;}` +
       `.Topstory .ContentItem-actions{padding: 0!important;}`,
@@ -56,9 +57,10 @@ export const myHidden = {
       `,.Topstory-recommend .ZVideoItem-video, .Topstory-recommend .VideoAnswerPlayer` +
       `{display: none;}`,
     hiddenListVideoContent: `.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}`,
-    hiddenZhuanlanActions: '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}',
+    hiddenZhuanlanActions:
+      '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}.zhuanlan .ContentItem .RichContent-actions.is-fixed,.zhuanlan .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}',
     hiddenZhuanlanTitleImage: '.css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}',
-    hiddenFixedActions: `.ContentItem .RichContent-actions.is-fixed,.List-item .RichContent-actions.is-fixed{visibility: hidden!important;}`,
+    hiddenFixedActions: `.zhihu .ContentItem .RichContent-actions.is-fixed,.zhihu .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}`,
     hiddenHotItemMetrics: '.HotItem-content .HotItem-metrics{display: none;}',
     hiddenHotItemIndex: '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}',
     hiddenHotItemLabel: '.HotItem-label{display: none;}',

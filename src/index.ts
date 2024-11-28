@@ -39,7 +39,7 @@ import { INNER_CSS } from './web-resources';
   });
 
   const T0 = performance.now();
-  const { hostname, host } = location;
+  const { hostname, href } = location;
   const { setStorageConfigItem, getStorageConfigItem } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
@@ -60,7 +60,14 @@ import { INNER_CSS } from './web-resources';
     await myStorage.getHistory();
     initHistoryView();
     onInitStyleExtra();
-    EXTRA_CLASS_HTML[host] && dom('html')!.classList.add(EXTRA_CLASS_HTML[host]);
+
+    (() => {
+      if (/www\.zhihu\.com\/column/.test(href)) {
+        dom('html')!.classList.add('zhuanlan');
+        return;
+      }
+      dom('html')!.classList.add(EXTRA_CLASS_HTML[hostname]);
+    })();
 
     // 获取最新的配置需要在此以后
     const { fetchInterceptStatus } = config;
@@ -146,7 +153,7 @@ import { INNER_CSS } from './web-resources';
     }
 
     historyToChangePathname();
-    if (host === 'zhuanlan.zhihu.com') {
+    if (hostname === 'zhuanlan.zhihu.com') {
       addArticleTime();
       const nodeArticle = dom('.Post-content');
       if (nodeArticle) {
@@ -199,7 +206,7 @@ import { INNER_CSS } from './web-resources';
     const nodeSignClose = nodeSignModal && (nodeSignModal.querySelector('.Modal-closeButton') as HTMLButtonElement);
     nodeSignClose && nodeSignClose.click();
 
-    if (host === 'zhuanlan.zhihu.com') {
+    if (hostname === 'zhuanlan.zhihu.com') {
       const nodeArticle = dom('.Post-content');
       if (nodeArticle) {
         initVideoDownload(nodeArticle);

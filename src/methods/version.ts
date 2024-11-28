@@ -76,8 +76,8 @@ export const myVersion = {
       `.Question-main .List-item{border-bottom: 1px dashed #ddd;}`;
     // 文章页面内容宽度
     const sizeArticle =
-      `.zhuanlan .AuthorInfo{max-width: initial;}` +
-      `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div{width: ${widthArticle}!important;}` +
+      `.zhuanlan .AuthorInfo,.zhuanlan .css-1xy3kyp{max-width: initial;}` +
+      `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd{width: ${widthArticle}!important;}` +
       `.zhuanlan .Post-SideActions{right: ${rightArticleActions}}`;
     /** 页面最小宽度 */
     const sizeMinWidth =

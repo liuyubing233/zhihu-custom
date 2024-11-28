@@ -116,7 +116,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         { value: 'hiddenDetailFollow', label: '回答人关注按钮' },
         { value: 'hiddenDetailVoters', label: '回答人下赞同数' },
         { value: 'hiddenQuestionSide', label: '问题关注和被浏览数' },
-        { value: 'hiddenFixedActions', label: '回答悬浮操作栏' },
+        { value: 'hiddenFixedActions', label: '回答底部悬浮操作栏' },
         { value: 'hiddenAnswerItemActions', label: '回答内容操作栏' },
         { value: 'hiddenReward', label: '赞赏按钮' },
         { value: 'hidden618HongBao', label: '618红包链接' },
@@ -142,7 +142,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
     content: [
       [
         { value: 'hiddenZhuanlanTag', label: '文章关联话题' },
-        { value: 'hiddenZhuanlanActions', label: '文章操作条' },
+        { value: 'hiddenZhuanlanActions', label: '文章底部悬浮操作栏' },
         { value: 'hiddenZhuanlanTitleImage', label: '文章标题图片' },
         { value: 'hiddenZhuanlanShare', label: '文章悬浮分享按钮' },
         { value: 'hiddenZhuanlanVoters', label: '文章悬浮赞同按钮' },
