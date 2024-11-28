@@ -10,17 +10,17 @@ export const myVersion = {
   init: async function () {
     fnInitDomStyle(
       'CTZ_STYLE_VERSION',
-      await this.versionWidth() +
-        await this.vImgSize() +
-        await this.vQuestionTitleTag() +
-        await this.vSusHomeTab() +
-        await this.vSusHeader() +
-        await this.vFixedListMore() +
-        await this.vHighlightListItem() +
-        await this.vShoppingLink() +
-        await this.vFontSizeContent() +
-        await this.vListVideoSize() +
-        await this.vVideoLink()
+      (await this.versionWidth()) +
+        (await this.vImgSize()) +
+        (await this.vQuestionTitleTag()) +
+        (await this.vSusHomeTab()) +
+        (await this.vSusHeader()) +
+        (await this.vFixedListMore()) +
+        (await this.vHighlightListItem()) +
+        (await this.vShoppingLink()) +
+        (await this.vFontSizeContent()) +
+        (await this.vListVideoSize()) +
+        (await this.vVideoLink())
     );
   },
   initAfterLoad: async function () {
@@ -90,14 +90,11 @@ export const myVersion = {
   /** 图片尺寸修改 */
   vImgSize: async function () {
     const { zoomImageType, zoomImageHeight, zoomImageHeightSize, zoomImageSize } = await myStorage.getConfig();
-    const nContent =
-      zoomImageType === '2'
-        ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: ${zoomImageHeight === '1' ? `${zoomImageHeightSize}px` : '100%'}!important;`
-        : '';
-    const nHeight = zoomImageHeight === '1' ? `max-height: ${zoomImageHeightSize}px!important;` : '';
+    const nWidth = zoomImageType === '2' ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : '';
+    const nHeight = zoomImageHeight === '1' ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : '';
     return (
       `.GifPlayer.isPlaying img {cursor:pointer!important;}` +
-      `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${nContent}${nHeight}}`
+      `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${nHeight || nWidth}}`
     );
   },
   /** 列表视频回答内容尺寸修改 */
