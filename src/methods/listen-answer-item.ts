@@ -5,7 +5,7 @@ import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../conf
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
 import { addAnswerCopyLink } from './link';
-import { addButtonForAnswerExportPDF, printArticle } from './print';
+import { printAnswer, printArticle } from './print';
 import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
 import { initVideoDownload } from './video';
@@ -43,7 +43,7 @@ export const myListenAnswerItem = {
       if (fetchInterceptStatus) {
         showBlockUser && myBlack.addButton(nodeItem, initThis);
         if (topExportContent) {
-          addButtonForAnswerExportPDF(nodeItem);
+          printAnswer(nodeItem);
           printArticle(nodeItem);
         }
       }

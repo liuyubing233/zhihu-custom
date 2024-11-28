@@ -135,20 +135,20 @@ export const myCollectionExport = {
   },
 };
 
-/** 回答添加导出为 PDF 按钮 */
-export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
-  const prevButton = nodeAnswerItem.querySelector('.ctz-export-answer');
+/** 导出当前回答 */
+export const printAnswer = (e: HTMLElement) => {
+  const prevButton = e.querySelector('.ctz-answer-print');
   if (prevButton) return;
-  const nodeUser = nodeAnswerItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
+  const nodeUser = e.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nodeButton = createBtnSmallTran('导出当前回答', 'ctz-export-answer');
-  nodeButton.onclick = function () {
-    const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
-    const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
-    const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ''}`;
+  const nButton = createBtnSmallTran('导出当前回答', 'ctz-answer-print');
+  nButton.onclick = function () {
+    const nodeUser = e.querySelector('.AuthorInfo-name .UserLink-link');
+    const nodeContent = e.querySelector('.RichContent-inner');
+    const innerHTML = `<h1>${JSON.parse(e.querySelector('.AnswerItem')!.getAttribute('data-zop') || '{}').title}</h1>${nodeUser!.outerHTML + nodeContent!.innerHTML}`;
     loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出当前回答');
   };
-  nodeUser.appendChild(nodeButton);
+  nodeUser.appendChild(nButton);
 };
 
 /** 导出当前文章 */

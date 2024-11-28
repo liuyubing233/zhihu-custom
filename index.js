@@ -2612,21 +2612,21 @@
       return typeObj[type] || "";
     }
   };
-  var addButtonForAnswerExportPDF = (nodeAnswerItem) => {
-    const prevButton = nodeAnswerItem.querySelector(".ctz-export-answer");
+  var printAnswer = (e2) => {
+    const prevButton = e2.querySelector(".ctz-answer-print");
     if (prevButton)
       return;
-    const nodeUser = nodeAnswerItem.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
+    const nodeUser = e2.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
     if (!nodeUser)
       return;
-    const nodeButton = createBtnSmallTran("导出当前回答", "ctz-export-answer");
-    nodeButton.onclick = function() {
-      const nodeAnswerUserLink = nodeAnswerItem.querySelector(".AuthorInfo-name");
-      const nodeAnswerContent = nodeAnswerItem.querySelector(".RichContent-inner");
-      const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ""}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ""}`;
+    const nButton = createBtnSmallTran("导出当前回答", "ctz-answer-print");
+    nButton.onclick = function() {
+      const nodeUser2 = e2.querySelector(".AuthorInfo-name .UserLink-link");
+      const nodeContent = e2.querySelector(".RichContent-inner");
+      const innerHTML = `<h1>${JSON.parse(e2.querySelector(".AnswerItem").getAttribute("data-zop") || "{}").title}</h1>${nodeUser2.outerHTML + nodeContent.innerHTML}`;
       loadIframePrint(this, [innerHTML], "导出当前回答");
     };
-    nodeUser.appendChild(nodeButton);
+    nodeUser.appendChild(nButton);
   };
   var printArticle = async (e2) => {
     const { topExportContent } = await myStorage.getConfig();
@@ -2873,7 +2873,7 @@
         if (fetchInterceptStatus) {
           showBlockUser && myBlack.addButton(nodeItem, initThis);
           if (topExportContent) {
-            addButtonForAnswerExportPDF(nodeItem);
+            printAnswer(nodeItem);
             printArticle(nodeItem);
           }
         }
@@ -3245,7 +3245,7 @@
         if (fetchInterceptStatus) {
           showBlockUser && myBlack.addButton(nodeItem.parentElement);
           if (topExportContent) {
-            addButtonForAnswerExportPDF(nodeItem.parentElement);
+            printAnswer(nodeItem.parentElement);
             printArticle(nodeItem.parentElement);
           }
         }

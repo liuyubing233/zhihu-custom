@@ -4,7 +4,7 @@ import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
 import { myBlack } from '../methods/black';
 import { addAnswerCopyLink } from '../methods/link';
-import { addButtonForAnswerExportPDF, printArticle } from '../methods/print';
+import { printAnswer, printArticle } from '../methods/print';
 import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
 import { CLASS_VIDEO_ONE, initVideoDownload } from '../methods/video';
@@ -49,7 +49,7 @@ const cbEventListener = async (event: Event) => {
       if (fetchInterceptStatus) {
         showBlockUser && myBlack.addButton(nodeItem.parentElement!);
         if (topExportContent) {
-          addButtonForAnswerExportPDF(nodeItem.parentElement!);
+          printAnswer(nodeItem.parentElement!);
           printArticle(nodeItem.parentElement!);
         }
       }
