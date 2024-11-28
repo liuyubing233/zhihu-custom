@@ -2,13 +2,13 @@ import { myStorage } from '../commons/storage';
 import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/tools';
 import { HTML_HOOTS } from '../configs';
 import { fnContentRemoveKeywordSearch } from '../methods/content-remove-keyword-search';
-import { myCollectionExport } from '../methods/export-PDF';
 import { previewGIF } from '../methods/image';
 import { initLinkChanger } from '../methods/link';
 import { myListenAnswerItem } from '../methods/listen-answer-item';
 import { myListenListItem } from '../methods/listen-list-item';
 import { myListenSearchListItem } from '../methods/listen-search-list-item';
 import { changeTitle } from '../methods/page-title';
+import { myCollectionExport } from '../methods/print';
 import { initImagePreview } from './init-image-preview';
 import { initTopStoryRecommendEvent } from './init-top-event-listener';
 

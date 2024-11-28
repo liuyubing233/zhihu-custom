@@ -2364,6 +2364,144 @@
       }
     }
   };
+  var myScroll = {
+    stop: () => dom("body").classList.add("ctz-stop-scroll"),
+    on: () => dom("body").classList.remove("ctz-stop-scroll")
+  };
+  var myPreview = {
+    // 开启预览弹窗
+    open: function(src, even, isVideo) {
+      const nameDom = isVideo ? this.evenPathVideo : this.evenPathImg;
+      const idDom = isVideo ? this.idVideo : this.idImg;
+      const nodeName = dom(nameDom);
+      const nodeId = domById(idDom);
+      nodeName && (nodeName.src = src);
+      nodeId && (nodeId.style.display = "block");
+      even && (this.even = even);
+      myScroll.stop();
+    },
+    // 关闭预览弹窗
+    hide: function(pEvent) {
+      if (this.even) {
+        this.even.click();
+        this.even = null;
+      }
+      pEvent.style.display = "none";
+      const nodeImg = dom(this.evenPathImg);
+      const nodeVideo = dom(this.evenPathVideo);
+      nodeImg && (nodeImg.src = "");
+      nodeVideo && (nodeVideo.src = "");
+      myScroll.on();
+    },
+    even: null,
+    evenPathImg: "#CTZ_PREVIEW_IMAGE img",
+    evenPathVideo: "#CTZ_PREVIEW_VIDEO video",
+    idImg: "CTZ_PREVIEW_IMAGE",
+    idVideo: "CTZ_PREVIEW_VIDEO"
+  };
+  var callbackGIF = async (mutationsList) => {
+    const target = mutationsList[0].target;
+    const targetClassList = target.classList;
+    const { showGIFinDialog } = await myStorage.getConfig();
+    if (!(targetClassList.contains("isPlaying") && !targetClassList.contains("css-1isopsn") && showGIFinDialog))
+      return;
+    const nodeVideo = target.querySelector("video");
+    const nodeImg = target.querySelector("img");
+    const srcImg = nodeImg ? nodeImg.src : "";
+    nodeVideo ? myPreview.open(nodeVideo.src, target, true) : myPreview.open(srcImg, target);
+  };
+  var observerGIF = new MutationObserver(callbackGIF);
+  async function previewGIF() {
+    const { showGIFinDialog } = await myStorage.getConfig();
+    if (showGIFinDialog) {
+      const config = { attributes: true, attributeFilter: ["class"] };
+      const gifPlayers = domA(".GifPlayer");
+      for (let i2 = 0, len = gifPlayers.length; i2 < len; i2++) {
+        const event = gifPlayers[i2];
+        observerGIF.observe(event, config);
+      }
+    } else {
+      observerGIF.disconnect();
+    }
+  }
+  var keydownNextImage = (event) => {
+    const { key } = event;
+    const nodeImgDialog = dom(".css-ypb3io");
+    if ((key === "ArrowRight" || key === "ArrowLeft") && nodeImgDialog) {
+      const src = nodeImgDialog.src;
+      const nodeImage = dom(`img[src="${src}"]`);
+      const nodeContentInner = domP(nodeImage, "class", "RichContent-inner") || domP(nodeImage, "class", "Post-RichTextContainer") || domP(nodeImage, "class", "QuestionRichText");
+      if (nodeContentInner) {
+        const nodesImageList = Array.from(nodeContentInner.querySelectorAll("img"));
+        const index = nodesImageList.findIndex((i2) => i2.src === src);
+        const dialogChange = (nodeDialog, nodeImage2) => {
+          const { width, height, src: src2 } = nodeImage2;
+          const { innerWidth, innerHeight } = window;
+          const aspectRatioWindow = innerWidth / innerHeight;
+          const aspectRatioImage = width / height;
+          const scale = aspectRatioImage > aspectRatioWindow ? (innerWidth - 200) / width : (innerHeight - 50) / height;
+          const top = document.documentElement.scrollTop;
+          const left = innerWidth / 2 - width * scale / 2;
+          nodeDialog.src = src2;
+          nodeDialog.style.cssText = nodeDialog.style.cssText + `width: ${width}px;height: ${height}px;top: ${top}px;left: ${left}px;transform: translateX(0) translateY(0) scale(${scale}) translateZ(0px);will-change:unset;transform-origin: 0 0;`;
+        };
+        if (key === "ArrowRight" && index < nodesImageList.length - 1) {
+          dialogChange(nodeImgDialog, nodesImageList[index + 1]);
+          return;
+        }
+        if (key === "ArrowLeft" && index > 0) {
+          dialogChange(nodeImgDialog, nodesImageList[index - 1]);
+          return;
+        }
+      }
+    }
+  };
+  var initLinkChanger = () => {
+    const esName = ["a.external", "a.LinkCard"];
+    const operaLink = "ctz-link-changed";
+    const hrefChanger = (item) => {
+      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
+      let href = "";
+      try {
+        href = decodeURIComponent(hrefFormat);
+      } catch {
+        href = hrefFormat;
+      }
+      item.href = href;
+      item.classList.add(operaLink);
+    };
+    for (let i2 = 0, len = esName.length; i2 < len; i2++) {
+      const name = esName[i2];
+      const links = domA(`${name}:not(.${operaLink})`);
+      for (let index = 0, linkLen = links.length; index < linkLen; index++) {
+        hrefChanger(links[index]);
+      }
+    }
+  };
+  var CLASS_COPY_LINK = "ctz-copy-answer-link";
+  var addAnswerCopyLink = async (nodeItem) => {
+    const { copyAnswerLink } = await myStorage.getConfig();
+    if (!copyAnswerLink)
+      return;
+    const prevButton = nodeItem.querySelector(`.${CLASS_COPY_LINK}`);
+    prevButton && prevButton.remove();
+    const nodeUser = nodeItem.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
+    if (!nodeUser)
+      return;
+    const nDomButton = createBtnSmallTran("一键获取回答链接", CLASS_COPY_LINK);
+    nDomButton.onclick = function() {
+      const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
+      if (!metaUrl)
+        return;
+      const link = metaUrl.getAttribute("content") || "";
+      if (link) {
+        copy(link);
+        message("链接复制成功");
+        return;
+      }
+    };
+    nodeUser.appendChild(nDomButton);
+  };
   var loadIframePrint = (eventBtn, arrHTML, btnText) => {
     let max = 0;
     let finish = 0;
@@ -2579,144 +2717,6 @@
     setTimeout(() => {
       addBtnForExportPeopleArticles();
     }, 500);
-  };
-  var myScroll = {
-    stop: () => dom("body").classList.add("ctz-stop-scroll"),
-    on: () => dom("body").classList.remove("ctz-stop-scroll")
-  };
-  var myPreview = {
-    // 开启预览弹窗
-    open: function(src, even, isVideo) {
-      const nameDom = isVideo ? this.evenPathVideo : this.evenPathImg;
-      const idDom = isVideo ? this.idVideo : this.idImg;
-      const nodeName = dom(nameDom);
-      const nodeId = domById(idDom);
-      nodeName && (nodeName.src = src);
-      nodeId && (nodeId.style.display = "block");
-      even && (this.even = even);
-      myScroll.stop();
-    },
-    // 关闭预览弹窗
-    hide: function(pEvent) {
-      if (this.even) {
-        this.even.click();
-        this.even = null;
-      }
-      pEvent.style.display = "none";
-      const nodeImg = dom(this.evenPathImg);
-      const nodeVideo = dom(this.evenPathVideo);
-      nodeImg && (nodeImg.src = "");
-      nodeVideo && (nodeVideo.src = "");
-      myScroll.on();
-    },
-    even: null,
-    evenPathImg: "#CTZ_PREVIEW_IMAGE img",
-    evenPathVideo: "#CTZ_PREVIEW_VIDEO video",
-    idImg: "CTZ_PREVIEW_IMAGE",
-    idVideo: "CTZ_PREVIEW_VIDEO"
-  };
-  var callbackGIF = async (mutationsList) => {
-    const target = mutationsList[0].target;
-    const targetClassList = target.classList;
-    const { showGIFinDialog } = await myStorage.getConfig();
-    if (!(targetClassList.contains("isPlaying") && !targetClassList.contains("css-1isopsn") && showGIFinDialog))
-      return;
-    const nodeVideo = target.querySelector("video");
-    const nodeImg = target.querySelector("img");
-    const srcImg = nodeImg ? nodeImg.src : "";
-    nodeVideo ? myPreview.open(nodeVideo.src, target, true) : myPreview.open(srcImg, target);
-  };
-  var observerGIF = new MutationObserver(callbackGIF);
-  async function previewGIF() {
-    const { showGIFinDialog } = await myStorage.getConfig();
-    if (showGIFinDialog) {
-      const config = { attributes: true, attributeFilter: ["class"] };
-      const gifPlayers = domA(".GifPlayer");
-      for (let i2 = 0, len = gifPlayers.length; i2 < len; i2++) {
-        const event = gifPlayers[i2];
-        observerGIF.observe(event, config);
-      }
-    } else {
-      observerGIF.disconnect();
-    }
-  }
-  var keydownNextImage = (event) => {
-    const { key } = event;
-    const nodeImgDialog = dom(".css-ypb3io");
-    if ((key === "ArrowRight" || key === "ArrowLeft") && nodeImgDialog) {
-      const src = nodeImgDialog.src;
-      const nodeImage = dom(`img[src="${src}"]`);
-      const nodeContentInner = domP(nodeImage, "class", "RichContent-inner") || domP(nodeImage, "class", "Post-RichTextContainer") || domP(nodeImage, "class", "QuestionRichText");
-      if (nodeContentInner) {
-        const nodesImageList = Array.from(nodeContentInner.querySelectorAll("img"));
-        const index = nodesImageList.findIndex((i2) => i2.src === src);
-        const dialogChange = (nodeDialog, nodeImage2) => {
-          const { width, height, src: src2 } = nodeImage2;
-          const { innerWidth, innerHeight } = window;
-          const aspectRatioWindow = innerWidth / innerHeight;
-          const aspectRatioImage = width / height;
-          const scale = aspectRatioImage > aspectRatioWindow ? (innerWidth - 200) / width : (innerHeight - 50) / height;
-          const top = document.documentElement.scrollTop;
-          const left = innerWidth / 2 - width * scale / 2;
-          nodeDialog.src = src2;
-          nodeDialog.style.cssText = nodeDialog.style.cssText + `width: ${width}px;height: ${height}px;top: ${top}px;left: ${left}px;transform: translateX(0) translateY(0) scale(${scale}) translateZ(0px);will-change:unset;transform-origin: 0 0;`;
-        };
-        if (key === "ArrowRight" && index < nodesImageList.length - 1) {
-          dialogChange(nodeImgDialog, nodesImageList[index + 1]);
-          return;
-        }
-        if (key === "ArrowLeft" && index > 0) {
-          dialogChange(nodeImgDialog, nodesImageList[index - 1]);
-          return;
-        }
-      }
-    }
-  };
-  var initLinkChanger = () => {
-    const esName = ["a.external", "a.LinkCard"];
-    const operaLink = "ctz-link-changed";
-    const hrefChanger = (item) => {
-      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
-      let href = "";
-      try {
-        href = decodeURIComponent(hrefFormat);
-      } catch {
-        href = hrefFormat;
-      }
-      item.href = href;
-      item.classList.add(operaLink);
-    };
-    for (let i2 = 0, len = esName.length; i2 < len; i2++) {
-      const name = esName[i2];
-      const links = domA(`${name}:not(.${operaLink})`);
-      for (let index = 0, linkLen = links.length; index < linkLen; index++) {
-        hrefChanger(links[index]);
-      }
-    }
-  };
-  var CLASS_COPY_LINK = "ctz-copy-answer-link";
-  var addAnswerCopyLink = async (nodeItem) => {
-    const { copyAnswerLink } = await myStorage.getConfig();
-    if (!copyAnswerLink)
-      return;
-    const prevButton = nodeItem.querySelector(`.${CLASS_COPY_LINK}`);
-    prevButton && prevButton.remove();
-    const nodeUser = nodeItem.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
-    if (!nodeUser)
-      return;
-    const nDomButton = createBtnSmallTran("一键获取回答链接", CLASS_COPY_LINK);
-    nDomButton.onclick = function() {
-      const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
-      if (!metaUrl)
-        return;
-      const link = metaUrl.getAttribute("content") || "";
-      if (link) {
-        copy(link);
-        message("链接复制成功");
-        return;
-      }
-    };
-    nodeUser.appendChild(nDomButton);
   };
   var formatTime = (t2, f = "YYYY-MM-DD HH:mm:ss") => {
     if (!t2)
