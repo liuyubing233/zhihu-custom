@@ -4,7 +4,7 @@ import { dom, domA } from '../commons/tools';
 import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
-import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from './export-PDF';
+import { addButtonForAnswerExportPDF, printArticle } from './export-PDF';
 import { addAnswerCopyLink } from './link';
 import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
@@ -44,7 +44,7 @@ export const myListenAnswerItem = {
         showBlockUser && myBlack.addButton(nodeItem, initThis);
         if (topExportContent) {
           addButtonForAnswerExportPDF(nodeItem);
-          addButtonForArticleExportPDF(nodeItem);
+          printArticle(nodeItem);
         }
       }
     };

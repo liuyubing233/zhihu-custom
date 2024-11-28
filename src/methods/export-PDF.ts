@@ -1,11 +1,11 @@
 import { createHeaders, doHomeFetch } from '../commons/fetch';
 import { myStorage } from '../commons/storage';
-import { createBtnSmallTran, dom, domC } from '../commons/tools';
+import { createBtnSmallTran, dom, domC, insertAfter } from '../commons/tools';
 import { store } from '../store';
 import { IZhihuArticlesDataItem } from '../types/zhihu-articles.type';
 import { INNER_CSS } from '../web-resources';
 
-const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText: string) => {
+const loadIframePrint = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText: string) => {
   let max = 0;
   let finish = 0;
   let error = 0;
@@ -65,7 +65,7 @@ const loadIframeAndExport = (eventBtn: HTMLButtonElement, arrHTML: string[], btn
 /** 收藏夹打印 */
 export const myCollectionExport = {
   init: async function () {
-    const { fetchInterceptStatus } = await myStorage.getConfig()
+    const { fetchInterceptStatus } = await myStorage.getConfig();
     if (!fetchInterceptStatus) return;
     const { pathname } = location;
     const elementBox = domC('div', { className: `${this.className}`, innerHTML: this.element });
@@ -116,7 +116,7 @@ export const myCollectionExport = {
                   );
               }
             });
-            loadIframeAndExport(me, collectionsHTMLMap, '生成PDF');
+            loadIframePrint(me, collectionsHTMLMap, '生成PDF');
           });
       });
 
@@ -146,36 +146,37 @@ export const addButtonForAnswerExportPDF = (nodeAnswerItem: HTMLElement) => {
     const nodeAnswerUserLink = nodeAnswerItem.querySelector('.AuthorInfo-name');
     const nodeAnswerContent = nodeAnswerItem.querySelector('.RichContent-inner');
     const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ''}`;
-    loadIframeAndExport(this as HTMLButtonElement, [innerHTML], '导出当前回答');
+    loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出当前回答');
   };
   nodeUser.appendChild(nodeButton);
 };
 
-/** 文章添加导出为 PDF 按钮 */
-export const addButtonForArticleExportPDF = async (e: HTMLElement) => {
-  const { topExportContent } = await myStorage.getConfig()
-  const prevButton = e.querySelector('.ctz-export-article');
-  if (prevButton) return;
-  const nodeUser = e.querySelector('.ArticleItem-authorInfo>.AuthorInfo') || e.querySelector('.Post-Header .AuthorInfo-content');
-  if (!nodeUser || !topExportContent) return;
-  const nodeButton = createBtnSmallTran('导出当前文章', 'ctz-export-article') as HTMLButtonElement;
-  nodeButton.onclick = function () {
-    const nodeAnswerUserLink = e.querySelector('.AuthorInfo-name');
-    const nodeAnswerContent = e.querySelector('.RichContent-inner') || e.querySelector('.Post-RichTextContainer');
-    const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ''}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ''}`;
-    loadIframeAndExport(this as HTMLButtonElement, [innerHTML], '导出当前文章');
+/** 导出当前文章 */
+export const printArticle = async (e: HTMLElement) => {
+  const { topExportContent } = await myStorage.getConfig();
+  const prevButton = e.querySelector('.ctz-article-print');
+  if (prevButton || !topExportContent) return;
+  const nodeHeader = e.querySelector('.ArticleItem-authorInfo') || e.querySelector('.Post-Header .Post-Title');
+  if (!nodeHeader) return;
+  const nButton = createBtnSmallTran('导出当前文章', 'ctz-article-print', { style: 'margin: 12px 0;' });
+  nButton.onclick = function () {
+    const nodeTitle = e.querySelector('.ContentItem.ArticleItem .ContentItem-title>span') || e.querySelector('.Post-Header .Post-Title');
+    const nodeUser = e.querySelector('.AuthorInfo-name');
+    const nodeContent = e.querySelector('.RichContent-inner') || e.querySelector('.Post-RichTextContainer');
+    const innerHTML = `<h1>${nodeTitle!.innerHTML}</h1>${nodeUser!.innerHTML + nodeContent!.innerHTML}`;
+    loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出当前文章');
   };
-  nodeUser.appendChild(nodeButton);
+  insertAfter(nButton, nodeHeader);
   setTimeout(() => {
     // 是为了解决页面内容被刷新的掉的问题
-    addButtonForArticleExportPDF(e);
+    printArticle(e);
   }, 500);
 };
 
 const C_EXPORT_ANSWER = 'ctz-people-export-answer-once';
 /** 当前用户所有回答导出为PDF */
 export const addBtnForExportPeopleAnswer = async () => {
-  const { fetchInterceptStatus } = await myStorage.getConfig()
+  const { fetchInterceptStatus } = await myStorage.getConfig();
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom(`.${C_EXPORT_ANSWER}`);
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
@@ -196,7 +197,7 @@ export const addBtnForExportPeopleAnswer = async () => {
     const header = createHeaders(requestUrl);
     const data = await doHomeFetch(requestUrl, header);
     const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
-    loadIframeAndExport(eventBtn, content, '导出当前页回答');
+    loadIframePrint(eventBtn, content, '导出当前页回答');
   };
   domListHeader.appendChild(nDomButtonOnce);
   setTimeout(() => {
@@ -206,7 +207,7 @@ export const addBtnForExportPeopleAnswer = async () => {
 
 /** 当前用户文章导出为PDF */
 export const addBtnForExportPeopleArticles = async () => {
-  const { fetchInterceptStatus } = await myStorage.getConfig()
+  const { fetchInterceptStatus } = await myStorage.getConfig();
   const domListHeader = dom('.Profile-main .List-headerText');
   const domButtonOnce = dom('.ctz-people-export-articles-once');
   if (!domListHeader || domButtonOnce || !fetchInterceptStatus) return;
@@ -237,7 +238,7 @@ export const addBtnForExportPeopleArticles = async () => {
     const header = createHeaders(requestUrl);
     const data = await doHomeFetch(requestUrl, header);
     const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
-    loadIframeAndExport(eventBtn, content, '导出当前页文章');
+    loadIframePrint(eventBtn, content, '导出当前页文章');
   };
   domListHeader.appendChild(nDomButtonOnce);
   setTimeout(() => {

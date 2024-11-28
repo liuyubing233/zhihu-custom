@@ -15,7 +15,7 @@ import { needRedirect } from './init/redirect';
 import { myBackground, myCustomStyle } from './methods/background';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myDialog } from './methods/dialog-open-close';
-import { addBtnForExportPeopleAnswer, addBtnForExportPeopleArticles, addButtonForArticleExportPDF, myCollectionExport } from './methods/export-PDF';
+import { addBtnForExportPeopleAnswer, addBtnForExportPeopleArticles, myCollectionExport, printArticle } from './methods/export-PDF';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
 import { keydownNextImage } from './methods/image';
@@ -157,7 +157,7 @@ import { INNER_CSS } from './web-resources';
       addArticleTime();
       const nodeArticle = dom('.Post-content');
       if (nodeArticle) {
-        addButtonForArticleExportPDF(nodeArticle);
+        printArticle(nodeArticle);
         initVideoDownload(nodeArticle);
       }
     }

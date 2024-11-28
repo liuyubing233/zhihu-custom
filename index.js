@@ -2364,7 +2364,7 @@
       }
     }
   };
-  var loadIframeAndExport = (eventBtn, arrHTML, btnText) => {
+  var loadIframePrint = (eventBtn, arrHTML, btnText) => {
     let max = 0;
     let finish = 0;
     let error = 0;
@@ -2457,7 +2457,7 @@
                 return `<div class="ctz-pdf-dialog-item"><div class="ctz-pdf-dialog-title">${elementTypeSpan(type)}${title || question.title}</div><div>内容链接：<a href="${url}" target="_blank">${url}</a></div><div>${content}</div></div>`;
             }
           });
-          loadIframeAndExport(me, collectionsHTMLMap, "生成PDF");
+          loadIframePrint(me, collectionsHTMLMap, "生成PDF");
         });
       });
       const nodePageHeaderTitle = dom(".CollectionDetailPageHeader-title");
@@ -2486,28 +2486,29 @@
       const nodeAnswerUserLink = nodeAnswerItem.querySelector(".AuthorInfo-name");
       const nodeAnswerContent = nodeAnswerItem.querySelector(".RichContent-inner");
       const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ""}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ""}`;
-      loadIframeAndExport(this, [innerHTML], "导出当前回答");
+      loadIframePrint(this, [innerHTML], "导出当前回答");
     };
     nodeUser.appendChild(nodeButton);
   };
-  var addButtonForArticleExportPDF = async (e2) => {
+  var printArticle = async (e2) => {
     const { topExportContent } = await myStorage.getConfig();
-    const prevButton = e2.querySelector(".ctz-export-article");
-    if (prevButton)
+    const prevButton = e2.querySelector(".ctz-article-print");
+    if (prevButton || !topExportContent)
       return;
-    const nodeUser = e2.querySelector(".ArticleItem-authorInfo>.AuthorInfo") || e2.querySelector(".Post-Header .AuthorInfo-content");
-    if (!nodeUser || !topExportContent)
+    const nodeHeader = e2.querySelector(".ArticleItem-authorInfo") || e2.querySelector(".Post-Header .Post-Title");
+    if (!nodeHeader)
       return;
-    const nodeButton = createBtnSmallTran("导出当前文章", "ctz-export-article");
-    nodeButton.onclick = function() {
-      const nodeAnswerUserLink = e2.querySelector(".AuthorInfo-name");
-      const nodeAnswerContent = e2.querySelector(".RichContent-inner") || e2.querySelector(".Post-RichTextContainer");
-      const innerHTML = `${nodeAnswerUserLink ? nodeAnswerUserLink.innerHTML : ""}${nodeAnswerContent ? nodeAnswerContent.innerHTML : ""}`;
-      loadIframeAndExport(this, [innerHTML], "导出当前文章");
+    const nButton = createBtnSmallTran("导出当前文章", "ctz-article-print", { style: "margin: 12px 0;" });
+    nButton.onclick = function() {
+      const nodeTitle = e2.querySelector(".ContentItem.ArticleItem .ContentItem-title>span") || e2.querySelector(".Post-Header .Post-Title");
+      const nodeUser = e2.querySelector(".AuthorInfo-name");
+      const nodeContent = e2.querySelector(".RichContent-inner") || e2.querySelector(".Post-RichTextContainer");
+      const innerHTML = `<h1>${nodeTitle.innerHTML}</h1>${nodeUser.innerHTML + nodeContent.innerHTML}`;
+      loadIframePrint(this, [innerHTML], "导出当前文章");
     };
-    nodeUser.appendChild(nodeButton);
+    insertAfter(nButton, nodeHeader);
     setTimeout(() => {
-      addButtonForArticleExportPDF(e2);
+      printArticle(e2);
     }, 500);
   };
   var C_EXPORT_ANSWER = "ctz-people-export-answer-once";
@@ -2533,7 +2534,7 @@
       const header = createHeaders(requestUrl);
       const data = await doHomeFetch(requestUrl, header);
       const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
-      loadIframeAndExport(eventBtn, content, "导出当前页回答");
+      loadIframePrint(eventBtn, content, "导出当前页回答");
     };
     domListHeader.appendChild(nDomButtonOnce);
     setTimeout(() => {
@@ -2572,7 +2573,7 @@
       const header = createHeaders(requestUrl);
       const data = await doHomeFetch(requestUrl, header);
       const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
-      loadIframeAndExport(eventBtn, content, "导出当前页文章");
+      loadIframePrint(eventBtn, content, "导出当前页文章");
     };
     domListHeader.appendChild(nDomButtonOnce);
     setTimeout(() => {
@@ -2873,7 +2874,7 @@
           showBlockUser && myBlack.addButton(nodeItem, initThis);
           if (topExportContent) {
             addButtonForAnswerExportPDF(nodeItem);
-            addButtonForArticleExportPDF(nodeItem);
+            printArticle(nodeItem);
           }
         }
       };
@@ -3245,7 +3246,7 @@
           showBlockUser && myBlack.addButton(nodeItem.parentElement);
           if (topExportContent) {
             addButtonForAnswerExportPDF(nodeItem.parentElement);
-            addButtonForArticleExportPDF(nodeItem.parentElement);
+            printArticle(nodeItem.parentElement);
           }
         }
       }, 0);
@@ -3254,11 +3255,11 @@
   var recommendTimeout;
   var indexTopStoryInit = 0;
   var initTopStoryRecommendEvent = () => {
-    const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow");
-    if (!nodeTopStoryRecommend)
-      return;
-    nodeTopStoryRecommend.removeEventListener("click", cbEventListener);
-    nodeTopStoryRecommend.addEventListener("click", cbEventListener);
+    const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1");
+    if (nodeTopStoryRecommend) {
+      nodeTopStoryRecommend.removeEventListener("click", cbEventListener);
+      nodeTopStoryRecommend.addEventListener("click", cbEventListener);
+    }
     if (indexTopStoryInit < 5) {
       indexTopStoryInit++;
       clearTimeout(recommendTimeout);
@@ -4032,7 +4033,7 @@
         addArticleTime();
         const nodeArticle = dom(".Post-content");
         if (nodeArticle) {
-          addButtonForArticleExportPDF(nodeArticle);
+          printArticle(nodeArticle);
           initVideoDownload(nodeArticle);
         }
       }

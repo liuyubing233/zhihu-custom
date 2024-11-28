@@ -3,7 +3,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
 import { myBlack } from '../methods/black';
-import { addButtonForAnswerExportPDF, addButtonForArticleExportPDF } from '../methods/export-PDF';
+import { addButtonForAnswerExportPDF, printArticle } from '../methods/export-PDF';
 import { addAnswerCopyLink } from '../methods/link';
 import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
@@ -50,7 +50,7 @@ const cbEventListener = async (event: Event) => {
         showBlockUser && myBlack.addButton(nodeItem.parentElement!);
         if (topExportContent) {
           addButtonForAnswerExportPDF(nodeItem.parentElement!);
-          addButtonForArticleExportPDF(nodeItem.parentElement!);
+          printArticle(nodeItem.parentElement!);
         }
       }
     }, 0);
@@ -61,10 +61,11 @@ let recommendTimeout: NodeJS.Timeout;
 let indexTopStoryInit = 0;
 /** 推荐列表最外层绑定事件 */
 export const initTopStoryRecommendEvent = () => {
-  const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow');
-  if (!nodeTopStoryRecommend) return;
-  nodeTopStoryRecommend.removeEventListener('click', cbEventListener);
-  nodeTopStoryRecommend.addEventListener('click', cbEventListener);
+  const nodeTopStoryRecommend = dom('.Topstory-recommend') || dom('.Topstory-follow') || dom('.zhuanlan .css-1voxft1');
+  if (nodeTopStoryRecommend) {
+    nodeTopStoryRecommend.removeEventListener('click', cbEventListener);
+    nodeTopStoryRecommend.addEventListener('click', cbEventListener);
+  }
   if (indexTopStoryInit < 5) {
     indexTopStoryInit++;
     clearTimeout(recommendTimeout);
