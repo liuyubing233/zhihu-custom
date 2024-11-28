@@ -29,10 +29,10 @@ export const myHidden = {
       `.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button` +
       `,.Topstory-container .ContentItem-actions>div,.Topstory-container .ContentItem-actions>a` +
       `,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint` +
-      `,.zhuanlan .ContentItem .ContentItem-actions` +
       `{visibility:hidden!important;height:0!important;padding:0!important;}` +
       `.TopstoryQuestionAskItem-hint{margin: 0!important;}` +
-      `.Topstory .ContentItem-actions{padding: 0!important;}`,
+      `.Topstory .ContentItem-actions{padding: 0!important;}` +
+      `.zhuanlan .ContentItem .ContentItem-actions:not(.Sticky){visibility:hidden!important;height:0!important;}`,
     hiddenAnswerText:
       `.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}` +
       `.ContentItem-action,.ContentItem-action button,.ContentItem-actions button` +
