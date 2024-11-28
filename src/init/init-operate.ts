@@ -31,6 +31,11 @@ export const initOperate = () => {
     const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CHANGE)) {
       fnChanger(target);
+      return;
+    }
+    if (target.classList.contains('ctz-input-config-import')) {
+      configImport(e);
+      return;
     }
   };
   dom('.ctz-menu-top')!.onclick = myMenu.click;
@@ -75,14 +80,6 @@ const myButtonOperation: Record<string, Function> = {
     link.click();
     document.body.removeChild(link);
   },
-  /** 导入配置 */
-  configImport: async function () {
-    const nodeImport = dom('[name=textConfigImport]') as HTMLInputElement;
-    const configImport = nodeImport ? nodeImport.value : '{}';
-    const nConfig = JSON.parse(configImport);
-    await myStorage.setConfig(nConfig);
-    resetData();
-  },
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
@@ -118,6 +115,26 @@ const myButtonOperation: Record<string, Function> = {
     changeTitle();
     message('网页标题已还原');
   },
+  configImport: () => {
+    dom('#IMPORT_BY_FILE input')!.click();
+  },
+};
+
+const configImport = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  const configFile = (target.files || [])[0];
+  if (!configFile) return;
+  const reader = new FileReader();
+  reader.readAsText(configFile);
+  reader.onload = async (oFREvent) => {
+    let config = oFREvent.target ? oFREvent.target.result : '';
+    if (typeof config === 'string') {
+      const nConfig = JSON.parse(config);
+      await myStorage.setConfig(nConfig);
+      resetData();
+    }
+  };
+  target.value = '';
 };
 
 /** 在重置数据时调用 */

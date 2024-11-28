@@ -176,18 +176,13 @@
           <div id="CTZ_BASIS_CONFIG">
             <div class="ctz-set-title"><span>配置操作</span></div>
             <div class="ctz-set-content">
-              <div class="ctz-flex-wrap">
+              <div class="ctz-flex-wrap ctz-config-buttons">
                 <button class="ctz-button" name="useSimple">启用极简模式</button>
-              </div>
-              <div class="ctz-config-import-export">
-                <div class="ctz-label">配置导出导入</div>
-                <div class="ctz-config-buttons">
-                  <button class="ctz-button" name="configExport">导出配置</button>
-                  <button class="ctz-button" name="configReset">恢复默认配置</button>
-                </div>
-                <div style="display: flex">
-                  <textarea name="textConfigImport" placeholder="配置可参考导出格式"></textarea>
-                  <button class="ctz-button" name="configImport">导 入</button>
+                <button class="ctz-button" name="configReset">恢复默认配置</button>
+                <button class="ctz-button" name="configExport">配置导出</button>
+                <div id="IMPORT_BY_FILE">
+                  <input type="file" class="ctz-input-config-import" id="readTxt" accept=".txt" />
+                  <button class="ctz-button" name="configImport">配置导入</button>
                 </div>
               </div>
 
