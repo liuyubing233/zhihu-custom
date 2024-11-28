@@ -32,9 +32,9 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       [
         { value: 'hiddenAppHeaderTabHome', label: '发现模块-首页' },
         { value: 'hiddenAppHeaderTabZhi', label: '发现模块-知学堂' },
-        { value: 'hiddenAppHeaderTabVIP', label: '发现模块-会员' },
-        { value: 'hiddenAppHeaderTabFind', label: '发现模块-发现' },
+        // { value: 'hiddenAppHeaderTabVIP', label: '发现模块-会员' },
         { value: 'hiddenAppHeaderTabWaitingForYou', label: '发现模块-等你来答' },
+        { value: 'hiddenAppHeaderTabFind', label: '发现模块-知乎直达' },
       ],
       [
         { value: 'hiddenAnswerText', label: '回答操作文字' },

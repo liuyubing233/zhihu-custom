@@ -379,9 +379,9 @@
         [
           { value: "hiddenAppHeaderTabHome", label: "发现模块-首页" },
           { value: "hiddenAppHeaderTabZhi", label: "发现模块-知学堂" },
-          { value: "hiddenAppHeaderTabVIP", label: "发现模块-会员" },
-          { value: "hiddenAppHeaderTabFind", label: "发现模块-发现" },
-          { value: "hiddenAppHeaderTabWaitingForYou", label: "发现模块-等你来答" }
+          // { value: 'hiddenAppHeaderTabVIP', label: '发现模块-会员' },
+          { value: "hiddenAppHeaderTabWaitingForYou", label: "发现模块-等你来答" },
+          { value: "hiddenAppHeaderTabFind", label: "发现模块-知乎直达" }
         ],
         [
           { value: "hiddenAnswerText", label: "回答操作文字" },
@@ -3422,9 +3422,8 @@
       hiddenAnswerItemTimeButHaveIP: ".Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}",
       hiddenAppHeaderTabHome: ".AppHeader-Tab:nth-of-type(1){display: none}",
       hiddenAppHeaderTabZhi: ".AppHeader-Tab:nth-of-type(2){display: none}",
-      hiddenAppHeaderTabVIP: ".AppHeader-Tab:nth-of-type(3){display: none}",
+      hiddenAppHeaderTabWaitingForYou: ".AppHeader-Tab:nth-of-type(3){display: none}",
       hiddenAppHeaderTabFind: ".AppHeader-Tab:nth-of-type(4){display: none}",
-      hiddenAppHeaderTabWaitingForYou: ".AppHeader-Tab:nth-of-type(5){display: none}",
       hiddenHomeListTabFollow: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-follow"]{display: none}',
       hiddenHomeListTabRecommend: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-recommend"]{display: none}',
       hiddenHomeListTabHot: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-hot"]{display: none}',

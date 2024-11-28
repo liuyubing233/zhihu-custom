@@ -127,7 +127,7 @@ export interface IConfigHidden {
   /** 发现模块-隐藏知学堂 */
   hiddenAppHeaderTabZhi?: boolean;
   /** 发现模块-隐藏会员 */
-  hiddenAppHeaderTabVIP?: boolean;
+  // hiddenAppHeaderTabVIP?: boolean;
   /** 发现模块-隐藏发现 */
   hiddenAppHeaderTabFind?: boolean;
   /** 发现模块-隐藏等你来答 */
