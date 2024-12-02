@@ -1475,24 +1475,29 @@
     }, 300);
   };
   var initHistoryView = async () => {
-    const { href, origin, pathname, hash } = location;
-    const question = "www.zhihu.com/question/";
-    const article = "zhuanlan.zhihu.com/p/";
-    const video = "www.zhihu.com/zvideo/";
-    let name = href.replace(hash, "");
+    const { href, origin, pathname } = location;
     setTimeout(async () => {
-      if (!href.includes(question) && !href.includes(article) && !href.includes(video))
+      let name = "";
+      const isQuestion = href.includes("www.zhihu.com/question/");
+      isQuestion && dom('.QuestionPage [itemprop="name"]') && (name = dom('.QuestionPage [itemprop="name"]').content);
+      href.includes("zhuanlan.zhihu.com/p/") && dom(".Post-Title") && (name = dom(".Post-Title").innerText);
+      href.includes("www.zhihu.com/zvideo/") && dom(".ZVideo .ZVideo-title") && (name = dom(".ZVideo .ZVideo-title").innerText);
+      if (!name) {
+        initHistoryView();
         return;
-      href.includes(question) && dom('.QuestionPage [itemprop="name"]') && (name = dom('.QuestionPage [itemprop="name"]').content);
-      href.includes(article) && dom(".Post-Title") && (name = dom(".Post-Title").innerText);
-      href.includes(video) && dom(".ZVideo .ZVideo-title") && (name = dom(".ZVideo .ZVideo-title").innerText);
-      const nA = `<a href="${origin + pathname}" target="_blank">${name}</a>`;
+      }
+      let extra = "";
+      const questionAnswerId = pathname.replace(/\/question\/\d+\/answer\//, "");
+      if (isQuestion && questionAnswerId) {
+        extra = ` ---- 回答: ${questionAnswerId}`;
+      }
+      const nA = `<a href="${origin + pathname}" target="_blank">${name + extra}</a>`;
       const { view } = await myStorage.getHistory();
       if (!view.includes(nA)) {
         view.unshift(nA);
         myStorage.setHistoryItem("view", view);
       }
-    }, 100);
+    }, 500);
   };
   function md5(s2) {
     function f12(t2, e2, n2) {
