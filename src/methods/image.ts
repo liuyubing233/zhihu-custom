@@ -6,7 +6,7 @@ import { myPreview } from './preview';
 const callbackGIF: MutationCallback = async (mutationsList) => {
   const target = mutationsList[0].target as HTMLElement;
   const targetClassList = target.classList;
-  const { showGIFinDialog } = await myStorage.getConfig()
+  const { showGIFinDialog } = await myStorage.getConfig();
   if (!(targetClassList.contains('isPlaying') && !targetClassList.contains('css-1isopsn') && showGIFinDialog)) return;
   const nodeVideo = target.querySelector('video');
   const nodeImg = target.querySelector('img');
@@ -18,7 +18,7 @@ const observerGIF = new MutationObserver(callbackGIF);
 export async function previewGIF() {
   // 因为 GIF 图是点击后切换到真正 GIF, 所以在点击切换后再打开弹窗
   // 使用 MutationObserver 监听元素属性变化
-  const { showGIFinDialog } = await myStorage.getConfig()
+  const { showGIFinDialog } = await myStorage.getConfig();
   if (showGIFinDialog) {
     const config = { attributes: true, attributeFilter: ['class'] };
     const gifPlayers = domA('.GifPlayer');
@@ -38,11 +38,10 @@ export const keydownNextImage = (event: KeyboardEvent) => {
   if ((key === 'ArrowRight' || key === 'ArrowLeft') && nodeImgDialog) {
     const src = nodeImgDialog.src;
     const nodeImage = dom(`img[src="${src}"]`);
-    const nodeContentInner =
-      domP(nodeImage, 'class', 'RichContent-inner') || domP(nodeImage, 'class', 'Post-RichTextContainer') || domP(nodeImage, 'class', 'QuestionRichText');
+    const nodeContentInner = domP(nodeImage, 'class', 'RichContent-inner') || domP(nodeImage, 'class', 'Post-RichTextContainer') || domP(nodeImage, 'class', 'QuestionRichText');
     if (nodeContentInner) {
-      const nodesImageList = Array.from(nodeContentInner.querySelectorAll('img')) as HTMLImageElement[];
-      const index = nodesImageList.findIndex((i) => i.src === src);
+      const images = Array.from(nodeContentInner.querySelectorAll('img')) as HTMLImageElement[];
+      const index = images.findIndex((i) => i.src === src);
 
       const dialogChange = (nodeDialog: HTMLImageElement, nodeImage: HTMLImageElement) => {
         const { width, height, src } = nodeImage;
@@ -63,13 +62,13 @@ export const keydownNextImage = (event: KeyboardEvent) => {
           `transform-origin: 0 0;`;
       };
 
-      if (key === 'ArrowRight' && index < nodesImageList.length - 1) {
-        dialogChange(nodeImgDialog, nodesImageList[index + 1]);
+      if (key === 'ArrowRight' && index < images.length - 1) {
+        dialogChange(nodeImgDialog, images[index + 1]);
         return;
       }
 
       if (key === 'ArrowLeft' && index > 0) {
-        dialogChange(nodeImgDialog, nodesImageList[index - 1]);
+        dialogChange(nodeImgDialog, images[index - 1]);
         return;
       }
     }
