@@ -2419,11 +2419,11 @@
   async function previewGIF() {
     const { showGIFinDialog } = await myStorage.getConfig();
     if (showGIFinDialog) {
-      const config = { attributes: true, attributeFilter: ["class"] };
-      const gifPlayers = domA(".GifPlayer");
-      for (let i2 = 0, len = gifPlayers.length; i2 < len; i2++) {
-        const event = gifPlayers[i2];
-        observerGIF.observe(event, config);
+      const nodeGIFs = domA(".GifPlayer:not(.ctz-processed)");
+      for (let i2 = 0, len = nodeGIFs.length; i2 < len; i2++) {
+        const item = nodeGIFs[i2];
+        item.classList.add("ctz-processed");
+        observerGIF.observe(item, { attributes: true, attributeFilter: ["class"] });
       }
     } else {
       observerGIF.disconnect();
@@ -3198,20 +3198,22 @@
   };
   var initImagePreview = async () => {
     const { zoomImageType } = await myStorage.getConfig();
-    const images = [domA(".TitleImage"), domA(".ArticleItem-image"), domA(".ztext figure .content_image")];
+    const images = [domA(".TitleImage:not(.ctz-processed)"), domA(".ArticleItem-image:not(.ctz-processed)"), domA(".ztext figure .content_image:not(.ctz-processed)")];
     for (let i2 = 0, imageLen = images.length; i2 < imageLen; i2++) {
       const ev = images[i2];
       for (let index = 0, len = ev.length; index < len; index++) {
         const nodeItem = ev[index];
+        nodeItem.classList.add("ctz-processed");
         const src = nodeItem.src || nodeItem.style.backgroundImage && nodeItem.style.backgroundImage.split('("')[1].split('")')[0];
         nodeItem.onclick = () => myPreview.open(src);
       }
     }
     if (zoomImageType === "2") {
-      const originImages = domA(".origin_image");
+      const originImages = domA(".origin_image:not(.ctz-processed)");
       for (let i2 = 0, len = originImages.length; i2 < len; i2++) {
         const nodeItem = originImages[i2];
         nodeItem.src = nodeItem.getAttribute("data-original") || nodeItem.src;
+        nodeItem.classList.add("ctz-processed");
         nodeItem.style.cssText = "max-width: 100%;";
       }
     }

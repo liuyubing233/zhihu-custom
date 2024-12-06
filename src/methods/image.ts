@@ -20,11 +20,11 @@ export async function previewGIF() {
   // 使用 MutationObserver 监听元素属性变化
   const { showGIFinDialog } = await myStorage.getConfig();
   if (showGIFinDialog) {
-    const config = { attributes: true, attributeFilter: ['class'] };
-    const gifPlayers = domA('.GifPlayer');
-    for (let i = 0, len = gifPlayers.length; i < len; i++) {
-      const event = gifPlayers[i];
-      observerGIF.observe(event, config);
+    const nodeGIFs = domA('.GifPlayer:not(.ctz-processed)');
+    for (let i = 0, len = nodeGIFs.length; i < len; i++) {
+      const item = nodeGIFs[i];
+      item.classList.add('ctz-processed');
+      observerGIF.observe(item, { attributes: true, attributeFilter: ['class'] });
     }
   } else {
     observerGIF.disconnect();
