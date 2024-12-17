@@ -1515,41 +1515,6 @@
       }
     }, 500);
   };
-  var doFetchNotInterested = ({ id, type }) => {
-    const nHeader = store.getStorageConfigItem("fetchHeaders");
-    delete nHeader["vod-authorization"];
-    delete nHeader["content-encoding"];
-    delete nHeader["Content-Type"];
-    delete nHeader["content-type"];
-    const idToNum = +id;
-    if (String(idToNum) === "NaN") {
-      fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
-      return;
-    }
-    fetch("/api/v3/feed/topstory/uninterestv2", {
-      body: `item_brief=${encodeURIComponent(JSON.stringify({ source: "TS", type, id: idToNum }))}`,
-      method: "POST",
-      headers: new Headers({
-        ...nHeader,
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-      })
-    }).then((res) => res.json());
-  };
-  var fetchGetUserinfo = () => {
-    const headers = store.getStorageConfigItem("fetchHeaders");
-    return new Promise((resolve) => {
-      fetch(
-        `https://www.zhihu.com/api/v4/me?include=is_realname%2Cad_type%2Cavailable_message_types%2Cdefault_notifications_count%2Cfollow_notifications_count%2Cvote_thank_notifications_count%2Cmessages_count%2Cemail%2Caccount_status%2Cis_bind_phone%2Cfollowing_question_count%2Cis_force_renamed%2Crenamed_fullname%2Cis_destroy_waiting`,
-        {
-          method: "GET",
-          headers: new Headers(headers),
-          credentials: "include"
-        }
-      ).then((response) => response.json()).then((res) => {
-        resolve(res);
-      });
-    });
-  };
   var BASIC_SHOW_CONTENT = [
     { label: "去除热词点击搜索", value: "contentRemoveKeywordSearch" },
     {
@@ -1812,9 +1777,9 @@
     if (!arrHidden || !arrHidden.length)
       return;
     const itemLabel = (item = []) => {
-      return item.map((i) => `<label style="display: inline-flex; algin-item: center;"><input class="ctz-i" name="${i.value}" type="checkbox" value="on" />${i.label}</label>`).join("") + `<br>`;
+      return item.map((i) => `<label style="display: inline-flex; algin-item: center;"><input class="ctz-i" name="${i.value}" type="checkbox" value="on" />${i.label}</label>`).join("");
     };
-    return `<div class="ctz-set-content">${arrHidden.map((i) => itemLabel(i)).join("")}</div>`;
+    return `<div class="ctz-set-content">${arrHidden.map((i) => itemLabel(i)).join("<br>")}</div>`;
   };
   var initInputRange = () => {
     const createRangeInnerHTML = (label, value, min, max) => `<div class="ctz-flex-wrap ctz-range-${value}">${label ? `<div class="ctz-label">${label}</div>` : ""}<input class="ctz-i" type="range" min="${min}" max="${max}" name="${value}" style="width: 300px" /><span id="${value}" style="margin: 0 8px">0</span><span class="ctz-commit">滑动条范围: ${min} ~ ${max}</span></div>`;
@@ -1856,21 +1821,21 @@
         innerText: "返回主页"
       })
     );
-    domAddUserinfo();
   };
-  var domAddUserinfo = async () => {
-    const { setUserinfo } = store;
-    const userinfo = await fetchGetUserinfo();
-    setUserinfo(userinfo);
+  var appendHomeLink = (userinfo) => {
+    if (dom(".ctz-home-link"))
+      return;
     const hrefUser = userinfo.url ? userinfo.url.replace("/api/v4", "") : "";
     if (!hrefUser)
       return;
-    const homeLink = domC("a", {
-      href: hrefUser,
-      target: "_blank",
-      innerText: "前往个人主页>>"
-    });
-    dom(".ctz-footer-right").appendChild(homeLink);
+    dom(".ctz-footer-right").appendChild(
+      domC("a", {
+        href: hrefUser,
+        target: "_blank",
+        innerText: "前往个人主页>>",
+        className: "ctz-home-link"
+      })
+    );
   };
   var initInviteOnce = () => {
     setTimeout(() => {
@@ -2746,6 +2711,26 @@
       }
     }
   };
+  var doFetchNotInterested = ({ id, type }) => {
+    const nHeader = store.getStorageConfigItem("fetchHeaders");
+    delete nHeader["vod-authorization"];
+    delete nHeader["content-encoding"];
+    delete nHeader["Content-Type"];
+    delete nHeader["content-type"];
+    const idToNum = +id;
+    if (String(idToNum) === "NaN") {
+      fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
+      return;
+    }
+    fetch("/api/v3/feed/topstory/uninterestv2", {
+      body: `item_brief=${encodeURIComponent(JSON.stringify({ source: "TS", type, id: idToNum }))}`,
+      method: "POST",
+      headers: new Headers({
+        ...nHeader,
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      })
+    }).then((res) => res.json());
+  };
   var classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon"];
   var canFindTargeted = (e) => {
     let isFind = false;
@@ -3476,7 +3461,7 @@
     });
     const T0 = performance.now();
     const { hostname, href } = location;
-    const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle } = store;
+    const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo } = store;
     let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement)
@@ -3521,6 +3506,12 @@
             }
             if (/\api\/v4\/members\/[^/]+\/articles/.test(res.url)) {
               res.clone().json().then((r) => setUserArticle(r.data));
+            }
+            if (/\/api\/v4\/me\?/.test(res.url)) {
+              res.clone().json().then((r) => {
+                appendHomeLink(r);
+                setUserinfo(r);
+              });
             }
             return res;
           });

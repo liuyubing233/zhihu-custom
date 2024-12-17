@@ -6,7 +6,7 @@ import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_DIALOG } from './configs/dom-name';
 import { initBlockWords } from './init/init-block-words';
 import { initData } from './init/init-data';
 import { initHistoryView } from './init/init-history-view';
-import { initHTML } from './init/init-html';
+import { appendHomeLink, initHTML } from './init/init-html';
 import { initInviteOnce } from './init/init-invite-once';
 import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
@@ -40,7 +40,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href } = location;
-  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle } = store;
+  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -114,6 +114,17 @@ import { INNER_CSS } from './web-resources';
               .clone()
               .json()
               .then((r) => setUserArticle(r.data));
+          }
+
+          // 个人信息
+          if (/\/api\/v4\/me\?/.test(res.url)) {
+            res
+            .clone()
+            .json()
+            .then((r) => {
+              appendHomeLink(r)
+              setUserinfo(r)
+            });
           }
 
           return res;

@@ -1,5 +1,4 @@
 import { store } from '../store';
-import { IZhihuUserinfo } from '../types';
 import { fnLog } from './tools';
 
 /** 调用「不感兴趣」接口 */
@@ -24,36 +23,36 @@ export const doFetchNotInterested = ({ id, type }: { id: string; type: string })
   }).then((res) => res.json());
 };
 
-/** 获取用户信息 */
-export const fetchGetUserinfo = (): Promise<IZhihuUserinfo> => {
-  const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
-  return new Promise((resolve) => {
-    fetch(
-      `https://www.zhihu.com/api/v4/me?include=is_realname%2Cad_type%2Cavailable_message_types%2Cdefault_notifications_count%2Cfollow_notifications_count%2Cvote_thank_notifications_count%2Cmessages_count%2Cemail%2Caccount_status%2Cis_bind_phone%2Cfollowing_question_count%2Cis_force_renamed%2Crenamed_fullname%2Cis_destroy_waiting`,
-      {
-        method: 'GET',
-        headers: new Headers(headers),
-        credentials: 'include',
-      }
-    )
-      .then((response) => response.json())
-      .then((res: IZhihuUserinfo) => {
-        resolve(res);
-      });
-  });
-};
+// /** 获取用户信息 */
+// export const fetchGetUserinfo = (): Promise<IZhihuUserinfo> => {
+//   const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
+//   return new Promise((resolve) => {
+//     fetch(
+//       `https://www.zhihu.com/api/v4/me?include=is_realname%2Cad_type%2Cavailable_message_types%2Cdefault_notifications_count%2Cfollow_notifications_count%2Cvote_thank_notifications_count%2Cmessages_count%2Cemail%2Caccount_status%2Cis_bind_phone%2Cfollowing_question_count%2Cis_force_renamed%2Crenamed_fullname%2Cis_destroy_waiting`,
+//       {
+//         method: 'GET',
+//         headers: new Headers(headers),
+//         credentials: 'include',
+//       }
+//     )
+//       .then((response) => response.json())
+//       .then((res: IZhihuUserinfo) => {
+//         resolve(res);
+//       });
+//   });
+// };
 
-export const doHomeFetch = (url: string, headers: HeadersInit): Promise<any[]> => {
-  return new Promise((resolve) => {
-    if (!url) {
-      resolve([]);
-    } else {
-      fetch(url, {
-        method: 'GET',
-        headers: new Headers(headers),
-      })
-        .then((response) => response.json())
-        .then((res) => resolve(res.data));
-    }
-  });
-};
+// export const doHomeFetch = (url: string, headers: HeadersInit): Promise<any[]> => {
+//   return new Promise((resolve) => {
+//     if (!url) {
+//       resolve([]);
+//     } else {
+//       fetch(url, {
+//         method: 'GET',
+//         headers: new Headers(headers),
+//       })
+//         .then((response) => response.json())
+//         .then((res) => resolve(res.data));
+//     }
+//   });
+// };

@@ -1,4 +1,3 @@
-import { fetchGetUserinfo } from '../commons/fetch';
 import { dom, domById, domC } from '../commons/tools';
 import { DEFAULT_FUNCTION, FONT_SIZE_INPUT, FOOTER_HTML, HEADER, HIDDEN_ARRAY, ICO_URL, VERSION_RANGE } from '../configs';
 import { BASIC_SHOW_CONTENT } from '../configs/basic-show';
@@ -6,19 +5,17 @@ import { addBackgroundSetting } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
 import { myMenu } from '../methods/menu';
-import { store } from '../store';
-import { IOptionItem, IRangeItem } from '../types';
+import { IOptionItem, IRangeItem, IZhihuUserinfo } from '../types';
 import { INNER_HTML } from '../web-resources';
 
 const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return;
   const itemLabel = (item: IOptionItem[] = []) => {
-    return (
-      item.map((i) => `<label style="display: inline-flex; algin-item: center;"><input class="ctz-i" name="${i.value}" type="checkbox" value="on" />${i.label}</label>`).join('') +
-      `<br>`
-    );
+    return item
+      .map((i) => `<label style="display: inline-flex; algin-item: center;"><input class="ctz-i" name="${i.value}" type="checkbox" value="on" />${i.label}</label>`)
+      .join('');
   };
-  return `<div class="ctz-set-content">${arrHidden.map((i) => itemLabel(i)).join('')}</div>`;
+  return `<div class="ctz-set-content">${arrHidden.map((i) => itemLabel(i)).join('<br>')}</div>`;
 };
 
 /** 加载滑动条输入框 */
@@ -107,19 +104,18 @@ export const initHTML = () => {
       innerText: '返回主页',
     })
   );
-  domAddUserinfo();
 };
 
-const domAddUserinfo = async () => {
-  const { setUserinfo } = store;
-  const userinfo = await fetchGetUserinfo();
-  setUserinfo(userinfo);
+export const appendHomeLink = (userinfo: IZhihuUserinfo) => {
+  if (dom('.ctz-home-link')) return;
   const hrefUser = userinfo.url ? userinfo.url.replace('/api/v4', '') : '';
   if (!hrefUser) return;
-  const homeLink = domC('a', {
-    href: hrefUser,
-    target: '_blank',
-    innerText: '前往个人主页>>',
-  });
-  dom('.ctz-footer-right')!.appendChild(homeLink);
+  dom('.ctz-footer-right')!.appendChild(
+    domC('a', {
+      href: hrefUser,
+      target: '_blank',
+      innerText: '前往个人主页>>',
+      className: 'ctz-home-link',
+    })
+  );
 };
