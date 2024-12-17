@@ -377,9 +377,9 @@
 // 配置操作
 #CTZ_BASIS_CONFIG {
   .ctz-config-buttons {
-    padding: 8px 0;
+    padding: 0 0 8px;
     button {
-      margin-right: 8px;
+      margin: 8px 8px 0 0;
     }
   }
   textarea {
@@ -414,9 +414,10 @@
     margin: 4px 4px 0 0;
     display: flex;
     align-items: center;
-    & > i {
-      margin-left: 2px;
-      .hover-style();
+    cursor: pointer;
+    &:hover {
+      color: @red1;
+      border-color: @red1;
     }
   }
 }

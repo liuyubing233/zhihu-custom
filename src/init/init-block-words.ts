@@ -18,14 +18,9 @@ const NAME_BY_KEY: IFindDomName = {
   blockWordsAnswer: BLOCK_WORDS_ANSWER,
 };
 
-const createHTMLBlockText = (w: string) => `<span data-title="${w}">${createHTMLBlockTextContent(w)}</span>`;
-const createHTMLBlockTextContent = (w: string) => `<span>${w}</span><i class="ctz-filter-word-remove">✗</i>`;
-
 const onRemove = async (e: MouseEvent, key: IKeyofDomName) => {
-  const target = e.target as HTMLElement;
-  if (!target.classList.contains('ctz-filter-word-remove')) return;
-  const domItem = target.parentElement!;
-  const title = domItem.dataset.title;
+  const domItem = e.target as HTMLElement;
+  const title = domItem.innerText;
   const config = await myStorage.getConfig();
   domItem.remove();
   myStorage.setConfigItem(
@@ -37,12 +32,12 @@ const onRemove = async (e: MouseEvent, key: IKeyofDomName) => {
 const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
   const word = target.value;
   const config = await myStorage.getConfig();
-  const configThis = config[key]
+  const configThis = config[key];
   if (!Array.isArray(configThis)) return;
   configThis.push(word);
   await myStorage.setConfigItem(key, configThis);
-  const domItem = domC('span', { innerHTML: createHTMLBlockTextContent(word) });
-  domItem.dataset.title = word;
+  const domItem = domC('span', { innerText: word });
+  domItem.classList.add('ctz-filter-word-remove');
   const nodeFilterWords = dom(NAME_BY_KEY[key]);
   nodeFilterWords && nodeFilterWords.appendChild(domItem);
   target.value = '';
@@ -58,7 +53,7 @@ export const initBlockWords = async () => {
   for (let i = 0, len = arr.length; i < len; i++) {
     const { domFind, name, domInput } = arr[i];
     if (domFind) {
-      const children = (config[name] || []).map((i: string) => createHTMLBlockText(i)).join('');
+      const children = (config[name] || []).map((i: string) => `<span class="ctz-filter-word-remove">${i}</span>`).join('');
       domFind.innerHTML = children || '';
       domFind.onclick = (e) => onRemove(e, name as IKeyofDomName);
     }
