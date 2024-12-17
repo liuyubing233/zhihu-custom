@@ -40,7 +40,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href } = location;
-  const { setStorageConfigItem, getStorageConfigItem } = store;
+  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -82,6 +82,7 @@ import { INNER_CSS } from './web-resources';
         //   // 如果是自定义排序则回答页码增加到20条
         //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
         // }
+
         // 缓存 header
         if (opt && opt.headers) {
           setStorageConfigItem('fetchHeaders', {
@@ -90,7 +91,18 @@ import { INNER_CSS } from './web-resources';
           });
         }
 
-        return originFetch(url, opt);
+        return originFetch(url, opt).then((res) => {
+          if (/\/api\/v3\/feed\/topstory\/recommend/.test(res.url)) {
+            res
+              .clone()
+              .json()
+              .then((r) => {
+                findRemoveRecommends(r.data);
+              });
+          }
+
+          return res;
+        });
       };
 
       // const matched = search.match(/(?<=sort=)\w+/);
@@ -119,6 +131,12 @@ import { INNER_CSS } from './web-resources';
 
   const createLoad = async () => {
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
+      try {
+        const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
+        const prevData = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
+        findRemoveRecommends(prevData || []);
+      } catch {}
+
       const { removeTopAD } = await myStorage.getConfig();
       // 不考虑在 iframe 中的情况
       initHTML();

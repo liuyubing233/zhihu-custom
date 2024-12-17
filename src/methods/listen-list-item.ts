@@ -13,13 +13,15 @@ export const myListenListItem = {
     await this.traversal(domA('.TopstoryItem'));
     setTimeout(() => {
       this.traversal(domA('.TopstoryItem:not(.ctz-listened)'), false); // 每次执行后检测未检测到的项，解决内容重载的问题
-    }, 500)
+    }, 500);
   },
   traversal: async function (nodes: HTMLElement[], needIndex = true) {
     const index = needIndex ? this.index : 0;
     if (!nodes.length) return;
     if (needIndex && index + 1 === nodes.length) return;
     const userinfo = store.getUserinfo();
+    const removeRecommendIds = store.getRemoveRecommends();
+    // console.log('removeRecommendIdsremoveRecommendIdsremoveRecommendIds', removeRecommendIds)
     const pfConfig = await myStorage.getConfig();
     const {
       filterKeywords = [],
@@ -40,9 +42,13 @@ export const myListenListItem = {
       removeMyOperateAtFollow,
       listOutputToQuestion,
       fetchInterceptStatus,
+      removeBlockUserContent,
+      removeBlockUserContentList,
     } = pfConfig;
     const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
+    let removeUsernames: string[] = [];
+    removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i) => i.name || ''));
     // 如果 this.index 为 0 则从第 0 位开始
     // 否则则从 this.index + 1 位开始，解决上一次遍历末尾跟这次便利开始重复的问题
     for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
@@ -63,7 +69,7 @@ export const myListenListItem = {
         dataZop = JSON.parse(nodeItemContent.getAttribute('data-zop') || '{}');
         cardContent = JSON.parse(nodeItemContent.getAttribute('data-za-extra-module') || '{}').card.content;
       } catch {}
-      const { title = '' } = dataZop || {};
+      const { title = '', itemId, authorName } = dataZop || {};
       // 关注列表屏蔽自己的操作
       if (removeMyOperateAtFollow && nodeItem.classList.contains('TopstoryItem-isFollow')) {
         try {
@@ -72,6 +78,16 @@ export const myListenListItem = {
           findUserId === myUserId && (message = '关注列表屏蔽自己的操作');
         } catch {}
       }
+      // 屏蔽盐选等...
+      if (!message && removeRecommendIds.includes(String(itemId))) {
+        message = `列表内容屏蔽来自盐选专栏的内容: ${title}`;
+      }
+
+      // 屏蔽用户的内容
+      if (!message) {
+        removeUsernames.includes(authorName || '') && (message = `已删除${dataZop.authorName}的内容: ${title}`);
+      }
+
       // 列表种类过滤
       if (!message && ((isVideo && removeItemAboutVideo) || (isArticle && removeItemAboutArticle) || (isTip && removeItemAboutPin))) {
         message = `列表种类屏蔽，${nodeItemContent.classList.value}`;

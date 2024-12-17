@@ -7,14 +7,6 @@ export const HIDDEN_ANSWER_TAG: Record<string, string> = {
   removeFromEBook: '电子书',
 };
 
-/** 屏蔽账号回答 */
-export const HIDDEN_ANSWER_ACCOUNT: Record<string, string> = {
-  removeStoryAnswer: '故事档案局',
-  removeYanxuanAnswer: '盐选科普',
-  removeYanxuanRecommend: '盐选推荐',
-  removeYanxuanCPRecommend: '盐选测评室',
-};
-
 // 勾选隐藏对应内容
 export const HIDDEN_ARRAY: IHiddenArray = [
   {
@@ -23,7 +15,6 @@ export const HIDDEN_ARRAY: IHiddenArray = [
     desc: '',
     content: [
       [{ value: 'hiddenAD', label: '广告' }],
-      // [{ value: 'hiddenTopAD', label: '顶部推广（只能物理隐藏，会存在颜色错误）' }],
       [
         { value: 'hiddenLogo', label: 'logo' },
         { value: 'hiddenHeader', label: '顶部悬浮模块' },

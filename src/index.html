@@ -23,7 +23,7 @@
         </div>
         <div class="ctz-content-right">
           <div id="CTZ_BASIS_DEFAULT">
-            <div class="ctz-set-title"><span>基本设置</span></div>
+            <div class="ctz-set-title">基本设置</div>
             <div class="ctz-set-content">
               <label class="ctz-flex-wrap">
                 <span class="ctz-label">不显示修改器唤醒图标 ⚙︎</span>
@@ -62,7 +62,8 @@
 
           <div id="CTZ_BASIS_SHOW_CONTENT">
             <div class="ctz-set-title">
-              <span>显示修改<span class="ctz-desc" style="color: red">修改后刷新页面生效</span></span>
+              显示修改
+              <span style="color: red">修改后刷新页面生效</span>
             </div>
             <div class="ctz-set-content">
               <div class="ctz-flex-wrap">
@@ -81,7 +82,7 @@
           </div>
 
           <div id="CTZ_BASIS_SIZE">
-            <div class="ctz-set-title"><span>页面尺寸</span></div>
+            <div class="ctz-set-title">页面尺寸</div>
             <div class="ctz-set-content">
               <!-- 页面内容宽度 -->
               <div id="CTZ_VERSION_RANGE_ZHIHU"></div>
@@ -126,7 +127,7 @@
           </div>
 
           <div id="CTZ_BASIS_FLOAT">
-            <div class="ctz-set-title"><span>悬浮模块</span></div>
+            <div class="ctz-set-title">悬浮模块</div>
             <div class="ctz-set-content">
               <div class="ctz-flex-wrap">
                 <label>
@@ -164,7 +165,7 @@
           </div>
 
           <div id="CTZ_BASIS_COLOR">
-            <div class="ctz-set-title"><span>颜色设置</span></div>
+            <div class="ctz-set-title">颜色设置</div>
             <div class="ctz-set-content">
               <div class="ctz-set-background"></div>
               <div class="ctz-set-color ctz-flex-wrap">
@@ -175,7 +176,7 @@
           </div>
 
           <div id="CTZ_BASIS_CONFIG">
-            <div class="ctz-set-title"><span>配置操作</span></div>
+            <div class="ctz-set-title">配置操作</div>
             <div class="ctz-set-content">
               <div class="ctz-flex-wrap ctz-config-buttons">
                 <button class="ctz-button" name="useSimple">启用极简模式</button>
@@ -201,13 +202,32 @@
 
       <div id="CTZ_FILTER" style="display: none">
         <div class="ctz-content-left">
+          <a href="#CTZ_FILTER_COMMEN">通用内容屏蔽</a>
           <a href="#CTZ_FILTER_LIST">列表内容屏蔽</a>
           <a href="#CTZ_FILTER_ANSWER">回答内容屏蔽</a>
         </div>
         <div class="ctz-content-right">
           <h5 class="ctz-alert-red">此部分更改后请重新刷新页面</h5>
+          <div id="CTZ_FILTER_COMMEN" class="ctz-filter-block">
+            <div class="ctz-set-title">
+              通用内容屏蔽
+              <span>此部分设置在推荐列表和回答中均可生效</span>
+            </div>
+            <div class="ctz-set-content">
+              <div class="ctz-flex-wrap">
+                <label>
+                  <span class="ctz-label">屏蔽选自盐选专栏的内容</span>
+                  <input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />
+                </label>
+              </div>
+            </div>
+          </div>
+
           <div id="CTZ_FILTER_LIST" class="ctz-filter-block">
-            <div class="ctz-set-title">列表内容屏蔽</div>
+            <div class="ctz-set-title">
+              列表内容屏蔽
+              <span>此部分设置只在首页列表生效</span>
+            </div>
             <div class="ctz-set-content">
               <div>
                 <label style="display: flex; align-items: center">
@@ -258,21 +278,11 @@
             </div>
           </div>
           <div id="CTZ_FILTER_ANSWER" class="ctz-filter-block">
-            <div class="ctz-set-title">回答内容屏蔽</div>
+            <div class="ctz-set-title">
+              回答内容屏蔽
+              <span>此部分设置只在回答页面生效</span>
+            </div>
             <div class="ctz-set-content">
-              <div class="ctz-filter-defail-who">
-                <div class="ctz-label">屏蔽以下官方账号的回答</div>
-                <div style="margin: 4px 0; border-bottom: 1px solid #ebebeb; padding-bottom: 4px">
-                  <label><input class="ctz-i" name="removeZhihuOfficial" type="checkbox" value="on" />所有知乎官方账号</label>
-                </div>
-                <div class="ctz-flex-wrap">
-                  <label><input class="ctz-i" name="removeStoryAnswer" type="checkbox" value="on" />故事档案局</label>
-                  <label><input class="ctz-i" name="removeYanxuanAnswer" type="checkbox" value="on" />盐选科普</label>
-                  <label><input class="ctz-i" name="removeYanxuanRecommend" type="checkbox" value="on" />盐选推荐</label>
-                  <label><input class="ctz-i" name="removeYanxuanCPRecommend" type="checkbox" value="on" />盐选测评室</label>
-                </div>
-              </div>
-
               <div class="ctz-flex-wrap">
                 <label>
                   <span class="ctz-label">屏蔽「匿名用户」回答</span>
@@ -283,7 +293,6 @@
               <div class="ctz-filter-defail-tag">
                 <div class="ctz-label">屏蔽带有以下标签的回答</div>
                 <div class="ctz-flex-wrap">
-                  <label><input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />选自盐选专栏</label>
                   <label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label>
                   <label><input class="ctz-i" name="removeFromEBook" type="checkbox" value="on" />选自电子书</label>
                 </div>
@@ -317,16 +326,16 @@
         <div class="ctz-content-right">
           <div id="CTZ_BLOCK_WORD_LIST">
             <div class="ctz-set-title">
-              <span>标题屏蔽词</span>
-              <span class="ctz-desc">匹配位置：「关注页、推荐页」列表<b>标题</b></span>
+              标题屏蔽词
+              <span>匹配位置：「关注页、推荐页」列表<b>标题</b></span>
             </div>
             <input name="inputFilterWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" />
             <div class="ctz-block-words-content"></div>
           </div>
           <div id="CTZ_BLOCK_WORD_CONTENT">
             <div class="ctz-set-title">
-              <span>内容屏蔽词</span>
-              <span class="ctz-desc">匹配位置：「关注页、推荐页」列表<b>内容</b>，回答页<b>回答内容</b></span>
+              内容屏蔽词
+              <span>匹配位置：「关注页、推荐页」列表<b>内容</b>，回答页<b>回答内容</b></span>
             </div>
             <input name="inputBlockWordsAnswer" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" />
             <div class="ctz-block-words-content"></div>
@@ -342,7 +351,7 @@
         <div class="ctz-content-right ctz-fetch-intercept">
           <h5 class="ctz-alert-red ctz-need-fetch">接口拦截已关闭，此部分功能无法使用</h5>
           <div id="CTZ_BASIS_BLOCK">
-            <div class="ctz-set-title"><span>黑名单设置</span></div>
+            <div class="ctz-set-title">黑名单设置</div>
             <div class="ctz-set-content">
               <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
               <label class="ctz-flex-wrap">
@@ -371,14 +380,16 @@
         <div class="ctz-content-right">
           <div id="CTZ_HISTORY_LIST">
             <div class="ctz-set-title">
-              <span>推荐列表缓存<span class="ctz-desc">最多缓存500条，包含已过滤项</span></span>
+              推荐列表缓存
+              <span>最多缓存500条，包含已过滤项</span>
             </div>
             <button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button>
             <div class="ctz-set-content"></div>
           </div>
           <div id="CTZ_HISTORY_VIEW">
             <div class="ctz-set-title">
-              <span>浏览历史记录<span class="ctz-desc">最多缓存500条</span></span>
+              浏览历史记录
+              <span>最多缓存500条</span>
             </div>
             <button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button>
             <div class="ctz-set-content"></div>
@@ -394,7 +405,8 @@
         <div class="ctz-content-right">
           <div id="CTZ_DEFAULT_CONTENT">
             <div class="ctz-set-title">
-              <span>默认功能<span class="ctz-desc">此部分功能为编辑器默认功能，不需要额外开启</span></span>
+              默认功能
+              <span>此部分功能为编辑器默认功能，不需要额外开启</span>
             </div>
             <div class="ctz-set-content">
               <div id="CTZ_DEFAULT_SELF"></div>

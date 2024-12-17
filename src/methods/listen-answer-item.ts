@@ -1,7 +1,7 @@
 import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domA } from '../commons/tools';
-import { HIDDEN_ANSWER_ACCOUNT, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
+import { HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
 import { addAnswerCopyLink } from './link';
@@ -22,7 +22,6 @@ export const myListenAnswerItem = {
       removeLessVoteDetail,
       lessVoteNumberDetail = 0,
       answerOpen,
-      removeZhihuOfficial,
       removeBlockUserContent,
       removeBlockUserContentList,
       showBlockUser,
@@ -52,11 +51,8 @@ export const myListenAnswerItem = {
     addFnInNodeItem(dom('.QuestionAnswer-content'));
     const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
     // 屏蔽用户名称列表
-    let hiddenUsers = [];
-    for (let i in HIDDEN_ANSWER_ACCOUNT) {
-      config[i] && hiddenUsers.push(HIDDEN_ANSWER_ACCOUNT[i]);
-    }
-    removeBlockUserContent && (hiddenUsers = hiddenTags.concat((removeBlockUserContentList || []).map((i) => i.name || '')));
+    let removeUsernames: string[] = [];
+    removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i) => i.name || ''));
     for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];
@@ -71,12 +67,7 @@ export const myListenAnswerItem = {
       // FIRST
       // 低赞回答过滤
       (dataCardContent['upvote_num'] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
-      // 屏蔽知乎官方账号回答
-      if (!message && removeZhihuOfficial) {
-        const labelE = nodeItem.querySelector('.AuthorInfo-name .css-n99yhz');
-        const label = labelE ? labelE.getAttribute('aria-label') || '' : '';
-        /知乎[\s]*官方帐号/.test(label) && (message = '已删除一条知乎官方帐号的回答');
-      }
+
       // 屏蔽带有选中标签的回答
       if (!message) {
         const nodeTag1 = nodeItem.querySelector('.KfeCollection-AnswerTopCard-Container') as HTMLElement;
@@ -89,9 +80,9 @@ export const myListenAnswerItem = {
           }
         }
       }
-      // 屏蔽用户 | 知乎账号的回答
+      // 屏蔽用户的回答
       if (!message) {
-        hiddenUsers.length && hiddenUsers.includes(dataZop.authorName || '') && (message = `已删除${dataZop.authorName}的回答`);
+        removeUsernames.includes(dataZop.authorName || '') && (message = `已删除${dataZop.authorName}的回答`);
       }
       // 屏蔽「匿名用户」回答
       if (!message && removeAnonymousAnswer) {

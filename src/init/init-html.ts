@@ -76,7 +76,7 @@ export const initHTML = () => {
   domById('CTZ_HIDDEN')!.innerHTML =
     `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('')}</div>` +
     `<div class="ctz-content-right">${HIDDEN_ARRAY.map(
-      (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span class="ctz-desc">${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
+      (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
     ).join('')}</div>`;
 
   // 添加修改网页标题图片

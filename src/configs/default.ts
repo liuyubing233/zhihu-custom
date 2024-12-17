@@ -13,11 +13,6 @@ export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
 
 /** 屏蔽内容模块默认配置 */
 export const CONFIG_FILTER_DEFAULT: IConfigFilter = {
-  removeZhihuOfficial: false,
-  removeStoryAnswer: true,
-  removeYanxuanAnswer: true,
-  removeYanxuanRecommend: true,
-  removeYanxuanCPRecommend: true,
   removeFromYanxuan: true,
   removeFromEBook: true,
   removeUnrealAnswer: false,
@@ -112,11 +107,6 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenHomeCategory: true,
   hiddenHomeCategoryMore: true,
   hiddenHomeFooter: true,
-  removeZhihuOfficial: false,
-  removeStoryAnswer: true,
-  removeYanxuanAnswer: true,
-  removeYanxuanRecommend: true,
-  removeYanxuanCPRecommend: true,
   removeFromYanxuan: true,
   removeUnrealAnswer: false,
   removeFollowVoteAnswer: false,

@@ -1,4 +1,17 @@
-export interface IZhihuListServiceTargetItem {
+export interface IZhihuRecommendItem {
+  id: string;
+  type: string;
+  offset: number;
+  verb: string;
+  created_time: number;
+  updated_time: number;
+  target: Target;
+  brief: string;
+  attached_info: string;
+  action_card: boolean;
+}
+
+export interface Target {
   id: number;
   type: string;
   url: string;
@@ -10,17 +23,20 @@ export interface IZhihuListServiceTargetItem {
   comment_count: number;
   is_copyable: boolean;
   question: Question;
+  thumbnail: string;
   excerpt: string;
   excerpt_new: string;
   preview_type: string;
   preview_text: string;
   reshipment_settings: string;
   content: string;
-  relationship: Untitled1_Relationship;
+  relationship: TargetRelationship;
   is_labeled: boolean;
   visited_count: number;
+  thumbnails: string[];
   favorite_count: number;
   answer_type: string;
+  paid_info?: PaidInfo;
 }
 
 export interface Author {
@@ -36,6 +52,12 @@ export interface Author {
   followers_count: number;
   is_following: boolean;
   is_followed: boolean;
+}
+
+export interface PaidInfo {
+  type: string;
+  content: string;
+  has_purchased: boolean;
 }
 
 export interface Question {
@@ -60,7 +82,7 @@ export interface QuestionRelationship {
   is_author: boolean;
 }
 
-export interface Untitled1_Relationship {
+export interface TargetRelationship {
   is_thanked: boolean;
   is_nothelp: boolean;
   voting: number;

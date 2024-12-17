@@ -203,16 +203,6 @@ export interface IBlockUserItem {
 
 /** 屏蔽内容模块默认配置 */
 export interface IConfigFilter {
-  /** 屏蔽知乎官方账号回答 */
-  removeZhihuOfficial?: boolean;
-  /** 屏蔽故事档案局回答 */
-  removeStoryAnswer?: boolean;
-  /** 屏蔽盐选科普回答 */
-  removeYanxuanAnswer?: boolean;
-  /** 屏蔽盐选推荐 */
-  removeYanxuanRecommend?: boolean;
-  /** 屏蔽盐选测评室 */
-  removeYanxuanCPRecommend?: boolean;
   /** 屏蔽选自盐选专栏的回答 */
   removeFromYanxuan?: boolean;
   /** 屏蔽带有虚构内容的回答 */
