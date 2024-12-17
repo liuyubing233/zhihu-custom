@@ -582,8 +582,8 @@
     },
     getHistory: async function() {
       const nHistory = await myStorage.get("pfHistory");
-      const h2 = nHistory ? JSON.parse(nHistory) : { list: [], view: [] };
-      return Promise.resolve(h2);
+      const h = nHistory ? JSON.parse(nHistory) : { list: [], view: [] };
+      return Promise.resolve(h);
     },
     /** 修改配置中的值 */
     setConfigItem: async function(key, value) {
@@ -610,9 +610,9 @@
       await this.set("pfHistory", value);
     }
   };
-  var dom = (n2) => document.querySelector(n2);
+  var dom = (n) => document.querySelector(n);
   var domById = (id) => document.getElementById(id);
-  var domA = (n2) => document.querySelectorAll(n2);
+  var domA = (n) => document.querySelectorAll(n);
   var domC = (name, attrObjs) => {
     const node = document.createElement(name);
     for (let key in attrObjs) {
@@ -697,7 +697,7 @@
     }
   };
   var messageDoms = [];
-  var message = (value, t2 = 3e3) => {
+  var message = (value, t = 3e3) => {
     const time = +/* @__PURE__ */ new Date();
     const classTime = `ctz-message-${time}`;
     const nDom = domC("div", {
@@ -719,7 +719,7 @@
         domById(ID_MESSAGE_BOX).removeChild(nPrevDom);
         messageDoms.shift();
       }
-    }, t2);
+    }, t);
   };
   var createBtnSmallTran = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
     innerHTML,
@@ -753,8 +753,8 @@
     }
     if (justCommitNum) {
       const buttons = element.querySelectorAll(".ContentItem-actions button");
-      for (let i2 = 0; i2 < buttons.length; i2++) {
-        const btn = buttons[i2];
+      for (let i = 0; i < buttons.length; i++) {
+        const btn = buttons[i];
         if (btn.innerHTML.includes("条评论")) {
           btn.style.cssText = "font-size: 14px!important;margin-top:-5px;";
           btn.innerHTML = btn.innerHTML.replace("条评论", "");
@@ -768,14 +768,14 @@
     filterKeywords: BLOCK_WORDS_LIST,
     blockWordsAnswer: BLOCK_WORDS_ANSWER
   };
-  var onRemove = async (e2, key) => {
-    const domItem = e2.target;
+  var onRemove = async (e, key) => {
+    const domItem = e.target;
     const title = domItem.innerText;
     const config = await myStorage.getConfig();
     domItem.remove();
     myStorage.setConfigItem(
       key,
-      (config[key] || []).filter((i2) => i2 !== title)
+      (config[key] || []).filter((i) => i !== title)
     );
   };
   var onAddWord = async (target, key) => {
@@ -798,21 +798,21 @@
       { domFind: dom(BLOCK_WORDS_LIST), name: "filterKeywords", domInput: dom('[name="inputFilterWord"]') },
       { domFind: dom(BLOCK_WORDS_ANSWER), name: "blockWordsAnswer", domInput: dom('[name="inputBlockWordsAnswer"]') }
     ];
-    for (let i2 = 0, len = arr.length; i2 < len; i2++) {
-      const { domFind, name, domInput } = arr[i2];
+    for (let i = 0, len = arr.length; i < len; i++) {
+      const { domFind, name, domInput } = arr[i];
       if (domFind) {
-        const children = (config[name] || []).map((i3) => `<span class="ctz-filter-word-remove">${i3}</span>`).join("");
+        const children = (config[name] || []).map((i2) => `<span class="ctz-filter-word-remove">${i2}</span>`).join("");
         domFind.innerHTML = children || "";
-        domFind.onclick = (e2) => onRemove(e2, name);
+        domFind.onclick = (e) => onRemove(e, name);
       }
-      domInput && (domInput.onchange = (e2) => onAddWord(e2.target, name));
+      domInput && (domInput.onchange = (e) => onAddWord(e.target, name));
     }
   };
   var echoData = async () => {
     const pfConfig = await myStorage.getConfig();
     const textSameName = {
-      globalTitle: (e2) => e2.value = pfConfig.globalTitle || document.title,
-      customizeCss: (e2) => e2.value = pfConfig.customizeCss || ""
+      globalTitle: (e) => e.value = pfConfig.globalTitle || document.title,
+      customizeCss: (e) => e.value = pfConfig.customizeCss || ""
     };
     const echoText = (even) => {
       textSameName[even.name] ? textSameName[even.name](even) : even.value = pfConfig[even.name];
@@ -836,12 +836,12 @@
       echo[item.type] && echo[item.type](item);
     };
     const nodeArrInputClick = domA(`.${CLASS_INPUT_CLICK}`);
-    for (let i2 = 0, len = nodeArrInputClick.length; i2 < len; i2++) {
-      doEcho(nodeArrInputClick[i2]);
+    for (let i = 0, len = nodeArrInputClick.length; i < len; i++) {
+      doEcho(nodeArrInputClick[i]);
     }
     const nodeArrInputChange = domA(`.${CLASS_INPUT_CHANGE}`);
-    for (let i2 = 0, len = nodeArrInputChange.length; i2 < len; i2++) {
-      doEcho(nodeArrInputChange[i2]);
+    for (let i = 0, len = nodeArrInputChange.length; i < len; i++) {
+      doEcho(nodeArrInputChange[i]);
     }
     echo.text(dom('[name="globalTitle"]'));
     VERSION_RANGE.forEach((item) => {
@@ -867,7 +867,12 @@
         fetchHeaders: {},
         headerDoms: {}
       };
+      /** 过滤的盐选回答ID */
       this.removeRecommendIds = [];
+      /** 当前用户主页的回答内容 */
+      this.userAnswers = [];
+      /** 当前用户主页的文章内容 */
+      this.userArticle = [];
       this.setUserinfo = this.setUserinfo.bind(this);
       this.getUserinfo = this.getUserinfo.bind(this);
       this.setFindEventItem = this.setFindEventItem.bind(this);
@@ -876,6 +881,10 @@
       this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
       this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
       this.getRemoveRecommends = this.getRemoveRecommends.bind(this);
+      this.setUserAnswer = this.setUserAnswer.bind(this);
+      this.getUserAnswer = this.getUserAnswer.bind(this);
+      this.setUserArticle = this.setUserArticle.bind(this);
+      this.getUserArticle = this.getUserArticle.bind(this);
     }
     setUserinfo(inner) {
       this.userinfo = inner;
@@ -897,8 +906,8 @@
     }
     async findRemoveRecommends(recommends) {
       const config = await myStorage.getConfig();
-      for (let i2 = 0, len = recommends.length; i2 < len; i2++) {
-        const item = recommends[i2];
+      for (let i = 0, len = recommends.length; i < len; i++) {
+        const item = recommends[i];
         if (!item.target)
           continue;
         if (config.removeFromYanxuan && item.target.paid_info) {
@@ -908,6 +917,18 @@
     }
     getRemoveRecommends() {
       return this.removeRecommendIds;
+    }
+    setUserAnswer(data) {
+      this.userAnswers = data;
+    }
+    getUserAnswer() {
+      return this.userAnswers;
+    }
+    setUserArticle(data) {
+      this.userArticle = data;
+    }
+    getUserArticle() {
+      return this.userArticle;
     }
   };
   var store = new Store();
@@ -942,7 +963,7 @@
       })
     );
   };
-  var appendClassStart = (str) => appendPrefix(str, (i2) => `[class|="${i2}"]`);
+  var appendClassStart = (str) => appendPrefix(str, (i) => `[class|="${i}"]`);
   var appendPrefix = (str, mapCB) => str.split(",").map(mapCB).join(",");
   var myBackground = {
     init: async function() {
@@ -986,7 +1007,7 @@
         // 这里不使用 addPrefix 添加前缀是因为 menuBeforeAfter 方法里背景色存在逗号
         `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}` + appendPrefix(
           this.doSetCSS(background, background2) + whiteText + blankText + linkText + extraBG1 + `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
-          (i2) => `html[data-theme=dark] ${i2}`
+          (i) => `html[data-theme=dark] ${i}`
           // 添加 html[data-theme=dark] 前缀
         )
       );
@@ -1031,13 +1052,13 @@
   };
   var isDark = async () => await myBackground.isUseDark();
   var radioBackground = (name, value, background, color, label) => `<label><input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div style="background: ${background};color: ${color}">${label}</div></label>`;
-  var themeToRadio = (o2, className, color) => Object.keys(o2).map((key) => radioBackground(className, key, o2[key].background, color, o2[key].name)).join("");
+  var themeToRadio = (o, className, color) => Object.keys(o).map((key) => radioBackground(className, key, o[key].background, color, o[key].name)).join("");
   var addBackgroundSetting = () => {
-    dom(".ctz-set-background").innerHTML = `<div id="CTZ_BACKGROUND">${THEMES.map((i2) => radioBackground(INPUT_NAME_THEME, i2.value, i2.background, i2.color, i2.label)).join("")}</div><div class="ctz-commit">浅色颜色选择:</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div><div class="ctz-commit">深色颜色选择:</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`;
+    dom(".ctz-set-background").innerHTML = `<div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label)).join("")}</div><div class="ctz-commit">浅色颜色选择:</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div><div class="ctz-commit">深色颜色选择:</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`;
   };
   var myLock = {
-    append: async function(e2, name) {
-      if (!e2)
+    append: async function(e, name) {
+      if (!e)
         return;
       const lock = this.lock.class;
       const unlock = this.unlock.class;
@@ -1046,28 +1067,28 @@
       const iLock = domC("i", { className: `${this.lock.name}`, innerHTML: "☑︎" });
       const iUnlock = domC("i", { className: `${this.unlock.name}`, innerHTML: "☒" });
       const dLockMask = domC("div", { className: this.lockMask.name });
-      !e2.querySelector(lock) && e2.appendChild(iLock);
-      !e2.querySelector(unlock) && e2.appendChild(iUnlock);
-      !e2.querySelector(lockMask) && e2.appendChild(dLockMask);
+      !e.querySelector(lock) && e.appendChild(iLock);
+      !e.querySelector(unlock) && e.appendChild(iUnlock);
+      !e.querySelector(lockMask) && e.appendChild(dLockMask);
       const pfConfig = await myStorage.getConfig();
-      e2.querySelector(lock).onclick = async () => {
+      e.querySelector(lock).onclick = async () => {
         await myStorage.setConfigItem(name + "Fixed", true);
-        e2.classList.remove(classRemove);
+        e.classList.remove(classRemove);
       };
-      e2.querySelector(unlock).onclick = async () => {
+      e.querySelector(unlock).onclick = async () => {
         await myStorage.setConfigItem(name + "Fixed", false);
-        e2.classList.add(classRemove);
+        e.classList.add(classRemove);
       };
       if (pfConfig[name + "Fixed"] === false) {
-        e2.classList.add(classRemove);
+        e.classList.add(classRemove);
       }
     },
-    remove: function(e2) {
-      if (!e2)
+    remove: function(e) {
+      if (!e)
         return;
-      const nodeLock = e2.querySelector(this.lock.class);
-      const nodeUnlock = e2.querySelector(this.unlock.class);
-      const nodeLockMask = e2.querySelector(this.lockMask.class);
+      const nodeLock = e.querySelector(this.lock.class);
+      const nodeUnlock = e.querySelector(this.unlock.class);
+      const nodeLockMask = e.querySelector(this.lockMask.class);
       nodeLock && nodeLock.remove();
       nodeUnlock && nodeUnlock.remove();
       nodeLockMask && nodeLockMask.remove();
@@ -1078,10 +1099,10 @@
   };
   var myMove = {
     init: function(eventName, configName, name) {
-      const e2 = dom(eventName);
-      if (e2) {
-        this.clicks[configName] = e2.click;
-        e2.onmousedown = async (ev) => {
+      const e = dom(eventName);
+      if (e) {
+        this.clicks[configName] = e.click;
+        e.onmousedown = async (ev) => {
           const pfConfig = await myStorage.getConfig();
           if (pfConfig[`${name}Fixed`])
             return;
@@ -1089,10 +1110,10 @@
           const bodyW = document.body.offsetWidth;
           const windowW = window.innerWidth;
           const windowH = window.innerHeight;
-          const eW = e2.offsetWidth;
-          const eH = e2.offsetHeight;
-          const eL = e2.offsetLeft;
-          const eT = e2.offsetTop;
+          const eW = e.offsetWidth;
+          const eH = e.offsetHeight;
+          const eL = e.offsetLeft;
+          const eT = e.offsetTop;
           const evX = event.clientX;
           const evY = event.clientY;
           const dx = evX - eL;
@@ -1103,19 +1124,19 @@
             const evNX = eventN.clientX;
             let evenLeft = 0;
             let evenRight = 0;
-            const isR = this.useR.find((i2) => i2 === name);
+            const isR = this.useR.find((i) => i === name);
             if (isR) {
               const right = bodyW - evNX - rx;
               evenRight = right <= 0 ? 0 : right >= bodyW - eW ? bodyW - eW : right;
-              e2.style.right = evenRight + "px";
+              e.style.right = evenRight + "px";
             } else {
               const left = evNX - dx;
               evenLeft = left <= 0 ? 0 : left >= windowW - eW ? windowW - eW : left;
-              e2.style.left = evenLeft + "px";
+              e.style.left = evenLeft + "px";
             }
             const top = eventN.clientY - dy;
             const evenTop = top <= 0 ? 0 : top >= windowH - eH ? windowH - eH : top;
-            e2.style.top = evenTop + "px";
+            e.style.top = evenTop + "px";
             this.isMove = true;
             this.timer[configName] && clearTimeout(this.timer[configName]);
             this.timer[configName] = setTimeout(async () => {
@@ -1126,17 +1147,17 @@
           document.onmouseup = () => {
             document.onmousemove = null;
             document.onmouseup = null;
-            e2.onclick = (e3) => {
+            e.onclick = (e2) => {
               if (this.isMove) {
                 this.isMove = false;
-                return e3.preventDefault && e3.preventDefault();
+                return e2.preventDefault && e2.preventDefault();
               } else {
                 return this.clicks[configName];
               }
             };
           };
-          if (e2.preventDefault) {
-            e2.preventDefault();
+          if (e.preventDefault) {
+            e.preventDefault();
           } else {
             return false;
           }
@@ -1144,8 +1165,8 @@
       }
     },
     destroy: function(eventName) {
-      const e2 = dom(eventName);
-      e2 && (e2.onmousedown = null);
+      const e = dom(eventName);
+      e && (e.onmousedown = null);
     },
     isMove: false,
     clicks: {},
@@ -1159,10 +1180,10 @@
   var CLASS_VIDEO_TWO = ".VideoAnswerPlayer-video";
   var NEED_LINK_CLASS = [CLASS_VIDEO_ONE, CLASS_VIDEO_TWO];
   var findDoms = (nodeFound, domNames) => {
-    const doms = domNames.map((i2) => nodeFound.querySelectorAll(i2));
-    for (let i2 = 0, len = doms.length; i2 < len; i2++) {
-      if (doms[i2].length) {
-        return doms[i2];
+    const doms = domNames.map((i) => nodeFound.querySelectorAll(i));
+    for (let i = 0, len = doms.length; i < len; i++) {
+      if (doms[i].length) {
+        return doms[i];
       }
     }
     return doms[doms.length - 1];
@@ -1171,12 +1192,12 @@
     const { videoUseLink } = await myStorage.getConfig();
     const domVideos = findDoms(
       nodeFound,
-      [".ZVideo-player>div", CLASS_VIDEO_ONE, CLASS_VIDEO_TWO].filter((i2) => {
-        return videoUseLink ? !NEED_LINK_CLASS.includes(i2) : true;
+      [".ZVideo-player>div", CLASS_VIDEO_ONE, CLASS_VIDEO_TWO].filter((i) => {
+        return videoUseLink ? !NEED_LINK_CLASS.includes(i) : true;
       })
     );
-    for (let i2 = 0, len = domVideos.length; i2 < len; i2++) {
-      const domVideoBox = domVideos[i2];
+    for (let i = 0, len = domVideos.length; i < len; i++) {
+      const domVideoBox = domVideos[i];
       const nDomDownload = domC("i", { className: "ctz-video-download", innerHTML: "⤓" });
       const nDomLoading = domC("i", { className: "ctz-loading", innerHTML: "↻" });
       nDomDownload.onclick = () => {
@@ -1346,9 +1367,9 @@
   };
   var suspensionPackUp = async (elements) => {
     const { themeLight = 0 /* 默认 */, themeDark = 1 /* 深色护眼一 */, suspensionPickupRight = 60 } = await myStorage.getConfig();
-    for (let i2 = 0; i2 < elements.length; i2++) {
-      const even = elements[i2];
-      const evenPrev = i2 > 0 ? elements[i2 - 1] : null;
+    for (let i = 0; i < elements.length; i++) {
+      const even = elements[i];
+      const evenPrev = i > 0 ? elements[i - 1] : null;
       const evenBottom = even.offsetTop + even.offsetHeight;
       const evenPrevBottom = evenPrev ? evenPrev.offsetTop + evenPrev.offsetHeight : 0;
       const hST = dom("html").scrollTop;
@@ -1494,458 +1515,6 @@
       }
     }, 500);
   };
-  function md5(s2) {
-    function f12(t2, e2, n2) {
-      var r2;
-      !function(o3) {
-        "use strict";
-        function i2(t3, e3) {
-          var n3 = (65535 & t3) + (65535 & e3);
-          return (t3 >> 16) + (e3 >> 16) + (n3 >> 16) << 16 | 65535 & n3;
-        }
-        function a2(t3, e3, n3, r3, o4, a3) {
-          return i2((u2 = i2(i2(e3, t3), i2(r3, a3))) << (c3 = o4) | u2 >>> 32 - c3, n3);
-          var u2, c3;
-        }
-        function u(t3, e3, n3, r3, o4, i3, u2) {
-          return a2(e3 & n3 | ~e3 & r3, t3, e3, o4, i3, u2);
-        }
-        function c2(t3, e3, n3, r3, o4, i3, u2) {
-          return a2(e3 & r3 | n3 & ~r3, t3, e3, o4, i3, u2);
-        }
-        function s3(t3, e3, n3, r3, o4, i3, u2) {
-          return a2(e3 ^ n3 ^ r3, t3, e3, o4, i3, u2);
-        }
-        function l2(t3, e3, n3, r3, o4, i3, u2) {
-          return a2(n3 ^ (e3 | ~r3), t3, e3, o4, i3, u2);
-        }
-        function f(t3, e3) {
-          var n3, r3, o4, a3, f2;
-          t3[e3 >> 5] |= 128 << e3 % 32, t3[14 + (e3 + 64 >>> 9 << 4)] = e3;
-          var d2 = 1732584193, p2 = -271733879, h3 = -1732584194, v2 = 271733878;
-          for (n3 = 0; n3 < t3.length; n3 += 16)
-            r3 = d2, o4 = p2, a3 = h3, f2 = v2, d2 = u(d2, p2, h3, v2, t3[n3], 7, -680876936), v2 = u(v2, d2, p2, h3, t3[n3 + 1], 12, -389564586), h3 = u(h3, v2, d2, p2, t3[n3 + 2], 17, 606105819), p2 = u(p2, h3, v2, d2, t3[n3 + 3], 22, -1044525330), d2 = u(d2, p2, h3, v2, t3[n3 + 4], 7, -176418897), v2 = u(v2, d2, p2, h3, t3[n3 + 5], 12, 1200080426), h3 = u(h3, v2, d2, p2, t3[n3 + 6], 17, -1473231341), p2 = u(p2, h3, v2, d2, t3[n3 + 7], 22, -45705983), d2 = u(d2, p2, h3, v2, t3[n3 + 8], 7, 1770035416), v2 = u(v2, d2, p2, h3, t3[n3 + 9], 12, -1958414417), h3 = u(h3, v2, d2, p2, t3[n3 + 10], 17, -42063), p2 = u(p2, h3, v2, d2, t3[n3 + 11], 22, -1990404162), d2 = u(d2, p2, h3, v2, t3[n3 + 12], 7, 1804603682), v2 = u(v2, d2, p2, h3, t3[n3 + 13], 12, -40341101), h3 = u(h3, v2, d2, p2, t3[n3 + 14], 17, -1502002290), d2 = c2(d2, p2 = u(p2, h3, v2, d2, t3[n3 + 15], 22, 1236535329), h3, v2, t3[n3 + 1], 5, -165796510), v2 = c2(v2, d2, p2, h3, t3[n3 + 6], 9, -1069501632), h3 = c2(h3, v2, d2, p2, t3[n3 + 11], 14, 643717713), p2 = c2(p2, h3, v2, d2, t3[n3], 20, -373897302), d2 = c2(d2, p2, h3, v2, t3[n3 + 5], 5, -701558691), v2 = c2(v2, d2, p2, h3, t3[n3 + 10], 9, 38016083), h3 = c2(h3, v2, d2, p2, t3[n3 + 15], 14, -660478335), p2 = c2(p2, h3, v2, d2, t3[n3 + 4], 20, -405537848), d2 = c2(d2, p2, h3, v2, t3[n3 + 9], 5, 568446438), v2 = c2(v2, d2, p2, h3, t3[n3 + 14], 9, -1019803690), h3 = c2(h3, v2, d2, p2, t3[n3 + 3], 14, -187363961), p2 = c2(p2, h3, v2, d2, t3[n3 + 8], 20, 1163531501), d2 = c2(d2, p2, h3, v2, t3[n3 + 13], 5, -1444681467), v2 = c2(v2, d2, p2, h3, t3[n3 + 2], 9, -51403784), h3 = c2(h3, v2, d2, p2, t3[n3 + 7], 14, 1735328473), d2 = s3(d2, p2 = c2(p2, h3, v2, d2, t3[n3 + 12], 20, -1926607734), h3, v2, t3[n3 + 5], 4, -378558), v2 = s3(v2, d2, p2, h3, t3[n3 + 8], 11, -2022574463), h3 = s3(h3, v2, d2, p2, t3[n3 + 11], 16, 1839030562), p2 = s3(p2, h3, v2, d2, t3[n3 + 14], 23, -35309556), d2 = s3(d2, p2, h3, v2, t3[n3 + 1], 4, -1530992060), v2 = s3(v2, d2, p2, h3, t3[n3 + 4], 11, 1272893353), h3 = s3(h3, v2, d2, p2, t3[n3 + 7], 16, -155497632), p2 = s3(p2, h3, v2, d2, t3[n3 + 10], 23, -1094730640), d2 = s3(d2, p2, h3, v2, t3[n3 + 13], 4, 681279174), v2 = s3(v2, d2, p2, h3, t3[n3], 11, -358537222), h3 = s3(h3, v2, d2, p2, t3[n3 + 3], 16, -722521979), p2 = s3(p2, h3, v2, d2, t3[n3 + 6], 23, 76029189), d2 = s3(d2, p2, h3, v2, t3[n3 + 9], 4, -640364487), v2 = s3(v2, d2, p2, h3, t3[n3 + 12], 11, -421815835), h3 = s3(h3, v2, d2, p2, t3[n3 + 15], 16, 530742520), d2 = l2(d2, p2 = s3(p2, h3, v2, d2, t3[n3 + 2], 23, -995338651), h3, v2, t3[n3], 6, -198630844), v2 = l2(v2, d2, p2, h3, t3[n3 + 7], 10, 1126891415), h3 = l2(h3, v2, d2, p2, t3[n3 + 14], 15, -1416354905), p2 = l2(p2, h3, v2, d2, t3[n3 + 5], 21, -57434055), d2 = l2(d2, p2, h3, v2, t3[n3 + 12], 6, 1700485571), v2 = l2(v2, d2, p2, h3, t3[n3 + 3], 10, -1894986606), h3 = l2(h3, v2, d2, p2, t3[n3 + 10], 15, -1051523), p2 = l2(p2, h3, v2, d2, t3[n3 + 1], 21, -2054922799), d2 = l2(d2, p2, h3, v2, t3[n3 + 8], 6, 1873313359), v2 = l2(v2, d2, p2, h3, t3[n3 + 15], 10, -30611744), h3 = l2(h3, v2, d2, p2, t3[n3 + 6], 15, -1560198380), p2 = l2(p2, h3, v2, d2, t3[n3 + 13], 21, 1309151649), d2 = l2(d2, p2, h3, v2, t3[n3 + 4], 6, -145523070), v2 = l2(v2, d2, p2, h3, t3[n3 + 11], 10, -1120210379), h3 = l2(h3, v2, d2, p2, t3[n3 + 2], 15, 718787259), p2 = l2(p2, h3, v2, d2, t3[n3 + 9], 21, -343485551), d2 = i2(d2, r3), p2 = i2(p2, o4), h3 = i2(h3, a3), v2 = i2(v2, f2);
-          return [d2, p2, h3, v2];
-        }
-        function d(t3) {
-          var e3, n3 = "", r3 = 32 * t3.length;
-          for (e3 = 0; e3 < r3; e3 += 8)
-            n3 += String.fromCharCode(t3[e3 >> 5] >>> e3 % 32 & 255);
-          return n3;
-        }
-        function p(t3) {
-          var e3, n3 = [];
-          for (n3[(t3.length >> 2) - 1] = void 0, e3 = 0; e3 < n3.length; e3 += 1)
-            n3[e3] = 0;
-          var r3 = 8 * t3.length;
-          for (e3 = 0; e3 < r3; e3 += 8)
-            n3[e3 >> 5] |= (255 & t3.charCodeAt(e3 / 8)) << e3 % 32;
-          return n3;
-        }
-        function h2(t3) {
-          var e3, n3, r3 = "0123456789abcdef", o4 = "";
-          for (n3 = 0; n3 < t3.length; n3 += 1)
-            e3 = t3.charCodeAt(n3), o4 += r3.charAt(e3 >>> 4 & 15) + r3.charAt(15 & e3);
-          return o4;
-        }
-        function v(t3) {
-          return unescape(encodeURIComponent(t3));
-        }
-        function A2(t3) {
-          return function(t4) {
-            return d(f(p(t4), 8 * t4.length));
-          }(v(t3));
-        }
-        function m(t3, e3) {
-          return function(t4, e4) {
-            var n3, r3, o4 = p(t4), i3 = [], a3 = [];
-            for (i3[15] = a3[15] = void 0, o4.length > 16 && (o4 = f(o4, 8 * t4.length)), n3 = 0; n3 < 16; n3 += 1)
-              i3[n3] = 909522486 ^ o4[n3], a3[n3] = 1549556828 ^ o4[n3];
-            return r3 = f(i3.concat(p(e4)), 512 + 8 * e4.length), d(f(a3.concat(r3), 640));
-          }(v(t3), v(e3));
-        }
-        function g2(t3, e3, n3) {
-          return e3 ? n3 ? m(e3, t3) : h2(m(e3, t3)) : n3 ? A2(t3) : h2(A2(t3));
-        }
-        void 0 === (r2 = function() {
-          return g2;
-        }.call(e2, n2, e2, t2)) || (t2.exports = r2);
-      }();
-    }
-    var o2 = {};
-    f12(o2);
-    return o2.exports(s2);
-  }
-  function zhihu_enc(s) {
-    function f1(__unused_webpack_module, exports) {
-      "use strict";
-      var __webpack_unused_export__;
-      function o(t2) {
-        return (o = "function" == typeof Symbol && "symbol" == typeof Symbol.A ? function(t3) {
-          return typeof t3;
-        } : function(t3) {
-          return t3 && "function" == typeof Symbol && t3.constructor === Symbol && t3 !== Symbol.prototype ? "symbol" : typeof t3;
-        })(t2);
-      }
-      function x(e2) {
-        return C(e2) || s(e2) || t();
-      }
-      function C(t2) {
-        if (Array.isArray(t2)) {
-          for (var e2 = 0, n2 = new Array(t2.length); e2 < t2.length; e2++)
-            n2[e2] = t2[e2];
-          return n2;
-        }
-      }
-      function s(t2) {
-        if (Symbol.A in Object(t2) || "[object Arguments]" === Object.prototype.toString.call(t2))
-          return Array.from(t2);
-      }
-      function t() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance");
-      }
-      __webpack_unused_export__ = {
-        value: true
-      };
-      var A = "3.0", S = "undefined" != typeof window ? window : {}, h;
-      function i(t2, e2, n2) {
-        e2[n2] = 255 & t2 >>> 24, e2[n2 + 1] = 255 & t2 >>> 16, e2[n2 + 2] = 255 & t2 >>> 8, e2[n2 + 3] = 255 & t2;
-      }
-      function B(t2, e2) {
-        return (255 & t2[e2]) << 24 | (255 & t2[e2 + 1]) << 16 | (255 & t2[e2 + 2]) << 8 | 255 & t2[e2 + 3];
-      }
-      function Q(t2, e2) {
-        return (4294967295 & t2) << e2 | t2 >>> 32 - e2;
-      }
-      function G(t2) {
-        var e2 = new Array(4), n2 = new Array(4);
-        i(t2, e2, 0), n2[0] = h.zb[255 & e2[0]], n2[1] = h.zb[255 & e2[1]], n2[2] = h.zb[255 & e2[2]], n2[3] = h.zb[255 & e2[3]];
-        var r2 = B(n2, 0);
-        return r2 ^ Q(r2, 2) ^ Q(r2, 10) ^ Q(r2, 18) ^ Q(r2, 24);
-      }
-      var __g = {
-        x: function(t2, e2) {
-          for (var n2 = [], r2 = t2.length, o2 = 0; 0 < r2; r2 -= 16) {
-            for (var i2 = t2.slice(16 * o2, 16 * (o2 + 1)), a2 = new Array(16), u = 0; u < 16; u++)
-              a2[u] = i2[u] ^ e2[u];
-            e2 = __g.r(a2), n2 = n2.concat(e2), o2++;
-          }
-          return n2;
-        },
-        r: function(t2) {
-          var e2 = new Array(16), n2 = new Array(36);
-          n2[0] = B(t2, 0), n2[1] = B(t2, 4), n2[2] = B(t2, 8), n2[3] = B(t2, 12);
-          for (var r2 = 0; r2 < 32; r2++) {
-            var o2 = G(n2[r2 + 1] ^ n2[r2 + 2] ^ n2[r2 + 3] ^ h.zk[r2]);
-            n2[r2 + 4] = n2[r2] ^ o2;
-          }
-          return i(n2[35], e2, 0), i(n2[34], e2, 4), i(n2[33], e2, 8), i(n2[32], e2, 12), e2;
-        }
-      };
-      function l() {
-        this.C = [0, 0, 0, 0], this.s = +[], this.t = [], this.S = [], this.h = [], this.i = [], this.B = [], this.Q = false, this.G = [], this.D = [], this.w = 1024, this.g = null, this.a = Date.now(), this.e = +[], this.T = 255, this.V = null, this.U = Date.now, this.M = new Array(32);
-      }
-      l.prototype.O = function(A, C, s) {
-        for (var t, S, h, i, B, Q, G, D, w, g, a, e, E, T, r, V, U, M, O, c, I; this.T < this.w; )
-          try {
-            switch (this.T) {
-              case 27:
-                this.C[this.c] = this.C[this.I] >> this.C[this.F], this.M[12] = 35, this.T = this.T * (this.C.length + (this.M[13] ? 3 : 9)) + 1;
-                break;
-              case 34:
-                this.C[this.c] = this.C[this.I] & this.C[this.F], this.T = this.T * (this.M[15] - 6) + 12;
-                break;
-              case 41:
-                this.C[this.c] = this.C[this.I] <= this.C[this.F], this.T = 8 * this.T + 27;
-                break;
-              case 48:
-                this.C[this.c] = !this.C[this.I], this.T = 7 * this.T + 16;
-                break;
-              case 50:
-                this.C[this.c] = this.C[this.I] | this.C[this.F], this.T = 6 * this.T + 52;
-                break;
-              case 57:
-                this.C[this.c] = this.C[this.I] >>> this.C[this.F], this.T = 7 * this.T - 47;
-                break;
-              case 64:
-                this.C[this.c] = this.C[this.I] << this.C[this.F], this.T = 5 * this.T + 32;
-                break;
-              case 71:
-                this.C[this.c] = this.C[this.I] ^ this.C[this.F], this.T = 6 * this.T - 74;
-                break;
-              case 78:
-                this.C[this.c] = this.C[this.I] & this.C[this.F], this.T = 4 * this.T + 40;
-                break;
-              case 80:
-                this.C[this.c] = this.C[this.I] < this.C[this.F], this.T = 5 * this.T - 48;
-                break;
-              case 87:
-                this.C[this.c] = -this.C[this.I], this.T = 3 * this.T + 91;
-                break;
-              case 94:
-                this.C[this.c] = this.C[this.I] > this.C[this.F], this.T = 4 * this.T - 24;
-                break;
-              case 101:
-                this.C[this.c] = this.C[this.I] in this.C[this.F], this.T = 3 * this.T + 49;
-                break;
-              case 108:
-                this.C[this.c] = o(this.C[this.I]), this.T = 2 * this.T + 136;
-                break;
-              case 110:
-                this.C[this.c] = this.C[this.I] !== this.C[this.F], this.T += 242;
-                break;
-              case 117:
-                this.C[this.c] = this.C[this.I] && this.C[this.F], this.T = 3 * this.T + 1;
-                break;
-              case 124:
-                this.C[this.c] = this.C[this.I] || this.C[this.F], this.T += 228;
-                break;
-              case 131:
-                this.C[this.c] = this.C[this.I] >= this.C[this.F], this.T = 3 * this.T - 41;
-                break;
-              case 138:
-                this.C[this.c] = this.C[this.I] == this.C[this.F], this.T = 2 * this.T + 76;
-                break;
-              case 140:
-                this.C[this.c] = this.C[this.I] % this.C[this.F], this.T += 212;
-                break;
-              case 147:
-                this.C[this.c] = this.C[this.I] / this.C[this.F], this.T += 205;
-                break;
-              case 154:
-                this.C[this.c] = this.C[this.I] * this.C[this.F], this.T += 198;
-                break;
-              case 161:
-                this.C[this.c] = this.C[this.I] - this.C[this.F], this.T += 191;
-                break;
-              case 168:
-                this.C[this.c] = this.C[this.I] + this.C[this.F], this.T = 2 * this.T + 16;
-                break;
-              case 254:
-                this.C[this.c] = eval(i), this.T += 20 < this.M[11] ? 98 : 89;
-                break;
-              case 255:
-                this.s = C || 0, this.M[26] = 52, this.T += this.M[13] ? 8 : 6;
-                break;
-              case 258:
-                g = {};
-                for (var F = 0; F < this.k; F++)
-                  e = this.i.pop(), a = this.i.pop(), g[a] = e;
-                this.C[this.W] = g, this.T += 94;
-                break;
-              case 261:
-                this.D = s || [], this.M[11] = 68, this.T += this.M[26] ? 3 : 5;
-                break;
-              case 264:
-                this.M[15] = 16, this.T = "string" == typeof A ? 331 : 336;
-                break;
-              case 266:
-                this.C[this.I][i] = this.i.pop(), this.T += 86;
-                break;
-              case 278:
-                this.C[this.c] = this.C[this.I][i], this.T += this.M[22] ? 63 : 74;
-                break;
-              case 283:
-                this.C[this.c] = eval(String.fromCharCode(this.C[this.I]));
-                break;
-              case 300:
-                S = this.U(), this.M[0] = 66, this.T += this.M[11];
-                break;
-              case 331:
-                D = atob(A), w = D.charCodeAt(0) << 16 | D.charCodeAt(1) << 8 | D.charCodeAt(2);
-                for (var k = 3; k < w + 3; k += 3)
-                  this.G.push(D.charCodeAt(k) << 16 | D.charCodeAt(k + 1) << 8 | D.charCodeAt(k + 2));
-                for (V = w + 3; V < D.length; )
-                  E = D.charCodeAt(V) << 8 | D.charCodeAt(V + 1), T = D.slice(V + 2, V + 2 + E), this.D.push(T), V += E + 2;
-                this.M[21] = 8, this.T += 1e3 < V ? 21 : 35;
-                break;
-              case 336:
-                this.G = A, this.D = s, this.M[18] = 134, this.T += this.M[15];
-                break;
-              case 344:
-                this.T = 3 * this.T - 8;
-                break;
-              case 350:
-                U = 66, M = [], I = this.D[this.k];
-                for (var W = 0; W < I.length; W++)
-                  M.push(String.fromCharCode(24 ^ I.charCodeAt(W) ^ U)), U = 24 ^ I.charCodeAt(W) ^ U;
-                r = parseInt(M.join("").split("|")[1]), this.C[this.W] = this.i.slice(this.i.length - r), this.i = this.i.slice(0, this.i.length - r), this.T += 2;
-                break;
-              case 352:
-                this.e = this.G[this.s++], this.T -= this.M[26];
-                break;
-              case 360:
-                this.a = S, this.T += this.M[0];
-                break;
-              case 368:
-                this.T -= 500 < S - this.a ? 24 : 8;
-                break;
-              case 380:
-                this.i.push(16383 & this.e), this.T -= 28;
-                break;
-              case 400:
-                this.i.push(this.S[16383 & this.e]), this.T -= 48;
-                break;
-              case 408:
-                this.T -= 64;
-                break;
-              case 413:
-                this.C[this.e >> 15 & 7] = (this.e >> 18 & 1) == +[] ? 32767 & this.e : this.S[32767 & this.e], this.T -= 61;
-                break;
-              case 418:
-                this.S[65535 & this.e] = this.C[this.e >> 16 & 7], this.T -= this.e >> 16 < 20 ? 66 : 80;
-                break;
-              case 423:
-                this.c = this.e >> 16 & 7, this.I = this.e >> 13 & 7, this.F = this.e >> 10 & 7, this.J = 1023 & this.e, this.T -= 255 + 6 * this.J + this.J % 5;
-                break;
-              case 426:
-                this.T += 5 * (this.e >> 19) - 18;
-                break;
-              case 428:
-                this.W = this.e >> 16 & 7, this.k = 65535 & this.e, this.t.push(this.s), this.h.push(this.S), this.s = this.C[this.W], this.S = [];
-                for (var J = 0; J < this.k; J++)
-                  this.S.unshift(this.i.pop());
-                this.B.push(this.i), this.i = [], this.T -= 76;
-                break;
-              case 433:
-                this.s = this.t.pop(), this.S = this.h.pop(), this.i = this.B.pop(), this.T -= 81;
-                break;
-              case 438:
-                this.Q = this.C[this.e >> 16 & 7], this.T -= 86;
-                break;
-              case 440:
-                U = 66, M = [], I = this.D[16383 & this.e];
-                for (var b = 0; b < I.length; b++)
-                  M.push(String.fromCharCode(24 ^ I.charCodeAt(b) ^ U)), U = 24 ^ I.charCodeAt(b) ^ U;
-                M = M.join("").split("|"), O = parseInt(M.shift()), this.i.push(O === +[] ? M.join("|") : O === +!+[] ? -1 !== M.join().indexOf(".") ? parseInt(M.join()) : parseFloat(M.join()) : O === !+[] + !+[] ? eval(M.join()) : 3 === O ? null : void 0), this.T -= 88;
-                break;
-              case 443:
-                this.b = this.e >> 2 & 65535, this.J = 3 & this.e, this.J === +[] ? this.s = this.b : this.J === +!+[] ? !!this.Q && (this.s = this.b) : 2 === this.J ? !this.Q && (this.s = this.b) : this.s = this.b, this.g = null, this.T -= 91;
-                break;
-              case 445:
-                this.i.push(this.C[this.e >> 14 & 7]), this.T -= 93;
-                break;
-              case 448:
-                this.W = this.e >> 16 & 7, this.k = this.e >> 2 & 4095, this.J = 3 & this.e, Q = this.J === +!+[] && this.i.pop(), G = this.i.slice(this.i.length - this.k, this.i.length), this.i = this.i.slice(0, this.i.length - this.k), c = 2 < G.length ? 3 : G.length, this.T += 6 * this.J + 1 + 10 * c;
-                break;
-              case 449:
-                this.C[3] = this.C[this.W](), this.T -= 97 - G.length;
-                break;
-              case 455:
-                this.C[3] = this.C[this.W][Q](), this.T -= 103 + G.length;
-                break;
-              case 453:
-                B = this.e >> 17 & 3, this.T = B === +[] ? 445 : B === +!+[] ? 380 : B === !+[] + !+[] ? 400 : 440;
-                break;
-              case 458:
-                this.J = this.e >> 17 & 3, this.c = this.e >> 14 & 7, this.I = this.e >> 11 & 7, i = this.i.pop(), this.T -= 12 * this.J + 180;
-                break;
-              case 459:
-                this.C[3] = this.C[this.W](G[+[]]), this.T -= 100 + 7 * G.length;
-                break;
-              case 461:
-                this.C[3] = new this.C[this.W](), this.T -= 109 - G.length;
-                break;
-              case 463:
-                U = 66, M = [], I = this.D[65535 & this.e];
-                for (var n = 0; n < I.length; n++)
-                  M.push(String.fromCharCode(24 ^ I.charCodeAt(n) ^ U)), U = 24 ^ I.charCodeAt(n) ^ U;
-                M = M.join("").split("|"), O = parseInt(M.shift()), this.T += 10 * O + 3;
-                break;
-              case 465:
-                this.C[3] = this.C[this.W][Q](G[+[]]), this.T -= 13 * G.length + 100;
-                break;
-              case 466:
-                this.C[this.e >> 16 & 7] = M.join("|"), this.T -= 114 * M.length;
-                break;
-              case 468:
-                this.g = 65535 & this.e, this.T -= 116;
-                break;
-              case 469:
-                this.C[3] = this.C[this.W](G[+[]], G[1]), this.T -= 119 - G.length;
-                break;
-              case 471:
-                this.C[3] = new this.C[this.W](G[+[]]), this.T -= 118 + G.length;
-                break;
-              case 473:
-                throw this.C[this.e >> 16 & 7];
-              case 475:
-                this.C[3] = this.C[this.W][Q](G[+[]], G[1]), this.T -= 123;
-                break;
-              case 476:
-                this.C[this.e >> 16 & 7] = -1 !== M.join().indexOf(".") ? parseInt(M.join()) : parseFloat(M.join()), this.T -= this.M[21] < 10 ? 124 : 126;
-                break;
-              case 478:
-                t = [0].concat(x(this.S)), this.V = 65535 & this.e, h = this, this.C[3] = function(e2) {
-                  var n2 = new l();
-                  return n2.S = t, n2.S[0] = e2, n2.O(h.G, h.V, h.D), n2.C[3];
-                }, this.T -= 50 < this.M[3] ? 120 : 126;
-                break;
-              case 479:
-                this.C[3] = this.C[this.W].apply(null, G), this.M[3] = 168, this.T -= this.M[9] ? 127 : 128;
-                break;
-              case 481:
-                this.C[3] = new this.C[this.W](G[+[]], G[1]), this.T -= 10 * G.length + 109;
-                break;
-              case 483:
-                this.J = this.e >> 15 & 15, this.W = this.e >> 12 & 7, this.k = 4095 & this.e, this.T = 0 === this.J ? 258 : 350;
-                break;
-              case 485:
-                this.C[3] = this.C[this.W][Q].apply(null, G), this.T -= this.M[15] % 2 == 1 ? 143 : 133;
-                break;
-              case 486:
-                this.C[this.e >> 16 & 7] = eval(M.join()), this.T -= this.M[18];
-                break;
-              case 491:
-                this.C[3] = new this.C[this.W].apply(null, G), this.T -= this.M[8] / this.M[1] < 10 ? 139 : 130;
-                break;
-              case 496:
-                this.C[this.e >> 16 & 7] = null, this.T -= 10 < this.M[5] - this.M[3] ? 160 : 144;
-                break;
-              case 506:
-                this.C[this.e >> 16 & 7] = void 0, this.T -= this.M[18] % this.M[12] == 1 ? 154 : 145;
-                break;
-              default:
-                this.T = this.w;
-            }
-          } catch (A2) {
-            this.g && (this.s = this.g), this.T -= 114;
-          }
-      }, "undefined" != typeof window && (S.__ZH__ = S.__ZH__ || {}, h = S.__ZH__.zse = S.__ZH__.zse || {}, new l().O("ABt7CAAUSAAACADfSAAACAD1SAAACAAHSAAACAD4SAAACAACSAAACADCSAAACADRSAAACABXSAAACAAGSAAACADjSAAACAD9SAAACADwSAAACACASAAACADeSAAACABbSAAACADtSAAACAAJSAAACAB9SAAACACdSAAACADmSAAACABdSAAACAD8SAAACADNSAAACABaSAAACABPSAAACACQSAAACADHSAAACACfSAAACADFSAAACAC6SAAACACnSAAACAAnSAAACAAlSAAACACcSAAACADGSAAACAAmSAAACAAqSAAACAArSAAACACoSAAACADZSAAACACZSAAACAAPSAAACABnSAAACABQSAAACAC9SAAACABHSAAACAC/SAAACABhSAAACABUSAAACAD3SAAACABfSAAACAAkSAAACABFSAAACAAOSAAACAAjSAAACAAMSAAACACrSAAACAAcSAAACABySAAACACySAAACACUSAAACABWSAAACAC2SAAACAAgSAAACABTSAAACACeSAAACABtSAAACAAWSAAACAD/SAAACABeSAAACADuSAAACACXSAAACABVSAAACABNSAAACAB8SAAACAD+SAAACAASSAAACAAESAAACAAaSAAACAB7SAAACACwSAAACADoSAAACADBSAAACACDSAAACACsSAAACACPSAAACACOSAAACACWSAAACAAeSAAACAAKSAAACACSSAAACACiSAAACAA+SAAACADgSAAACADaSAAACADESAAACADlSAAACAABSAAACADASAAACADVSAAACAAbSAAACABuSAAACAA4SAAACADnSAAACAC0SAAACACKSAAACABrSAAACADySAAACAC7SAAACAA2SAAACAB4SAAACAATSAAACAAsSAAACAB1SAAACADkSAAACADXSAAACADLSAAACAA1SAAACADvSAAACAD7SAAACAB/SAAACABRSAAACAALSAAACACFSAAACABgSAAACADMSAAACACESAAACAApSAAACABzSAAACABJSAAACAA3SAAACAD5SAAACACTSAAACABmSAAACAAwSAAACAB6SAAACACRSAAACABqSAAACAB2SAAACABKSAAACAC+SAAACAAdSAAACAAQSAAACACuSAAACAAFSAAACACxSAAACACBSAAACAA/SAAACABxSAAACABjSAAACAAfSAAACAChSAAACABMSAAACAD2SAAACAAiSAAACADTSAAACAANSAAACAA8SAAACABESAAACADPSAAACACgSAAACABBSAAACABvSAAACABSSAAACAClSAAACABDSAAACACpSAAACADhSAAACAA5SAAACABwSAAACAD0SAAACACbSAAACAAzSAAACADsSAAACADISAAACADpSAAACAA6SAAACAA9SAAACAAvSAAACABkSAAACACJSAAACAC5SAAACABASAAACAARSAAACABGSAAACADqSAAACACjSAAACADbSAAACABsSAAACACqSAAACACmSAAACAA7SAAACACVSAAACAA0SAAACABpSAAACAAYSAAACADUSAAACABOSAAACACtSAAACAAtSAAACAAASAAACAB0SAAACADiSAAACAB3SAAACACISAAACADOSAAACACHSAAACACvSAAACADDSAAACAAZSAAACABcSAAACAB5SAAACADQSAAACAB+SAAACACLSAAACAADSAAACABLSAAACACNSAAACAAVSAAACACCSAAACABiSAAACADxSAAACAAoSAAACACaSAAACABCSAAACAC4SAAACAAxSAAACAC1SAAACAAuSAAACADzSAAACABYSAAACABlSAAACAC3SAAACAAISAAACAAXSAAACABISAAACAC8SAAACABoSAAACACzSAAACADSSAAACACGSAAACAD6SAAACADJSAAACACkSAAACABZSAAACADYSAAACADKSAAACADcSAAACAAySAAACADdSAAACACYSAAACACMSAAACAAhSAAACADrSAAACADWSAAAeIAAEAAACAB4SAAACAAySAAACABiSAAACABlSAAACABjSAAACABiSAAACAB3SAAACABkSAAACABnSAAACABrSAAACABjSAAACAB3SAAACABhSAAACABjSAAACABuSAAACABvSAAAeIABEAABCABkSAAACAAzSAAACABkSAAACAAySAAACABlSAAACAA3SAAACAAySAAACAA2SAAACABmSAAACAA1SAAACAAwSAAACABkSAAACAA0SAAACAAxSAAACAAwSAAACAAxSAAAeIABEAACCAAgSAAATgACVAAAQAAGEwADDAADSAAADAACSAAADAAASAAACANcIAADDAADSAAASAAATgADVAAATgAEUAAATgAFUAAATgAGUgAADAAASAAASAAATgADVAAATgAEUAAATgAFUAAATgAHUgAADAABSAAASAAATgADVAAATgAEUAAATgAFUAAATgAIUgAAcAgUSMAATgAJVAAATgAKUgAAAAAADAABSAAADAAAUAAACID/GwQPCAAYG2AREwAGDAABCIABGwQASMAADAAAUAAACID/GwQPCAAQG2AREwAHDAABCIACGwQASMAADAAAUAAACID/GwQPCAAIG2AREwAIDAABCIADGwQASMAADAAAUAAACID/GwQPEwAJDYAGDAAHG2ATDAAIG2ATDAAJG2ATKAAACAD/DIAACQAYGygSGwwPSMAASMAADAACSAAADAABUgAACAD/DIAACQAQGygSGwwPSMAASMAADAACCIABGwQASMAADAABUgAACAD/DIAACQAIGygSGwwPSMAASMAADAACCIACGwQASMAADAABUgAACAD/DIAAGwQPSMAASMAADAACCIADGwQASMAADAABUgAAKAAACAAgDIABGwQBEwANDAAAWQALGwQPDAABG2AREwAODAAODIAADQANGygSGwwTEwAPDYAPKAAACAAESAAATgACVAAAQAAGEwAQCAAESAAATgACVAAAQAAGEwAFDAAASAAADAAQSAAACAAASAAACAKsIAADCAAASAAADAAQUAAACID/GwQPSMAADAABUAAASAAASAAACAAASAAADAAFUgAACAABSAAADAAQUAAACID/GwQPSMAADAABUAAASAAASAAACAABSAAADAAFUgAACAACSAAADAAQUAAACID/GwQPSMAADAABUAAASAAASAAACAACSAAADAAFUgAACAADSAAADAAQUAAACID/GwQPSMAADAABUAAASAAASAAACAADSAAADAAFUgAADAAFSAAACAAASAAACAJ8IAACEwARDAARSAAACAANSAAACALdIAACEwASDAARSAAACAAXSAAACALdIAACEwATDAARDIASGwQQDAATG2AQEwAUDYAUKAAAWAAMSAAAWAANSAAAWAAOSAAAWAAPSAAAWAAQSAAAWAARSAAAWAASSAAAWAATSAAAWAAUSAAAWAAVSAAAWAAWSAAAWAAXSAAAWAAYSAAAWAAZSAAAWAAaSAAAWAAbSAAAWAAcSAAAWAAdSAAAWAAeSAAAWAAfSAAAWAAgSAAAWAAhSAAAWAAiSAAAWAAjSAAAWAAkSAAAWAAlSAAAWAAmSAAAWAAnSAAAWAAoSAAAWAApSAAAWAAqSAAAWAArSAAAeIAsEAAXWAAtSAAAWAAuSAAAWAAvSAAAWAAwSAAAeIAxEAAYCAAESAAATgACVAAAQAAGEwAZCAAkSAAATgACVAAAQAAGEwAaDAABSAAACAAASAAACAJ8IAACSMAASMAACAAASAAADAAZUgAADAABSAAACAAESAAACAJ8IAACSMAASMAACAABSAAADAAZUgAADAABSAAACAAISAAACAJ8IAACSMAASMAACAACSAAADAAZUgAADAABSAAACAAMSAAACAJ8IAACSMAASMAACAADSAAADAAZUgAACAAASAAADAAZUAAACIAASEAADIAYUEgAGwQQSMAASMAACAAASAAADAAaUgAACAABSAAADAAZUAAACIABSEAADIAYUEgAGwQQSMAASMAACAABSAAADAAaUgAACAACSAAADAAZUAAACIACSEAADIAYUEgAGwQQSMAASMAACAACSAAADAAaUgAACAADSAAADAAZUAAACIADSEAADIAYUEgAGwQQSMAASMAACAADSAAADAAaUgAACAAAEAAJDAAJCIAgGwQOMwAGOBG2DAAJCIABGwQASMAADAAaUAAAEAAbDAAJCIACGwQASMAADAAaUAAAEAAcDAAJCIADGwQASMAADAAaUAAAEAAdDAAbDIAcGwQQDAAdG2AQDAAJSAAADAAXUAAAG2AQEwAeDAAeSAAADAACSAAACALvIAACEwAfDAAJSAAADAAaUAAADIAfGwQQSMAASMAADAAJCIAEGwQASMAADAAaUgAADAAJCIAEGwQASMAADAAaUAAASAAASAAADAAJSAAADAAAUgAADAAJCIABGQQAEQAJOBCIKAAADAABTgAyUAAACIAQGwQEEwAVCAAQDIAVGwQBEwAKCAAAEAAhDAAhDIAKGwQOMwAGOBImDAAKSAAADAABTgAzQAAFDAAhCIABGQQAEQAhOBHoCAAASAAACAAQSAAADAABTgA0QAAJEwAiCAAQSAAATgACVAAAQAAGEwAjCAAAEAALDAALCIAQGwQOMwAGOBLSDAALSAAADAAiUAAADIALSEAADIAAUEgAGwQQCAAqG2AQSMAASMAADAALSAAADAAjUgAA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"));
-      var D = function(t2) {
-        return __g._encrypt(encodeURIComponent(t2));
-      };
-      exports.XL = A, exports.ZP = D;
-    }
-    var o = {};
-    f1(void 0, o);
-    return o.ZP(s);
-  }
-  var createHeaders = (url) => {
-    function K() {
-      var t2 = new RegExp("d_c0=([^;]+)").exec(document.cookie);
-      return t2 && t2[1];
-    }
-    var z = function(t2) {
-      var e2 = new URL(t2, "https://www.zhihu.com");
-      return "" + e2.pathname + e2.search;
-    };
-    var S2 = function(t2, e2, n2, r2) {
-      var o2 = n2.zse93, i2 = n2.dc0, a2 = n2.xZst81, u = z(t2), c2 = "", s2 = [o2, u, i2, "", a2].filter(Boolean).join("+");
-      return {
-        source: s2,
-        signature: zhihu_enc(md5(s2))
-      };
-    }(url, void 0, {
-      zse93: "101_3_3.0",
-      dc0: K(),
-      xZst81: null
-    });
-    return {
-      "x-zse-93": "101_3_3.0",
-      "x-zse-96": "2.0_" + S2.signature
-    };
-  };
   var doFetchNotInterested = ({ id, type }) => {
     const nHeader = store.getStorageConfigItem("fetchHeaders");
     delete nHeader["vod-authorization"];
@@ -1979,18 +1548,6 @@
       ).then((response) => response.json()).then((res) => {
         resolve(res);
       });
-    });
-  };
-  var doHomeFetch = (url, headers) => {
-    return new Promise((resolve) => {
-      if (!url) {
-        resolve([]);
-      } else {
-        fetch(url, {
-          method: "GET",
-          headers: new Headers(headers)
-        }).then((response) => response.json()).then((res) => resolve(res.data));
-      }
     });
   };
   var BASIC_SHOW_CONTENT = [
@@ -2027,7 +1584,7 @@
       if (!elementBlock)
         return;
       const { removeBlockUserContentList = [] } = await myStorage.getConfig();
-      elementBlock.innerHTML = removeBlockUserContentList.map((i2) => this.createItem(i2)).join("");
+      elementBlock.innerHTML = removeBlockUserContentList.map((i) => this.createItem(i)).join("");
       elementBlock.onclick = (event) => {
         const target = event.target;
         if (!target || !target.classList.contains(CLASS_REMOVE_BLOCK))
@@ -2066,7 +1623,7 @@
       if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, ""))
         return;
       const { removeBlockUserContentList = [] } = await myStorage.getConfig();
-      const isAlreadyBlack = removeBlockUserContentList.findIndex((i2) => i2.id === userId) >= 0;
+      const isAlreadyBlack = removeBlockUserContentList.findIndex((i) => i.id === userId) >= 0;
       const message2 = `是否要屏蔽${userName}？
 屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。
 如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`;
@@ -2154,7 +1711,7 @@
       }).then(async () => {
         const pfConfig = await myStorage.getConfig();
         const nL = pfConfig.removeBlockUserContentList || [];
-        const itemIndex = nL.findIndex((i2) => i2.id === info.id);
+        const itemIndex = nL.findIndex((i) => i.id === info.id);
         if (itemIndex >= 0) {
           nL.splice(itemIndex, 1);
           const removeItem = dom(`.ctz-black-id-${id}`);
@@ -2164,9 +1721,9 @@
       });
     },
     /** 同步黑名单列表 */
-    sync: function(offset = 0, l2 = []) {
+    sync: function(offset = 0, l = []) {
       const nodeList = domById(ID_BLOCK_LIST);
-      !l2.length && nodeList && (nodeList.innerHTML = "");
+      !l.length && nodeList && (nodeList.innerHTML = "");
       fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
       const limit = 20;
       const headers = this.getHeaders();
@@ -2176,12 +1733,12 @@
         credentials: "include"
       }).then((response) => response.json()).then(({ data, paging }) => {
         data.forEach(({ id, name, avatar_url, user_type, url_token }) => {
-          l2.push({ id, name, avatar: avatar_url, userType: user_type, urlToken: url_token });
+          l.push({ id, name, avatar: avatar_url, userType: user_type, urlToken: url_token });
         });
         if (!paging.is_end) {
-          this.sync(offset + limit, l2);
+          this.sync(offset + limit, l);
         } else {
-          myStorage.setConfigItem("removeBlockUserContentList", l2);
+          myStorage.setConfigItem("removeBlockUserContentList", l);
           myBlack.init();
           fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: "同步黑名单", disabled: false });
         }
@@ -2222,7 +1779,7 @@
       const nodeMenuTop = dom(".ctz-menu-top");
       if (!nodeMenuTop)
         return;
-      const chooseId = [...nodeMenuTop.children].map((i2) => i2.hash).find((i2) => i2 === hash || hash.replace(i2, "") !== hash);
+      const chooseId = [...nodeMenuTop.children].map((i) => i.hash).find((i) => i === hash || hash.replace(i, "") !== hash);
       if (chooseId) {
         this.click({ target: dom(`a[href="${chooseId}"]`) });
         return;
@@ -2237,14 +1794,14 @@
       if (!isThis)
         return;
       const nodesA = domA(".ctz-menu-top>a");
-      for (let i2 = 0, len = nodesA.length; i2 < len; i2++) {
-        const itemA = nodesA[i2];
+      for (let i = 0, len = nodesA.length; i < len; i++) {
+        const itemA = nodesA[i];
         itemA.classList.remove("target");
       }
       targetForA.classList.add("target");
       const nodesDiv = domA(".ctz-content>div");
-      for (let i2 = 0, len = nodesDiv.length; i2 < len; i2++) {
-        const item = nodesDiv[i2];
+      for (let i = 0, len = nodesDiv.length; i < len; i++) {
+        const item = nodesDiv[i];
         item.style.display = isThis === item.id ? "flex" : "none";
       }
     }
@@ -2255,9 +1812,9 @@
     if (!arrHidden || !arrHidden.length)
       return;
     const itemLabel = (item = []) => {
-      return item.map((i2) => `<label style="display: inline-flex; algin-item: center;"><input class="ctz-i" name="${i2.value}" type="checkbox" value="on" />${i2.label}</label>`).join("") + `<br>`;
+      return item.map((i) => `<label style="display: inline-flex; algin-item: center;"><input class="ctz-i" name="${i.value}" type="checkbox" value="on" />${i.label}</label>`).join("") + `<br>`;
     };
-    return `<div class="ctz-set-content">${arrHidden.map((i2) => itemLabel(i2)).join("")}</div>`;
+    return `<div class="ctz-set-content">${arrHidden.map((i) => itemLabel(i)).join("")}</div>`;
   };
   var initInputRange = () => {
     const createRangeInnerHTML = (label, value, min, max) => `<div class="ctz-flex-wrap ctz-range-${value}">${label ? `<div class="ctz-label">${label}</div>` : ""}<input class="ctz-i" type="range" min="${min}" max="${max}" name="${value}" style="width: 300px" /><span id="${value}" style="margin: 0 8px">0</span><span class="ctz-commit">滑动条范围: ${min} ~ ${max}</span></div>`;
@@ -2278,11 +1835,11 @@
     initInputRange();
     domById("CTZ_FONT_SIZE_IN_ZHIHU").innerHTML = FONT_SIZE_INPUT.map(
       (item) => `<div class="ctz-flex-wrap">` + item.map(
-        (i2, index) => `<span class="ctz-label" style="margin-left: ${index !== 0 ? "24px" : "0"};">${i2.label}</span><input type="number" name="${i2.value}" class="ctz-i-change" style="width: 80px;" />`
+        (i, index) => `<span class="ctz-label" style="margin-left: ${index !== 0 ? "24px" : "0"};">${i.label}</span><input type="number" name="${i.value}" class="ctz-i-change" style="width: 80px;" />`
       ).join("") + `</div>`
     ).join("");
-    domById("CTZ_HIDDEN").innerHTML = `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i2) => `<a href="#${i2.key}">${i2.name}</a>`).join("")}</div><div class="ctz-content-right">${HIDDEN_ARRAY.map(
-      (i2) => `<div id="${i2.key}"><div class="ctz-set-title">${i2.name}<span>${i2.desc}</span></div>${createHiddenItem(i2.content)}</div>`
+    domById("CTZ_HIDDEN").innerHTML = `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join("")}</div><div class="ctz-content-right">${HIDDEN_ARRAY.map(
+      (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
     ).join("")}</div>`;
     domById("CTZ_TITLE_ICO").innerHTML = Object.keys(ICO_URL).map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`).join("");
     domById("CTZ_DEFAULT_SELF").innerHTML = DEFAULT_FUNCTION.map((elementItem, index) => `<div>${index + 1}. ${elementItem}</div>`).join("");
@@ -2351,8 +1908,8 @@
   };
   var fnContentRemoveKeywordSearch = (domFind) => {
     const domKeywords = domFind.querySelectorAll(".RichContent-EntityWord");
-    for (let i2 = 0, len = domKeywords.length; i2 < len; i2++) {
-      const domItem = domKeywords[i2];
+    for (let i = 0, len = domKeywords.length; i < len; i++) {
+      const domItem = domKeywords[i];
       if (domItem.href === "javascript:;") {
         continue;
       }
@@ -2415,8 +1972,8 @@
     const { showGIFinDialog } = await myStorage.getConfig();
     if (showGIFinDialog) {
       const nodeGIFs = domA(".GifPlayer:not(.ctz-processed)");
-      for (let i2 = 0, len = nodeGIFs.length; i2 < len; i2++) {
-        const item = nodeGIFs[i2];
+      for (let i = 0, len = nodeGIFs.length; i < len; i++) {
+        const item = nodeGIFs[i];
         item.classList.add("ctz-processed");
         observerGIF.observe(item, { attributes: true, attributeFilter: ["class"] });
       }
@@ -2433,7 +1990,7 @@
       const nodeContentInner = domP(nodeImage, "class", "RichContent-inner") || domP(nodeImage, "class", "Post-RichTextContainer") || domP(nodeImage, "class", "QuestionRichText");
       if (nodeContentInner) {
         const images = Array.from(nodeContentInner.querySelectorAll("img"));
-        const index = images.findIndex((i2) => i2.src === src);
+        const index = images.findIndex((i) => i.src === src);
         const dialogChange = (nodeDialog, nodeImage2) => {
           const { width, height, src: src2 } = nodeImage2;
           const { innerWidth, innerHeight } = window;
@@ -2470,8 +2027,8 @@
       item.href = href;
       item.classList.add(operaLink);
     };
-    for (let i2 = 0, len = esName.length; i2 < len; i2++) {
-      const name = esName[i2];
+    for (let i = 0, len = esName.length; i < len; i++) {
+      const name = esName[i];
       const links = domA(`${name}:not(.${operaLink})`);
       for (let index = 0, linkLen = links.length; index < linkLen; index++) {
         hrefChanger(links[index]);
@@ -2612,41 +2169,41 @@
       return typeObj[type] || "";
     }
   };
-  var printAnswer = (e2) => {
-    const prevButton = e2.querySelector(".ctz-answer-print");
+  var printAnswer = (e) => {
+    const prevButton = e.querySelector(".ctz-answer-print");
     if (prevButton)
       return;
-    const nodeUser = e2.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
+    const nodeUser = e.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
     if (!nodeUser)
       return;
     const nButton = createBtnSmallTran("导出当前回答", "ctz-answer-print");
     nButton.onclick = function() {
-      const nodeUser2 = e2.querySelector(".AuthorInfo-name .UserLink-link");
-      const nodeContent = e2.querySelector(".RichContent-inner");
-      const innerHTML = `<h1>${JSON.parse(e2.querySelector(".AnswerItem").getAttribute("data-zop") || "{}").title}</h1>${nodeUser2.outerHTML + nodeContent.innerHTML}`;
+      const nodeUser2 = e.querySelector(".AuthorInfo-name .UserLink-link");
+      const nodeContent = e.querySelector(".RichContent-inner");
+      const innerHTML = `<h1>${JSON.parse(e.querySelector(".AnswerItem").getAttribute("data-zop") || "{}").title}</h1>${nodeUser2.outerHTML + nodeContent.innerHTML}`;
       loadIframePrint(this, [innerHTML], "导出当前回答");
     };
     nodeUser.appendChild(nButton);
   };
-  var printArticle = async (e2) => {
+  var printArticle = async (e) => {
     const { topExportContent } = await myStorage.getConfig();
-    const prevButton = e2.querySelector(".ctz-article-print");
+    const prevButton = e.querySelector(".ctz-article-print");
     if (prevButton || !topExportContent)
       return;
-    const nodeHeader = e2.querySelector(".ArticleItem-authorInfo") || e2.querySelector(".Post-Header .Post-Title");
+    const nodeHeader = e.querySelector(".ArticleItem-authorInfo") || e.querySelector(".Post-Header .Post-Title");
     if (!nodeHeader)
       return;
     const nButton = createBtnSmallTran("导出当前文章", "ctz-article-print", { style: "margin: 12px 0;" });
     nButton.onclick = function() {
-      const nodeTitle = e2.querySelector(".ContentItem.ArticleItem .ContentItem-title>span") || e2.querySelector(".Post-Header .Post-Title");
-      const nodeUser = e2.querySelector(".AuthorInfo-name");
-      const nodeContent = e2.querySelector(".RichContent-inner") || e2.querySelector(".Post-RichTextContainer");
+      const nodeTitle = e.querySelector(".ContentItem.ArticleItem .ContentItem-title>span") || e.querySelector(".Post-Header .Post-Title");
+      const nodeUser = e.querySelector(".AuthorInfo-name");
+      const nodeContent = e.querySelector(".RichContent-inner") || e.querySelector(".Post-RichTextContainer");
       const innerHTML = `<h1>${nodeTitle.innerHTML}</h1>${nodeUser.innerHTML + nodeContent.innerHTML}`;
       loadIframePrint(this, [innerHTML], "导出当前文章");
     };
     insertAfter(nButton, nodeHeader);
     setTimeout(() => {
-      printArticle(e2);
+      printArticle(e);
     }, 500);
   };
   var printPeopleAnswer = async () => {
@@ -2660,16 +2217,7 @@
       const eventBtn = this;
       eventBtn.innerText = "加载回答内容中...";
       eventBtn.disabled = true;
-      const { search, pathname } = location;
-      const matchPageArr = search.match(/page=(\d+)?/);
-      const page = matchPageArr && matchPageArr.length ? matchPageArr[1] : "1";
-      const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
-      const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : "";
-      if (!username)
-        return;
-      const requestUrl = `/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${(+page - 1) * 20}&limit=20&sort_by=created`;
-      const header = createHeaders(requestUrl);
-      const data = await doHomeFetch(requestUrl, header);
+      const data = store.getUserAnswer();
       const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
       loadIframePrint(eventBtn, content, "导出当前页回答");
     };
@@ -2691,24 +2239,7 @@
       const page = search.replace("?page=", "") || "1";
       eventBtn.innerText = "加载文章内容中...";
       eventBtn.disabled = true;
-      const prevData = [];
-      if (page === "1") {
-        const domScript = dom("#js-initialData");
-        if (!domScript)
-          return;
-        const scriptData = JSON.parse(domScript.innerText);
-        const articles = scriptData.initialState.entities.articles;
-        for (let key in articles) {
-          prevData.push(articles[key]);
-        }
-      }
-      const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//) || pathname.match(/org\/([\W\w]+)\//);
-      const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : "";
-      if (!username)
-        return;
-      const requestUrl = `https://www.zhihu.com/api/v4/members/${username}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${(+page - 1) * 20}&limit=20&sort_by=created`;
-      const header = createHeaders(requestUrl);
-      const data = await doHomeFetch(requestUrl, header);
+      const data = store.getUserArticle();
       const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
       loadIframePrint(eventBtn, content, "导出当前页文章");
     };
@@ -2717,10 +2248,10 @@
       printPeopleArticles();
     }, 500);
   };
-  var formatTime = (t2, f = "YYYY-MM-DD HH:mm:ss") => {
-    if (!t2)
+  var formatTime = (t, f = "YYYY-MM-DD HH:mm:ss") => {
+    if (!t)
       return "";
-    const d = new Date(t2);
+    const d = new Date(t);
     const year = d.getFullYear();
     const month = d.getMonth() + 1;
     const day = d.getDate();
@@ -2730,20 +2261,20 @@
     const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
     return f.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
   };
-  var updateItemTime = (e2) => {
-    const nodeCreated = e2.querySelector('[itemprop="dateCreated"]');
-    const nodePublished = e2.querySelector('[itemprop="datePublished"]');
-    const nodeModified = e2.querySelector('[itemprop="dateModified"]');
+  var updateItemTime = (e) => {
+    const nodeCreated = e.querySelector('[itemprop="dateCreated"]');
+    const nodePublished = e.querySelector('[itemprop="datePublished"]');
+    const nodeModified = e.querySelector('[itemprop="dateModified"]');
     const crTime = nodeCreated ? nodeCreated.content : "";
     const puTime = nodePublished ? nodePublished.content : "";
     const muTime = nodeModified ? nodeModified.content : "";
     const timeCreated = formatTime(crTime || puTime);
     const timeModified = formatTime(muTime);
-    const nodeBox = e2.querySelector(".ContentItem-meta");
+    const nodeBox = e.querySelector(".ContentItem-meta");
     if (!timeCreated || !nodeBox)
       return;
     const innerHTML = `<div>创建时间：${timeCreated}</div><div>最后修改时间：${timeModified}</div>`;
-    const domTime = e2.querySelector(`.${CLASS_TIME_ITEM}`);
+    const domTime = e.querySelector(`.${CLASS_TIME_ITEM}`);
     if (domTime) {
       domTime.innerHTML = innerHTML;
     } else {
@@ -2879,10 +2410,10 @@
       addFnInNodeItem(dom(".QuestionAnswer-content"));
       const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
       let removeUsernames = [];
-      removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i2) => i2.name || ""));
-      for (let i2 = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i2 < len; i2++) {
+      removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i) => i.name || ""));
+      for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
         let message2 = "";
-        const nodeItem = nodes[i2];
+        const nodeItem = nodes[i];
         const nodeItemContent = nodeItem.querySelector(".ContentItem");
         if (!nodeItemContent)
           continue;
@@ -2898,10 +2429,10 @@
           const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
           const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
           const tagNames = (nodeTag1 ? nodeTag1.innerText : "") + (nodeTag2 ? nodeTag2.innerText : "");
-          for (let i3 of hiddenTags) {
-            if (config[i3]) {
-              const nReg = new RegExp(HIDDEN_ANSWER_TAG[i3]);
-              nReg.test(tagNames) && (message2 = `已删除一条标签${HIDDEN_ANSWER_TAG[i3]}的回答`);
+          for (let i2 of hiddenTags) {
+            if (config[i2]) {
+              const nReg = new RegExp(HIDDEN_ANSWER_TAG[i2]);
+              nReg.test(tagNames) && (message2 = `已删除一条标签${HIDDEN_ANSWER_TAG[i2]}的回答`);
             }
           }
         }
@@ -2951,8 +2482,8 @@
             }
           }
         }
-        if (i2 === len - 1) {
-          this.index = i2;
+        if (i === len - 1) {
+          this.index = i;
         }
       }
     },
@@ -3006,9 +2537,9 @@
       const pfHistory = await myStorage.getHistory();
       const historyList = pfHistory.list;
       let removeUsernames = [];
-      removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i2) => i2.name || ""));
-      for (let i2 = index === 0 ? 0 : index + 1, len = nodes.length; i2 < len; i2++) {
-        const nodeItem = nodes[i2];
+      removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i) => i.name || ""));
+      for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
+        const nodeItem = nodes[i];
         nodeItem.classList.add("ctz-listened");
         const nodeItemContent = nodeItem.querySelector(".ContentItem");
         if (!nodeItem.scrollHeight || !nodeItemContent)
@@ -3099,8 +2630,8 @@
           }
         }
         fnJustNum(nodeItem);
-        if (i2 === len - 1) {
-          needIndex && (this.index = i2);
+        if (i === len - 1) {
+          needIndex && (this.index = i);
           myStorage.setHistoryItem("list", historyList);
         }
       }
@@ -3156,9 +2687,9 @@
       if (this.index + 1 === nodes.length)
         return;
       const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = await myStorage.getConfig();
-      for (let i2 = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i2 < len; i2++) {
+      for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
         let message2 = "";
-        const elementThis = nodes[i2];
+        const elementThis = nodes[i];
         if (!elementThis)
           continue;
         const haveAD = removeItemAboutAD && elementThis.querySelector(".KfeCollection-PcCollegeCard-root");
@@ -3180,8 +2711,8 @@
         }
         fnJustNum(elementThis);
         message2 && fnHidden(elementThis, message2);
-        if (i2 === len - 1) {
-          this.index = i2;
+        if (i === len - 1) {
+          this.index = i;
         }
       }
     },
@@ -3196,8 +2727,8 @@
   var initImagePreview = async () => {
     const { zoomImageType } = await myStorage.getConfig();
     const images = [domA(".TitleImage:not(.ctz-processed)"), domA(".ArticleItem-image:not(.ctz-processed)"), domA(".ztext figure .content_image:not(.ctz-processed)")];
-    for (let i2 = 0, imageLen = images.length; i2 < imageLen; i2++) {
-      const ev = images[i2];
+    for (let i = 0, imageLen = images.length; i < imageLen; i++) {
+      const ev = images[i];
       for (let index = 0, len = ev.length; index < len; index++) {
         const nodeItem = ev[index];
         nodeItem.classList.add("ctz-processed");
@@ -3207,8 +2738,8 @@
     }
     if (zoomImageType === "2") {
       const originImages = domA(".origin_image:not(.ctz-processed)");
-      for (let i2 = 0, len = originImages.length; i2 < len; i2++) {
-        const nodeItem = originImages[i2];
+      for (let i = 0, len = originImages.length; i < len; i++) {
+        const nodeItem = originImages[i];
         nodeItem.src = nodeItem.getAttribute("data-original") || nodeItem.src;
         nodeItem.classList.add("ctz-processed");
         nodeItem.style.cssText = "max-width: 100%;";
@@ -3216,10 +2747,10 @@
     }
   };
   var classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon"];
-  var canFindTargeted = (e2) => {
+  var canFindTargeted = (e) => {
     let isFind = false;
     classTarget.forEach((item) => {
-      (e2.classList.contains(item) || e2.parentElement.classList.contains(item)) && (isFind = true);
+      (e.classList.contains(item) || e.parentElement.classList.contains(item)) && (isFind = true);
     });
     return isFind;
   };
@@ -3580,8 +3111,8 @@
   };
   var initOperate = () => {
     const nodeContent = dom(".ctz-content");
-    nodeContent.onclick = (e2) => {
-      const target = e2.target;
+    nodeContent.onclick = (e) => {
+      const target = e.target;
       if (target.classList.contains(CLASS_INPUT_CLICK)) {
         fnChanger(target);
       }
@@ -3589,14 +3120,14 @@
         myButtonOperation[target.name] && myButtonOperation[target.name]();
       }
     };
-    nodeContent.onchange = (e2) => {
-      const target = e2.target;
+    nodeContent.onchange = (e) => {
+      const target = e.target;
       if (target.classList.contains(CLASS_INPUT_CHANGE)) {
         fnChanger(target);
         return;
       }
       if (target.classList.contains("ctz-input-config-import")) {
-        configImport(e2);
+        configImport(e);
         return;
       }
     };
@@ -3678,8 +3209,8 @@
       dom("#IMPORT_BY_FILE input").click();
     }
   };
-  var configImport = (e2) => {
-    const target = e2.target;
+  var configImport = (e) => {
+    const target = e.target;
     const configFile = (target.files || [])[0];
     if (!configFile)
       return;
@@ -3861,8 +3392,8 @@
     if (!userHomeContentTimeTop)
       return;
     const doContent = (domList) => {
-      for (let i2 = 0, len = domList.length; i2 < len; i2++) {
-        const nodeItem = domList[i2];
+      for (let i = 0, len = domList.length; i < len; i++) {
+        const nodeItem = domList[i];
         const nodeTitle = nodeItem.querySelector(".ContentItem-title");
         if (!nodeTitle || nodeItem.querySelector(`.${CLASS_TIME_ITEM}`))
           continue;
@@ -3945,7 +3476,7 @@
     });
     const T0 = performance.now();
     const { hostname, href } = location;
-    const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends } = store;
+    const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle } = store;
     let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement)
@@ -3983,9 +3514,13 @@
           }
           return originFetch(url, opt).then((res) => {
             if (/\/api\/v3\/feed\/topstory\/recommend/.test(res.url)) {
-              res.clone().json().then((r2) => {
-                findRemoveRecommends(r2.data);
-              });
+              res.clone().json().then((r) => findRemoveRecommends(r.data));
+            }
+            if (/\api\/v4\/members\/[^/]+\/answers/.test(res.url)) {
+              res.clone().json().then((r) => setUserAnswer(r.data));
+            }
+            if (/\api\/v4\/members\/[^/]+\/articles/.test(res.url)) {
+              res.clone().json().then((r) => setUserArticle(r.data));
             }
             return res;
           });

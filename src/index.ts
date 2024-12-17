@@ -40,7 +40,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href } = location;
-  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends } = store;
+  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -92,13 +92,28 @@ import { INNER_CSS } from './web-resources';
         }
 
         return originFetch(url, opt).then((res) => {
+          // 推荐列表
           if (/\/api\/v3\/feed\/topstory\/recommend/.test(res.url)) {
             res
               .clone()
               .json()
-              .then((r) => {
-                findRemoveRecommends(r.data);
-              });
+              .then((r) => findRemoveRecommends(r.data));
+          }
+
+          // 用户主页回答
+          if (/\api\/v4\/members\/[^/]+\/answers/.test(res.url)) {
+            res
+              .clone()
+              .json()
+              .then((r) => setUserAnswer(r.data));
+          }
+
+          // 用户主页文章
+          if (/\api\/v4\/members\/[^/]+\/articles/.test(res.url)) {
+            res
+              .clone()
+              .json()
+              .then((r) => setUserArticle(r.data));
           }
 
           return res;

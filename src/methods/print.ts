@@ -1,8 +1,6 @@
-import { createHeaders, doHomeFetch } from '../commons/fetch';
 import { myStorage } from '../commons/storage';
 import { createBtnSmallTran, dom, domC, insertAfter } from '../commons/tools';
 import { store } from '../store';
-import { IZhihuArticlesDataItem } from '../types/zhihu-articles.type';
 import { INNER_CSS } from '../web-resources';
 
 const loadIframePrint = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText: string) => {
@@ -184,17 +182,19 @@ export const printPeopleAnswer = async () => {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载回答内容中...';
     eventBtn.disabled = true;
-    const { search, pathname } = location;
-    const matchPageArr = search.match(/page=(\d+)?/);
-    const page = matchPageArr && matchPageArr.length ? matchPageArr[1] : '1';
-    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
-    const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
-    if (!username) return;
-    const requestUrl = `/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${
-      (+page - 1) * 20
-    }&limit=20&sort_by=created`;
-    const header = createHeaders(requestUrl);
-    const data = await doHomeFetch(requestUrl, header);
+    // const { search, pathname } = location;
+    // const matchPageArr = search.match(/page=(\d+)?/);
+    // const page = matchPageArr && matchPageArr.length ? matchPageArr[1] : '1';
+    // const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//);
+    // const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
+    // if (!username) return;
+    // const requestUrl = `/api/v4/members/${username}/answers?include=data%5B*%5D.is_normal%2Cadmin_closed_comment%2Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2Ccollapsed_by%2Csuggest_edit%2Ccomment_count%2Ccan_comment%2Ccontent%2Ceditable_content%2Cattachment%2Cvoteup_count%2Creshipment_settings%2Ccomment_permission%2Ccreated_time%2Cupdated_time%2Creview_info%2Cexcerpt%2Cpaid_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%2Crelationship.is_authorized%2Cvoting%2Cis_author%2Cis_thanked%2Cis_nothelp%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.kvip_info%3Bdata%5B*%5D.author.vip_info%3Bdata%5B*%5D.question.has_publishing_draft%2Crelationship&offset=${
+    //   (+page - 1) * 20
+    // }&limit=20&sort_by=created`;
+    // console.log(store.getStorageConfigItem('fetchHeaders'));
+    // const header = createHeaders(requestUrl);
+    // const data = await doHomeFetch(requestUrl, header);
+    const data = store.getUserAnswer();
     const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
     loadIframePrint(eventBtn, content, '导出当前页回答');
   };
@@ -217,25 +217,26 @@ export const printPeopleArticles = async () => {
     const page = search.replace('?page=', '') || '1';
     eventBtn.innerText = '加载文章内容中...';
     eventBtn.disabled = true;
-    const prevData: IZhihuArticlesDataItem[] = [];
-    if (page === '1') {
-      // 文章第一页内容为 script 标签生成部分
-      const domScript = dom('#js-initialData');
-      if (!domScript) return;
-      const scriptData = JSON.parse(domScript.innerText);
-      const articles = scriptData.initialState.entities.articles;
-      for (let key in articles) {
-        prevData.push(articles[key]);
-      }
-    }
-    const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//) || pathname.match(/org\/([\W\w]+)\//);
-    const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
-    if (!username) return;
-    const requestUrl = `https://www.zhihu.com/api/v4/members/${username}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${
-      (+page - 1) * 20
-    }&limit=20&sort_by=created`;
-    const header = createHeaders(requestUrl);
-    const data = await doHomeFetch(requestUrl, header);
+    // const prevData: IZhihuArticlesDataItem[] = [];
+    // if (page === '1') {
+    //   // 文章第一页内容为 script 标签生成部分
+    //   const domScript = dom('#js-initialData');
+    //   if (!domScript) return;
+    //   const scriptData = JSON.parse(domScript.innerText);
+    //   const articles = scriptData.initialState.entities.articles;
+    //   for (let key in articles) {
+    //     prevData.push(articles[key]);
+    //   }
+    // }
+    // const matchUsernameArr = pathname.match(/people\/([\W\w]+)\//) || pathname.match(/org\/([\W\w]+)\//);
+    // const username = matchUsernameArr && matchUsernameArr.length ? matchUsernameArr[1] : '';
+    // if (!username) return;
+    // const requestUrl = `https://www.zhihu.com/api/v4/members/${username}/articles?include=data%5B*%5D.comment_count%2Csuggest_edit%2Cis_normal%2Cthumbnail_extra_info%2Cthumbnail%2Ccan_comment%2Ccomment_permission%2Cadmin_closed_comment%2Ccontent%2Cvoteup_count%2Ccreated%2Cupdated%2Cupvoted_followees%2Cvoting%2Creview_info%2Creaction_instruction%2Cis_labeled%2Clabel_info%3Bdata%5B*%5D.vessay_info%3Bdata%5B*%5D.author.badge%5B%3F%28type%3Dbest_answerer%29%5D.topics%3Bdata%5B*%5D.author.vip_info%3B&offset=${
+    //   (+page - 1) * 20
+    // }&limit=20&sort_by=created`;
+    // const header = createHeaders(requestUrl);
+    // const data = await doHomeFetch(requestUrl, header);
+    const data = store.getUserArticle();
     const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
     loadIframePrint(eventBtn, content, '导出当前页文章');
   };

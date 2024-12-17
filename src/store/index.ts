@@ -17,7 +17,12 @@ class Store {
     headerDoms: {},
   };
 
+  /** 过滤的盐选回答ID */
   removeRecommendIds: string[] = [];
+  /** 当前用户主页的回答内容 */
+  userAnswers: any[] = [];
+  /** 当前用户主页的文章内容 */
+  userArticle: any[] = [];
 
   constructor() {
     // fix this is undefined
@@ -29,6 +34,10 @@ class Store {
     this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
     this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
     this.getRemoveRecommends = this.getRemoveRecommends.bind(this);
+    this.setUserAnswer = this.setUserAnswer.bind(this);
+    this.getUserAnswer = this.getUserAnswer.bind(this);
+    this.setUserArticle = this.setUserArticle.bind(this);
+    this.getUserArticle = this.getUserArticle.bind(this);
   }
 
   setUserinfo(inner: IZhihuUserinfo) {
@@ -64,11 +73,23 @@ class Store {
         this.removeRecommendIds = [...this.removeRecommendIds, String(item.target.id)];
       }
     }
-
     // console.log('this.removeRecommendIds', this.removeRecommendIds);
   }
   getRemoveRecommends() {
     return this.removeRecommendIds;
+  }
+
+  setUserAnswer(data: any[]) {
+    this.userAnswers = data;
+  }
+  getUserAnswer() {
+    return this.userAnswers;
+  }
+  setUserArticle(data: any[]) {
+    this.userArticle = data;
+  }
+  getUserArticle() {
+    return this.userArticle;
   }
 }
 
