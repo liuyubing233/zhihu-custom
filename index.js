@@ -770,6 +770,8 @@
   };
   var onRemove = async (e, key) => {
     const domItem = e.target;
+    if (!domItem.classList.contains("ctz-filter-word-remove"))
+      return;
     const title = domItem.innerText;
     const config = await myStorage.getConfig();
     domItem.remove();
@@ -806,6 +808,7 @@
         domFind.onclick = (e) => onRemove(e, name);
       }
       domInput && (domInput.onchange = (e) => {
+        console.log("onchange block input");
         onAddWord(e.target, name);
       });
     }

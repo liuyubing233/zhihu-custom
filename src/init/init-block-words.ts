@@ -20,6 +20,7 @@ const NAME_BY_KEY: IFindDomName = {
 
 const onRemove = async (e: MouseEvent, key: IKeyofDomName) => {
   const domItem = e.target as HTMLElement;
+  if (!domItem.classList.contains('ctz-filter-word-remove')) return;
   const title = domItem.innerText;
   const config = await myStorage.getConfig();
   domItem.remove();
@@ -57,8 +58,10 @@ export const initBlockWords = async () => {
       domFind.innerHTML = children || '';
       domFind.onclick = (e) => onRemove(e, name as IKeyofDomName);
     }
-    domInput && (domInput.onchange = (e) => {
-      onAddWord(e.target as HTMLInputElement, name as IKeyofDomName)
-    });
+    domInput &&
+      (domInput.onchange = (e) => {
+        console.log('onchange block input');
+        onAddWord(e.target as HTMLInputElement, name as IKeyofDomName);
+      });
   }
 };
