@@ -194,7 +194,7 @@ export interface IConfigHidden {
 
 /** 自定义黑名单列表内容 */
 export interface IBlockUserItem {
-  avatar?: string;
+  // avatar?: string;
   id?: string;
   name?: string;
   urlToken?: string;

@@ -32,15 +32,14 @@ const onRemove = async (e: MouseEvent, key: IKeyofDomName) => {
 
 const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
   const word = target.value;
-  const config = await myStorage.getConfig();
-  const configThis = config[key];
-  if (!Array.isArray(configThis)) return;
-  if (configThis.includes(word)) {
+  const configChoose = (await myStorage.getConfig())[key];
+  if (!Array.isArray(configChoose)) return;
+  if (configChoose.includes(word)) {
     message('屏蔽词已存在');
     return;
   }
-  configThis.push(word);
-  await myStorage.setConfigItem(key, configThis);
+  configChoose.push(word);
+  await myStorage.setConfigItem(key, configChoose);
   const domItem = domC('span', { innerText: word });
   domItem.classList.add('ctz-filter-word-remove');
   const nodeFilterWords = dom(NAME_BY_KEY[key]);
@@ -62,10 +61,6 @@ export const initBlockWords = async () => {
       domFind.innerHTML = children || '';
       domFind.onclick = (e) => onRemove(e, name as IKeyofDomName);
     }
-    domInput &&
-      (domInput.onchange = (e) => {
-        console.log('onchange block input');
-        onAddWord(e.target as HTMLInputElement, name as IKeyofDomName);
-      });
+    domInput && (domInput.onchange = (e) => onAddWord(e.target as HTMLInputElement, name as IKeyofDomName));
   }
 };

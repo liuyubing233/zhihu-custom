@@ -782,16 +782,15 @@
   };
   var onAddWord = async (target, key) => {
     const word = target.value;
-    const config = await myStorage.getConfig();
-    const configThis = config[key];
-    if (!Array.isArray(configThis))
+    const configChoose = (await myStorage.getConfig())[key];
+    if (!Array.isArray(configChoose))
       return;
-    if (configThis.includes(word)) {
+    if (configChoose.includes(word)) {
       message("屏蔽词已存在");
       return;
     }
-    configThis.push(word);
-    await myStorage.setConfigItem(key, configThis);
+    configChoose.push(word);
+    await myStorage.setConfigItem(key, configChoose);
     const domItem = domC("span", { innerText: word });
     domItem.classList.add("ctz-filter-word-remove");
     const nodeFilterWords = dom(NAME_BY_KEY[key]);
@@ -811,10 +810,7 @@
         domFind.innerHTML = children || "";
         domFind.onclick = (e) => onRemove(e, name);
       }
-      domInput && (domInput.onchange = (e) => {
-        console.log("onchange block input");
-        onAddWord(e.target, name);
-      });
+      domInput && (domInput.onchange = (e) => onAddWord(e.target, name));
     }
   };
   var echoData = async () => {
@@ -1572,8 +1568,8 @@
     createItem: function(info) {
       return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
     },
-    createItemContent: ({ id, name, avatar }) => {
-      return `<img src="${avatar}"/><a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
+    createItemContent: ({ id, name }) => {
+      return `<a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
     },
     /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
     addButton: async function(event, objMy) {
@@ -1587,7 +1583,6 @@
         return;
       const userUrl = nodeUser.querySelector('meta[itemprop="url"]').content;
       const userName = nodeUser.querySelector('meta[itemprop="name"]').content;
-      const avatar = nodeUser.querySelector('meta[itemprop="image"]').content;
       const nodeAnswerItem = event.querySelector(".AnswerItem");
       const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute("data-za-extra-module") || "{}" : "{}";
       if (!JSON.parse(mo).card)
@@ -1615,7 +1610,7 @@
         if (target.classList.contains(classBlack)) {
           if (!confirm(message2))
             return;
-          me.serviceAdd(urlToken, userName, userId, avatar);
+          me.serviceAdd(urlToken, userName, userId);
           fnDomReplace(this.querySelector(`.${classBlackFilter}`), { className: createClass(classJustFilter), innerText: "隐藏该回答" });
           fnDomReplace(target, { className: createClass(classBlackRemove), innerText: "解除屏蔽" });
           return;
@@ -1635,7 +1630,7 @@
           if (target.classList.contains(classBlackFilter)) {
             if (!confirm(message2))
               return;
-            me.serviceAdd(urlToken, userName, userId, avatar);
+            me.serviceAdd(urlToken, userName, userId);
           }
           event.style.display = "none";
           if (objMy) {
@@ -1657,7 +1652,7 @@
       domById(ID_BLOCK_LIST).appendChild(nodeBlackItem);
     },
     /** 调用「屏蔽用户」接口 */
-    serviceAdd: function(urlToken, userName, userId, avatar) {
+    serviceAdd: function(urlToken, userName, userId) {
       const me = this;
       const headers = this.getHeaders();
       fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
@@ -1668,7 +1663,7 @@
         }),
         credentials: "include"
       }).then(() => {
-        me.addBlackItem({ id: userId, name: userName, avatar, userType: "people", urlToken });
+        me.addBlackItem({ id: userId, name: userName, userType: "people", urlToken });
       });
     },
     /** 解除拉黑用户接口 */
@@ -1706,8 +1701,8 @@
         headers: new Headers(headers),
         credentials: "include"
       }).then((response) => response.json()).then(({ data, paging }) => {
-        data.forEach(({ id, name, avatar_url, user_type, url_token }) => {
-          l.push({ id, name, avatar: avatar_url, userType: user_type, urlToken: url_token });
+        data.forEach(({ id, name, user_type, url_token }) => {
+          l.push({ id, name, userType: user_type, urlToken: url_token });
         });
         if (!paging.is_end) {
           this.sync(offset + limit, l);

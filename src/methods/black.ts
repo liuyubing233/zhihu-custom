@@ -29,8 +29,8 @@ export const myBlack = {
   createItem: function (info: IBlockUserItem) {
     return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
   },
-  createItemContent: ({ id, name, avatar }: IBlockUserItem) => {
-    return `<img src="${avatar}"/><a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
+  createItemContent: ({ id, name }: IBlockUserItem) => {
+    return `<a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
   },
   /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
   addButton: async function (event: HTMLElement, objMy?: any) {
@@ -42,7 +42,6 @@ export const myBlack = {
     if (!nodeUser || !nodeUser.offsetHeight) return;
     const userUrl = (nodeUser.querySelector('meta[itemprop="url"]') as HTMLMetaElement).content;
     const userName = (nodeUser.querySelector('meta[itemprop="name"]') as HTMLMetaElement).content;
-    const avatar = (nodeUser.querySelector('meta[itemprop="image"]') as HTMLMetaElement).content;
     const nodeAnswerItem = event.querySelector('.AnswerItem');
     const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute('data-za-extra-module') || '{}' : '{}';
     if (!JSON.parse(mo).card) return;
@@ -68,7 +67,7 @@ export const myBlack = {
       // 屏蔽用户
       if (target.classList.contains(classBlack)) {
         if (!confirm(message)) return;
-        me.serviceAdd(urlToken, userName, userId, avatar);
+        me.serviceAdd(urlToken, userName, userId);
         fnDomReplace((this as HTMLElement).querySelector(`.${classBlackFilter}`), { className: createClass(classJustFilter), innerText: '隐藏该回答' });
         fnDomReplace(target, { className: createClass(classBlackRemove), innerText: '解除屏蔽' });
         return;
@@ -88,7 +87,7 @@ export const myBlack = {
       if (target.classList.contains(classBlackFilter) || target.classList.contains(classJustFilter)) {
         if (target.classList.contains(classBlackFilter)) {
           if (!confirm(message)) return;
-          me.serviceAdd(urlToken, userName, userId, avatar);
+          me.serviceAdd(urlToken, userName, userId);
         }
         event.style.display = 'none';
         if (objMy) {
@@ -110,7 +109,7 @@ export const myBlack = {
     domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
   },
   /** 调用「屏蔽用户」接口 */
-  serviceAdd: function (urlToken: string, userName: string, userId: string, avatar: string) {
+  serviceAdd: function (urlToken: string, userName: string, userId: string) {
     const me = this;
     const headers = this.getHeaders();
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
@@ -121,7 +120,7 @@ export const myBlack = {
       }),
       credentials: 'include',
     }).then(() => {
-      me.addBlackItem({ id: userId, name: userName, avatar, userType: 'people', urlToken });
+      me.addBlackItem({ id: userId, name: userName, userType: 'people', urlToken });
     });
   },
   /** 解除拉黑用户接口 */
@@ -161,8 +160,8 @@ export const myBlack = {
     })
       .then((response) => response.json())
       .then(({ data, paging }: { data: any[]; paging: any }) => {
-        data.forEach(({ id, name, avatar_url, user_type, url_token }) => {
-          l.push({ id, name, avatar: avatar_url, userType: user_type, urlToken: url_token });
+        data.forEach(({ id, name, user_type, url_token }) => {
+          l.push({ id, name, userType: user_type, urlToken: url_token });
         });
         if (!paging.is_end) {
           this.sync(offset + limit, l);
