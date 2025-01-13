@@ -53,20 +53,20 @@ export const myListenListItem = {
     for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
       nodeItem.classList.add('ctz-listened');
-      const nodeItemContent = nodeItem.querySelector('.ContentItem');
-      if (!nodeItem.scrollHeight || !nodeItemContent) continue;
+      const nodeContentItem = nodeItem.querySelector('.ContentItem');
+      if (!nodeItem.scrollHeight || !nodeContentItem) continue;
       let message = ''; // 屏蔽信息
       let dataZop: IZhihuDataZop = {};
       let cardContent: IZhihuCardContent = {};
       /** 是否视频回答 */
-      const isVideo = nodeItemContent.classList.contains('ZVideoItem');
+      const isVideo = nodeContentItem.classList.contains('ZVideoItem');
       /** 是否文章 */
-      const isArticle = nodeItemContent.classList.contains('ArticleItem');
+      const isArticle = nodeContentItem.classList.contains('ArticleItem');
       /** 是否想法 */
-      const isTip = nodeItemContent.classList.contains('PinItem');
+      const isTip = nodeContentItem.classList.contains('PinItem');
       try {
-        dataZop = JSON.parse(nodeItemContent.getAttribute('data-zop') || '{}');
-        cardContent = JSON.parse(nodeItemContent.getAttribute('data-za-extra-module') || '{}').card.content;
+        dataZop = JSON.parse(nodeContentItem.getAttribute('data-zop') || '{}');
+        cardContent = JSON.parse(nodeContentItem.getAttribute('data-za-extra-module') || '{}').card.content;
       } catch {}
       const { title = '', itemId, authorName } = dataZop || {};
       // 关注列表屏蔽自己的操作
@@ -89,7 +89,7 @@ export const myListenListItem = {
 
       // 列表种类过滤
       if (!message && ((isVideo && removeItemAboutVideo) || (isArticle && removeItemAboutArticle) || (isTip && removeItemAboutPin))) {
-        message = `列表种类屏蔽，${nodeItemContent.classList.value}`;
+        message = `列表种类屏蔽，${nodeContentItem.classList.value}`;
       }
       // 屏蔽低赞内容
       if (!message && removeLessVote && (cardContent['upvote_num'] || 0) < lessVoteNumber) {
@@ -112,12 +112,12 @@ export const myListenListItem = {
         }
       }
       // 标题屏蔽词过滤
-      !message && (message = this.replaceBlockWord(title, nodeItemContent, filterKeywords, title, '标题'));
+      !message && (message = this.replaceBlockWord(title, nodeContentItem, filterKeywords, title, '标题'));
       // 内容屏蔽词过滤
       if (!message) {
         const domRichContent = nodeItem.querySelector('.RichContent');
         const innerText = domRichContent ? (domRichContent as HTMLElement).innerText : '';
-        message = this.replaceBlockWord(innerText, nodeItemContent, blockWordsAnswer, title, '内容');
+        message = this.replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, '内容');
       }
 
       if (message) {
@@ -152,7 +152,7 @@ export const myListenListItem = {
           }
           // 推荐列表显示「直达问题」按钮
           if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
-            const domUrl = nodeItemContent.querySelector('[itemprop="url"]');
+            const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
             const pathAnswer = domUrl ? domUrl.getAttribute('content') || '' : '';
             nodeItemTitle.appendChild(createBtnSmallTran('直达问题', CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, '') } }));
           }
@@ -162,8 +162,9 @@ export const myListenListItem = {
       if (domP(nodeItem, 'class', 'Topstory-recommend') && nodeItem.querySelector('.ContentItem-title a')) {
         const nodeA = nodeItem.querySelector('.ContentItem-title a') as HTMLAnchorElement;
         if (nodeA) {
-          const itemT = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
-          historyList.unshift(`<a href="${nodeA.href}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${nodeA.innerText}</a>`);
+          const typeObj = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
+          const historyItem = `<a href="${nodeA.href}" target="_blank"><b style="${typeObj.style}">「${typeObj.name}」</b>${nodeA.innerText}</a>`;
+          !historyList.includes(historyItem) && historyList.unshift(historyItem);
         }
       }
       fnJustNum(nodeItem);

@@ -2510,18 +2510,18 @@
       for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
         const nodeItem = nodes[i];
         nodeItem.classList.add("ctz-listened");
-        const nodeItemContent = nodeItem.querySelector(".ContentItem");
-        if (!nodeItem.scrollHeight || !nodeItemContent)
+        const nodeContentItem = nodeItem.querySelector(".ContentItem");
+        if (!nodeItem.scrollHeight || !nodeContentItem)
           continue;
         let message2 = "";
         let dataZop = {};
         let cardContent = {};
-        const isVideo = nodeItemContent.classList.contains("ZVideoItem");
-        const isArticle = nodeItemContent.classList.contains("ArticleItem");
-        const isTip = nodeItemContent.classList.contains("PinItem");
+        const isVideo = nodeContentItem.classList.contains("ZVideoItem");
+        const isArticle = nodeContentItem.classList.contains("ArticleItem");
+        const isTip = nodeContentItem.classList.contains("PinItem");
         try {
-          dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
-          cardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
+          dataZop = JSON.parse(nodeContentItem.getAttribute("data-zop") || "{}");
+          cardContent = JSON.parse(nodeContentItem.getAttribute("data-za-extra-module") || "{}").card.content;
         } catch {
         }
         const { title = "", itemId, authorName } = dataZop || {};
@@ -2540,7 +2540,7 @@
           removeUsernames.includes(authorName || "") && (message2 = `已删除${dataZop.authorName}的内容: ${title}`);
         }
         if (!message2 && (isVideo && removeItemAboutVideo || isArticle && removeItemAboutArticle || isTip && removeItemAboutPin)) {
-          message2 = `列表种类屏蔽，${nodeItemContent.classList.value}`;
+          message2 = `列表种类屏蔽，${nodeContentItem.classList.value}`;
         }
         if (!message2 && removeLessVote && (cardContent["upvote_num"] || 0) < lessVoteNumber) {
           message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`;
@@ -2559,11 +2559,11 @@
             }
           }
         }
-        !message2 && (message2 = this.replaceBlockWord(title, nodeItemContent, filterKeywords, title, "标题"));
+        !message2 && (message2 = this.replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
         if (!message2) {
           const domRichContent = nodeItem.querySelector(".RichContent");
           const innerText = domRichContent ? domRichContent.innerText : "";
-          message2 = this.replaceBlockWord(innerText, nodeItemContent, blockWordsAnswer, title, "内容");
+          message2 = this.replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
         }
         if (message2) {
           fnHidden(nodeItem, message2);
@@ -2585,7 +2585,7 @@
               nodeItemTitle.appendChild(createBtnSmallTran("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
             }
             if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
-              const domUrl = nodeItemContent.querySelector('[itemprop="url"]');
+              const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
               const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
               nodeItemTitle.appendChild(createBtnSmallTran("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
             }
@@ -2594,8 +2594,9 @@
         if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
           const nodeA = nodeItem.querySelector(".ContentItem-title a");
           if (nodeA) {
-            const itemT = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
-            historyList.unshift(`<a href="${nodeA.href}" target="_blank"><b style="${itemT.style}">「${itemT.name}」</b>${nodeA.innerText}</a>`);
+            const typeObj = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
+            const historyItem = `<a href="${nodeA.href}" target="_blank"><b style="${typeObj.style}">「${typeObj.name}」</b>${nodeA.innerText}</a>`;
+            !historyList.includes(historyItem) && historyList.unshift(historyItem);
           }
         }
         fnJustNum(nodeItem);
