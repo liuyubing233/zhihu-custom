@@ -36,6 +36,8 @@ export interface IConfigHidden {
   hiddenAnswers?: boolean;
   /** 隐藏专栏下方操作条 */
   hiddenZhuanlanActions?: boolean;
+  /** 隐藏文章底部知乎热榜 */
+  hiddenZhuanlanButtonHot?: boolean;
   /** 隐藏专栏标题图片 */
   hiddenZhuanlanTitleImage?: boolean;
   /** 隐藏热门热度值 */

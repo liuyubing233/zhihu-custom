@@ -21,7 +21,6 @@ export const myListenListItem = {
     if (needIndex && index + 1 === nodes.length) return;
     const userinfo = store.getUserinfo();
     const removeRecommendIds = store.getRemoveRecommends();
-    // console.log('removeRecommendIdsremoveRecommendIdsremoveRecommendIds', removeRecommendIds)
     const pfConfig = await myStorage.getConfig();
     const {
       filterKeywords = [],

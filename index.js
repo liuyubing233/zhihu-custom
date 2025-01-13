@@ -472,14 +472,15 @@
       content: [
         [
           { value: "hiddenZhuanlanTag", label: "文章关联话题" },
-          { value: "hiddenZhuanlanActions", label: "文章底部悬浮操作栏" },
           { value: "hiddenZhuanlanTitleImage", label: "文章标题图片" },
           { value: "hiddenZhuanlanShare", label: "文章悬浮分享按钮" },
           { value: "hiddenZhuanlanVoters", label: "文章悬浮赞同按钮" },
           { value: "hiddenZhuanlanAvatarWrapper", label: "文章作者头像" },
           { value: "hiddenZhuanlanAuthorInfoHead", label: "文章作者姓名" },
           { value: "hiddenZhuanlanAuthorInfoDetail", label: "文章作者简介" },
-          { value: "hiddenZhuanlanFollowButton", label: "文章作者关注按钮" }
+          { value: "hiddenZhuanlanFollowButton", label: "文章作者关注按钮" },
+          { value: "hiddenZhuanlanActions", label: "文章底部悬浮操作栏" },
+          { value: "hiddenZhuanlanButtonHot", label: "文章底部知乎热榜" }
         ]
       ]
     },
@@ -2204,8 +2205,6 @@
     const nButton = createBtnSmallTran("导出当前页文章", "ctz-people-export-articles-once");
     nButton.onclick = async function() {
       const eventBtn = this;
-      const { search, pathname } = location;
-      const page = search.replace("?page=", "") || "1";
       eventBtn.innerText = "加载文章内容中...";
       eventBtn.disabled = true;
       const data = store.getUserArticle();
@@ -2900,6 +2899,7 @@
       hiddenAnswers: `.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine,.TopstoryQuestionAskItem .RichContent .RichContent-inner,.HotItem-content .HotItem-excerpt,.Topstory-recommend .ZVideoItem-video, .Topstory-recommend .VideoAnswerPlayer{display: none;}`,
       hiddenListVideoContent: `.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}`,
       hiddenZhuanlanActions: ".RichContent-actions.is-fixed>.ContentItem-actions{display: none;}.zhuanlan .ContentItem .RichContent-actions.is-fixed,.zhuanlan .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}",
+      hiddenZhuanlanButtonHot: `.zhuanlan .Post-Sub .css-1ildg7g{display: none;}`,
       hiddenZhuanlanTitleImage: ".css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}",
       hiddenFixedActions: `.zhihu .ContentItem .RichContent-actions.is-fixed,.zhihu .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}`,
       hiddenHotItemMetrics: ".HotItem-content .HotItem-metrics{display: none;}",

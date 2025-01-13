@@ -59,6 +59,7 @@ export const myHidden = {
     hiddenListVideoContent: `.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}`,
     hiddenZhuanlanActions:
       '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}.zhuanlan .ContentItem .RichContent-actions.is-fixed,.zhuanlan .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}',
+    hiddenZhuanlanButtonHot: `.zhuanlan .Post-Sub .css-1ildg7g{display: none;}`,
     hiddenZhuanlanTitleImage: '.css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}',
     hiddenFixedActions: `.zhihu .ContentItem .RichContent-actions.is-fixed,.zhihu .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}`,
     hiddenHotItemMetrics: '.HotItem-content .HotItem-metrics{display: none;}',

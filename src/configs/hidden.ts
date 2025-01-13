@@ -133,7 +133,6 @@ export const HIDDEN_ARRAY: IHiddenArray = [
     content: [
       [
         { value: 'hiddenZhuanlanTag', label: '文章关联话题' },
-        { value: 'hiddenZhuanlanActions', label: '文章底部悬浮操作栏' },
         { value: 'hiddenZhuanlanTitleImage', label: '文章标题图片' },
         { value: 'hiddenZhuanlanShare', label: '文章悬浮分享按钮' },
         { value: 'hiddenZhuanlanVoters', label: '文章悬浮赞同按钮' },
@@ -141,6 +140,8 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         { value: 'hiddenZhuanlanAuthorInfoHead', label: '文章作者姓名' },
         { value: 'hiddenZhuanlanAuthorInfoDetail', label: '文章作者简介' },
         { value: 'hiddenZhuanlanFollowButton', label: '文章作者关注按钮' },
+        { value: 'hiddenZhuanlanActions', label: '文章底部悬浮操作栏' },
+        { value: 'hiddenZhuanlanButtonHot', label: '文章底部知乎热榜' },
       ],
     ],
   },

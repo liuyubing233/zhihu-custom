@@ -61,19 +61,14 @@ class Store {
 
   async findRemoveRecommends(recommends: IZhihuRecommendItem[]) {
     const config = await myStorage.getConfig();
-    // console.log('recommends', recommends, config.removeFromYanxuan)
     for (let i = 0, len = recommends.length; i < len; i++) {
       const item = recommends[i];
       if (!item.target) continue;
-      // console.log(item.target.paid_info)
       // 盐选专栏回答
       if (config.removeFromYanxuan && item.target.paid_info) {
-        // console.log('......removeRecommendIds', true);
-
         this.removeRecommendIds = [...this.removeRecommendIds, String(item.target.id)];
       }
     }
-    // console.log('this.removeRecommendIds', this.removeRecommendIds);
   }
   getRemoveRecommends() {
     return this.removeRecommendIds;
