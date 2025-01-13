@@ -57,6 +57,8 @@ export const initBlockWords = async () => {
       domFind.innerHTML = children || '';
       domFind.onclick = (e) => onRemove(e, name as IKeyofDomName);
     }
-    domInput && (domInput.onchange = (e) => onAddWord(e.target as HTMLInputElement, name as IKeyofDomName));
+    domInput && (domInput.onchange = (e) => {
+      onAddWord(e.target as HTMLInputElement, name as IKeyofDomName)
+    });
   }
 };

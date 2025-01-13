@@ -1,7 +1,7 @@
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domA, domById, fnInitDomStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
-import { CONFIG_SIMPLE } from './configs';
+import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_DIALOG } from './configs/dom-name';
 import { initBlockWords } from './init/init-block-words';
 import { initData } from './init/init-data';
@@ -56,7 +56,14 @@ import { INNER_CSS } from './web-resources';
 
     fixVideoAutoPlay();
     fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-    const config = await myStorage.getConfig();
+    let config = await myStorage.getConfig();
+
+    if (!config || config.fetchInterceptStatus === undefined) {
+      fnLog('您好，欢迎使用本插件，第一次进入，初始化中...');
+      await myStorage.setConfig(CONFIG_DEFAULT);
+      config = CONFIG_DEFAULT;
+    }
+
     await myStorage.getHistory();
     initHistoryView();
     onInitStyleExtra();
@@ -78,11 +85,6 @@ import { INNER_CSS } from './web-resources';
       const originFetch = fetch;
       const myWindow = isSafari ? window : unsafeWindow;
       myWindow.fetch = (url: any, opt) => {
-        // if (/\/v4\/questions\?/.test(url) && (myListenSelect.keySort === 'vote' || myListenSelect.keySort === 'comment') && myListenSelect.isSortFirst) {
-        //   // 如果是自定义排序则回答页码增加到20条
-        //   url = url.replace(/(?<=limit=)\d+(?=&)/, '20');
-        // }
-
         // 缓存 header
         if (opt && opt.headers) {
           setStorageConfigItem('fetchHeaders', {
@@ -119,22 +121,17 @@ import { INNER_CSS } from './web-resources';
           // 个人信息
           if (/\/api\/v4\/me\?/.test(res.url)) {
             res
-            .clone()
-            .json()
-            .then((r) => {
-              appendHomeLink(r)
-              setUserinfo(r)
-            });
+              .clone()
+              .json()
+              .then((r) => {
+                appendHomeLink(r);
+                setUserinfo(r);
+              });
           }
 
           return res;
         });
       };
-
-      // const matched = search.match(/(?<=sort=)\w+/);
-      // if (/\/question/.test(pathname) && matched) {
-      //   myListenSelect.keySort = matched[0];
-      // }
     }
   }
   onDocumentStart();

@@ -1,6 +1,7 @@
 declare const GM: {
   setValue: (key: string, value: string) => Promise<void>;
   getValue: (key: string) => Promise<string>;
+  deleteValue: (key: string) => Promise<any>;
 };
 
 // declare const window: Window & {

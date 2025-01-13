@@ -80,6 +80,10 @@ const myButtonOperation: Record<string, Function> = {
     link.click();
     document.body.removeChild(link);
   },
+  configRemove: async () => {
+    GM.deleteValue('pfConfig');
+    localStorage.removeItem('pfConfig');
+  },
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;

@@ -26,6 +26,7 @@ const info =
   `// @grant        GM_getValue\n` +
   `// @grant        GM.getValue\n` +
   `// @grant        GM.setValue\n` +
+  `// @grant        GM.deleteValue\n` +
   `// @grant        GM_registerMenuCommand\n` +
   `// @run-at       document-start\n` +
   `// ==/UserScript==\n`;
