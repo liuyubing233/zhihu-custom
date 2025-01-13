@@ -786,6 +786,10 @@
     const configThis = config[key];
     if (!Array.isArray(configThis))
       return;
+    if (configThis.includes(word)) {
+      message("屏蔽词已存在");
+      return;
+    }
     configThis.push(word);
     await myStorage.setConfigItem(key, configThis);
     const domItem = domC("span", { innerText: word });

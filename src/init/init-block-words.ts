@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { dom, domC } from '../commons/tools';
+import { dom, domC, message } from '../commons/tools';
 
 interface IFindDomName {
   /** 列表标题屏蔽词 */
@@ -35,6 +35,10 @@ const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
   const config = await myStorage.getConfig();
   const configThis = config[key];
   if (!Array.isArray(configThis)) return;
+  if (configThis.includes(word)) {
+    message('屏蔽词已存在');
+    return;
+  }
   configThis.push(word);
   await myStorage.setConfigItem(key, configThis);
   const domItem = domC('span', { innerText: word });
