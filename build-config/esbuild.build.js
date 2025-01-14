@@ -1,5 +1,5 @@
 const esbuild = require('esbuild');
-const { envInnerResources, envEnd } = require('./esbuild.plugins');
+const { envInnerResources, envEnd, envRemoveJsAnnotations } = require('./esbuild.plugins');
 
 const env = process.env;
 const isDev = env.APP_ENV === 'dev';
@@ -39,7 +39,7 @@ const options = {
   format: 'iife', // 打包输出格式设置为 iife，用立即执行函数包裹
   minify: false,
   charset: 'utf8',
-  plugins: [envInnerResources, envEnd],
+  plugins: [envRemoveJsAnnotations, envInnerResources, envEnd],
   banner: {
     js: info,
   },

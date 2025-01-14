@@ -30,7 +30,21 @@ const envInnerResources = {
   },
 };
 
-/** 打包完成后删除路径注释并生成 index.js */
+const envRemoveJsAnnotations = {
+  name: 'envRemoveJsAnnotations',
+  setup(build) {
+    build.onLoad({ filter: /[^type].ts/ }, async (args) => {
+      // const content = fs.readFileSync(args.path).toString();
+
+
+      // // console.log(args, content.replace(/\/\*\*[^(\/\*\*)]*\*\//g, ''));
+      // console.log(args, content.replace(/\/\*\*[\s\S]*?\*\//g, ''));
+      // return { contents: content.replace(/\/\*\*[\s\S]*?\*\//g, ''), loader: 'ts' };
+    });
+  },
+};
+
+/** 打包完成后删除路径注释并生成 index.js*/
 const envEnd = {
   name: 'envEnd',
   setup(build) {
@@ -44,4 +58,4 @@ const envEnd = {
   },
 };
 
-module.exports = { envInnerResources, envEnd };
+module.exports = { envInnerResources, envEnd, envRemoveJsAnnotations };
