@@ -236,6 +236,7 @@
     fontSizeForListTitle: 18,
     fontSizeForAnswerTitle: 22,
     fontSizeForArticleTitle: 24,
+    contentLineHeight: 24,
     zoomListVideoType: "0",
     zoomListVideoSize: "500",
     hotKey: true,
@@ -294,7 +295,8 @@
     [
       { value: "fontSizeForArticleTitle", label: "文章标题文字大小" },
       { value: "fontSizeForArticle", label: "文章内容文字大小" }
-    ]
+    ],
+    [{ value: "contentLineHeight", label: "内容行高" }]
   ];
   var VERSION_MIN_WIDTH = 600;
   var VERSION_RANGE = [
@@ -1355,14 +1357,15 @@
       return cssObj[pfConfig.linkShopping || "0"];
     },
     vFontSizeContent: async function() {
-      const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle, fontSizeForListTitle, fontSizeForAnswerTitle, fontSizeForArticleTitle } = await myStorage.getConfig();
+      const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle, fontSizeForListTitle, fontSizeForAnswerTitle, fontSizeForArticleTitle, contentLineHeight } = await myStorage.getConfig();
       const list = `.Topstory-body .RichContent-inner,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent,.HotItem-excerpt--multiLine{font-size: ${fontSizeForList}px!important;}`;
       const answer = `.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent{font-size: ${fontSizeForAnswer}px}`;
       const article = `.zhuanlan .Post-RichTextContainer,.zhuanlan .ctz-article-create-time,.zhuanlan .CommentContent{font-size: ${fontSizeForArticle}px}`;
       const articleTitle = `.zhuanlan .Post-Main .Post-Title{font-size: ${fontSizeForArticleTitle}px;}`;
       const listTitle = `.ContentItem-title,.HotItem-title{font-size: ${fontSizeForListTitle}px!important;}`;
       const answerTitle = `.QuestionHeader-title{font-size: ${fontSizeForAnswerTitle}px!important;}`;
-      return list + answer + article + articleTitle + listTitle + answerTitle;
+      const pLineHeight = `p {line-height: ${contentLineHeight || 24}px;}`;
+      return list + answer + article + articleTitle + listTitle + answerTitle + pLineHeight;
     },
     vVideoLink: async () => {
       const { videoUseLink } = await myStorage.getConfig();
@@ -3031,6 +3034,7 @@
       "fontSizeForList",
       "fontSizeForAnswer",
       "fontSizeForArticle",
+      "contentLineHeight",
       "zoomListVideoType",
       "zoomListVideoSize",
       "commitModalSizeSameVersion",

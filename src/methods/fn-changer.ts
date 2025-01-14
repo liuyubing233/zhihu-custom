@@ -34,6 +34,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'fontSizeForList',
     'fontSizeForAnswer',
     'fontSizeForArticle',
+    'contentLineHeight',
     'zoomListVideoType',
     'zoomListVideoSize',
     'commitModalSizeSameVersion',

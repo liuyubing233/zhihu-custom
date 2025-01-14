@@ -201,7 +201,8 @@ export const myVersion = {
   },
   vFontSizeContent: async function () {
     // 调整文字大小
-    const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle, fontSizeForListTitle, fontSizeForAnswerTitle, fontSizeForArticleTitle } = await myStorage.getConfig();
+    const { fontSizeForList, fontSizeForAnswer, fontSizeForArticle, fontSizeForListTitle, fontSizeForAnswerTitle, fontSizeForArticleTitle, contentLineHeight } =
+      await myStorage.getConfig();
     const list =
       `.Topstory-body .RichContent-inner,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
       `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent,.HotItem-excerpt--multiLine` +
@@ -211,7 +212,8 @@ export const myVersion = {
     const articleTitle = `.zhuanlan .Post-Main .Post-Title{font-size: ${fontSizeForArticleTitle}px;}`;
     const listTitle = `.ContentItem-title,.HotItem-title{font-size: ${fontSizeForListTitle}px!important;}`;
     const answerTitle = `.QuestionHeader-title{font-size: ${fontSizeForAnswerTitle}px!important;}`;
-    return list + answer + article + articleTitle + listTitle + answerTitle;
+    const pLineHeight = `p {line-height: ${contentLineHeight || 24}px;}`;
+    return list + answer + article + articleTitle + listTitle + answerTitle + pLineHeight;
   },
   vVideoLink: async () => {
     // 视频是否只显示链接

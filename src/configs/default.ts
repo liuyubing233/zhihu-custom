@@ -193,6 +193,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   fontSizeForListTitle: 18,
   fontSizeForAnswerTitle: 22,
   fontSizeForArticleTitle: 24,
+  contentLineHeight: 24,
   zoomListVideoType: '0',
   zoomListVideoSize: '500',
   hotKey: true,

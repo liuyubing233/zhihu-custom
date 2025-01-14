@@ -354,6 +354,8 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   fontSizeForAnswer?: number;
   /** 文章内容标准文字大小 */
   fontSizeForArticle?: number;
+  /** 内容行高 */
+  contentLineHeight?: number;
   /** 列表视频回答内容尺寸 */
   zoomListVideoType?: string;
   /** 列表视频回答内容缩放 */

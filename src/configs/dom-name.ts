@@ -57,6 +57,7 @@ export const FONT_SIZE_INPUT: IOptionItem[][] = [
     { value: 'fontSizeForArticleTitle', label: '文章标题文字大小' },
     { value: 'fontSizeForArticle', label: '文章内容文字大小' },
   ],
+  [{ value: 'contentLineHeight', label: '内容行高' }],
 ];
 
 /** 版心最小宽度 */
