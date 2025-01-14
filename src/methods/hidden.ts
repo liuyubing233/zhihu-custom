@@ -1,11 +1,11 @@
 import { myStorage } from '../commons/storage';
-import { fnInitDomStyle } from '../commons/tools';
+import { fnAppendStyle } from '../commons/tools';
 
 /** 隐藏元素的 css */
 export const myHidden = {
   init: async function () {
     const changeValue = await this.change();
-    fnInitDomStyle('CTZ_STYLE_HIDDEN', changeValue || '');
+    fnAppendStyle('CTZ_STYLE_HIDDEN', changeValue || '');
   },
   change: async function () {
     const pfConfig = await myStorage.getConfig();

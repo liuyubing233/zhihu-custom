@@ -1,15 +1,15 @@
 import { myStorage } from '../commons/storage';
-import { dom, fnInitDomStyle, fnReturnStr } from '../commons/tools';
+import { dom, fnAppendStyle, fnReturnStr } from '../commons/tools';
 import {
-  CLASS_INPUT_CLICK,
-  CLASS_MESSAGE,
-  ID_DIALOG,
-  INPUT_NAME_THEME,
-  INPUT_NAME_THEME_DARK,
-  INPUT_NAME_ThEME_LIGHT,
-  THEMES,
-  THEME_CONFIG_DARK,
-  THEME_CONFIG_LIGHT,
+    CLASS_INPUT_CLICK,
+    CLASS_MESSAGE,
+    ID_DIALOG,
+    INPUT_NAME_THEME,
+    INPUT_NAME_THEME_DARK,
+    INPUT_NAME_ThEME_LIGHT,
+    THEMES,
+    THEME_CONFIG_DARK,
+    THEME_CONFIG_LIGHT,
 } from '../configs';
 import { ETheme, EThemeDark, EThemeLight } from '../types';
 
@@ -27,7 +27,7 @@ export const myBackground = {
       if (+themeLight === EThemeLight.默认) return this.default();
       return this.light(themeLight);
     };
-    fnInitDomStyle('CTZ_STYLE_BACKGROUND', (await getBackground()) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
+    fnAppendStyle('CTZ_STYLE_BACKGROUND', (await getBackground()) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
   },
   isUseDark: async () => {
     const { theme = ETheme.自动 } = await myStorage.getConfig();
@@ -182,7 +182,7 @@ export const myCustomStyle = {
     (dom('[name="textStyleCustom"]') as HTMLTextAreaElement).value = customizeCss;
     this.change(customizeCss);
   },
-  change: (innerCus: string) => fnInitDomStyle('CTZ_STYLE_CUSTOM', innerCus),
+  change: (innerCus: string) => fnAppendStyle('CTZ_STYLE_CUSTOM', innerCus),
 };
 
 /** 启用知乎默认的黑暗模式 */

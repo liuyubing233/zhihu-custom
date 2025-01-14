@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { domById, fnInitDomStyle, fnReturnStr } from '../commons/tools';
+import { domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
 import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, VERSION_MIN_WIDTH } from '../configs';
 import { EThemeDark, EThemeLight } from '../types';
 import { isDark } from './background';
@@ -8,7 +8,7 @@ import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './video';
 /** 修改版心的 css */
 export const myVersion = {
   init: async function () {
-    fnInitDomStyle(
+    fnAppendStyle(
       'CTZ_STYLE_VERSION',
       (await this.versionWidth()) +
         (await this.vImgSize()) +

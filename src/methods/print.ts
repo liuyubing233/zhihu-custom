@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { createBtnSmallTran, dom, domC, insertAfter } from '../commons/tools';
+import { createButtonST, dom, domC, insertAfter } from '../commons/tools';
 import { store } from '../store';
 import { INNER_CSS } from '../web-resources';
 
@@ -139,7 +139,7 @@ export const printAnswer = (e: HTMLElement) => {
   if (prevButton) return;
   const nodeUser = e.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nButton = createBtnSmallTran('导出当前回答', 'ctz-answer-print');
+  const nButton = createButtonST('导出当前回答', 'ctz-answer-print');
   nButton.onclick = function () {
     const nodeUser = e.querySelector('.AuthorInfo-name .UserLink-link');
     const nodeContent = e.querySelector('.RichContent-inner');
@@ -156,7 +156,7 @@ export const printArticle = async (e: HTMLElement) => {
   if (prevButton || !topExportContent) return;
   const nodeHeader = e.querySelector('.ArticleItem-authorInfo') || e.querySelector('.Post-Header .Post-Title');
   if (!nodeHeader) return;
-  const nButton = createBtnSmallTran('导出当前文章', 'ctz-article-print', { style: 'margin: 12px 0;' });
+  const nButton = createButtonST('导出当前文章', 'ctz-article-print', { style: 'margin: 12px 0;' });
   nButton.onclick = function () {
     const nodeTitle = e.querySelector('.ContentItem.ArticleItem .ContentItem-title>span') || e.querySelector('.Post-Header .Post-Title');
     const nodeUser = e.querySelector('.AuthorInfo-name');
@@ -177,7 +177,7 @@ export const printPeopleAnswer = async () => {
   const nodeListHeader = dom('.Profile-main .List-headerText');
   const prevButton = dom(`.ctz-people-answer-print`);
   if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
-  const nButton = createBtnSmallTran('导出当前页回答', 'ctz-people-answer-print');
+  const nButton = createButtonST('导出当前页回答', 'ctz-people-answer-print');
   nButton.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载回答内容中...';
@@ -198,7 +198,7 @@ export const printPeopleArticles = async () => {
   const nodeListHeader = dom('.Profile-main .List-headerText');
   const prevButton = dom('.ctz-people-export-articles-once');
   if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
-  const nButton = createBtnSmallTran('导出当前页文章', 'ctz-people-export-articles-once');
+  const nButton = createButtonST('导出当前页文章', 'ctz-people-export-articles-once');
   nButton.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载文章内容中...';

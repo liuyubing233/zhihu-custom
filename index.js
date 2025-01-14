@@ -643,7 +643,7 @@
   };
   var fnReturnStr = (str, isHave = false, strFalse = "") => isHave ? str : strFalse;
   var fnLog = (...str) => console.log("%c「知乎修改器」", "color: green;font-weight: bold;", ...str);
-  var fnInitDomStyle = (id, innerHTML) => {
+  var fnAppendStyle = (id, innerHTML) => {
     const element = domById(id);
     element ? element.innerHTML = innerHTML : document.head.appendChild(domC("style", { id, type: "text/css", innerHTML }));
   };
@@ -723,7 +723,7 @@
       }
     }, t);
   };
-  var createBtnSmallTran = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
+  var createButtonST = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
     innerHTML,
     className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
     style: "margin: 0 4px;",
@@ -982,7 +982,7 @@
           return this.default();
         return this.light(themeLight);
       };
-      fnInitDomStyle("CTZ_STYLE_BACKGROUND", await getBackground() + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
+      fnAppendStyle("CTZ_STYLE_BACKGROUND", await getBackground() + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
     },
     isUseDark: async () => {
       const { theme = 2 /* 自动 */ } = await myStorage.getConfig();
@@ -1036,7 +1036,7 @@
       dom('[name="textStyleCustom"]').value = customizeCss;
       this.change(customizeCss);
     },
-    change: (innerCus) => fnInitDomStyle("CTZ_STYLE_CUSTOM", innerCus)
+    change: (innerCus) => fnAppendStyle("CTZ_STYLE_CUSTOM", innerCus)
   };
   var onUseThemeDark = async () => {
     dom("html").setAttribute("data-theme", await isDark() ? "dark" : "light");
@@ -1247,7 +1247,7 @@
   };
   var myVersion = {
     init: async function() {
-      fnInitDomStyle(
+      fnAppendStyle(
         "CTZ_STYLE_VERSION",
         await this.versionWidth() + await this.vImgSize() + await this.vQuestionTitleTag() + await this.vSusHomeTab() + await this.vSusHeader() + await this.vFixedListMore() + await this.vHighlightListItem() + await this.vShoppingLink() + await this.vFontSizeContent() + await this.vListVideoSize() + await this.vVideoLink()
       );
@@ -2016,7 +2016,7 @@
     const nodeUser = nodeItem.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
     if (!nodeUser)
       return;
-    const nDomButton = createBtnSmallTran("一键获取回答链接", CLASS_COPY_LINK);
+    const nDomButton = createButtonST("一键获取回答链接", CLASS_COPY_LINK);
     nDomButton.onclick = function() {
       const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
       if (!metaUrl)
@@ -2147,7 +2147,7 @@
     const nodeUser = e.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
     if (!nodeUser)
       return;
-    const nButton = createBtnSmallTran("导出当前回答", "ctz-answer-print");
+    const nButton = createButtonST("导出当前回答", "ctz-answer-print");
     nButton.onclick = function() {
       const nodeUser2 = e.querySelector(".AuthorInfo-name .UserLink-link");
       const nodeContent = e.querySelector(".RichContent-inner");
@@ -2164,7 +2164,7 @@
     const nodeHeader = e.querySelector(".ArticleItem-authorInfo") || e.querySelector(".Post-Header .Post-Title");
     if (!nodeHeader)
       return;
-    const nButton = createBtnSmallTran("导出当前文章", "ctz-article-print", { style: "margin: 12px 0;" });
+    const nButton = createButtonST("导出当前文章", "ctz-article-print", { style: "margin: 12px 0;" });
     nButton.onclick = function() {
       const nodeTitle = e.querySelector(".ContentItem.ArticleItem .ContentItem-title>span") || e.querySelector(".Post-Header .Post-Title");
       const nodeUser = e.querySelector(".AuthorInfo-name");
@@ -2183,7 +2183,7 @@
     const prevButton = dom(`.ctz-people-answer-print`);
     if (!nodeListHeader || prevButton || !fetchInterceptStatus)
       return;
-    const nButton = createBtnSmallTran("导出当前页回答", "ctz-people-answer-print");
+    const nButton = createButtonST("导出当前页回答", "ctz-people-answer-print");
     nButton.onclick = async function() {
       const eventBtn = this;
       eventBtn.innerText = "加载回答内容中...";
@@ -2203,7 +2203,7 @@
     const prevButton = dom(".ctz-people-export-articles-once");
     if (!nodeListHeader || prevButton || !fetchInterceptStatus)
       return;
-    const nButton = createBtnSmallTran("导出当前页文章", "ctz-people-export-articles-once");
+    const nButton = createButtonST("导出当前页文章", "ctz-people-export-articles-once");
     nButton.onclick = async function() {
       const eventBtn = this;
       eventBtn.innerText = "加载文章内容中...";
@@ -2582,12 +2582,12 @@
           const nodeItemTitle = nodeItem.querySelector(".ContentItem-title");
           if (nodeItemTitle) {
             if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
-              nodeItemTitle.appendChild(createBtnSmallTran("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
+              nodeItemTitle.appendChild(createButtonST("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
             }
             if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
               const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
               const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
-              nodeItemTitle.appendChild(createBtnSmallTran("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
+              nodeItemTitle.appendChild(createButtonST("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
             }
           }
         }
@@ -2870,7 +2870,7 @@
   var myHidden = {
     init: async function() {
       const changeValue = await this.change();
-      fnInitDomStyle("CTZ_STYLE_HIDDEN", changeValue || "");
+      fnAppendStyle("CTZ_STYLE_HIDDEN", changeValue || "");
     },
     change: async function() {
       const pfConfig = await myStorage.getConfig();
@@ -3482,7 +3482,7 @@
         return;
       }
       fixVideoAutoPlay();
-      fnInitDomStyle("CTZ_STYLE", INNER_CSS);
+      fnAppendStyle("CTZ_STYLE", INNER_CSS);
       let config = await myStorage.getConfig();
       if (!config || config.fetchInterceptStatus === void 0) {
         fnLog("您好，欢迎使用本插件，第一次进入，初始化中...");
@@ -3492,13 +3492,7 @@
       await myStorage.getHistory();
       initHistoryView();
       onInitStyleExtra();
-      (() => {
-        if (/www\.zhihu\.com\/column/.test(href)) {
-          dom("html").classList.add("zhuanlan");
-          return;
-        }
-        dom("html").classList.add(EXTRA_CLASS_HTML[hostname]);
-      })();
+      dom("html").classList.add(/www\.zhihu\.com\/column/.test(href) ? "zhuanlan" : EXTRA_CLASS_HTML[hostname]);
       const { fetchInterceptStatus } = config;
       if (fetchInterceptStatus) {
         fnLog("已开启 fetch 接口拦截");

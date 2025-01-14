@@ -51,7 +51,7 @@ export const fnReturnStr = (str: string, isHave = false, strFalse = '') => (isHa
 export const fnLog = (...str: string[]) => console.log('%c「知乎修改器」', 'color: green;font-weight: bold;', ...str);
 
 /** 注入样式文件的方法 */
-export const fnInitDomStyle = (id: string, innerHTML: string) => {
+export const fnAppendStyle = (id: string, innerHTML: string) => {
   const element = domById(id);
   element ? (element.innerHTML = innerHTML) : document.head.appendChild(domC('style', { id, type: 'text/css', innerHTML }));
 };
@@ -169,7 +169,7 @@ export const message = (value: string, t: number = 3000) => {
  * @param {string} extraCLass 按钮额外类名
  * @returns {HTMLElement} 元素
  */
-export const createBtnSmallTran = (innerHTML: string, extraCLass: string = '', extra: Record<string, any> = {}): HTMLElement =>
+export const createButtonST = (innerHTML: string, extraCLass: string = '', extra: Record<string, any> = {}): HTMLElement =>
   domC('button', {
     innerHTML,
     className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,

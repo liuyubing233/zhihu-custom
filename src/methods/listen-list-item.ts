@@ -1,6 +1,6 @@
 import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { createBtnSmallTran, domA, domP } from '../commons/tools';
+import { createButtonST, domA, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
@@ -148,13 +148,13 @@ export const myListenListItem = {
         if (nodeItemTitle) {
           // 列表外置不感兴趣按钮
           if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
-            nodeItemTitle.appendChild(createBtnSmallTran('不感兴趣', CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
+            nodeItemTitle.appendChild(createButtonST('不感兴趣', CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
           }
           // 推荐列表显示「直达问题」按钮
           if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
             const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
             const pathAnswer = domUrl ? domUrl.getAttribute('content') || '' : '';
-            nodeItemTitle.appendChild(createBtnSmallTran('直达问题', CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, '') } }));
+            nodeItemTitle.appendChild(createButtonST('直达问题', CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, '') } }));
           }
         }
       }

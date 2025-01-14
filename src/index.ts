@@ -1,6 +1,6 @@
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
-import { dom, domA, domById, fnInitDomStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
+import { dom, domA, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_DIALOG } from './configs/dom-name';
 import { initBlockWords } from './init/init-block-words';
@@ -55,9 +55,9 @@ import { INNER_CSS } from './web-resources';
     }
 
     fixVideoAutoPlay();
-    fnInitDomStyle('CTZ_STYLE', INNER_CSS);
-    let config = await myStorage.getConfig();
+    fnAppendStyle('CTZ_STYLE', INNER_CSS);
 
+    let config = await myStorage.getConfig();
     if (!config || config.fetchInterceptStatus === undefined) {
       fnLog('您好，欢迎使用本插件，第一次进入，初始化中...');
       await myStorage.setConfig(CONFIG_DEFAULT);
@@ -68,13 +68,7 @@ import { INNER_CSS } from './web-resources';
     initHistoryView();
     onInitStyleExtra();
 
-    (() => {
-      if (/www\.zhihu\.com\/column/.test(href)) {
-        dom('html')!.classList.add('zhuanlan');
-        return;
-      }
-      dom('html')!.classList.add(EXTRA_CLASS_HTML[hostname]);
-    })();
+    dom('html')!.classList.add(/www\.zhihu\.com\/column/.test(href) ? 'zhuanlan' : EXTRA_CLASS_HTML[hostname]);
 
     // 获取最新的配置需要在此以后
     const { fetchInterceptStatus } = config;
