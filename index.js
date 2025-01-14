@@ -365,7 +365,6 @@
         [
           { value: "hiddenAppHeaderTabHome", label: "发现模块-首页" },
           { value: "hiddenAppHeaderTabZhi", label: "发现模块-知学堂" },
-          // { value: 'hiddenAppHeaderTabVIP', label: '发现模块-会员' },
           { value: "hiddenAppHeaderTabWaitingForYou", label: "发现模块-等你来答" },
           { value: "hiddenAppHeaderTabFind", label: "发现模块-知乎直达" }
         ],
@@ -585,7 +584,6 @@
       const h = nHistory ? JSON.parse(nHistory) : { list: [], view: [] };
       return Promise.resolve(h);
     },
-    /** 修改配置中的值 */
     setConfigItem: async function(key, value) {
       const config = await this.getConfig();
       if (typeof key === "string") {
@@ -597,7 +595,6 @@
       }
       await this.setConfig(config);
     },
-    /** 更新配置 */
     setConfig: async function(params) {
       await this.set("pfConfig", params);
     },
@@ -849,22 +846,17 @@
   };
   var Store = class {
     constructor() {
-      /** 用户信息 更改prev: userInfo */
       this.userinfo = void 0;
       this.findEvent = {
         header: { fun: null, num: 0, isFind: false }
       };
-      /** 脚本内配置缓存 */
       this.storageConfig = {
         cacheTitle: "",
         fetchHeaders: {},
         headerDoms: {}
       };
-      /** 过滤的盐选回答ID */
       this.removeRecommendIds = [];
-      /** 当前用户主页的回答内容 */
       this.userAnswers = [];
-      /** 当前用户主页的文章内容 */
       this.userArticle = [];
       this.setUserinfo = this.setUserinfo.bind(this);
       this.getUserinfo = this.getUserinfo.bind(this);
@@ -992,22 +984,15 @@
       const blankText = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
       const linkText = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.CreatorSalt-IdentitySelect-Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.css-vphnkw,.css-1aqu4xd,.css-6m0nd1,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a,.KfeCollection-OrdinaryLabel-newStyle-mobile .KfeCollection-OrdinaryLabel-content,.KfeCollection-OrdinaryLabel-newStyle-pc .KfeCollection-OrdinaryLabel-content,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore{color: deepskyblue!important;}.css-1tu59u4,.ZDI,.ZDI--PencilCircleFill24,.Zi,.Zi--ArrowDown{fill: deepskyblue!important;}`;
       const extraBG1 = `.ztext pre,.ztext code{background: ${background}!important;}`;
-      return (
-        // 这里不使用 addPrefix 添加前缀是因为 menuBeforeAfter 方法里背景色存在逗号
-        `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}` + appendPrefix(
-          this.doSetCSS(background, background2) + whiteText + blankText + linkText + extraBG1 + `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
-          (i) => `html[data-theme=dark] ${i}`
-          // 添加 html[data-theme=dark] 前缀
-        )
+      return `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}` + appendPrefix(
+        this.doSetCSS(background, background2) + whiteText + blankText + linkText + extraBG1 + `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
+        (i) => `html[data-theme=dark] ${i}`
       );
     },
-    /** 使用背景色1的元素名称 */
     cssBG1: `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span,body,.Input-wrapper,.toolbar-section button:hover,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover,.Popover-content button:hover,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp,.index-videoCardItem-bzeJ1,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar,.TextMessage-sender,.ChatUserListItem--active,.css-yoby3j,.css-wmwsyx,.css-wmwsyx button,.css-82b621,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-item:hover,.index-learnPath-dfrcu .index-learnContainer-9QR37 .index-learnShow-p3yvw .index-learnCard-vuCza,.index-courseCard-ebw4r,${appendClassStart("Tabs-container,EpisodeList-sectionItem")}`,
-    /** 使用背景色2的元素名称 */
     cssBG2: `#CTZ_MAIN input,#CTZ_MAIN textarea,.${CLASS_MESSAGE},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ,.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item,.CreatorSalt-letter-wrapper,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div,.Creator-salt-new-author-content,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ZVideoToolbar button,.Creator-salt-author-welfare .Creator-salt-author-welfare-card,.Creator-salt-author-welfare-banner,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5),.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div,.css-1i12cbe,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer,.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-table,.Popover-content,.Notifications-footer,.Messages-footer,.Popover-arrow:after,.css-97fdvh>div,.css-4lspwd,.css-1e6hvbc,.css-k32okj,.ant-table-tbody>tr.ant-table-placeholder:hover>td,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div),.CreatorSalt-community-story-wrapper,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root,.CreatorSalt-sideBar-wrapper,.ant-menu,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask,.Write-school-search-bar .CreatorSalt-management-search,.CreatorSalt-Content-Management-Index,.Topstory-container .TopstoryTabs>a::after,.ZVideo,.KfeCollection-CreateSaltCard,.CreatorSalt-personalInfo,.CreatorSalt-sideBar-item,.css-d1sc5t,.css-1gvsmgz,.css-u56wtg,.css-1hrberl,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-header,.ant-table-tbody>tr>td,.CreatorSalt-management-wrapper .CreatorSalt-management-search,.ant-table-thead .ant-table-cell,.QuestionWaiting-typesTopper,${appendClassStart(
       "App-root,PcContent-root,TopNavBar-root,CourseConsultation-corner,CourseConsultation-cornerButton,CornerButtonToTop-cornerButton,LearningRouteCard-pathContent,index-item,index-hoverCard,ShelfTopNav-root,ProductCard-root,NewOrderedLayout-root,Tabs-tabHeader,ButtonBar-root,WebPage-root,LearningPathWayCard-pathItem,VideoCourseList-title,Article-header,PcContent-coverFix,index-module,TopNavBar-module,PcContent-module,CourseRecord-module,Learned-module,Tab-module,PcContentBought-module,Media-module"
     )}`,
-    /** 背景色透明的元素名称 */
     cssBGTransparent: `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`,
     cssBG1Color: `.css-z0izby`,
     menuBeforeAfter: (color, size = "12px") => `background: radial-gradient(circle at top left, transparent ${size}, ${color} 0) top left,radial-gradient(circle at top right, transparent ${size}, ${color} 0) top right,radial-gradient(circle at bottom right, transparent ${size}, ${color} 0) bottom right,radial-gradient(circle at bottom left, transparent ${size}, ${color} 0) bottom left;background-size: 50% 50%;background-repeat: no-repeat;`
@@ -1157,9 +1142,7 @@
     clicks: {},
     timer: {},
     useL: ["suspensionHomeTab", "suspensionFind", "suspensionSearch"],
-    // 使用left定位的name
     useR: ["suspensionUser"]
-    // 使用right定位的name
   };
   var CLASS_VIDEO_ONE = ".css-1h1xzpn";
   var CLASS_VIDEO_TWO = ".VideoAnswerPlayer-video";
@@ -1240,7 +1223,6 @@
       this.initAfterLoad();
       this.init();
     },
-    /** 页面内容宽度修改 */
     versionWidth: async function() {
       const {
         commitModalSizeSameVersion,
@@ -1270,19 +1252,16 @@
       const sizeMinWidth = `.Topstory-mainColumn,.SearchMain,.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content,.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,${CLASS_MODAL},.Topstory-body ${CLASS_MODAL},.PostIndex-body ${CLASS_MODAL}{min-width: ${VERSION_MIN_WIDTH}px!important;}`;
       return sizeHome + sizeAnswer + sizeArticle + sizeModal + sizeMinWidth;
     },
-    /** 图片尺寸修改 */
     vImgSize: async function() {
       const { zoomImageType, zoomImageHeight, zoomImageHeightSize, zoomImageSize } = await myStorage.getConfig();
       const nWidth = zoomImageType === "2" ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : "";
       const nHeight = zoomImageHeight === "1" ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : "";
       return `.GifPlayer.isPlaying img {cursor:pointer!important;}img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${nHeight || nWidth}}`;
     },
-    /** 列表视频回答内容尺寸修改 */
     vListVideoSize: async function() {
       const pfConfig = await myStorage.getConfig();
       return `.ZVideoItem>div:first-of-type{${fnReturnStr(`width: ${pfConfig.zoomListVideoSize}px!important;`, pfConfig.zoomListVideoType === "2")}}`;
     },
-    /** 列表更多按钮移动至题目右侧 */
     vFixedListMore: async function() {
       const pfConfig = await myStorage.getConfig();
       return fnReturnStr(
@@ -1290,7 +1269,6 @@
         pfConfig.fixedListItemMore
       );
     },
-    /** 内容标题添加类别显示 */
     vQuestionTitleTag: async function() {
       const pfConfig = await myStorage.getConfig();
       const cssTag = "margin-right:6px;font-weight:normal;display:inline;padding:2px 4px;border-radius:4px;font-size:12px;color:#ffffff";
@@ -1299,7 +1277,6 @@
         pfConfig.questionTitleTag
       );
     },
-    /** 首页问题列表切换模块悬浮 */
     vSusHomeTab: async function() {
       const pfConfig = await myStorage.getConfig();
       const { themeDark = 1 /* 深色护眼一 */, themeLight = 0 /* 默认 */ } = pfConfig;
@@ -1310,7 +1287,6 @@
         pfConfig.suspensionHomeTab
       );
     },
-    /** 顶部三大块悬浮 */
     vSusHeader: async function() {
       const pfConfig = await myStorage.getConfig();
       const { themeDark = 1 /* 深色护眼一 */, themeLight = 0 /* 默认 */ } = pfConfig;
@@ -1318,7 +1294,6 @@
       const background = dark ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background;
       return `.position-suspensionFind{${pfConfig.suspensionFindPo}}.position-suspensionUser{${pfConfig.suspensionUserPo}}.position-suspensionSearch{${pfConfig.suspensionSearchPo}}.position-suspensionFind .Tabs-link{border:1px solid #999999;color:#999999;background: ${background || "transparent"};}.position-suspensionFind .Tabs-link.is-active{color:#0066ff!important;border-color:#0066ff!important;}.position-suspensionUser .css-1m60na {display: none;}.position-suspensionUser .css-1n0eufo{margin-right: 0;}`;
     },
-    /** 列表内容点击高亮边框 */
     vHighlightListItem: async function() {
       const { highlightListItem } = await myStorage.getConfig();
       return highlightListItem ? `.List-item:focus,.TopstoryItem:focus,.HotItem:focus{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(0, 102, 255, 0.3)!important;outline:none!important;transition:box-shadow 0.3s!important;}` : `.List-item:focus,.Card:focus::before{box-shadow: none!important;}`;
@@ -1454,7 +1429,6 @@
       suspensionHomeTab: ".Topstory-container .TopstoryTabs",
       suspensionFind: ".AppHeader-Tabs",
       suspensionSearch: ".SearchBar",
-      // 搜索框使用自己添加的元素
       suspensionUser: ".AppHeader-userInfo"
     };
     const nodeCTZName = dom(`.ctz-${name}`);
@@ -1526,7 +1500,6 @@
   var ID_BLOCK_LIST = "CTZ-BLOCK-LIST";
   var myBlack = {
     messageCancel: "取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。",
-    /** 初始化黑名单列表 */
     init: async function() {
       const me = this;
       const elementBlock = domById(ID_BLOCK_LIST);
@@ -1541,14 +1514,12 @@
         confirm(me.messageCancel) && me.serviceRemove(info);
       };
     },
-    /** 黑名单元素 */
     createItem: function(info) {
       return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
     },
     createItemContent: ({ id, name }) => {
       return `<a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
     },
-    /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
     addButton: async function(event, objMy) {
       const me = this;
       const classBox = "ctz-block-box";
@@ -1611,7 +1582,6 @@
       };
       nodeUser.appendChild(nodeBox);
     },
-    /** 添加屏蔽用户 */
     addBlackItem: async function(info) {
       const pfConfig = await myStorage.getConfig();
       const nL = pfConfig.removeBlockUserContentList || [];
@@ -1621,7 +1591,6 @@
       nodeBlackItem.dataset.info = JSON.stringify(info);
       domById(ID_BLOCK_LIST).appendChild(nodeBlackItem);
     },
-    /** 调用「屏蔽用户」接口 */
     serviceAdd: function(urlToken, userName, userId) {
       const me = this;
       const headers = this.getHeaders();
@@ -1636,7 +1605,6 @@
         me.addBlackItem({ id: userId, name: userName, userType: "people", urlToken });
       });
     },
-    /** 解除拉黑用户接口 */
     serviceRemove: function(info) {
       const { urlToken, id } = info;
       const headers = this.getHeaders();
@@ -1659,7 +1627,6 @@
         }
       });
     },
-    /** 同步黑名单列表 */
     sync: function(offset = 0, l = []) {
       const nodeList = domById(ID_BLOCK_LIST);
       !l.length && nodeList && (nodeList.innerHTML = "");
@@ -1858,7 +1825,6 @@
     on: () => dom("body").classList.remove("ctz-stop-scroll")
   };
   var myPreview = {
-    // 开启预览弹窗
     open: function(src, even, isVideo) {
       const nameDom = isVideo ? this.evenPathVideo : this.evenPathImg;
       const idDom = isVideo ? this.idVideo : this.idImg;
@@ -1869,7 +1835,6 @@
       even && (this.even = even);
       myScroll.stop();
     },
-    // 关闭预览弹窗
     hide: function(pEvent) {
       if (this.even) {
         this.even.click();
@@ -3078,7 +3043,6 @@
     initRootEvent();
   };
   var myButtonOperation = {
-    /** 导出配置 */
     configExport: async () => {
       const config = await myStorage.get("pfConfig") || "{}";
       const link = domC("a", {
@@ -3104,7 +3068,6 @@
       });
       resetData();
     },
-    /** 自定义样式 */
     styleCustom: async function() {
       const nodeText = dom('[name="textStyleCustom"]');
       const value = nodeText ? nodeText.value : "";
@@ -3112,14 +3075,12 @@
       myCustomStyle.change(value);
     },
     syncBlack: () => myBlack.sync(0),
-    /** 确认更改网页标题 */
     buttonConfirmTitle: async function() {
       const nodeTitle = dom('[name="globalTitle"]');
       await myStorage.setConfigItem("globalTitle", nodeTitle ? nodeTitle.value : "");
       changeTitle();
       message("网页标题修改成功");
     },
-    /** 还原网页标题 */
     buttonResetTitle: async function() {
       const { getStorageConfigItem } = store;
       const nodeTitle = dom('[name="globalTitle"]');
@@ -3175,7 +3136,6 @@
       let ctzType = params.get("ctzType");
       this[ctzType] && this[ctzType]();
     },
-    /** 移除、关注问题并关闭网页 */
     "1": function() {
       const domQuestion = dom(".QuestionPage");
       if (domQuestion && domQuestion.getAttribute("data-za-extra-module")) {
@@ -3186,11 +3146,9 @@
         }, 500);
       }
     },
-    /** 移除、关注话题并关闭网页 */
     "2": function() {
       this.clickAndClose(".TopicActions .FollowButton");
     },
-    /** 移除、关注收藏夹并关闭网页 */
     "3": function() {
       const domQuestion = dom(".CollectionsDetailPage");
       if (domQuestion && domQuestion.getAttribute("data-za-extra-module")) {
@@ -3217,7 +3175,6 @@
       this.timer = setTimeout(() => {
         pathnameHasFn({
           questions: () => this.addButtons(this.classOb.questions),
-          // topics: () => this.addButtons(this.classOb.topics), // 话题跳转页面内会重定向，暂时隐藏
           collections: () => this.addButtons(this.classOb.collections)
         });
       }, 500);
@@ -3260,19 +3217,16 @@
     classNameRemove: "ctz-button-red",
     classOb: {
       questions: {
-        // 关注的问题
         classNameItem: "List-item",
         classHref: ".QuestionItem-title a",
         ctzType: 1
       },
       topics: {
-        // 关注的话题
         classNameItem: "List-item",
         classHref: ".ContentItem-title .TopicLink",
         ctzType: 2
       },
       collections: {
-        // 关注的收藏夹
         classNameItem: "List-item",
         classHref: ".ContentItem-title a",
         ctzType: 3
