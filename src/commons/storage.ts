@@ -30,7 +30,7 @@ export const myStorage = {
     return Promise.resolve(h);
   },
   /** 修改配置中的值 */
-  setConfigItem: async function (key: string | Record<string, any>, value?: any) {
+  updateConfigItem: async function (key: string | Record<string, any>, value?: any) {
     const config = await this.getConfig();
     if (typeof key === 'string') {
       config[key] = value;
@@ -39,18 +39,18 @@ export const myStorage = {
         config[itemKey] = key[itemKey];
       }
     }
-    await this.setConfig(config);
+    await this.updateConfig(config);
   },
   /** 更新配置 */
-  setConfig: async function (params: IPfConfig) {
+  updateConfig: async function (params: IPfConfig) {
     await this.set('pfConfig', params);
   },
-  setHistoryItem: async function (key: 'list' | 'view', params: string[]) {
+  updateHistoryItem: async function (key: 'list' | 'view', params: string[]) {
     const pfHistory = await this.getHistory();
     pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
     await this.set('pfHistory', pfHistory);
   },
-  setHistory: async function (value: IPfHistory) {
+  updateHistory: async function (value: IPfHistory) {
     await this.set('pfHistory', value);
   },
 };

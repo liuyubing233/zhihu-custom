@@ -3,14 +3,10 @@ import { IOptionItem, IRangeItem } from '../types';
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
 /** id: 设置弹窗 */
 export const ID_DIALOG = 'CTZ_DIALOG_MAIN';
-/** id: 同步黑名单按钮 */
-export const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
 /** class: INPUT 点击元素类名 */
 export const CLASS_INPUT_CLICK = 'ctz-i';
 /** class: INPUT 修改操作元素类名 */
 export const CLASS_INPUT_CHANGE = 'ctz-i-change';
-/** class: 黑名单元素删除按钮类名 */
-export const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** class: 不感兴趣外置按钮 */
 export const CLASS_NOT_INTERESTED = 'ctz-not-interested';
 /** class: 推荐列表显示「直达问题」按钮 */

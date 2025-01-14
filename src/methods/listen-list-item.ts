@@ -170,7 +170,7 @@ export const myListenListItem = {
       fnJustNum(nodeItem);
       if (i === len - 1) {
         needIndex && (this.index = i);
-        myStorage.setHistoryItem('list', historyList);
+        myStorage.updateHistoryItem('list', historyList);
       }
     }
   },

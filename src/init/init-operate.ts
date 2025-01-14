@@ -53,7 +53,7 @@ export const initOperate = () => {
       const isClear = confirm(`是否清空${target.innerText}`);
       if (!isClear) return;
       prevHistory[dataId] = [];
-      await myStorage.setHistory(prevHistory);
+      await myStorage.updateHistory(prevHistory);
       echoHistory();
     };
   });
@@ -88,7 +88,7 @@ const myButtonOperation: Record<string, Function> = {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
     const { filterKeywords = [], removeBlockUserContentList = [] } = await myStorage.getConfig();
-    await myStorage.setConfig({
+    await myStorage.updateConfig({
       ...CONFIG_DEFAULT,
       filterKeywords,
       removeBlockUserContentList,
@@ -99,14 +99,14 @@ const myButtonOperation: Record<string, Function> = {
   styleCustom: async function () {
     const nodeText = dom('[name="textStyleCustom"]') as HTMLInputElement;
     const value = nodeText ? nodeText.value : '';
-    await myStorage.setConfigItem('customizeCss', value);
+    await myStorage.updateConfigItem('customizeCss', value);
     myCustomStyle.change(value);
   },
   syncBlack: () => myBlack.sync(0),
   /** 确认更改网页标题 */
   buttonConfirmTitle: async function () {
     const nodeTitle = dom('[name="globalTitle"]') as HTMLInputElement;
-    await myStorage.setConfigItem('globalTitle', nodeTitle ? nodeTitle.value : '');
+    await myStorage.updateConfigItem('globalTitle', nodeTitle ? nodeTitle.value : '');
     changeTitle();
     message('网页标题修改成功');
   },
@@ -115,7 +115,7 @@ const myButtonOperation: Record<string, Function> = {
     const { getStorageConfigItem } = store;
     const nodeTitle = dom('[name="globalTitle"]') as HTMLInputElement;
     nodeTitle && (nodeTitle.value = getStorageConfigItem('cacheTitle') as string);
-    await myStorage.setConfigItem('globalTitle', '');
+    await myStorage.updateConfigItem('globalTitle', '');
     changeTitle();
     message('网页标题已还原');
   },
@@ -134,7 +134,7 @@ const configImport = (e: Event) => {
     let config = oFREvent.target ? oFREvent.target.result : '';
     if (typeof config === 'string') {
       const nConfig = JSON.parse(config);
-      await myStorage.setConfig(nConfig);
+      await myStorage.updateConfig(nConfig);
       resetData();
     }
   };

@@ -1,9 +1,12 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById, domC, fnDomReplace, fnReturnStr } from '../commons/tools';
-import { CLASS_REMOVE_BLOCK, ID_BUTTON_SYNC_BLOCK } from '../configs';
 import { store } from '../store';
 import { IBlockUserItem, IZhihuCardContent } from '../types';
 
+/** id: 同步黑名单按钮 */
+const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
+/** class: 黑名单元素删除按钮类名 */
+const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** id: 黑名单列表 */
 const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
 
@@ -103,7 +106,7 @@ export const myBlack = {
     const pfConfig = await myStorage.getConfig();
     const nL = pfConfig.removeBlockUserContentList || [];
     nL.push(info);
-    myStorage.setConfigItem('removeBlockUserContentList', nL);
+    myStorage.updateConfigItem('removeBlockUserContentList', nL);
     const nodeBlackItem = domC('div', { className: `ctz-black-item ctz-black-id-${info.id}`, innerHTML: this.createItemContent(info) });
     nodeBlackItem.dataset.info = JSON.stringify(info);
     domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
@@ -142,7 +145,7 @@ export const myBlack = {
         nL.splice(itemIndex, 1);
         const removeItem = dom(`.ctz-black-id-${id}`);
         removeItem && removeItem.remove();
-        myStorage.setConfigItem('removeBlockUserContentList', nL);
+        myStorage.updateConfigItem('removeBlockUserContentList', nL);
       }
     });
   },
@@ -166,7 +169,7 @@ export const myBlack = {
         if (!paging.is_end) {
           this.sync(offset + limit, l);
         } else {
-          myStorage.setConfigItem('removeBlockUserContentList', l);
+          myStorage.updateConfigItem('removeBlockUserContentList', l);
           myBlack.init();
           fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '同步黑名单', disabled: false });
         }

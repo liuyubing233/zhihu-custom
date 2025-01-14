@@ -13,7 +13,7 @@ export const initFetchInterceptStatus = async () => {
           : '开启接口拦截，确认后将刷新页面。\n如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。'
       )
     ) {
-      myStorage.setConfigItem('fetchInterceptStatus', !fetchInterceptStatus);
+      myStorage.updateConfigItem('fetchInterceptStatus', !fetchInterceptStatus);
       window.location.reload();
     }
   };

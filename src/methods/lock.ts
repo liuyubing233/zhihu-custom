@@ -19,11 +19,11 @@ export const myLock = {
 
     const pfConfig = await myStorage.getConfig();
     (e.querySelector(lock) as HTMLButtonElement).onclick = async () => {
-      await myStorage.setConfigItem(name + 'Fixed', true);
+      await myStorage.updateConfigItem(name + 'Fixed', true);
       e.classList.remove(classRemove);
     };
     (e.querySelector(unlock) as HTMLButtonElement).onclick = async () => {
-      await myStorage.setConfigItem(name + 'Fixed', false);
+      await myStorage.updateConfigItem(name + 'Fixed', false);
       e.classList.add(classRemove);
     };
     // 如果进入页面的时候该项的 FIXED 为 false 则添加 class

@@ -257,10 +257,8 @@
   var SAVE_HISTORY_NUMBER = 500;
   var HTML_HOOTS = ["www.zhihu.com", "zhuanlan.zhihu.com"];
   var ID_DIALOG = "CTZ_DIALOG_MAIN";
-  var ID_BUTTON_SYNC_BLOCK = "CTZ-BUTTON-SYNC-BLOCK";
   var CLASS_INPUT_CLICK = "ctz-i";
   var CLASS_INPUT_CHANGE = "ctz-i-change";
-  var CLASS_REMOVE_BLOCK = "ctz-remove-block";
   var CLASS_NOT_INTERESTED = "ctz-not-interested";
   var CLASS_TO_QUESTION = "ctz-to-question";
   var CLASS_TIME_ITEM = "ctz-list-item-time";
@@ -584,7 +582,7 @@
       const h = nHistory ? JSON.parse(nHistory) : { list: [], view: [] };
       return Promise.resolve(h);
     },
-    setConfigItem: async function(key, value) {
+    updateConfigItem: async function(key, value) {
       const config = await this.getConfig();
       if (typeof key === "string") {
         config[key] = value;
@@ -593,17 +591,17 @@
           config[itemKey] = key[itemKey];
         }
       }
-      await this.setConfig(config);
+      await this.updateConfig(config);
     },
-    setConfig: async function(params) {
+    updateConfig: async function(params) {
       await this.set("pfConfig", params);
     },
-    setHistoryItem: async function(key, params) {
+    updateHistoryItem: async function(key, params) {
       const pfHistory = await this.getHistory();
       pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
       await this.set("pfHistory", pfHistory);
     },
-    setHistory: async function(value) {
+    updateHistory: async function(value) {
       await this.set("pfHistory", value);
     }
   };
@@ -761,7 +759,7 @@
     const title = domItem.innerText;
     const config = await myStorage.getConfig();
     domItem.remove();
-    myStorage.setConfigItem(
+    myStorage.updateConfigItem(
       key,
       (config[key] || []).filter((i) => i !== title)
     );
@@ -775,7 +773,7 @@
       return;
     }
     configChoose.push(word);
-    await myStorage.setConfigItem(key, configChoose);
+    await myStorage.updateConfigItem(key, configChoose);
     const domItem = domC("span", { innerText: word });
     domItem.classList.add("ctz-filter-word-remove");
     const nodeFilterWords = dom(NAME_BY_KEY[key]);
@@ -916,15 +914,15 @@
     }
   };
   var store = new Store();
-  var regexpMessage = /^\([^()]+\)/;
+  var REGEXP_MESSAGE = /^\([^()]+\)/;
   var changeTitle = async () => {
     const { getStorageConfigItem } = store;
     const { globalTitle, globalTitleRemoveMessage } = await myStorage.getConfig();
     const cacheTitle = getStorageConfigItem("cacheTitle");
     let prevTitle = globalTitle || cacheTitle;
     if (globalTitleRemoveMessage) {
-      if (regexpMessage.test(prevTitle)) {
-        prevTitle = prevTitle.replace(regexpMessage, "").trim();
+      if (REGEXP_MESSAGE.test(prevTitle)) {
+        prevTitle = prevTitle.replace(REGEXP_MESSAGE, "").trim();
       }
     }
     document.title = prevTitle;
@@ -952,18 +950,11 @@
     init: async function() {
       const { themeDark = 1 /* 深色护眼一 */, themeLight = 0 /* 默认 */, colorText1 } = await myStorage.getConfig();
       const getBackground = async () => {
-        if (await this.isUseDark()) return this.dark(themeDark);
+        if (await isDark()) return this.dark(themeDark);
         if (+themeLight === 0 /* 默认 */) return this.default();
         return this.light(themeLight);
       };
       fnAppendStyle("CTZ_STYLE_BACKGROUND", await getBackground() + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
-    },
-    isUseDark: async () => {
-      const { theme = 2 /* 自动 */ } = await myStorage.getConfig();
-      if (+theme === 2 /* 自动 */) {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches;
-      }
-      return +theme === 1 /* 深色 */;
     },
     doSetCSS: function(bg1, bg2) {
       return `${this.cssBG1}{background-color: ${bg1}!important;}${this.cssBG2}{background-color:${bg2}!important;background:${bg2}!important;}${this.cssBGTransparent}{background-color: transparent!important;background: transparent!important;}${this.cssBG1Color}{color: ${bg1}!important}.SignContainer-content input:-webkit-autofill{-webkit-box-shadow: inset 0 0 0 30px ${bg2}!important;}`;
@@ -980,12 +971,10 @@
     },
     dark: function(darkKey) {
       const { background, background2 } = THEME_CONFIG_DARK[darkKey];
-      const whiteText = `#${ID_DIALOG},.${CLASS_MESSAGE},#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,#CTZ_OPEN_BUTTON,.ctz-export-collection-box p,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.Modal-title,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.FeedbackModal-title,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.css-10ub9de,.css-1wbvd3d,.css-1f4cz9u,.css-y42e6l,.css-jiu0xt,.css-1myqwel,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ChatListGroup-SectionTitle .Zi,.Qrcode-container>div,.Qrcode-guide-message>div,.signQr-leftContainer button,.signQr-leftContainer a,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,.CreatorSalt-personalInfo-name,.css-c3gbo3,.css-1ygg4xu blockquote,.css-r8ate4,.ant-collapse>.ant-collapse-item>.ant-collapse-header,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-author-welfare .Creator-salt-author-welfare-card h1,.css-u56wtg,.css-1hrberl,.css-13e6wvn,.css-i0heim,.CommentContent,${appendClassStart("index-title,CourseConsultation-tip,index-text,index-number,CourseDescription-playCount,LecturerList-title,LearningRouteCard-title,index-tabItemLabel,VideoCourseCard-module,TextTruncation-module")}{color: #f7f9f9!important}`;
-      const blankText = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}`;
-      const linkText = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.CreatorSalt-IdentitySelect-Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.css-vphnkw,.css-1aqu4xd,.css-6m0nd1,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a,.KfeCollection-OrdinaryLabel-newStyle-mobile .KfeCollection-OrdinaryLabel-content,.KfeCollection-OrdinaryLabel-newStyle-pc .KfeCollection-OrdinaryLabel-content,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore{color: deepskyblue!important;}.css-1tu59u4,.ZDI,.ZDI--PencilCircleFill24,.Zi,.Zi--ArrowDown{fill: deepskyblue!important;}`;
-      const extraBG1 = `.ztext pre,.ztext code{background: ${background}!important;}`;
       return `html[data-theme=dark] .ctz-menu-top>a.target::before,html[data-theme=dark] .ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}` + appendPrefix(
-        this.doSetCSS(background, background2) + whiteText + blankText + linkText + extraBG1 + `#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
+        this.doSetCSS(background, background2) + `#${ID_DIALOG},.${CLASS_MESSAGE},#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,#CTZ_OPEN_BUTTON,.ctz-export-collection-box p,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.Modal-title,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.FeedbackModal-title,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.css-10ub9de,.css-1wbvd3d,.css-1f4cz9u,.css-y42e6l,.css-jiu0xt,.css-1myqwel,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ChatListGroup-SectionTitle .Zi,.Qrcode-container>div,.Qrcode-guide-message>div,.signQr-leftContainer button,.signQr-leftContainer a,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,.CreatorSalt-personalInfo-name,.css-c3gbo3,.css-1ygg4xu blockquote,.css-r8ate4,.ant-collapse>.ant-collapse-item>.ant-collapse-header,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-author-welfare .Creator-salt-author-welfare-card h1,.css-u56wtg,.css-1hrberl,.css-13e6wvn,.css-i0heim,.CommentContent,${appendClassStart(
+          "index-title,CourseConsultation-tip,index-text,index-number,CourseDescription-playCount,LecturerList-title,LearningRouteCard-title,index-tabItemLabel,VideoCourseCard-module,TextTruncation-module"
+        )}{color: #f7f9f9!important}css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v{color: ${background2}!important}.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.CreatorSalt-IdentitySelect-Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.css-vphnkw,.css-1aqu4xd,.css-6m0nd1,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a,.KfeCollection-OrdinaryLabel-newStyle-mobile .KfeCollection-OrdinaryLabel-content,.KfeCollection-OrdinaryLabel-newStyle-pc .KfeCollection-OrdinaryLabel-content,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore{color: deepskyblue!important;}.css-1tu59u4,.ZDI,.ZDI--PencilCircleFill24,.Zi,.Zi--ArrowDown{fill: deepskyblue!important;}.ztext pre,.ztext code{background: ${background}!important;}#${ID_DIALOG}{border: 1px solid ${background2}}.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
         (i) => `html[data-theme=dark] ${i}`
       );
     },
@@ -1023,10 +1012,16 @@
     const muObserver = new MutationObserver(muCallback);
     muObserver.observe(elementHTML, muConfig);
   };
-  var isDark = async () => await myBackground.isUseDark();
-  var radioBackground = (name, value, background, color, label) => `<label><input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div style="background: ${background};color: ${color}">${label}</div></label>`;
-  var themeToRadio = (o, className, color) => Object.keys(o).map((key) => radioBackground(className, key, o[key].background, color, o[key].name)).join("");
+  var isDark = async () => {
+    const { theme = 2 /* 自动 */ } = await myStorage.getConfig();
+    if (+theme === 2 /* 自动 */) {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    return +theme === 1 /* 深色 */;
+  };
   var addBackgroundSetting = () => {
+    const radioBackground = (name, value, background, color, label) => `<label><input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div style="background: ${background};color: ${color}">${label}</div></label>`;
+    const themeToRadio = (o, className, color) => Object.keys(o).map((key) => radioBackground(className, key, o[key].background, color, o[key].name)).join("");
     dom(".ctz-set-background").innerHTML = `<div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label)).join("")}</div><div class="ctz-commit">浅色颜色选择:</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div><div class="ctz-commit">深色颜色选择:</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`;
   };
   var myLock = {
@@ -1044,11 +1039,11 @@
       !e.querySelector(lockMask) && e.appendChild(dLockMask);
       const pfConfig = await myStorage.getConfig();
       e.querySelector(lock).onclick = async () => {
-        await myStorage.setConfigItem(name + "Fixed", true);
+        await myStorage.updateConfigItem(name + "Fixed", true);
         e.classList.remove(classRemove);
       };
       e.querySelector(unlock).onclick = async () => {
-        await myStorage.setConfigItem(name + "Fixed", false);
+        await myStorage.updateConfigItem(name + "Fixed", false);
         e.classList.add(classRemove);
       };
       if (pfConfig[name + "Fixed"] === false) {
@@ -1111,7 +1106,7 @@
             this.timer[configName] && clearTimeout(this.timer[configName]);
             this.timer[configName] = setTimeout(async () => {
               clearTimeout(this.timer[configName]);
-              await myStorage.setConfigItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`);
+              await myStorage.updateConfigItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`);
             }, 500);
           };
           document.onmouseup = () => {
@@ -1439,7 +1434,7 @@
       const { view } = await myStorage.getHistory();
       if (!view.includes(nA)) {
         view.unshift(nA);
-        myStorage.setHistoryItem("view", view);
+        myStorage.updateHistoryItem("view", view);
       }
     }, 500);
   };
@@ -1467,6 +1462,8 @@
     { label: "<b>用户主页</b>内容置顶发布、修改时间", value: "userHomeContentTimeTop" },
     { label: "<b>用户主页</b>置顶「屏蔽用户」按钮", value: "userHomeTopBlockUser" }
   ];
+  var ID_BUTTON_SYNC_BLOCK = "CTZ-BUTTON-SYNC-BLOCK";
+  var CLASS_REMOVE_BLOCK = "ctz-remove-block";
   var ID_BLOCK_LIST = "CTZ-BLOCK-LIST";
   var myBlack = {
     messageCancel: "取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。",
@@ -1556,7 +1553,7 @@
       const pfConfig = await myStorage.getConfig();
       const nL = pfConfig.removeBlockUserContentList || [];
       nL.push(info);
-      myStorage.setConfigItem("removeBlockUserContentList", nL);
+      myStorage.updateConfigItem("removeBlockUserContentList", nL);
       const nodeBlackItem = domC("div", { className: `ctz-black-item ctz-black-id-${info.id}`, innerHTML: this.createItemContent(info) });
       nodeBlackItem.dataset.info = JSON.stringify(info);
       domById(ID_BLOCK_LIST).appendChild(nodeBlackItem);
@@ -1593,7 +1590,7 @@
           nL.splice(itemIndex, 1);
           const removeItem = dom(`.ctz-black-id-${id}`);
           removeItem && removeItem.remove();
-          myStorage.setConfigItem("removeBlockUserContentList", nL);
+          myStorage.updateConfigItem("removeBlockUserContentList", nL);
         }
       });
     },
@@ -1614,7 +1611,7 @@
         if (!paging.is_end) {
           this.sync(offset + limit, l);
         } else {
-          myStorage.setConfigItem("removeBlockUserContentList", l);
+          myStorage.updateConfigItem("removeBlockUserContentList", l);
           myBlack.init();
           fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: "同步黑名单", disabled: false });
         }
@@ -1629,7 +1626,7 @@
       if (confirm(
         fetchInterceptStatus ? "关闭接口拦截，确认后将刷新页面。\n「黑名单设置；外置不感兴趣；快速屏蔽用户；回答、文章和收藏夹导出」功能将不可用。" : "开启接口拦截，确认后将刷新页面。\n如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。"
       )) {
-        myStorage.setConfigItem("fetchInterceptStatus", !fetchInterceptStatus);
+        myStorage.updateConfigItem("fetchInterceptStatus", !fetchInterceptStatus);
         window.location.reload();
       }
     };
@@ -2472,7 +2469,7 @@
         fnJustNum(nodeItem);
         if (i === len - 1) {
           needIndex && (this.index = i);
-          myStorage.setHistoryItem("list", historyList);
+          myStorage.updateHistoryItem("list", historyList);
         }
       }
     },
@@ -2946,7 +2943,7 @@
       },
       globalTitleRemoveMessage: changeTitle
     };
-    await myStorage.setConfigItem(name, type === "checkbox" ? checked : value);
+    await myStorage.updateConfigItem(name, type === "checkbox" ? checked : value);
     const nodeName = domById(name);
     type === "range" && nodeName && (nodeName.innerText = value);
     if (/^hidden/.test(name)) {
@@ -3001,7 +2998,7 @@
         const isClear = confirm(`是否清空${target.innerText}`);
         if (!isClear) return;
         prevHistory[dataId] = [];
-        await myStorage.setHistory(prevHistory);
+        await myStorage.updateHistory(prevHistory);
         echoHistory();
       };
     });
@@ -3031,7 +3028,7 @@
       const isUse = confirm("是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存");
       if (!isUse) return;
       const { filterKeywords = [], removeBlockUserContentList = [] } = await myStorage.getConfig();
-      await myStorage.setConfig({
+      await myStorage.updateConfig({
         ...CONFIG_DEFAULT,
         filterKeywords,
         removeBlockUserContentList
@@ -3041,13 +3038,13 @@
     styleCustom: async function() {
       const nodeText = dom('[name="textStyleCustom"]');
       const value = nodeText ? nodeText.value : "";
-      await myStorage.setConfigItem("customizeCss", value);
+      await myStorage.updateConfigItem("customizeCss", value);
       myCustomStyle.change(value);
     },
     syncBlack: () => myBlack.sync(0),
     buttonConfirmTitle: async function() {
       const nodeTitle = dom('[name="globalTitle"]');
-      await myStorage.setConfigItem("globalTitle", nodeTitle ? nodeTitle.value : "");
+      await myStorage.updateConfigItem("globalTitle", nodeTitle ? nodeTitle.value : "");
       changeTitle();
       message("网页标题修改成功");
     },
@@ -3055,7 +3052,7 @@
       const { getStorageConfigItem } = store;
       const nodeTitle = dom('[name="globalTitle"]');
       nodeTitle && (nodeTitle.value = getStorageConfigItem("cacheTitle"));
-      await myStorage.setConfigItem("globalTitle", "");
+      await myStorage.updateConfigItem("globalTitle", "");
       changeTitle();
       message("网页标题已还原");
     },
@@ -3073,7 +3070,7 @@
       let config = oFREvent.target ? oFREvent.target.result : "";
       if (typeof config === "string") {
         const nConfig = JSON.parse(config);
-        await myStorage.setConfig(nConfig);
+        await myStorage.updateConfig(nConfig);
         resetData();
       }
     };
@@ -3330,7 +3327,7 @@
       let config = await myStorage.getConfig();
       if (!config || config.fetchInterceptStatus === void 0) {
         fnLog("您好，欢迎使用本插件，第一次进入，初始化中...");
-        await myStorage.setConfig(CONFIG_DEFAULT);
+        await myStorage.updateConfig(CONFIG_DEFAULT);
         config = CONFIG_DEFAULT;
       }
       await myStorage.getHistory();
@@ -3409,7 +3406,7 @@
           const isUse = confirm("是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存");
           if (!isUse) return;
           const prevConfig = await myStorage.getConfig();
-          myStorage.setConfig({
+          myStorage.updateConfig({
             ...prevConfig,
             ...CONFIG_SIMPLE
           });

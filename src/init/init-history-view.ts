@@ -26,7 +26,7 @@ export const initHistoryView = async () => {
     const { view } = await myStorage.getHistory();
     if (!view.includes(nA)) {
       view.unshift(nA);
-      myStorage.setHistoryItem('view', view);
+      myStorage.updateHistoryItem('view', view);
     }
   }, 500);
 };

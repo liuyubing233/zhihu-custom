@@ -3,7 +3,7 @@ import { dom, domById, domC } from '../commons/tools';
 import { ICO_URL } from '../configs';
 import { store } from '../store';
 
-const regexpMessage = /^\([^()]+\)/;
+const REGEXP_MESSAGE = /^\([^()]+\)/;
 
 /** 修改网页标题 */
 export const changeTitle = async () => {
@@ -13,8 +13,8 @@ export const changeTitle = async () => {
   let prevTitle = globalTitle || cacheTitle;
 
   if (globalTitleRemoveMessage) {
-    if (regexpMessage.test(prevTitle)) {
-      prevTitle = prevTitle.replace(regexpMessage, '').trim();
+    if (REGEXP_MESSAGE.test(prevTitle)) {
+      prevTitle = prevTitle.replace(REGEXP_MESSAGE, '').trim();
     }
   }
   document.title = prevTitle;

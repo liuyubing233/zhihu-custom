@@ -60,7 +60,7 @@ import { INNER_CSS } from './web-resources';
     let config = await myStorage.getConfig();
     if (!config || config.fetchInterceptStatus === undefined) {
       fnLog('您好，欢迎使用本插件，第一次进入，初始化中...');
-      await myStorage.setConfig(CONFIG_DEFAULT);
+      await myStorage.updateConfig(CONFIG_DEFAULT);
       config = CONFIG_DEFAULT;
     }
 
@@ -172,7 +172,7 @@ import { INNER_CSS } from './web-resources';
         const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
         if (!isUse) return;
         const prevConfig = await myStorage.getConfig();
-        myStorage.setConfig({
+        myStorage.updateConfig({
           ...prevConfig,
           ...CONFIG_SIMPLE,
         });

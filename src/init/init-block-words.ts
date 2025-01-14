@@ -24,7 +24,7 @@ const onRemove = async (e: MouseEvent, key: IKeyofDomName) => {
   const title = domItem.innerText;
   const config = await myStorage.getConfig();
   domItem.remove();
-  myStorage.setConfigItem(
+  myStorage.updateConfigItem(
     key,
     (config[key] || []).filter((i: string) => i !== title)
   );
@@ -39,7 +39,7 @@ const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
     return;
   }
   configChoose.push(word);
-  await myStorage.setConfigItem(key, configChoose);
+  await myStorage.updateConfigItem(key, configChoose);
   const domItem = domC('span', { innerText: word });
   domItem.classList.add('ctz-filter-word-remove');
   const nodeFilterWords = dom(NAME_BY_KEY[key]);
