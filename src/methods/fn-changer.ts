@@ -3,7 +3,7 @@ import { dom, domById } from '../commons/tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
 import { initImagePreview } from '../init/init-image-preview';
 import { myBackground, onUseThemeDark } from './background';
-import { myHidden } from './hidden';
+import { appendHidden } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO, changeTitle } from './page-title';
@@ -91,7 +91,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   const nodeName = domById(name);
   type === 'range' && nodeName && (nodeName.innerText = value);
   if (/^hidden/.test(name)) {
-    myHidden.init();
+    appendHidden()
     return;
   }
   if (doCssVersion.includes(name)) {

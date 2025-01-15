@@ -1,7 +1,7 @@
 import { dom, domA, domC } from '../commons/tools';
 
-/** 添加一键邀请功能 */
-export const initInviteOnce = () => {
+/** 初始化一键邀请功能 */
+export const initOneClickInvitation = () => {
   setTimeout(() => {
     const domInvitation = dom('.QuestionInvitation');
     if (!domInvitation || dom('.ctz-invite-once')) return;

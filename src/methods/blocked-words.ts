@@ -47,12 +47,12 @@ const onAddWord = async (target: HTMLInputElement, key: IKeyofDomName) => {
   target.value = '';
 };
 
-/** 加载屏蔽词 */
-export const initBlockWords = async () => {
+/** 初始化屏蔽词 */
+export const initBlockedWords = async () => {
   const config = await myStorage.getConfig();
   const arr = [
-    { domFind: dom(BLOCK_WORDS_LIST), name: 'filterKeywords', domInput: dom('[name="inputFilterWord"]') },
-    { domFind: dom(BLOCK_WORDS_ANSWER), name: 'blockWordsAnswer', domInput: dom('[name="inputBlockWordsAnswer"]') },
+    { domFind: dom(BLOCK_WORDS_LIST), name: 'filterKeywords', domInput: dom('[name="inputBlockedWord"]') },
+    { domFind: dom(BLOCK_WORDS_ANSWER), name: 'blockWordsAnswer', domInput: dom('[name="inputBlockedWordAnswer"]') },
   ];
   for (let i = 0, len = arr.length; i < len; i++) {
     const { domFind, name, domInput } = arr[i];

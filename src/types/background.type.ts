@@ -45,9 +45,13 @@ export interface IThemeValue {
 }
 
 export type IHiddenArray = IHiddenItem[];
+
+export interface IHiddenContentItem extends IOptionItem {
+  css: string;
+}
 export interface IHiddenItem {
   key: string;
   name: string;
   desc: string;
-  content: IOptionItem[][];
+  content: IHiddenContentItem[][];
 }
