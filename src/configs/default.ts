@@ -9,6 +9,7 @@ export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
   hiddenDetailFollow: true,
   hidden618HongBao: true,
   hiddenZhihuZhiShop: true,
+  hiddenQuestionAD: true,
 };
 
 /** 屏蔽内容模块默认配置 */

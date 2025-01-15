@@ -99,6 +99,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         { value: 'hiddenQuestionFollowing', label: '问题关注按钮' },
         { value: 'hiddenQuestionAnswer', label: '问题写回答按钮' },
         { value: 'hiddenQuestionInvite', label: '问题邀请回答按钮' },
+        { value: 'hiddenQuestionAD', label: '问题标题卡片广告和榜单' },
       ],
       [
         { value: 'hiddenDetailAvatar', label: '回答人头像' },

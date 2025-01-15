@@ -139,6 +139,7 @@ export const myHidden = {
     hiddenTopicRightNumberBoard: '[data-za-detail-view-path-module="TopicItem"] .Card .NumberBoard{display:none;}',
     hiddenTopicRightParentChild: '[data-za-detail-view-path-module="TopicItem"] .Card .Card-section{display:none;}',
     hiddenTopicRightFooter: '[data-za-detail-view-path-module="TopicItem"] footer{display:none;}',
+    hiddenQuestionAD: '.css-e69dqy,.Card.css-15hh8yc{display: none;}'
   },
   cssForKeysArray: [
     {

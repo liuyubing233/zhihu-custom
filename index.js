@@ -59,7 +59,8 @@
     hiddenAD: true,
     hiddenDetailFollow: true,
     hidden618HongBao: true,
-    hiddenZhihuZhiShop: true
+    hiddenZhihuZhiShop: true,
+    hiddenQuestionAD: true
   };
   var CONFIG_FILTER_DEFAULT = {
     removeFromYanxuan: true,
@@ -437,7 +438,8 @@
           { value: "hiddenQuestionSpecial", label: "问题专题收录标签" },
           { value: "hiddenQuestionFollowing", label: "问题关注按钮" },
           { value: "hiddenQuestionAnswer", label: "问题写回答按钮" },
-          { value: "hiddenQuestionInvite", label: "问题邀请回答按钮" }
+          { value: "hiddenQuestionInvite", label: "问题邀请回答按钮" },
+          { value: "hiddenQuestionAD", label: "问题标题卡片广告和榜单" }
         ],
         [
           { value: "hiddenDetailAvatar", label: "回答人头像" },
@@ -2838,7 +2840,8 @@
       hiddenZhihuZhiShop: ".RichText-EduCardContainer{display:none;}",
       hiddenTopicRightNumberBoard: '[data-za-detail-view-path-module="TopicItem"] .Card .NumberBoard{display:none;}',
       hiddenTopicRightParentChild: '[data-za-detail-view-path-module="TopicItem"] .Card .Card-section{display:none;}',
-      hiddenTopicRightFooter: '[data-za-detail-view-path-module="TopicItem"] footer{display:none;}'
+      hiddenTopicRightFooter: '[data-za-detail-view-path-module="TopicItem"] footer{display:none;}',
+      hiddenQuestionAD: ".css-e69dqy,.Card.css-15hh8yc{display: none;}"
     },
     cssForKeysArray: [
       {

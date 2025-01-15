@@ -2,6 +2,8 @@ import { ETheme, EThemeDark, EThemeLight } from './background.type';
 
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {
+  /** 隐藏问题标题卡片广告和榜单 */
+  hiddenQuestionAD?: boolean;
   /** 隐藏回答页面右侧内容 */
   hiddenAnswerRightFooter?: boolean;
   /** 隐藏回答下方悬浮操作条 */
