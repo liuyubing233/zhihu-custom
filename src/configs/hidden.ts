@@ -388,6 +388,11 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           value: 'hiddenAnswerItemTimeButHaveIP',
           css: '.Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}',
         },
+        {
+          label: '回答底部「继续追问」模块',
+          value: 'hiddenAnswerKeepAsking',
+          css: '.css-jghqwm{display: none;}',
+        },
       ],
       [
         {
