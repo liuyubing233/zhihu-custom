@@ -91,7 +91,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   const nodeName = domById(name);
   type === 'range' && nodeName && (nodeName.innerText = value);
   if (/^hidden/.test(name)) {
-    appendHidden()
+    appendHidden();
     return;
   }
   if (doCssVersion.includes(name)) {

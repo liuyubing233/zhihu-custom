@@ -1,6 +1,6 @@
 import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { dom, domA } from '../commons/tools';
+import { dom, domA, fnLog } from '../commons/tools';
 import { HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
 import { myBlack } from './black';
@@ -30,6 +30,7 @@ export const myListenAnswerItem = {
       blockWordsAnswer = [],
       fetchInterceptStatus,
       answerItemCreatedAndModifiedTime,
+      highPerformanceAnswer,
     } = config;
 
     /** 添加功能 */
@@ -116,19 +117,17 @@ export const myListenAnswerItem = {
         fnJustNum(nodeItem);
         // 自动展开回答 和 默认收起长回答
         if (answerOpen) {
-          const unFoldButton = nodeItem.querySelector('.ContentItem-expandButton') as HTMLButtonElement;
-          const foldButton = nodeItem.querySelector('.RichContent-collapsedText') as HTMLButtonElement;
-          const isNotOpen = !nodeItem.classList.contains(OB_CLASS_FOLD.on);
-          const isNotClose = !nodeItem.classList.contains(OB_CLASS_FOLD.off);
-          if (answerOpen === 'on' && isNotOpen) {
-            unFoldButton && unFoldButton.click();
+          const buttonUnfold = nodeItem.querySelector('.ContentItem-expandButton') as HTMLButtonElement;
+          const buttonFold = nodeItem.querySelector('.RichContent-collapsedText') as HTMLButtonElement;
+          if (answerOpen === 'on' && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
+            buttonUnfold && buttonUnfold.click();
             nodeItem.classList.add(OB_CLASS_FOLD.on);
           }
-          const isF = foldButton && nodeItem.offsetHeight > 939;
-          const isFC = unFoldButton; // 已经收起的回答
-          if (answerOpen === 'off' && isNotClose && (isF || isFC)) {
+          const isF = buttonFold && nodeItem.offsetHeight > 939;
+          const isFC = buttonUnfold; // 已经收起的回答
+          if (answerOpen === 'off' && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
             nodeItem.classList.add(OB_CLASS_FOLD.off);
-            isF && foldButton && foldButton.click();
+            isF && buttonFold && buttonFold.click();
           }
         }
       }
@@ -136,6 +135,22 @@ export const myListenAnswerItem = {
       if (i === len - 1) {
         this.index = i;
       }
+    }
+
+    if (highPerformanceAnswer) {
+      setTimeout(() => {
+        const nodes = domA('.AnswersNavWrapper .List-item');
+        if (nodes.length > 30) {
+          const nIndex = nodes.length - 30;
+          nodes.forEach((item, index) => {
+            if (index < nIndex) {
+              item.remove();
+            }
+          });
+          this.index = this.index - nIndex;
+          fnLog(`已开启高性能模式，删除${nIndex}条回答`);
+        }
+      }, 500);
     }
   },
   reset: function () {

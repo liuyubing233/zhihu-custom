@@ -16,11 +16,11 @@ export const myBlack = {
   /** 初始化黑名单列表 */
   init: async function () {
     const me = this;
-    const elementBlock = domById(ID_BLOCK_LIST);
-    if (!elementBlock) return;
+    const nodeBlank = domById(ID_BLOCK_LIST);
+    if (!nodeBlank) return;
     const { removeBlockUserContentList = [] } = await myStorage.getConfig();
-    elementBlock.innerHTML = removeBlockUserContentList.map((i) => this.createItem(i)).join('');
-    elementBlock.onclick = (event) => {
+    nodeBlank.innerHTML = removeBlockUserContentList.map((i) => this.createItem(i)).join('');
+    nodeBlank.onclick = (event) => {
       const target = event.target as HTMLElement;
       if (!target || !target.classList.contains(CLASS_REMOVE_BLOCK)) return;
       const item = target.parentElement as HTMLElement;

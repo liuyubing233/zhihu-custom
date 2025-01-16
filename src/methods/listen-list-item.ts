@@ -1,6 +1,6 @@
 import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { createButtonST, domA, domP } from '../commons/tools';
+import { createButtonST, domA, domP, fnLog } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
@@ -43,6 +43,7 @@ export const myListenListItem = {
       fetchInterceptStatus,
       removeBlockUserContent,
       removeBlockUserContentList,
+      highPerformanceRecommend,
     } = pfConfig;
     const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
@@ -172,6 +173,22 @@ export const myListenListItem = {
         needIndex && (this.index = i);
         myStorage.updateHistoryItem('list', historyList);
       }
+    }
+
+    if (highPerformanceRecommend) {
+      setTimeout(() => {
+        const nodes = domA('.TopstoryItem');
+        if (nodes.length > 30) {
+          const nIndex = nodes.length - 30;
+          nodes.forEach((item, index) => {
+            if (index < nIndex) {
+              item.remove();
+            }
+          });
+          this.index = this.index - nIndex;
+          fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
+        }
+      }, 500);
     }
   },
   reset: function () {

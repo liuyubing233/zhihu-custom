@@ -404,4 +404,8 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   zoomImageHeight?: '0' | '1';
   /** 图片最大高度限制数 */
   zoomImageHeightSize?: string;
+  /** 推荐列表高性能模式 */
+  highPerformanceRecommend?: boolean;
+  /** 回答页高性能模式 */
+  highPerformanceAnswer?: boolean;
 }
