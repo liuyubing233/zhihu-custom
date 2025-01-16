@@ -711,7 +711,7 @@
           {
             label: "回答底部「继续追问」模块",
             value: "hiddenAnswerKeepAsking",
-            css: ".css-jghqwm{display: none;}"
+            css: ".css-jghqwm{display: none!important;}"
           }
         ],
         [
