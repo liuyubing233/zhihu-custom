@@ -129,8 +129,8 @@
   line-height: 18px;
   background: transparent;
   border-radius: 6px;
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   transition: all 0.2s;
   border: 0;
   i {
@@ -799,15 +799,15 @@
 #CTZ_HISTORY_LIST .ctz-set-content,
 #CTZ_HISTORY_VIEW .ctz-set-content {
   a {
-    .hover-style();
     word-break: break-all;
     display: block;
     margin-bottom: 4px;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    cursor: pointer;
     &:hover {
-      border-color: @blue1;
+      background: rgba(33, 150, 243, 0.1);
     }
   }
 }
