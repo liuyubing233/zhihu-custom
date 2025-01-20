@@ -1,9 +1,9 @@
 import { dom, domById, domC } from '../commons/tools';
-import { BASIC_SHOW_CONTENT, DEFAULT_FUNCTION, FONT_SIZE_INPUT, FOOTER_HTML, HEADER, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
+import { BASIC_SHOW_CONTENT, DEFAULT_FUNCTION, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
 import { addBackgroundSetting } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
-import { myMenu } from '../methods/menu';
+import { initMenu } from '../methods/menu';
 import { IOptionItem, IRangeItem, IZhihuUserinfo } from '../types';
 import { INNER_HTML } from '../web-resources';
 
@@ -42,8 +42,8 @@ const commonLabelCheckbox = (con: ICommonContent[]) =>
 export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
   dom('.ctz-version')!.innerText = `version: ${GM_info.script.version}`;
-  dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
-  dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
+  // dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
+  // dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
 
   addBackgroundSetting();
 
@@ -69,11 +69,12 @@ export const initHTML = () => {
   ).join('');
 
   // 隐藏元素部分
-  domById('CTZ_HIDDEN')!.innerHTML =
-    `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('')}</div>` +
-    `<div class="ctz-content-right">${HIDDEN_ARRAY.map(
-      (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
-    ).join('')}</div>`;
+  domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
+    (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
+  ).join('');
+  dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
+  // `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('')}</div>` +
+  // `<div class="ctz-content-right"></div>`;
 
   // 添加修改网页标题图片
   domById('CTZ_TITLE_ICO')!.innerHTML = Object.keys(ICO_URL)
@@ -90,27 +91,29 @@ export const initHTML = () => {
 
   initFetchInterceptStatus();
   myBlack.init();
-  myMenu.init();
+  // myMenu.init();
+  // myMenuDrawer.init();
+  initMenu();
 
-  dom('.ctz-footer-right')!.appendChild(
-    domC('a', {
-      href: 'https://www.zhihu.com',
-      target: '_self',
-      innerText: '返回主页',
-    })
-  );
+  // dom('.ctz-footer-right')!.appendChild(
+  //   domC('a', {
+  //     href: 'https://www.zhihu.com',
+  //     target: '_self',
+  //     innerText: '返回主页',
+  //   })
+  // );
 };
 
 export const appendHomeLink = (userinfo: IZhihuUserinfo) => {
   if (dom('.ctz-home-link')) return;
   const hrefUser = userinfo.url ? userinfo.url.replace('/api/v4', '') : '';
   if (!hrefUser) return;
-  dom('.ctz-footer-right')!.appendChild(
-    domC('a', {
-      href: hrefUser,
-      target: '_blank',
-      innerText: '前往个人主页>>',
-      className: 'ctz-home-link',
-    })
-  );
+  // dom('.ctz-footer-right')!.appendChild(
+  //   domC('a', {
+  //     href: hrefUser,
+  //     target: '_blank',
+  //     innerText: '前往个人主页>>',
+  //     className: 'ctz-home-link',
+  //   })
+  // );
 };

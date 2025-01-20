@@ -10,9 +10,94 @@
 @red3: #ffccc7;
 @red4: #fff2f0;
 
+@Hover: #009688;
+@HoverBg: rgba(77, 66, 86, 0.08);
+@Gray: #96a2aa;
+@GraySecond: #f0f0f0;
+
+@FontSize: 14px;
+
+@Primary: #009688;
+@PrimaryBg: #e0f2f1;
+
 .hover-style {
   cursor: pointer;
   &:hover {
     color: @blue1!important;
   }
 }
+
+.CommonTransition {
+  transition-property: transform;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/** 内部有 DIV 的点击效果 */
+.HoverDiv() {
+  cursor: pointer;
+  &:hover {
+    div {
+      background: @HoverBg;
+      color: @Hover;
+      font-weight: 600;
+    }
+  }
+  &:active {
+    div {
+      font-weight: 200;
+    }
+  }
+}
+
+.Hover() {
+  cursor: pointer;
+  &:hover {
+    background: @HoverBg;
+    color: @Hover!important;
+    font-weight: 600;
+  }
+}
+
+.Active() {
+  &:active {
+    font-weight: 200;
+  }
+}
+
+/** 禁止鼠标选中 */
+.MonUserSelect() {
+  // 禁止文字被鼠标选中
+  moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// .FakeCircle(@background) {
+//   position: relative;
+//   &::after,
+//   &::before {
+//     position: absolute;
+//     right: -20px;
+//     content: ' ';
+//     background: radial-gradient(circle at top left, transparent 20px, @background 0) top left, radial-gradient(circle at top right, transparent 20px, @background 0) top right,
+//       radial-gradient(circle at bottom right, transparent 20px, @background 0) bottom right, radial-gradient(circle at bottom left, transparent 20px, @background 0) bottom left;
+//     background-size: 50% 50%;
+//     background-repeat: no-repeat;
+//     width: 40px;
+//     height: 40px;
+//   }
+//   &::before {
+//     top: -19px;
+//     z-index: -1;
+//   }
+
+//   &::after {
+//     bottom: -19px;
+//     z-index: -1;
+//   }
+// }
