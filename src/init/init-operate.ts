@@ -3,10 +3,10 @@ import { dom, domA, domById, domC, message } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CONFIG_DEFAULT } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
 import { myBlack } from '../methods/black';
-import { myDialog } from '../methods/dialog-open-close';
+import { changeDrawer } from '../methods/dialog-open-close';
 import { fnChanger } from '../methods/fn-changer';
 import { echoHistory } from '../methods/history';
-import { myMenu } from '../methods/menu';
+import { onChangeMenu } from '../methods/menu';
 import { changeTitle } from '../methods/page-title';
 import { myPreview } from '../methods/preview';
 import { store } from '../store';
@@ -17,7 +17,7 @@ import { initRootEvent, initTopStoryRecommendEvent } from './init-top-event-list
 
 /** 加载设置弹窗绑定方法 */
 export const initOperate = () => {
-  const nodeContent = dom('.ctz-content')!;
+  const nodeContent = domById('CTZ_DRAWER_MAIN')!;
   nodeContent.onclick = (e) => {
     const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CLICK)) {
@@ -38,7 +38,8 @@ export const initOperate = () => {
       return;
     }
   };
-  dom('.ctz-menu-top')!.onclick = myMenu.click;
+  // dom('.ctz-menu-top')!.onclick = myMenu.click;
+  dom('#CTZ_DRAWER_MENU')!.onclick = onChangeMenu;
   domA('.ctz-preview').forEach((item) => {
     item.onclick = function () {
       myPreview.hide(this);
@@ -59,10 +60,14 @@ export const initOperate = () => {
   });
 
   // 绑定元素事件
-  const nodeOpenButton = domById('CTZ_OPEN_BUTTON');
-  const nodeCloseDialog = domById('CTZ_CLOSE_DIALOG');
-  nodeOpenButton && (nodeOpenButton.onclick = myDialog.open);
-  nodeCloseDialog && (nodeCloseDialog.onclick = myDialog.hide);
+  // const nodeOpenButton = domById('CTZ_OPEN_BUTTON');
+  // const nodeCloseDialog = domById('CTZ_CLOSE_DIALOG');
+  // nodeOpenButton && (nodeOpenButton.onclick = myDialog.open);
+  // nodeCloseDialog && (nodeCloseDialog.onclick = myDialog.hide);
+
+  domById('CTZ_OPEN_CLOSE')!.onclick = changeDrawer;
+  domById('CTZ_BLOCK')!.onclick = changeDrawer;
+
   initTopStoryRecommendEvent();
   initRootEvent();
 };

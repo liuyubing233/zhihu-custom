@@ -2,7 +2,7 @@ import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domA, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
-import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_DIALOG } from './configs/dom-name';
+import { EXTRA_CLASS_HTML, HTML_HOOTS } from './configs/dom-name';
 import { initData } from './init/init-data';
 import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html';
@@ -13,7 +13,7 @@ import { needRedirect } from './init/redirect';
 import { myBackground, myCustomStyle } from './methods/background';
 import { initBlockedWords } from './methods/blocked-words';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
-import { myDialog } from './methods/dialog-open-close';
+import { changeDrawer } from './methods/dialog-open-close';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
 import { keydownNextImage } from './methods/image';
@@ -35,7 +35,8 @@ import { INNER_CSS } from './web-resources';
   if (needRedirect()) return;
 
   GM_registerMenuCommand('⚙️ 设置', () => {
-    myDialog.open();
+    // myDialog.open();
+    changeDrawer()
   });
 
   const T0 = performance.now();
@@ -261,13 +262,15 @@ import { INNER_CSS } from './web-resources';
     if (hotKey) {
       // shift + . 唤醒关闭修改器弹窗
       if (event.key === '>' || event.key === '》') {
-        const nodeDialog = domById(ID_DIALOG);
-        nodeDialog && nodeDialog.style.display === 'none' ? myDialog.open() : myDialog.hide();
+        changeDrawer()
+        // const nodeDialog = domById(ID_DIALOG);
+        // nodeDialog && nodeDialog.style.display === 'none' ? myDialog.open() : myDialog.hide();
       }
     }
     // esc 关闭弹窗
-    if (event.key === 'Escape') {
-      myDialog.hide();
+    if (event.key === 'Escape' && domById('CTZ_DRAWER_OPEN_CLOSE')!.getAttribute('data-close') === '0') {
+      // myDialog.hide();
+      changeDrawer()
     }
     keydownNextImage(event);
   });

@@ -10,8 +10,8 @@ interface IFindDomName {
 type IKeyofDomName = keyof IFindDomName;
 
 /** 屏蔽词 ID */
-const BLOCK_WORDS_LIST = `#CTZ_BLOCK_WORD_LIST .ctz-block-words-content`;
-const BLOCK_WORDS_ANSWER = `#CTZ_BLOCK_WORD_CONTENT .ctz-block-words-content`;
+const BLOCK_WORDS_LIST = `#CTZ_FILTER_BLOCK_WORDS .ctz-block-words-content`;
+const BLOCK_WORDS_ANSWER = `#CTZ_FILTER_BLOCK_WORDS_CONTENT .ctz-block-words-content`;
 
 const NAME_BY_KEY: IFindDomName = {
   filterKeywords: BLOCK_WORDS_LIST,
