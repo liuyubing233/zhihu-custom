@@ -3,30 +3,42 @@
 .ctz-button {
   outline: none;
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 400;
-  white-space: nowrap;
-  text-align: center;
-  border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.3s;
   user-select: none;
   touch-action: manipulation;
-  line-height: 1.5;
   font-size: 14px;
   height: 32px;
-  padding: 4px 15px;
-  border-radius: 6px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 1px solid transparent;
   background-color: #ffffff;
-  border-color: @gray2;
-  color: rgba(0, 0, 0, 0.88);
+  border-color: @Gray04;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
   &:hover {
-    color: @blue1;
-    border-color: @blue1;
+    color: @Hover;
+    border-color: @Hover;
+    font-weight: 600;
   }
   &:active {
-    background: rgba(0, 0, 0, 0.08) !important;
+    background: rgba(0, 0, 0, 0.08);
+    font-weight: 400;
+  }
+}
+
+.ctz-button.ctz-button-primary {
+  background: @PrimaryBg;
+  color: #fff;
+  border-color: transparent;
+  &:hover {
+    background: @PrimaryHover;
+  }
+  &:active {
+    background: @PrimaryActive;
   }
 }
 
@@ -42,11 +54,11 @@
 }
 
 .ctz-button-red {
-  color: @red1 !important;
-  border: 1px solid @red1 !important;
+  color: @Red1 !important;
+  border: 1px solid @Red1 !important;
   &:hover {
-    color: @red2 !important;
-    border: 1px solid @red2 !important;
+    color: @Red2 !important;
+    border: 1px solid @Red2 !important;
   }
 }
 

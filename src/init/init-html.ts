@@ -9,6 +9,7 @@ import { INNER_HTML } from '../web-resources';
 
 const commonCheckbox = (v: string) => `<input class="ctz-i" name="${v}" type="checkbox" value="on" />`;
 const commonLabel = (l?: string) => (l ? `<span class="ctz-label">${l}</span>` : '');
+const commonText = (l?: string) => (l ? `<span class="ctz-checkbox-text">${l}</span>` : '');
 
 const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return '';
@@ -32,8 +33,8 @@ const commonLabelCheckbox = (con: ICommonContent[]) =>
     .map(
       ({ label, value, needFetch }) =>
         `<label class="ctz-flex-wrap ${needFetch ? 'ctz-fetch-intercept' : ''}">` +
-        commonLabel(label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')) +
         commonCheckbox(value) +
+        commonText(label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')) +
         `</label>`
     )
     .join('');
@@ -41,7 +42,8 @@ const commonLabelCheckbox = (con: ICommonContent[]) =>
 /** 加载基础元素及绑定方法 */
 export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
-  dom('.ctz-version')!.innerText = `version: ${GM_info.script.version}`;
+  dom('.ctz-version')!.innerText = GM_info.script.version;
+  // dom('.ctz-version')!.innerText = `版本号: ${GM_info.script.version}`;
   // dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
   // dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
 
@@ -70,7 +72,7 @@ export const initHTML = () => {
 
   // 隐藏元素部分
   domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
-    (i) => `<div id="${i.key}"><div class="ctz-set-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
+    (i) => `<div id="${i.key}"><div class="ctz-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
   ).join('');
   dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
   // `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('')}</div>` +
@@ -108,12 +110,12 @@ export const appendHomeLink = (userinfo: IZhihuUserinfo) => {
   if (dom('.ctz-home-link')) return;
   const hrefUser = userinfo.url ? userinfo.url.replace('/api/v4', '') : '';
   if (!hrefUser) return;
-  // dom('.ctz-footer-right')!.appendChild(
-  //   domC('a', {
-  //     href: hrefUser,
-  //     target: '_blank',
-  //     innerText: '前往个人主页>>',
-  //     className: 'ctz-home-link',
-  //   })
-  // );
+  dom('.ctz-to-zhihu')!.appendChild(
+    domC('a', {
+      href: hrefUser,
+      target: '_blank',
+      innerText: '前往个人主页',
+      className: 'ctz-home-link',
+    })
+  );
 };

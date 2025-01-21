@@ -3,271 +3,40 @@
 @import './change-zhihu.less';
 @import './drawer.less';
 
-// 弹窗按钮
-#CTZ_OPEN_BUTTON {
-  position: fixed;
-  left: 0;
-  top: 100px;
-  font-size: 48px;
-  color: rgba(0, 0, 0, 0.8);
+.ctz-title {
+  font-weight: bold;
   height: 48px;
-  line-height: 42px;
-  text-align: center;
-  width: 48px;
-  border-radius: 0 12px 12px 0;
-  background: @gray1;
-  box-shadow: 0px 0px 8px #d0d4d6, 0px 0px 8px #e6eaec;
-  cursor: pointer;
-  user-select: none;
-  transform: translate(-30px);
-  transition: transform 0.5s;
-  z-index: 200;
-  &:hover {
-    transform: translate(0);
-  }
-}
-
-// 设置弹窗
-#CTZ_DIALOG_MAIN {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  height: 600px;
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  background: @gray1;
-  z-index: 201;
-  flex-direction: column;
-  font-size: 14px;
-  padding: 16px;
-  transition: all 0.2s;
-  input[type='text'],
-  input[type='number'] {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 4px 11px;
-    font-size: 14px;
-    line-height: 1.5;
-    list-style: none;
-    position: relative;
-    display: inline-block;
-    min-width: 0;
-    border-width: 1px;
-    border-style: solid;
-    border-color: @gray2;
-    border-radius: 6px;
-    transition: all 0.2s;
-  }
-
-  textarea {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 4px 11px;
-    font-size: 14px;
-    line-height: 1.5;
-    list-style: none;
-    position: relative;
-    display: inline-block;
-    min-width: 0;
-    border-width: 1px;
-    border-style: solid;
-    border-color: @gray2;
-    border-radius: 6px;
-    transition: all 0.2s;
-  }
-
-  label {
-    cursor: pointer;
-    transition: all 0.2s;
-    &:hover {
-      color: @blue1!important;
-    }
-  }
-  a {
-    transition: all 0.2s;
-    text-decoration: none;
-    color: inherit;
-  }
-}
-
-.ctz-center {
-  flex: 1;
-  flex-direction: column;
+  font-size: @FontSizeHead;
   display: flex;
   overflow: hidden;
-}
-
-.ctz-header {
-  font-size: 16px;
-  margin-bottom: 12px;
-  display: flex;
   align-items: center;
-}
-
-.ctz-top-operate {
-  flex: 1;
-  padding: 0 8px;
-  font-size: 12px;
-}
-
-#CTZ_FETCH_STATUS {
-  padding-right: 8px;
-  font-weight: bold;
-}
-
-.ctz-version {
-  padding-left: 8px;
-  font-size: 12px;
-}
-
-#CTZ_CLOSE_DIALOG {
-  color: rgba(0, 0, 0, 0.45);
-  font-weight: 600;
-  line-height: 18px;
-  background: transparent;
-  border-radius: 6px;
-  width: 32px;
-  height: 32px;
-  transition: all 0.2s;
-  border: 0;
-  i {
-    font-size: 8px;
-  }
-  &:hover {
-    background-color: #fff;
-    text-decoration: none;
-  }
-}
-
-.ctz-menu-top {
-  height: 36px;
-  display: flex;
-
-  & > a {
-    border-radius: 12px 12px 0 0;
-    flex: 1;
-    text-align: center;
-    cursor: pointer;
-    transition: initial !important;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    span {
-      border-radius: 8px;
-      transition: all 0.3s;
-      margin: 0 6px;
-      flex: 1;
-      box-sizing: border-box;
-      align-items: center;
-      line-height: 26px;
-    }
-    &:hover {
-      span {
-        background: #fff;
-      }
-    }
-    &.target {
-      background: #fff;
-      &::after,
-      &::before {
-        position: absolute;
-        bottom: -12px;
-        content: ' ';
-        background: radial-gradient(circle at top left, transparent 12px, #fff 0) top left, radial-gradient(circle at top right, transparent 12px, #fff 0) top right,
-          radial-gradient(circle at bottom right, transparent 12px, #fff 0) bottom right, radial-gradient(circle at bottom left, transparent 12px, #fff 0) bottom left;
-        background-size: 50% 50%;
-        background-repeat: no-repeat;
-        width: 24px;
-        height: 24px;
-      }
-
-      &::before {
-        left: -12px;
-        z-index: -1;
-      }
-
-      &::after {
-        right: -12px;
-        z-index: -1;
-      }
-    }
-  }
-}
-
-.ctz-content {
-  flex: 1;
-  display: flex;
-  overflow: hidden;
-  background: #fff;
-  border-radius: 12px;
-  padding: 8px 0;
-  & > div {
-    width: 100%;
-  }
-
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    border-radius: 0;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #bbb;
-    transition: all 0.2s;
-    border-radius: 8px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(95, 95, 95, 0.7);
-  }
-}
-
-.ctz-content-right {
-  flex: 1;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  padding: 0 8px;
-  & > div:nth-of-type(2n) {
-    padding: 0 8px;
-    margin: 0 -8px;
-    box-shadow: rgb(153, 153, 153) 0px 0px 5px inset;
-    border-radius: 0 12px 12px 0;
-  }
-}
-
-.ctz-set-title {
-  font-weight: bold;
-  height: 36px;
-  line-height: 36px;
-  font-size: 16px;
-  overflow: hidden;
-  vertical-align: middle;
   & > span {
-    vertical-align: middle;
-    display: inline-block;
-    font-size: 12px;
+    font-size: @FontSizeSmall;
     color: #999;
-    padding-left: 4px;
+    padding-left: 8px;
     b {
-      color: @red1;
+      color: @Waring;
     }
+  }
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 0;
+    border-bottom: 2px dotted @Gray02;
+    margin-left: 12px;
   }
 }
 
 .ctz-set-content:not(.ctz-flex-wrap) {
   & > div,
   & > label {
-    padding-bottom: 8px;
-    margin-bottom: 8px;
-    border-bottom: 1px dashed #ddd;
-    &:last-child {
-      border-bottom: 0;
-    }
+    margin-bottom: 16px;
+    // padding-bottom: 8px;
+    // border-bottom: 1px dashed #ddd;
+    // &:last-child {
+    //   border-bottom: 0;
+    // }
   }
 }
 
@@ -314,7 +83,6 @@
 }
 
 .ctz-label {
-  font-size: 14px;
   line-height: 24px;
   &::after {
     content: '：';
@@ -374,9 +142,6 @@
 
 // 屏蔽内容
 #CTZ_BLOCK_WORD {
-  .ctz-content-right > div {
-    padding-bottom: 12px;
-  }
   input {
     height: 24px;
     width: 300px;
@@ -409,7 +174,8 @@
 .ctz-flex-wrap {
   display: flex;
   flex-wrap: wrap;
-  line-height: 24px;
+  min-height: 24px;
+  align-items: center;
   label {
     margin-right: 4px;
     display: flex;
@@ -514,18 +280,22 @@
 
 #CTZ_TITLE_ICO {
   label {
-    margin: 0 4px 4px 0;
     input {
       display: none;
       &:checked + img {
-        border: 4px solid #0461cf;
-        border-radius: 12px;
+        border-color: @Primary;
       }
     }
     img {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border: 4px solid transparent;
+      border-radius: @RadiusCommon;
+    }
+    &:hover {
+      img {
+        border-color: @HoverBorder;
+      }
     }
   }
 }
@@ -778,6 +548,7 @@
   height: 26px;
   padding: 0px 6px;
   text-align: center;
+  margin: 0 4px;
 }
 
 #CTZ_HISTORY_LIST .ctz-set-content,
@@ -858,7 +629,8 @@
 
 .ctz-fetch-intercept.ctz-fetch-intercept-close {
   color: #b0b0b0 !important;
-  cursor: not-allowed;
+  cursor: not-allowed !important;
+  text-decoration: line-through;
   span.ctz-need-fetch {
     display: inline;
   }
@@ -871,6 +643,9 @@
   .ctz-black-item .ctz-remove-block:hover,
   .ctz-black-item a:hover {
     background: transparent !important;
+    color: #b0b0b0 !important;
+  }
+  &:hover {
     color: #b0b0b0 !important;
   }
 }

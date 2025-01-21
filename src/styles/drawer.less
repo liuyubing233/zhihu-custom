@@ -3,9 +3,9 @@
 @WidthDrawer: 800px;
 @WidthOpen: 40px;
 @WidthOpenReal: @WidthDrawer;
-@Radius: 16px;
 @HeightFooter: 70px;
 
+/** 抽屉样式 */
 #CTZ_DRAWER {
   .CommonTransition();
   width: @WidthDrawer;
@@ -18,8 +18,44 @@
   transform: translateX(@WidthDrawer);
   font-size: @FontSize;
 
+  input[type='text'],
+  input[type='number'],
+  textarea {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px 11px;
+    font-size: @FontSize;
+    line-height: 1.5;
+    list-style: none;
+    position: relative;
+    display: inline-block;
+    min-width: 0;
+    border: 1px solid @Gray04;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'] {
+    width: 16px;
+    height: 16px;
+  }
+
+  label {
+    cursor: pointer;
+    transition: all 0.2s;
+    &:hover {
+      color: @Hover!important;
+    }
+  }
+  a {
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
   &_CONTENT {
-    height: calc(100vh - @HeightFooter);
+    height: calc(100vh - @HeightFooter - 1px);
     display: flex;
     background: #fff;
     border-radius: 16px 0 0;
@@ -44,7 +80,7 @@
 
       &.target {
         color: @Hover;
-        background: @PrimaryBg;
+        background: @TargetBg;
       }
     }
 
@@ -65,7 +101,7 @@
       justify-content: center;
       font-size: 18px;
       transform: rotate(90deg);
-      border-radius: @Radius;
+      border-radius: @RadiusCommon;
       margin-right: 8px;
       &.ctz-dropdown-open {
         transform: rotate(270deg);
@@ -134,43 +170,63 @@
 
   &_FOOTER {
     height: @HeightFooter;
-    border-top: 1px solid @GraySecond;
+    border-top: 1px solid @Gray02;
     background: #fff;
     box-sizing: border-box;
     padding: 12px;
-  }
-
-  input[type='text'],
-  input[type='number'],
-  textarea {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 4px 11px;
-    font-size: @FontSize;
-    line-height: 1.5;
-    list-style: none;
-    position: relative;
-    display: inline-block;
-    min-width: 0;
-    border: 1px solid @GraySecond;
-    border-radius: 6px;
-    transition: all 0.2s;
-  }
-
-  label {
-    cursor: pointer;
-    transition: all 0.2s;
-    &:hover {
-      color: @Hover!important;
+    display: flex;
+    .ctz-status {
+      flex: 1;
+      font-size: 12px;
+      line-height: 24px;
+      padding-right: 24px;
+      text-align: right;
     }
-  }
-  a {
-    transition: all 0.2s;
-    text-decoration: none;
-    color: inherit;
+    .ctz-info {
+      text-align: center;
+      line-height: 24px;
+      margin: 0 12px 0 24px;
+    }
+
+    .ctz-to-zhihu::before {
+      content: '';
+      width: 1px;
+      height: 24px;
+      background: @Gray02;
+      position: absolute;
+      left: -12px;
+      top: 12px;
+    }
+
+    .ctz-to-zhihu,
+    .ctz-github {
+      position: relative;
+      margin: 0 12px;
+      &::after {
+        content: '';
+        width: 1px;
+        height: 24px;
+        background: @Gray02;
+        position: absolute;
+        right: -12px;
+        top: 12px;
+      }
+
+      a {
+        .Hover();
+        display: block;
+        border-radius: 16px;
+        height: 24px;
+        line-height: 24px;
+        width: 110px;
+        text-align: center;
+        color: @Gray;
+      }
+    }
   }
 }
 
+/** 打开关闭抽屉按钮 */
 #CTZ_OPEN_CLOSE {
   .CommonTransition();
   .HoverDiv();
@@ -183,7 +239,7 @@
   pointer-events: auto;
   cursor: pointer;
   z-index: 201;
-  border-radius: @Radius 0 0 @Radius;
+  border-radius: @RadiusCommon 0 0 @RadiusCommon;
   background: #fff;
   width: @WidthOpenReal;
   transform: translateX(@WidthOpenReal - @WidthOpen);
@@ -197,7 +253,7 @@
     width: @WidthOpen;
     height: @HeightOpen;
     line-height: @HeightOpen;
-    border-radius: @Radius 0 0 @Radius;
+    border-radius: @RadiusCommon 0 0 @RadiusCommon;
   }
 
   &[data-close='0'] {
@@ -208,11 +264,12 @@
       width: @WidthOpen - @PaddingSize * 2;
       height: @HeightOpen - @PaddingSize * 2;
       line-height: @HeightOpen - @PaddingSize * 2;
-      border-radius: @Radius;
+      border-radius: @RadiusCommon;
     }
   }
 }
 
+/** 遮罩层 */
 #CTZ_BLOCK {
   width: 100vw;
   height: 100vh;
