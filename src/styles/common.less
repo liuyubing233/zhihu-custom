@@ -1,103 +1,4 @@
-@Hover: @Blue6;
-@HoverBg: rgba(77, 66, 86, 0.08);
-@HoverBorder: @Blue2;
-
-@Primary: @Blue6;
-@PrimaryBg: @Blue6;
-@PrimaryBorder: @Blue6;
-@PrimaryHover: @Blue4;
-@PrimaryActive: @Blue6;
-
-@TargetBg: @Blue1;
-
-@ActiveBg: #d7d7d7;
-
-@Waring: @Red6;
-
-@HeadTag: @Blue3;
-
-@border: 1px solid #e0e0e0;
-
-@gray1: #f5f5f5;
-@gray2: #d9d9d9;
-
-@blue1: #1677ff;
-
-@red1: #e55353;
-@red2: #ec7259;
-@red3: #ffccc7;
-@red4: #fff2f0;
-
-@FontSizeSmall: 12px;
-@FontSize: 14px;
-@FontSizeHead: 18px;
-
-@RadiusCommon: 16px;
-
-@Gray: #96a2aa;
-@Gray02: rgba(150, 162, 170, 0.2);
-@Gray04: rgba(150, 162, 170, 0.4);
-@GraySecond: #f0f0f0;
-
-@Blue1: #e3f2fd;
-@Blue2: #bbdefb;
-@Blue3: #90caf9;
-@Blue4: #64b5f6;
-@Blue5: #42a5f5;
-@Blue6: #2196f3;
-@Blue7: #1e88e5;
-@Blue8: #1976d2;
-@Blue9: #1565c0;
-@Blue10: #0d47a1;
-@BlueA1: #82b1ff;
-@BlueA2: #448aff;
-@BlueA3: #2979ff;
-@BlueA4: #2962ff;
-
-@Red1: #ffebee;
-@Red2: #ffcdd2;
-@Red3: #ef9a9a;
-@Red4: #e57373;
-@Red5: #ef5350;
-@Red6: #f44336;
-@Red7: #e53935;
-@Red8: #d32f2f;
-@Red9: #c62828;
-@Red10: #b71c1c;
-@RedA1: #ff8a80;
-@RedA2: #ff5252;
-@RedA3: #ff1744;
-@RedA4: #d50000;
-
-@Green1: #e0f2f1;
-@Green2: #b2dfdb;
-@Green3: #80cbc4;
-@Green4: #4db6ac;
-@Green5: #26a69a;
-@Green6: #009688;
-@Green7: #00897b;
-@Green8: #00796b;
-@Green9: #00695c;
-@Green10: #004d40;
-@GreenA1: #a7ffeb;
-@GreenA2: #64ffda;
-@GreenA3: #1de9b6;
-@GreenA4: #00bfa5;
-
-// @LightBlue1: #e1f5fe;
-// @LightBlue2: #b3e5fc;
-// @LightBlue3: #81d4fa;
-// @LightBlue4: #4fc3f7;
-// @LightBlue5: #29b6f6;
-// @LightBlue6: #03a9f4;
-// @LightBlue7: #039be5;
-// @LightBlue8: #0288d1;
-// @LightBlue9: #0277bd;
-// @LightBlue10: #01579b;
-// @LightBlueA1: #80d8ff;
-// @LightBlueA2: #40c4ff;
-// @LightBlueA3: #00b0ff;
-// @LightBlueA4: #0091ea;
+@import './theme.less';
 
 .hover-style {
   cursor: pointer;
@@ -117,8 +18,8 @@
   cursor: pointer;
   &:hover {
     div {
-      background: @HoverBg;
-      color: @Hover;
+      background: @hoverBg;
+      color: @hover;
       font-weight: 600;
     }
   }
@@ -130,10 +31,10 @@
 }
 
 .Hover() {
-  cursor: pointer;
+  // cursor: pointer;
   &:hover {
-    background: @HoverBg;
-    color: @Hover!important;
+    background: @hoverBg;
+    color: @hover!important;
     font-weight: 600;
   }
 }

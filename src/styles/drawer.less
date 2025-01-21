@@ -16,7 +16,7 @@
   right: 0;
   bottom: 0;
   transform: translateX(@WidthDrawer);
-  font-size: @FontSize;
+  font-size: @fontSize;
 
   input[type='text'],
   input[type='number'],
@@ -24,13 +24,13 @@
     box-sizing: border-box;
     margin: 0;
     padding: 4px 11px;
-    font-size: @FontSize;
+    font-size: @fontSize;
     line-height: 1.5;
     list-style: none;
     position: relative;
     display: inline-block;
     min-width: 0;
-    border: 1px solid @Gray04;
+    border: 1px solid @gray04;
     border-radius: 8px;
     transition: all 0.2s;
   }
@@ -45,7 +45,7 @@
     cursor: pointer;
     transition: all 0.2s;
     &:hover {
-      color: @Hover!important;
+      color: @hover!important;
     }
   }
   a {
@@ -65,8 +65,7 @@
     width: 120px;
     @HeightMenuItem: 44px;
     & > div {
-      .Hover();
-      color: @Gray;
+      color: @gray1;
       position: relative;
       box-sizing: border-box;
       display: flex;
@@ -74,13 +73,23 @@
       line-height: @HeightMenuItem;
       padding-left: 12px;
       border-radius: 16px;
-      font-size: @FontSize;
+      font-size: @fontSize;
       margin: 12px 0 0 12px;
       align-items: center;
+      cursor: pointer;
+      &:hover {
+        background: @hoverBg;
+        .ctz-menu-choose {
+          color: @hover!important;
+          font-weight: 600;
+        }
+      }
 
       &.target {
-        color: @Hover;
-        background: @TargetBg;
+        & > span {
+          color: @hover;
+        }
+        background: @targetBg;
       }
     }
 
@@ -101,7 +110,7 @@
       justify-content: center;
       font-size: 18px;
       transform: rotate(90deg);
-      border-radius: @RadiusCommon;
+      border-radius: @radiusCommon;
       margin-right: 8px;
       &.ctz-dropdown-open {
         transform: rotate(270deg);
@@ -170,7 +179,7 @@
 
   &_FOOTER {
     height: @HeightFooter;
-    border-top: 1px solid @Gray02;
+    border-top: 1px solid @gray02;
     background: #fff;
     box-sizing: border-box;
     padding: 12px;
@@ -192,7 +201,7 @@
       content: '';
       width: 1px;
       height: 24px;
-      background: @Gray02;
+      background: @gray02;
       position: absolute;
       left: -12px;
       top: 12px;
@@ -206,7 +215,7 @@
         content: '';
         width: 1px;
         height: 24px;
-        background: @Gray02;
+        background: @gray02;
         position: absolute;
         right: -12px;
         top: 12px;
@@ -220,7 +229,7 @@
         line-height: 24px;
         width: 110px;
         text-align: center;
-        color: @Gray;
+        color: @gray1;
       }
     }
   }
@@ -239,21 +248,21 @@
   pointer-events: auto;
   cursor: pointer;
   z-index: 201;
-  border-radius: @RadiusCommon 0 0 @RadiusCommon;
+  border-radius: @radiusCommon 0 0 @radiusCommon;
   background: #fff;
   width: @WidthOpenReal;
   transform: translateX(@WidthOpenReal - @WidthOpen);
   position: fixed;
   bottom: 0;
   right: 0;
-  color: @Gray;
+  color: @gray1;
   box-shadow: -6px 6px 12px #c9c9c9, 6px -6px 12px #ffffff;
   box-sizing: border-box;
   div {
     width: @WidthOpen;
     height: @HeightOpen;
     line-height: @HeightOpen;
-    border-radius: @RadiusCommon 0 0 @RadiusCommon;
+    border-radius: @radiusCommon 0 0 @radiusCommon;
   }
 
   &[data-close='0'] {
@@ -264,7 +273,7 @@
       width: @WidthOpen - @PaddingSize * 2;
       height: @HeightOpen - @PaddingSize * 2;
       line-height: @HeightOpen - @PaddingSize * 2;
-      border-radius: @RadiusCommon;
+      border-radius: @radiusCommon;
     }
   }
 }
