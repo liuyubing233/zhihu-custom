@@ -2,6 +2,8 @@
 @import './button.less';
 @import './change-zhihu.less';
 @import './drawer.less';
+@import './radio.less';
+@import './checkbox.less';
 
 .ctz-title {
   font-weight: bold;
@@ -31,7 +33,7 @@
 .ctz-set-content:not(.ctz-flex-wrap) {
   & > div,
   & > label {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     // padding-bottom: 8px;
     // border-bottom: 1px dashed #ddd;
     // &:last-child {
@@ -95,33 +97,38 @@
 #CTZ_BACKGROUND_DARK {
   display: grid;
   grid-template-columns: 30% 30% 30%;
-  gap: 8px;
+  gap: 12px;
   & > label {
     position: relative;
     input {
       position: absolute;
       visibility: hidden;
       &:checked + div {
-        border: 4px solid @blue1;
-        margin: 0 !important;
+        border: 2px solid @blue1;
       }
     }
     div {
       font-size: 14px;
-      border-radius: 12px;
+      border-radius: 16px;
       line-height: 50px;
       padding-left: 30px;
-      margin: 4px;
+      border: 2px solid @gray04;
+      .Hover();
+      .Active();
+      .CommonTransition();
+      transition-property: all;
+      &:hover {
+        border-color: @hover;
+      }
     }
   }
-}
-#CTZ_BACKGROUND_LIGHT {
-  color: #000;
 }
 
 .ctz-set-background {
   .ctz-commit {
-    line-height: 24px;
+    color: #69696e;
+    padding: 12px 0 6px;
+    box-sizing: border-box;
     font-size: 14px;
   }
 }
@@ -620,6 +627,34 @@
   }
   .ctz-flex-wrap > span:nth-of-type(2) {
     margin-left: 24px;
+  }
+}
+
+#CTZ_VERSION_RANGE_ZHIHU {
+  .ctz-checkbox {
+    display: inline-flex;
+  }
+  .ctz-range-commit {
+    display: flex;
+    align-items: center;
+    .ctz-commit {
+      margin-left: 64px;
+    }
+  }
+
+  .ctz-range-line {
+    height: 12px;
+    width: 100%;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 0;
+      border-bottom: 1px dashed @gray04;
+      bottom: 50%;
+      left: 0;
+    }
   }
 }
 

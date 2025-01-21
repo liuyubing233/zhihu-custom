@@ -9,12 +9,11 @@ import { INNER_HTML } from '../web-resources';
 
 const commonCheckbox = (v: string) => `<input class="ctz-i" name="${v}" type="checkbox" value="on" />`;
 const commonLabel = (l?: string) => (l ? `<span class="ctz-label">${l}</span>` : '');
-const commonText = (l?: string) => (l ? `<span class="ctz-checkbox-text">${l}</span>` : '');
 
 const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return '';
   return `<div class="ctz-set-content">${arrHidden
-    .map((item) => item.map((i) => `<label style="display: inline-flex; algin-item: center;">${commonCheckbox(i.value)}${i.label}</label>`).join(''))
+    .map((item) => item.map((i) => `<label style="display: inline-flex;" class="ctz-checkbox">${commonCheckbox(i.value)}<div>${i.label}</div></label>`).join(''))
     .join('<br>')}</div>`;
 };
 
@@ -24,7 +23,7 @@ const rangeHTML = (l: string, v: string, min: number, max: number) =>
   commonLabel(l) +
   `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 300px" />` +
   `<span id="${v}" style="margin: 0 8px">0</span>` +
-  `<span class="ctz-commit">滑动条范围: ${min} ~ ${max}</span>` +
+  `<span class="ctz-commit">设置区间: ${min} ~ ${max}</span>` +
   `</div>`;
 
 /** 通用选项html */
@@ -32,9 +31,9 @@ const commonLabelCheckbox = (con: ICommonContent[]) =>
   con
     .map(
       ({ label, value, needFetch }) =>
-        `<label class="ctz-flex-wrap ${needFetch ? 'ctz-fetch-intercept' : ''}">` +
-        commonCheckbox(value) +
-        commonText(label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')) +
+        `<label class="ctz-checkbox ${needFetch ? 'ctz-fetch-intercept' : ''}">` +
+        `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` +
+        `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')}</div>` +
         `</label>`
     )
     .join('');
@@ -43,9 +42,6 @@ const commonLabelCheckbox = (con: ICommonContent[]) =>
 export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
   dom('.ctz-version')!.innerText = GM_info.script.version;
-  // dom('.ctz-version')!.innerText = `版本号: ${GM_info.script.version}`;
-  // dom('.ctz-footer-left')!.innerHTML = FOOTER_HTML;
-  // dom('.ctz-menu-top')!.innerHTML = HEADER.map(({ href, value }) => `<a href="${href}"><span>${value}</span></a>`).join('');
 
   addBackgroundSetting();
 
@@ -54,9 +50,10 @@ export const initHTML = () => {
     (item: IRangeItem, index: number) =>
       rangeHTML(item.label, item.value, item.min, item.max) +
       rangeHTML(item.percentLabel, item.percentValue, item.percentMin, item.percentMax) +
+      `<div class="ctz-range-commit">` +
       commonLabelCheckbox([{ label: item.percentChooseLabel, value: item.percentChooseValue }]) +
-      `<div class="ctz-commit" style="${index < VERSION_RANGE.length - 1 ? 'border-bottom: 1px solid #e0e0e0;' : 'margin:0;'}padding:8px 0;"><b>${item.desc}</b></div>`
-  ).join('');
+      `<span class="ctz-commit">${item.desc}</span></div>`
+  ).join('<div class="ctz-range-line"></div>');
   domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = rangeHTML('', 'zoomImageSize', 0, 1000);
   domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = rangeHTML('', 'zoomImageHeightSize', 0, 1000);
   domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = rangeHTML('', 'zoomListVideoSize', 0, 1000);
