@@ -6,16 +6,16 @@
 .ctz-title {
   font-weight: bold;
   height: 48px;
-  font-size: @FontSizeHead;
+  font-size: @fontSizeHead;
   display: flex;
   overflow: hidden;
   align-items: center;
   & > span {
-    font-size: @FontSizeSmall;
+    font-size: @fontSizeSmall;
     color: #999;
     padding-left: 8px;
     b {
-      color: @Waring;
+      color: @waring;
     }
   }
 
@@ -23,7 +23,7 @@
     content: '';
     flex: 1;
     height: 0;
-    border-bottom: 2px dotted @Gray02;
+    border-bottom: 2px dotted @gray02;
     margin-left: 12px;
   }
 }
@@ -72,11 +72,11 @@
 .ctz-alert-red {
   text-align: center;
   font-size: 14px;
-  color: @red1;
+  color: @waring;
   height: 24px;
   line-height: 24px;
-  background-color: @red4;
-  border: 1px solid @red3;
+  background-color: @waringBg;
+  border: 1px solid @waring;
   border-radius: 12px;
   margin: 0;
   font-weight: 400;
@@ -283,18 +283,18 @@
     input {
       display: none;
       &:checked + img {
-        border-color: @Primary;
+        border-color: @primary;
       }
     }
     img {
       width: 38px;
       height: 38px;
       border: 4px solid transparent;
-      border-radius: @RadiusCommon;
+      border-radius: @radiusCommon;
     }
     &:hover {
       img {
-        border-color: @HoverBorder;
+        border-color: @hoverBorder;
       }
     }
   }
