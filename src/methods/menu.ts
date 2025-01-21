@@ -22,12 +22,14 @@ export const onChangeMenu = (event: MouseEvent) => {
 
   if (target.classList.contains('ctz-menu-choose')) {
     // 点击主菜单
+    const dataHref = target.parentElement!.getAttribute('data-href') || ''
+    location.hash = dataHref;
     fnChangeMenu(target.parentElement as HTMLElement);
     return;
   }
 
   if (target.nodeName === 'A') {
-    // 点击了子菜单
+    // 点击子菜单
     target.parentElement!.parentElement!.querySelector('.ctz-dropdown-icon')!.classList.remove(CLASS_OPENED);
     const chooseHref = (target as HTMLAnchorElement).hash;
     location.hash = chooseHref;

@@ -67,50 +67,45 @@
       <!-- 基础设置 -->
       <div id="CTZ_BASIS" style="display: none">
         <div id="CTZ_BASIS_DEFAULT">
-          <div class="ctz-set-title">基本设置</div>
+          <div class="ctz-title">基本设置</div>
           <div class="ctz-set-content">
-            <div class="ctz-top-operate">
-              <span id="CTZ_FETCH_STATUS">状态获取中...</span>
-              <button class="ctz-button" id="CTZ_CHANGE_FETCH" size="small">切换接口拦截</button>
-            </div>
-
             <label class="ctz-flex-wrap">
-              <span class="ctz-label">不显示修改器唤醒图标 ⚙︎</span>
               <input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" />
+              <span class="ctz-checkbox-text">隐藏修改器唤醒图标 ⚙︎</span>
             </label>
 
             <label class="ctz-flex-wrap">
-              <span class="ctz-label">
+              <input class="ctz-i" name="hotKey" type="checkbox" value="on" />
+              <span class="ctz-checkbox-text">
                 快捷键唤起编辑器
                 <span class="key-shadow">></span>
                 (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
               </span>
-              <input class="ctz-i" name="hotKey" type="checkbox" value="on" />
+            </label>
+
+            <label class="ctz-flex-wrap">
+              <input class="ctz-i" name="globalTitleRemoveMessage" type="checkbox" value="on" />
+              <span class="ctz-checkbox-text">去除浏览器标签上<b>XX条私信/未读消息</b>的提示</span>
             </label>
 
             <div>
-              <div class="ctz-label">修改浏览器标签</div>
               <div class="ctz-flex-wrap">
-                <input type="text" name="globalTitle" style="width: 250px" />
-                <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 4px">确认</button>
+                <div class="ctz-label">修改浏览器标签名</div>
+                <input type="text" name="globalTitle" style="width: 300px" />
+                <button class="ctz-button ctz-button-primary" name="buttonConfirmTitle" style="margin: 0 8px">确认</button>
                 <button class="ctz-button" name="buttonResetTitle">还原</button>
               </div>
             </div>
 
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">去除浏览器标签上<b>XX条私信/未读消息</b>的提示</span>
-              <input class="ctz-i" name="globalTitleRemoveMessage" type="checkbox" value="on" />
-            </label>
-
             <div>
-              <div class="ctz-label">修改网页标题图片（图标可能会因为网络问题丢失）</div>
+              <div class="ctz-label" style="margin-bottom: 8px">修改网页标题图片（图标可能会因为网络问题丢失）</div>
               <div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div>
             </div>
           </div>
         </div>
 
         <div id="CTZ_BASIS_HIGH_PERFORMANCE">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             高性能
             <span style="color: red">修改后刷新页面生效</span>
           </div>
@@ -118,7 +113,7 @@
         </div>
 
         <div id="CTZ_BASIS_SHOW_CONTENT">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             显示修改
             <span style="color: red">修改后刷新页面生效</span>
           </div>
@@ -139,7 +134,7 @@
         </div>
 
         <div id="CTZ_BASIS_SIZE">
-          <div class="ctz-set-title">页面尺寸</div>
+          <div class="ctz-title">页面尺寸</div>
           <div class="ctz-set-content">
             <!-- 页面内容宽度 -->
             <div id="CTZ_VERSION_RANGE_ZHIHU"></div>
@@ -184,7 +179,7 @@
         </div>
 
         <div id="CTZ_BASIS_FLOAT">
-          <div class="ctz-set-title">悬浮模块</div>
+          <div class="ctz-title">悬浮模块</div>
           <div class="ctz-set-content">
             <div class="ctz-flex-wrap">
               <label>
@@ -222,7 +217,7 @@
         </div>
 
         <div id="CTZ_BASIS_COLOR">
-          <div class="ctz-set-title">颜色设置</div>
+          <div class="ctz-title">颜色设置</div>
           <div class="ctz-set-content">
             <div class="ctz-set-background"></div>
             <div class="ctz-set-color ctz-flex-wrap">
@@ -233,7 +228,7 @@
         </div>
 
         <div id="CTZ_BASIS_CONFIG">
-          <div class="ctz-set-title">配置操作</div>
+          <div class="ctz-title">配置操作</div>
           <div class="ctz-set-content">
             <div class="ctz-flex-wrap ctz-config-buttons">
               <button class="ctz-button" name="useSimple">启用极简模式</button>
@@ -264,7 +259,7 @@
       <div id="CTZ_FILTER" style="display: none">
         <h5 class="ctz-alert-red">此部分更改后请重新刷新页面</h5>
         <div id="CTZ_FILTER_COMMEN" class="ctz-filter-block">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             通用内容屏蔽
             <span>此部分设置在推荐列表和回答中均可生效</span>
           </div>
@@ -279,7 +274,7 @@
         </div>
 
         <div id="CTZ_FILTER_LIST" class="ctz-filter-block">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             列表内容屏蔽
             <span>此部分设置只在首页列表生效</span>
           </div>
@@ -333,7 +328,7 @@
           </div>
         </div>
         <div id="CTZ_FILTER_ANSWER" class="ctz-filter-block">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             回答内容屏蔽
             <span>此部分设置只在回答页面生效</span>
           </div>
@@ -368,7 +363,7 @@
         </div>
 
         <div id="CTZ_FILTER_BLOCK_WORDS">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             标题屏蔽词
             <span>匹配位置：列表标题</span>
           </div>
@@ -377,7 +372,7 @@
           <div class="ctz-block-words-content"></div>
         </div>
         <div id="CTZ_FILTER_BLOCK_WORDS_CONTENT">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             内容屏蔽词
             <span>匹配位置：列表、回答页内容</span>
           </div>
@@ -391,7 +386,7 @@
       <div id="CTZ_BLACKLIST" class="ctz-fetch-intercept" style="display: none">
         <h5 class="ctz-alert-red ctz-need-fetch">接口拦截已关闭，此部分功能无法使用</h5>
         <div id="CTZ_BASIS_BLOCK">
-          <div class="ctz-set-title">黑名单设置</div>
+          <div class="ctz-title">黑名单设置</div>
           <div class="ctz-set-content">
             <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
             <label class="ctz-flex-wrap">
@@ -413,7 +408,7 @@
       <!-- 历史记录 -->
       <div id="CTZ_HISTORY" style="display: none">
         <div id="CTZ_HISTORY_LIST">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             推荐列表缓存
             <span>最多缓存500条，包含已过滤项</span>
           </div>
@@ -421,7 +416,7 @@
           <div class="ctz-set-content"></div>
         </div>
         <div id="CTZ_HISTORY_VIEW">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             浏览历史记录
             <span>最多缓存500条</span>
           </div>
@@ -433,7 +428,7 @@
       <!-- 默认功能 -->
       <div id="CTZ_DEFAULT" style="display: none">
         <div id="CTZ_DEFAULT_CONTENT">
-          <div class="ctz-set-title">
+          <div class="ctz-title">
             默认功能
             <span>此部分功能为编辑器默认功能，不需要额外开启</span>
           </div>
@@ -454,6 +449,20 @@
   </div>
 
   <div id="CTZ_DRAWER_FOOTER">
-    <span class="ctz-version"></span>
+    <div class="ctz-status">
+      <span id="CTZ_FETCH_STATUS" style="margin-right: 8px">状态获取中...</span>
+      <button class="ctz-button" id="CTZ_CHANGE_FETCH" size="small">切换接口拦截</button>
+    </div>
+    <div class="ctz-to-zhihu">
+      <a href="https://www.zhihu.com" target="_self">返回主页</a>
+    </div>
+    <div class="ctz-github">
+      <a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a>
+      <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
+    </div>
+    <div class="ctz-info">
+      <div>版本号</div>
+      <div class="ctz-version"></div>
+    </div>
   </div>
 </div>
