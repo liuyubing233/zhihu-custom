@@ -12,7 +12,7 @@ const commonLabel = (l?: string) => (l ? `<span class="ctz-label">${l}</span>` :
 
 const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return '';
-  return `<div class="ctz-set-content">${arrHidden
+  return `<div class="ctz-checkbox-group">${arrHidden
     .map((item) => item.map((i) => `<label style="display: inline-flex;" class="ctz-checkbox">${commonCheckbox(i.value)}<div>${i.label}</div></label>`).join(''))
     .join('<br>')}</div>`;
 };
@@ -68,10 +68,10 @@ export const initHTML = () => {
   ).join('');
 
   // 隐藏元素部分
+  dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
   domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
     (i) => `<div id="${i.key}"><div class="ctz-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
   ).join('');
-  dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
   // `<div class="ctz-content-left">${HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('')}</div>` +
   // `<div class="ctz-content-right"></div>`;
 
