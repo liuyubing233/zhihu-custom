@@ -236,12 +236,12 @@
             </label>
             <div class="ctz-flex-wrap" style="align-items: center">
               <span>悬浮收起按钮位置，数字越大离右侧越远：</span>
-              <input name="suspensionPickupRight" type="number" class="ctz-i-change" style="width: 80px;" />
+              <input name="suspensionPickupRight" type="number" class="ctz-i-change" style="width: 80px" />
             </div>
             <div>
               <div class="ctz-label">
                 <span>信息模块悬浮</span>
-                <span class="ctz-commit" style="margin-left: 12px;">拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span>
+                <span class="ctz-commit" style="margin-left: 12px">拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span>
               </div>
               <div class="ctz-checkbox-group">
                 <label class="ctz-checkbox">
@@ -313,12 +313,10 @@
             <span>此部分设置在推荐列表和回答中均可生效</span>
           </div>
           <div class="ctz-set-content">
-            <div class="ctz-flex-wrap">
-              <label>
-                <span class="ctz-label">屏蔽选自盐选专栏的内容</span>
-                <input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />
-              </label>
-            </div>
+            <label class="ctz-checkbox">
+              <input class="ctz-i" name="removeFromYanxuan" type="checkbox" value="on" />
+              <div>屏蔽选自盐选专栏的内容</div>
+            </label>
           </div>
         </div>
 
@@ -328,49 +326,71 @@
             <span>此部分设置只在首页列表生效</span>
           </div>
           <div class="ctz-set-content">
-            <div>
-              <label style="display: flex; align-items: center">
-                <span class="ctz-label">屏蔽顶部活动推广</span>
-                <input class="ctz-i" name="removeTopAD" type="checkbox" value="on" />
-              </label>
-            </div>
+            <label class="ctz-checkbox">
+              <input class="ctz-i" name="removeTopAD" type="checkbox" value="on" />
+              <div>屏蔽顶部活动推广</div>
+            </label>
+
+            <label class="ctz-checkbox">
+              <input class="ctz-i" name="removeMyOperateAtFollow" type="checkbox" value="on" />
+              <div>关注列表屏蔽自己的操作</div>
+            </label>
 
             <div class="ctz-filter-follow">
               <div class="ctz-label">关注列表关注人操作屏蔽</div>
-              <div class="ctz-flex-wrap">
-                <label><input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />赞同回答</label>
-                <label><input class="ctz-i" name="removeFollowVoteArticle" type="checkbox" value="on" />赞同文章</label>
-                <label><input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />关注问题</label>
+              <div class="ctz-checkbox-group">
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />
+                  <div>赞同回答</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeFollowVoteArticle" type="checkbox" value="on" />
+                  <div>赞同文章</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />
+                  <div>关注问题</div>
+                </label>
               </div>
             </div>
 
-            <div class="ctz-filter-me">
-              <label style="display: flex; align-items: center">
-                <span class="ctz-label">关注列表屏蔽自己的操作</span>
-                <input class="ctz-i" name="removeMyOperateAtFollow" type="checkbox" value="on" />
-              </label>
-            </div>
-
             <div class="ctz-filter-type">
-              <div class="ctz-label">列表类别屏蔽</div>
-              <div class="ctz-commit" style="line-height: 22px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</div>
-              <div class="ctz-flex-wrap">
-                <label><input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />邀请回答</label>
-                <label><input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />商业推广</label>
-                <label><input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />文章</label>
-                <label><input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />视频</label>
-                <label><input class="ctz-i" name="removeItemAboutPin" type="checkbox" value="on" />想法</label>
+              <div class="ctz-label">
+                列表类别屏蔽
+                <span class="ctz-commit" style="margin-left: 12px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</span>
+              </div>
+              <div class="ctz-checkbox-group">
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />
+                  <div>邀请回答</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeItemAboutAD" type="checkbox" value="on" />
+                  <div>商业推广</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeItemAboutArticle" type="checkbox" value="on" />
+                  <div>文章</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeItemAboutVideo" type="checkbox" value="on" />
+                  <div>视频</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeItemAboutPin" type="checkbox" value="on" />
+                  <div>想法</div>
+                </label>
               </div>
             </div>
 
             <div class="ctz-filter-list-vote">
-              <label style="display: flex; align-items: center">
-                <span class="ctz-label">列表低赞内容屏蔽</span>
+              <label class="ctz-checkbox">
                 <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
+                <div>列表低赞内容屏蔽</div>
               </label>
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
-                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />
+                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
                 的内容
               </div>
             </div>
@@ -382,29 +402,34 @@
             <span>此部分设置只在回答页面生效</span>
           </div>
           <div class="ctz-set-content">
-            <div class="ctz-flex-wrap">
-              <label>
-                <span class="ctz-label">屏蔽「匿名用户」回答</span>
-                <input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" />
-              </label>
-            </div>
+            <label class="ctz-checkbox">
+              <input class="ctz-i" name="removeAnonymousAnswer" type="checkbox" value="on" />
+              <div>屏蔽「匿名用户」回答</div>
+            </label>
 
             <div class="ctz-filter-defail-tag">
               <div class="ctz-label">屏蔽带有以下标签的回答</div>
-              <div class="ctz-flex-wrap">
-                <label><input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />带有虚构创作</label>
-                <label><input class="ctz-i" name="removeFromEBook" type="checkbox" value="on" />选自电子书</label>
+              <div class="ctz-checkbox-group">
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />
+                  <div>带有虚构创作</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeFromEBook" type="checkbox" value="on" />
+                  <div>选自电子书</div>
+                </label>
               </div>
             </div>
 
             <div class="ctz-filter-detail-vote">
-              <label style="display: flex; align-items: center">
-                <span class="ctz-label">回答内容低赞回答屏蔽</span>
+              <label class="ctz-checkbox">
                 <input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" />
+                <div>回答内容低赞回答屏蔽</div>
               </label>
+
               <div style="font-size: 12px; color: #999; line-height: 22px">
                 勾选后问题详情页将屏蔽点赞量少于
-                <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 100px; margin: 0 4px" />
+                <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
                 的回答
               </div>
             </div>
@@ -416,7 +441,7 @@
             标题屏蔽词
             <span>匹配位置：列表标题</span>
           </div>
-          <input name="inputBlockedWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" />
+          <input name="inputBlockedWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
           <span class="ctz-commit">点击屏蔽词即可删除</span>
           <div class="ctz-block-words-content"></div>
         </div>
@@ -425,7 +450,7 @@
             内容屏蔽词
             <span>匹配位置：列表、回答页内容</span>
           </div>
-          <input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" class="input-block-words" />
+          <input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
           <span class="ctz-commit">点击屏蔽词即可删除</span>
           <div class="ctz-block-words-content"></div>
         </div>
@@ -437,14 +462,14 @@
         <div id="CTZ_BASIS_BLOCK">
           <div class="ctz-title">黑名单设置</div>
           <div class="ctz-set-content">
-            <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">回答列表用户名后显示「屏蔽用户」按钮</span>
+            <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button ctz-button-primary">同步黑名单</button>
+            <label class="ctz-checkbox">
               <input class="ctz-i" name="showBlockUser" type="checkbox" value="on" />
+              <div>回答列表用户名后显示「屏蔽用户」按钮</div>
             </label>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">屏蔽黑名单用户发布的内容</span>
+            <label class="ctz-checkbox">
               <input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" />
+              <div>屏蔽黑名单用户发布的内容</div>
             </label>
             <div>
               <div class="ctz-label">黑名单列表</div>

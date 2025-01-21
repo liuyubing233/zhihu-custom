@@ -73,13 +73,13 @@
 
 .ctz-alert-red {
   text-align: center;
-  font-size: 14px;
-  color: @waring;
-  height: 24px;
-  line-height: 24px;
-  background-color: @waringBg;
-  border: 1px solid @waring;
-  border-radius: 12px;
+  font-size: 16px;
+  color: @red1;
+  height: 34px;
+  line-height: 34px;
+  background-color: @red01;
+  border: 1px solid @red1;
+  border-radius: 16px;
   margin: 0;
   font-weight: 400;
 }
@@ -162,18 +162,17 @@
   flex-wrap: wrap;
   cursor: default;
   & > span {
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    background: #fafafa;
-    border: 1px solid @gray2;
-    margin: 4px 4px 0 0;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid @gray04;
+    margin: 4px 8px 0 0;
     display: flex;
     align-items: center;
     cursor: pointer;
     &:hover {
-      color: @red1;
-      border-color: @red1;
+      color: @waring;
+      border-color: @waring;
     }
   }
 }
@@ -193,8 +192,7 @@
   }
 }
 
-.ctz-video-download,
-.ctz-loading {
+.ctz-video-download {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -205,6 +203,9 @@
 
 .ctz-loading {
   animation: loadingAnimation 2s infinite;
+  font-size: 24px;
+  color: @gray2;
+  cursor: none;
 }
 
 @keyframes loadingAnimation {
@@ -252,7 +253,7 @@
     text-align: center;
     border-radius: 8px;
     &:hover {
-      background: @gray2;
+      background: @gray04;
     }
   }
 }
@@ -563,13 +564,13 @@
   a {
     word-break: break-all;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid @gray04;
+    border-radius: 8px;
     cursor: pointer;
     &:hover {
-      background: rgba(33, 150, 243, 0.1);
+      background: @blue01;
     }
   }
 }
@@ -577,13 +578,11 @@
 [name='button_history_clear'],
 [name='button_history_clear'],
 #CTZ-BUTTON-SYNC-BLOCK {
-  min-width: 88px;
-  margin-bottom: 8px;
-  i {
-    top: 0px;
-    left: 28px;
-    color: #909090;
-  }
+  min-width: 100px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ctz-zhihu-key a {
@@ -711,5 +710,12 @@
   display: inline-flex;
   input {
     display: none;
+  }
+}
+
+#CTZ_FILTER_BLOCK_WORDS,
+#CTZ_FILTER_BLOCK_WORDS_CONTENT {
+  input {
+    width: 100%;
   }
 }

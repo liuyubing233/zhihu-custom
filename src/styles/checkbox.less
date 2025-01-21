@@ -56,11 +56,8 @@ label.ctz-checkbox {
 }
 
 .ctz-checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 24px;
-  align-items: center;
   label {
+    display: inline-flex;
     padding-right: 12px;
     div {
       margin-right: 12px;
@@ -74,6 +71,14 @@ label.ctz-checkbox {
 
     &:last-of-type::after {
       display: none;
+    }
+  }
+}
+
+#CTZ_HIDDEN {
+  .ctz-checkbox-group {
+    label {
+      margin-bottom: 8px;
     }
   }
 }
