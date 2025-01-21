@@ -2,7 +2,7 @@
 import { ETheme, EThemeDark, EThemeLight, IThemeConfigLight } from '../types/background.type';
 
 export const THEMES = [
-  { label: '浅色', value: ETheme.浅色, background: '#fff', color: '#000' },
+  { label: '浅色', value: ETheme.浅色, background: '#fff', color: '#69696e' },
   { label: '深色', value: ETheme.深色, background: '#000', color: '#fff' },
   { label: '自动', value: ETheme.自动, background: 'linear-gradient(to right, #fff, #000)', color: '#000' },
 ];

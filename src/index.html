@@ -25,7 +25,7 @@
           <a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a>
           <a href="#CTZ_BASIS_SIZE">页面尺寸</a>
           <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
-          <a href="#CTZ_BASIS_COLOR">颜色设置</a>
+          <a href="#CTZ_BASIS_COLOR">主题</a>
           <a href="#CTZ_BASIS_CONFIG">配置操作</a>
         </div>
       </div>
@@ -69,23 +69,23 @@
         <div id="CTZ_BASIS_DEFAULT">
           <div class="ctz-title">基本设置</div>
           <div class="ctz-set-content">
-            <label class="ctz-flex-wrap">
+            <label class="ctz-checkbox">
               <input class="ctz-i" name="hiddenOpenButton" type="checkbox" value="on" />
-              <span class="ctz-checkbox-text">隐藏修改器唤醒图标 ⚙︎</span>
+              <div>隐藏打开修改器图标 ⚙︎</div>
             </label>
 
-            <label class="ctz-flex-wrap">
+            <label class="ctz-checkbox">
               <input class="ctz-i" name="hotKey" type="checkbox" value="on" />
-              <span class="ctz-checkbox-text">
-                快捷键唤起编辑器
+              <div>
+                快捷键打开修改器
                 <span class="key-shadow">></span>
                 (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
-              </span>
+              </div>
             </label>
 
-            <label class="ctz-flex-wrap">
+            <label class="ctz-checkbox">
               <input class="ctz-i" name="globalTitleRemoveMessage" type="checkbox" value="on" />
-              <span class="ctz-checkbox-text">去除浏览器标签上<b>XX条私信/未读消息</b>的提示</span>
+              <div>去除浏览器标签上<b>XX条私信/未读消息</b>的提示</div>
             </label>
 
             <div>
@@ -160,9 +160,9 @@
           <div class="ctz-set-content">
             <!-- 页面内容宽度 -->
             <div id="CTZ_VERSION_RANGE_ZHIHU"></div>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">评论弹窗匹配页面宽度</span>
+            <label class="ctz-checkbox">
               <input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" />
+              <div>评论弹窗匹配页面宽度</div>
             </label>
             <!-- 页面字体大小 -->
             <div id="CTZ_FONT_SIZE_IN_ZHIHU"></div>
@@ -170,30 +170,57 @@
             <div>
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">回答和文章图片尺寸</div>
-                <label><input class="ctz-i" name="zoomImageType" type="radio" value="0" />默认</label>
-                <label><input class="ctz-i" name="zoomImageType" type="radio" value="1" />原图</label>
-                <label><input class="ctz-i" name="zoomImageType" type="radio" value="2" />自定义</label>
+                <div class="ctz-radio-group">
+                  <label>
+                    <input class="ctz-i" name="zoomImageType" type="radio" value="0" />
+                    <div>默认</div>
+                  </label>
+                  <label>
+                    <input class="ctz-i" name="zoomImageType" type="radio" value="1" />
+                    <div>原图</div>
+                  </label>
+                  <label>
+                    <input class="ctz-i" name="zoomImageType" type="radio" value="2" />
+                    <div>自定义</div>
+                  </label>
+                </div>
               </div>
               <div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none"></div>
             </div>
             <div>
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">图片最大高度限制</div>
-                <label><input class="ctz-i" name="zoomImageHeight" type="radio" value="0" />不限制</label>
-                <label><input class="ctz-i" name="zoomImageHeight" type="radio" value="1" />限制</label>
-                <span class="ctz-commit">限制图片最大高度后，图片将按照高度等比例缩放</span>
+                <div class="ctz-radio-group">
+                  <label>
+                    <input class="ctz-i" name="zoomImageHeight" type="radio" value="0" />
+                    <div>不限制</div>
+                  </label>
+                  <label>
+                    <input class="ctz-i" name="zoomImageHeight" type="radio" value="1" />
+                    <div>限制</div>
+                  </label>
+                </div>
+                <span class="ctz-commit" style="margin-left: 12px">限制图片最大高度后，图片将按照高度等比例缩放</span>
               </div>
               <div id="CTZ_IMAGE_HEIGHT_CUSTOM" style="display: none"></div>
             </div>
-            <label class="ctz-flex-wrap">
-              <span class="ctz-label">使用弹窗打开动图</span>
+            <label class="ctz-checkbox">
               <input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" />
+              <div>弹窗打开动图</div>
             </label>
             <div>
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">列表视频回答的视频内容尺寸</div>
-                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />默认</label>
-                <label><input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />自定义</label>
+                <div class="ctz-radio-group">
+                  <label>
+                    <input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />
+                    <div>默认</div>
+                  </label>
+                  <label>
+                    <input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />
+                    <div>自定义</div>
+                  </label>
+                </div>
               </div>
               <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM"></div>
             </div>
@@ -203,35 +230,35 @@
         <div id="CTZ_BASIS_FLOAT">
           <div class="ctz-title">悬浮模块</div>
           <div class="ctz-set-content">
-            <div class="ctz-flex-wrap">
-              <label>
-                <span class="ctz-label">回答内容「收起」按钮悬浮</span>
-                <input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" />
-              </label>
-            </div>
+            <label class="ctz-checkbox">
+              <input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" />
+              <div>回答内容「收起」按钮悬浮</div>
+            </label>
             <div class="ctz-flex-wrap" style="align-items: center">
               <span>悬浮收起按钮位置，数字越大离右侧越远：</span>
-              <input name="suspensionPickupRight" type="number" class="ctz-i-change" />
+              <input name="suspensionPickupRight" type="number" class="ctz-i-change" style="width: 80px;" />
             </div>
             <div>
-              <div class="ctz-label">信息模块悬浮</div>
-              <div class="ctz-commit">拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</div>
-              <div class="ctz-flex-wrap">
-                <label>
+              <div class="ctz-label">
+                <span>信息模块悬浮</span>
+                <span class="ctz-commit" style="margin-left: 12px;">拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span>
+              </div>
+              <div class="ctz-checkbox-group">
+                <label class="ctz-checkbox">
                   <input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />
-                  首页列表切换
+                  <div>首页列表切换</div>
                 </label>
-                <label>
+                <label class="ctz-checkbox">
                   <input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />
-                  顶部发现模块
+                  <div>顶部发现模块</div>
                 </label>
-                <label>
+                <label class="ctz-checkbox">
                   <input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />
-                  个人中心模块
+                  <div>个人中心模块</div>
                 </label>
-                <label>
+                <label class="ctz-checkbox">
                   <input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />
-                  搜索栏模块
+                  <div>搜索栏模块</div>
                 </label>
               </div>
             </div>
@@ -239,7 +266,7 @@
         </div>
 
         <div id="CTZ_BASIS_COLOR">
-          <div class="ctz-title">颜色设置</div>
+          <div class="ctz-title">主题</div>
           <div class="ctz-set-content">
             <div class="ctz-set-background"></div>
             <div class="ctz-set-color ctz-flex-wrap">
