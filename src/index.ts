@@ -13,7 +13,7 @@ import { needRedirect } from './init/redirect';
 import { myBackground, myCustomStyle } from './methods/background';
 import { initBlockedWords } from './methods/blocked-words';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
-import { changeDrawer } from './methods/dialog-open-close';
+import { changeDrawer } from './methods/drawer-open-close';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
 import { keydownNextImage } from './methods/image';
@@ -263,8 +263,6 @@ import { INNER_CSS } from './web-resources';
       // shift + . 唤醒关闭修改器弹窗
       if (event.key === '>' || event.key === '》') {
         changeDrawer()
-        // const nodeDialog = domById(ID_DIALOG);
-        // nodeDialog && nodeDialog.style.display === 'none' ? myDialog.open() : myDialog.hide();
       }
     }
     // esc 关闭弹窗

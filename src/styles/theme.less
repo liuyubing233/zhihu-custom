@@ -6,23 +6,25 @@
 @red01: rgba(255, 59, 48, 0.1);
 
 /** 橙色 **/
-// @origin1: rgb(0, 0,0);
 @origin1: rgb(255, 149, 0);
 @origin2: rgb(255, 159, 10);
 @origin3: rgb(201, 52, 0);
 @origin4: rgb(255, 179, 64);
+@origin01: rgba(255, 179, 64, 0.1);
 
 /** 黄色 **/
-@yellow1: rgb(255, 204, 0);
+@yellow1: rgb(160, 90, 0);
 @yellow2: rgb(255, 214, 10);
-@yellow3: rgb(160, 90, 0);
+@yellow3: rgb(255, 204, 0);
 @yellow4: rgb(255, 212, 38);
+@yellow01: rgba(160, 90, 0, 0.1);
 
 /** 绿色 **/
-@green1: rgb(40, 205, 65);
+@green1: rgb(0, 125, 27);
 @green2: rgb(50, 215, 75);
-@green3: rgb(0, 125, 27);
+@green3: rgb(40, 205, 65);
 @green4: rgb(49, 222, 75);
+@green01: rgba(0, 125, 27, 0.1);
 
 /** 蓝色 **/
 @blue1: rgb(0, 122, 255);
@@ -36,15 +38,51 @@
 @purple2: rgb(191, 90, 242);
 @purple3: rgb(173, 68, 171);
 @purple4: rgb(218, 143, 255);
+@purple01: rgba(175, 82, 222, 0.1);
 
 /** 灰色 **/
 @gray1: rgb(142, 142, 147);
 @gray2: rgb(145, 145, 157);
 @gray3: rgb(105, 105, 110);
 @gray4: rgb(152, 152, 157);
-
+@gray01: rgba(142, 142, 147, 0.1);
 @gray02: rgba(150, 162, 170, 0.2);
 @gray04: rgba(150, 162, 170, 0.4);
+
+// 背景色 - 红
+@background_1_1: #ffd6d4;
+@background_1_2: #f8ebeb;
+@openShadow_1: -6px 6px 12px #d3c8c8, 6px -6px 12px #ffffff;
+
+// 背景色 - 黄
+@background_2_1: #faf9de;
+@background_2_2: #fdfdf2;
+@openShadow_2: -6px 6px 12px #d7d7ce, 6px -6px 12px #ffffff;
+
+// 背景色 - 绿
+@background_3_1: #cce8cf;
+@background_3_2: #e5f1e7;
+@openShadow_3: -6px 6px 12px #c3cdc4, 6px -6px 12px #ffffff;
+
+// 背景色 - 灰
+@background_4_1: #eaeaef;
+@background_4_2: #f3f3f5;
+@openShadow_4: -6px 6px 12px #cfcfd0, 6px -6px 12px #ffffff;
+
+// 背景色 - 紫
+@background_5_1: #e9ebfe;
+@background_5_2: #f2f3fb;
+@openShadow_5: -6px 6px 12px #cecfd5, 6px -6px 12px #ffffff;
+
+// 背景色 - 橙
+@background_6_1: #ffd39b;
+@background_6_2: #ffe4c4;
+@openShadow_6: -6px 6px 12px #d9c2a7, 6px -6px 12px #ffffe1;
+
+// 背景色 - 浅橙
+@background_7_1: #ffe4c4;
+@background_7_2: #fff4e7;
+@openShadow_7: -6px 6px 12px #d9cfc4, 6px -6px 12px #ffffff;
 
 /** theme **/
 @bg: #fff;
@@ -54,12 +92,8 @@
 @hoverBorder: @blue1;
 
 @primary: @blue1;
-@primaryBg: @blue1;
-@primaryBorder: @blue1;
 @primaryHover: @blue3;
 @primaryActive: @blue1;
-
-@targetBg: @blue01;
 
 @activeBg: #d7d7d7;
 
@@ -71,3 +105,131 @@
 @fontSizeHead: 18px;
 
 @radiusCommon: 16px;
+
+.themeLight(@background1, @background2, @openShadow, @primary01, @primary1, @primary3) {
+  #CTZ_DRAWER_CONTENT,
+  #CTZ_DRAWER_FOOTER,
+  #CTZ_DRAWER_MENU .ctz-dropdown,
+  &#CTZ_OPEN_CLOSE {
+    background: @background2!important;
+  }
+  &#CTZ_OPEN_CLOSE {
+    .HoverDiv(@primary1);
+    box-shadow: @openShadow;
+  }
+
+  #CTZ_DRAWER_MENU > div {
+    &.target {
+      & > span {
+        color: @primary1;
+      }
+      color: @primary1;
+      background: @primary01;
+    }
+  }
+
+  #CTZ_DRAWER_MENU > div,
+  #CTZ_DRAWER_MENU .ctz-dropdown-icon,
+  #CTZ_DRAWER_MENU .ctz-dropdown a,
+  #CTZ_DRAWER_FOOTER .ctz-to-zhihu a:hover,
+  #CTZ_DRAWER_FOOTER .ctz-github a:hover {
+    .Hover(@primary1);
+  }
+
+  .ctz-button {
+    background: @background1;
+    &:hover {
+      border-color: @primary1;
+    }
+  }
+  .ctz-button.ctz-button-primary {
+    background: @primary1;
+    &:hover {
+      background: @primary3;
+    }
+    &:active {
+      background: @primary1;
+    }
+  }
+
+  .ctz-title {
+    &::before {
+      background: @primary1;
+    }
+    &::after {
+      border-color: @primary01;
+    }
+  }
+
+  &#CTZ_DRAWER label:hover,
+  #CTZ_BACKGROUND > label div:hover,
+  #CTZ_BACKGROUND_LIGHT > label div:hover,
+  #CTZ_BACKGROUND_DARK > label div:hover {
+    color: @primary1!important;
+  }
+  .ctz-black-item .ctz-remove-block:hover,
+  .ctz-black-item a:hover {
+    color: @primary1;
+  }
+
+  #CTZ_TITLE_ICO label input:checked + img,
+  #CTZ_BACKGROUND > label input:checked + div,
+  #CTZ_BACKGROUND_LIGHT > label input:checked + div,
+  #CTZ_BACKGROUND_DARK > label input:checked + div,
+  #CTZ_BACKGROUND > label div:hover,
+  #CTZ_BACKGROUND_LIGHT > label div:hover,
+  #CTZ_BACKGROUND_DARK > label div:hover {
+    border-color: @primary1;
+  }
+
+  label.ctz-checkbox {
+    input:checked + div::before {
+      color: @background2;
+      background: @primary1;
+      border-color: @primary1;
+    }
+    &:hover {
+      color: @primary1;
+      div::before {
+        border-color: @primary1;
+      }
+    }
+  }
+
+  .ctz-radio-group {
+    input:checked + div {
+      background: @background2;
+      color: @primary1;
+      border-color: @primary1;
+      &::after {
+        background: @primary1;
+      }
+      &::before {
+        background: @primary1;
+      }
+    }
+  }
+}
+
+// 主题颜色配置
+[theme-light='1'] {
+  .themeLight(@background_1_1, @background_1_2, @openShadow_1, @red01, @red1, @red3);
+}
+[theme-light='2'] {
+  .themeLight(@background_2_1, @background_2_2, @openShadow_2, @yellow01, @yellow1, @yellow3);
+}
+[theme-light='3'] {
+  .themeLight(@background_3_1, @background_3_2, @openShadow_3, @green01, @green1, @green3);
+}
+[theme-light='4'] {
+  .themeLight(@background_4_1, @background_4_2, @openShadow_4, @gray01, @gray1, @gray3);
+}
+[theme-light='5'] {
+  .themeLight(@background_5_1, @background_5_2, @openShadow_5, @purple01, @purple1, @purple3);
+}
+[theme-light='6'] {
+  .themeLight(@background_6_1, @background_6_2, @openShadow_6, @origin01, @origin1, @origin3);
+}
+[theme-light='7'] {
+  .themeLight(@background_7_1, @background_7_2, @openShadow_7, @origin01, @origin1, @origin3);
+}

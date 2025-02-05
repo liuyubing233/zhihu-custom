@@ -1,16 +1,6 @@
 import { myStorage } from '../commons/storage';
-import { dom, fnAppendStyle, fnReturnStr } from '../commons/tools';
-import {
-  CLASS_INPUT_CLICK,
-  CLASS_MESSAGE,
-  ID_DIALOG,
-  INPUT_NAME_THEME,
-  INPUT_NAME_THEME_DARK,
-  INPUT_NAME_ThEME_LIGHT,
-  THEMES,
-  THEME_CONFIG_DARK,
-  THEME_CONFIG_LIGHT,
-} from '../configs';
+import { dom, domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
+import { CLASS_INPUT_CLICK, CLASS_MESSAGE, INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, THEMES, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { ETheme, EThemeDark, EThemeLight } from '../types';
 
 /** 匹配类名以i开始部分 */
@@ -23,12 +13,27 @@ const appendPrefix = (str: string, mapCB: (i: string) => string) => str.split(',
 export const myBackground = {
   init: async function () {
     const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认, colorText1 } = await myStorage.getConfig();
+    const useDark = await isDark();
     const getBackground = async () => {
-      if (await isDark()) return this.dark(themeDark);
+      if (useDark) return this.dark(themeDark);
       if (+themeLight === EThemeLight.默认) return this.default();
       return this.light(themeLight);
     };
     fnAppendStyle('CTZ_STYLE_BACKGROUND', (await getBackground()) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
+
+    const domDrawer = domById('CTZ_DRAWER')!;
+    const domOpen = domById('CTZ_OPEN_CLOSE')!;
+    if (useDark) {
+      domDrawer.setAttribute('theme-dark', `${themeDark}`);
+      domOpen.setAttribute('theme-dark', `${themeDark}`);
+      domDrawer.removeAttribute('theme-light');
+      domOpen.removeAttribute('theme-light');
+    } else {
+      domDrawer.setAttribute('theme-light', `${themeLight}`);
+      domOpen.setAttribute('theme-light', `${themeLight}`);
+      domDrawer.removeAttribute('theme-dark');
+      domOpen.removeAttribute('theme-dark');
+    }
   },
   doSetCSS: function (bg1: string, bg2: string): string {
     return (
@@ -63,7 +68,7 @@ export const myBackground = {
       appendPrefix(
         this.doSetCSS(background, background2) +
           // 白色字体部分
-          `#${ID_DIALOG},.${CLASS_MESSAGE},#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-footer,#CTZ_CLOSE_DIALOG,.ctz-commit,#CTZ_OPEN_BUTTON,.ctz-export-collection-box p` +
+          `.${CLASS_MESSAGE},.ctz-export-collection-box p` +
           `,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.Modal-title` +
           `,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button` +
           `,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div` +
@@ -95,8 +100,8 @@ export const myBackground = {
           `.css-1tu59u4,.ZDI,.ZDI--PencilCircleFill24,.Zi,.Zi--ArrowDown{fill: deepskyblue!important;}` +
           // 存在于深夜模式下的额外的背景色1
           `.ztext pre,.ztext code{background: ${background}!important;}` +
-          // 边框颜色
-          `#${ID_DIALOG}{border: 1px solid ${background2}}` +
+          // // 边框颜色
+          // `#${ID_DIALOG}{border: 1px solid ${background2}}` +
           // 暗黑模式下的自定义按钮颜色
           `.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
         (i) => `html[data-theme=dark] ${i}` // 添加 html[data-theme=dark] 前缀
@@ -105,8 +110,8 @@ export const myBackground = {
   },
   /** 使用背景色1的元素名称 */
   cssBG1:
-    `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span` +
-    `,body,.Input-wrapper,.toolbar-section button:hover` +
+    // `#${ID_DIALOG},.ctz-content-right>div:nth-of-type(2n),.ctz-content-left>a:hover,.ctz-black-item,.ctz-block-words-content>span` +
+    `body,.Input-wrapper,.toolbar-section button:hover` +
     `,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
     `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +
     `,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem` +
@@ -120,7 +125,8 @@ export const myBackground = {
     `,${appendClassStart('Tabs-container,EpisodeList-sectionItem')}`,
   /** 使用背景色2的元素名称 */
   cssBG2:
-    `#CTZ_MAIN input,#CTZ_MAIN textarea,.${CLASS_MESSAGE},.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
+    // `#CTZ_MAIN input,#CTZ_MAIN textarea,.ctz-content,.ctz-menu-top>a.target,.ctz-menu-top>a:hover span,#CTZ_OPEN_BUTTON,#CTZ_CLOSE_DIALOG:hover` +
+    `.${CLASS_MESSAGE}` +
     `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
     `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
     `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +

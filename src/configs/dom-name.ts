@@ -1,8 +1,6 @@
 import { IOptionItem, IRangeItem } from '../types';
 
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
-/** id: 设置弹窗 */
-export const ID_DIALOG = 'CTZ_DIALOG_MAIN';
 /** class: INPUT 点击元素类名 */
 export const CLASS_INPUT_CLICK = 'ctz-i';
 /** class: INPUT 修改操作元素类名 */

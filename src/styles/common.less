@@ -14,12 +14,12 @@
 }
 
 /** 内部有 DIV 的点击效果 */
-.HoverDiv() {
+.HoverDiv(@color: @hover, @background: @hoverBg) {
   cursor: pointer;
   &:hover {
     div {
-      background: @hoverBg;
-      color: @hover;
+      background: @background;
+      color: @color;
       font-weight: 600;
     }
   }
@@ -30,11 +30,11 @@
   }
 }
 
-.Hover() {
+.Hover(@color: @hover, @background: @hoverBg) {
   // cursor: pointer;
   &:hover {
-    background: @hoverBg;
-    color: @hover!important;
+    background: @background;
+    color: @color!important;
     font-weight: 600;
   }
 }
