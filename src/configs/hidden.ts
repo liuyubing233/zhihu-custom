@@ -16,6 +16,13 @@ export const HIDDEN_ARRAY: IHiddenArray = [
     content: [
       [
         {
+          label: '隐藏修改器弹出图标 ⚙︎',
+          value: 'hiddenOpenButton',
+          css: '#CTZ_OPEN_CLOSE{display:none!important;}'
+        }
+      ],
+      [
+        {
           label: '广告',
           value: 'hiddenAD',
           css: '.TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer,.Pc-Business-Card-PcTopFeedBanner{display: none!important;}',
