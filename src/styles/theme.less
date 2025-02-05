@@ -84,6 +84,41 @@
 @background_7_2: #fff4e7;
 @openShadow_7: -6px 6px 12px #d9cfc4, 6px -6px 12px #ffffff;
 
+// 深色主题色 - 深色模式默认
+@background_dark_0_1: #121212;
+@background_dark_0_2: #333333;
+@openShadow_dark_0: -6px 6px 12px #2b2b2b, 6px -6px 12px #3b3b3b;
+
+// 深色主题色 - 深色护眼一
+@background_dark_1_1: #15202b;
+@background_dark_1_2: #38444d;
+@openShadow_dark_1: -6px 6px 12px #303a41, 6px -6px 12px #404e59;
+
+// 深色主题色 - 深色护眼二
+@background_dark_2_1: #1f1f1f;
+@background_dark_2_2: #303030;
+@openShadow_dark_2: -6px 6px 12px #292929, 6px -6px 12px #373737;
+
+// 深色主题色 - 深色护眼三
+@background_dark_3_1: #272822;
+@background_dark_3_2: #383932;
+@openShadow_dark_3: -6px 6px 12px #30302b, 6px -6px 12px #40423a;
+
+// 深色主题色 - 深色蓝
+@background_dark_4_1: #1c0c59;
+@background_dark_4_2: #191970;
+@openShadow_dark_4: -6px 6px 12px #15155f, 6px -6px 12px #1d1d81;
+
+// 深色主题色 - 深色红
+@background_dark_5_1: #570d0d;
+@background_dark_5_2: #8b0000;
+@openShadow_dark_5: -6px 6px 12px #760000, 6px -6px 12px #a00000;
+
+// 深色主题色 - 深色绿
+@background_dark_6_1: #093333;
+@background_dark_6_2: #0c403f;
+@openShadow_dark_6: -6px 6px 12px #0a3636, 6px -6px 12px #0e4a48;
+
 /** theme **/
 @bg: #fff;
 
@@ -110,7 +145,8 @@
   #CTZ_DRAWER_CONTENT,
   #CTZ_DRAWER_FOOTER,
   #CTZ_DRAWER_MENU .ctz-dropdown,
-  &#CTZ_OPEN_CLOSE {
+  &#CTZ_OPEN_CLOSE,
+  .ctz-black-item {
     background: @background2!important;
   }
   &#CTZ_OPEN_CLOSE {
@@ -232,4 +268,26 @@
 }
 [theme-light='7'] {
   .themeLight(@background_7_1, @background_7_2, @openShadow_7, @origin01, @origin1, @origin3);
+}
+
+[theme-dark='0'] {
+  .themeLight(@background_dark_0_1, @background_dark_0_2, @openShadow_dark_0, @gray01, @gray1, @gray3);
+}
+[theme-dark='1'] {
+  .themeLight(@background_dark_1_1, @background_dark_1_2, @openShadow_dark_1, @gray01, @gray1, @gray3);
+}
+[theme-dark='2'] {
+  .themeLight(@background_dark_2_1, @background_dark_2_2, @openShadow_dark_2, @gray01, @gray1, @gray3);
+}
+[theme-dark='3'] {
+  .themeLight(@background_dark_3_1, @background_dark_3_2, @openShadow_dark_3, @gray01, @gray1, @gray3);
+}
+[theme-dark='4'] {
+  .themeLight(@background_dark_4_1, @background_dark_4_2, @openShadow_dark_4, @blue01, @blue1, @blue3);
+}
+[theme-dark='5'] {
+  .themeLight(@background_dark_5_1, @background_dark_5_2, @openShadow_dark_5, @red01, @red1, @red3);
+}
+[theme-dark='6'] {
+  .themeLight(@background_dark_6_1, @background_dark_6_2, @openShadow_dark_6,  @green01, @green1, @green3);
 }
