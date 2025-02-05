@@ -64,6 +64,7 @@
     width: 120px;
     @HeightMenuItem: 44px;
     & > div {
+      .Active();
       color: @gray1;
       position: relative;
       box-sizing: border-box;
@@ -78,16 +79,15 @@
       cursor: pointer;
       &:hover {
         background: @hoverBg;
-        .ctz-menu-choose {
-          color: @hover!important;
-          font-weight: 600;
-        }
+        color: @hover;
+        font-weight: 600;
       }
 
       &.target {
         & > span {
           color: @hover;
         }
+        color: @hover;
         background: @targetBg;
       }
     }
@@ -131,6 +131,8 @@
       box-shadow: 5px 5px 10px #e6e6e6, -5px -5px 10px #ffffff;
       height: 0;
       overflow: hidden;
+      color: @gray1;
+      font-weight: normal;
       a {
         .Hover();
         .Active();
@@ -287,4 +289,15 @@
   bottom: 0;
   transform: translateX(100vw);
   background: rgba(0, 0, 0, 0.5);
+}
+
+.ctz-filter-list-vote,
+.ctz-filter-detail-vote {
+  display: flex;
+  align-items: center;
+}
+
+.ctz-range-zoomImageSize,
+.ctz-range-zoomListVideoSize {
+  margin: 8px 0;
 }

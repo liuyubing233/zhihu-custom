@@ -33,7 +33,7 @@ export const myBlack = {
     return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
   },
   createItemContent: ({ id, name }: IBlockUserItem) => {
-    return `<a href="/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
+    return `<a href="https://www.zhihu.com/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
   },
   /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
   addButton: async function (event: HTMLElement, objMy?: any) {

@@ -7,7 +7,7 @@
 
 .ctz-title {
   font-weight: bold;
-  height: 48px;
+  min-height: 48px;
   font-size: @fontSizeHead;
   display: flex;
   overflow: hidden;
@@ -21,11 +21,20 @@
     }
   }
 
+  &::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: @blue1;
+    margin-right: 8px;
+    border-radius: 4px;
+  }
+
   &::after {
     content: '';
     flex: 1;
     height: 0;
-    border-bottom: 2px dotted @gray02;
+    border-bottom: 2px dotted @blue01;
     margin-left: 12px;
   }
 }
@@ -34,11 +43,6 @@
   & > div,
   & > label {
     margin-bottom: 12px;
-    // padding-bottom: 8px;
-    // border-bottom: 1px dashed #ddd;
-    // &:last-child {
-    //   border-bottom: 0;
-    // }
   }
 }
 
@@ -121,15 +125,6 @@
         border-color: @hover;
       }
     }
-  }
-}
-
-.ctz-set-background {
-  .ctz-commit {
-    color: #69696e;
-    padding: 12px 0 6px;
-    box-sizing: border-box;
-    font-size: 14px;
   }
 }
 
@@ -344,17 +339,14 @@
 
 // 默认功能
 #CTZ_DEFAULT_SELF {
-  & > div {
+  .ctz-commit {
+    font-size: 14px;
     line-height: 24px;
-    margin-bottom: 4px;
-    .ctz-commit {
-      font-weight: normal;
-    }
-    a {
-      color: @blue1;
-      &:hover {
-        color: #bbb;
-      }
+  }
+  a {
+    color: @blue1;
+    &:hover {
+      color: #bbb;
     }
   }
 }
@@ -578,11 +570,7 @@
 [name='button_history_clear'],
 [name='button_history_clear'],
 #CTZ-BUTTON-SYNC-BLOCK {
-  min-width: 100px;
   margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .ctz-zhihu-key a {

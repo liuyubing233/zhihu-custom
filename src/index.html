@@ -42,32 +42,13 @@
           <a href="#CTZ_FILTER_BLOCK_WORDS_CONTENT">内容屏蔽词</a>
         </div>
       </div>
-      <div data-href="#CTZ_BLACKLIST">
-        <span class="ctz-menu-choose">黑名单</span>
-        <!-- <span class="ctz-dropdown-icon">›</span> -->
-      </div>
-      <div data-href="#CTZ_VERSION">
-        <span class="ctz-menu-choose">内容尺寸</span>
-      </div>
-      <div data-href="#CTZ_THEME">
-        <span class="ctz-menu-choose">主题</span>
-      </div>
-      <div data-href="#CTZ_CONFIG">
-        <span class="ctz-menu-choose">配置操作</span>
-      </div>
-
-      <div data-href="#CTZ_HISTORY">
-        <span class="ctz-menu-choose">历史记录</span>
-        <span class="ctz-dropdown-icon">›</span>
-        <div class="ctz-dropdown">
-          <a href="#CTZ_HISTORY_LIST">推荐列表缓存</a>
-          <a href="#CTZ_HISTORY_VIEW">浏览历史记录</a>
-        </div>
-      </div>
-      <div data-href="#CTZ_DEFAULT">
-        <span class="ctz-menu-choose">默认功能</span>
-        <!-- <span class="ctz-dropdown-icon">›</span> -->
-      </div>
+      <div data-href="#CTZ_BLACKLIST">黑名单</div>
+      <div data-href="#CTZ_VERSION">内容尺寸</div>
+      <div data-href="#CTZ_THEME">主题颜色</div>
+      <div data-href="#CTZ_CONFIG">配置操作</div>
+      <div data-href="#CTZ_HISTORY_LIST">推荐列表缓存</div>
+      <div data-href="#CTZ_HISTORY_VIEW">浏览历史记录</div>
+      <div data-href="#CTZ_DEFAULT">默认功能</div>
     </div>
 
     <div id="CTZ_DRAWER_MAIN">
@@ -99,13 +80,13 @@
               <div class="ctz-flex-wrap">
                 <div class="ctz-label">修改浏览器标签名</div>
                 <input type="text" name="globalTitle" style="width: 300px" />
-                <button class="ctz-button ctz-button-primary" name="buttonConfirmTitle" style="margin: 0 8px">确认</button>
-                <button class="ctz-button" name="buttonResetTitle">还原</button>
+                <button class="ctz-button ctz-button-primary" name="buttonConfirmTitle" style="margin: 0 8px">确 认</button>
+                <button class="ctz-button" name="buttonResetTitle">还 原</button>
               </div>
             </div>
 
             <div>
-              <div class="ctz-label" style="margin-bottom: 8px">修改网页标题图片（图标可能会因为网络问题丢失）</div>
+              <div class="ctz-label" style="margin-bottom: 8px">修改网页标签图片</div>
               <div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div>
             </div>
           </div>
@@ -288,8 +269,8 @@
                 <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
                 <div>列表低赞内容屏蔽</div>
               </label>
-              <div style="font-size: 12px; color: #999; line-height: 22px">
-                勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
+              <div>
+                ，勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
                 <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
                 的内容
               </div>
@@ -308,7 +289,7 @@
             </label>
 
             <div class="ctz-filter-defail-tag">
-              <div class="ctz-label">屏蔽带有以下标签的回答</div>
+              <div class="ctz-label">屏蔽具有标签的回答内容</div>
               <div class="ctz-checkbox-group">
                 <label class="ctz-checkbox">
                   <input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />
@@ -327,8 +308,8 @@
                 <div>回答内容低赞回答屏蔽</div>
               </label>
 
-              <div style="font-size: 12px; color: #999; line-height: 22px">
-                勾选后问题详情页将屏蔽点赞量少于
+              <div>
+                ，勾选后问题详情页将屏蔽点赞量少于
                 <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
                 的回答
               </div>
@@ -342,7 +323,7 @@
             <span>匹配位置：列表标题</span>
           </div>
           <input name="inputBlockedWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
-          <span class="ctz-commit">点击屏蔽词即可删除</span>
+          <span class="ctz-commit" style="line-height: 24px">点击屏蔽词即可删除</span>
           <div class="ctz-block-words-content"></div>
         </div>
         <div id="CTZ_FILTER_BLOCK_WORDS_CONTENT">
@@ -351,7 +332,7 @@
             <span>匹配位置：列表、回答页内容</span>
           </div>
           <input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
-          <span class="ctz-commit">点击屏蔽词即可删除</span>
+          <span class="ctz-commit" style="line-height: 24px">点击屏蔽词即可删除</span>
           <div class="ctz-block-words-content"></div>
         </div>
       </div>
@@ -371,60 +352,52 @@
             <div>屏蔽黑名单用户发布的内容</div>
           </label>
           <div>
-            <div class="ctz-label">黑名单列表</div>
+            <div class="ctz-title">黑名单列表</div>
             <div id="CTZ-BLOCK-LIST"></div>
           </div>
         </div>
       </div>
 
-      <!-- 历史记录 -->
-      <div id="CTZ_HISTORY" style="display: none">
-        <div id="CTZ_HISTORY_LIST">
-          <div class="ctz-title">
-            推荐列表缓存
-            <span>最多缓存500条，包含已过滤项</span>
-          </div>
-          <button class="ctz-button" name="button_history_clear" data-id="list">清空推荐列表缓存</button>
-          <div class="ctz-set-content"></div>
+      <!-- 推荐列表缓存 -->
+      <div id="CTZ_HISTORY_LIST" style="display: none">
+        <div class="ctz-title">
+          推荐列表缓存
+          <span>最多缓存500条，包含已过滤项</span>
         </div>
-        <div id="CTZ_HISTORY_VIEW">
-          <div class="ctz-title">
-            浏览历史记录
-            <span>最多缓存500条</span>
-          </div>
-          <button class="ctz-button" name="button_history_clear" data-id="view">清空浏览历史记录</button>
-          <div class="ctz-set-content"></div>
+        <button class="ctz-button ctz-button-primary" name="button_history_clear" data-id="list">清 空</button>
+        <div class="ctz-set-content"></div>
+      </div>
+
+      <!-- 浏览历史记录 -->
+      <div id="CTZ_HISTORY_VIEW" style="display: none">
+        <div class="ctz-title">
+          浏览历史记录
+          <span>最多缓存500条</span>
         </div>
+        <button class="ctz-button ctz-button-primary" name="button_history_clear" data-id="view">清 空</button>
+        <div class="ctz-set-content"></div>
       </div>
 
       <!-- 默认功能 -->
       <div id="CTZ_DEFAULT" style="display: none">
-        <div class="ctz-title">
-          默认功能
-          <span>此部分功能为编辑器默认功能，不需要额外开启</span>
-        </div>
-        <div class="ctz-set-content">
-          <div id="CTZ_DEFAULT_SELF"></div>
-          <div class="ctz-zhihu-self">
-            <div class="ctz-zhihu-key">
-              更加方便的浏览，按
-              <span class="key-shadow">?</span>
-              （<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。
-              <a href="/settings/preference" target="_blank">前往开启快捷键功能</a>
-            </div>
+        <h5 class="ctz-alert-red ctz-need-fetch">默认功能，不需要额外开启</h5>
+        <div id="CTZ_DEFAULT_SELF"></div>
+        <div class="ctz-zhihu-self" style="margin-top: 42px">
+          <div class="ctz-zhihu-key">
+            更加方便的浏览，按
+            <span class="key-shadow">?</span>
+            （<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。
+            <a href="/settings/preference" target="_blank">前往开启快捷键功能</a>
           </div>
         </div>
       </div>
 
       <!-- 主题 -->
       <div id="CTZ_THEME" style="display: none">
-        <div class="ctz-title">主题</div>
-        <div class="ctz-set-content">
-          <div class="ctz-set-background"></div>
-          <div class="ctz-set-color ctz-flex-wrap">
-            <div class="ctz-label">修改文字颜色（例: #f7f9f9）</div>
-            <input type="text" class="ctz-i" name="colorText1" style="width: 200px" />
-          </div>
+        <div class="ctz-set-background"></div>
+        <div class="ctz-set-color">
+          <div class="ctz-title">修改文字颜色</div>
+          <input type="text" class="ctz-i" name="colorText1" style="width: 200px" placeholder="例如：#f7f9f9" />
         </div>
       </div>
 
@@ -505,9 +478,9 @@
         <div class="ctz-title">配置操作</div>
         <div class="ctz-set-content">
           <div class="ctz-flex-wrap ctz-config-buttons">
-            <button class="ctz-button" name="useSimple">启用极简模式</button>
+            <button class="ctz-button ctz-button-primary" name="useSimple">启用极简模式</button>
             <button class="ctz-button" name="configReset">恢复默认配置</button>
-            <button class="ctz-button" name="configExport">配置导出</button>
+            <button class="ctz-button ctz-button-primary" name="configExport">配置导出</button>
             <!-- <button class="ctz-button" name="configRemove">清空配置</button> -->
             <div id="IMPORT_BY_FILE">
               <input type="file" class="ctz-input-config-import" id="readTxt" accept=".txt" />
@@ -516,10 +489,10 @@
           </div>
 
           <div class="ctz-customize-css">
-            <div class="ctz-label">自定义样式</div>
+            <div class="ctz-title">自定义样式</div>
             <div style="display: flex">
-              <textarea name="textStyleCustom" placeholder="格式为CSS"></textarea>
-              <button class="ctz-button" name="styleCustom">确 定</button>
+              <textarea name="textStyleCustom" placeholder="内容为CSS"></textarea>
+              <button class="ctz-button ctz-button-primary" name="styleCustom">确 定</button>
             </div>
           </div>
         </div>

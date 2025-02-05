@@ -22,9 +22,16 @@ export const onChangeMenu = (event: MouseEvent) => {
 
   if (target.classList.contains('ctz-menu-choose')) {
     // 点击主菜单
-    const dataHref = target.parentElement!.getAttribute('data-href') || ''
+    const dataHref = target.parentElement!.getAttribute('data-href') || '';
     location.hash = dataHref;
     fnChangeMenu(target.parentElement as HTMLElement);
+    return;
+  }
+
+  if (target.getAttribute('data-href')) {
+    const dataHref = target.getAttribute('data-href') || '';
+    location.hash = dataHref;
+    fnChangeMenu(target as HTMLElement);
     return;
   }
 
