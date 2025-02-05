@@ -1,7 +1,8 @@
 import { myScroll } from '../commons/scroll-stop-on';
-import { domById } from '../commons/tools';
+import { domA, domById } from '../commons/tools';
 import { echoData } from './echo-data';
 import { echoHistory } from './history';
+import { CLASS_OPENED } from './menu';
 
 export const changeDrawer = () => {
   const nodeButton = domById('CTZ_OPEN_CLOSE')!;
@@ -16,6 +17,7 @@ export const changeDrawer = () => {
     myScroll.stop();
   } else {
     // 关闭
+    domA('.ctz-dropdown-icon').forEach((item) => item.classList.remove(CLASS_OPENED));
     domById('CTZ_DRAWER')!.style.transform = '';
     domById('CTZ_BLOCK')!.style.transform = '';
     nodeButton.setAttribute('data-close', '1');

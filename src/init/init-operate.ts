@@ -3,7 +3,7 @@ import { dom, domA, domById, domC, message } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CONFIG_DEFAULT } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
 import { myBlack } from '../methods/black';
-import { changeDrawer } from '../methods/dialog-open-close';
+import { changeDrawer } from '../methods/drawer-open-close';
 import { fnChanger } from '../methods/fn-changer';
 import { echoHistory } from '../methods/history';
 import { onChangeMenu } from '../methods/menu';

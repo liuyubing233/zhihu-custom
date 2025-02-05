@@ -9,7 +9,8 @@ export const initMenu = () => {
   fnChangeMenu(dom(`#CTZ_DRAWER_MENU>div[data-href="${chooseId || HEADER[0].href}"]`) as HTMLElement);
 };
 
-const CLASS_OPENED = 'ctz-dropdown-open';
+export const CLASS_OPENED = 'ctz-dropdown-open';
+
 export const onChangeMenu = (event: MouseEvent) => {
   const target = event.target as HTMLElement;
   if (target.classList.contains('ctz-dropdown-icon')) {
