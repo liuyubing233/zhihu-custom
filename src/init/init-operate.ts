@@ -38,7 +38,7 @@ export const initOperate = () => {
       return;
     }
   };
-  // dom('.ctz-menu-top')!.onclick = myMenu.click;
+
   dom('#CTZ_DRAWER_MENU')!.onclick = onChangeMenu;
   domA('.ctz-preview').forEach((item) => {
     item.onclick = function () {
@@ -58,12 +58,6 @@ export const initOperate = () => {
       echoHistory();
     };
   });
-
-  // 绑定元素事件
-  // const nodeOpenButton = domById('CTZ_OPEN_BUTTON');
-  // const nodeCloseDialog = domById('CTZ_CLOSE_DIALOG');
-  // nodeOpenButton && (nodeOpenButton.onclick = myDialog.open);
-  // nodeCloseDialog && (nodeCloseDialog.onclick = myDialog.hide);
 
   domById('CTZ_OPEN_CLOSE')!.onclick = changeDrawer;
   domById('CTZ_BLOCK')!.onclick = changeDrawer;

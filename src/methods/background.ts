@@ -220,9 +220,10 @@ export const addBackgroundSetting = () => {
       .join('');
 
   dom('.ctz-set-background')!.innerHTML =
+    `<div class="ctz-title">主题颜色</div>` +
     `<div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label)).join('')}</div>` +
-    `<div class="ctz-commit">浅色颜色选择:</div>` +
+    `<div class="ctz-title">浅色颜色选择</div>` +
     `<div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, '#000')}</div>` +
-    `<div class="ctz-commit">深色颜色选择:</div>` +
+    `<div class="ctz-title">深色颜色选择</div>` +
     `<div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, '#f7f9f9')}</div>`;
 };
