@@ -196,6 +196,8 @@ export interface IConfigHidden {
   hiddenTopicRightFooter?: boolean;
   /** 盐选作者平台 */
   hiddenYanXuanWriter?: boolean;
+  /** 问题查看全部回答 */
+  hiddenQuestionViewAll?: boolean;
 }
 
 /** 自定义黑名单列表内容 */

@@ -654,6 +654,13 @@
         ],
         [
           {
+            label: "查看全部回答",
+            value: "hiddenQuestionViewAll",
+            css: ".Question-mainColumn .ViewAll{display:none;}"
+          }
+        ],
+        [
+          {
             label: "回答人头像",
             value: "hiddenDetailAvatar",
             css: ".AnswerItem .AuthorInfo .AuthorInfo-avatarWrapper{display: none;}.AnswerItem .AuthorInfo .AuthorInfo-content{margin-left:0!important;}"
