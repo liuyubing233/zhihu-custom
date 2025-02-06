@@ -817,6 +817,11 @@
             label: "文章底部知乎热榜",
             value: "hiddenZhuanlanButtonHot",
             css: ".zhuanlan .Post-Sub .css-1ildg7g{display: none;}"
+          },
+          {
+            label: "内容所属专栏",
+            value: "hiddenZhuanlanContributions",
+            css: ".zhuanlan .PostIndex-Contributions{display: none;}"
           }
         ]
       ]
