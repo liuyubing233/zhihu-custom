@@ -22,9 +22,21 @@ export const initOperate = () => {
     const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CLICK)) {
       fnChanger(target);
+      return;
     }
+
+    if (target.classList.contains('ctz-reset-font-size')) {
+      // 字体大小重置
+      const inputName = target.name.replace('reset-', '');
+      const nodeInput = dom(`[name="${inputName}"]`) as HTMLInputElement;
+      nodeInput.value = ''
+      fnChanger(nodeInput);
+      return;
+    }
+
     if (target.classList.contains('ctz-button')) {
       myButtonOperation[target.name] && myButtonOperation[target.name]();
+      return;
     }
   };
   nodeContent.onchange = (e) => {

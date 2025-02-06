@@ -63,7 +63,14 @@ export const initHTML = () => {
   domById('CTZ_FONT_SIZE_IN_ZHIHU')!.innerHTML = FONT_SIZE_INPUT.map(
     (item) =>
       `<div class="ctz-flex-wrap">` +
-      item.map((i) => commonLabel(i.label) + `<input type="number" name="${i.value}" class="ctz-i-change" style="width: 80px;" />`).join('') +
+      item
+        .map(
+          (i) =>
+            commonLabel(i.label) +
+            `<input type="number" name="${i.value}" class="ctz-i-change" style="width: 100px;margin-right: 8px;" placeholder="例：18" />` +
+            `<button class="ctz-button ctz-reset-font-size" name="${i.reset}">重 置</button>`
+        )
+        .join('') +
       `</div>`
   ).join('');
 

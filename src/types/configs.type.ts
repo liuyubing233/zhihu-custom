@@ -351,19 +351,19 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 购物链接显示设置 0 1 2 */
   linkShopping?: '0' | '1' | '2';
   /** 列表标题文字大小 */
-  fontSizeForListTitle?: number;
+  fontSizeForListTitle?: string;
   /** 回答标题文字大小 */
-  fontSizeForAnswerTitle?: number;
+  fontSizeForAnswerTitle?: string;
   /** 文章标题文字大小 */
-  fontSizeForArticleTitle?: number;
+  fontSizeForArticleTitle?: string;
   /** 列表内容标准文字大小 */
-  fontSizeForList?: number;
+  fontSizeForList?: string;
   /** 回答内容标准文字大小 */
-  fontSizeForAnswer?: number;
+  fontSizeForAnswer?: string;
   /** 文章内容标准文字大小 */
-  fontSizeForArticle?: number;
+  fontSizeForArticle?: string;
   /** 内容行高 */
-  contentLineHeight?: number;
+  contentLineHeight?: string;
   /** 列表视频回答内容尺寸 */
   zoomListVideoType?: string;
   /** 列表视频回答内容缩放 */

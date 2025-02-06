@@ -193,21 +193,24 @@ export const myVersion = {
     /** 调整文字大小 */
     const xxxFontSize =
       // 列表文字大小
-      `.Topstory-body .RichContent-inner,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
-      `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent,.HotItem-excerpt--multiLine` +
-      `{font-size: ${fontSizeForList}px!important;}` +
+      fnReturnStr(
+        `.Topstory-body .RichContent-inner,.Topstory-body .ctz-list-item-time,.Topstory-body .CommentContent` +
+          `,.SearchResult-Card .RichContent-inner,.SearchResult-Card .CommentContent,.HotItem-excerpt--multiLine` +
+          `{font-size: ${fontSizeForList}px!important;}`,
+        !!fontSizeForList
+      ) +
       // 回答文字大小
-      `.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent{font-size: ${fontSizeForAnswer}px}` +
+      fnReturnStr(`.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent{font-size: ${fontSizeForAnswer}px}`, !!fontSizeForAnswer) +
       // 文章文字大小
-      `.zhuanlan .Post-RichTextContainer,.zhuanlan .ctz-article-create-time,.zhuanlan .CommentContent{font-size: ${fontSizeForArticle}px}` +
+      fnReturnStr(`.zhuanlan .Post-RichTextContainer,.zhuanlan .ctz-article-create-time,.zhuanlan .CommentContent{font-size: ${fontSizeForArticle}px}`, !!fontSizeForArticle) +
       // 文章标题文字大小
-      `.zhuanlan .Post-Main .Post-Title{font-size: ${fontSizeForArticleTitle}px;}` +
+      fnReturnStr(`.zhuanlan .Post-Main .Post-Title{font-size: ${fontSizeForArticleTitle}px;}`, !!fontSizeForArticleTitle) +
       // 列表标题文字大小
-      `.ContentItem-title,.HotItem-title{font-size: ${fontSizeForListTitle}px!important;}` +
+      fnReturnStr(`.ContentItem-title,.HotItem-title{font-size: ${fontSizeForListTitle}px!important;}`, !!fontSizeForListTitle) +
       // 回答标题文字大小
-      `.QuestionHeader-title{font-size: ${fontSizeForAnswerTitle}px!important;}` +
+      fnReturnStr(`.QuestionHeader-title{font-size: ${fontSizeForAnswerTitle}px!important;}`, !!fontSizeForAnswerTitle) +
       // 行高
-      `p {line-height: ${contentLineHeight || 24}px;}`;
+      fnReturnStr(`p {line-height: ${contentLineHeight}px;}`, !!contentLineHeight);
 
     /** 视频是否只显示链接 */
     const xxxVideoLink = fnReturnStr(
