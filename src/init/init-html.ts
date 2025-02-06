@@ -13,7 +13,7 @@ const commonLabel = (l?: string) => (l ? `<span class="ctz-label">${l}</span>` :
 const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return '';
   return `<div class="ctz-checkbox-group">${arrHidden
-    .map((item) => item.map((i) => `<label style="display: inline-flex;" class="ctz-checkbox">${commonCheckbox(i.value)}<div>${i.label}</div></label>`).join(''))
+    .map((item) => item.map((i) => `<label class="ctz-checkbox">${commonCheckbox(i.value)}<div>${i.label}</div></label>`).join(''))
     .join('<br>')}</div>`;
 };
 

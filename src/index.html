@@ -46,9 +46,9 @@
       <div data-href="#CTZ_VERSION">内容尺寸</div>
       <div data-href="#CTZ_THEME">主题颜色</div>
       <div data-href="#CTZ_CONFIG">配置操作</div>
+      <div data-href="#CTZ_DEFAULT">默认功能</div>
       <div data-href="#CTZ_HISTORY_LIST">推荐列表缓存</div>
       <div data-href="#CTZ_HISTORY_VIEW">浏览历史记录</div>
-      <div data-href="#CTZ_DEFAULT">默认功能</div>
     </div>
 
     <div id="CTZ_DRAWER_MAIN">
@@ -212,8 +212,20 @@
               <div>关注列表屏蔽自己的操作</div>
             </label>
 
-            <div class="ctz-filter-follow">
-              <div class="ctz-label">关注列表关注人操作屏蔽</div>
+            <div class="ctz-filter-list-vote">
+              <label class="ctz-checkbox">
+                <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
+                <div>列表低赞内容屏蔽</div>
+              </label>
+              <div>
+                ，勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
+                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
+                的内容
+              </div>
+            </div>
+
+            <div class="ctz-filter-follow ctz-flex-wrap">
+              <div class="ctz-label">关注列表过滤关注人操作：</div>
               <div class="ctz-checkbox-group">
                 <label class="ctz-checkbox">
                   <input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />
@@ -230,11 +242,8 @@
               </div>
             </div>
 
-            <div class="ctz-filter-type">
-              <div class="ctz-label">
-                列表类别屏蔽
-                <span class="ctz-commit" style="margin-left: 12px">勾选后「关注、推荐、搜索」将屏蔽所勾选的类别内容</span>
-              </div>
+            <div class="ctz-filter-type ctz-flex-wrap">
+              <div class="ctz-label">列表类别过滤</div>
               <div class="ctz-checkbox-group">
                 <label class="ctz-checkbox">
                   <input class="ctz-i" name="removeItemQuestionAsk" type="checkbox" value="on" />
@@ -258,18 +267,6 @@
                 </label>
               </div>
             </div>
-
-            <div class="ctz-filter-list-vote">
-              <label class="ctz-checkbox">
-                <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
-                <div>列表低赞内容屏蔽</div>
-              </label>
-              <div>
-                ，勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
-                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
-                的内容
-              </div>
-            </div>
           </div>
         </div>
         <div id="CTZ_FILTER_ANSWER" class="ctz-filter-block">
@@ -283,20 +280,6 @@
               <div>屏蔽「匿名用户」回答</div>
             </label>
 
-            <div class="ctz-filter-defail-tag">
-              <div class="ctz-label">屏蔽具有标签的回答内容</div>
-              <div class="ctz-checkbox-group">
-                <label class="ctz-checkbox">
-                  <input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />
-                  <div>带有虚构创作</div>
-                </label>
-                <label class="ctz-checkbox">
-                  <input class="ctz-i" name="removeFromEBook" type="checkbox" value="on" />
-                  <div>选自电子书</div>
-                </label>
-              </div>
-            </div>
-
             <div class="ctz-filter-detail-vote">
               <label class="ctz-checkbox">
                 <input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" />
@@ -307,6 +290,20 @@
                 ，勾选后问题详情页将屏蔽点赞量少于
                 <input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
                 的回答
+              </div>
+            </div>
+
+            <div class="ctz-filter-defail-tag ctz-flex-wrap">
+              <div class="ctz-label">屏蔽带有标签的回答内容</div>
+              <div class="ctz-checkbox-group">
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeUnrealAnswer" type="checkbox" value="on" />
+                  <div>带有虚构创作</div>
+                </label>
+                <label class="ctz-checkbox">
+                  <input class="ctz-i" name="removeFromEBook" type="checkbox" value="on" />
+                  <div>选自电子书</div>
+                </label>
               </div>
             </div>
           </div>
