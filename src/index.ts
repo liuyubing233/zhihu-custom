@@ -267,7 +267,6 @@ import { INNER_CSS } from './web-resources';
     }
     // esc 关闭弹窗
     if (event.key === 'Escape' && domById('CTZ_DRAWER_OPEN_CLOSE')!.getAttribute('data-close') === '0') {
-      // myDialog.hide();
       changeDrawer()
     }
     keydownNextImage(event);
