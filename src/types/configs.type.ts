@@ -198,6 +198,8 @@ export interface IConfigHidden {
   hiddenYanXuanWriter?: boolean;
   /** 问题查看全部回答 */
   hiddenQuestionViewAll?: boolean;
+  /** 文章内容所属专栏 */
+  hiddenZhuanlanContributions?:boolean;
 }
 
 /** 自定义黑名单列表内容 */
