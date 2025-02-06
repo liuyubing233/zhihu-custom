@@ -9,6 +9,7 @@ export const HIDDEN_ANSWER_TAG: Record<string, string> = {
 
 // 勾选隐藏对应内容
 export const HIDDEN_ARRAY: IHiddenArray = [
+  // 通用隐藏
   {
     key: 'CTZ_HIDDEN_COMMON',
     name: '通用隐藏',
@@ -18,8 +19,8 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         {
           label: '隐藏修改器弹出图标 ⚙︎',
           value: 'hiddenOpenButton',
-          css: '#CTZ_OPEN_CLOSE{display:none!important;}'
-        }
+          css: '#CTZ_OPEN_CLOSE{display:none!important;}',
+        },
       ],
       [
         {
@@ -113,6 +114,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  // 列表
   {
     key: 'CTZ_HIDDEN_LIST',
     name: '列表',
@@ -267,6 +269,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  // 问答
   {
     key: 'CTZ_HIDDEN_ANSWER',
     name: '问答',
@@ -327,6 +330,13 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           label: '问题标题卡片广告和榜单',
           value: 'hiddenQuestionAD',
           css: '.css-e69dqy,.Card.css-15hh8yc{display: none;}',
+        },
+      ],
+      [
+        {
+          label: '查看全部回答',
+          value: 'hiddenQuestionViewAll',
+          css: '.Question-mainColumn .ViewAll{display:none;}',
         },
       ],
       [
@@ -435,6 +445,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  // 文章
   {
     key: 'CTZ_HIDDEN_ARTICLE',
     name: '文章',
@@ -496,6 +507,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  // 用户主页
   {
     key: 'CTZ_HIDDEN_USER_HOME',
     name: '用户主页',
@@ -540,6 +552,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  // 收藏夹主页
   {
     key: 'CTZ_HIDDEN_USER_COLLECTIONS',
     name: '收藏夹主页',
@@ -574,6 +587,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  // 话题
   {
     key: 'CTZ_HIDDEN_TOPIC',
     name: '话题',
