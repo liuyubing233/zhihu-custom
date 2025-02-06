@@ -125,9 +125,9 @@ export const myCollectionExport = {
   element: `<button class="ctz-button" name="ctz-export-collection">生成PDF</button>` + `<p>仅对当前页内容进行导出</p>`,
   elementTypeSpan: (type: string) => {
     const typeObj: Record<string, string> = {
-      zvideo: '<span class="ctz-label-tag" style="color: #12c2e9;">视频</span>',
-      answer: '<span class="ctz-label-tag" style="color: #ec7259;">问答</span>',
-      article: '<span class="ctz-label-tag" style="color: #00965e;">文章</span>',
+      zvideo: '<b style="color: #ec7259">「问题」</b>',
+      answer: '<b style="color: #12c2e9">「视频」</b>',
+      article: '<b style="color: #00965e">「文章」</b>',
     };
     return typeObj[type] || '';
   },

@@ -7,9 +7,13 @@ export const initHistoryView = async () => {
   setTimeout(async () => {
     let name = '';
     const isQuestion = href.includes('www.zhihu.com/question/');
-    isQuestion && dom('.QuestionPage [itemprop="name"]') && (name = (dom('.QuestionPage [itemprop="name"]') as HTMLMetaElement)!.content);
-    href.includes('zhuanlan.zhihu.com/p/') && dom('.Post-Title') && (name = dom('.Post-Title')!.innerText);
-    href.includes('www.zhihu.com/zvideo/') && dom('.ZVideo .ZVideo-title') && (name = dom('.ZVideo .ZVideo-title')!.innerText);
+    isQuestion &&
+      dom('.QuestionPage [itemprop="name"]') &&
+      (name = `<b style="color: #ec7259">「问题」</b>${(dom('.QuestionPage [itemprop="name"]') as HTMLMetaElement)!.content}`);
+    href.includes('zhuanlan.zhihu.com/p/') && dom('.Post-Title') && (name = `<b style="color: #00965e">「文章」</b>${dom('.Post-Title')!.innerText}`);
+    href.includes('www.zhihu.com/zvideo/') &&
+      dom('.ZVideo .ZVideo-title') &&
+      (name = `<b style="color: #12c2e9">「视频」</b>${dom('.ZVideo .ZVideo-title')!.innerText}`);
 
     if (!name) {
       initHistoryView();

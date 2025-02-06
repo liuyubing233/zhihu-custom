@@ -41,10 +41,10 @@ export const BASIC_SHOW_CONTENT: ICommonContent[] = [
   {
     label:
       `<b>列表</b>标题类别显示` +
-      `<span class="ctz-label-tag ctz-label-tag-Answer">问答</span>` +
-      `<span class="ctz-label-tag ctz-label-tag-Article">文章</span>` +
-      `<span class="ctz-label-tag ctz-label-tag-ZVideo">视频</span>` +
-      `<span class="ctz-label-tag ctz-label-tag-Pin">想法</span>`,
+      `<b style="color: #ec7259">「问题」</b>` +
+      `<b style="color: #00965e">「文章」</b>` +
+      `<b style="color: #12c2e9">「视频」</b>` +
+      `<b style="color: #9c27b0">「想法」</b>`,
     value: 'questionTitleTag',
   },
   { label: '<b>列表</b>更多「···」按钮移动到最右侧', value: 'fixedListItemMore' },

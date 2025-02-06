@@ -57,7 +57,7 @@ label.ctz-checkbox {
 
 .ctz-checkbox-group {
   label {
-    display: inline-flex;
+    display: inline-flex !important;
     padding-right: 12px;
     div {
       margin-right: 12px;
@@ -80,5 +80,8 @@ label.ctz-checkbox {
     label {
       margin-bottom: 12px;
     }
+  }
+  & > div {
+    margin-bottom: 24px;
   }
 }

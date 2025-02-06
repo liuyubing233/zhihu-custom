@@ -21,8 +21,9 @@ export const myBackground = {
     };
     fnAppendStyle('CTZ_STYLE_BACKGROUND', (await getBackground()) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
 
-    const domDrawer = domById('CTZ_DRAWER')!;
-    const domOpen = domById('CTZ_OPEN_CLOSE')!;
+    const domDrawer = domById('CTZ_DRAWER');
+    const domOpen = domById('CTZ_OPEN_CLOSE');
+    if (!domDrawer || !domOpen) return;
     if (useDark) {
       domDrawer.setAttribute('theme-dark', `${themeDark}`);
       domOpen.setAttribute('theme-dark', `${themeDark}`);
