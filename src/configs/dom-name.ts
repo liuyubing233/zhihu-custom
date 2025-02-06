@@ -1,4 +1,4 @@
-import { IOptionItem, IRangeItem } from '../types';
+import { IFontSizeSetOption, IRangeItem } from '../types';
 
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
 /** class: INPUT 点击元素类名 */
@@ -38,20 +38,20 @@ export const HEADER = [
   { href: '#CTZ_DEFAULT', value: '默认功能' },
 ];
 
-export const FONT_SIZE_INPUT: IOptionItem[][] = [
+export const FONT_SIZE_INPUT: IFontSizeSetOption[][] = [
   [
-    { value: 'fontSizeForListTitle', label: '列表标题文字大小' },
-    { value: 'fontSizeForList', label: '列表内容文字大小' },
+    { value: 'fontSizeForListTitle', label: '列表标题文字大小', reset: 'reset-fontSizeForListTitle' },
+    { value: 'fontSizeForList', label: '列表内容文字大小', reset: 'reset-fontSizeForList' },
   ],
   [
-    { value: 'fontSizeForAnswerTitle', label: '回答标题文字大小' },
-    { value: 'fontSizeForAnswer', label: '回答内容文字大小' },
+    { value: 'fontSizeForAnswerTitle', label: '回答标题文字大小', reset: 'reset-fontSizeForAnswerTitle' },
+    { value: 'fontSizeForAnswer', label: '回答内容文字大小', reset: 'reset-fontSizeForAnswer' },
   ],
   [
-    { value: 'fontSizeForArticleTitle', label: '文章标题文字大小' },
-    { value: 'fontSizeForArticle', label: '文章内容文字大小' },
+    { value: 'fontSizeForArticleTitle', label: '文章标题文字大小', reset: 'reset-fontSizeForArticleTitle' },
+    { value: 'fontSizeForArticle', label: '文章内容文字大小', reset: 'reset-fontSizeForArticle' },
   ],
-  [{ value: 'contentLineHeight', label: '内容行高' }],
+  [{ value: 'contentLineHeight', label: '内容行高', reset: 'reset-contentLineHeight' }],
 ];
 
 /** 版心最小宽度 */
