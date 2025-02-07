@@ -254,7 +254,9 @@
     contentRemoveKeywordSearch: false,
     topExportContent: true,
     zoomImageHeight: "0",
-    zoomImageHeightSize: "100"
+    zoomImageHeightSize: "100",
+    highPerformanceRecommend: true,
+    highPerformanceAnswer: true
   };
   var SAVE_HISTORY_NUMBER = 500;
   var HTML_HOOTS = ["www.zhihu.com", "zhuanlan.zhihu.com"];
@@ -1020,7 +1022,7 @@
     { label: "<b>用户主页</b>置顶「屏蔽用户」按钮", value: "userHomeTopBlockUser" }
   ];
   var HIGH_PERFORMANCE = [
-    { label: "推荐列表高性能模式（推荐列表内容最多保留30条，超出则删除之前内容）", value: "highPerformanceRecommend" },
+    { label: "推荐列表高性能模式（推荐列表内容最多保留50条，超出则删除之前内容）", value: "highPerformanceRecommend" },
     { label: "回答页高性能模式（最多保留30条回答，超出则删除之前回答）", value: "highPerformanceAnswer" }
   ];
   var ICO_URL = {
@@ -2918,14 +2920,18 @@
       if (highPerformanceRecommend) {
         setTimeout(() => {
           const nodes2 = domA(".TopstoryItem");
-          if (nodes2.length > 30) {
-            const nIndex = nodes2.length - 30;
+          if (nodes2.length > 50) {
+            const nodeLast = nodes2[nodes2.length - 1];
+            const yLastPrev = nodeLast.getBoundingClientRect().y;
+            const yDocument = document.documentElement.scrollTop;
+            const nIndex = nodes2.length - 50;
             nodes2.forEach((item, index2) => {
-              if (index2 < nIndex) {
-                item.remove();
-              }
+              index2 < nIndex && item.remove();
             });
             this.index = this.index - nIndex;
+            const nNodeLast = nodes2[nodes2.length - 1];
+            const nYLast = nNodeLast.getBoundingClientRect().y;
+            window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
             fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
           }
         }, 500);

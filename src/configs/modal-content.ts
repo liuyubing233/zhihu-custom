@@ -67,7 +67,7 @@ export const BASIC_SHOW_CONTENT: ICommonContent[] = [
 ];
 
 export const HIGH_PERFORMANCE: ICommonContent[] = [
-  { label: '推荐列表高性能模式（推荐列表内容最多保留30条，超出则删除之前内容）', value: 'highPerformanceRecommend' },
+  { label: '推荐列表高性能模式（推荐列表内容最多保留50条，超出则删除之前内容）', value: 'highPerformanceRecommend' },
   { label: '回答页高性能模式（最多保留30条回答，超出则删除之前回答）', value: 'highPerformanceAnswer' },
 ];
 
