@@ -20,8 +20,8 @@ export interface IConfigHidden {
   hiddenItemActions?: boolean;
   /** 隐藏列表回答操作栏 - 底部悬浮 */
   hiddenItemActionsIsFixed?: boolean;
-  /** 隐藏回答操作文字 */
-  hiddenAnswerText?: boolean;
+  // /** 隐藏回答操作文字 */
+  // hiddenAnswerText?: boolean;
   /** 隐藏问题分享 */
   hiddenQuestionShare?: boolean;
   /** 隐藏问题话题 */

@@ -69,19 +69,19 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         },
       ],
       [
-        {
-          label: '回答操作文字',
-          value: 'hiddenAnswerText',
-          css:
-            '.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}' +
-            '.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}' +
-            '.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}' +
-            '.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}' +
-            '.VoteButton{color: #8590a6!important; }' +
-            '.VoteButton.is-active{color: #056de8!important;}' +
-            '.ContentItem-action{margin-left:8px!important;}' +
-            '.Search-questionFollowButton{display: none}',
-        },
+        // {
+        //   label: '回答操作文字',
+        //   value: 'hiddenAnswerText',
+        //   css:
+        //     '.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}' +
+        //     '.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}' +
+        //     '.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}' +
+        //     '.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}' +
+        //     '.VoteButton{color: #8590a6!important; }' +
+        //     '.VoteButton.is-active{color: #056de8!important;}' +
+        //     '.ContentItem-action{margin-left:8px!important;}' +
+        //     '.Search-questionFollowButton{display: none}',
+        // },
         {
           label: '回答隐藏用户信息下的附加信息，比如：你赞同过、XXX赞同了等...',
           value: 'hiddenWhoVoters',
@@ -263,7 +263,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '列表回答内容',
+          label: '列表内容',
           value: 'hiddenAnswers',
           css:
             '.Topstory-container .RichContent.is-collapsed .RichContent-inner,.HotItem-excerpt--multiLine' +
@@ -272,7 +272,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
             '{display: none;}',
         },
         {
-          label: '列表视频回答的内容',
+          label: '推荐、关注列表的视频',
           value: 'hiddenListVideoContent',
           css: '.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}',
         },
@@ -294,7 +294,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '关注列表关注人的操作',
+          label: '关注列表关注人操作',
           value: 'hiddenFollowAction',
           css: '.TopstoryItem-isFollow .FeedSource-firstline{display: none;}',
         },
@@ -400,7 +400,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '查看全部回答',
+          label: '查看全部回答按钮',
           value: 'hiddenQuestionViewAll',
           css: '.Question-mainColumn .ViewAll{display:none;}',
         },

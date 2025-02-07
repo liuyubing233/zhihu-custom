@@ -62,7 +62,7 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenHeader: true,
   hiddenHeaderScroll: true,
   hiddenItemActions: true,
-  hiddenAnswerText: true,
+  // hiddenAnswerText: true,
   hiddenQuestionShare: true,
   hiddenQuestionTag: true,
   hiddenQuestionActions: true,
