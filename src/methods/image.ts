@@ -37,7 +37,7 @@ export const keydownNextImage = (event: KeyboardEvent) => {
   const nodeImgDialog = dom('.css-ypb3io') as HTMLImageElement;
   if ((key === 'ArrowRight' || key === 'ArrowLeft') && nodeImgDialog) {
     const src = nodeImgDialog.src;
-    const nodeImage = domById('root')?.querySelector(`img[src="${src}"]`) || domById('root')?.querySelector(`img[data-original="${src}"]`);
+    const nodeImage = domById('root')!.querySelector(`img[src="${src}"]`) || domById('root')!.querySelector(`img[data-original="${src}"]`);
     const nodeContentInner = domP(nodeImage, 'class', 'RichContent-inner') || domP(nodeImage, 'class', 'Post-RichTextContainer') || domP(nodeImage, 'class', 'QuestionRichText');
     if (nodeContentInner) {
       const images = Array.from(nodeContentInner.querySelectorAll('img')) as HTMLImageElement[];

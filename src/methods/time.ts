@@ -72,7 +72,7 @@ export const addQuestionTime = async () => {
     resetQuestionTime();
     return;
   }
-  nodeBox?.appendChild(
+  nodeBox && nodeBox.appendChild(
     domC('div', {
       className: 'ctz-question-time',
       innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,

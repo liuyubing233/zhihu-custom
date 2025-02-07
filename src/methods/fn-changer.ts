@@ -7,7 +7,7 @@ import { appendHidden } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO, changeTitle } from './page-title';
-import { cacheHeader, changeSuspensionTab } from './suspension';
+import { cacheHeader, changeSuspensionTab, suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
 import { myVersion } from './version';
 
@@ -86,6 +86,8 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       initImagePreview();
     },
     globalTitleRemoveMessage: changeTitle,
+    suspensionPickUp: suspensionPickupAttribute,
+    suspensionPickupRight: suspensionPickupAttribute,
   };
   await myStorage.updateConfigItem(name, type === 'checkbox' ? checked : value);
   const nodeName = domById(name);

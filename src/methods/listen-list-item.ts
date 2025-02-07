@@ -136,7 +136,7 @@ export const myListenListItem = {
               dark
                 ? `${THEME_CONFIG_DARK[themeDark].background2}!important;`
                 : +themeLight === EThemeLight.默认
-                ? '#fff3d4!important;'
+                ? 'rgb(251,248,241)!important;'
                 : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`
             }`;
             const nodeActions = nodeItem.querySelector('.ContentItem-actions') as HTMLElement;

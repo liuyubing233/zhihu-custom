@@ -1,6 +1,6 @@
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
-import { dom, domA, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
+import { dom, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS } from './configs/dom-name';
 import { initData } from './init/init-data';
@@ -23,7 +23,6 @@ import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { initOneClickInvitation } from './methods/one-click-invitation';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './methods/print';
-import { suspensionPackUp } from './methods/suspension';
 import { addArticleTime, addQuestionTime } from './methods/time';
 import { topBlockUser, userHomeAnswers } from './methods/user-home-content';
 import { myVersion } from './methods/version';
@@ -36,7 +35,7 @@ import { INNER_CSS } from './web-resources';
 
   GM_registerMenuCommand('⚙️ 设置', () => {
     // myDialog.open();
-    changeDrawer()
+    changeDrawer();
   });
 
   const T0 = performance.now();
@@ -262,12 +261,12 @@ import { INNER_CSS } from './web-resources';
     if (hotKey) {
       // shift + . 唤醒关闭修改器弹窗
       if (event.key === '>' || event.key === '》') {
-        changeDrawer()
+        changeDrawer();
       }
     }
     // esc 关闭弹窗
     if (event.key === 'Escape' && domById('CTZ_OPEN_CLOSE')!.getAttribute('data-close') === '0') {
-      changeDrawer()
+      changeDrawer();
     }
     keydownNextImage(event);
   });
@@ -283,18 +282,4 @@ import { INNER_CSS } from './web-resources';
       clipboardData.setData('text/plain', text);
     }
   });
-
-  /** 页面滚动方法 */
-  window.addEventListener(
-    'scroll',
-    throttle(async () => {
-      const { suspensionPickUp } = await myStorage.getConfig();
-      if (suspensionPickUp) {
-        suspensionPackUp(domA('.List-item'));
-        suspensionPackUp(domA('.TopstoryItem'));
-        suspensionPackUp(domA('.AnswerCard'));
-      }
-    }, 100),
-    false
-  );
 })();
