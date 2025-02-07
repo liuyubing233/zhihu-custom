@@ -1,6 +1,6 @@
 @import './common.less';
 
-@WidthDrawer: 800px;
+@WidthDrawer: 900px;
 @WidthOpen: 40px;
 @WidthOpenReal: @WidthDrawer;
 @HeightFooter: 70px;
@@ -61,22 +61,20 @@
   }
 
   &_MENU {
-    width: 120px;
+    width: 160px;
+    overflow: hidden auto;
+    padding: 12px 12px 0 12px;
     @HeightMenuItem: 44px;
     & > div {
       .Active();
       .Hover();
       color: @gray1;
-      position: relative;
       box-sizing: border-box;
-      display: flex;
-      height: @HeightMenuItem;
       line-height: @HeightMenuItem;
       padding-left: 12px;
       border-radius: 12px;
       font-size: @fontSize;
-      margin: 12px 0 0 12px;
-      align-items: center;
+      margin-bottom: 12px;
       cursor: pointer;
 
       &.target {
@@ -89,8 +87,9 @@
     }
 
     .ctz-menu-choose {
-      flex: 1;
       .Active();
+      width: calc(100% - 40px);
+      display: inline-block;
     }
 
     .ctz-dropdown-icon {
@@ -100,7 +99,7 @@
       .MonUserSelect();
       width: 28px;
       height: 28px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 18px;
@@ -115,16 +114,9 @@
     .ctz-dropdown {
       .CommonTransition();
       transition-property: all;
-      position: absolute;
-      top: @HeightMenuItem;
-      right: 0;
-      background: @bg;
       z-index: 1;
       box-sizing: border-box;
-      padding: 0 12px;
-      width: 140px;
       border-radius: 12px;
-      box-shadow: 5px 5px 10px #e6e6e6, -5px -5px 10px #ffffff;
       height: 0;
       overflow: hidden;
       color: @gray1;
@@ -134,14 +126,16 @@
         .Active();
         display: block;
         border-radius: 16px;
-        padding: 0 12px;
+        padding-left: 12px;
+        margin-right: 12px;
         height: @HeightMenuItem;
         line-height: @HeightMenuItem;
+        cursor: pointer;
       }
     }
 
     .ctz-dropdown-open + .ctz-dropdown {
-      padding: 12px;
+      padding-bottom: 12px;
       height: auto;
     }
   }
