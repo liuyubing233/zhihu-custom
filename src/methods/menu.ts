@@ -38,7 +38,7 @@ export const onChangeMenu = (event: MouseEvent) => {
 
   if (target.nodeName === 'A') {
     // 点击子菜单
-    target.parentElement!.parentElement!.querySelector('.ctz-dropdown-icon')!.classList.remove(CLASS_OPENED);
+    // target.parentElement!.parentElement!.querySelector('.ctz-dropdown-icon')!.classList.remove(CLASS_OPENED);
     const chooseHref = (target as HTMLAnchorElement).hash;
     location.hash = chooseHref;
     initMenu();
