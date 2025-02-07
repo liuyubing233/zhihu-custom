@@ -211,6 +211,8 @@ export const CONFIG_DEFAULT: IPfConfig = {
   topExportContent: true,
   zoomImageHeight: '0',
   zoomImageHeightSize: '100',
+  highPerformanceRecommend: true,
+  highPerformanceAnswer: true,
 };
 
 /** 缓存的历史记录数量 */

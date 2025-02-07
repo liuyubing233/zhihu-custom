@@ -178,14 +178,26 @@ export const myListenListItem = {
     if (highPerformanceRecommend) {
       setTimeout(() => {
         const nodes = domA('.TopstoryItem');
-        if (nodes.length > 30) {
-          const nIndex = nodes.length - 30;
+        if (nodes.length > 50) {
+          // 查找最后一个元素显示位置，并在删除最前方元素后将页面位置调整回删除前，解决闪烁问题
+          const nodeLast = nodes[nodes.length - 1];
+          /** 删除前最后一个元素的位置 */
+          const yLastPrev = nodeLast.getBoundingClientRect().y;
+          /** 当前页面滚动位置 */
+          const yDocument = document.documentElement.scrollTop;
+
+          const nIndex = nodes.length - 50;
           nodes.forEach((item, index) => {
-            if (index < nIndex) {
-              item.remove();
-            }
+            index < nIndex && item.remove();
           });
           this.index = this.index - nIndex;
+
+          const nNodeLast = nodes[nodes.length - 1];
+          /** 删除元素后最后一个元素的位置 */
+          const nYLast = nNodeLast.getBoundingClientRect().y;
+          // 原页面滚动位置减去最后一个元素位置的差值，得出新的位置，解决闪烁问题
+          window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
+
           fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
         }
       }, 500);
