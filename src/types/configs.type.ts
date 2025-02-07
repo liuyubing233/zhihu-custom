@@ -18,6 +18,8 @@ export interface IConfigHidden {
   hiddenHeaderScroll?: boolean;
   /** 隐藏列表回答操作 */
   hiddenItemActions?: boolean;
+  /** 隐藏列表回答操作栏 - 底部悬浮 */
+  hiddenItemActionsIsFixed?: boolean;
   /** 隐藏回答操作文字 */
   hiddenAnswerText?: boolean;
   /** 隐藏问题分享 */
@@ -199,7 +201,19 @@ export interface IConfigHidden {
   /** 问题查看全部回答 */
   hiddenQuestionViewAll?: boolean;
   /** 文章内容所属专栏 */
-  hiddenZhuanlanContributions?:boolean;
+  hiddenZhuanlanContributions?: boolean;
+  /** 收藏夹列表操作栏 */
+  hiddenItemActionsCollection?: boolean;
+  /** 收藏夹列表操作栏 - 底部悬浮 */
+  hiddenItemActionsIsFixedCollection?: boolean;
+  /** 搜索页列表操作栏 */
+  hiddenItemActionsSearch?: boolean;
+  /** 搜索页列表操作栏 - 底部悬浮 */
+  hiddenItemActionsIsFixedSearch?: boolean;
+  /** 个人主页动态、回答、文章等操作栏 */
+  hiddenItemActionsUser?: boolean;
+  /** 个人主页动态、回答、文章等操作栏 - 底部悬浮 */
+  hiddenItemActionsIsFixedUser?: boolean;
 }
 
 /** 自定义黑名单列表内容 */

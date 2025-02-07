@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
+import { dom, domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
 import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, VERSION_MIN_WIDTH } from '../configs';
 import { EThemeDark, EThemeLight } from '../types';
 import { isDark } from './background';
@@ -60,6 +60,8 @@ export const myVersion = {
       fontSizeForArticleTitle,
       contentLineHeight,
       videoUseLink,
+      suspensionPickUp,
+      suspensionPickupRight,
     } = await myStorage.getConfig();
     const dark = await isDark();
 
@@ -222,8 +224,29 @@ export const myVersion = {
       videoUseLink
     );
 
+    const nodeContentBox =
+      domById('TopstoryContent') || dom('.Question-mainColumn') || domById('SearchMain') || dom('.Profile-mainColumn') || dom('.CollectionsDetailPage-mainColumn') || document.body;
+    let suspensionRight = +(suspensionPickupRight || 0);
+    if (nodeContentBox) {
+      suspensionRight = window.innerWidth - nodeContentBox.getBoundingClientRect().width - nodeContentBox.getBoundingClientRect().left + +(suspensionPickupRight || 0);
+    }
+    /** 收起按钮悬浮 */
+    const xxxSuspensionPickUp = fnReturnStr(`.ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question="true"]{right: ${suspensionRight}px;}`, suspensionPickUp);
+
     return (
-      xxxFontSize + xxxHighlight + xxxImage + xxxListMore + xxxShoppingLink + xxxShoppingLink + xxxSusHeader + xxxSusHomeTab + xxxTitleTag + xxxVideo + xxxVideoLink + xxxWidth
+      xxxFontSize +
+      xxxHighlight +
+      xxxImage +
+      xxxListMore +
+      xxxShoppingLink +
+      xxxShoppingLink +
+      xxxSusHeader +
+      xxxSusHomeTab +
+      xxxTitleTag +
+      xxxVideo +
+      xxxVideoLink +
+      xxxWidth +
+      xxxSuspensionPickUp
     );
   },
 };

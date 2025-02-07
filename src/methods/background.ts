@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { dom, domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
+import { dom, fnAppendStyle, fnReturnStr } from '../commons/tools';
 import { CLASS_INPUT_CLICK, CLASS_MESSAGE, INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, THEMES, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
 import { ETheme, EThemeDark, EThemeLight } from '../types';
 
@@ -21,19 +21,26 @@ export const myBackground = {
     };
     fnAppendStyle('CTZ_STYLE_BACKGROUND', (await getBackground()) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
 
-    const domDrawer = domById('CTZ_DRAWER');
-    const domOpen = domById('CTZ_OPEN_CLOSE');
-    if (!domDrawer || !domOpen) return;
+    // const domDrawer = domById('CTZ_DRAWER');
+    // const domOpen = domById('CTZ_OPEN_CLOSE');
+    const domHTML = dom('html');
+    if (!domHTML) return;
+    // if (!domDrawer || !domOpen) return;
     if (useDark) {
-      domDrawer.setAttribute('theme-dark', `${themeDark}`);
-      domOpen.setAttribute('theme-dark', `${themeDark}`);
-      domDrawer.removeAttribute('theme-light');
-      domOpen.removeAttribute('theme-light');
+      domHTML.setAttribute('theme-dark', `${themeDark}`);
+      domHTML.removeAttribute('theme-light');
+
+      // domDrawer.setAttribute('theme-dark', `${themeDark}`);
+      // domOpen.setAttribute('theme-dark', `${themeDark}`);
+      // domDrawer.removeAttribute('theme-light');
+      // domOpen.removeAttribute('theme-light');
     } else {
-      domDrawer.setAttribute('theme-light', `${themeLight}`);
-      domOpen.setAttribute('theme-light', `${themeLight}`);
-      domDrawer.removeAttribute('theme-dark');
-      domOpen.removeAttribute('theme-dark');
+      // domDrawer.setAttribute('theme-light', `${themeLight}`);
+      // domOpen.setAttribute('theme-light', `${themeLight}`);
+      // domDrawer.removeAttribute('theme-dark');
+      // domOpen.removeAttribute('theme-dark');
+      domHTML.setAttribute('theme-light', `${themeLight}`);
+      domHTML.removeAttribute('theme-dark');
     }
   },
   doSetCSS: function (bg1: string, bg2: string): string {

@@ -1,3 +1,5 @@
+@import './common.less';
+
 .Profile-mainColumn,
 .Collections-mainColumn {
   flex: 1;
@@ -27,4 +29,25 @@
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
+}
+
+// 知乎搜索页标题下的 XXX回答·XXX浏览
+.HotLanding-contentItemCount.HotLanding-contentItemCountWithoutSub {
+  margin-top: 12px;
+}
+
+// 悬浮收起按钮
+body[data-suspension-pickup='true'] {
+  .ContentItem-actions.Sticky.is-fixed {
+    button[data-zop-retract-question='true'] {
+      .Hover(@hover, #fff);
+      .Active();
+      position: fixed;
+      bottom: 50px;
+      background: #fff;
+      padding: 12px;
+      box-shadow: @openShadow_0;
+      border-radius: 12px;
+    }
+  }
 }

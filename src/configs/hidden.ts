@@ -114,6 +114,88 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
+  // 操作栏
+  {
+    key: 'CTZ_HIDDEN_ACTION',
+    name: '操作栏',
+    desc: '',
+    content: [
+      [
+        {
+          label: '推荐、关注列表操作栏',
+          value: 'hiddenItemActions',
+          css: '#TopstoryContent .RichContent .ContentItem-actions:not(.is-fixed) {visibility:hidden;height:0;padding:0;}',
+        },
+        {
+          label: '推荐、关注列表操作栏 - 底部悬浮',
+          value: 'hiddenItemActionsIsFixed',
+          css: '#TopstoryContent .RichContent .ContentItem-actions.is-fixed{bottom: -60px!important;}',
+        },
+      ],
+      [
+        {
+          label: '搜索页列表操作栏',
+          value: 'hiddenItemActionsSearch',
+          css: '#SearchMain .RichContent .ContentItem-actions:not(.is-fixed) {visibility:hidden;height:0;}',
+        },
+        {
+          label: '搜索页列表操作栏 - 底部悬浮',
+          value: 'hiddenItemActionsIsFixedSearch',
+          css: '#SearchMain .RichContent .ContentItem-actions.is-fixed{bottom: -60px!important;}',
+        },
+      ],
+      [
+        {
+          label: '回答页问题操作栏',
+          value: 'hiddenQuestionActions',
+          css: '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}',
+        },
+      ],
+      [
+        {
+          label: '回答页回答内容操作栏',
+          value: 'hiddenAnswerItemActions',
+          css: '.Question-mainColumn .RichContent .ContentItem-actions:not(.is-fixed) {visibility:hidden;height:0;}',
+        },
+        {
+          label: '回答页回答内容操作栏 - 底部悬浮',
+          value: 'hiddenFixedActions',
+          css: '.Question-mainColumn .RichContent .ContentItem-actions.is-fixed{bottom: -60px!important;}',
+        },
+      ],
+      [
+        {
+          label: '文章底部悬浮操作栏',
+          value: 'hiddenZhuanlanActions',
+          css: '.zhuanlan .RichContent-actions.is-fixed>.ContentItem-actions{display: none;}',
+        },
+      ],
+      [
+        {
+          label: '收藏夹列表操作栏',
+          value: 'hiddenItemActionsCollection',
+          css: '.CollectionsDetailPage-mainColumn .RichContent .ContentItem-actions:not(.is-fixed) {visibility:hidden;height:0;}',
+        },
+        {
+          label: '收藏夹列表操作栏 - 底部悬浮',
+          value: 'hiddenItemActionsIsFixedCollection',
+          css: '.CollectionsDetailPage-mainColumn .RichContent .ContentItem-actions.is-fixed{bottom: -60px!important;}',
+        },
+      ],
+      [
+        {
+          label: '个人主页动态、回答、文章等操作栏',
+          value: 'hiddenItemActionsUser',
+          css: '.Profile-mainColumn .RichContent .ContentItem-actions:not(.is-fixed) {visibility:hidden;height:0;}',
+        },
+        {
+          label: '个人主页动态、回答、文章等操作栏 - 底部悬浮',
+          value: 'hiddenItemActionsIsFixedUser',
+          css: '.Profile-mainColumn .RichContent .ContentItem-actions.is-fixed{bottom: -60px!important;}',
+        },
+      ],
+    ],
+  },
   // 列表
   {
     key: 'CTZ_HIDDEN_LIST',
@@ -181,23 +263,6 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '热门排序编号',
-          value: 'hiddenHotItemIndex',
-          css: '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}',
-        },
-        {
-          label: '热门"新"元素',
-          value: 'hiddenHotItemLabel',
-          css: '.HotItem-label{display: none;}',
-        },
-        {
-          label: '热门热度值',
-          value: 'hiddenHotItemMetrics',
-          css: '.HotItem-content .HotItem-metrics{display: none;}',
-        },
-      ],
-      [
-        {
           label: '列表回答内容',
           value: 'hiddenAnswers',
           css:
@@ -210,17 +275,6 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           label: '列表视频回答的内容',
           value: 'hiddenListVideoContent',
           css: '.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}',
-        },
-        {
-          label: '列表回答操作',
-          value: 'hiddenItemActions',
-          css:
-            '.Topstory-container .ContentItem-actions>span,.Topstory-container .ContentItem-actions>button,.Topstory-container .ContentItem-actions>div' +
-            ',.Topstory-container .ContentItem-actions>a,.TopstoryQuestionAskItem-writeAnswerButton,.TopstoryQuestionAskItem-hint' +
-            '{visibility:hidden!important;height:0!important;padding:0!important;}' +
-            '.TopstoryQuestionAskItem-hint{margin: 0!important;}' +
-            '.Topstory .ContentItem-actions{padding: 0!important;}' +
-            '.zhuanlan .ContentItem .ContentItem-actions:not(.Sticky){visibility:hidden!important;height:0!important;}',
         },
         {
           label: '列表图片',
@@ -240,7 +294,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '关注列表关注人操作栏',
+          label: '关注列表关注人的操作',
           value: 'hiddenFollowAction',
           css: '.TopstoryItem-isFollow .FeedSource-firstline{display: none;}',
         },
@@ -248,6 +302,23 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           label: '关注列表用户信息',
           value: 'hiddenFollowChooseUser',
           css: '.TopstoryItem-isFollow .AuthorInfo{display: none;}',
+        },
+      ],
+      [
+        {
+          label: '热门排序编号',
+          value: 'hiddenHotItemIndex',
+          css: '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}',
+        },
+        {
+          label: '热门"新"元素',
+          value: 'hiddenHotItemLabel',
+          css: '.HotItem-label{display: none;}',
+        },
+        {
+          label: '热门热度值',
+          value: 'hiddenHotItemMetrics',
+          css: '.HotItem-content .HotItem-metrics{display: none;}',
         },
       ],
       [
@@ -300,11 +371,6 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           label: '问题更多「...」按钮',
           value: 'hiddenQuestionMore',
           css: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
-        },
-        {
-          label: '问题操作栏',
-          value: 'hiddenQuestionActions',
-          css: '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}',
         },
         {
           label: '问题专题收录标签',
@@ -369,19 +435,6 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           label: '问题关注和被浏览数',
           value: 'hiddenQuestionSide',
           css: '.QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}',
-        },
-        {
-          label: '回答底部悬浮操作栏',
-          value: 'hiddenFixedActions',
-          css: '.zhihu .ContentItem .RichContent-actions.is-fixed,.zhihu .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}',
-        },
-        {
-          label: '回答内容操作栏',
-          value: 'hiddenAnswerItemActions',
-          css:
-            '.Question-main .ContentItem-actions>span,.Question-main .ContentItem-actions>button' +
-            ',.Question-main .ContentItem-actions>div,.Question-main .ContentItem-actions>a' +
-            '{visibility:hidden!important;height:0!important;padding:0!important;}',
         },
         {
           label: '赞赏按钮',
@@ -475,7 +528,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         {
           label: '文章作者头像',
           value: 'hiddenZhuanlanAvatarWrapper',
-          css: '.zhuanlan .AuthorInfo-avatarWrapper{display: none;}',
+          css: '.zhuanlan .AuthorInfo-avatarWrapper{display: none;}.zhuanlan .AuthorInfo-content{margin-left:0;}',
         },
         {
           label: '文章作者姓名',
@@ -491,13 +544,6 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           label: '文章作者关注按钮',
           value: 'hiddenZhuanlanFollowButton',
           css: '.zhuanlan .FollowButton{display: none;}',
-        },
-        {
-          label: '文章底部悬浮操作栏',
-          value: 'hiddenZhuanlanActions',
-          css:
-            '.RichContent-actions.is-fixed>.ContentItem-actions{display: none;}' +
-            '.zhuanlan .ContentItem .RichContent-actions.is-fixed,.zhuanlan .List-item .RichContent-actions.is-fixed{visibility: hidden!important;}',
         },
         {
           label: '文章底部知乎热榜',
@@ -557,11 +603,11 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
     ],
   },
-  // 收藏夹主页
+  // 收藏夹
   {
     key: 'CTZ_HIDDEN_USER_COLLECTIONS',
-    name: '收藏夹主页',
-    desc: '只在我的收藏夹主页隐藏相应内容',
+    name: '收藏夹',
+    desc: '只在我的收藏夹隐藏相应内容',
     content: [
       [
         {
