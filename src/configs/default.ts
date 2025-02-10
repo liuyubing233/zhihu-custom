@@ -51,7 +51,7 @@ export const CONFIG_SUSPENSION: IConfigSuspension = {
   suspensionUserPo: 'right: 60px; top: 100px;',
   suspensionUserFixed: true,
   suspensionPickUp: true,
-  suspensionPickupRight: 60,
+  suspensionPickupRight: 0,
 };
 
 /** 极简模式配置 */

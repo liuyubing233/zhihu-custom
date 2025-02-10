@@ -29,7 +29,7 @@ export const initOperate = () => {
       // 字体大小重置
       const inputName = target.name.replace('reset-', '');
       const nodeInput = dom(`[name="${inputName}"]`) as HTMLInputElement;
-      nodeInput.value = ''
+      nodeInput.value = '';
       fnChanger(nodeInput);
       return;
     }
@@ -105,6 +105,9 @@ const myButtonOperation: Record<string, Function> = {
       removeBlockUserContentList,
     });
     resetData();
+    setTimeout(() => {
+      location.reload();
+    }, 300);
   },
   /** 自定义样式 */
   styleCustom: async function () {
@@ -147,6 +150,9 @@ const configImport = (e: Event) => {
       const nConfig = JSON.parse(config);
       await myStorage.updateConfig(nConfig);
       resetData();
+      setTimeout(() => {
+        location.reload();
+      }, 300);
     }
   };
   target.value = '';

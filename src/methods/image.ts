@@ -61,7 +61,7 @@ export const keydownNextImage = (event: KeyboardEvent) => {
         let finallyWidth = ralWidth;
         let finallyHeight = ralHeight;
 
-        if (ralHeight > innerHeight && ralWidth < innerWidth) {
+        if (ralHeight >= innerHeight && ralWidth < innerWidth) {
           // 图片原始高度大于网页显示高度，图片原始宽度小于网页显示宽度
           // 高度优先
           finallyHeight = innerHeight;
@@ -70,7 +70,7 @@ export const keydownNextImage = (event: KeyboardEvent) => {
           finallyWidth = innerHeight * aspectRatioImage;
         }
 
-        if (ralHeight > innerHeight && ralWidth > innerWidth) {
+        if (ralHeight >= innerHeight && ralWidth >= innerWidth) {
           // 图片原始高度大于网页显示高度，图片原始宽度大于网页显示宽度
           // 按照比例缩小
           if (aspectRatioImage > aspectRatioWindow) {
@@ -86,7 +86,7 @@ export const keydownNextImage = (event: KeyboardEvent) => {
           }
         }
 
-        if (ralHeight < innerHeight && ralWidth > innerWidth) {
+        if (ralHeight < innerHeight && ralWidth >= innerWidth) {
           // 图片原始高度小于网页显示高度，图片原始宽度大于网页显示宽度
           // 宽度优先
           finallyWidth = innerWidth;
