@@ -242,16 +242,16 @@ import { INNER_CSS } from './web-resources';
     nodeSignClose && nodeSignClose.click();
 
     if (hostname === 'zhuanlan.zhihu.com') {
-      const nodeArticle = dom('.Post-content');
-      if (nodeArticle) {
-        initVideoDownload(nodeArticle);
-      }
+      setTimeout(() => {
+        initVideoDownload(dom('.Post-content'));
+      }, 500);
     }
 
     pathnameHasFn({
       zvideo: () => {
-        const domFind = dom('.ZVideo-mainColumn');
-        domFind && initVideoDownload(domFind);
+        setTimeout(() => {
+          initVideoDownload(dom('.ZVideo-mainColumn'));
+        }, 500);
       },
     });
   });
