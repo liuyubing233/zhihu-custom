@@ -1029,7 +1029,7 @@
     },
     {
       title: "收藏夹内容导出为 PDF（需开启接口拦截）",
-      commit: "点击收藏夹名称上方「生成PDF」按钮，可导出当前页码的收藏夹详细内容"
+      commit: "点击收藏夹名称上方「导出当前页内容」按钮，可导出当前页码的收藏夹详细内容"
     },
     {
       title: "个人主页「我关注的问题」、「我关注的收藏」一键移除或添回关注",
@@ -2487,18 +2487,18 @@
                 return `<div class="ctz-pdf-dialog-item"><div class="ctz-pdf-dialog-title">${elementTypeSpan(type)}${title || question.title}</div><div>内容链接：<a href="${url}" target="_blank">${url}</a></div><div>${content}</div></div>`;
             }
           });
-          loadIframePrint(me, collectionsHTMLMap, "生成PDF");
+          loadIframePrint(me, collectionsHTMLMap, "导出当前页内容");
         });
       });
       const nodePageHeaderTitle = dom(".CollectionDetailPageHeader-title");
       nodePageHeaderTitle && nodePageHeaderTitle.appendChild(elementBox);
     },
     className: "ctz-export-collection-box",
-    element: `<button class="ctz-button" name="ctz-export-collection">生成PDF</button><p>仅对当前页内容进行导出</p>`,
+    element: `<button class="ctz-button" name="ctz-export-collection">导出当前页内容</button><p>仅对当前页内容进行导出</p>`,
     elementTypeSpan: (type) => {
       const typeObj = {
-        zvideo: '<b style="color: #ec7259">「问题」</b>',
-        answer: '<b style="color: #12c2e9">「视频」</b>',
+        answer: '<b style="color: #ec7259">「问题」</b>',
+        zvideo: '<b style="color: #12c2e9">「视频」</b>',
         article: '<b style="color: #00965e">「文章」</b>'
       };
       return typeObj[type] || "";
