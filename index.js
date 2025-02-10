@@ -525,7 +525,7 @@
     },
     {
       key: "CTZ_HIDDEN_LIST",
-      name: "列表",
+      name: "列表页面",
       desc: "只在列表中隐藏相应内容",
       content: [
         [
@@ -664,7 +664,7 @@
     },
     {
       key: "CTZ_HIDDEN_ANSWER",
-      name: "问答",
+      name: "回答页面",
       desc: "只在回答页面中隐藏相应内容",
       content: [
         [
@@ -821,7 +821,7 @@
     },
     {
       key: "CTZ_HIDDEN_ARTICLE",
-      name: "文章",
+      name: "文章专栏",
       desc: "只在文章页面中隐藏相应内容",
       content: [
         [
