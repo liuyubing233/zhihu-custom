@@ -3149,7 +3149,7 @@
             printArticle(nodeItem.parentElement);
           }
         }
-      }, 0);
+      }, 100);
     }
   };
   var recommendTimeout;
