@@ -114,7 +114,7 @@ export const myCollectionExport = {
                   );
               }
             });
-            loadIframePrint(me, collectionsHTMLMap, '生成PDF');
+            loadIframePrint(me, collectionsHTMLMap, '导出当前页内容');
           });
       });
 
@@ -122,11 +122,11 @@ export const myCollectionExport = {
     nodePageHeaderTitle && nodePageHeaderTitle.appendChild(elementBox);
   },
   className: 'ctz-export-collection-box',
-  element: `<button class="ctz-button" name="ctz-export-collection">生成PDF</button>` + `<p>仅对当前页内容进行导出</p>`,
+  element: `<button class="ctz-button" name="ctz-export-collection">导出当前页内容</button>` + `<p>仅对当前页内容进行导出</p>`,
   elementTypeSpan: (type: string) => {
     const typeObj: Record<string, string> = {
-      zvideo: '<b style="color: #ec7259">「问题」</b>',
-      answer: '<b style="color: #12c2e9">「视频」</b>',
+      answer: '<b style="color: #ec7259">「问题」</b>',
+      zvideo: '<b style="color: #12c2e9">「视频」</b>',
       article: '<b style="color: #00965e">「文章」</b>',
     };
     return typeObj[type] || '';
