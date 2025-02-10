@@ -73,7 +73,7 @@
 
             <div>
               <div class="ctz-flex-wrap">
-                <div class="ctz-label">修改浏览器标签名</div>
+                <div class="ctz-label">修改网页标签名</div>
                 <input type="text" name="globalTitle" style="width: 400px" />
                 <button class="ctz-button ctz-button-primary" name="buttonConfirmTitle" style="margin: 0 8px">确 认</button>
                 <button class="ctz-button" name="buttonResetTitle">还 原</button>
@@ -88,7 +88,10 @@
         </div>
 
         <div id="CTZ_BASIS_SHOW_CONTENT">
-          <div class="ctz-title">显示修改</div>
+          <div class="ctz-title">
+            显示修改
+            <span class="ctz-commit" style="color: red">修改后刷新页面生效</span>
+          </div>
           <div class="ctz-set-content">
             <div class="ctz-flex-wrap">
               <span class="ctz-label">购物链接显示</span>
@@ -116,7 +119,7 @@
                 </label>
                 <label>
                   <input class="ctz-i" type="radio" name="answerOpen" value="on" />
-                  <div>自动展开</div>
+                  <div>自动展开所有回答</div>
                 </label>
                 <label>
                   <input class="ctz-i" type="radio" name="answerOpen" value="off" />
@@ -207,20 +210,8 @@
               <div>关注列表屏蔽自己的操作</div>
             </label>
 
-            <div class="ctz-filter-list-vote">
-              <label class="ctz-checkbox">
-                <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
-                <div>列表低赞内容屏蔽</div>
-              </label>
-              <div>
-                ，勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
-                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
-                的内容
-              </div>
-            </div>
-
             <div class="ctz-filter-follow ctz-flex-wrap">
-              <div class="ctz-label">关注列表过滤关注人操作：</div>
+              <div class="ctz-label">关注列表过滤关注人操作</div>
               <div class="ctz-checkbox-group">
                 <label class="ctz-checkbox">
                   <input class="ctz-i" name="removeFollowVoteAnswer" type="checkbox" value="on" />
@@ -234,6 +225,18 @@
                   <input class="ctz-i" name="removeFollowFQuestion" type="checkbox" value="on" />
                   <div>关注问题</div>
                 </label>
+              </div>
+            </div>
+
+            <div class="ctz-filter-list-vote">
+              <label class="ctz-checkbox">
+                <input class="ctz-i" name="removeLessVote" type="checkbox" value="on" />
+                <div>列表低赞内容屏蔽</div>
+              </label>
+              <div>
+                ，勾选后「关注、推荐、搜索」列表屏蔽点赞量少于
+                <input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px; margin: 0 4px" />
+                的内容
               </div>
             </div>
 
@@ -279,7 +282,7 @@
             <div class="ctz-filter-detail-vote">
               <label class="ctz-checkbox">
                 <input class="ctz-i" name="removeLessVoteDetail" type="checkbox" value="on" />
-                <div>回答内容低赞回答屏蔽</div>
+                <div>回答页面低赞回答屏蔽</div>
               </label>
 
               <div>
@@ -386,7 +389,10 @@
         <div class="ctz-set-background"></div>
         <div class="ctz-set-color">
           <div class="ctz-title">修改文字颜色</div>
-          <input type="text" class="ctz-i" name="colorText1" style="width: 200px" placeholder="例如：#f7f9f9" />
+          <div class="ctz-flex-wrap">
+            <input type="text" class="ctz-i" name="colorText1" style="width: 200px; margin-right: 8px" placeholder="例如：#f7f9f9" />
+            <button class="ctz-button ctz-reset-font-size" name="reset-colorText1">重 置</button>
+          </div>
         </div>
       </div>
 
