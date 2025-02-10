@@ -53,6 +53,11 @@ const changelogJson = fs.readFileSync(pathChangelog).toString();
 fs.writeFileSync(pathChangelog, changelogJson.replace(VERSION_TAG, nVersion + '\n\n`' + timeFormatter() + '`'));
 echo(`CHANGELOG 内容修改完成。`);
 
+const pathReadme = path.join(__dirname, '../README.md');
+const readmeJson = fs.readFileSync(pathReadme).toString();
+fs.writeFileSync(pathReadme, readmeJson.replace(/\.\/static\//g, 'https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/'));
+echo(`README 内容修改完成。`);
+
 const doExec = async (commit) => {
   const res = exec(commit);
   if (res.code !== 0) {
