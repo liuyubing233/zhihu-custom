@@ -93,7 +93,7 @@ export const initHTML = () => {
   // 添加基础设置显示修改
   dom('#CTZ_BASIS_SHOW_CONTENT .ctz-set-content')!.innerHTML += commonLabelCheckbox(BASIC_SHOW_CONTENT);
   // 高性能
-  dom('#CTZ_BASIS_HIGH_PERFORMANCE .ctz-set-content')!.innerHTML += commonLabelCheckbox(HIGH_PERFORMANCE);
+  dom('#CTZ_HIGH_PERFORMANCE .ctz-set-content')!.innerHTML += commonLabelCheckbox(HIGH_PERFORMANCE);
 
   initFetchInterceptStatus();
   myBlack.init();
