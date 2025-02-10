@@ -21,24 +21,12 @@ export const myBackground = {
     };
     fnAppendStyle('CTZ_STYLE_BACKGROUND', (await getBackground()) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
 
-    // const domDrawer = domById('CTZ_DRAWER');
-    // const domOpen = domById('CTZ_OPEN_CLOSE');
     const domHTML = dom('html');
     if (!domHTML) return;
-    // if (!domDrawer || !domOpen) return;
     if (useDark) {
       domHTML.setAttribute('theme-dark', `${themeDark}`);
       domHTML.removeAttribute('theme-light');
-
-      // domDrawer.setAttribute('theme-dark', `${themeDark}`);
-      // domOpen.setAttribute('theme-dark', `${themeDark}`);
-      // domDrawer.removeAttribute('theme-light');
-      // domOpen.removeAttribute('theme-light');
     } else {
-      // domDrawer.setAttribute('theme-light', `${themeLight}`);
-      // domOpen.setAttribute('theme-light', `${themeLight}`);
-      // domDrawer.removeAttribute('theme-dark');
-      // domOpen.removeAttribute('theme-dark');
       domHTML.setAttribute('theme-light', `${themeLight}`);
       domHTML.removeAttribute('theme-dark');
     }
