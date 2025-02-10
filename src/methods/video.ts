@@ -19,8 +19,9 @@ const findDoms = (nodeFound: HTMLElement, domNames: string[]): NodeListOf<Elemen
 };
 
 /** 加载视频下载方法 */
-export const initVideoDownload = async (nodeFound: HTMLElement) => {
-  const { videoUseLink } = await myStorage.getConfig()
+export const initVideoDownload = async (nodeFound?: HTMLElement) => {
+  if (!nodeFound) return;
+  const { videoUseLink } = await myStorage.getConfig();
   const domVideos = findDoms(
     nodeFound,
     ['.ZVideo-player>div', CLASS_VIDEO_ONE, CLASS_VIDEO_TWO].filter((i) => {
@@ -30,14 +31,15 @@ export const initVideoDownload = async (nodeFound: HTMLElement) => {
   for (let i = 0, len = domVideos.length; i < len; i++) {
     const domVideoBox = domVideos[i] as HTMLElement;
     const nDomDownload = domC('i', { className: 'ctz-video-download', innerHTML: '⤓' });
-    const nDomLoading = domC('i', { className: 'ctz-loading', innerHTML: '↻' });
-    nDomDownload.onclick = () => {
+    const nDomLoading = domC('i', { className: 'ctz-loading', innerHTML: '↻', style: 'color: #fff;position: absolute;top: 20px;left: 20px;' });
+    nDomDownload.onclick = function () {
+      const me = this as HTMLElement;
       const srcVideo = domVideoBox.querySelector('video')!.src;
       if (srcVideo) {
-        nDomDownload.style.display = 'none';
+        me.style.display = 'none';
         domVideoBox.appendChild(nDomLoading);
         videoDownload(srcVideo, `video${+new Date()}`).then(() => {
-          nDomDownload.style.display = 'block';
+          me.style.display = 'block';
           nDomLoading.remove();
         });
       }
