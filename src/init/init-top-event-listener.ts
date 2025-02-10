@@ -53,7 +53,7 @@ const cbEventListener = async (event: Event) => {
           printArticle(nodeItem.parentElement!);
         }
       }
-    }, 0);
+    }, 100);
   }
 };
 
