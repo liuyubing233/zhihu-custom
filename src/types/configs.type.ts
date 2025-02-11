@@ -426,4 +426,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   highPerformanceRecommend?: boolean;
   /** 回答页高性能模式 */
   highPerformanceAnswer?: boolean;
+  /** 修改器是否使用过 */
+  isUsed: boolean;
 }

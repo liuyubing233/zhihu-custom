@@ -481,7 +481,7 @@
             <button class="ctz-button ctz-button-primary" name="useSimple">启用极简模式</button>
             <button class="ctz-button" name="configReset">恢复默认配置</button>
             <button class="ctz-button ctz-button-primary" name="configExport">配置导出</button>
-            <!-- <button class="ctz-button" name="configRemove">清空配置</button> -->
+            <button class="ctz-button" name="configRemove">清空配置</button>
             <div id="IMPORT_BY_FILE">
               <input type="file" class="ctz-input-config-import" id="readTxt" accept=".txt" />
               <button class="ctz-button" name="configImport">配置导入</button>
@@ -516,5 +516,15 @@
       <div>版本号</div>
       <div class="ctz-version"></div>
     </div>
+  </div>
+</div>
+
+<!-- 第一次进入 version 5 版本的提示 -->
+<div id="CTZ_FIRST_VERSION_5" style="display: none;">
+  <div id="CTZ_FIRST_VERSION_5_ALLOW"></div>
+  <div id="CTZ_FIRST_VERSION_5_CONTENT">
+    <div>欢迎使用 <span>知乎修改器5</span></div>
+    <div>唤起修改器按钮现已移动到页面右下角</div>
+    <button class="ctz-button ctz-button-primary" id="BUTTON_FIRST_USE">我知道了</button>
   </div>
 </div>
