@@ -18,7 +18,7 @@
 
 2. `使用弹窗打开动图` 设置与修改图片类型的脚本或插件冲突，如果有使用修改图片的脚本不要打开此项设置。
 3. 如果遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。
-   ![接口拦截](./static/not-fetch.png)
+   ![接口拦截](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/not-fetch.png)
 
 快捷键 >（Shift + .）唤起修改器抽屉, 或鼠标点击页面右下角齿轮按钮唤修改器抽屉。
 
@@ -30,7 +30,7 @@
 
 ### 脚本样式
 
-![脚本样式](./static/home.png)
+![脚本样式](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/home.png)
 
 ## 功能简介
 
@@ -44,7 +44,7 @@
 
 > 菜单目录：通用 - 基本设置
 
-![修改网页标签](./static/change-web-title.png)
+![修改网页标签](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/change-web-title.png)
 
 1. 去除浏览器标签上 `XX 条私信，XX条未读消息` 的提示
 2. 修改浏览器标签名
@@ -90,7 +90,7 @@
 
 开启后将页面中的搜索词、AI 搜索词将会显示为正常文本，并去除点击跳转。
 
-![去除热词点击搜索](./static/word-search.png)
+![去除热词点击搜索](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/word-search.png)
 
 </details>
 
@@ -104,7 +104,7 @@
 
 开启后将在列表中显示类别
 
-![列表标题类别显示](./static/item-type.png)
+![列表标题类别显示](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/item-type.png)
 
 </details>
 
@@ -150,7 +150,7 @@
 
 > 菜单目录：通用 - 显示修改
 
-![仅数字](./static/just-number.png)
+![仅数字](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/just-number.png)
 
 1. 开启 `推荐列表「不感兴趣」按钮` 后在推荐列表标题显示 `不感兴趣` 按钮
    1. 点击`不感兴趣`隐藏当前问题并自动调用知乎本身 `不感兴趣` 接口，防止出现重复推荐（知乎不感兴趣接口对内容推荐的时效性不强，若后续再次出现重复内容为知乎自身问题）；
@@ -168,7 +168,7 @@
 
 > 菜单目录：通用 - 显示修改
 
-![仅数字](./static/just-number.png)
+![仅数字](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/just-number.png)
 
 </details>
 
@@ -192,7 +192,7 @@
 
 > 菜单目录：通用 - 显示修改
 
-![回答一键获取回答链接](./static/copy-link.png)
+![回答一键获取回答链接](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/copy-link.png)
 
 点击后自动复制当前回答内容的链接到剪贴板
 
@@ -234,7 +234,7 @@
 
 > 菜单目录：通用 - 悬浮模块
 
-![收起悬浮](./static/suspension-pickup.png)
+![收起悬浮](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/suspension-pickup.png)
 
 将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。
 
@@ -297,7 +297,7 @@
 - 话题
   - `话题主页右侧浏览/讨论量模块`, `话题主页右侧父子话题模块`, `话题主页右侧知乎指南`
 
-![设置隐藏模块](./static/hidden.png)
+![设置隐藏模块](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/hidden.png)
 
 </details>
 
@@ -318,7 +318,7 @@ _注：需要开启接口拦截_
 2. 勾选 `屏蔽黑名单用户发布的内容` 后在回答详情中将会过滤黑名单用户的回答内容；
 3. 点击用户后的 x 即可将用户从黑名单移除；
 
-![黑名单](./static/black.png)
+![黑名单](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/black.png)
 
 </details>
 
@@ -336,7 +336,7 @@ _注：需要开启接口拦截_
 2. 勾选百分比设置后，页面内容将根据浏览器宽度的比例进行设置，最小百分比为 20%；
 3. `评论弹窗匹配页面宽度` 勾选后，评论弹窗将跟页面内容宽度一致；
 
-![页面尺寸](./static/setting-size.png)
+![页面尺寸](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-size.png)
 
 </details>
 
@@ -353,7 +353,7 @@ _注：需要开启接口拦截_
 3. 文章标题文字大小、文章内容文字大小；
 4. 内容行高（在所有内容中生效）
 
-![字体大小](./static/font-size.png)
+![字体大小](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/font-size.png)
 
 </details>
 
@@ -373,7 +373,7 @@ _注：需要开启接口拦截_
    1. 开启限制后，图片宽度设置将会失效；
    2. 开启后，将按照设置的高度等比缩放图片；
 
-![图片尺寸](./static/image-size.png)
+![图片尺寸](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/image-size.png)
 
 </details>
 
@@ -415,7 +415,7 @@ _注：需要开启接口拦截_
 2. 深色（夜间模式）：页面主题将根据深色设置；
 3. 自动：页面主题将根据浏览器是否开启夜间模式来设置，适用于自动开启夜间模式的电脑和浏览器
 
-![颜色设置](./static/setting-background.png)
+![颜色设置](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-background.png)
 
 </details>
 
@@ -429,7 +429,7 @@ _注：需要开启接口拦截_
 
 浅色颜色主题预览（黄）：
 
-![浅色颜色预览](./static/background-light.png)
+![浅色颜色预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/background-light.png)
 
 </details>
 
@@ -447,7 +447,7 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 深色颜色主题预览（深色护眼三）：
 
-![深色颜色预览](./static/background-dark.png)
+![深色颜色预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/background-dark.png)
 
 </details>
 
@@ -463,7 +463,7 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 修改文字颜色预览：
 
-![修改文字颜色](./static/font-color.png)
+![修改文字颜色](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/font-color.png)
 
 </details>
 
@@ -514,7 +514,7 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：屏蔽内容
 
-![屏蔽内容设置预览](./static/setting-filter.png)
+![屏蔽内容设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-filter.png)
 
 </details>
 
@@ -638,7 +638,7 @@ _注：仅在回答页面生效_
 
 > 菜单目录：屏蔽内容 - 标题屏蔽词
 
-![标题屏蔽词](./static/filter-title-word.png)
+![标题屏蔽词](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/filter-title-word.png)
 
 **(图片内容仅为示例，无个人主观情感)**
 
@@ -682,9 +682,9 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 默认缓存 500 条，点击标题可跳转。
 
-![推荐列表缓存](./static/history-recommend.png)
+![推荐列表缓存](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/history-recommend.png)
 
-![浏览历史记录](./static/history-view.png)
+![浏览历史记录](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/history-view.png)
 
 </details>
 
@@ -710,7 +710,7 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 可下载视频内容左上角将会生成一个下载按钮，点击即可下载视频
 
-![视频下载](./static/download-video.png)
+![视频下载](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/download-video.png)
 
 </details>
 
@@ -742,11 +742,11 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 2. 等待资源加载完成
 3. 生成为 PDF 预览，点击保存即可保存至本地
 
-![内容导出步骤](./static/export-to-pdf.png)
+![内容导出步骤](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-to-pdf.png)
 
 用户主页回答、文章导出按钮：
 
-![用户主页内容导出](./static/export-home.png)
+![用户主页内容导出](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-home.png)
 
 如需显示文章和回答导出按钮，需勾选 `通用 - 显示修改 - 文档或回答顶部显示导出当前内容/回答按钮`
 
@@ -818,7 +818,7 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 _注：由于知乎屏蔽话题每次只显示部分内容，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽话题。_
 
-![一键移除屏蔽话题](./static/remove-filter-tag.png)
+![一键移除屏蔽话题](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-filter-tag.png)
 
 </details>
 
