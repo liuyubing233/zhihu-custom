@@ -44,11 +44,13 @@
 
 > 菜单目录：通用 - 基本设置
 
-![修改网页标签](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/change-web-title.png)
+<br>
 
-1. 去除浏览器标签上 `XX 条私信，XX条未读消息` 的提示
-2. 修改浏览器标签名
-3. 修改浏览器标签图片
+1. 去除浏览器标签上 `XX 条私信，XX条未读消息` 的提示<br>
+2. 修改浏览器标签名<br>
+3. 修改浏览器标签图片<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/change-web-title.png" alt="修改网页标签">
 
 </details>
 
@@ -60,9 +62,11 @@
 
 > 菜单目录：通用 - 显示修改
 
-- 默认：不修改
-- 近文字：购物链接显示为 `购物链接：XXX` 的超链接
-- 隐藏：隐藏购物链接显示
+<br>
+
+- 默认：不修改<br>
+- 近文字：购物链接显示为 `购物链接：XXX` 的超链接<br>
+- 隐藏：隐藏购物链接显示<br>
 
 </details>
 
@@ -74,9 +78,11 @@
 
 > 菜单目录：通用 - 显示修改
 
-- 默认：不修改
-- 自动展开所有回答：通过推荐页进入问答详情时原本为收起长回答，选择此项后进入页面会自动展开所有收起的回答；
-- 默认收起长回答：选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览。
+<br>
+
+- 默认：不修改<br>
+- 自动展开所有回答：通过推荐页进入问答详情时原本为收起长回答，选择此项后进入页面会自动展开所有收起的回答<br>
+- 默认收起长回答：选择此项后问答页面所有可收起的长回答默认都是收起状态，方便浏览<br>
 
 </details>
 
@@ -88,9 +94,11 @@
 
 > 菜单目录：通用 - 显示修改
 
-开启后将页面中的搜索词、AI 搜索词将会显示为正常文本，并去除点击跳转。
+<br>
 
-![去除热词点击搜索](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/word-search.png)
+开启后将页面中的搜索词、AI 搜索词将会显示为正常文本，并去除点击跳转<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/word-search.png" alt="去除热词点击搜索">
 
 </details>
 
@@ -102,9 +110,11 @@
 
 > 菜单目录：通用 - 显示修改
 
-开启后将在列表中显示类别
+<br>
 
-![列表标题类别显示](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/item-type.png)
+开启后将在列表中显示类别<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/item-type.png" alt="列表标题类别显示">
 
 </details>
 
@@ -115,6 +125,8 @@
 <summary>列表点击高亮边框</summary>
 
 > 菜单目录：通用 - 显示修改
+
+<br>
 
 勾选后后首页和回答详情列表在点击时边框高亮，类似于知乎原生快捷键 S 键
 
@@ -127,6 +139,8 @@
 <summary>关注列表高亮原创内容</summary>
 
 > 菜单目录：通用 - 显示修改
+
+<br>
 
 勾选后关注列表里原创内容 `发表回答`、`发表文章`、`提出问题` 后将高亮显示
 
@@ -150,13 +164,15 @@
 
 > 菜单目录：通用 - 显示修改
 
-![仅数字](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/just-number.png)
+<br>
 
-1. 开启 `推荐列表「不感兴趣」按钮` 后在推荐列表标题显示 `不感兴趣` 按钮
-   1. 点击`不感兴趣`隐藏当前问题并自动调用知乎本身 `不感兴趣` 接口，防止出现重复推荐（知乎不感兴趣接口对内容推荐的时效性不强，若后续再次出现重复内容为知乎自身问题）；
-   2. 该功能需开启接口拦截。
-2. 开启 `推荐列表「直达问题」按钮` 后在推荐列表标题显示 `直达问题` 按钮
-   1. 点击直接跳转到问题主页，而不是当前推荐回答页面。
+1. 开启 `推荐列表「不感兴趣」按钮` 后在推荐列表标题显示 `不感兴趣` 按钮<br>
+   - 点击`不感兴趣`隐藏当前问题并自动调用知乎本身 `不感兴趣` 接口，防止出现重复推荐（知乎不感兴趣接口对内容推荐的时效性不强，若后续再次出现重复内容为知乎自身问题）<br>
+   - 该功能需开启接口拦截<br>
+2. 开启 `推荐列表「直达问题」按钮` 后在推荐列表标题显示 `直达问题` 按钮<br>
+   - 点击直接跳转到问题主页，而不是当前推荐回答页面<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/just-number.png" alt="仅数字">
 
 </details>
 
@@ -168,7 +184,9 @@
 
 > 菜单目录：通用 - 显示修改
 
-![仅数字](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/just-number.png)
+<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/just-number.png" alt="仅数字">
 
 </details>
 
@@ -179,6 +197,8 @@
 <summary>回答内容顶部显示赞同人数</summary>
 
 > 菜单目录：通用 - 显示修改
+
+<br>
 
 此功能是为了解决知乎更新后顶部赞同人数消失的问题。
 
@@ -192,9 +212,11 @@
 
 > 菜单目录：通用 - 显示修改
 
-![回答一键获取回答链接](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/copy-link.png)
+<br>
 
-点击后自动复制当前回答内容的链接到剪贴板
+点击后自动复制当前回答内容的链接到剪贴板<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/copy-link.png" alt="回答一键获取回答链接">
 
 </details>
 
@@ -206,9 +228,11 @@
 
 > 菜单目录：通用 - 显示修改
 
-![回答和文章中的视频替换为链接](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/video-link.png)
+<br>
 
-勾选后回答和文章中的视频内容将修改为超链接的形式
+勾选后回答和文章中的视频内容将修改为超链接的形式<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/video-link.png" alt="回答和文章中的视频替换为链接">
 
 </details>
 
@@ -220,9 +244,11 @@
 
 > 菜单目录：通用 - 显示修改
 
-![时间](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/item-date.png)
+<br>
 
-分别勾选后将在对应的内容顶部显示发布和修改时间
+分别勾选后将在对应的内容顶部显示发布和修改时间<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/item-date.png" alt="时间">
 
 </details>
 
@@ -234,11 +260,13 @@
 
 > 菜单目录：通用 - 悬浮模块
 
-![收起悬浮](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/suspension-pickup.png)
+<br>
 
-将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。
+将展开长回答中的收起按钮悬浮显示，建议在隐藏问题详情操作栏的时候选择此项。<br>
 
-悬浮收起按钮距离右侧位置可自行设置。
+悬浮收起按钮距离右侧位置可自行设置。<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/suspension-pickup.png" alt="收起悬浮">
 
 </details>
 
@@ -250,9 +278,11 @@
 
 > 菜单目录：通用 - 悬浮模块
 
-悬浮对应模块，可以拖动自定义位置。
+<br>
 
-可设置模块：`首页列表切换`、`顶部发现模块`、`个人重心模块`、`搜索栏模块`
+悬浮对应模块，可以拖动自定义位置。<br>
+
+可设置模块：`首页列表切换`、`顶部发现模块`、`个人重心模块`、`搜索栏模块`<br>
 
 </details>
 
@@ -264,9 +294,11 @@
 
 > 菜单目录：高性能模式
 
-推荐列表高性能模式开启后推荐列表内容最多保留 50 条，超出则删除之前内容
+<br>
 
-回答页高性能模式开启后，最多保留 30 条回答，超出则删除之前回答
+推荐列表高性能模式开启后推荐列表内容最多保留 50 条，超出则删除之前内容<br>
+
+回答页高性能模式开启后，最多保留 30 条回答，超出则删除之前回答<br>
 
 </details>
 
@@ -278,26 +310,28 @@
 
 > 菜单目录：隐藏模块
 
-勾选即可隐藏相应模块，隐藏模块大概设置内容：
+<br>
 
-- 通用隐藏
-  - `隐藏修改器弹出图标 ⚙︎`, `广告`, `logo`, `顶部悬浮模块`, `滚动顶部悬浮模块/问题名称`, `发现模块-首页`, `发现模块-知学堂`, `发现模块-等你来答`, `发现模块-知乎直达`, `回答隐藏用户信息下的附加信息，比如：你赞同过、XXX 赞同了等...`, `评论「回复」按钮`, `评论「点赞」按钮`, `评论底部信息`, `知乎知学堂教育推广商品模块`
-- 操作栏
-  - `推荐、关注列表操作栏`, `推荐、关注列表操作栏 - 底部悬浮`, `搜索页列表操作栏`, `搜索页列表操作栏 - 底部悬浮`, `回答页问题操作栏`, `回答页回答内容操作栏`, `回答页回答内容操作栏 - 底部悬浮`, `文章底部悬浮操作栏`, `收藏夹列表操作栏`, `收藏夹列表操作栏 - 底部悬浮`, `个人主页动态、回答、文章等操作栏`, `个人主页动态、回答、文章等操作栏 - 底部悬浮`
-- 列表页面
-  - `创作中心`, `推荐关注`, `分类圆桌`, `更多分类`, `知乎指南`, `盐选作者平台`, `首页列表切换模块`, `首页列表切换 - 关注`, `首页列表切换 - 推荐`, `首页列表切换 - 热榜`, `首页列表切换 - 视频`, `列表内容`, `推荐、关注列表的视频`, `列表图片`, `问题列表阅读全文文字`, `列表「亲自答」标签`, `关注列表关注人操作`, `关注列表用户信息`, `热门排序编号`, `热门"新"元素`, `热门热度值`, `搜索栏知乎热搜`, `搜索页知乎热搜`, `搜索页知乎指南`
-- 回答页面
-  - `问题话题`, `问题分享`, `「好问题」按钮`, `添加评论`, `问题更多「...」按钮`, `问题专题收录标签`, `问题关注按钮`, `问题写回答按钮`, `问题邀请回答按钮`, `问题标题卡片广告和榜单`, `查看全部回答按钮`, `回答人头像`, `回答人姓名`, `回答人简介`, `回答人关注按钮`, `回答人下赞同数`, `问题关注和被浏览数`, `赞赏按钮`, `618 红包链接`, `回答底部发布编辑时间和 IP`, `回答底部发布编辑时间（保留 IP）`, `回答底部「继续追问」模块`, `详情右侧信息栏`, `信息栏关于作者`, `信息栏被收藏次数`, `信息栏相关问题`, `信息栏相关推荐`, `信息栏知乎指南`
-- 文章专栏
-  - `文章关联话题`, `文章标题图片`, `文章悬浮分享按钮`, `文章悬浮赞同按钮`, `文章作者头像`, `文章作者姓名`, `文章作者简介`, `文章作者关注按钮`, `文章底部知乎热榜`, `内容所属专栏`
-- 用户主页
-  - `用户主页付费咨询、认证和成就`, `用户主页出版作品`, `用户主页创作中心`, `用户主页关注和关注者卡片`, `用户主页关注的内容和赞助`, `用户主页右侧屏蔽·举报用户、个人主页被浏览次数`, `用户主页知乎指南`
-- 收藏夹
-  - `收藏夹创作中心`, `收藏夹推荐关注`, `收藏夹圆桌入口`, `收藏夹更多分类`, `收藏夹知乎指南`
-- 话题
-  - `话题主页右侧浏览/讨论量模块`, `话题主页右侧父子话题模块`, `话题主页右侧知乎指南`
+勾选即可隐藏相应模块，隐藏模块大概设置内容：<br>
 
-![设置隐藏模块](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/hidden.png)
+- 通用隐藏<br>
+  - `隐藏修改器弹出图标 ⚙︎`, `广告`, `logo`, `顶部悬浮模块`, `滚动顶部悬浮模块/问题名称`, `发现模块-首页`, `发现模块-知学堂`, `发现模块-等你来答`, `发现模块-知乎直达`, `回答隐藏用户信息下的附加信息，比如：你赞同过、XXX 赞同了等...`, `评论「回复」按钮`, `评论「点赞」按钮`, `评论底部信息`, `知乎知学堂教育推广商品模块`<br>
+- 操作栏<br>
+  - `推荐、关注列表操作栏`, `推荐、关注列表操作栏 - 底部悬浮`, `搜索页列表操作栏`, `搜索页列表操作栏 - 底部悬浮`, `回答页问题操作栏`, `回答页回答内容操作栏`, `回答页回答内容操作栏 - 底部悬浮`, `文章底部悬浮操作栏`, `收藏夹列表操作栏`, `收藏夹列表操作栏 - 底部悬浮`, `个人主页动态、回答、文章等操作栏`, `个人主页动态、回答、文章等操作栏 - 底部悬浮`<br>
+- 列表页面<br>
+  - `创作中心`, `推荐关注`, `分类圆桌`, `更多分类`, `知乎指南`, `盐选作者平台`, `首页列表切换模块`, `首页列表切换 - 关注`, `首页列表切换 - 推荐`, `首页列表切换 - 热榜`, `首页列表切换 - 视频`, `列表内容`, `推荐、关注列表的视频`, `列表图片`, `问题列表阅读全文文字`, `列表「亲自答」标签`, `关注列表关注人操作`, `关注列表用户信息`, `热门排序编号`, `热门"新"元素`, `热门热度值`, `搜索栏知乎热搜`, `搜索页知乎热搜`, `搜索页知乎指南`<br>
+- 回答页面<br>
+  - `问题话题`, `问题分享`, `「好问题」按钮`, `添加评论`, `问题更多「...」按钮`, `问题专题收录标签`, `问题关注按钮`, `问题写回答按钮`, `问题邀请回答按钮`, `问题标题卡片广告和榜单`, `查看全部回答按钮`, `回答人头像`, `回答人姓名`, `回答人简介`, `回答人关注按钮`, `回答人下赞同数`, `问题关注和被浏览数`, `赞赏按钮`, `618 红包链接`, `回答底部发布编辑时间和 IP`, `回答底部发布编辑时间（保留 IP）`, `回答底部「继续追问」模块`, `详情右侧信息栏`, `信息栏关于作者`, `信息栏被收藏次数`, `信息栏相关问题`, `信息栏相关推荐`, `信息栏知乎指南`<br>
+- 文章专栏<br>
+  - `文章关联话题`, `文章标题图片`, `文章悬浮分享按钮`, `文章悬浮赞同按钮`, `文章作者头像`, `文章作者姓名`, `文章作者简介`, `文章作者关注按钮`, `文章底部知乎热榜`, `内容所属专栏`<br>
+- 用户主页<br>
+  - `用户主页付费咨询、认证和成就`, `用户主页出版作品`, `用户主页创作中心`, `用户主页关注和关注者卡片`, `用户主页关注的内容和赞助`, `用户主页右侧屏蔽·举报用户、个人主页被浏览次数`, `用户主页知乎指南`<br>
+- 收藏夹<br>
+  - `收藏夹创作中心`, `收藏夹推荐关注`, `收藏夹圆桌入口`, `收藏夹更多分类`, `收藏夹知乎指南`<br>
+- 话题<br>
+  - `话题主页右侧浏览/讨论量模块`, `话题主页右侧父子话题模块`, `话题主页右侧知乎指南`<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/hidden.png" alt="设置隐藏模块">
 
 </details>
 
@@ -309,16 +343,18 @@
 
 > 菜单目录：黑名单
 
-_注：需要开启接口拦截_
+<br>
 
-在使用该功能前，请先点击 `同步黑名单` 按钮同步黑名单内容。
+_注：需要开启接口拦截_<br>
 
-1. 回答列表用户名后显示「屏蔽用户」按钮；
-   - 勾选后在回答内容中将添加 `屏蔽用户`、`屏蔽用户并隐藏该回答` 按钮，点击即可将对应用户拉入黑名单
-2. 勾选 `屏蔽黑名单用户发布的内容` 后在回答详情中将会过滤黑名单用户的回答内容；
-3. 点击用户后的 x 即可将用户从黑名单移除；
+在使用该功能前，请先点击 `同步黑名单` 按钮同步黑名单内容。<br>
 
-![黑名单](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/black.png)
+1. 回答列表用户名后显示「屏蔽用户」按钮<br>
+   - 勾选后在回答内容中将添加 `屏蔽用户`、`屏蔽用户并隐藏该回答` 按钮，点击即可将对应用户拉入黑名单<br>
+2. 勾选 `屏蔽黑名单用户发布的内容` 后在回答详情中将会过滤黑名单用户的回答内容<br>
+3. 点击用户后的 x 即可将用户从黑名单移除<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/black.png" alt="黑名单">
 
 </details>
 
@@ -332,11 +368,13 @@ _注：需要开启接口拦截_
 
 > 菜单目录：页面尺寸 - 页面内容宽度
 
-1. 普通宽度设置，宽度为固定宽度，设置区间为 600 ～ 1500；
-2. 勾选百分比设置后，页面内容将根据浏览器宽度的比例进行设置，最小百分比为 20%；
-3. `评论弹窗匹配页面宽度` 勾选后，评论弹窗将跟页面内容宽度一致；
+<br>
 
-![页面尺寸](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-size.png)
+1. 普通宽度设置，宽度为固定宽度，设置区间为 600 ～ 1500<br>
+2. 勾选百分比设置后，页面内容将根据浏览器宽度的比例进行设置，最小百分比为 20%<br>
+3. `评论弹窗匹配页面宽度` 勾选后，评论弹窗将跟页面内容宽度一致<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-size.png" alt="页面尺寸">
 
 </details>
 
@@ -348,12 +386,14 @@ _注：需要开启接口拦截_
 
 > 菜单目录：页面尺寸 - 字体大小
 
-1. 列表标题文字大小、列表内容文字大小；
-2. 回答标题文字大小、回答内容文字大小；
-3. 文章标题文字大小、文章内容文字大小；
-4. 内容行高（在所有内容中生效）
+<br>
 
-![字体大小](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/font-size.png)
+1. 列表标题文字大小、列表内容文字大小<br>
+2. 回答标题文字大小、回答内容文字大小<br>
+3. 文章标题文字大小、文章内容文字大小<br>
+4. 内容行高（在所有内容中生效）<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/font-size.png" alt="字体大小">
 
 </details>
 
@@ -365,15 +405,17 @@ _注：需要开启接口拦截_
 
 > 菜单目录：页面尺寸 - 回答和文章图片尺寸 ｜ 页面尺寸 - 图片最大高度限制
 
-1. 回答和文章图片尺寸 - 为图片宽度设置
-   1. 默认：不修改；
-   2. 原图：按照图片原图大小显示；
-   3. 自定义：自定义图片宽度，设置区间为 0 ～ 1000；
-2. 图片最大高度显示
-   1. 开启限制后，图片宽度设置将会失效；
-   2. 开启后，将按照设置的高度等比缩放图片；
+<br>
 
-![图片尺寸](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/image-size.png)
+1. 回答和文章图片尺寸 - 为图片宽度设置<br>
+   - 默认：不修改<br>
+   - 原图：按照图片原图大小显示<br>
+   - 自定义：自定义图片宽度，设置区间为 0 ～ 1000<br>
+2. 图片最大高度显示<br>
+   - 开启限制后，图片宽度设置将会失效<br>
+   - 开启后，将按照设置的高度等比缩放图片<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/image-size.png" alt="图片尺寸">
 
 </details>
 
@@ -384,6 +426,8 @@ _注：需要开启接口拦截_
 <summary>弹窗打开动图</summary>
 
 > 菜单目录：页面尺寸 - 图片最大高度限制
+
+<br>
 
 开启后，页面动图预览将以弹窗的形式查看，来替换直接在原位置查看的方式
 
@@ -396,6 +440,8 @@ _注：需要开启接口拦截_
 <summary>列表视频回答中的视频尺寸</summary>
 
 > 菜单目录：页面尺寸 - 列表视频回答中的视频尺寸
+
+<br>
 
 开启自定义后，将列表中的视频内容按照宽度进行缩放，设置区间为 0 ～ 1000
 
@@ -411,11 +457,13 @@ _注：需要开启接口拦截_
 
 > 菜单目录：主题颜色 - 主题颜色
 
-1. 浅色：页面主题将根据浅色设置；
-2. 深色（夜间模式）：页面主题将根据深色设置；
-3. 自动：页面主题将根据浏览器是否开启夜间模式来设置，适用于自动开启夜间模式的电脑和浏览器
+<br>
 
-![颜色设置](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-background.png)
+1. 浅色：页面主题将根据浅色设置<br>
+2. 深色（夜间模式）：页面主题将根据深色设置<br>
+3. 自动：页面主题将根据浏览器是否开启夜间模式来设置，适用于自动开启夜间模式的电脑和浏览器<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-background.png" alt="颜色设置">
 
 </details>
 
@@ -427,9 +475,11 @@ _注：需要开启接口拦截_
 
 > 菜单目录：主题颜色 - 浅色颜色选择
 
-浅色颜色主题预览（黄）：
+<br>
 
-![浅色颜色预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/background-light.png)
+浅色颜色主题预览（黄）：<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/background-light.png" alt="浅色颜色预览">
 
 </details>
 
@@ -441,13 +491,15 @@ _注：需要开启接口拦截_
 
 > 菜单目录：主题颜色 - 深色颜色选择
 
-_注：需开启深色模式，或在主题颜色自动时浏览器为深色模式_
+<br>
 
-_注 2: 深色蓝、深色红、深色绿为高对比度颜色_
+_注：需开启深色模式，或在主题颜色自动时浏览器为深色模式_<br>
 
-深色颜色主题预览（深色护眼三）：
+_注 2: 深色蓝、深色红、深色绿为高对比度颜色_<br>
 
-![深色颜色预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/background-dark.png)
+深色颜色主题预览（深色护眼三）：<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/background-dark.png" alt="深色颜色预览">
 
 </details>
 
@@ -459,11 +511,13 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：主题颜色 - 修改文字颜色
 
-输入文字颜色后点击回车键或失去焦点生效，点击重置去除文字颜色设置
+<br>
 
-修改文字颜色预览：
+输入文字颜色后点击回车键或失去焦点生效，点击重置去除文字颜色设置<br>
 
-![修改文字颜色](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/font-color.png)
+修改文字颜色预览：<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/font-color.png" alt="修改文字颜色">
 
 </details>
 
@@ -477,6 +531,8 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：主题颜色 - 配置操作
 
+<br>
+
 点击即可启用极简模式，隐藏大部分的模块，仅保留列表主体、回答主体、文章主体，完全服务于阅读
 
 </details>
@@ -489,8 +545,10 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：主题颜色 - 配置操作
 
-1. 配置导出即可将当前设置导出为 txt 文件
-2. 配置导入可将配置 txt 文件上传进行配置同步，一般用户跨浏览器使用
+<br>
+
+1. 配置导出即可将当前设置导出为 txt 文件<br>
+2. 配置导入可将配置 txt 文件上传进行配置同步，一般用户跨浏览器使用<br>
 
 </details>
 
@@ -501,6 +559,8 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 <summary>自定义样式</summary>
 
 > 菜单目录：主题颜色 - 自定义样式
+
+<br>
 
 可自行输入 css 样式来进行定制化设置
 
@@ -514,7 +574,9 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：屏蔽内容
 
-![屏蔽内容设置预览](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-filter.png)
+<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-filter.png" alt="屏蔽内容设置预览">
 
 </details>
 
@@ -525,6 +587,8 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 <summary>屏蔽选自盐选专栏的内容</summary>
 
 > 菜单目录：屏蔽内容 - 通用内容屏蔽
+
+<br>
 
 开启后在推荐列表、回答内容中均会自动屏蔽来自盐选专栏的内容
 
@@ -538,6 +602,8 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：屏蔽内容 - 列表内容屏蔽
 
+<br>
+
 开启后将模拟点击方式关闭主页顶部活动推广，可解决物理隐藏下的颜色错误问题。
 
 </details>
@@ -550,6 +616,8 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：屏蔽内容 - 列表内容屏蔽
 
+<br>
+
 开启后在关注列表将不再出现自己的操作内容
 
 </details>
@@ -561,6 +629,8 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 <summary>关注列表过滤关注人操作</summary>
 
 > 菜单目录：屏蔽内容 - 列表内容屏蔽
+
+<br>
 
 可设置过滤关注列表关注人的`赞同回答`、`赞同文章`、`关注话题`的操作
 
@@ -584,11 +654,13 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：屏蔽内容 - 列表内容屏蔽
 
-- 勾选 `邀请回答` 后推荐列表将不会显示邀请回答内容。
-- 勾选 `商业推广` 后搜索列表将不会显示商业推广内容。
-- 勾选 `文章` 后推荐列表将不会再出现专栏文章。
-- 勾选 `视频` 后推荐列表中将不会再出现视频内容。
-- 勾选 `想法` 后推荐列表中将不会再出现想法内容。
+<br>
+
+- 勾选 `邀请回答` 后推荐列表将不会显示邀请回答内容<br>
+- 勾选 `商业推广` 后搜索列表将不会显示商业推广内容<br>
+- 勾选 `文章` 后推荐列表将不会再出现专栏文章<br>
+- 勾选 `视频` 后推荐列表中将不会再出现视频内容<br>
+- 勾选 `想法` 后推荐列表中将不会再出现想法内容<br>
 
 </details>
 
@@ -600,9 +672,11 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_
 
 > 菜单目录：屏蔽内容 - 回答内容屏蔽
 
-开启后在回答页面，将不会再推荐匿名用户的回答
+<br>
 
-_注：仅在回答页面生效_
+开启后在回答页面，将不会再推荐匿名用户的回答<br>
+
+_注：仅在回答页面生效_<br>
 
 </details>
 
@@ -613,6 +687,8 @@ _注：仅在回答页面生效_
 <summary>回答页面低赞回答屏蔽</summary>
 
 > 菜单目录：屏蔽内容 - 回答内容屏蔽
+
+<br>
 
 勾选后问题详情页将屏蔽点赞量少于设置大小的回答
 
@@ -626,6 +702,8 @@ _注：仅在回答页面生效_
 
 > 菜单目录：屏蔽内容 - 回答内容屏蔽
 
+<br>
+
 勾选后在回答内容中将屏蔽带有对应标签的回答
 
 </details>
@@ -638,17 +716,17 @@ _注：仅在回答页面生效_
 
 > 菜单目录：屏蔽内容 - 标题屏蔽词
 
-![标题屏蔽词](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/filter-title-word.png)
+<br>
 
-**(图片内容仅为示例，无个人主观情感)**
+输入框输入后点击回车键可添加屏蔽词，点击屏蔽词即可删除<br>
 
-输入框输入后点击回车键可添加屏蔽词，点击屏蔽词即可删除
+推荐列表的标题将会针对屏蔽词过滤。可过滤多项，无上限。并在过滤后自动调用 `不感兴趣` 的接口，防止在其他设备上出现重复内容<br>
 
-推荐列表的标题将会针对屏蔽词过滤。可过滤多项，无上限。并在过滤后自动调用 `不感兴趣` 的接口，防止在其他设备上出现重复内容
+_注：标题屏蔽词仅匹配标题内容_<br>
 
-_注：标题屏蔽词仅匹配标题内容_
+**(图片内容仅为示例，无个人主观情感)**<br>
 
----
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/filter-title-word.png" alt="标题屏蔽词">
 
 </details>
 
@@ -660,13 +738,13 @@ _注：标题屏蔽词仅匹配标题内容_
 
 > 菜单目录：屏蔽内容 - 内容屏蔽词
 
-输入框输入后点击回车键可添加屏蔽词，点击屏蔽词即可删除
+<br>
 
-推荐列表内容、回答列表的内容将会针对屏蔽词过滤。可过滤多项，无上限。
+输入框输入后点击回车键可添加屏蔽词，点击屏蔽词即可删除<br>
 
-_注：内容屏蔽词仅匹配列表或回答内容_
+推荐列表内容、回答列表的内容将会针对屏蔽词过滤。可过滤多项，无上限。<br>
 
----
+_注：内容屏蔽词仅匹配列表或回答内容_<br>
 
 </details>
 
@@ -680,11 +758,13 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 > 修改器默认功能，无需主动开启
 
-默认缓存 500 条，点击标题可跳转。
+<br>
 
-![推荐列表缓存](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/history-recommend.png)
+默认缓存 500 条，点击标题可跳转。<br>
 
-![浏览历史记录](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/history-view.png)
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/history-recommend.png" alt="推荐列表缓存">
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/history-view.png" alt="浏览历史记录">
 
 </details>
 
@@ -695,6 +775,8 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 <summary>外部链接直接跳转</summary>
 
 > 修改器默认功能，无需主动开启
+
+<br>
 
 知乎里所有外部链接的重定向页面去除，点击将直接跳转到外部链接，不再打开知乎外部链接提示页面
 
@@ -708,9 +790,11 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 > 修改器默认功能，无需主动开启
 
-可下载视频内容左上角将会生成一个下载按钮，点击即可下载视频
+<br>
 
-![视频下载](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/download-video.png)
+可下载视频内容左上角将会生成一个下载按钮，点击即可下载视频<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/download-video.png" alt="视频下载">
 
 </details>
 
@@ -722,9 +806,11 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 > 修改器默认功能，无需主动开启
 
-未登录状态下自动移除登录弹窗
+<br>
 
-由于知乎接口的修改，未登录状态下无法查看全部回答、无法查看完整回答，以上问题只能通过登录解决
+未登录状态下自动移除登录弹窗<br>
+
+由于知乎接口的修改，未登录状态下无法查看全部回答、无法查看完整回答，以上问题只能通过登录解决<br>
 
 </details>
 
@@ -736,21 +822,27 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 > 修改器默认功能，无需主动开启
 
-导出步骤：
+<br>
 
-1. 点击导出内容按钮
-2. 等待资源加载完成
-3. 生成为 PDF 预览，点击保存即可保存至本地
+导出步骤：<br>
 
-![内容导出步骤](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-to-pdf.png)
+1. 点击导出内容按钮<br>
+2. 等待资源加载完成<br>
+3. 生成为 PDF 预览，点击保存即可保存至本地<br>
 
-用户主页回答、文章导出按钮：
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-to-pdf.png" alt="内容导出步骤">
 
-![用户主页内容导出](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-home.png)
+<br>
 
-如需显示文章和回答导出按钮，需勾选 `通用 - 显示修改 - 文档或回答顶部显示导出当前内容/回答按钮`
+用户主页回答、文章导出按钮：<br>
 
-![导出当前内容](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-content.png)
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-home.png" alt="用户主页内容导出">
+
+<br>
+
+如需显示文章和回答导出按钮，需勾选 `通用 - 显示修改 - 文档或回答顶部显示导出当前内容/回答按钮`<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/export-content.png" alt="导出当前内容">
 
 </details>
 
@@ -762,9 +854,11 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 > 修改器默认功能，无需主动开启
 
-问题邀请用户添加一键邀请按钮，点击可邀请所有推荐用户
+<br>
 
-![一键邀请](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/invite.png)
+问题邀请用户添加一键邀请按钮，点击可邀请所有推荐用户<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/invite.png" alt="一键邀请">
 
 </details>
 
@@ -776,11 +870,13 @@ _注：内容屏蔽词仅匹配列表或回答内容_
 
 > 修改器默认功能，无需主动开启
 
-_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击 `移除关注` 按钮将打开到对应页面，取消或关注后此页面自动关闭，脚本未加载请刷新页面_
+<br>
 
-目前只支持 `关注的问题`、`关注的收藏`
+_注：由于知乎接口的限制，关注及移除只能在对应页面中进行操作，所以点击 `移除关注` 按钮将打开到对应页面，取消或关注后此页面自动关闭，脚本未加载请刷新页面_<br>
 
-![一键移除](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-item.png)
+目前只支持 `关注的问题`、`关注的收藏`<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-item.png" alt="一键移除">
 
 </details>
 
@@ -792,7 +888,9 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 > 修改器默认功能，无需主动开启
 
-![移除版权信息](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-message.png)
+<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-message.png" alt="移除版权信息">
 
 </details>
 
@@ -803,6 +901,8 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 <summary>预览静态图片键盘快捷切换</summary>
 
 > 修改器默认功能，无需主动开启
+
+<br>
 
 静态图片点击查看大图时，如果当前回答或者文章中存在多个图片，可以使用键盘方向键左右切换图片显示
 
@@ -816,9 +916,11 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 
 > 修改器默认功能，无需主动开启
 
-_注：由于知乎屏蔽话题每次只显示部分内容，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽话题。_
+<br>
 
-![一键移除屏蔽话题](https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-filter-tag.png)
+_注：由于知乎屏蔽话题每次只显示部分内容，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽话题。_<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-filter-tag.png" alt="一键移除屏蔽话题">
 
 </details>
 
