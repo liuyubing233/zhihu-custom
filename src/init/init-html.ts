@@ -1,5 +1,5 @@
 import { dom, domById, domC } from '../commons/tools';
-import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE, VERSION_RANGE_SHOW_VALUE } from '../configs';
+import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
 import { addBackgroundSetting } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
@@ -8,7 +8,8 @@ import { IOptionItem, IRangeItem, IZhihuUserinfo } from '../types';
 import { INNER_HTML } from '../web-resources';
 
 const commonCheckbox = (v: string) => `<input class="ctz-i" name="${v}" type="checkbox" value="on" />`;
-const commonLabel = (l?: string) => (l ? `<span class="ctz-label">${l}</span>` : '');
+
+const tooltipHTML = (value: string) => `<span class="ctz-tooltip"><span>?</span><span>${value}</span></span>`;
 
 const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return '';
@@ -17,17 +18,12 @@ const createHiddenItem = (arrHidden: IOptionItem[][]) => {
     .join('<br>')}</div>`;
 };
 
-const rangeHTML = (l: string, v: string, min: number, max: number, desc?: string) =>
-  `<div class="ctz-form-item ctz-range-${v}"">${
-    `<div>${l}</div>` + `<div>${range(v, min, max) + (desc ? `<div class="ctz-commit" style="margin-top: 8px;">${desc}</div>` : '')}</div>`
-  }</div>`;
-
-const range = (v: string, min: number, max: number) =>
-  `<div class="ctz-flex-wrap">${
-    `<span class="ctz-commit" style="margin-right: 2px;">${min}</span>` +
+const range = (v: string, min: number, max: number, unit = '') =>
+  `<div class="ctz-flex-wrap ctz-range-${v}">${
+    `<span class="ctz-commit" style="margin-right: 2px;">${min}${unit}</span>` +
     `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 300px" />` +
-    `<span class="ctz-commit" style="margin: 0 8px 0 2px;">${max}</span>` +
-    `<span id="${v}">${VERSION_RANGE_SHOW_VALUE}0</span>`
+    `<span class="ctz-commit" style="margin: 0 8px 0 2px;">${max}${unit}</span>` +
+    `<span>当前：<span id="${v}">0</span>${unit}</span>`
   }</div>`;
 
 /** 通用选项html */
@@ -53,15 +49,17 @@ export const initHTML = () => {
   domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(
     (item: IRangeItem) =>
       `<div>${
-        rangeHTML(item.label, item.value, item.min, item.max, item.desc) +
-        rangeHTML(item.percentLabel, item.percentValue, item.percentMin, item.percentMax, item.desc) +
+        `<div class="ctz-form-item">${
+          `<div>${item.label}${tooltipHTML(item.desc)}</div>` +
+          `<div>${range(item.value, item.min, item.max) + range(item.percentValue, item.percentMin, item.percentMax, '%')}</div>`
+        }</div>` +
         `<div class="ctz-form-item">${
           `<div>${item.percentChooseLabel}</div>` + `<div><input class="ctz-i" name="${item.percentChooseValue}" type="checkbox" value="on" /></div>`
         }</div>`
       }</div>`
   ).join('');
 
-  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = range('zoomImageSize', 0, 1000);
+  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = range('zoomImageSize', 0, 1000)
   domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = range('zoomImageHeightSize', 0, 1000);
   domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = range('zoomListVideoSize', 0, 1000);
   // 滑动输入条部分 END

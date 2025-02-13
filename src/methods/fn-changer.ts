@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById } from '../commons/tools';
-import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, VERSION_RANGE_SHOW_VALUE } from '../configs';
+import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
 import { initImagePreview } from '../init/init-image-preview';
 import { myBackground, onUseThemeDark } from './background';
 import { appendHidden } from './hidden';
@@ -93,7 +93,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
 
   if (type === 'range') {
     const nodeName = domById(name);
-    nodeName && (nodeName.innerText = VERSION_RANGE_SHOW_VALUE + value);
+    nodeName && (nodeName.innerText = value);
   }
 
   if (/^hidden/.test(name)) {

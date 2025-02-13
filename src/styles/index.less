@@ -5,41 +5,9 @@
 @import './radio.less';
 @import './checkbox.less';
 @import './first-use.less';
-
-.ctz-title {
-  font-weight: bold;
-  min-height: 48px;
-  font-size: @fontSizeHead;
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  margin-bottom: 12px;
-  & > span {
-    font-size: @fontSizeSmall;
-    color: #999;
-    padding-left: 8px;
-    b {
-      color: @waring;
-    }
-  }
-
-  &::before {
-    content: '';
-    width: 4px;
-    height: 20px;
-    background: @blue1;
-    margin-right: 8px;
-    border-radius: 4px;
-  }
-
-  &::after {
-    content: '';
-    flex: 1;
-    height: 0;
-    border-bottom: 2px dotted @blue01;
-    margin-left: 12px;
-  }
-}
+@import './tooltip.less';
+@import './form.less';
+@import './title.less';
 
 .ctz-set-content:not(.ctz-flex-wrap) {
   & > div,
@@ -162,20 +130,6 @@
     input[type='radio'] {
       margin: 0 4px 0 0;
     }
-  }
-}
-
-.ctz-form-item {
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 24px;
-  margin-bottom: 12px;
-  & > div:first-of-type {
-    width: 148px;
-    line-height: 24px;
-  }
-  & > div:nth-child(2) {
-    flex: 1;
   }
 }
 
@@ -523,8 +477,8 @@
   margin: 0 4px;
 }
 
-#CTZ_HISTORY_LIST .ctz-set-content,
-#CTZ_HISTORY_VIEW .ctz-set-content {
+#CTZ_HISTORY_LIST,
+#CTZ_HISTORY_VIEW {
   a {
     word-break: break-all;
     display: block;
@@ -574,35 +528,6 @@
   &:hover {
     border-color: #005ce6;
     color: #005ce6;
-  }
-}
-
-#CTZ_FONT_SIZE_IN_ZHIHU {
-  & > div {
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .ctz-flex-wrap > span:nth-of-type(2) {
-    margin-left: 24px;
-  }
-}
-
-#CTZ_VERSION_RANGE_ZHIHU {
-  margin-bottom: 12px;
-
-  & > div {
-    padding-bottom: 12px;
-    margin-bottom: 12px;
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      width: 78%;
-      height: 0;
-      border-bottom: 1px dashed rgba(150, 162, 170, 0.4);
-      bottom: 0;
-      right: 0;
-    }
   }
 }
 

@@ -8,6 +8,5 @@ export interface IRangeItem extends IOptionItem {
   percentChooseValue: string;
   percentMin: number;
   percentMax: number;
-  percentLabel: string;
   percentValue: string;
 }

@@ -1,0 +1,34 @@
+@import './common.less';
+
+.ctz-title {
+  font-weight: bold;
+  min-height: 48px;
+  font-size: @fontSizeHead;
+  display: flex;
+  align-items: center;
+  & > span {
+    font-size: @fontSizeSmall;
+    color: #999;
+    padding-left: 8px;
+    b {
+      color: @waring;
+    }
+  }
+
+  &::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: @blue1;
+    margin-right: 8px;
+    border-radius: 4px;
+  }
+
+  &::after {
+    content: '';
+    flex: 1;
+    height: 0;
+    border-bottom: 2px dotted @blue01;
+    margin-left: 12px;
+  }
+}

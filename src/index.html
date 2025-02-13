@@ -397,100 +397,94 @@
       </div>
 
       <!-- 页面尺寸 -->
-      <div id="CTZ_VERSION" class="ctz-set-content" style="display: none">
+      <div id="CTZ_VERSION" style="display: none">
         <!-- 页面内容宽度 -->
-        <div>
-          <div class="ctz-title">页面内容宽度</div>
-          <div id="CTZ_VERSION_RANGE_ZHIHU"></div>
-          <div class="ctz-form-item">
-            <div>评论弹窗匹配页面宽度</div>
-            <div>
-              <input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" />
-            </div>
+        <div class="ctz-title">页面内容宽度</div>
+        <div id="CTZ_VERSION_RANGE_ZHIHU"></div>
+        <div class="ctz-form-item">
+          <div>评论弹窗匹配页面宽度</div>
+          <div>
+            <input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" />
           </div>
         </div>
 
         <!-- 页面字体大小 -->
-        <div>
-          <div class="ctz-title">字体大小</div>
-          <div id="CTZ_FONT_SIZE_IN_ZHIHU"></div>
-        </div>
+        <div class="ctz-title">字体大小</div>
+        <div id="CTZ_FONT_SIZE_IN_ZHIHU"></div>
 
         <!-- 图片尺寸 -->
-        <div>
-          <div class="ctz-title">图片尺寸</div>
-          <div class="ctz-set-content">
-            <div class="ctz-form-item">
-              <div>回答和文章图片宽度</div>
-              <div>
-                <div class="ctz-radio-group">
-                  <label>
-                    <input class="ctz-i" name="zoomImageType" type="radio" value="0" />
-                    <div>默认</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="zoomImageType" type="radio" value="1" />
-                    <div>原图</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="zoomImageType" type="radio" value="2" />
-                    <div>自定义</div>
-                  </label>
-                </div>
-                <div id="CTZ_IMAGE_SIZE_CUSTOM" class="marginTB8" style="display: none; margin-top: 12px"></div>
-              </div>
+        <div class="ctz-title">图片尺寸</div>
+        <div class="ctz-form-item">
+          <div>回答和文章图片显示</div>
+          <div>
+            <div class="ctz-radio-group" style="width: 100%">
+              <label>
+                <input class="ctz-i" name="zoomImageType" type="radio" value="0" />
+                <div>默认尺寸</div>
+              </label>
+              <label>
+                <input class="ctz-i" name="zoomImageType" type="radio" value="1" />
+                <div>原图尺寸</div>
+              </label>
+              <label>
+                <input class="ctz-i" name="zoomImageType" type="radio" value="2" />
+                <div>自定义尺寸</div>
+              </label>
             </div>
 
-            <div class="ctz-form-item">
-              <div>图片最大高度限制</div>
-              <div>
-                <div class="ctz-radio-group">
-                  <label>
-                    <input class="ctz-i" name="zoomImageHeight" type="radio" value="0" />
-                    <div>关闭</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="zoomImageHeight" type="radio" value="1" />
-                    <div>开启</div>
-                  </label>
-                </div>
-                <div class="ctz-commit marginTB8">开启高度限制后，图片将按照高度等比例缩放，宽度限制将失效</div>
-                <div id="CTZ_IMAGE_HEIGHT_CUSTOM" class="marginTB8" style="display: none"></div>
-              </div>
-            </div>
-
-            <div class="ctz-form-item">
-              <div>弹窗打开动图</div>
-              <div><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></div>
-            </div>
+            <div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none; margin-top: 18px"></div>
           </div>
         </div>
 
-        <div>
-          <div class="ctz-title">视频尺寸</div>
-          <div class="ctz-set-content">
-            <div class="ctz-form-item">
-              <div>列表视频回答尺寸</div>
-              <div>
-                <div class="ctz-radio-group">
-                  <label>
-                    <input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />
-                    <div>默认</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />
-                    <div>自定义</div>
-                  </label>
-                </div>
-                <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM" class="marginTB8"></div>
-              </div>
+        <div class="ctz-form-item">
+          <div>
+            图片最大高度限制
+            <span class="ctz-tooltip">
+              <span>?</span>
+              <span>开启高度限制后，图片将按照高度等比例缩放，宽度限制将失效</span>
+            </span>
+          </div>
+          <div>
+            <div class="ctz-radio-group" style="width: 100%">
+              <label>
+                <input class="ctz-i" name="zoomImageHeight" type="radio" value="0" />
+                <div>关闭</div>
+              </label>
+              <label>
+                <input class="ctz-i" name="zoomImageHeight" type="radio" value="1" />
+                <div>开启</div>
+              </label>
             </div>
+            <div id="CTZ_IMAGE_HEIGHT_CUSTOM" style="display: none; margin-top: 18px"></div>
+          </div>
+        </div>
+
+        <div class="ctz-form-item">
+          <div>弹窗打开动图</div>
+          <div><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></div>
+        </div>
+
+        <div class="ctz-title">视频尺寸</div>
+        <div class="ctz-form-item">
+          <div>列表视频回答尺寸</div>
+          <div>
+            <div class="ctz-radio-group" style="width: 100%">
+              <label>
+                <input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />
+                <div>默认尺寸</div>
+              </label>
+              <label>
+                <input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />
+                <div>自定义尺寸</div>
+              </label>
+            </div>
+            <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM" style="display: none; margin-top: 18px"></div>
           </div>
         </div>
       </div>
 
       <!-- 配置操作 -->
-      <div id="CTZ_CONFIG" class="ctz-set-content" style="display: none">
+      <div id="CTZ_CONFIG" style="display: none">
         <div>
           <div class="ctz-title">配置操作</div>
           <div class="ctz-flex-wrap ctz-config-buttons">
@@ -548,3 +542,10 @@
     <button class="ctz-button ctz-button-primary" id="BUTTON_FIRST_USE">我知道了</button>
   </div>
 </div>
+
+<!--
+<span class="ctz-tooltip">
+  <span>?</span>
+  <span>hhhahahhahahahhahahahahhahaha</span>
+</span>
+-->

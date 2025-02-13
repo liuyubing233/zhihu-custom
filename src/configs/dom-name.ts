@@ -50,45 +50,41 @@ export const FONT_SIZE_INPUT: IOptionItem[] = [
 
 /** 版心最小宽度 */
 export const VERSION_MIN_WIDTH = 600;
-export const VERSION_RANGE_SHOW_VALUE = '当前: '
 export const VERSION_RANGE: IRangeItem[] = [
   {
-    label: '列表内容宽度',
+    label: '列表宽度',
     value: 'versionHome',
     min: VERSION_MIN_WIDTH,
     max: 1500,
     percentChooseValue: 'versionHomeIsPercent',
-    percentChooseLabel: '使用百分比设置',
+    percentChooseLabel: '列表宽度使用百分比',
     desc: '最小显示宽度为600像素，设置低于此值将按照600像素显示',
     percentMin: 20,
     percentMax: 100,
-    percentLabel: '列表内容宽度（百分比）',
     percentValue: 'versionHomePercent',
   },
   {
-    label: '回答内容宽度',
+    label: '回答宽度',
     value: 'versionAnswer',
     min: VERSION_MIN_WIDTH,
     max: 1500,
     percentChooseValue: 'versionAnswerIsPercent',
-    percentChooseLabel: '使用百分比设置',
+    percentChooseLabel: '回答宽度使用百分比',
     desc: '最小显示宽度为600像素，设置低于此值将按照600像素显示',
     percentMin: 20,
     percentMax: 100,
-    percentLabel: '回答内容宽度（百分比）',
     percentValue: 'versionAnswerPercent',
   },
   {
-    label: '文章内容宽度',
+    label: '文章宽度',
     value: 'versionArticle',
     min: VERSION_MIN_WIDTH,
     max: 1500,
     percentChooseValue: 'versionArticleIsPercent',
-    percentChooseLabel: '使用百分比设置',
+    percentChooseLabel: '文章宽度使用百分比',
     desc: '最小显示宽度为600像素，设置低于此值将按照600像素显示',
     percentMin: 20,
     percentMax: 100,
-    percentLabel: '文章内容宽度（百分比）',
     percentValue: 'versionArticlePercent',
   },
 ];
