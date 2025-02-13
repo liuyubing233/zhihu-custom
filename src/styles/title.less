@@ -2,10 +2,11 @@
 
 .ctz-title {
   font-weight: bold;
-  margin-bottom: 12px;
-  font-size: @fontSizeHead;
+  font-size: 14px;
   display: flex;
   align-items: center;
+  height: 42px;
+  line-height: 42px;
   & > span {
     font-size: @fontSizeSmall;
     color: #999;
@@ -13,22 +14,5 @@
     b {
       color: @waring;
     }
-  }
-
-  &::before {
-    content: '';
-    width: 4px;
-    height: 20px;
-    background: @blue1;
-    margin-right: 8px;
-    border-radius: 4px;
-  }
-
-  &::after {
-    content: '';
-    flex: 1;
-    height: 0;
-    border-bottom: 2px dotted @blue01;
-    margin-left: 12px;
   }
 }

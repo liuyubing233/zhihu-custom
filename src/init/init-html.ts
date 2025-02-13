@@ -38,6 +38,22 @@ const commonLabelCheckbox = (con: ICommonContent[]) =>
     )
     .join('');
 
+const commonFormBoxItem = (con: ICommonContent[][]) =>
+  con
+    .map(
+      (item) =>
+        `<div class="ctz-form-box">${item
+          .map(
+            ({ label, value, needFetch }) =>
+              `<div class="ctz-form-box-item ${needFetch ? 'ctz-fetch-intercept' : ''}">${
+                `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')}</div>` +
+                `<div><input class="ctz-i ctz-switch" name="${value}" type="checkbox" value="on" /></div>`
+              }</div>`
+          )
+          .join('')}</div>`
+    )
+    .join('');
+
 /** 加载基础元素及绑定方法 */
 export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
@@ -59,7 +75,7 @@ export const initHTML = () => {
       }</div>`
   ).join('');
 
-  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = range('zoomImageSize', 0, 1000)
+  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = range('zoomImageSize', 0, 1000);
   domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = range('zoomImageHeightSize', 0, 1000);
   domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = range('zoomListVideoSize', 0, 1000);
   // 滑动输入条部分 END
@@ -93,7 +109,7 @@ export const initHTML = () => {
   ).join('');
 
   // 添加基础设置显示修改
-  dom('#CTZ_BASIS_SHOW_CONTENT .ctz-set-content')!.innerHTML += commonLabelCheckbox(BASIC_SHOW_CONTENT);
+  dom('#CTZ_BASIS_SHOW_CONTENT')!.innerHTML += commonFormBoxItem(BASIC_SHOW_CONTENT);
   // 高性能
   dom('#CTZ_HIGH_PERFORMANCE .ctz-set-content')!.innerHTML += commonLabelCheckbox(HIGH_PERFORMANCE);
 

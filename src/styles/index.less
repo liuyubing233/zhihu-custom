@@ -8,9 +8,11 @@
 @import './tooltip.less';
 @import './form.less';
 @import './title.less';
+@import './switch.less';
 @import './setting-theme.less';
 @import './setting-config.less';
 @import './setting-default.less';
+@import './fetch-intercept.less';
 
 .ctz-set-content:not(.ctz-flex-wrap) {
   & > div,
@@ -44,9 +46,6 @@
   line-height: 24px;
   margin-right: 12px;
 }
-
-
-
 
 // 屏蔽内容
 #CTZ_BLOCK_WORD {
@@ -195,10 +194,10 @@
       }
     }
     img {
-      width: 38px;
-      height: 38px;
+      width: 28px;
+      height: 28px;
       border: 4px solid transparent;
-      border-radius: 12px;
+      border-radius: 8px;
     }
     &:hover {
       img {
@@ -474,33 +473,6 @@
   &:hover {
     border-color: #005ce6;
     color: #005ce6;
-  }
-}
-
-.ctz-fetch-intercept .ctz-need-fetch {
-  display: none;
-}
-
-.ctz-fetch-intercept.ctz-fetch-intercept-close {
-  color: #b0b0b0 !important;
-  cursor: not-allowed !important;
-  text-decoration: line-through;
-  span.ctz-need-fetch {
-    display: inline;
-  }
-  div.ctz-need-fetch {
-    display: block;
-  }
-  .ctz-remove-block {
-    cursor: not-allowed !important;
-  }
-  .ctz-black-item .ctz-remove-block:hover,
-  .ctz-black-item a:hover {
-    background: transparent !important;
-    color: #b0b0b0 !important;
-  }
-  &:hover {
-    color: #b0b0b0 !important;
   }
 }
 

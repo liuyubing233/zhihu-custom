@@ -89,6 +89,23 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     suspensionPickUp: suspensionPickupAttribute,
     suspensionPickupRight: suspensionPickupAttribute,
   };
+
+  if (name === 'fetchInterceptStatus') {
+    if (
+      confirm(
+        !checked
+          ? '关闭接口拦截，确认后将刷新页面。\n「黑名单设置；外置不感兴趣；快速屏蔽用户；回答、文章和收藏夹导出」功能将不可用。'
+          : '开启接口拦截，确认后将刷新页面。\n如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。'
+      )
+    ) {
+      myStorage.updateConfigItem('fetchInterceptStatus', checked);
+      window.location.reload();
+    } else {
+      ev.checked = !checked;
+    }
+    return;
+  }
+
   await myStorage.updateConfigItem(name, type === 'checkbox' ? checked : value);
 
   if (type === 'range') {

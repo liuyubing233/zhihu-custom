@@ -1,0 +1,31 @@
+
+.ctz-fetch-intercept .ctz-need-fetch {
+  display: none;
+}
+
+.ctz-fetch-intercept.ctz-fetch-intercept-close {
+  color: #b0b0b0 !important;
+  cursor: not-allowed !important;
+  text-decoration: line-through;
+  span.ctz-need-fetch {
+    display: inline;
+  }
+  div.ctz-need-fetch {
+    display: block;
+  }
+  .ctz-remove-block {
+    cursor: not-allowed !important;
+  }
+  .ctz-black-item .ctz-remove-block:hover,
+  .ctz-black-item a:hover {
+    background: transparent !important;
+    color: #b0b0b0 !important;
+  }
+  &:hover {
+    color: #b0b0b0 !important;
+  }
+
+  .ctz-switch:checked {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+}

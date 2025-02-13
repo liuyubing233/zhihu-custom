@@ -14,3 +14,43 @@
     align-items: center;
   }
 }
+
+.ctz-form-box {
+  background: #e9e9e8;
+  border: 1px solid #dfdfde;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  .ctz-form-box-item {
+    display: flex;
+    padding: 0 12px;
+    min-height: 42px;
+    position: relative;
+    & > div:first-of-type {
+      flex: 1;
+      line-height: 42px;
+      word-break: keep-all;
+      padding-right: 12px;
+    }
+    & > div:nth-child(2) {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 6px 0;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      background: #e0e0df;
+      height: 1px;
+      width: 96%;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &:last-of-type::after {
+      display: none;
+    }
+  }
+}

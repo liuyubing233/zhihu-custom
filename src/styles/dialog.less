@@ -14,7 +14,7 @@
   max-height: 100vh;
   border-radius: 8px;
   box-shadow: @openShadow_0;
-  background: #e1e0e0;
+  background: @backgroundMenu;
   flex-direction: column;
   overflow: hidden;
   z-index: 202;
@@ -39,6 +39,7 @@
     border: 1px solid @gray04;
     border-radius: 8px;
     transition: all 0.2s;
+    background: @backgroundMenu;
   }
 
   input[type='radio'] {
@@ -115,7 +116,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #e1e0e0;
+  background: @backgroundMenu;
 }
 
 #CTZ_DIALOG_MENU {
@@ -202,7 +203,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #ededec;
+  background: @backgroundContent;
 
   &_TITLE {
     height: 52px;
@@ -211,7 +212,7 @@
     font-weight: 600;
     box-sizing: border-box;
     padding-left: 18px;
-    border-bottom: 1px solid @gray02;;
+    border-bottom: 1px solid @gray02;
   }
 }
 
@@ -222,7 +223,7 @@
   & > div {
     box-sizing: border-box;
     width: 100%;
-    padding: 0 18px 24px;
+    padding: 18px;
   }
 }
 
@@ -242,13 +243,13 @@
     display: inline-block;
   }
 
-  .ctz-status {
-    flex: 1;
-    font-size: 12px;
-    line-height: 24px;
-    padding-right: 24px;
-    text-align: right;
-  }
+  // .ctz-status {
+  //   flex: 1;
+  //   font-size: 12px;
+  //   line-height: 24px;
+  //   padding-right: 24px;
+  //   text-align: right;
+  // }
 
   .ctz-version {
     float: right;
@@ -296,17 +297,17 @@
     border-radius: @radiusCommon 0 0 @radiusCommon;
   }
 
-  &[data-close='0'] {
-    transform: translateX(-@WidthOpen);
-    box-shadow: none;
-    padding: @PaddingSize;
-    div {
-      width: @WidthOpen - @PaddingSize * 2;
-      height: @HeightOpen - @PaddingSize * 2;
-      line-height: @HeightOpen - @PaddingSize * 2;
-      border-radius: 14px;
-    }
-  }
+  // &[data-close='0'] {
+  //   transform: translateX(-@WidthOpen);
+  //   box-shadow: none;
+  //   padding: @PaddingSize;
+  //   div {
+  //     width: @WidthOpen - @PaddingSize * 2;
+  //     height: @HeightOpen - @PaddingSize * 2;
+  //     line-height: @HeightOpen - @PaddingSize * 2;
+  //     border-radius: 14px;
+  //   }
+  // }
 }
 
 #CTZ_LEFT_BUTTONS {

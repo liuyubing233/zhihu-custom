@@ -22,6 +22,7 @@
       <div id="CTZ_DIALOG_MENU">
         <div data-href="#CTZ_BASIS">通用</div>
         <div data-href="#CTZ_HIGH_PERFORMANCE">高性能模式</div>
+        <div data-href="#CTZ_POSITION">悬浮模块</div>
         <div data-href="#CTZ_HIDDEN">隐藏模块</div>
         <div data-href="#CTZ_FILTER">屏蔽内容</div>
         <div data-href="#CTZ_BLACKLIST">黑名单</div>
@@ -31,39 +32,6 @@
         <div data-href="#CTZ_DEFAULT">默认功能</div>
         <div data-href="#CTZ_HISTORY_LIST">推荐列表缓存</div>
         <div data-href="#CTZ_HISTORY_VIEW">浏览历史记录</div>
-        <!-- <div data-href="#CTZ_BASIS">
-          <span class="ctz-menu-choose">通用</span>
-          <span class="ctz-dropdown-icon">›</span>
-          <div class="ctz-dropdown">
-            <a href="#CTZ_BASIS_DEFAULT">基本设置</a>
-            <a href="#CTZ_BASIS_SHOW_CONTENT">显示修改</a>
-            <a href="#CTZ_BASIS_FLOAT">悬浮模块</a>
-          </div>
-        </div> -->
-        <!-- <div data-href="#CTZ_HIGH_PERFORMANCE">高性能模式</div>
-        <div data-href="#CTZ_HIDDEN">
-          <span class="ctz-menu-choose">隐藏模块</span>
-          <span class="ctz-dropdown-icon">›</span>
-          <div class="ctz-dropdown"></div>
-        </div> -->
-        <!-- <div data-href="#CTZ_FILTER">
-          <span class="ctz-menu-choose">屏蔽内容</span>
-          <span class="ctz-dropdown-icon">›</span>
-          <div class="ctz-dropdown">
-            <a href="#CTZ_FILTER_COMMEN">通用</a>
-            <a href="#CTZ_FILTER_LIST">列表</a>
-            <a href="#CTZ_FILTER_ANSWER">回答</a>
-            <a href="#CTZ_FILTER_BLOCK_WORDS">标题屏蔽词</a>
-            <a href="#CTZ_FILTER_BLOCK_WORDS_CONTENT">内容屏蔽词</a>
-          </div>
-        </div>
-        <div data-href="#CTZ_BLACKLIST">黑名单</div>
-        <div data-href="#CTZ_VERSION">页面尺寸</div>
-        <div data-href="#CTZ_THEME">主题颜色</div>
-        <div data-href="#CTZ_CONFIG">配置操作</div>
-        <div data-href="#CTZ_DEFAULT">默认功能</div>
-        <div data-href="#CTZ_HISTORY_LIST">推荐列表缓存</div> -->
-        <!-- <div data-href="#CTZ_HISTORY_VIEW">浏览历史记录</div> -->
       </div>
     </div>
 
@@ -74,51 +42,86 @@
         <!-- 基础设置 -->
         <div id="CTZ_BASIS" style="display: none">
           <div id="CTZ_BASIS_DEFAULT">
-            <div class="ctz-title">基本设置</div>
+            <!-- <div class="ctz-title">基本设置</div> -->
             <div class="ctz-set-content">
-              <div class="ctz-status">
+              <!-- <div class="ctz-status">
                 <span id="CTZ_FETCH_STATUS" style="margin-right: 8px">状态获取中...</span>
                 <button class="ctz-button" id="CTZ_CHANGE_FETCH" size="small">切换接口拦截</button>
+              </div> -->
+
+              <div class="ctz-form-box">
+                <div class="ctz-form-box-item">
+                  <div id="CTZ_FETCH_STATUS">状态获取中...</div>
+                  <div>
+                    <input id="CTZ_CHANGE_FETCH" class="ctz-i ctz-switch" name="fetchInterceptStatus" type="checkbox" value="on" />
+                    <!-- <button class="ctz-button" id="CTZ_CHANGE_FETCH" size="small">切换接口拦截</button> -->
+                  </div>
+                </div>
               </div>
 
-              <label class="ctz-flex-wrap">
-                <input class="ctz-i" name="hotKey" type="checkbox" value="on" />
-                <div>
-                  快捷键打开修改器
-                  <span class="key-shadow">></span>
-                  (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
+              <div class="ctz-form-box">
+                <div class="ctz-form-box-item">
+                  <div>
+                    快捷键打开修改器
+                    <span class="key-shadow">></span>
+                    (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
+                  </div>
+                  <div>
+                    <input class="ctz-i ctz-switch" name="hotKey" type="checkbox" value="on" />
+                  </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="ctz-flex-wrap">
+              <div class="ctz-form-box">
+                <div class="ctz-form-box-item">
+                  <div>去除浏览器标签上<b>XX条私信/未读消息</b>的提示</div>
+                  <div><input class="ctz-i ctz-switch" name="globalTitleRemoveMessage" type="checkbox" value="on" /></div>
+                </div>
+                <div class="ctz-form-box-item">
+                  <div>修改网页标签</div>
+                  <div>
+                    <input type="text" name="globalTitle" style="width: 300px" />
+                    <button class="ctz-button ctz-button-primary" name="buttonConfirmTitle" style="margin: 0 8px">确 认</button>
+                    <button class="ctz-button" name="buttonResetTitle">还 原</button>
+                  </div>
+                </div>
+                <div class="ctz-form-box-item">
+                  <div>修改网页标签图标</div>
+                  <!-- <div><input class="ctz-i ctz-switch" name="globalTitleRemoveMessage" type="checkbox" value="on" /></div> -->
+                  <div id="CTZ_TITLE_ICO"></div>
+                </div>
+              </div>
+
+              <!-- <label class="ctz-flex-wrap">
                 <input class="ctz-i" name="globalTitleRemoveMessage" type="checkbox" value="on" />
                 <div>去除浏览器标签上<b>XX条私信/未读消息</b>的提示</div>
-              </label>
+              </label> -->
 
-              <div>
+              <!-- <div>
                 <div class="ctz-flex-wrap">
                   <div class="ctz-label">修改网页标签名</div>
                   <input type="text" name="globalTitle" style="width: 300px" />
                   <button class="ctz-button ctz-button-primary" name="buttonConfirmTitle" style="margin: 0 8px">确 认</button>
                   <button class="ctz-button" name="buttonResetTitle">还 原</button>
                 </div>
-              </div>
+              </div> -->
 
-              <div>
+              <!-- <div>
                 <div class="ctz-label" style="margin-bottom: 8px">修改网页标签图片</div>
-                <div class="ctz-flex-wrap" id="CTZ_TITLE_ICO"></div>
-              </div>
+                <div id="CTZ_TITLE_ICO"></div>
+              </div> -->
             </div>
           </div>
 
-          <div id="CTZ_BASIS_SHOW_CONTENT">
-            <div class="ctz-title">
-              显示修改
-              <span class="ctz-commit" style="color: red">修改后刷新页面生效</span>
-            </div>
-            <div class="ctz-set-content">
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">购物链接显示</span>
+          <div class="ctz-title">
+            显示修改
+            <span class="ctz-commit" style="color: red">修改后刷新页面生效</span>
+          </div>
+
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>购物链接显示</div>
+              <div>
                 <div class="ctz-radio-group">
                   <label>
                     <input class="ctz-i" name="linkShopping" type="radio" value="0" />
@@ -134,8 +137,11 @@
                   </label>
                 </div>
               </div>
-              <div class="ctz-flex-wrap">
-                <span class="ctz-label">回答内容展开/收起状态</span>
+            </div>
+
+            <div class="ctz-form-box-item">
+              <div>回答内容收起状态</div>
+              <div>
                 <div class="ctz-radio-group">
                   <label>
                     <input class="ctz-i" type="radio" name="answerOpen" value="" />
@@ -154,40 +160,80 @@
             </div>
           </div>
 
-          <div id="CTZ_BASIS_FLOAT">
-            <div class="ctz-title">悬浮模块</div>
-            <div class="ctz-set-content">
-              <label class="ctz-flex-wrap">
-                <input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" />
-                <div>回答内容「收起」按钮悬浮</div>
-              </label>
-              <div class="ctz-flex-wrap" style="align-items: center">
-                <span>悬浮收起按钮位置，数字越大离右侧越远：</span>
-                <input name="suspensionPickupRight" type="number" class="ctz-i-change" style="width: 80px" />
+          <!-- <div class="ctz-set-content">
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">购物链接显示</span>
+              <div class="ctz-radio-group">
+                <label>
+                  <input class="ctz-i" name="linkShopping" type="radio" value="0" />
+                  <div>默认</div>
+                </label>
+                <label>
+                  <input class="ctz-i" name="linkShopping" type="radio" value="1" />
+                  <div>仅文字</div>
+                </label>
+                <label>
+                  <input class="ctz-i" name="linkShopping" type="radio" value="2" />
+                  <div>隐藏</div>
+                </label>
               </div>
-              <div>
-                <div class="ctz-label">
-                  <span>信息模块悬浮</span>
-                  <span class="ctz-commit" style="margin-left: 12px">拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span>
-                </div>
-                <div class="ctz-checkbox-group marginTB8">
-                  <label>
-                    <input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />
-                    <div>首页列表切换</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />
-                    <div>顶部发现模块</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />
-                    <div>个人中心模块</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />
-                    <div>搜索栏模块</div>
-                  </label>
-                </div>
+            </div>
+            <div class="ctz-flex-wrap">
+              <span class="ctz-label">回答内容展开/收起状态</span>
+              <div class="ctz-radio-group">
+                <label>
+                  <input class="ctz-i" type="radio" name="answerOpen" value="" />
+                  <div>默认</div>
+                </label>
+                <label>
+                  <input class="ctz-i" type="radio" name="answerOpen" value="on" />
+                  <div>自动展开所有回答</div>
+                </label>
+                <label>
+                  <input class="ctz-i" type="radio" name="answerOpen" value="off" />
+                  <div>默认收起长回答</div>
+                </label>
+              </div>
+            </div> -->
+          <!-- </div> -->
+
+          <div id="CTZ_BASIS_SHOW_CONTENT"></div>
+        </div>
+
+        <!-- 悬浮模块 -->
+        <div id="CTZ_POSITION" style="display: none">
+          <div class="ctz-title">悬浮模块</div>
+          <div class="ctz-set-content">
+            <label class="ctz-flex-wrap">
+              <input class="ctz-i" name="suspensionPickUp" type="checkbox" value="on" />
+              <div>回答内容「收起」按钮悬浮</div>
+            </label>
+            <div class="ctz-flex-wrap" style="align-items: center">
+              <span>悬浮收起按钮位置，数字越大离右侧越远：</span>
+              <input name="suspensionPickupRight" type="number" class="ctz-i-change" style="width: 80px" />
+            </div>
+            <div>
+              <div class="ctz-label">
+                <span>信息模块悬浮</span>
+                <span class="ctz-commit" style="margin-left: 12px">拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span>
+              </div>
+              <div class="ctz-checkbox-group marginTB8">
+                <label>
+                  <input class="ctz-i" name="suspensionHomeTab" type="checkbox" value="on" />
+                  <div>首页列表切换</div>
+                </label>
+                <label>
+                  <input class="ctz-i" name="suspensionFind" type="checkbox" value="on" />
+                  <div>顶部发现模块</div>
+                </label>
+                <label>
+                  <input class="ctz-i" name="suspensionUser" type="checkbox" value="on" />
+                  <div>个人中心模块</div>
+                </label>
+                <label>
+                  <input class="ctz-i" name="suspensionSearch" type="checkbox" value="on" />
+                  <div>搜索栏模块</div>
+                </label>
               </div>
             </div>
           </div>

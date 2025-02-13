@@ -1,0 +1,43 @@
+@import './common.less';
+
+.ctz-switch {
+  width: 46px;
+  height: 28px;
+  position: relative;
+  border: 1px solid #dfdfdf;
+  background-color: #dcdfe6;
+  box-shadow: #dfdfdf 0 0 0 0 inset;
+  border-radius: 20px;
+  background-clip: content-box;
+  display: inline-block;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  user-select: none;
+  outline: none;
+  margin: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    left: 2px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    transition: 0.3s;
+  }
+
+  &:checked {
+    background-color: @blue1;
+    transition: 0.6s;
+  }
+
+  &:checked::before {
+    left: 20px;
+    transition: 0.3s;
+  }
+}
