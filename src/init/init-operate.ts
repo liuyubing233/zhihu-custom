@@ -3,10 +3,10 @@ import { dom, domA, domById, domC, message } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CONFIG_DEFAULT } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
 import { myBlack } from '../methods/black';
-import { changeDrawer } from '../methods/drawer-open-close';
 import { fnChanger } from '../methods/fn-changer';
 import { echoHistory } from '../methods/history';
 import { onChangeMenu } from '../methods/menu';
+import { openChange } from '../methods/open';
 import { changeTitle } from '../methods/page-title';
 import { myPreview } from '../methods/preview';
 import { store } from '../store';
@@ -17,7 +17,7 @@ import { initRootEvent, initTopStoryRecommendEvent } from './init-top-event-list
 
 /** 加载设置弹窗绑定方法 */
 export const initOperate = () => {
-  const nodeContent = domById('CTZ_DRAWER_MAIN')!;
+  const nodeContent = domById('CTZ_DIALOG')!;
   nodeContent.onclick = (e) => {
     const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CLICK)) {
@@ -51,7 +51,7 @@ export const initOperate = () => {
     }
   };
 
-  dom('#CTZ_DRAWER_MENU')!.onclick = onChangeMenu;
+  dom('#CTZ_DIALOG_MENU')!.onclick = onChangeMenu;
   domA('.ctz-preview').forEach((item) => {
     item.onclick = function () {
       myPreview.hide(this);
@@ -71,8 +71,8 @@ export const initOperate = () => {
     };
   });
 
-  domById('CTZ_OPEN_CLOSE')!.onclick = changeDrawer;
-  domById('CTZ_BLOCK')!.onclick = changeDrawer;
+  domById('CTZ_OPEN_CLOSE')!.onclick = openChange;
+  // domById('CTZ_CLOSE')!.onclick = openChange;
 
   initTopStoryRecommendEvent();
   initRootEvent();
@@ -136,6 +136,7 @@ const myButtonOperation: Record<string, Function> = {
   configImport: () => {
     dom('#IMPORT_BY_FILE input')!.click();
   },
+  dialogClose: openChange
 };
 
 const configImport = (e: Event) => {

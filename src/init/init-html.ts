@@ -21,7 +21,7 @@ const createHiddenItem = (arrHidden: IOptionItem[][]) => {
 const range = (v: string, min: number, max: number, unit = '') =>
   `<div class="ctz-flex-wrap ctz-range-${v}">${
     `<span class="ctz-commit" style="margin-right: 2px;">${min}${unit}</span>` +
-    `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 300px" />` +
+    `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 200px" />` +
     `<span class="ctz-commit" style="margin: 0 8px 0 2px;">${max}${unit}</span>` +
     `<span>当前：<span id="${v}">0</span>${unit}</span>`
   }</div>`;
@@ -77,7 +77,7 @@ export const initHTML = () => {
   ).join('');
 
   // 隐藏元素部分
-  dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
+  // dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
   domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
     (i) => `<div id="${i.key}"><div class="ctz-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
   ).join('');

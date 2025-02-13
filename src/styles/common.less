@@ -62,8 +62,8 @@
 }
 
 .themeLight(@background1, @background2, @openShadow, @primary01, @primary1, @primary3) {
-  #CTZ_DRAWER_CONTENT,
-  #CTZ_DRAWER_FOOTER,
+  #CTZ_DIALOG_CONTENT,
+  #CTZ_DIALOG_FOOTER,
   #CTZ_OPEN_CLOSE,
   .ctz-black-item {
     background: @background2!important;
@@ -73,7 +73,7 @@
     box-shadow: @openShadow;
   }
 
-  #CTZ_DRAWER_MENU > div {
+  #CTZ_DIALOG_MENU > div {
     &.target {
       & > span {
         color: @primary1;
@@ -83,11 +83,11 @@
     }
   }
 
-  #CTZ_DRAWER_MENU > div,
-  #CTZ_DRAWER_MENU .ctz-dropdown-icon,
-  #CTZ_DRAWER_MENU .ctz-dropdown a,
-  #CTZ_DRAWER_FOOTER .ctz-to-zhihu a:hover,
-  #CTZ_DRAWER_FOOTER .ctz-github a:hover {
+  #CTZ_DIALOG_MENU > div,
+  #CTZ_DIALOG_MENU .ctz-dropdown-icon,
+  #CTZ_DIALOG_MENU .ctz-dropdown a,
+  #CTZ_DIALOG_FOOTER .ctz-to-zhihu a:hover,
+  #CTZ_DIALOG_FOOTER .ctz-github a:hover {
     .Hover(@primary1);
   }
 
@@ -116,7 +116,7 @@
     }
   }
 
-  #CTZ_DRAWER label:hover,
+  #CTZ_DIALOG label:hover,
   #CTZ_BACKGROUND > label div:hover,
   #CTZ_BACKGROUND_LIGHT > label div:hover,
   #CTZ_BACKGROUND_DARK > label div:hover {
@@ -137,7 +137,7 @@
     border-color: @primary1;
   }
 
-  #CTZ_DRAWER {
+  #CTZ_DIALOG {
     .ctz-i[type='checkbox'] {
       &:hover::after {
         border-color: @primary1;

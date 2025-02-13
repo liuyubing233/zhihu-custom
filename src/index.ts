@@ -14,7 +14,6 @@ import { needRedirect } from './init/redirect';
 import { myBackground, myCustomStyle } from './methods/background';
 import { initBlockedWords } from './methods/blocked-words';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
-import { changeDrawer } from './methods/drawer-open-close';
 import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
 import { keydownNextImage } from './methods/image';
@@ -22,6 +21,7 @@ import { myListenAnswerItem } from './methods/listen-answer-item';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { initOneClickInvitation } from './methods/one-click-invitation';
+import { openChange } from './methods/open';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './methods/print';
 import { addArticleTime, addQuestionTime } from './methods/time';
@@ -35,7 +35,7 @@ import { INNER_CSS } from './web-resources';
   if (needRedirect()) return;
 
   GM_registerMenuCommand('⚙️ 设置', () => {
-    changeDrawer();
+    openChange();
   });
 
   const T0 = performance.now();
@@ -266,12 +266,12 @@ import { INNER_CSS } from './web-resources';
     if (hotKey) {
       // shift + . 唤醒关闭修改器弹窗
       if (event.key === '>' || event.key === '》') {
-        changeDrawer();
+        openChange();
       }
     }
     // esc 关闭弹窗
     if (event.key === 'Escape' && domById('CTZ_OPEN_CLOSE')!.getAttribute('data-close') === '0') {
-      changeDrawer();
+      openChange();
     }
     keydownNextImage(event);
   });

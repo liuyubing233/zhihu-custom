@@ -21,7 +21,7 @@ export const initFetchInterceptStatus = async () => {
 
 const changeHTML = (status: boolean) => {
   domById('CTZ_FETCH_STATUS')!.innerHTML = status
-    ? '<b style="color: #00bfa5;">已开启接口拦截</b>，遇到页面无法显示数据的情况请尝试'
+    ? '<b style="color: #00bfa5;">已开启接口拦截</b>，若页面无法显示数据请尝试'
     : '<b style="color: #d50000;">已关闭接口拦截</b>，部分功能不可用';
   domById('CTZ_CHANGE_FETCH')!.innerHTML = status ? '关闭接口拦截' : '开启接口拦截';
   if (!status) {
