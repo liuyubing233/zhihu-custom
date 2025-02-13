@@ -46,7 +46,40 @@
     &:hover {
       color: @hover!important;
     }
+
+    .ctz-i[type="checkbox"] ~ div {
+      margin-left: 8px;
+      display: inline-block;
+    }
   }
+
+  input[type='range'] {
+    /* 设置滑块下面那条线的样式 */
+    outline: none; /* 去掉点击时出现的外边框 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; /* 这三个是去掉那条线原有的默认样式 */
+    height: 6px;
+    border-radius: 8px;
+    background: @blue01;
+
+    &::-webkit-slider-thumb {
+      /* ::-webkit-slider-thumb 是代表给滑块的样式进行变更*/
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none; /* 这三个是去掉滑块原有的默认样式 */
+      transition: all 0.2s;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid @blue1;
+      &:hover {
+        border: 3px solid @blue3;
+      }
+    }
+  }
+
   a {
     transition: all 0.2s;
     text-decoration: none;

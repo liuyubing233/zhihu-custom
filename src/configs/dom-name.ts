@@ -1,4 +1,4 @@
-import { IFontSizeSetOption, IRangeItem } from '../types';
+import { IOptionItem, IRangeItem } from '../types';
 
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
 /** class: INPUT 点击元素类名 */
@@ -38,24 +38,19 @@ export const HEADER = [
   { href: '#CTZ_DEFAULT', value: '默认功能' },
 ];
 
-export const FONT_SIZE_INPUT: IFontSizeSetOption[][] = [
-  [
-    { value: 'fontSizeForListTitle', label: '列表标题文字大小', reset: 'reset-fontSizeForListTitle' },
-    { value: 'fontSizeForList', label: '列表内容文字大小', reset: 'reset-fontSizeForList' },
-  ],
-  [
-    { value: 'fontSizeForAnswerTitle', label: '回答标题文字大小', reset: 'reset-fontSizeForAnswerTitle' },
-    { value: 'fontSizeForAnswer', label: '回答内容文字大小', reset: 'reset-fontSizeForAnswer' },
-  ],
-  [
-    { value: 'fontSizeForArticleTitle', label: '文章标题文字大小', reset: 'reset-fontSizeForArticleTitle' },
-    { value: 'fontSizeForArticle', label: '文章内容文字大小', reset: 'reset-fontSizeForArticle' },
-  ],
-  [{ value: 'contentLineHeight', label: '内容行高', reset: 'reset-contentLineHeight' }],
+export const FONT_SIZE_INPUT: IOptionItem[] = [
+  { value: 'fontSizeForListTitle', label: '列表标题文字大小' },
+  { value: 'fontSizeForList', label: '列表内容文字大小' },
+  { value: 'fontSizeForAnswerTitle', label: '回答标题文字大小' },
+  { value: 'fontSizeForAnswer', label: '回答内容文字大小' },
+  { value: 'fontSizeForArticleTitle', label: '文章标题文字大小' },
+  { value: 'fontSizeForArticle', label: '文章内容文字大小' },
+  { value: 'contentLineHeight', label: '内容行高' },
 ];
 
 /** 版心最小宽度 */
 export const VERSION_MIN_WIDTH = 600;
+export const VERSION_RANGE_SHOW_VALUE = '当前: '
 export const VERSION_RANGE: IRangeItem[] = [
   {
     label: '列表内容宽度',
@@ -64,7 +59,7 @@ export const VERSION_RANGE: IRangeItem[] = [
     max: 1500,
     percentChooseValue: 'versionHomeIsPercent',
     percentChooseLabel: '使用百分比设置',
-    desc: '最小显示宽度为600',
+    desc: '最小显示宽度为600像素，设置低于此值将按照600像素显示',
     percentMin: 20,
     percentMax: 100,
     percentLabel: '列表内容宽度（百分比）',
@@ -77,7 +72,7 @@ export const VERSION_RANGE: IRangeItem[] = [
     max: 1500,
     percentChooseValue: 'versionAnswerIsPercent',
     percentChooseLabel: '使用百分比设置',
-    desc: '最小显示宽度为600',
+    desc: '最小显示宽度为600像素，设置低于此值将按照600像素显示',
     percentMin: 20,
     percentMax: 100,
     percentLabel: '回答内容宽度（百分比）',
@@ -90,7 +85,7 @@ export const VERSION_RANGE: IRangeItem[] = [
     max: 1500,
     percentChooseValue: 'versionArticleIsPercent',
     percentChooseLabel: '使用百分比设置',
-    desc: '最小显示宽度为600',
+    desc: '最小显示宽度为600像素，设置低于此值将按照600像素显示',
     percentMin: 20,
     percentMax: 100,
     percentLabel: '文章内容宽度（百分比）',

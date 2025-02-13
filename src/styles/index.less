@@ -13,6 +13,7 @@
   display: flex;
   overflow: hidden;
   align-items: center;
+  margin-bottom: 12px;
   & > span {
     font-size: @fontSizeSmall;
     color: #999;
@@ -43,7 +44,7 @@
 .ctz-set-content:not(.ctz-flex-wrap) {
   & > div,
   & > label {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 }
 
@@ -70,9 +71,7 @@
 
 .ctz-label {
   line-height: 24px;
-  &::after {
-    content: '：';
-  }
+  margin-right: 12px;
 }
 
 // 颜色设置
@@ -163,6 +162,20 @@
     input[type='radio'] {
       margin: 0 4px 0 0;
     }
+  }
+}
+
+.ctz-form-item {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 24px;
+  margin-bottom: 12px;
+  & > div:first-of-type {
+    width: 148px;
+    line-height: 24px;
+  }
+  & > div:nth-child(2) {
+    flex: 1;
   }
 }
 
@@ -564,11 +577,10 @@
   }
 }
 
-#CTZ_VERSION_RANGE_ZHIHU,
 #CTZ_FONT_SIZE_IN_ZHIHU {
   & > div {
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
   .ctz-flex-wrap > span:nth-of-type(2) {
     margin-left: 24px;
@@ -576,30 +588,20 @@
 }
 
 #CTZ_VERSION_RANGE_ZHIHU {
-  margin-bottom: 14px;
-  .ctz-checkbox {
-    display: inline-flex;
-  }
-  .ctz-range-commit {
-    display: flex;
-    align-items: center;
-    .ctz-commit {
-      margin-left: 64px;
-    }
-  }
+  margin-bottom: 12px;
 
-  .ctz-range-line {
-    height: 12px;
-    width: 100%;
+  & > div {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
     position: relative;
     &::after {
       content: '';
       position: absolute;
-      width: 50%;
+      width: 78%;
       height: 0;
-      border-bottom: 1px dashed @gray04;
-      bottom: 50%;
-      left: 0;
+      border-bottom: 1px dashed rgba(150, 162, 170, 0.4);
+      bottom: 0;
+      right: 0;
     }
   }
 }

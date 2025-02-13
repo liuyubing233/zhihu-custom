@@ -1,5 +1,5 @@
 import { dom, domById, domC } from '../commons/tools';
-import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
+import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE, VERSION_RANGE_SHOW_VALUE } from '../configs';
 import { addBackgroundSetting } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
@@ -13,25 +13,29 @@ const commonLabel = (l?: string) => (l ? `<span class="ctz-label">${l}</span>` :
 const createHiddenItem = (arrHidden: IOptionItem[][]) => {
   if (!arrHidden || !arrHidden.length) return '';
   return `<div class="ctz-checkbox-group">${arrHidden
-    .map((item) => item.map((i) => `<label class="ctz-checkbox">${commonCheckbox(i.value)}<div>${i.label}</div></label>`).join(''))
+    .map((item) => item.map((i) => `<label>${commonCheckbox(i.value)}<div>${i.label}</div></label>`).join(''))
     .join('<br>')}</div>`;
 };
 
-/** 滑动输入条html */
-const rangeHTML = (l: string, v: string, min: number, max: number) =>
-  `<div class="ctz-flex-wrap ctz-range-${v}">` +
-  commonLabel(l) +
-  `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 300px" />` +
-  `<span id="${v}" style="margin: 0 8px">0</span>` +
-  `<span class="ctz-commit">设置区间: ${min} ~ ${max}</span>` +
-  `</div>`;
+const rangeHTML = (l: string, v: string, min: number, max: number, desc?: string) =>
+  `<div class="ctz-form-item ctz-range-${v}"">${
+    `<div>${l}</div>` + `<div>${range(v, min, max) + (desc ? `<div class="ctz-commit" style="margin-top: 8px;">${desc}</div>` : '')}</div>`
+  }</div>`;
+
+const range = (v: string, min: number, max: number) =>
+  `<div class="ctz-flex-wrap">${
+    `<span class="ctz-commit" style="margin-right: 2px;">${min}</span>` +
+    `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 300px" />` +
+    `<span class="ctz-commit" style="margin: 0 8px 0 2px;">${max}</span>` +
+    `<span id="${v}">${VERSION_RANGE_SHOW_VALUE}0</span>`
+  }</div>`;
 
 /** 通用选项html */
 const commonLabelCheckbox = (con: ICommonContent[]) =>
   con
     .map(
       ({ label, value, needFetch }) =>
-        `<label class="ctz-checkbox ${needFetch ? 'ctz-fetch-intercept' : ''}">` +
+        `<label class="ctz-flex-wrap ${needFetch ? 'ctz-fetch-intercept' : ''}">` +
         `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` +
         `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')}</div>` +
         `</label>`
@@ -47,31 +51,31 @@ export const initHTML = () => {
 
   // 滑动输入条部分 START
   domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(
-    (item: IRangeItem, index: number) =>
-      rangeHTML(item.label, item.value, item.min, item.max) +
-      rangeHTML(item.percentLabel, item.percentValue, item.percentMin, item.percentMax) +
-      `<div class="ctz-range-commit">` +
-      commonLabelCheckbox([{ label: item.percentChooseLabel, value: item.percentChooseValue }]) +
-      `<span class="ctz-commit">${item.desc}</span></div>`
-  ).join('<div class="ctz-range-line"></div>');
-  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = rangeHTML('', 'zoomImageSize', 0, 1000);
-  domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = rangeHTML('', 'zoomImageHeightSize', 0, 1000);
-  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = rangeHTML('', 'zoomListVideoSize', 0, 1000);
+    (item: IRangeItem) =>
+      `<div>${
+        rangeHTML(item.label, item.value, item.min, item.max, item.desc) +
+        rangeHTML(item.percentLabel, item.percentValue, item.percentMin, item.percentMax, item.desc) +
+        `<div class="ctz-form-item">${
+          `<div>${item.percentChooseLabel}</div>` + `<div><input class="ctz-i" name="${item.percentChooseValue}" type="checkbox" value="on" /></div>`
+        }</div>`
+      }</div>`
+  ).join('');
+
+  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = range('zoomImageSize', 0, 1000);
+  domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = range('zoomImageHeightSize', 0, 1000);
+  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = range('zoomListVideoSize', 0, 1000);
   // 滑动输入条部分 END
 
   // 文字大小调节
   domById('CTZ_FONT_SIZE_IN_ZHIHU')!.innerHTML = FONT_SIZE_INPUT.map(
     (item) =>
-      `<div class="ctz-flex-wrap">` +
-      item
-        .map(
-          (i) =>
-            commonLabel(i.label) +
-            `<input type="number" name="${i.value}" class="ctz-i-change" style="width: 100px;margin-right: 8px;" placeholder="例：18" />` +
-            `<button class="ctz-button ctz-reset-font-size" name="${i.reset}">重 置</button>`
-        )
-        .join('') +
-      `</div>`
+      `<div class="ctz-form-item">${
+        `<div>${item.label}</div>` +
+        `<div>${
+          `<input type="number" name="${item.value}" class="ctz-i-change" style="width: 100px;margin-right: 8px;" placeholder="例：18" />` +
+          `<button class="ctz-button ctz-reset-font-size" name="reset-${item.value}">重 置</button>`
+        }</div>`
+      }</div>`
   ).join('');
 
   // 隐藏元素部分

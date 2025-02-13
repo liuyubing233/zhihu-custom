@@ -1,57 +1,54 @@
 @import './theme.less';
 
-label.ctz-checkbox {
-  @checkboxSize: 18px;
-  @checkboxMR: 8px;
+@checkboxSize: 22px;
+@checkboxMR: 8px;
 
-  display: flex;
+.ctz-i[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  transition: all 0.2s;
+  width: @checkboxSize;
+  height: @checkboxSize;
+  margin: 0;
+  position: relative;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: none;
   cursor: pointer;
-  height: 24px;
-  align-items: center;
-  transition-property: all;
-  transition-duration: 500ms;
-  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 
-  div {
-    position: relative;
-    &::before {
-      content: '';
-      width: @checkboxSize;
-      height: @checkboxSize;
-      border-radius: 4px;
-      border: 1px solid @gray04;
-      box-sizing: border-box;
-      left: -@checkboxSize - @checkboxMR;
-      position: absolute;
-      top: 1px;
-      font-weight: 600;
-      text-align: center;
-      line-height: @checkboxSize - 2px;
-    }
-  }
-
-  input {
-    opacity: 0;
+  &::after {
+    cursor: pointer;
+    transition: all 0.2s;
+    content: ' ';
     width: @checkboxSize;
     height: @checkboxSize;
-    margin: 0;
-    margin-right: @checkboxMR;
+    border-radius: 4px;
+    border: 1px solid @gray04;
+    box-sizing: border-box;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+    position: absolute;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  input:checked + div {
-    &::before {
-      content: '✓';
-      color: @bg;
-      background: @primary;
-      border-color: @primary;
-    }
+  &:hover::after {
+    border-color: @hover;
   }
 
-  &:hover {
-    color: @hover;
-    div::before {
-      border-color: @hover;
-    }
+  &:checked::after {
+    content: '✓';
+    font-size: 16px;
+    font-weight: 600;
+    color: @bg;
+    background: @primary;
+    border-color: @primary;
   }
 }
 
@@ -80,8 +77,5 @@ label.ctz-checkbox {
     label {
       margin-bottom: 12px;
     }
-  }
-  & > div {
-    margin-bottom: 14px;
   }
 }

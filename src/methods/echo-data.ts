@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById } from '../commons/tools';
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, VERSION_RANGE } from '../configs';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, VERSION_RANGE, VERSION_RANGE_SHOW_VALUE } from '../configs';
 
 /** 回填数据，供每次打开使用 */
 export const echoData = async () => {
@@ -24,7 +24,7 @@ export const echoData = async () => {
       const rangeNum = isNaN(+nValue) || !(+nValue > 0) ? min : nValue;
       even.value = rangeNum;
       const nodeNewOne = domById(even.name);
-      nodeNewOne && (nodeNewOne.innerText = rangeNum);
+      nodeNewOne && (nodeNewOne.innerText = VERSION_RANGE_SHOW_VALUE + rangeNum);
     },
   };
   const doEcho = (item: HTMLInputElement) => {

@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById } from '../commons/tools';
-import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
+import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, VERSION_RANGE_SHOW_VALUE } from '../configs';
 import { initImagePreview } from '../init/init-image-preview';
 import { myBackground, onUseThemeDark } from './background';
 import { appendHidden } from './hidden';
@@ -90,8 +90,12 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     suspensionPickupRight: suspensionPickupAttribute,
   };
   await myStorage.updateConfigItem(name, type === 'checkbox' ? checked : value);
-  const nodeName = domById(name);
-  type === 'range' && nodeName && (nodeName.innerText = value);
+
+  if (type === 'range') {
+    const nodeName = domById(name);
+    nodeName && (nodeName.innerText = VERSION_RANGE_SHOW_VALUE + value);
+  }
+
   if (/^hidden/.test(name)) {
     appendHidden();
     return;

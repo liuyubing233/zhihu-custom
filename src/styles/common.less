@@ -1,5 +1,9 @@
 @import './theme.less';
 
+.marginTB8 {
+  margin: 8px 0;
+}
+
 .hover-style {
   cursor: pointer;
   &:hover {
@@ -55,10 +59,6 @@
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.ctz-checkbox-text {
-  margin-left: 6px;
 }
 
 .themeLight(@background1, @background2, @openShadow, @primary01, @primary1, @primary3) {
@@ -137,16 +137,26 @@
     border-color: @primary1;
   }
 
-  #CTZ_DRAWER label.ctz-checkbox {
-    input:checked + div::before {
-      color: @background2;
-      background: @primary1;
-      border-color: @primary1;
-    }
-    &:hover {
-      color: @primary1;
-      div::before {
+  #CTZ_DRAWER {
+    .ctz-i[type='checkbox'] {
+      &:hover::after {
         border-color: @primary1;
+      }
+      &:checked::after {
+        color: @background2;
+        background: @primary1;
+        border-color: @primary1;
+      }
+    }
+
+    input[type='range'] {
+      background: @primary01;
+      &::-webkit-slider-thumb {
+        background: @background2;
+        border-color: @primary1;
+        &:hover {
+          border-color: @primary3;
+        }
       }
     }
   }
