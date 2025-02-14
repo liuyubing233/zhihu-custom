@@ -6,6 +6,7 @@ import { myBlack } from '../methods/black';
 import { fnChanger } from '../methods/fn-changer';
 import { echoHistory } from '../methods/history';
 import { onChangeMenu } from '../methods/menu';
+import { moveAndOpen } from '../methods/move';
 import { openChange } from '../methods/open';
 import { changeTitle } from '../methods/page-title';
 import { myPreview } from '../methods/preview';
@@ -71,9 +72,8 @@ export const initOperate = () => {
     };
   });
 
-  domById('CTZ_OPEN_CLOSE')!.onclick = openChange;
-  // domById('CTZ_CLOSE')!.onclick = openChange;
-
+  // domById('CTZ_OPEN_CLOSE')!.onclick = openChange;
+  moveAndOpen();
   initTopStoryRecommendEvent();
   initRootEvent();
 };

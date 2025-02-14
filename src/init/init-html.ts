@@ -4,19 +4,10 @@ import { addBackgroundSetting } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
 import { initMenu } from '../methods/menu';
-import { IOptionItem, IRangeItem, IZhihuUserinfo } from '../types';
+import { IRangeItem, IZhihuUserinfo } from '../types';
 import { INNER_HTML } from '../web-resources';
 
-const commonCheckbox = (v: string) => `<input class="ctz-i" name="${v}" type="checkbox" value="on" />`;
-
 const tooltipHTML = (value: string) => `<span class="ctz-tooltip"><span>?</span><span>${value}</span></span>`;
-
-const createHiddenItem = (arrHidden: IOptionItem[][]) => {
-  if (!arrHidden || !arrHidden.length) return '';
-  return `<div class="ctz-checkbox-group">${arrHidden
-    .map((item) => item.map((i) => `<label>${commonCheckbox(i.value)}<div>${i.label}</div></label>`).join(''))
-    .join('<br>')}</div>`;
-};
 
 const range = (v: string, min: number, max: number, unit = '') =>
   `<div class="ctz-flex-wrap ctz-range-${v}">${

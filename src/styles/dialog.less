@@ -1,15 +1,10 @@
 @import './common.less';
 
-@WidthDrawer: 800px;
-@WidthOpen: 40px;
-@WidthOpenReal: @WidthDrawer;
-@HeightDialog: 680px;
-
 /** 抽屉样式 */
 #CTZ_DIALOG {
   .CommonTransition();
-  width: @WidthDrawer;
-  height: @HeightDialog;
+  width: 800px;
+  height: 680px;
   max-width: 100vw;
   max-height: 100vh;
   border-radius: 8px;
@@ -136,7 +131,6 @@
 #CTZ_DIALOG_MAIN {
   flex: 1;
   overflow-y: auto;
-  // margin-top: 12px;
   & > div {
     box-sizing: border-box;
     width: 100%;
@@ -152,21 +146,12 @@
 
 #CTZ_DIALOG_FOOTER {
   border-top: 1px solid @gray02;
-  // background: @bg;
   box-sizing: border-box;
-  padding: 12px;
+  padding: 6px 12px;
 
   & > div {
     display: inline-block;
   }
-
-  // .ctz-status {
-  //   flex: 1;
-  //   font-size: 12px;
-  //   line-height: 24px;
-  //   padding-right: 24px;
-  //   text-align: right;
-  // }
 
   .ctz-version {
     float: right;
@@ -179,52 +164,34 @@
     border-radius: 8px;
     height: 24px;
     line-height: 24px;
-    // color: @gray1;
     padding: 0 12px;
   }
 }
 
 /** 打开关闭抽屉按钮 */
 #CTZ_OPEN_CLOSE {
-  .CommonTransition();
-  .HoverDiv();
-  @HeightOpen: 70px;
-  @PaddingSize: 4px;
-
-  height: @HeightOpen;
-  font-size: 36px;
+  transition-property: none;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  user-select: none;
+  width: 48px;
+  height: 48px;
+  line-height: 44px;
   text-align: center;
-  pointer-events: auto;
+  background: @gray04;
+  border-radius: 8px;
+  opacity: 0.8;
+  font-size: 44px;
   cursor: pointer;
   z-index: 201;
-  border-radius: @radiusCommon 0 0 @radiusCommon;
-  background: @bg;
-  width: @WidthOpenReal;
-  transform: translateX(@WidthOpenReal - @WidthOpen);
   position: fixed;
   bottom: 0;
   right: 0;
   color: @gray1;
-  box-shadow: @openShadow_0;
   box-sizing: border-box;
-  div {
-    width: @WidthOpen;
-    height: @HeightOpen;
-    line-height: @HeightOpen;
-    border-radius: @radiusCommon 0 0 @radiusCommon;
+  &:hover {
+    opacity: 1;
   }
-
-  // &[data-close='0'] {
-  //   transform: translateX(-@WidthOpen);
-  //   box-shadow: none;
-  //   padding: @PaddingSize;
-  //   div {
-  //     width: @WidthOpen - @PaddingSize * 2;
-  //     height: @HeightOpen - @PaddingSize * 2;
-  //     line-height: @HeightOpen - @PaddingSize * 2;
-  //     border-radius: 14px;
-  //   }
-  // }
 }
 
 #CTZ_LEFT_BUTTONS {

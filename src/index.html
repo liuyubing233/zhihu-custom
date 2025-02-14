@@ -10,7 +10,7 @@
 
 <div id="CTZ_MESSAGE_BOX"></div>
 
-<div id="CTZ_OPEN_CLOSE" data-close="1"><div>⚙︎</div></div>
+<div id="CTZ_OPEN_CLOSE" data-close="1">⚙︎</div>
 <div id="CTZ_DIALOG" style="display: none">
   <div id="CTZ_DIALOG_CONTENT">
     <!-- 左侧菜单 -->
@@ -42,46 +42,44 @@
         <!-- 基础设置 -->
         <div id="CTZ_BASIS" style="display: none">
           <div id="CTZ_BASIS_DEFAULT">
-            <div class="ctz-set-content">
-              <div class="ctz-form-box">
-                <div class="ctz-form-box-item">
-                  <div id="CTZ_FETCH_STATUS">状态获取中...</div>
-                  <div>
-                    <input id="CTZ_CHANGE_FETCH" class="ctz-i ctz-switch" name="fetchInterceptStatus" type="checkbox" value="on" />
-                  </div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div id="CTZ_FETCH_STATUS">状态获取中...</div>
+                <div>
+                  <input id="CTZ_CHANGE_FETCH" class="ctz-i ctz-switch" name="fetchInterceptStatus" type="checkbox" value="on" />
                 </div>
               </div>
+            </div>
 
-              <div class="ctz-form-box">
-                <div class="ctz-form-box-item">
-                  <div>
-                    快捷键打开修改器
-                    <span class="key-shadow">></span>
-                    (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
-                  </div>
-                  <div>
-                    <input class="ctz-i ctz-switch" name="hotKey" type="checkbox" value="on" />
-                  </div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div>
+                  快捷键打开修改器
+                  <span class="key-shadow">></span>
+                  (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
+                </div>
+                <div>
+                  <input class="ctz-i ctz-switch" name="hotKey" type="checkbox" value="on" />
                 </div>
               </div>
+            </div>
 
-              <div class="ctz-form-box">
-                <div class="ctz-form-box-item">
-                  <div>去除浏览器标签上XX条私信/未读消息的提示</div>
-                  <div><input class="ctz-i ctz-switch" name="globalTitleRemoveMessage" type="checkbox" value="on" /></div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div>去除浏览器标签上XX条私信/未读消息的提示</div>
+                <div><input class="ctz-i ctz-switch" name="globalTitleRemoveMessage" type="checkbox" value="on" /></div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>网页标签名称</div>
+                <div>
+                  <input type="text" name="globalTitle" style="width: 300px" />
+                  <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 8px">确认</button>
+                  <button class="ctz-button" name="buttonResetTitle">还原</button>
                 </div>
-                <div class="ctz-form-box-item">
-                  <div>网页标签名称</div>
-                  <div>
-                    <input type="text" name="globalTitle" style="width: 300px" />
-                    <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 8px">确认</button>
-                    <button class="ctz-button" name="buttonResetTitle">还原</button>
-                  </div>
-                </div>
-                <div class="ctz-form-box-item">
-                  <div>网页标签图标</div>
-                  <div id="CTZ_TITLE_ICO"></div>
-                </div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>网页标签图标</div>
+                <div id="CTZ_TITLE_ICO"></div>
               </div>
             </div>
           </div>
@@ -120,6 +118,18 @@
 
         <!-- 悬浮模块 -->
         <div id="CTZ_POSITION" style="display: none">
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>修改器弹出图标 ⚙︎ 定位方式</div>
+              <div>
+                <select class="ctz-select" name="suspensionOpen">
+                  <option value="0">左右</option>
+                  <option value="1">上下</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           <div class="ctz-form-box">
             <div class="ctz-form-box-item">
               <div>回答内容「收起」按钮悬浮</div>
@@ -162,7 +172,7 @@
         <div id="CTZ_HIDDEN" style="display: none"></div>
 
         <!-- 屏蔽内容 -->
-        <div id="CTZ_FILTER" class="ctz-set-content" style="display: none">
+        <div id="CTZ_FILTER" style="display: none">
           <div id="CTZ_FILTER_COMMEN">
             <div class="ctz-form-box">
               <div class="ctz-form-box-item">
@@ -243,34 +253,32 @@
               回答内容屏蔽
               <span>此部分设置只在回答页面生效</span>
             </div>
-            <div class="ctz-set-content">
-              <div class="ctz-form-box">
-                <div class="ctz-form-box-item">
-                  <div>屏蔽匿名用户回答</div>
-                  <div><input class="ctz-i ctz-switch" name="removeAnonymousAnswer" type="checkbox" value="on" /></div>
-                </div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div>屏蔽匿名用户回答</div>
+                <div><input class="ctz-i ctz-switch" name="removeAnonymousAnswer" type="checkbox" value="on" /></div>
               </div>
+            </div>
 
-              <div class="ctz-form-box">
-                <div class="ctz-form-box-item">
-                  <div>回答页面低赞回答屏蔽</div>
-                  <div><input class="ctz-i ctz-switch" name="removeLessVoteDetail" type="checkbox" value="on" /></div>
-                </div>
-                <div class="ctz-form-box-item">
-                  <div>问题回答屏蔽小于的点赞数量</div>
-                  <div><input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px" /></div>
-                </div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div>回答页面低赞回答屏蔽</div>
+                <div><input class="ctz-i ctz-switch" name="removeLessVoteDetail" type="checkbox" value="on" /></div>
               </div>
+              <div class="ctz-form-box-item">
+                <div>问题回答屏蔽小于的点赞数量</div>
+                <div><input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px" /></div>
+              </div>
+            </div>
 
-              <div class="ctz-form-box">
-                <div class="ctz-form-box-item">
-                  <div>屏蔽带有虚构创作标签的回答</div>
-                  <div><input class="ctz-i ctz-switch" name="removeUnrealAnswer" type="checkbox" value="on" /></div>
-                </div>
-                <div class="ctz-form-box-item">
-                  <div>屏蔽选自电子书标签的回答</div>
-                  <div><input class="ctz-i ctz-switch" name="removeFromEBook" type="checkbox" value="on" /></div>
-                </div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div>屏蔽带有虚构创作标签的回答</div>
+                <div><input class="ctz-i ctz-switch" name="removeUnrealAnswer" type="checkbox" value="on" /></div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>屏蔽选自电子书标签的回答</div>
+                <div><input class="ctz-i ctz-switch" name="removeFromEBook" type="checkbox" value="on" /></div>
               </div>
             </div>
           </div>
@@ -455,7 +463,7 @@
             <button class="ctz-button" name="useSimple">启用极简模式</button>
             <button class="ctz-button" name="configReset">恢复默认配置</button>
             <button class="ctz-button" name="configExport">配置导出</button>
-            <!-- <button class="ctz-button" name="configRemove">清空配置</button> -->
+            <button class="ctz-button" name="configRemove">清空配置</button>
             <div id="IMPORT_BY_FILE">
               <input type="file" class="ctz-input-config-import" id="readTxt" accept=".txt" />
               <button class="ctz-button" name="configImport">配置导入</button>
@@ -465,7 +473,7 @@
           <div class="ctz-title">自定义样式</div>
           <div class="ctz-form-box">
             <div class="ctz-form-box-item">
-              <div style="align-items: start; padding: 0;text-align: right;">
+              <div style="align-items: start; padding: 0; text-align: right">
                 <textarea name="textStyleCustom" placeholder="内容为CSS"></textarea>
                 <button class="ctz-button" name="styleCustom">确定</button>
               </div>
@@ -493,10 +501,15 @@
   <div id="CTZ_FIRST_VERSION_5_ALLOW"></div>
   <div id="CTZ_FIRST_VERSION_5_CONTENT">
     <div>欢迎使用 <span>知乎修改器5</span></div>
-    <div>唤起修改器按钮现已移动到页面右下角</div>
-    <button class="ctz-button ctz-button-primary" id="BUTTON_FIRST_USE">我知道了</button>
+    <div style="line-height: 28px; font-size: 18px">
+      <p>弹出修改器按钮在右下角，长按拖动更改位置</p>
+      <p>可在悬浮模块中设置定位方式</p>
+    </div>
+    <button class="ctz-button ctz-button-primary" id="BUTTON_FIRST_USE" style="padding: 8px 14px;height: 34px;">我知道了</button>
   </div>
 </div>
+
+<div id="CTZ_COVER"></div>
 
 <!--
 <span class="ctz-tooltip">

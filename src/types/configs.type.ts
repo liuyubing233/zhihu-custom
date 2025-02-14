@@ -299,6 +299,14 @@ export interface IConfigSuspension {
   suspensionPickUp?: boolean;
   /** 悬浮收起按钮位置，数字越大离右侧越远 */
   suspensionPickupRight?: number;
+  /** 修改器弹出图标定位方式 */
+  suspensionOpen?: '0' | '1';
+  suspensionOpenRight?: string;
+  suspensionOpenLeft?: string;
+  suspensionOpenBottom?: string;
+  suspensionOpenTop?: string;
+  suspensionOpenUseLeft?: boolean;
+  suspensionOpenUseTop?: boolean;
 }
 
 /** 配置参数 */
@@ -427,5 +435,5 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 回答页高性能模式 */
   highPerformanceAnswer?: boolean;
   /** 修改器是否使用过 */
-  isUsed: boolean;
+  isUsed2: boolean;
 }

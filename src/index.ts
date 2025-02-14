@@ -62,7 +62,7 @@ import { INNER_CSS } from './web-resources';
       fnLog('您好，欢迎使用本插件，第一次进入，初始化中...');
       await myStorage.updateConfig({
         ...CONFIG_DEFAULT,
-        isUsed: false,
+        isUsed2: false,
       });
       config = CONFIG_DEFAULT;
     }
