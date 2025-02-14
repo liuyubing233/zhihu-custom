@@ -137,6 +137,10 @@ const myButtonOperation: Record<string, Function> = {
     dom('#IMPORT_BY_FILE input')!.click();
   },
   dialogClose: openChange,
+  dialogBig: () => {
+    const nodeDialog = domById('CTZ_DIALOG')!;
+    nodeDialog.style.height = nodeDialog.style.height === '100vh' ? '' : '100vh';
+  },
 };
 
 const configImport = (e: Event) => {
