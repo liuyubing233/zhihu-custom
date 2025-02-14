@@ -5,7 +5,7 @@ import { dom, domA, domById } from '../commons/tools';
 /** 菜单初始化 */
 export const initMenu = () => {
   const { hash } = location;
-  const arrayHash = [...domA('#CTZ_DIALOG_MENU>div')].map((i: any) => i.getAttribute('data-href'))
+  const arrayHash = [...domA('#CTZ_DIALOG_MENU>div')].map((i: any) => i.getAttribute('data-href'));
   const chooseId = arrayHash.find((i) => i === hash || hash.replace(i, '') !== hash);
   fnChangeMenu(dom(`#CTZ_DIALOG_MENU>div[data-href="${chooseId || arrayHash[0]}"]`) as HTMLElement);
 };
@@ -53,5 +53,6 @@ const fnChangeMenu = (target: HTMLElement) => {
   domA('#CTZ_DIALOG_MENU>div').forEach((item) => item.classList.remove('target'));
   domA('#CTZ_DIALOG_MAIN>div').forEach((item) => (item.style.display = chooseId === item.id ? 'block' : 'none'));
   target.classList.add('target');
-  domById('CTZ_DIALOG_RIGHT_TITLE')!.innerText = target.innerText
+  const commit = target.getAttribute('data-commit') || '';
+  domById('CTZ_DIALOG_RIGHT_TITLE')!.innerHTML = `${target.innerText}<span>${commit}</span>`;
 };

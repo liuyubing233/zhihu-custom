@@ -41,8 +41,8 @@ export const DE = [
 
 /** 基础设置 - 显示设置部分 */
 export const BASIC_SHOW_CONTENT: ICommonContent[][] = [
+  [{ label: '去除热词点击搜索', value: 'contentRemoveKeywordSearch' }],
   [
-    { label: '去除热词点击搜索', value: 'contentRemoveKeywordSearch' },
     {
       label:
         `列表标题类别显示` +
@@ -80,13 +80,16 @@ export const BASIC_SHOW_CONTENT: ICommonContent[][] = [
   ],
 ];
 
-export const HIGH_PERFORMANCE: ICommonContent[] = [
-  { label: '推荐列表高性能模式（推荐列表内容最多保留50条，超出则删除之前内容）', value: 'highPerformanceRecommend' },
-  { label: '回答页高性能模式（最多保留30条回答，超出则删除之前回答）', value: 'highPerformanceAnswer' },
+export const HIGH_PERFORMANCE: ICommonContent[][] = [
+  [
+    { label: '推荐列表高性能模式', value: 'highPerformanceRecommend', tooltip: '推荐列表内容最多保留50条，超出则删除之前内容' },
+    { label: '回答页高性能模式', value: 'highPerformanceAnswer', tooltip: '回答列表最多保留30条回答，超出则删除之前回答' },
+  ],
 ];
 
 export interface ICommonContent {
   label: string;
   value: string;
   needFetch?: boolean;
+  tooltip?: string;
 }

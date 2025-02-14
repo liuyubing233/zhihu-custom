@@ -26,27 +26,15 @@ const range = (v: string, min: number, max: number, unit = '') =>
     `<span>当前：<span id="${v}">0</span>${unit}</span>`
   }</div>`;
 
-/** 通用选项html */
-const commonLabelCheckbox = (con: ICommonContent[]) =>
-  con
-    .map(
-      ({ label, value, needFetch }) =>
-        `<label class="ctz-flex-wrap ${needFetch ? 'ctz-fetch-intercept' : ''}">` +
-        `<input class="ctz-i" name="${value}" type="checkbox" value="on" />` +
-        `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')}</div>` +
-        `</label>`
-    )
-    .join('');
-
 const commonFormBoxItem = (con: ICommonContent[][]) =>
   con
     .map(
       (item) =>
         `<div class="ctz-form-box">${item
           .map(
-            ({ label, value, needFetch }) =>
+            ({ label, value, needFetch, tooltip }) =>
               `<div class="ctz-form-box-item ${needFetch ? 'ctz-fetch-intercept' : ''}">${
-                `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '')}</div>` +
+                `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '') + (tooltip ? tooltipHTML(tooltip) : '')}</div>` +
                 `<div><input class="ctz-i ctz-switch" name="${value}" type="checkbox" value="on" /></div>`
               }</div>`
           )
@@ -94,8 +82,11 @@ export const initHTML = () => {
 
   // 隐藏元素部分
   // dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
+  // domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
+  //   (i) => `<div id="${i.key}"><div class="ctz-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
+  // ).join('');
   domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
-    (i) => `<div id="${i.key}"><div class="ctz-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
+    (item) => (item.name ? `<div class="ctz-title">${item.name}<span>${item.desc}</span></div>` : '') + commonFormBoxItem(item.content)
   ).join('');
 
   // 添加修改网页标题图片
@@ -111,7 +102,7 @@ export const initHTML = () => {
   // 添加基础设置显示修改
   dom('#CTZ_BASIS_SHOW_CONTENT')!.innerHTML += commonFormBoxItem(BASIC_SHOW_CONTENT);
   // 高性能
-  dom('#CTZ_HIGH_PERFORMANCE .ctz-set-content')!.innerHTML += commonLabelCheckbox(HIGH_PERFORMANCE);
+  dom('#CTZ_HIGH_PERFORMANCE')!.innerHTML += commonFormBoxItem(HIGH_PERFORMANCE);
 
   initFetchInterceptStatus();
   myBlack.init();

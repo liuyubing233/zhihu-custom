@@ -204,15 +204,20 @@
   flex-direction: column;
   overflow: hidden;
   background: @backgroundContent;
+}
 
-  &_TITLE {
-    height: 52px;
-    line-height: 52px;
-    font-size: 16px;
-    font-weight: 600;
-    box-sizing: border-box;
-    padding-left: 18px;
-    border-bottom: 1px solid @gray02;
+#CTZ_DIALOG_RIGHT_TITLE {
+  height: 52px;
+  line-height: 52px;
+  font-size: 16px;
+  font-weight: 600;
+  box-sizing: border-box;
+  padding-left: 18px;
+  border-bottom: 1px solid @gray02;
+  & > span {
+    font-size: 12px;
+    color: @red1;
+    padding-left: 8px;
   }
 }
 
@@ -328,10 +333,4 @@
     font-size: 12px;
     .Hover(#fff, @red3);
   }
-}
-
-.ctz-filter-list-vote,
-.ctz-filter-detail-vote {
-  display: flex;
-  align-items: center;
 }

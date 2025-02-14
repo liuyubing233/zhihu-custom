@@ -12,7 +12,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
   // 通用隐藏
   {
     key: 'CTZ_HIDDEN_COMMON',
-    name: '通用隐藏',
+    name: '',
     desc: '',
     content: [
       [
