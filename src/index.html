@@ -29,8 +29,8 @@
         <div data-href="#CTZ_VERSION">页面尺寸</div>
         <div data-href="#CTZ_THEME">主题颜色</div>
         <div data-href="#CTZ_CONFIG">配置操作</div>
-        <div data-href="#CTZ_HISTORY_LIST">推荐列表缓存</div>
-        <div data-href="#CTZ_HISTORY_VIEW">浏览历史记录</div>
+        <div data-href="#CTZ_HISTORY_LIST" data-commit="最多缓存500条, 包含已过滤项">推荐列表缓存</div>
+        <div data-href="#CTZ_HISTORY_VIEW" data-commit="最多缓存500条">浏览历史记录</div>
         <div data-href="#CTZ_DEFAULT" data-commit="修改器自带功能, 不需要额外开启">默认功能</div>
       </div>
     </div>
@@ -351,29 +351,21 @@
 
         <!-- 推荐列表缓存 -->
         <div id="CTZ_HISTORY_LIST" style="display: none">
-          <div class="ctz-title">
-            推荐列表缓存
-            <span>最多缓存500条，包含已过滤项</span>
-          </div>
-          <button class="ctz-button ctz-button-primary" name="button_history_clear" data-id="list">清 空</button>
+          <button class="ctz-button" name="button_history_clear" data-id="list" style="margin-bottom: 12px">清空列表缓存</button>
           <div class="ctz-set-content"></div>
         </div>
 
         <!-- 浏览历史记录 -->
         <div id="CTZ_HISTORY_VIEW" style="display: none">
-          <div class="ctz-title">
-            浏览历史记录
-            <span>最多缓存500条</span>
-          </div>
-          <button class="ctz-button ctz-button-primary" name="button_history_clear" data-id="view">清 空</button>
+          <button class="ctz-button" name="button_history_clear" data-id="view" style="margin-bottom: 12px">清空历史记录</button>
           <div class="ctz-set-content"></div>
         </div>
 
         <!-- 默认功能 -->
         <div id="CTZ_DEFAULT" style="display: none">
-          <!-- <h5 class="ctz-alert-red ctz-need-fetch">默认功能，不需要额外开启</h5> -->
-          <div id="CTZ_DEFAULT_SELF"></div>
-          <div class="ctz-zhihu-self" style="margin-top: 42px">
+          <div id="CTZ_DEFAULT_SELF" class="ctz-form-box"></div>
+
+          <div class="ctz-zhihu-self" style="margin-top: 18px">
             <div class="ctz-zhihu-key">
               更加方便的浏览，按
               <span class="key-shadow">?</span>
@@ -488,25 +480,24 @@
 
         <!-- 配置操作 -->
         <div id="CTZ_CONFIG" style="display: none">
-          <div>
-            <div class="ctz-title">配置操作</div>
-            <div class="ctz-flex-wrap ctz-config-buttons">
-              <button class="ctz-button ctz-button-primary" name="useSimple">启用极简模式</button>
-              <button class="ctz-button" name="configReset">恢复默认配置</button>
-              <button class="ctz-button ctz-button-primary" name="configExport">配置导出</button>
-              <!-- <button class="ctz-button" name="configRemove">清空配置</button> -->
-              <div id="IMPORT_BY_FILE">
-                <input type="file" class="ctz-input-config-import" id="readTxt" accept=".txt" />
-                <button class="ctz-button" name="configImport">配置导入</button>
-              </div>
+          <div class="ctz-config-buttons">
+            <button class="ctz-button" name="useSimple">启用极简模式</button>
+            <button class="ctz-button" name="configReset">恢复默认配置</button>
+            <button class="ctz-button" name="configExport">配置导出</button>
+            <!-- <button class="ctz-button" name="configRemove">清空配置</button> -->
+            <div id="IMPORT_BY_FILE">
+              <input type="file" class="ctz-input-config-import" id="readTxt" accept=".txt" />
+              <button class="ctz-button" name="configImport">配置导入</button>
             </div>
           </div>
 
-          <div class="ctz-customize-css">
-            <div class="ctz-title">自定义样式</div>
-            <div style="display: flex">
-              <textarea name="textStyleCustom" placeholder="内容为CSS"></textarea>
-              <button class="ctz-button ctz-button-primary" name="styleCustom">确 定</button>
+          <div class="ctz-title">自定义样式</div>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div style="align-items: start; padding: 0">
+                <textarea name="textStyleCustom" placeholder="内容为CSS"></textarea>
+                <button class="ctz-button" name="styleCustom">确定</button>
+              </div>
             </div>
           </div>
         </div>

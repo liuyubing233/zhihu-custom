@@ -90,7 +90,8 @@ export const initHTML = () => {
 
   // 添加更多默认设置
   domById('CTZ_DEFAULT_SELF')!.innerHTML = DE.map(
-    ({ title, commit }, index) => `<div class="ctz-title">${title}</div>${commit ? `<div class="ctz-commit">${commit}</div>` : ''}`
+    ({ title, commit }) =>
+      `<div class="ctz-form-box-item ctz-form-box-item-vertical">${`<div>${title}</div>` + `<div style="font-size: 12px;color:#999;">${commit || ''}</div>`}</div>`
   ).join('');
 
   // 添加基础设置显示修改
