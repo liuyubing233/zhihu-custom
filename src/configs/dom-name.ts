@@ -30,16 +30,6 @@ export const EXTRA_CLASS_HTML: Record<string, string> = {
   'www.zhihu.com': 'zhihu',
 };
 
-// export const HEADER = [
-//   { href: '#CTZ_BASIS', value: '基础设置' },
-//   { href: '#CTZ_HIDDEN', value: '隐藏模块设置' },
-//   { href: '#CTZ_FILTER', value: '屏蔽内容设置' },
-//   { href: '#CTZ_BLOCK_WORD', value: '屏蔽词设置' },
-//   { href: '#CTZ_BLACKLIST', value: '黑名单设置' },
-//   { href: '#CTZ_HISTORY', value: '历史记录' },
-//   { href: '#CTZ_DEFAULT', value: '默认功能' },
-// ];
-
 export const FONT_SIZE_INPUT: IOptionItem[] = [
   { value: 'fontSizeForListTitle', label: '列表标题文字大小' },
   { value: 'fontSizeForList', label: '列表内容文字大小' },

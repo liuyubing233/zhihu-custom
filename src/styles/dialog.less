@@ -89,7 +89,6 @@
   @HeightMenuItem: 38px;
   & > div {
     .Active();
-    .Hover(@blue1, @blue01);
     box-sizing: border-box;
     line-height: @HeightMenuItem;
     padding-left: 12px;
@@ -97,6 +96,10 @@
     font-size: @fontSize;
     margin-bottom: 2px;
     cursor: pointer;
+
+    &:hover {
+      background: @hoverBg;
+    }
 
     &.target {
       color: #fff !important;
