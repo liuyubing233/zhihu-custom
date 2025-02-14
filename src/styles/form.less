@@ -22,12 +22,12 @@
   margin-bottom: 14px;
   .ctz-form-box-item {
     display: flex;
-    padding: 0 12px;
-    min-height: 42px;
+    padding: 8px 12px;
+    min-height: 24px;
     position: relative;
     & > div:first-of-type {
       flex: 1;
-      line-height: 42px;
+      line-height: 24px;
       word-break: keep-all;
       padding-right: 12px;
     }
@@ -35,7 +35,6 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      padding: 6px 0;
     }
 
     &::after {
@@ -51,6 +50,14 @@
 
     &:last-of-type::after {
       display: none;
+    }
+
+    &.ctz-form-box-item-vertical {
+      display: block;
+      & > div:nth-child(2) {
+        display: block;
+        padding-top: 4px;
+      }
     }
   }
 }

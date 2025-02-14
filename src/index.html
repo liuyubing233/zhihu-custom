@@ -10,7 +10,6 @@
 
 <div id="CTZ_MESSAGE_BOX"></div>
 
-<!-- <div id="CTZ_BLOCK"></div> -->
 <div id="CTZ_OPEN_CLOSE" data-close="1"><div>⚙︎</div></div>
 <div id="CTZ_DIALOG" style="display: none">
   <div id="CTZ_DIALOG_CONTENT">
@@ -25,15 +24,14 @@
         <div data-href="#CTZ_POSITION">悬浮模块</div>
         <div data-href="#CTZ_HIDDEN">隐藏模块</div>
         <div data-href="#CTZ_FILTER" data-commit="更改后请重新刷新页面">屏蔽内容</div>
-        <div data-href="#CTZ_FILTER_BLOCK_WORDS" data-commit="匹配位置：列表标题；更改后请重新刷新页面">标题屏蔽词</div>
-        <div data-href="#CTZ_FILTER_BLOCK_WORDS_CONTENT" data-commit="匹配位置：列表、回答页内容；更改后请重新刷新页面">内容屏蔽词</div>
+        <div data-href="#CTZ_BLOCK_WORDS" data-commit="更改后请重新刷新页面, 点击屏蔽词删除">屏蔽词</div>
         <div data-href="#CTZ_BLACKLIST" data-commit="更改后请重新刷新页面">黑名单</div>
         <div data-href="#CTZ_VERSION">页面尺寸</div>
         <div data-href="#CTZ_THEME">主题颜色</div>
         <div data-href="#CTZ_CONFIG">配置操作</div>
-        <div data-href="#CTZ_DEFAULT">默认功能</div>
         <div data-href="#CTZ_HISTORY_LIST">推荐列表缓存</div>
         <div data-href="#CTZ_HISTORY_VIEW">浏览历史记录</div>
+        <div data-href="#CTZ_DEFAULT">默认功能</div>
       </div>
     </div>
 
@@ -76,8 +74,8 @@
                   <div>网页标签名称</div>
                   <div>
                     <input type="text" name="globalTitle" style="width: 300px" />
-                    <button class="ctz-button ctz-button-primary" name="buttonConfirmTitle" style="margin: 0 8px">确 认</button>
-                    <button class="ctz-button" name="buttonResetTitle">还 原</button>
+                    <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 8px">确认</button>
+                    <button class="ctz-button" name="buttonResetTitle">还原</button>
                   </div>
                 </div>
                 <div class="ctz-form-box-item">
@@ -94,43 +92,39 @@
           </div>
 
           <div class="ctz-form-box">
-            <div class="ctz-form-box-item">
+            <div class="ctz-form-box-item ctz-form-box-item-vertical">
               <div>购物链接显示</div>
               <div>
-                <div class="ctz-radio-group">
-                  <label>
-                    <input class="ctz-i" name="linkShopping" type="radio" value="0" />
-                    <div>默认</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="linkShopping" type="radio" value="1" />
-                    <div>仅文字</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" name="linkShopping" type="radio" value="2" />
-                    <div>隐藏</div>
-                  </label>
-                </div>
+                <label class="ctz-radio" style="display: block">
+                  <input class="ctz-i" name="linkShopping" type="radio" value="0" />
+                  <div>默认</div>
+                </label>
+                <label class="ctz-radio" style="display: block">
+                  <input class="ctz-i" name="linkShopping" type="radio" value="1" />
+                  <div>仅文字</div>
+                </label>
+                <label class="ctz-radio" style="display: block">
+                  <input class="ctz-i" name="linkShopping" type="radio" value="2" />
+                  <div>隐藏</div>
+                </label>
               </div>
             </div>
 
-            <div class="ctz-form-box-item">
+            <div class="ctz-form-box-item ctz-form-box-item-vertical">
               <div>回答内容收起状态</div>
               <div>
-                <div class="ctz-radio-group">
-                  <label>
-                    <input class="ctz-i" type="radio" name="answerOpen" value="" />
-                    <div>默认</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" type="radio" name="answerOpen" value="on" />
-                    <div>自动展开所有回答</div>
-                  </label>
-                  <label>
-                    <input class="ctz-i" type="radio" name="answerOpen" value="off" />
-                    <div>默认收起长回答</div>
-                  </label>
-                </div>
+                <label class="ctz-radio" style="display: block">
+                  <input class="ctz-i" type="radio" name="answerOpen" value="" />
+                  <div>默认</div>
+                </label>
+                <label class="ctz-radio" style="display: block">
+                  <input class="ctz-i" type="radio" name="answerOpen" value="on" />
+                  <div>自动展开所有回答</div>
+                </label>
+                <label class="ctz-radio" style="display: block">
+                  <input class="ctz-i" type="radio" name="answerOpen" value="off" />
+                  <div>默认收起长回答</div>
+                </label>
               </div>
             </div>
           </div>
@@ -296,18 +290,38 @@
           </div>
         </div>
 
-        <!-- 标题屏蔽词 -->
-        <div id="CTZ_FILTER_BLOCK_WORDS">
-          <input name="inputBlockedWord" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
-          <span class="ctz-commit" style="line-height: 24px">点击屏蔽词即可删除</span>
-          <div class="ctz-block-words-content"></div>
-        </div>
+        <!-- 屏蔽词 -->
+        <div id="CTZ_BLOCK_WORDS" style="display: none">
+          <!-- 标题屏蔽词 -->
+          <div class="ctz-title">
+            标题屏蔽词
+            <span>匹配位置：列表标题</span>
+          </div>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>新增</div>
+              <div><input name="inputBlockedWord" type="text" placeholder="输入后回车新增（不区分大小写）" style="width: 256px" /></div>
+            </div>
+            <div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS">
+              <div class="ctz-block-words-content"></div>
+            </div>
+          </div>
 
-        <!-- 内容屏蔽词 -->
-        <div id="CTZ_FILTER_BLOCK_WORDS_CONTENT">
-          <input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车或失去焦点（不区分大小写）" />
-          <span class="ctz-commit" style="line-height: 24px">点击屏蔽词即可删除</span>
-          <div class="ctz-block-words-content"></div>
+          <!-- 内容屏蔽词 -->
+          <div class="ctz-title">
+            内容屏蔽词
+            <span>匹配位置：列表、回答页内容</span>
+          </div>
+
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>新增</div>
+              <div><input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车新增（不区分大小写）" style="width: 256px" /></div>
+            </div>
+            <div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS_CONTENT">
+              <div class="ctz-block-words-content"></div>
+            </div>
+          </div>
         </div>
 
         <!-- 黑名单设置 -->

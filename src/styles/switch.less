@@ -1,12 +1,10 @@
 @import './common.less';
 
 .ctz-switch {
-  width: 46px;
-  height: 28px;
+  width: 40px;
+  height: 24px;
   position: relative;
-  border: 1px solid #dfdfdf;
   background-color: #dcdfe6;
-  box-shadow: #dfdfdf 0 0 0 0 inset;
   border-radius: 20px;
   background-clip: content-box;
   display: inline-block;
@@ -16,6 +14,7 @@
   user-select: none;
   outline: none;
   margin: 0;
+  cursor: pointer;
 
   &::before {
     content: '';
@@ -37,7 +36,7 @@
   }
 
   &:checked::before {
-    left: 20px;
+    left: 17px;
     transition: 0.3s;
   }
 }

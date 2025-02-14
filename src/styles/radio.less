@@ -8,8 +8,8 @@
     margin: 0 !important;
     div {
       box-sizing: border-box;
-      padding: 0 12px;
-      height: 32px;
+      padding: 0 8px;
+      height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,6 +74,64 @@
       left: 0;
       top: 0;
       z-index: 1;
+    }
+  }
+}
+
+.ctz-radio {
+  display: inline-block;
+  padding-left: 24px;
+  line-height: 24px;
+  input[type='radio'] {
+    display: none;
+
+    & + div {
+      position: relative;
+      cursor: pointer;
+      &::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 4px;
+        border-radius: 50%;
+        border: 1px solid #cecece;
+        width: 14px;
+        height: 14px;
+        background: #fff;
+        box-shadow: inset 5px 5px 5px #f0f0f0, inset -5px -5px 5px #ffffff;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        left: -16px;
+        top: 8px;
+        border-radius: 50%;
+        width: 8px;
+        height: 8px;
+      }
+    }
+    &:checked {
+      + div {
+        &::before {
+          background: @blue1;
+          border-color: @blue1;
+          box-shadow: none;
+        }
+        &::after {
+          background: #fff;
+        }
+      }
+    }
+    &:focus {
+      + div::before {
+        box-shadow: 0 0px 8px @blue1;
+      }
+    }
+    &:disabled {
+      + div::before {
+        border: 1px solid #cecece;
+        box-shadow: 0 0px 4px #ddd;
+      }
     }
   }
 }

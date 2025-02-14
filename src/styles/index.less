@@ -9,10 +9,11 @@
 @import './form.less';
 @import './title.less';
 @import './switch.less';
+@import './fetch-intercept.less';
 @import './setting-theme.less';
 @import './setting-config.less';
 @import './setting-default.less';
-@import './fetch-intercept.less';
+@import './setting-block.less';
 
 .ctz-set-content:not(.ctz-flex-wrap) {
   & > div,
@@ -45,36 +46,6 @@
 .ctz-label {
   line-height: 24px;
   margin-right: 12px;
-}
-
-// 屏蔽内容
-#CTZ_BLOCK_WORD {
-  input {
-    height: 24px;
-    width: 300px;
-    margin: 4px 0;
-    width: 100%;
-  }
-}
-
-.ctz-block-words-content {
-  display: flex;
-  flex-wrap: wrap;
-  cursor: default;
-  & > span {
-    padding: 4px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    border: 1px solid @gray04;
-    margin: 4px 8px 0 0;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-      color: @waring;
-      border-color: @waring;
-    }
-  }
 }
 
 .ctz-flex-wrap {
