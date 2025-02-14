@@ -12,6 +12,8 @@ export const CLASS_TO_QUESTION = 'ctz-to-question';
 /** class: 自定义的时间元素名称 */
 export const CLASS_TIME_ITEM = 'ctz-list-item-time';
 
+export const CLASS_SELECT = 'ctz-select';
+
 /** class: 消息提示弹窗 */
 export const CLASS_MESSAGE = 'ctz-message';
 export const ID_MESSAGE_BOX = 'CTZ_MESSAGE_BOX';

@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC, message } from '../commons/tools';
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CONFIG_DEFAULT } from '../configs';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, CONFIG_DEFAULT } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
 import { myBlack } from '../methods/black';
 import { fnChanger } from '../methods/fn-changer';
@@ -41,7 +41,7 @@ export const initOperate = () => {
   };
   nodeContent.onchange = (e) => {
     const target = e.target as HTMLInputElement;
-    if (target.classList.contains(CLASS_INPUT_CHANGE)) {
+    if (target.classList.contains(CLASS_INPUT_CHANGE) || target.classList.contains(CLASS_SELECT)) {
       fnChanger(target);
       return;
     }
@@ -136,7 +136,7 @@ const myButtonOperation: Record<string, Function> = {
   configImport: () => {
     dom('#IMPORT_BY_FILE input')!.click();
   },
-  dialogClose: openChange
+  dialogClose: openChange,
 };
 
 const configImport = (e: Event) => {

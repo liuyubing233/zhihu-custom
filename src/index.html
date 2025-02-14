@@ -92,39 +92,25 @@
           </div>
 
           <div class="ctz-form-box">
-            <div class="ctz-form-box-item ctz-form-box-item-vertical">
+            <div class="ctz-form-box-item">
               <div>购物链接显示</div>
               <div>
-                <label class="ctz-radio" style="display: block">
-                  <input class="ctz-i" name="linkShopping" type="radio" value="0" />
-                  <div>默认</div>
-                </label>
-                <label class="ctz-radio" style="display: block">
-                  <input class="ctz-i" name="linkShopping" type="radio" value="1" />
-                  <div>仅文字</div>
-                </label>
-                <label class="ctz-radio" style="display: block">
-                  <input class="ctz-i" name="linkShopping" type="radio" value="2" />
-                  <div>隐藏</div>
-                </label>
+                <select class="ctz-select" name="linkShopping">
+                  <option value="0">默认</option>
+                  <option value="1">仅文字</option>
+                  <option value="2">隐藏</option>
+                </select>
               </div>
             </div>
 
-            <div class="ctz-form-box-item ctz-form-box-item-vertical">
+            <div class="ctz-form-box-item">
               <div>回答内容收起状态</div>
               <div>
-                <label class="ctz-radio" style="display: block">
-                  <input class="ctz-i" type="radio" name="answerOpen" value="" />
-                  <div>默认</div>
-                </label>
-                <label class="ctz-radio" style="display: block">
-                  <input class="ctz-i" type="radio" name="answerOpen" value="on" />
-                  <div>自动展开所有回答</div>
-                </label>
-                <label class="ctz-radio" style="display: block">
-                  <input class="ctz-i" type="radio" name="answerOpen" value="off" />
-                  <div>默认收起长回答</div>
-                </label>
+                <select class="ctz-select" name="answerOpen">
+                  <option value="">默认</option>
+                  <option value="on">自动展开所有回答</option>
+                  <option value="off">默认收起长回答</option>
+                </select>
               </div>
             </div>
           </div>
@@ -407,49 +393,37 @@
 
           <!-- 图片尺寸 -->
           <div class="ctz-title">图片尺寸</div>
-          <div class="ctz-form-item">
-            <div>回答和文章图片显示</div>
-            <div>
-              <div class="ctz-radio-group" style="width: 100%">
-                <label>
-                  <input class="ctz-i" name="zoomImageType" type="radio" value="0" />
-                  <div>默认尺寸</div>
-                </label>
-                <label>
-                  <input class="ctz-i" name="zoomImageType" type="radio" value="1" />
-                  <div>原图尺寸</div>
-                </label>
-                <label>
-                  <input class="ctz-i" name="zoomImageType" type="radio" value="2" />
-                  <div>自定义尺寸</div>
-                </label>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>回答和文章图片尺寸</div>
+              <div>
+                <select class="ctz-select" name="zoomImageType">
+                  <option value="0">默认尺寸</option>
+                  <option value="1">原图尺寸</option>
+                  <option value="2">自定义尺寸</option>
+                </select>
               </div>
-
-              <div id="CTZ_IMAGE_SIZE_CUSTOM" style="display: none; margin-top: 18px"></div>
             </div>
+            <div id="CTZ_IMAGE_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div>
           </div>
 
-          <div class="ctz-form-item">
-            <div>
-              图片最大高度限制
-              <span class="ctz-tooltip">
-                <span>?</span>
-                <span>开启高度限制后，图片将按照高度等比例缩放，宽度限制将失效</span>
-              </span>
-            </div>
-            <div>
-              <div class="ctz-radio-group" style="width: 100%">
-                <label>
-                  <input class="ctz-i" name="zoomImageHeight" type="radio" value="0" />
-                  <div>关闭</div>
-                </label>
-                <label>
-                  <input class="ctz-i" name="zoomImageHeight" type="radio" value="1" />
-                  <div>开启</div>
-                </label>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>
+                图片最大高度限制
+                <span class="ctz-tooltip">
+                  <span>?</span>
+                  <span>开启高度限制后，图片将按照高度等比例缩放，宽度限制将失效</span>
+                </span>
               </div>
-              <div id="CTZ_IMAGE_HEIGHT_CUSTOM" style="display: none; margin-top: 18px"></div>
+              <div>
+                <select class="ctz-select" name="zoomImageHeight">
+                  <option value="0">关闭</option>
+                  <option value="1">开启</option>
+                </select>
+              </div>
             </div>
+            <div id="CTZ_IMAGE_HEIGHT_CUSTOM" class="ctz-form-box-item" style="display: none"></div>
           </div>
 
           <div class="ctz-form-box">
@@ -460,21 +434,18 @@
           </div>
 
           <div class="ctz-title">视频尺寸</div>
-          <div class="ctz-form-item">
-            <div>列表视频回答尺寸</div>
-            <div>
-              <div class="ctz-radio-group" style="width: 100%">
-                <label>
-                  <input class="ctz-i" name="zoomListVideoType" type="radio" value="0" />
-                  <div>默认尺寸</div>
-                </label>
-                <label>
-                  <input class="ctz-i" name="zoomListVideoType" type="radio" value="2" />
-                  <div>自定义尺寸</div>
-                </label>
+
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>列表视频回答尺寸</div>
+              <div>
+                <select class="ctz-select" name="zoomListVideoType">
+                  <option value="0">默认尺寸</option>
+                  <option value="2">自定义尺寸</option>
+                </select>
               </div>
-              <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM" style="display: none; margin-top: 18px"></div>
             </div>
+            <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div>
           </div>
         </div>
 
@@ -494,7 +465,7 @@
           <div class="ctz-title">自定义样式</div>
           <div class="ctz-form-box">
             <div class="ctz-form-box-item">
-              <div style="align-items: start; padding: 0">
+              <div style="align-items: start; padding: 0;text-align: right;">
                 <textarea name="textStyleCustom" placeholder="内容为CSS"></textarea>
                 <button class="ctz-button" name="styleCustom">确定</button>
               </div>

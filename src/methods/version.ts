@@ -17,11 +17,11 @@ export const myVersion = {
   initAfterLoad: async function () {
     const pfConfig = await myStorage.getConfig();
     // 自定义图片尺寸大小 range 显隐
-    domById('CTZ_IMAGE_SIZE_CUSTOM')!.style.display = pfConfig.zoomImageType === '2' ? 'block' : 'none';
+    domById('CTZ_IMAGE_SIZE_CUSTOM')!.style.display = pfConfig.zoomImageType === '2' ? 'flex' : 'none';
     // 自定义图片尺寸高度限制
-    domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.style.display = pfConfig.zoomImageHeight === '1' ? 'block' : 'none';
+    domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.style.display = pfConfig.zoomImageHeight === '1' ? 'flex' : 'none';
     // 自定义列表视频回答内容 range 显隐
-    domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.style.display = pfConfig.zoomListVideoType === '2' ? 'block' : 'none';
+    domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.style.display = pfConfig.zoomListVideoType === '2' ? 'flex' : 'none';
   },
   content: async function () {
     const {

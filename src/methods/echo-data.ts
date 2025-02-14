@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById } from '../commons/tools';
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, VERSION_RANGE } from '../configs';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, VERSION_RANGE } from '../configs';
 
 /** 回填数据，供每次打开使用 */
 export const echoData = async () => {
@@ -37,6 +37,12 @@ export const echoData = async () => {
   const nodeArrInputChange = domA(`.${CLASS_INPUT_CHANGE}`);
   for (let i = 0, len = nodeArrInputChange.length; i < len; i++) {
     doEcho(nodeArrInputChange[i] as HTMLInputElement);
+  }
+
+  const nodeArrSelect = domA(`.${CLASS_SELECT}`);
+  for (let i = 0, len = nodeArrSelect.length; i < len; i++) {
+    const item = nodeArrSelect[i] as HTMLSelectElement;
+    item.value = pfConfig[item.name];
   }
 
   echo.text(dom('[name="globalTitle"]'));

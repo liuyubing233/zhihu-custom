@@ -61,9 +61,9 @@ export const initHTML = () => {
       }</div>`
   ).join('');
 
-  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = range('zoomImageSize', 0, 1000);
-  domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = range('zoomImageHeightSize', 0, 1000);
-  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = range('zoomListVideoSize', 0, 1000);
+  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = `<div>回答和文章图片宽度</div>` + range('zoomImageSize', 0, 1000);
+  domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = `<div>图片最大高度</div>` + range('zoomImageHeightSize', 0, 1000);
+  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = `<div>列表视频回答宽度</div>` + range('zoomListVideoSize', 0, 1000);
   // 滑动输入条部分 END
 
   // 文字大小调节
