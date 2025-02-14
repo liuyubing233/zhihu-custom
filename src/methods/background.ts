@@ -12,7 +12,7 @@ const appendPrefix = (str: string, mapCB: (i: string) => string) => str.split(',
 /** 修改页面背景的 css */
 export const myBackground = {
   init: async function () {
-    const { themeDark = EThemeDark.深色护眼一, themeLight = EThemeLight.默认, colorText1 } = await myStorage.getConfig();
+    const { themeDark = EThemeDark.深色一, themeLight = EThemeLight.默认, colorText1 } = await myStorage.getConfig();
     const useDark = await isDark();
     const getBackground = async () => {
       if (useDark) return this.dark(themeDark);
@@ -205,19 +205,23 @@ export const isDark = async () => {
 
 /** 添加背景色选择元素 */
 export const addBackgroundSetting = () => {
-  const radioBackground = (name: string, value: string | number, background: string, color: string, label: string) =>
-    `<label><input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div style="background: ${background};color: ${color}">${label}</div></label>`;
+  const radioBackground = (name: string, value: string | number, background: string, color: string, label: string, primary: string) =>
+    `<label class="ctz-background-item">${
+      `<input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/>` +
+      `<div class="ctz-background-item-div" style="background: ${primary || background};color: ${color}"></div>` +
+      `<div class="ctz-background-item-border"></div>` +
+      `<div class="ctz-background-item-name">${label}</div>`
+    }</label>`;
 
   const themeToRadio = (o: Record<string, any>, className: string, color: string) =>
     Object.keys(o)
-      .map((key) => radioBackground(className, key, o[key].background, color, o[key].name))
+      .map((key) => radioBackground(className, key, o[key].background, color, o[key].name, o[key].primary))
       .join('');
 
   dom('.ctz-set-background')!.innerHTML =
-    `<div class="ctz-title">主题颜色</div>` +
-    `<div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label)).join('')}</div>` +
-    `<div class="ctz-title">浅色颜色选择</div>` +
-    `<div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, '#000')}</div>` +
-    `<div class="ctz-title">深色颜色选择</div>` +
-    `<div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, '#f7f9f9')}</div>`;
+    `<div class="ctz-form-box-item">${
+      `<div>主题</div>` + `<div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label, i.background)).join('')}</div>`
+    }</div>` +
+    `<div class="ctz-form-box-item">${`<div>浅色主题</div>` + `<div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, '#000')}</div>`}</div>` +
+    `<div class="ctz-form-box-item">${`<div>深色主题</div>` + `<div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, '#f7f9f9')}</div>`}</div>`;
 };

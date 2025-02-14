@@ -20,10 +20,10 @@ const createHiddenItem = (arrHidden: IOptionItem[][]) => {
 
 const range = (v: string, min: number, max: number, unit = '') =>
   `<div class="ctz-flex-wrap ctz-range-${v}">${
-    `<span class="ctz-commit" style="margin-right: 2px;">${min}${unit}</span>` +
+    `<span style="font-size: 12px;margin-right: 8px;">当前：<span id="${v}">0</span>${unit}</span>` +
+    `<span style="margin-right: 2px;color: #757575;font-size: 12px;">${min}${unit}</span>` +
     `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 200px" />` +
-    `<span class="ctz-commit" style="margin: 0 8px 0 2px;">${max}${unit}</span>` +
-    `<span>当前：<span id="${v}">0</span>${unit}</span>`
+    `<span style="margin-left: 2px;color: #757575;font-size: 12px;">${max}${unit}</span>`
   }</div>`;
 
 const commonFormBoxItem = (con: ICommonContent[][]) =>
@@ -52,14 +52,12 @@ export const initHTML = () => {
   // 滑动输入条部分 START
   domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(
     (item: IRangeItem) =>
-      `<div>${
-        `<div class="ctz-form-item">${
-          `<div>${item.label}${tooltipHTML(item.desc)}</div>` +
-          `<div>${range(item.value, item.min, item.max) + range(item.percentValue, item.percentMin, item.percentMax, '%')}</div>`
-        }</div>` +
-        `<div class="ctz-form-item">${
-          `<div>${item.percentChooseLabel}</div>` + `<div><input class="ctz-i" name="${item.percentChooseValue}" type="checkbox" value="on" /></div>`
-        }</div>`
+      `<div class="ctz-form-box-item">${
+        `<div>${item.label}${tooltipHTML(item.desc)}</div>` +
+        `<div>${range(item.value, item.min, item.max) + range(item.percentValue, item.percentMin, item.percentMax, '%')}</div>`
+      }</div>` +
+      `<div class="ctz-form-box-item">${
+        `<div>${item.percentChooseLabel}</div>` + `<div><input class="ctz-i ctz-switch" name="${item.percentChooseValue}" type="checkbox" value="on" /></div>`
       }</div>`
   ).join('');
 
@@ -71,20 +69,16 @@ export const initHTML = () => {
   // 文字大小调节
   domById('CTZ_FONT_SIZE_IN_ZHIHU')!.innerHTML = FONT_SIZE_INPUT.map(
     (item) =>
-      `<div class="ctz-form-item">${
+      `<div class="ctz-form-box-item">${
         `<div>${item.label}</div>` +
         `<div>${
           `<input type="number" name="${item.value}" class="ctz-i-change" style="width: 100px;margin-right: 8px;" placeholder="例：18" />` +
-          `<button class="ctz-button ctz-reset-font-size" name="reset-${item.value}">重 置</button>`
+          `<button class="ctz-button ctz-reset-font-size" name="reset-${item.value}">↺</button>`
         }</div>`
       }</div>`
   ).join('');
 
   // 隐藏元素部分
-  // dom('[data-href="#CTZ_HIDDEN"] .ctz-dropdown')!.innerHTML = HIDDEN_ARRAY.map((i) => `<a href="#${i.key}">${i.name}</a>`).join('');
-  // domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
-  //   (i) => `<div id="${i.key}"><div class="ctz-title">${i.name}<span>${i.desc}</span></div>${createHiddenItem(i.content)}</div>`
-  // ).join('');
   domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
     (item) => (item.name ? `<div class="ctz-title">${item.name}<span>${item.desc}</span></div>` : '') + commonFormBoxItem(item.content)
   ).join('');

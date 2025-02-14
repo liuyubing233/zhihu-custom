@@ -36,7 +36,7 @@ export const myListenListItem = {
       removeFollowFQuestion,
       listOutPutNotInterested,
       highlightOriginal,
-      themeDark = EThemeDark.深色护眼一,
+      themeDark = EThemeDark.深色一,
       themeLight = EThemeLight.默认,
       removeMyOperateAtFollow,
       listOutputToQuestion,

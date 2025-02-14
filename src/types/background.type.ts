@@ -21,13 +21,13 @@ export enum EThemeLight {
 
 /** 主题风格 - 深色 */
 export enum EThemeDark {
-  深色模式默认 = 0,
-  深色护眼一 = 1,
-  深色护眼二 = 2,
-  深色护眼三 = 3,
-  深色蓝 = 4,
-  深色红 = 5,
-  深色绿 = 6,
+  默认 = 0,
+  深色一 = 1,
+  深色二 = 2,
+  深色三 = 3,
+  高对比度蓝 = 4,
+  高对比度红 = 5,
+  高对比度绿 = 6,
 }
 
 /** 浅色主题色配置 */
@@ -43,6 +43,8 @@ export interface IThemeValue {
   background: string;
   /** 第二背景色 */
   background2: string;
+  /** 主题色 */
+  primary: string;
 }
 
 export type IHiddenArray = IHiddenItem[];

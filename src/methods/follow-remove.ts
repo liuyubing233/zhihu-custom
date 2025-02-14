@@ -22,7 +22,7 @@ export const myFollowRemove = {
 
     domA(`.${classNameItem}`).forEach((item) => {
       const elementButton = domC('button', {
-        className: `${me.className} ${me.classNameRemove} ctz-button-block ctz-button`,
+        className: `${me.className} ${me.classNameRemove} ctz-button-black ctz-button`,
         innerText: '移除关注',
         style: 'position: absolute;right: 16px;bottom: 16px;background: transparent;',
       });

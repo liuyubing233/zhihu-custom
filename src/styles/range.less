@@ -1,0 +1,51 @@
+@import './common.less';
+
+#CTZ_DIALOG {
+  input[type='range'] {
+    /* 设置滑块下面那条线的样式 */
+    outline: none; /* 去掉点击时出现的外边框 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; /* 这三个是去掉那条线原有的默认样式 */
+    height: 6px;
+    border-radius: 8px;
+    background: #dddddc;
+    position: relative;
+    box-shadow: inset 1px 1px 2px #d4d4d3, inset -1px -1px 2px #d4d4d3;
+    &::before,
+    &::after {
+      content: '';
+      background: #c6c6c5;
+      position: absolute;
+      height: 10px;
+      width: 3px;
+      border-radius: 4px;
+      top: -2px;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+
+    &::-webkit-slider-thumb {
+      /* ::-webkit-slider-thumb 是代表给滑块的样式进行变更*/
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none; /* 这三个是去掉滑块原有的默认样式 */
+      transition: all 0.2s;
+      width: 10px;
+      height: 25px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #c7c7c6;
+      // box-shadow: 3px 3px 6px #f5f5f5, -3px -3px 6px #f5f5f5;
+      &:active {
+        background: #f0f0f0;
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
 /** class: 黑名单元素删除按钮类名 */
 const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** id: 黑名单列表 */
-const ID_BLOCK_LIST = 'CTZ-BLOCK-LIST';
+const ID_BLOCK_LIST = 'CTZ-BLACK-LIST';
 
 /** 黑名单用户操作方法 */
 export const myBlack = {
@@ -38,7 +38,7 @@ export const myBlack = {
   /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
   addButton: async function (event: HTMLElement, objMy?: any) {
     const me = this;
-    const classBox = 'ctz-block-box';
+    const classBox = 'ctz-black-box';
     const nodeBlockBox = event.querySelector(`.${classBox}`);
     if (nodeBlockBox) return;
     const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;

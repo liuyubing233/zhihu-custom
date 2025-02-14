@@ -25,13 +25,13 @@
         <div data-href="#CTZ_HIDDEN">隐藏模块</div>
         <div data-href="#CTZ_FILTER" data-commit="更改后请重新刷新页面">屏蔽内容</div>
         <div data-href="#CTZ_BLOCK_WORDS" data-commit="更改后请重新刷新页面, 点击屏蔽词删除">屏蔽词</div>
-        <div data-href="#CTZ_BLACKLIST" data-commit="更改后请重新刷新页面">黑名单</div>
+        <div data-href="#CTZ_BLACKLIST" data-commit="更改后请重新刷新页面, 需开启接口拦截">黑名单</div>
         <div data-href="#CTZ_VERSION">页面尺寸</div>
         <div data-href="#CTZ_THEME">主题颜色</div>
         <div data-href="#CTZ_CONFIG">配置操作</div>
         <div data-href="#CTZ_HISTORY_LIST">推荐列表缓存</div>
         <div data-href="#CTZ_HISTORY_VIEW">浏览历史记录</div>
-        <div data-href="#CTZ_DEFAULT">默认功能</div>
+        <div data-href="#CTZ_DEFAULT" data-commit="修改器自带功能, 不需要额外开启">默认功能</div>
       </div>
     </div>
 
@@ -326,21 +326,25 @@
 
         <!-- 黑名单设置 -->
         <div id="CTZ_BLACKLIST" class="ctz-fetch-intercept" style="display: none">
-          <h5 class="ctz-alert-red ctz-need-fetch">接口拦截已关闭，此部分功能无法使用</h5>
-          <div class="ctz-title">黑名单设置</div>
-          <div class="ctz-set-content">
-            <button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button ctz-button-primary">同步黑名单</button>
-            <label class="ctz-flex-wrap">
-              <input class="ctz-i" name="showBlockUser" type="checkbox" value="on" />
-              <div>回答列表用户名后显示「屏蔽用户」按钮</div>
-            </label>
-            <label class="ctz-flex-wrap">
-              <input class="ctz-i" name="removeBlockUserContent" type="checkbox" value="on" />
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div></div>
+              <div><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button></div>
+            </div>
+            <div class="ctz-form-box-item">
+              <div>回答列表用户名后显示"屏蔽用户"按钮</div>
+              <div><input class="ctz-i ctz-switch" name="showBlockUser" type="checkbox" value="on" /></div>
+            </div>
+            <div class="ctz-form-box-item">
               <div>屏蔽黑名单用户发布的内容</div>
-            </label>
-            <div>
-              <div class="ctz-title">黑名单列表</div>
-              <div id="CTZ-BLOCK-LIST"></div>
+              <div><input class="ctz-i ctz-switch" name="removeBlockUserContent" type="checkbox" value="on" /></div>
+            </div>
+          </div>
+
+          <div class="ctz-title">黑名单列表</div>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div id="CTZ-BLACK-LIST"></div>
             </div>
           </div>
         </div>
@@ -367,7 +371,7 @@
 
         <!-- 默认功能 -->
         <div id="CTZ_DEFAULT" style="display: none">
-          <h5 class="ctz-alert-red ctz-need-fetch">默认功能，不需要额外开启</h5>
+          <!-- <h5 class="ctz-alert-red ctz-need-fetch">默认功能，不需要额外开启</h5> -->
           <div id="CTZ_DEFAULT_SELF"></div>
           <div class="ctz-zhihu-self" style="margin-top: 42px">
             <div class="ctz-zhihu-key">
@@ -381,12 +385,15 @@
 
         <!-- 主题 -->
         <div id="CTZ_THEME" style="display: none">
-          <div class="ctz-set-background"></div>
-          <div class="ctz-set-color">
-            <div class="ctz-title">修改文字颜色</div>
-            <div class="ctz-flex-wrap">
-              <input type="text" class="ctz-i" name="colorText1" style="width: 200px; margin-right: 8px" placeholder="例如：#f7f9f9" />
-              <button class="ctz-button ctz-reset-font-size" name="reset-colorText1">重 置</button>
+          <div class="ctz-set-background ctz-form-box"></div>
+
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>修改文字颜色</div>
+              <div>
+                <input type="text" class="ctz-i" name="colorText1" style="width: 148px; margin-right: 8px" placeholder="例如：#f7f9f9" />
+                <button class="ctz-button ctz-reset-font-size" name="reset-colorText1">↺</button>
+              </div>
             </div>
           </div>
         </div>
@@ -394,18 +401,17 @@
         <!-- 页面尺寸 -->
         <div id="CTZ_VERSION" style="display: none">
           <!-- 页面内容宽度 -->
-          <div class="ctz-title">页面内容宽度</div>
-          <div id="CTZ_VERSION_RANGE_ZHIHU"></div>
-          <div class="ctz-form-item">
-            <div>评论弹窗匹配页面宽度</div>
-            <div>
-              <input class="ctz-i" name="commitModalSizeSameVersion" type="checkbox" value="on" />
+          <div id="CTZ_VERSION_RANGE_ZHIHU" class="ctz-form-box"></div>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>评论弹窗匹配页面宽度</div>
+              <div><input class="ctz-i ctz-switch" name="commitModalSizeSameVersion" type="checkbox" value="on" /></div>
             </div>
           </div>
 
           <!-- 页面字体大小 -->
           <div class="ctz-title">字体大小</div>
-          <div id="CTZ_FONT_SIZE_IN_ZHIHU"></div>
+          <div id="CTZ_FONT_SIZE_IN_ZHIHU" class="ctz-form-box"></div>
 
           <!-- 图片尺寸 -->
           <div class="ctz-title">图片尺寸</div>
@@ -454,9 +460,11 @@
             </div>
           </div>
 
-          <div class="ctz-form-item">
-            <div>弹窗打开动图</div>
-            <div><input class="ctz-i" name="showGIFinDialog" type="checkbox" value="on" /></div>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>弹窗打开动图</div>
+              <div><input class="ctz-i ctz-switch" name="showGIFinDialog" type="checkbox" value="on" /></div>
+            </div>
           </div>
 
           <div class="ctz-title">视频尺寸</div>
