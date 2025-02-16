@@ -477,7 +477,7 @@ _注：需要开启接口拦截_<br>
 
 <br>
 
-浅色颜色主题预览（黄）：<br>
+浅色颜色主题预览（绿）：<br>
 
 <img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/background-light.png" alt="浅色颜色预览">
 
