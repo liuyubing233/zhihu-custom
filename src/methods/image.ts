@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { dom, domA, domById, domP } from '../commons/tools';
+import { dom, domA, domById, domP, message } from '../commons/tools';
 import { myPreview } from './preview';
 
 /** 预览动图回调 */
@@ -123,6 +123,16 @@ export const keydownNextImage = (event: KeyboardEvent) => {
 
       if (key === 'ArrowLeft' && index > 0) {
         dialogChange(nodeImgDialog, images[index - 1]);
+        return;
+      }
+
+      if (index === images.length - 1) {
+        message('已经是最后一张了');
+        return;
+      }
+
+      if (index === 0) {
+        message('已经是第一张了');
         return;
       }
     }
