@@ -109,6 +109,7 @@ export const keydownNextImage = (event: KeyboardEvent) => {
         nodeDialog.src = originSrc;
         nodeDialog.style.cssText =
           nodeDialog.style.cssText +
+          `width: ${DIALOG_INNER_WIDTH}px;` +
           `height: ${finallyHeight / scaleY}px;` +
           `top: ${top}px;left: ${left}px;` +
           `transform: translateX(0) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;` +
