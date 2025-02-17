@@ -180,7 +180,9 @@
   user-select: none;
   width: 48px;
   height: 48px;
-  line-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   background: @gray04;
   border-radius: 8px;
@@ -191,8 +193,8 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  color: @gray1;
   box-sizing: border-box;
+  border: 2px solid @gray02;
   &:hover {
     opacity: 1;
   }
@@ -220,5 +222,42 @@
   [name='dialogBig'] {
     background: #27c93f;
     .Hover(#fff, @green3);
+  }
+}
+
+.gear {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 6px solid @gray1;
+  background: transparent;
+  &_line_1,
+  &_line_2,
+  &_line_3,
+  &_line_4 {
+    position: absolute;
+    box-sizing: border-box;
+    width: 30px;
+    height: 6px;
+    border-radius: 2px;
+    border-left: 6px solid #8e8e93;
+    border-right: 6px solid #8e8e93;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &_line_2 {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &_line_3 {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  &_line_4 {
+    transform: translate(-50%, -50%) rotate(135deg);
   }
 }
