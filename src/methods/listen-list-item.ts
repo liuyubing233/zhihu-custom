@@ -1,3 +1,4 @@
+import { doFetchNotInterested } from '../commons/fetch';
 import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { createButtonST, domA, domP, fnLog } from '../commons/tools';
@@ -127,6 +128,8 @@ export const myListenListItem = {
       if (message) {
         // 是否需要隐藏元素
         fnHidden(nodeItem, message);
+        const { itemId, type } = dataZop;
+        doFetchNotInterested({ id: `${itemId || ''}`, type: `${type}` });
       } else {
         // 未隐藏的元素需添加的内容
         // 高亮原创

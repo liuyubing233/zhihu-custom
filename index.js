@@ -2940,6 +2940,26 @@
       this.init();
     }
   };
+  var doFetchNotInterested = ({ id, type }) => {
+    const nHeader = store.getStorageConfigItem("fetchHeaders");
+    delete nHeader["vod-authorization"];
+    delete nHeader["content-encoding"];
+    delete nHeader["Content-Type"];
+    delete nHeader["content-type"];
+    const idToNum = +id;
+    if (String(idToNum) === "NaN") {
+      fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
+      return;
+    }
+    fetch("/api/v3/feed/topstory/uninterestv2", {
+      body: `item_brief=${encodeURIComponent(JSON.stringify({ source: "TS", type, id: idToNum }))}`,
+      method: "POST",
+      headers: new Headers({
+        ...nHeader,
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      })
+    }).then((res) => res.json());
+  };
   var myListenListItem = {
     index: 0,
     init: async function() {
@@ -3043,6 +3063,8 @@
         }
         if (message2) {
           fnHidden(nodeItem, message2);
+          const { itemId: itemId2, type } = dataZop;
+          doFetchNotInterested({ id: `${itemId2 || ""}`, type: `${type}` });
         } else {
           const userNameE = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
           const userName = userNameE ? userNameE.innerText : "";
@@ -3204,26 +3226,6 @@
         nodeItem.style.cssText = "max-width: 100%;";
       }
     }
-  };
-  var doFetchNotInterested = ({ id, type }) => {
-    const nHeader = store.getStorageConfigItem("fetchHeaders");
-    delete nHeader["vod-authorization"];
-    delete nHeader["content-encoding"];
-    delete nHeader["Content-Type"];
-    delete nHeader["content-type"];
-    const idToNum = +id;
-    if (String(idToNum) === "NaN") {
-      fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
-      return;
-    }
-    fetch("/api/v3/feed/topstory/uninterestv2", {
-      body: `item_brief=${encodeURIComponent(JSON.stringify({ source: "TS", type, id: idToNum }))}`,
-      method: "POST",
-      headers: new Headers({
-        ...nHeader,
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-      })
-    }).then((res) => res.json());
   };
   var classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon"];
   var canFindTargeted = (e) => {
