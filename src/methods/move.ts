@@ -175,7 +175,6 @@ export const moveAndOpen = async () => {
       me.style.right = !useLeft ? `${right}px` : '';
       me.style.top = useTop ? `${top}px` : '';
       me.style.bottom = !useTop ? `${bottom}px` : '';
-      // console.log('isMove')
       isMove = true;
     };
 
@@ -199,19 +198,6 @@ export const moveAndOpen = async () => {
         suspensionOpenBottom: !useTop ? (config.suspensionOpen !== '1' ? `${bottom}px` : '0') : '',
       };
 
-      // if (config.suspensionOpen) {
-      //   if (
-      //     config.suspensionOpenUseTop !== suspension.suspensionOpenUseTop ||
-      //     config.suspensionOpenUseLeft !== suspension.suspensionOpenUseLeft ||
-      //     config.suspensionOpenLeft !== suspension.suspensionOpenLeft ||
-      //     config.suspensionOpenRight !== suspension.suspensionOpenRight ||
-      //     config.suspensionOpenTop !== suspension.suspensionOpenTop ||
-      //     config.suspensionOpenBottom !== suspension.suspensionOpenBottom
-      //   ) {
-      //     isMove = true;
-      //   }
-      // }
-
       myStorage.updateConfig({
         ...config,
         ...suspension,
@@ -220,7 +206,6 @@ export const moveAndOpen = async () => {
       document.onmousemove = null;
       document.onmouseup = null;
       me.onclick = (e) => {
-        // console.log('???', isMove);
         // 如果模块被移动则移除默认点击事件
         // 否则返回原有点击事件
         if (isMove) {

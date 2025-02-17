@@ -360,6 +360,8 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   fixedListItemMore?: boolean;
   /** 关注列表高亮原创内容 */
   highlightOriginal?: boolean;
+  /** 关注列表高亮原创内容背景色 */
+  backgroundHighlightOriginal?: string;
   /** 列表内容点击高亮边框 */
   highlightListItem?: boolean;
   /** 列表内容显示发布与最后修改时间 */

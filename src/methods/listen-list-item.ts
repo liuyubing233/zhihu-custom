@@ -1,10 +1,10 @@
 import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { createButtonST, domA, domP, fnLog } from '../commons/tools';
-import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../configs';
+import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
-import { isDark } from './background';
+import { doHighlightOriginal } from './background';
 
 /** 监听列表内容 - 过滤  */
 export const myListenListItem = {
@@ -36,6 +36,7 @@ export const myListenListItem = {
       removeFollowFQuestion,
       listOutPutNotInterested,
       highlightOriginal,
+      backgroundHighlightOriginal,
       themeDark = EThemeDark.深色一,
       themeLight = EThemeLight.默认,
       removeMyOperateAtFollow,
@@ -49,6 +50,8 @@ export const myListenListItem = {
     const historyList = pfHistory.list;
     let removeUsernames: string[] = [];
     removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i) => i.name || ''));
+
+    const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
     // 如果 this.index 为 0 则从第 0 位开始
     // 否则则从 this.index + 1 位开始，解决上一次遍历末尾跟这次便利开始重复的问题
     for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
@@ -127,22 +130,12 @@ export const myListenListItem = {
       } else {
         // 未隐藏的元素需添加的内容
         // 高亮原创
-        if (highlightOriginal) {
-          const userNameE = nodeItem.querySelector('.FeedSource-firstline .UserLink-link') as HTMLElement;
-          const userName = userNameE ? userNameE.innerText : '';
-          if (dataZop && dataZop.authorName === userName) {
-            const dark = await isDark();
-            const highlight = `background: ${
-              dark
-                ? `${THEME_CONFIG_DARK[themeDark].background2}!important;`
-                : +themeLight === EThemeLight.默认
-                ? 'rgb(251,248,241)!important;'
-                : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`
-            }`;
-            const nodeActions = nodeItem.querySelector('.ContentItem-actions') as HTMLElement;
-            nodeItem.style.cssText = `${highlight}border: 1px solid #aaa;`;
-            nodeActions && (nodeActions.style.cssText = highlight);
-          }
+        const userNameE = nodeItem.querySelector('.FeedSource-firstline .UserLink-link') as HTMLElement;
+        const userName = userNameE ? userNameE.innerText : '';
+        if (dataZop && dataZop.authorName === userName) {
+          const nodeActions = nodeItem.querySelector('.ContentItem-actions') as HTMLElement;
+          nodeItem.style.cssText = highlightOriginal ? `${highlight}border: 1px solid #aaa;` : '';
+          nodeActions && (nodeActions.style.cssText = highlightOriginal ? highlight : '');
         }
 
         const nodeItemTitle = nodeItem.querySelector('.ContentItem-title');

@@ -53,7 +53,7 @@ export const BASIC_SHOW_CONTENT: ICommonContent[][] = [
       value: 'questionTitleTag',
     },
     { label: '列表点击高亮边框', value: 'highlightListItem' },
-    { label: '关注列表高亮原创内容', value: 'highlightOriginal' },
+    // { label: '关注列表高亮原创内容', value: 'highlightOriginal' },
     { label: '列表更多「···」按钮移动到最右侧', value: 'fixedListItemMore' },
     { label: '推荐列表「不感兴趣」按钮', value: 'listOutPutNotInterested', needFetch: true },
     { label: '推荐列表「直达问题」按钮', value: 'listOutputToQuestion' },

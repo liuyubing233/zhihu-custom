@@ -65,6 +65,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     [INPUT_NAME_ThEME_LIGHT]: changeBackground,
     [INPUT_NAME_THEME_DARK]: changeBackground,
     colorText1: changeBackground,
+    backgroundHighlightOriginal: changeBackground,
     suspensionHomeTab: () => {
       myVersion.change();
       changeSuspensionTab();
@@ -75,8 +76,8 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     titleIco: changeICO,
     showGIFinDialog: previewGIF,
     questionCreatedAndModifiedTime: addQuestionTime,
-    highlightOriginal: myListenListItem.restart,
-    listOutPutNotInterested: myListenListItem.restart,
+    highlightOriginal: () => myListenListItem.restart(),
+    listOutPutNotInterested: () => myListenListItem.restart(),
     articleCreateTimeToTop: addArticleTime,
     versionHomeIsPercent: rangeChoosePercent,
     versionAnswerIsPercent: rangeChoosePercent,

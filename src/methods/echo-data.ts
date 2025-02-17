@@ -9,9 +9,7 @@ export const echoData = async () => {
     globalTitle: (e: HTMLInputElement) => (e.value = pfConfig.globalTitle || document.title),
     customizeCss: (e: HTMLInputElement) => (e.value = pfConfig.customizeCss || ''),
   };
-  const echoText = (even: HTMLInputElement) => {
-    textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name]);
-  };
+  const echoText = (even: HTMLInputElement) => (textSameName[even.name] ? textSameName[even.name](even) : (even.value = pfConfig[even.name] || ''));
   const echo: Record<string, Function> = {
     radio: (even: HTMLInputElement) => pfConfig.hasOwnProperty(even.name) && String(even.value) === String(pfConfig[even.name]) && (even.checked = true),
     checkbox: (even: HTMLInputElement) => (even.checked = pfConfig[even.name] || false),

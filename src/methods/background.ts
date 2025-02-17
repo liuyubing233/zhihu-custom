@@ -225,3 +225,14 @@ export const addBackgroundSetting = () => {
     `<div class="ctz-form-box-item">${`<div>浅色主题</div>` + `<div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, '#000')}</div>`}</div>` +
     `<div class="ctz-form-box-item">${`<div>深色主题</div>` + `<div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, '#f7f9f9')}</div>`}</div>`;
 };
+
+/** 原创内容颜色高亮设置 */
+export const doHighlightOriginal = async (backgroundHighlightOriginal = '', themeDark: EThemeDark, themeLight: EThemeLight) =>
+  'background: ' +
+  (backgroundHighlightOriginal
+    ? `${backgroundHighlightOriginal}!important;`
+    : (await isDark())
+    ? `${THEME_CONFIG_DARK[themeDark].background2}!important;`
+    : +themeLight === EThemeLight.默认
+    ? 'rgb(251,248,241)!important;'
+    : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`);
