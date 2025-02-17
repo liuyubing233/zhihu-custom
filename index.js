@@ -657,7 +657,7 @@
           {
             label: "问题话题",
             value: "hiddenQuestionTag",
-            css: ".QuestionHeader-tags{display: none!important;}"
+            css: ".QuestionHeader-tags,.QuestionHeader .css-wmwsyx{display: none!important;}"
           },
           {
             label: "问题分享",
