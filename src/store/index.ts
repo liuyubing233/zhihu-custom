@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IStorageConfig, IZhihuUserinfo } from '../types';
+import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig, IZhihuUserinfo } from '../types';
 import { IZhihuRecommendItem } from '../types/zhihu-recommend.type';
 
 class Store {
@@ -18,7 +18,7 @@ class Store {
   };
 
   /** 过滤的盐选回答ID */
-  removeRecommendIds: string[] = [];
+  removeRecommends: IRecommendRemoved[] = [];
   /** 当前用户主页的回答内容 */
   userAnswers: any[] = [];
   /** 当前用户主页的文章内容 */
@@ -63,15 +63,28 @@ class Store {
     const config = await myStorage.getConfig();
     for (let i = 0, len = recommends.length; i < len; i++) {
       const item = recommends[i];
-      if (!item.target) continue;
+      const target = item.target;
+      if (!target) continue;
+      let message = '';
       // 盐选专栏回答
-      if (config.removeFromYanxuan && item.target.paid_info) {
-        this.removeRecommendIds = [...this.removeRecommendIds, String(item.target.id)];
+      if (config.removeFromYanxuan && target.paid_info) {
+        message = '选自盐选专栏的回答';
+      }
+      // 匿名用于的提问
+      if (config.removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
+        message = '匿名用户的提问';
+      }
+
+      if (message) {
+        this.removeRecommends.push({
+          id: String(item.target.id),
+          message,
+        });
       }
     }
   }
   getRemoveRecommends() {
-    return this.removeRecommendIds;
+    return this.removeRecommends;
   }
 
   setUserAnswer(data: any[]) {

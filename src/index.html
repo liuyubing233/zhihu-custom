@@ -183,8 +183,11 @@
         <div id="CTZ_FILTER" style="display: none">
           <div id="CTZ_FILTER_COMMEN">
             <div class="ctz-form-box">
-              <div class="ctz-form-box-item">
-                <div>屏蔽选自盐选专栏的内容</div>
+              <div class="ctz-form-box-item ctz-fetch-intercept">
+                <div>
+                  屏蔽选自盐选专栏的内容
+                  <span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>
+                </div>
                 <div><input class="ctz-i ctz-switch" name="removeFromYanxuan" type="checkbox" value="on" /></div>
               </div>
             </div>
@@ -199,6 +202,16 @@
               <div class="ctz-form-box-item">
                 <div>屏蔽顶部活动推广</div>
                 <div><input class="ctz-i ctz-switch" name="removeTopAD" type="checkbox" value="on" /></div>
+              </div>
+            </div>
+
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item ctz-fetch-intercept">
+                <div>
+                  屏蔽匿名用户提问
+                  <span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>
+                </div>
+                <div><input class="ctz-i ctz-switch" name="removeAnonymousQuestion" type="checkbox" value="on" /></div>
               </div>
             </div>
 
@@ -409,7 +422,6 @@
               </div>
             </div>
           </div>
-
         </div>
 
         <!-- 页面尺寸 -->
@@ -529,7 +541,7 @@
       <p>弹出修改器按钮在右下角，可拖动更改位置</p>
       <p>在悬浮模块中选择定位方式</p>
     </div>
-    <button class="ctz-button ctz-button-primary" id="BUTTON_FIRST_USE" style="padding: 8px 14px;height: 34px;">我知道了</button>
+    <button class="ctz-button ctz-button-primary" id="BUTTON_FIRST_USE" style="padding: 8px 14px; height: 34px">我知道了</button>
   </div>
 </div>
 

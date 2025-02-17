@@ -267,6 +267,8 @@ export interface IConfigFilter {
   removeTopAD?: boolean;
   /** 屏蔽标签选自电子书的回答 */
   removeFromEBook?: boolean;
+  /** 屏蔽匿名用户提问 */
+  removeAnonymousQuestion?: boolean;
 }
 
 /** 悬浮模块默认配置 */

@@ -21,7 +21,7 @@ export const myListenListItem = {
     if (!nodes.length) return;
     if (needIndex && index + 1 === nodes.length) return;
     const userinfo = store.getUserinfo();
-    const removeRecommendIds = store.getRemoveRecommends();
+    const removeRecommends = store.getRemoveRecommends();
     const pfConfig = await myStorage.getConfig();
     const {
       filterKeywords = [],
@@ -82,9 +82,11 @@ export const myListenListItem = {
           findUserId === myUserId && (message = '关注列表屏蔽自己的操作');
         } catch {}
       }
+
       // 屏蔽盐选等...
-      if (!message && removeRecommendIds.includes(String(itemId))) {
-        message = `列表内容屏蔽来自盐选专栏的内容: ${title}`;
+      if (!message) {
+        const removeItem = removeRecommends.find((i) => i.id === String(itemId));
+        removeItem && (message = `推荐列表已屏蔽${removeItem.message}: ${title}`);
       }
 
       // 屏蔽用户的内容
