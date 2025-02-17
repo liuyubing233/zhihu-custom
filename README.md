@@ -132,20 +132,6 @@
 
 </details>
 
-<!-- 关注列表高亮原创内容 -->
-
-<details>
-
-<summary>关注列表高亮原创内容</summary>
-
-> 菜单目录：通用 - 显示修改
-
-<br>
-
-勾选后关注列表里原创内容 `发表回答`、`发表文章`、`提出问题` 后将高亮显示
-
-</details>
-
 <!-- 列表更多「···」按钮移动到最右侧 -->
 
 <details>
@@ -518,6 +504,22 @@ _注 2: 深色蓝、深色红、深色绿为高对比度颜色_<br>
 修改文字颜色预览：<br>
 
 <img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/font-color.png" alt="修改文字颜色">
+
+</details>
+
+<!-- 关注列表高亮原创内容 -->
+
+<details>
+
+<summary>关注列表高亮原创内容</summary>
+
+> 菜单目录：通用 - 显示修改
+
+<br>
+
+勾选后关注列表里原创内容 `发表回答`、`发表文章`、`提出问题` 后将高亮显示<br>
+
+可在 `关注列表高亮原创内容背景色` 自定义高亮背景色
 
 </details>
 
