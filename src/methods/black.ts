@@ -10,115 +10,15 @@ const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** id: 黑名单列表 */
 const ID_BLOCK_LIST = 'CTZ-BLACK-LIST';
 
-// export const confirmBlock = (userName: string) => {
-//   const message = `是否要屏蔽${userName}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。\n如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`;
-// }
+export const CLASS_BLACK_TAG = 'ctz-black-tag';
 
-/** 黑名单用户操作方法 */
-export const myBlack = {
-  messageCancel: '取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。',
-  /** 初始化黑名单列表 */
-  init: async function () {
-    const me = this;
-    const nodeBlank = domById(ID_BLOCK_LIST);
-    if (!nodeBlank) return;
-    const { blockedUsers = [] } = await myStorage.getConfig();
-    nodeBlank.innerHTML = blockedUsers.map((i) => this.createItem(i)).join('');
-    nodeBlank.onclick = (event) => {
-      const target = event.target as HTMLElement;
-      if (!target || !target.classList.contains(CLASS_REMOVE_BLOCK)) return;
-      const item = target.parentElement as HTMLElement;
-      const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
-      confirm(me.messageCancel) && me.serviceRemove(info);
-    };
-  },
-  /** 黑名单元素 */
-  createItem: function (info: IBlockedUser) {
-    return `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${this.createItemContent(info)}</div>`;
-  },
-  createItemContent: ({ id, name }: IBlockedUser) => {
-    return `<a href="https://www.zhihu.com/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;">✗</i>`;
-  },
-  /** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
-  addButton: async function (event: HTMLElement, objMy?: any) {
-    const me = this;
-    const classBox = 'ctz-black-box';
-    const nodeBlockBox = event.querySelector(`.${classBox}`);
-    if (nodeBlockBox) return;
-    const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;
-    if (!nodeUser || !nodeUser.offsetHeight) return;
-    const userUrl = (nodeUser.querySelector('meta[itemprop="url"]') as HTMLMetaElement).content;
-    const userName = (nodeUser.querySelector('meta[itemprop="name"]') as HTMLMetaElement).content;
-    const nodeAnswerItem = event.querySelector('.AnswerItem');
-    const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute('data-za-extra-module') || '{}' : '{}';
-    if (!JSON.parse(mo).card) return;
-    const aContent: IZhihuCardContent = JSON.parse(mo).card.content;
-    const userId = aContent.author_member_hash_id || '';
-    if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;
-    const { blockedUsers = [] } = await myStorage.getConfig();
-    const isAlreadyBlack = blockedUsers.findIndex((i) => i.id === userId) >= 0;
-    const message = `是否要屏蔽${userName}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。\n如果开启了「不再显示已屏蔽用户发布的内容」那么也不会看到对方发布的回答`;
-    const classBlack = 'ctz-black';
-    const classBlackRemove = 'ctz-black-remove';
-    const classBlackFilter = 'ctz-black-filter';
-    const classJustFilter = 'ctz-just-filter';
-    const createClass = (value?: string) => `${value} ctz-button`;
-    const innerHTML = isAlreadyBlack
-      ? `<button class="${createClass(classBlackRemove)}">解除屏蔽</button>` + fnReturnStr(`<button class="${createClass(classJustFilter)}">隐藏该回答</button>`, !!objMy)
-      : `<button class="${createClass(classBlack)}">屏蔽用户</button>` + fnReturnStr(`<button class="${createClass(classBlackFilter)}">屏蔽用户并隐藏该回答</button>`, !!objMy);
-    const nodeBox = domC('div', { className: classBox, innerHTML });
-    nodeBox.onclick = function (ev) {
-      const target = ev.target as HTMLElement;
-      const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
-      const urlToken = matched ? matched[0] : '';
-      // 屏蔽用户
-      if (target.classList.contains(classBlack)) {
-        if (!confirm(message)) return;
-        me.serviceAdd(urlToken, userName, userId);
-        fnDomReplace((this as HTMLElement).querySelector(`.${classBlackFilter}`), { className: createClass(classJustFilter), innerText: '隐藏该回答' });
-        fnDomReplace(target, { className: createClass(classBlackRemove), innerText: '解除屏蔽' });
-        return;
-      }
-      // 解除屏蔽
-      if (target.classList.contains(classBlackRemove)) {
-        if (!confirm(me.messageCancel)) return;
-        me.serviceRemove({ urlToken, id: userId, name: userName });
-        fnDomReplace(target, { className: createClass(classBlack), innerText: '屏蔽用户' });
-        fnDomReplace((this as HTMLElement).querySelector(`.${classJustFilter}`), {
-          className: createClass(classBlackFilter),
-          innerText: '屏蔽用户并隐藏该回答',
-        });
-        return;
-      }
-      // 屏蔽并隐藏回答
-      if (target.classList.contains(classBlackFilter) || target.classList.contains(classJustFilter)) {
-        if (target.classList.contains(classBlackFilter)) {
-          if (!confirm(message)) return;
-          me.serviceAdd(urlToken, userName, userId);
-        }
-        event.style.display = 'none';
-        if (objMy) {
-          objMy.index = objMy.index - 1 > 0 ? objMy.index - 1 : 0;
-        }
-        return;
-      }
-    };
-    nodeUser.appendChild(nodeBox);
-  },
-  /** 添加屏蔽用户 */
-  addBlackItem: async function (info: IBlockedUser) {
-    const pfConfig = await myStorage.getConfig();
-    const nL = pfConfig.blockedUsers || [];
-    nL.push(info);
-    myStorage.updateConfigItem('blockedUsers', nL);
-    const nodeBlackItem = domC('div', { className: `ctz-black-item ctz-black-id-${info.id}`, innerHTML: this.createItemContent(info) });
-    nodeBlackItem.dataset.info = JSON.stringify(info);
-    domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
-  },
-  /** 调用「屏蔽用户」接口 */
-  serviceAdd: function (urlToken: string, userName: string, userId: string) {
-    const me = this;
-    const headers = this.getHeaders();
+/** 拉黑用户（屏蔽用户）方法 */
+export const addBlockUser = (userInfo: IBlockedUser) => {
+  const { name, urlToken } = userInfo;
+  const message = `是否要屏蔽${name}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。`;
+  if (!confirm(message)) return Promise.reject();
+  return new Promise<void>((resolve) => {
+    const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
       method: 'POST',
       headers: new Headers({
@@ -126,14 +26,28 @@ export const myBlack = {
         'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)![0] || '',
       }),
       credentials: 'include',
-    }).then(() => {
-      me.addBlackItem({ id: userId, name: userName, userType: 'people', urlToken });
+    }).then(async () => {
+      const blockedUsers = (await myStorage.getConfig()).blockedUsers || [];
+      blockedUsers.push(userInfo);
+      myStorage.updateConfigItem('blockedUsers', blockedUsers);
+      const nodeBlackItem = domC('div', {
+        className: `ctz-black-item ctz-black-id-${userInfo.id}`,
+        innerHTML: blackItemContent(userInfo),
+      });
+      nodeBlackItem.dataset.info = JSON.stringify(userInfo);
+      domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
+      resolve();
     });
-  },
-  /** 解除拉黑用户接口 */
-  serviceRemove: function (info: IBlockedUser) {
+  });
+};
+
+/** 解除拉黑用户 */
+export const removeBlockUser = (info: IBlockedUser) => {
+  const message = '取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。';
+  if (!confirm(message)) return Promise.reject();
+  return new Promise<void>((resolve) => {
     const { urlToken, id } = info;
-    const headers = this.getHeaders();
+    const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
       method: 'DELETE',
       headers: new Headers({
@@ -142,48 +56,138 @@ export const myBlack = {
       }),
       credentials: 'include',
     }).then(async () => {
-      const pfConfig = await myStorage.getConfig();
-      const nL = pfConfig.blockedUsers || [];
-      const itemIndex = nL.findIndex((i) => i.id === info.id);
+      const blockedUsers = (await myStorage.getConfig()).blockedUsers || [];
+      const itemIndex = blockedUsers.findIndex((i) => i.id === info.id);
       if (itemIndex >= 0) {
-        nL.splice(itemIndex, 1);
+        blockedUsers.splice(itemIndex, 1);
         const removeItem = dom(`.ctz-black-id-${id}`);
         removeItem && removeItem.remove();
-        myStorage.updateConfigItem('blockedUsers', nL);
+        myStorage.updateConfigItem('blockedUsers', blockedUsers);
+      }
+      resolve();
+    });
+  });
+};
+
+const blackItem = (info: IBlockedUser) => `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${blackItemContent(info)}</div>`;
+const blackItemContent = ({ id, name }: IBlockedUser) =>
+  `<a href="https://www.zhihu.com/people/${id}" target="_blank">${name}</a><i class="${CLASS_REMOVE_BLOCK}" style="margin-left:4px;cursor:pointer;font-style: normal;">✕</i>`;
+
+/** 初始化黑名单列表 */
+export const initBlackList = async () => {
+  const nodeBlank = domById(ID_BLOCK_LIST);
+  if (!nodeBlank) return;
+  const { blockedUsers = [] } = await myStorage.getConfig();
+  nodeBlank.innerHTML = blockedUsers.map((i) => blackItem(i)).join('');
+  nodeBlank.onclick = (event) => {
+    const target = event.target as HTMLElement;
+    if (!target || !target.classList.contains(CLASS_REMOVE_BLOCK)) return;
+    const item = target.parentElement as HTMLElement;
+    const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
+    removeBlockUser(info);
+  };
+};
+
+/** 同步黑名单 */
+export function syncBlackList(offset = 0, l: IBlockedUser[] = []) {
+  const nodeList = domById(ID_BLOCK_LIST);
+  if (!l.length && nodeList) {
+    nodeList.innerHTML = '黑名单列表加载中...';
+  }
+
+  const buttonSync = domById(ID_BUTTON_SYNC_BLOCK) as HTMLButtonElement;
+  if (!buttonSync.querySelector('ctz-loading')) {
+    fnDomReplace(buttonSync, { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
+  }
+
+  const limit = 20;
+  const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
+  fetch(`https://www.zhihu.com/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
+    method: 'GET',
+    headers: new Headers(headers),
+    credentials: 'include',
+  })
+    .then((response) => response.json())
+    .then(({ data, paging }: { data: any[]; paging: any }) => {
+      data.forEach(({ id, name, url_token }) => {
+        l.push({ id, name, urlToken: url_token });
+      });
+      if (!paging.is_end) {
+        syncBlackList(offset + limit, l);
+        if (nodeList) {
+          nodeList.innerHTML = `黑名单列表加载中（${l.length} / ${paging.totals}）...`;
+        }
+      } else {
+        myStorage.updateConfigItem('blockedUsers', l);
+        initBlackList();
+        fnDomReplace(buttonSync, { innerHTML: '同步黑名单', disabled: false });
       }
     });
-  },
-  /** 同步黑名单列表 */
-  sync: function (offset = 0, l: IBlockedUser[] = []) {
-    const nodeList = domById(ID_BLOCK_LIST);
-    if (!l.length && nodeList) {
-      nodeList.innerHTML = '黑名单列表加载中...';
-    }
+}
 
-    fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
-    const limit = 20;
-    const headers = this.getHeaders();
-    fetch(`https://www.zhihu.com/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
-      method: 'GET',
-      headers: new Headers(headers),
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then(({ data, paging }: { data: any[]; paging: any }) => {
-        data.forEach(({ id, name, user_type, url_token }) => {
-          l.push({ id, name, userType: user_type, urlToken: url_token });
-        });
-        if (!paging.is_end) {
-          this.sync(offset + limit, l);
-          if (nodeList) {
-            nodeList.innerHTML = `黑名单列表加载中（${l.length} / ${paging.totals}）...`;
-          }
-        } else {
-          myStorage.updateConfigItem('blockedUsers', l);
-          myBlack.init();
-          fnDomReplace(domById(ID_BUTTON_SYNC_BLOCK), { innerHTML: '同步黑名单', disabled: false });
-        }
-      });
-  },
-  getHeaders: () => store.getStorageConfigItem('fetchHeaders') as HeadersInit,
+const CLASS_ANSWER_BLACK_BOX = 'ctz-answer-black-box';
+const CLASS_BTN_BLACK = 'ctz-answer-black-add';
+const CLASS_BTN_BLACK_REMOVE = 'ctz-answer-black-remove';
+const CLASS_BTN_BLACK_FILTER = 'ctz-answer-black-filter';
+
+/** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
+export const answerAddBlockButton = async (event: HTMLElement, objMy?: any) => {
+  if (event.querySelector(`.${CLASS_ANSWER_BLACK_BOX}`)) return;
+  const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;
+  if (!nodeUser || !nodeUser.offsetHeight) return;
+  const userUrl = (nodeUser.querySelector('meta[itemprop="url"]') as HTMLMetaElement).content;
+  const userName = (nodeUser.querySelector('meta[itemprop="name"]') as HTMLMetaElement).content;
+  const nodeAnswerItem = event.querySelector('.AnswerItem');
+  const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute('data-za-extra-module') || '{}' : '{}';
+  if (!JSON.parse(mo).card) return;
+  const aContent: IZhihuCardContent = JSON.parse(mo).card.content;
+  const userId = aContent.author_member_hash_id || '';
+  if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;
+  const { blockedUsers = [] } = await myStorage.getConfig();
+  const isBlocked = blockedUsers.findIndex((i) => i.id === userId) >= 0;
+
+  const nBlackBox = domC('div', { className: CLASS_ANSWER_BLACK_BOX, innerHTML: await changeBoxHTML(isBlocked, !!objMy) });
+  nBlackBox.onclick = async function (ev) {
+    const target = ev.target as HTMLElement;
+    const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
+    const urlToken = matched ? matched[0] : '';
+    const me = this as HTMLElement;
+    // 屏蔽用户
+    if (target.classList.contains(CLASS_BTN_BLACK)) {
+      await addBlockUser({ urlToken, name: userName, id: userId });
+      me.innerHTML = await changeBoxHTML(true, !!objMy);
+      return;
+    }
+    // 解除屏蔽
+    if (target.classList.contains(CLASS_BTN_BLACK_REMOVE)) {
+      await removeBlockUser({ urlToken, name: userName, id: userId });
+      me.innerHTML = await changeBoxHTML(false, !!objMy);
+      return;
+    }
+    // 屏蔽并隐藏回答
+    if (target.classList.contains(CLASS_BTN_BLACK_FILTER)) {
+      await addBlockUser({ urlToken, name: userName, id: userId });
+      event.style.display = 'none';
+      if (objMy) {
+        objMy.index = objMy.index - 1 > 0 ? objMy.index - 1 : 0;
+      }
+      return;
+    }
+  };
+  nodeUser.appendChild(nBlackBox);
+};
+
+const changeBoxHTML = async (isBlocked: boolean, showHidden?: boolean) => {
+  const { showBlockUserTag, showBlockUser } = await myStorage.getConfig();
+  if (isBlocked) {
+    return (
+      fnReturnStr(`<span class="${CLASS_BLACK_TAG}">黑名单</span>`, showBlockUserTag) +
+      fnReturnStr(`<button class="${CLASS_BTN_BLACK_REMOVE} ctz-button">解除屏蔽</button>`, showBlockUser)
+    );
+  } else {
+    return fnReturnStr(
+      `<button class="${CLASS_BTN_BLACK} ctz-button">屏蔽</button>` + fnReturnStr(`<button class="${CLASS_BTN_BLACK_FILTER} ctz-button">屏蔽并隐藏回答</button>`, showHidden),
+      showBlockUser
+    );
+  }
 };

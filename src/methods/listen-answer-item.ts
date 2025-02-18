@@ -3,7 +3,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
 import { HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
-import { myBlack } from './black';
+import { answerAddBlockButton } from './black';
 import { addAnswerCopyLink } from './link';
 import { printAnswer, printArticle } from './print';
 import { updateItemTime } from './time';
@@ -24,7 +24,6 @@ export const myListenAnswerItem = {
       answerOpen,
       removeBlockUserContent,
       blockedUsers,
-      showBlockUser,
       removeAnonymousAnswer,
       topExportContent,
       blockWordsAnswer = [],
@@ -41,7 +40,7 @@ export const myListenAnswerItem = {
       initVideoDownload(nodeItem);
       addAnswerCopyLink(nodeItem);
       if (fetchInterceptStatus) {
-        showBlockUser && myBlack.addButton(nodeItem, initThis);
+        answerAddBlockButton(nodeItem, initThis);
         if (topExportContent) {
           printAnswer(nodeItem);
           printArticle(nodeItem);

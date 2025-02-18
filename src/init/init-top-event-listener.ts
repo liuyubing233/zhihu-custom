@@ -2,7 +2,7 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { myStorage } from '../commons/storage';
 import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
-import { myBlack } from '../methods/black';
+import { answerAddBlockButton } from '../methods/black';
 import { addAnswerCopyLink } from '../methods/link';
 import { printAnswer, printArticle } from '../methods/print';
 import { updateItemTime } from '../methods/time';
@@ -22,7 +22,7 @@ const cbEventListener = async (event: Event) => {
   const target = event.target as HTMLElement;
   const nodeItem = domP(target, 'class', 'ContentItem');
   if (!nodeItem) return;
-  const { showBlockUser, topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = await myStorage.getConfig();
+  const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = await myStorage.getConfig();
   // 点击外置「不感兴趣」按钮
   if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
     // @ts-ignore 自添加属性
@@ -47,7 +47,7 @@ const cbEventListener = async (event: Event) => {
       initVideoDownload(nodeItem);
       addAnswerCopyLink(nodeItem);
       if (fetchInterceptStatus) {
-        showBlockUser && myBlack.addButton(nodeItem.parentElement!);
+        answerAddBlockButton(nodeItem.parentElement!);
         if (topExportContent) {
           printAnswer(nodeItem.parentElement!);
           printArticle(nodeItem.parentElement!);

@@ -339,6 +339,7 @@ _注：需要开启接口拦截_<br>
    - 勾选后在回答内容中将添加 `屏蔽用户`、`屏蔽用户并隐藏该回答` 按钮，点击即可将对应用户拉入黑名单<br>
 2. 勾选 `屏蔽黑名单用户发布的内容` 后在回答详情中将会过滤黑名单用户的回答内容<br>
 3. 点击用户后的 x 即可将用户从黑名单移除<br>
+4. 黑名单功能在评论区同样适用
 
 <img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/black.png" alt="黑名单">
 

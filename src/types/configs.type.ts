@@ -218,11 +218,9 @@ export interface IConfigHidden {
 
 /** 自定义黑名单列表内容 */
 export interface IBlockedUser {
-  // avatar?: string;
   id?: string;
   name?: string;
   urlToken?: string;
-  userType?: string;
 }
 
 /** 屏蔽内容模块默认配置 */
@@ -275,6 +273,8 @@ export interface IConfigFilter {
   removeBlockUserComment?: boolean;
   /** 黑名单用户发布的评论显示黑名单标签 */
   showBlockUserCommentTag?: boolean;
+  /** 列表和回答用户显示黑名单标签 */
+  showBlockUserTag?: boolean;
 }
 
 /** 悬浮模块默认配置 */

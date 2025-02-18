@@ -2,7 +2,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC, message } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, CONFIG_DEFAULT } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
-import { myBlack } from '../methods/black';
+import { syncBlackList } from '../methods/black';
 import { fnChanger } from '../methods/fn-changer';
 import { echoHistory } from '../methods/history';
 import { onChangeMenu } from '../methods/menu';
@@ -116,7 +116,7 @@ const myButtonOperation: Record<string, Function> = {
     await myStorage.updateConfigItem('customizeCss', value);
     myCustomStyle.change(value);
   },
-  syncBlack: () => myBlack.sync(0),
+  syncBlack: () => syncBlackList(0),
   /** 确认更改网页标题 */
   buttonConfirmTitle: async function () {
     const nodeTitle = dom('[name="globalTitle"]') as HTMLInputElement;

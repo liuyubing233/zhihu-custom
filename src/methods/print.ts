@@ -114,7 +114,7 @@ export const myCollectionExport = {
                   );
               }
             });
-            loadIframePrint(me, collectionsHTMLMap, '导出当前页内容');
+            loadIframePrint(me, collectionsHTMLMap, '导出此页内容');
           });
       });
 
@@ -122,7 +122,7 @@ export const myCollectionExport = {
     nodePageHeaderTitle && nodePageHeaderTitle.appendChild(elementBox);
   },
   className: 'ctz-export-collection-box',
-  element: `<button class="ctz-button" name="ctz-export-collection">导出当前页内容</button>` + `<p>仅对当前页内容进行导出</p>`,
+  element: `<button class="ctz-button" name="ctz-export-collection">导出此页内容</button>` + `<p>仅对此页内容进行导出</p>`,
   elementTypeSpan: (type: string) => {
     const typeObj: Record<string, string> = {
       answer: '<b style="color: #ec7259">「问题」</b>',
@@ -139,12 +139,12 @@ export const printAnswer = (e: HTMLElement) => {
   if (prevButton) return;
   const nodeUser = e.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nButton = createButtonFontSize12('导出当前回答', 'ctz-answer-print');
+  const nButton = createButtonFontSize12('导出回答', 'ctz-answer-print');
   nButton.onclick = function () {
     const nodeUser = e.querySelector('.AuthorInfo-name .UserLink-link');
     const nodeContent = e.querySelector('.RichContent-inner');
     const innerHTML = `<h1>${JSON.parse(e.querySelector('.AnswerItem')!.getAttribute('data-zop') || '{}').title}</h1>${nodeUser!.outerHTML + nodeContent!.innerHTML}`;
-    loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出当前回答');
+    loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出回答');
   };
   nodeUser.appendChild(nButton);
 };
@@ -156,13 +156,13 @@ export const printArticle = async (e: HTMLElement) => {
   if (prevButton || !topExportContent) return;
   const nodeHeader = e.querySelector('.ArticleItem-authorInfo') || e.querySelector('.Post-Header .Post-Title');
   if (!nodeHeader) return;
-  const nButton = createButtonFontSize12('导出当前文章', 'ctz-article-print', { style: 'margin: 12px 0;' });
+  const nButton = createButtonFontSize12('导出文章', 'ctz-article-print', { style: 'margin: 12px 0;' });
   nButton.onclick = function () {
     const nodeTitle = e.querySelector('.ContentItem.ArticleItem .ContentItem-title>span') || e.querySelector('.Post-Header .Post-Title');
     const nodeUser = e.querySelector('.AuthorInfo-name');
     const nodeContent = e.querySelector('.RichContent-inner') || e.querySelector('.Post-RichTextContainer');
     const innerHTML = `<h1>${nodeTitle!.innerHTML}</h1>${nodeUser!.innerHTML + nodeContent!.innerHTML}`;
-    loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出当前文章');
+    loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出文章');
   };
   insertAfter(nButton, nodeHeader);
   setTimeout(() => {
@@ -171,20 +171,20 @@ export const printArticle = async (e: HTMLElement) => {
   }, 500);
 };
 
-/** 用户主页 - 导出当前页回答 */
+/** 用户主页 - 导出此页回答 */
 export const printPeopleAnswer = async () => {
   const { fetchInterceptStatus } = await myStorage.getConfig();
   const nodeListHeader = dom('.Profile-main .List-headerText');
   const prevButton = dom(`.ctz-people-answer-print`);
   if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
-  const nButton = createButtonFontSize12('导出当前页回答', 'ctz-people-answer-print');
+  const nButton = createButtonFontSize12('导出此页回答', 'ctz-people-answer-print');
   nButton.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载回答内容中...';
     eventBtn.disabled = true;
     const data = store.getUserAnswer();
     const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
-    loadIframePrint(eventBtn, content, '导出当前页回答');
+    loadIframePrint(eventBtn, content, '导出此页回答');
   };
   nodeListHeader.appendChild(nButton);
   setTimeout(() => {
@@ -198,14 +198,14 @@ export const printPeopleArticles = async () => {
   const nodeListHeader = dom('.Profile-main .List-headerText');
   const prevButton = dom('.ctz-people-export-articles-once');
   if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
-  const nButton = createButtonFontSize12('导出当前页文章', 'ctz-people-export-articles-once');
+  const nButton = createButtonFontSize12('导出此页文章', 'ctz-people-export-articles-once');
   nButton.onclick = async function () {
     const eventBtn = this as HTMLButtonElement;
     eventBtn.innerText = '加载文章内容中...';
     eventBtn.disabled = true;
     const data = store.getUserArticle();
     const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
-    loadIframePrint(eventBtn, content, '导出当前页文章');
+    loadIframePrint(eventBtn, content, '导出此页文章');
   };
   nodeListHeader.appendChild(nButton);
   setTimeout(() => {

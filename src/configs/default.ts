@@ -216,6 +216,10 @@ export const CONFIG_DEFAULT: IPfConfig = {
   highPerformanceAnswer: true,
   isUsed2: true,
   suspensionOpen: '0',
+  /** 黑名单用户发布的评论显示黑名单标签 */
+  showBlockUserCommentTag: true,
+  /** 列表和回答用户显示黑名单标签 */
+  showBlockUserTag: true,
 };
 
 /** 缓存的历史记录数量 */

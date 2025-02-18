@@ -36,7 +36,7 @@ export const addAnswerCopyLink = async (nodeItem: HTMLElement) => {
   prevButton && prevButton.remove();
   const nodeUser = nodeItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nDomButton = createButtonFontSize12('一键获取回答链接', CLASS_COPY_LINK)
+  const nDomButton = createButtonFontSize12('获取回答链接', CLASS_COPY_LINK)
   nDomButton.onclick = function () {
     const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
     if (!metaUrl) return;
