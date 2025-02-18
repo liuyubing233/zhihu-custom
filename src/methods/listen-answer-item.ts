@@ -23,7 +23,7 @@ export const myListenAnswerItem = {
       lessVoteNumberDetail = 0,
       answerOpen,
       removeBlockUserContent,
-      removeBlockUserContentList,
+      blockedUsers,
       showBlockUser,
       removeAnonymousAnswer,
       topExportContent,
@@ -53,7 +53,7 @@ export const myListenAnswerItem = {
     const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
     // 屏蔽用户名称列表
     let removeUsernames: string[] = [];
-    removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i) => i.name || ''));
+    removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
     for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];

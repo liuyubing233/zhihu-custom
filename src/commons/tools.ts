@@ -68,7 +68,7 @@ export const fnDomReplace = (node: any, attrObjs: Record<string, any>) => {
 export function throttle(fn: Function, time = 300) {
   let tout: NodeJS.Timeout | undefined = undefined;
   return function () {
-    clearTimeout(tout)
+    clearTimeout(tout);
     tout = setTimeout(() => {
       // @ts-ignore
       fn.apply(this, arguments);
@@ -164,17 +164,17 @@ export const message = (value: string, t: number = 3000) => {
 };
 
 /**
- * 创建按钮，尺寸小，透明
+ * 创建按钮，font-size: 12px
  * @param {string} innerHTML 按钮内容
  * @param {string} extraCLass 按钮额外类名
  * @returns {HTMLElement} 元素
  */
-export const createButtonST = (innerHTML: string, extraCLass: string = '', extra: Record<string, any> = {}): HTMLElement =>
+export const createButtonFontSize12 = (innerHTML: string, extraCLass: string = '', extra: Record<string, any> = {}): HTMLElement =>
   domC('button', {
     innerHTML,
-    className: `ctz-button ctz-button-small ctz-button-transparent ${extraCLass}`,
-    style: 'margin: 0 4px;',
-    ...extra
+    className: `ctz-button ${extraCLass}`,
+    style: 'margin-left: 8px;font-size: 12px;',
+    ...extra,
   });
 
 export const judgeBrowserType = () => {

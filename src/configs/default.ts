@@ -21,7 +21,7 @@ export const CONFIG_FILTER_DEFAULT: IConfigFilter = {
   removeFollowVoteArticle: false,
   removeFollowFQuestion: false,
   removeBlockUserContent: true,
-  removeBlockUserContentList: [],
+  blockedUsers: [],
   removeItemAboutAD: false,
   removeItemAboutArticle: false,
   removeItemAboutVideo: false,

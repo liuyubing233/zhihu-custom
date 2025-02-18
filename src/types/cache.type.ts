@@ -49,7 +49,6 @@ export type IKeyofFindEvent = keyof IFindEvent;
 export type IKeyofStorageConfig = keyof IStorageConfig;
 export type IContentStorageConfig = string | number | IPfConfig | HeadersInit | IHeaderDoms;
 
-
 export interface IRecommendRemoved {
   id: string;
   message: string;

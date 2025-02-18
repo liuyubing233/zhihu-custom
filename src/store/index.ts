@@ -1,5 +1,15 @@
 import { myStorage } from '../commons/storage';
-import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig, IZhihuUserinfo } from '../types';
+import {
+  IBlockedUser,
+  IContentStorageConfig,
+  IFindEvent,
+  IFindEventEntries,
+  IKeyofFindEvent,
+  IKeyofStorageConfig,
+  IRecommendRemoved,
+  IStorageConfig,
+  IZhihuUserinfo
+} from '../types';
 import { IZhihuRecommendItem } from '../types/zhihu-recommend.type';
 
 class Store {
@@ -19,6 +29,8 @@ class Store {
 
   /** 过滤的盐选回答ID */
   removeRecommends: IRecommendRemoved[] = [];
+  /** 评论区用户信息集合 */
+  commendAuthors: IBlockedUser[] = [];
   /** 当前用户主页的回答内容 */
   userAnswers: any[] = [];
   /** 当前用户主页的文章内容 */
@@ -38,6 +50,8 @@ class Store {
     this.getUserAnswer = this.getUserAnswer.bind(this);
     this.setUserArticle = this.setUserArticle.bind(this);
     this.getUserArticle = this.getUserArticle.bind(this);
+    this.setCommentAuthors = this.setCommentAuthors.bind(this);
+    this.getCommentAuthors = this.getCommentAuthors.bind(this);
   }
 
   setUserinfo(inner: IZhihuUserinfo) {
@@ -98,6 +112,12 @@ class Store {
   }
   getUserArticle() {
     return this.userArticle;
+  }
+  async setCommentAuthors(authors: IBlockedUser[]) {
+    this.commendAuthors = authors;
+  }
+  getCommentAuthors() {
+    return this.commendAuthors;
   }
 }
 

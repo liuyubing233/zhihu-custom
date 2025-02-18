@@ -1,7 +1,7 @@
 import { doFetchNotInterested } from '../commons/fetch';
 import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { createButtonST, domA, domP, fnLog } from '../commons/tools';
+import { createButtonFontSize12, domA, domP, fnLog } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
@@ -44,13 +44,13 @@ export const myListenListItem = {
       listOutputToQuestion,
       fetchInterceptStatus,
       removeBlockUserContent,
-      removeBlockUserContentList,
+      blockedUsers,
       highPerformanceRecommend,
     } = pfConfig;
     const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
     let removeUsernames: string[] = [];
-    removeBlockUserContent && (removeUsernames = (removeBlockUserContentList || []).map((i) => i.name || ''));
+    removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
 
     const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
     // 如果 this.index 为 0 则从第 0 位开始
@@ -147,13 +147,13 @@ export const myListenListItem = {
         if (nodeItemTitle) {
           // 列表外置不感兴趣按钮
           if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
-            nodeItemTitle.appendChild(createButtonST('不感兴趣', CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
+            nodeItemTitle.appendChild(createButtonFontSize12('不感兴趣', CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
           }
           // 推荐列表显示「直达问题」按钮
           if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
             const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
             const pathAnswer = domUrl ? domUrl.getAttribute('content') || '' : '';
-            nodeItemTitle.appendChild(createButtonST('直达问题', CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, '') } }));
+            nodeItemTitle.appendChild(createButtonFontSize12('直达问题', CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, '') } }));
           }
         }
       }

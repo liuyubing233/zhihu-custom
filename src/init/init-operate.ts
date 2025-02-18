@@ -98,11 +98,11 @@ const myButtonOperation: Record<string, Function> = {
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
-    const { filterKeywords = [], removeBlockUserContentList = [] } = await myStorage.getConfig();
+    const { filterKeywords = [], blockedUsers = [] } = await myStorage.getConfig();
     await myStorage.updateConfig({
       ...CONFIG_DEFAULT,
       filterKeywords,
-      removeBlockUserContentList,
+      blockedUsers,
     });
     resetData();
     setTimeout(() => {

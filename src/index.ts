@@ -1,3 +1,4 @@
+import { interceptionResponse } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
@@ -18,6 +19,7 @@ import { myFollowRemove } from './methods/follow-remove';
 import { echoHistory } from './methods/history';
 import { keydownNextImage } from './methods/image';
 import { myListenAnswerItem } from './methods/listen-answer-item';
+import { formatCommentAuthors } from './methods/listen-comment';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { initOneClickInvitation } from './methods/one-click-invitation';
@@ -40,7 +42,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href } = location;
-  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo } = store;
+  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, setCommentAuthors } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -65,6 +67,13 @@ import { INNER_CSS } from './web-resources';
         isUsed2: false,
       });
       config = CONFIG_DEFAULT;
+    }
+
+    // TODO: 更改黑名单列表字段，10个 feature 版本后删除，5.2.0 添加，5.12.0 删除
+    if (config.removeBlockUserContentList && config.removeBlockUserContentList.length) {
+      config.blockedUsers = [...config.removeBlockUserContentList];
+      delete config.removeBlockUserContentList;
+      await myStorage.updateConfig(config)
     }
 
     await myStorage.getHistory();
@@ -92,39 +101,18 @@ import { INNER_CSS } from './web-resources';
 
         return originFetch(url, opt).then((res) => {
           // 推荐列表
-          if (/\/api\/v3\/feed\/topstory\/recommend/.test(res.url)) {
-            res
-              .clone()
-              .json()
-              .then((r) => findRemoveRecommends(r.data));
-          }
-
+          interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => findRemoveRecommends(r.data));
           // 用户主页回答
-          if (/\api\/v4\/members\/[^/]+\/answers/.test(res.url)) {
-            res
-              .clone()
-              .json()
-              .then((r) => setUserAnswer(r.data));
-          }
-
+          interceptionResponse(res, /\api\/v4\/members\/[^/]+\/answers/, (r) => setUserAnswer(r.data));
           // 用户主页文章
-          if (/\api\/v4\/members\/[^/]+\/articles/.test(res.url)) {
-            res
-              .clone()
-              .json()
-              .then((r) => setUserArticle(r.data));
-          }
-
+          interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
           // 个人信息
-          if (/\/api\/v4\/me\?/.test(res.url)) {
-            res
-              .clone()
-              .json()
-              .then((r) => {
-                appendHomeLink(r);
-                setUserinfo(r);
-              });
-          }
+          interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
+            appendHomeLink(r);
+            setUserinfo(r);
+          });
+          // 评论
+          interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
 
           return res;
         });

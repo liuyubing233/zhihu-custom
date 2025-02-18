@@ -217,7 +217,7 @@ export interface IConfigHidden {
 }
 
 /** 自定义黑名单列表内容 */
-export interface IBlockUserItem {
+export interface IBlockedUser {
   // avatar?: string;
   id?: string;
   name?: string;
@@ -239,8 +239,8 @@ export interface IConfigFilter {
   removeFollowFQuestion?: boolean;
   /** 屏蔽不再显示黑名单用户发布的内容 */
   removeBlockUserContent?: boolean;
-  /** 屏蔽已屏蔽用户列表 */
-  removeBlockUserContentList?: IBlockUserItem[];
+  /** 黑名单列表 */
+  blockedUsers?: IBlockedUser[];
   /** 屏蔽商业推广 */
   removeItemAboutAD?: boolean;
   /** 屏蔽文章 */
@@ -269,6 +269,12 @@ export interface IConfigFilter {
   removeFromEBook?: boolean;
   /** 屏蔽匿名用户提问 */
   removeAnonymousQuestion?: boolean;
+  /** 评论用户名后显示"屏蔽用户"按钮 */
+  showBlockUserComment?: boolean;
+  /** 屏蔽黑名单用户发布的评论 */
+  removeBlockUserComment?: boolean;
+  /** 黑名单用户发布的评论显示黑名单标签 */
+  showBlockUserCommentTag?: boolean;
 }
 
 /** 悬浮模块默认配置 */

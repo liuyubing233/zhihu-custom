@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { copy, createButtonST, domA, message } from '../commons/tools';
+import { copy, createButtonFontSize12, domA, message } from '../commons/tools';
 
 /** 知乎外链直接打开(修改外链内容，去除知乎重定向) */
 export const initLinkChanger = () => {
@@ -36,7 +36,7 @@ export const addAnswerCopyLink = async (nodeItem: HTMLElement) => {
   prevButton && prevButton.remove();
   const nodeUser = nodeItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nDomButton = createButtonST('一键获取回答链接', CLASS_COPY_LINK)
+  const nDomButton = createButtonFontSize12('一键获取回答链接', CLASS_COPY_LINK)
   nDomButton.onclick = function () {
     const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
     if (!metaUrl) return;
