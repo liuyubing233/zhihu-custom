@@ -1,3 +1,4 @@
+import { CTZ_HIDDEN_ITEM_CLASS } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domC, fnLog, fnReturnStr } from '../commons/tools';
 import { store } from '../store';
@@ -52,6 +53,8 @@ const CLASS_BLOCK_ADD = 'ctz-comment-block-add';
 const CLASS_BLOCK_REMOVE = 'ctz-comment-block-remove';
 /** 按钮外层盒子 */
 const CLASS_BLOCK_BOX = 'ctz-comment-block-box';
+/** 元素上 data-id 属性 */
+const ATTR_ID = 'data-id';
 
 const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.css-jp43l4') => {
   if (!nodeComments) return;
@@ -64,8 +67,6 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
 
   const commentAuthors = store.getCommentAuthors();
   const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
-  /** 元素上 data-id 属性 */
-  const ATTR_ID = 'data-id';
   const comments = nodeComments.childNodes;
   for (let i = 0, len = comments.length; i < len; i++) {
     const item = comments[i] as HTMLElement;
@@ -75,7 +76,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
           doListenComment();
         }, 500);
       });
-    } else if (!item.getAttribute(ATTR_ID)) {
+    } else if (!item.getAttribute(ATTR_ID) || item.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) {
       continue;
     }
 
@@ -132,6 +133,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
 
     if (isHidden) {
       item.style.display = 'none';
+      item.classList.add(CTZ_HIDDEN_ITEM_CLASS);
       continue;
     }
 

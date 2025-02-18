@@ -1,4 +1,4 @@
-import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
+import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
 import { HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
@@ -56,6 +56,7 @@ export const myListenAnswerItem = {
     for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];
+      if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       const nodeItemContent = nodeItem.querySelector('.ContentItem');
       if (!nodeItemContent) continue;
       let dataZop: IZhihuDataZop = {};

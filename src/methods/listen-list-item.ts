@@ -1,5 +1,5 @@
 import { doFetchNotInterested } from '../commons/fetch';
-import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
+import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { createButtonFontSize12, domA, domP, fnLog } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
@@ -57,6 +57,7 @@ export const myListenListItem = {
     // 否则则从 this.index + 1 位开始，解决上一次遍历末尾跟这次便利开始重复的问题
     for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
+      if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       nodeItem.classList.add('ctz-listened');
       const nodeContentItem = nodeItem.querySelector('.ContentItem');
       if (!nodeItem.scrollHeight || !nodeContentItem) continue;

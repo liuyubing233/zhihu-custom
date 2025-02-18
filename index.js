@@ -1377,8 +1377,10 @@
       res.clone().json().then((r) => fn(r));
     }
   };
+  var CTZ_HIDDEN_ITEM_CLASS = "ctz-hidden-item";
   var fnHidden = (ev, msg) => {
     ev.style.display = "none";
+    ev.classList.add(CTZ_HIDDEN_ITEM_CLASS);
     fnLog(msg);
   };
   var fnJustNum = async (element) => {
@@ -2896,6 +2898,7 @@
       for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
         let message2 = "";
         const nodeItem = nodes[i];
+        if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
         const nodeItemContent = nodeItem.querySelector(".ContentItem");
         if (!nodeItemContent) continue;
         let dataZop = {};
@@ -3025,6 +3028,7 @@
   var CLASS_BLOCK_ADD = "ctz-comment-block-add";
   var CLASS_BLOCK_REMOVE = "ctz-comment-block-remove";
   var CLASS_BLOCK_BOX = "ctz-comment-block-box";
+  var ATTR_ID = "data-id";
   var formatComments = async (nodeComments, commentBoxClass = ".css-jp43l4") => {
     if (!nodeComments) return;
     if (nodeComments.querySelector(".css-1t6pvna")) {
@@ -3034,7 +3038,6 @@
     }
     const commentAuthors = store.getCommentAuthors();
     const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
-    const ATTR_ID = "data-id";
     const comments = nodeComments.childNodes;
     for (let i = 0, len = comments.length; i < len; i++) {
       const item = comments[i];
@@ -3044,7 +3047,7 @@
             doListenComment();
           }, 500);
         });
-      } else if (!item.getAttribute(ATTR_ID)) {
+      } else if (!item.getAttribute(ATTR_ID) || item.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) {
         continue;
       }
       const itemUserBox = item.querySelector(`${commentBoxClass} .css-14nvvry .css-swj9d4`);
@@ -3088,6 +3091,7 @@
       }
       if (isHidden) {
         item.style.display = "none";
+        item.classList.add(CTZ_HIDDEN_ITEM_CLASS);
         continue;
       }
       formatComments(item, ".css-1kwt8l8");
@@ -3147,6 +3151,7 @@
       const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
       for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
         const nodeItem = nodes[i];
+        if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
         nodeItem.classList.add("ctz-listened");
         const nodeContentItem = nodeItem.querySelector(".ContentItem");
         if (!nodeItem.scrollHeight || !nodeContentItem) continue;
@@ -3314,7 +3319,7 @@
       for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
         let message2 = "";
         const elementThis = nodes[i];
-        if (!elementThis) continue;
+        if (!elementThis || elementThis.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
         const haveAD = removeItemAboutAD && elementThis.querySelector(".KfeCollection-PcCollegeCard-root");
         const haveArticle = removeItemAboutArticle && elementThis.querySelector(".ArticleItem");
         const haveVideo = removeItemAboutVideo && elementThis.querySelector(".ZvideoItem");

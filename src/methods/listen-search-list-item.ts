@@ -1,4 +1,4 @@
-import { fnHidden, fnJustNum } from '../commons/math-for-my-listens';
+import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { domA } from '../commons/tools';
 
@@ -12,7 +12,7 @@ export const myListenSearchListItem = {
     for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
       let message = ''; // 屏蔽信息
       const elementThis = nodes[i];
-      if (!elementThis) continue;
+      if (!elementThis || elementThis.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       // FIRST
       // 列表种类屏蔽
       const haveAD = removeItemAboutAD && elementThis.querySelector('.KfeCollection-PcCollegeCard-root');
