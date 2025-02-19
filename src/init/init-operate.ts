@@ -10,6 +10,7 @@ import { moveAndOpen } from '../methods/move';
 import { openChange } from '../methods/open';
 import { changeTitle } from '../methods/page-title';
 import { myPreview } from '../methods/preview';
+import { formatTime } from '../methods/time';
 import { store } from '../store';
 import { IKeyofHistory } from '../types';
 import { initData } from './init-data';
@@ -83,9 +84,10 @@ const myButtonOperation: Record<string, Function> = {
   /** 导出配置 */
   configExport: async () => {
     const config = (await myStorage.get('pfConfig')) || '{}';
+    const dateNumber = +new Date();
     const link = domC('a', {
       href: 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config),
-      download: `知乎编辑器配置-${+new Date()}.txt`,
+      download: `知乎编辑器配置-${formatTime(dateNumber, 'YYYY-MM-DD_HH-mm-ss')}-${dateNumber}.txt`,
     });
     document.body.appendChild(link);
     link.click();
@@ -141,7 +143,7 @@ const myButtonOperation: Record<string, Function> = {
     const nodeDialog = domById('CTZ_DIALOG')!;
     const isHeight = nodeDialog.style.height === '100vh';
     nodeDialog.style.height = isHeight ? '' : '100vh';
-    dom(`button[name="dialogBig"]`)!.innerText = isHeight ? '+' : '-'
+    dom(`button[name="dialogBig"]`)!.innerText = isHeight ? '+' : '-';
   },
 };
 

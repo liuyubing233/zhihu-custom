@@ -75,7 +75,7 @@ import { INNER_CSS } from './web-resources';
       })
     }
 
-    // TODO: 更改黑名单列表字段，10个 feature 版本后删除，5.2.0 添加，5.12.0 删除
+    // TODO: 更改黑名单列表字段，10个 feature 版本后删除(removeBlockUserContentList)，5.2.0 添加，5.12.0 删除
     if (config.removeBlockUserContentList && config.removeBlockUserContentList.length) {
       config.blockedUsers = [...config.removeBlockUserContentList];
       delete config.removeBlockUserContentList;

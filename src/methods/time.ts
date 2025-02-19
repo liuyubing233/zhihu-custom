@@ -3,7 +3,7 @@ import { dom, domC } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
 
 /** 时间格式化 */
-export const formatTime = (t: string, f = 'YYYY-MM-DD HH:mm:ss') => {
+export const formatTime = (t: string | number, f = 'YYYY-MM-DD HH:mm:ss') => {
   if (!t) return '';
   const d = new Date(t);
   const year = d.getFullYear();
