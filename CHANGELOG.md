@@ -1,24 +1,15 @@
-| 图标 | 含义                                             |
-| ---- | ------------------------------------------------ |
-| 🆕   | 功能添加                                         |
-| 🐞   | 问题修复                                         |
-| 💄   | 添加或更新 UI 和样式文件                         |
-| 👽   | **由于知乎自身接口或结构修改而进行的兼容性变化** |
-| 🎨   | 改进代码的结构/格式                              |
-| ⚡   | 提高性能                                         |
-| 📝   | 添加或更新文档                                   |
-| 🔨   | 添加或更新开发脚本                               |
-| ♻️   | 重构代码                                         |
+@import "./CHANGELOG_ICONS.md";
 
 ## $version
 
 - 🆕 黑名单添加 `评论区显示"屏蔽用户"按钮` 功能；
 - 🆕 黑名单添加 `屏蔽黑名单用户评论` 功能；
 - 🆕 黑名单部分添加 `列表和回答用户显示黑名单标签`，`评论区显示黑名单标签` 功能；
-- 🆕 屏蔽内容列表内容屏蔽添加 `屏蔽匿名用户提问` 功能；
-- 🆕 添加自定义`高亮原创内容背景色`；
+- 🆕 屏蔽内容添加 `屏蔽匿名用户提问` 功能；
+- 🆕 主题颜色添加自定义`高亮原创内容背景色`；
 - 🆕 列表屏蔽过滤内容后自动调用不感兴趣接口；
-- 🆕 页面尺寸，图片尺寸部分添加 `评论图片预览不超出页面` 设置，开启后评论区的弹窗图片预览将不超出页面最大尺寸；
+- 🆕 页面尺寸添加 `评论图片预览不超出页面` 设置，开启后评论区的弹窗图片预览将不超出页面最大尺寸；
+- 🆕 修改器中添加更新日志菜单；
 - 🐞 `问题话题`也可隐藏问题栏大块话题模块；
 - 🐞 修复自定义修改颜色部分输入框失效的问题；
 - 🐞 修复`高亮原创内容`切换失效的问题，高亮原创内容移动到`主题颜色`模块；
@@ -27,7 +18,7 @@
 - 💄 自定义齿轮唤醒齿轮，解决不同系统下的位置错误问题；
 - 💄 修改器放大缩小时按钮的变化，关闭修改器时大小返回原状；
 - 💄 添加图片切换到开头和结尾时候的提示；
-- 💄 修改 range 选择器样式；
+- 💄 修改范围选择器样式；
 - 💄 修改配置操作页面样式；
 - 💄 导出配置添加格式化的时间，方便查看；
 - 📝 更新说明文档；
@@ -77,10 +68,10 @@
 
 ## 历史版本更新日志
 
-[查看 4.x 版本的更新日志](https://github.com/liuyubing233/zhihu-custom/blob/v4.25.0/CHANGELOG.md)
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/v4.25.0/CHANGELOG.md" target="_blank">查看 4.x 版本的更新日志</a>
 
-[查看 3.x 版本的更新日志](https://github.com/liuyubing233/zhihu-custom/blob/v3.16.7/CHANGELOG.md)
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/v3.16.7/CHANGELOG.md" target="_blank">查看 3.x 版本的更新日志</a>
 
-[查看 2.x 版本的更新日志](https://github.com/liuyubing233/zhihu-custom/blob/v2.8.0/development/changelog.md)
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/v2.8.0/development/changelog.md" target="_blank">查看 2.x 版本的更新日志</a>
 
-[查看 1.x 版本的更新日志](https://github.com/liuyubing233/zhihu-custom/blob/v1.8.0/doc/changelog.md)
+<a href="https://github.com/liuyubing233/zhihu-custom/blob/v1.8.0/doc/changelog.md" target="_blank">查看 1.x 版本的更新日志</a>
