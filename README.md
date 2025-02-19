@@ -406,6 +406,22 @@ _注：需要开启接口拦截_<br>
 
 </details>
 
+<!-- 评论图片预览不超出页面 -->
+
+<details>
+
+<summary>评论图片预览不超出页面</summary>
+
+> 菜单目录：页面尺寸 - 图片尺寸 - 评论图片预览不超出页面
+
+<br>
+
+开启后评论区的弹窗图片预览将不超出页面最大尺寸<br>
+
+<img src="./static/comment-image-preview.png" alt="图片尺寸">
+
+</details>
+
 <!-- 弹窗打开动图 -->
 
 <details>

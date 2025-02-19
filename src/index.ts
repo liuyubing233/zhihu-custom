@@ -67,6 +67,12 @@ import { INNER_CSS } from './web-resources';
         isUsed2: false,
       });
       config = CONFIG_DEFAULT;
+    } else {
+      await myStorage.updateConfig({
+        ...CONFIG_DEFAULT,
+        ...config,
+        isUsed2: !!config.isUsed2
+      })
     }
 
     // TODO: 更改黑名单列表字段，10个 feature 版本后删除，5.2.0 添加，5.12.0 删除

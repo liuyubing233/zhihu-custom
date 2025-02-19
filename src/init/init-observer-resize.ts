@@ -21,7 +21,7 @@ export const initResizeObserver = () => {
 
 async function resizeFun() {
   if (!HTML_HOOTS.includes(location.hostname)) return;
-  const { hiddenSearchBoxTopSearch, contentRemoveKeywordSearch, globalTitle } = await myStorage.getConfig()
+  const { hiddenSearchBoxTopSearch, contentRemoveKeywordSearch, globalTitle } = await myStorage.getConfig();
   // 比较列表缓存的高度是否大于当前高度，如果大于则是从 index = 0 遍历
   const nodeTopStoryC = domById('TopstoryContent');
   if (nodeTopStoryC) {
@@ -42,7 +42,7 @@ async function resizeFun() {
   initImagePreview();
   myListenSearchListItem.init();
   myListenAnswerItem.init();
-  doListenComment()
+  doListenComment();
   pathnameHasFn({
     collection: () => myCollectionExport.init(),
   });

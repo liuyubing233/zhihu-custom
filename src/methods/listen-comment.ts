@@ -1,9 +1,10 @@
 import { CTZ_HIDDEN_ITEM_CLASS } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { dom, domC, fnLog, fnReturnStr } from '../commons/tools';
+import { dom, domC, domP, fnLog, fnReturnStr } from '../commons/tools';
 import { store } from '../store';
 import { IBlockedUser } from '../types';
 import { addBlockUser, CLASS_BLACK_TAG, removeBlockUser } from './black';
+import { formatPreviewSize } from './image';
 
 /** 格式化评论区接口内的用户信息并储存 */
 export const formatCommentAuthors = (data: any[]) => {
@@ -56,6 +57,7 @@ const CLASS_BLOCK_BOX = 'ctz-comment-block-box';
 /** 元素上 data-id 属性 */
 const ATTR_ID = 'data-id';
 
+/** 处理评论 */
 const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.css-jp43l4') => {
   if (!nodeComments) return;
   if (nodeComments.querySelector('.css-1t6pvna')) {
@@ -137,6 +139,12 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
       continue;
     }
 
+    item.querySelectorAll('.comment_img img').forEach((itemImage) => {
+      (itemImage as HTMLImageElement).onclick = () => {
+        setTimeout(commentImagePreview, 100);
+      };
+    });
+
     formatComments(item, '.css-1kwt8l8');
   }
 };
@@ -150,5 +158,37 @@ const changeBoxHTML = async (isBlocked: boolean) => {
     );
   } else {
     return fnReturnStr(`<button class="${CLASS_BLOCK_ADD} ctz-button">屏蔽</button>`, showBlockUserComment);
+  }
+};
+
+let commentPreviewObserver: MutationObserver | undefined = undefined;
+/** 评论图片预览尺寸调整 */
+const commentImagePreview = async () => {
+  const { commentImageFullPage } = await myStorage.getConfig();
+  if (commentImageFullPage) {
+    const commentPreviewImage = dom('.ImageView-img') as HTMLImageElement;
+    if (!commentPreviewImage) return;
+    // 预览图地址会多一个 _r
+    const imageSrc = commentPreviewImage.src.replace('_r', '');
+    const commentImage = dom(`.comment_img img[data-original="${imageSrc}"]`) as HTMLImageElement;
+    if (!commentImage) return;
+    const { width, height, scaleX, scaleY } = formatPreviewSize(commentImage);
+    const { innerWidth } = window;
+
+    commentPreviewImage.style.cssText =
+      `width: ${width}px;` +
+      `height: ${height}px;` +
+      `transform: translateX(${innerWidth / 2 - (width * scaleX) / 2}px) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;` +
+      `transform-origin: 0 0;` +
+      `transition: none;`;
+
+    const nodeImageBox = domP(commentPreviewImage, 'class', 'ImageView')!;
+    commentPreviewObserver && commentPreviewObserver.disconnect();
+    commentPreviewObserver = new MutationObserver((records) => {
+      if (!nodeImageBox.classList.contains('is-active')) {
+        commentPreviewImage.style.transition = '';
+      }
+    });
+    commentPreviewObserver.observe(nodeImageBox, { characterData: true, attributes: true });
   }
 };

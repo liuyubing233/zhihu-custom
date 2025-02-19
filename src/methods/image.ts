@@ -31,6 +31,94 @@ export async function previewGIF() {
   }
 }
 
+/**
+ * 格式化预览图片尺寸
+ * @param nodeImage 对应的原图
+ * @returns {{width: number, height: number, top: number, left: number, scaleX: number, scaleY: number}}
+ */
+export const formatPreviewSize = (nodeImage: HTMLImageElement): { width: number; height: number; top: number; left: number; scaleX: number; scaleY: number } => {
+  const { innerWidth, innerHeight } = window;
+  /** 写死的內联样式宽度 */
+  const DIALOG_INNER_WIDTH = 240;
+  /** 原本真实的宽度 */
+  const ralWidth = +`${nodeImage.getAttribute('data-rawwidth') || nodeImage.getAttribute('width')}`;
+  /** 原本真实的高度 */
+  const ralHeight = +`${nodeImage.getAttribute('data-rawheight') || nodeImage.getAttribute('height')}`;
+  /** 原图 */
+  const originSrc = nodeImage.getAttribute('data-original') || nodeImage.src;
+  /** 网页宽高比 */
+  const aspectRatioWindow = innerWidth / innerHeight;
+  /** 图片宽高比 */
+  const aspectRatioImage = ralWidth / ralHeight;
+
+  let scaleY = 1;
+  let finallyWidth = ralWidth;
+  let finallyHeight = ralHeight;
+
+  if (ralHeight >= innerHeight && ralWidth < innerWidth) {
+    // 图片原始高度大于网页显示高度，图片原始宽度小于网页显示宽度
+    // 高度优先
+    finallyHeight = innerHeight;
+    scaleY = ralHeight / innerHeight;
+    // 最终显示宽度
+    finallyWidth = innerHeight * aspectRatioImage;
+  }
+
+  if (ralHeight >= innerHeight && ralWidth >= innerWidth) {
+    // 图片原始高度大于网页显示高度，图片原始宽度大于网页显示宽度
+    // 按照比例缩小
+    if (aspectRatioImage > aspectRatioWindow) {
+      // 宽度优先
+      finallyWidth = innerWidth;
+      finallyHeight = finallyWidth / aspectRatioImage;
+      scaleY = finallyHeight / ralHeight;
+    } else {
+      // 高度优先
+      finallyHeight = innerHeight;
+      scaleY = ralHeight / innerHeight;
+      finallyWidth = innerHeight * aspectRatioImage;
+    }
+  }
+
+  if (ralHeight < innerHeight && ralWidth >= innerWidth) {
+    // 图片原始高度小于网页显示高度，图片原始宽度大于网页显示宽度
+    // 宽度优先
+    finallyWidth = innerWidth;
+    finallyHeight = finallyWidth / aspectRatioImage;
+    scaleY = finallyHeight / ralHeight;
+  }
+
+  if (ralHeight < innerHeight && ralWidth < innerWidth) {
+    // 图片原始高度小于网页显示高度，图片原始宽度小于网页显示宽度
+    // 根据比例
+    finallyWidth = ralWidth;
+    finallyHeight = ralHeight;
+    scaleY = 1;
+  }
+
+  // 最终宽度缩放比例
+  const scaleX = finallyWidth / DIALOG_INNER_WIDTH;
+  const top = document.documentElement.scrollTop + (innerHeight / 2 - finallyHeight / 2);
+  const left = innerWidth / 2 - finallyWidth / 2;
+  // previewImage.src = originSrc;
+  // previewImage.style.cssText =
+  //   previewImage.style.cssText +
+  //   `width: ${DIALOG_INNER_WIDTH}px;` +
+  //   `height: ${finallyHeight / scaleY}px;` +
+  //   `top: ${top}px;left: ${left}px;` +
+  //   `transform: translateX(0) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;` +
+  //   `transform-origin: 0 0;`;
+
+  return {
+    width: DIALOG_INNER_WIDTH,
+    height: finallyHeight / scaleY,
+    top,
+    left,
+    scaleX,
+    scaleY,
+  };
+};
+
 /** 键盘点击下一张或上一张图片（仅静态图片） */
 export const keydownNextImage = (event: KeyboardEvent) => {
   const { key } = event;
@@ -43,74 +131,14 @@ export const keydownNextImage = (event: KeyboardEvent) => {
       const images = Array.from(nodeContentInner.querySelectorAll('img')) as HTMLImageElement[];
       const index = images.findIndex((i) => i.src === src || i.getAttribute('data-original') === src);
       const dialogChange = (nodeDialog: HTMLImageElement, nodeImage: HTMLImageElement) => {
-        const { innerWidth, innerHeight } = window;
-        /** 写死的內联样式宽度 */
-        const DIALOG_INNER_WIDTH = 240;
-        /** 原本真实的宽度 */
-        const ralWidth = +`${nodeImage.getAttribute('data-rawwidth') || nodeImage.getAttribute('width')}`;
-        /** 原本真实的高度 */
-        const ralHeight = +`${nodeImage.getAttribute('data-rawheight') || nodeImage.getAttribute('height')}`;
         /** 原图 */
         const originSrc = nodeImage.getAttribute('data-original') || nodeImage.src;
-        /** 网页宽高比 */
-        const aspectRatioWindow = innerWidth / innerHeight;
-        /** 图片宽高比 */
-        const aspectRatioImage = ralWidth / ralHeight;
-
-        let scaleY = 1;
-        let finallyWidth = ralWidth;
-        let finallyHeight = ralHeight;
-
-        if (ralHeight >= innerHeight && ralWidth < innerWidth) {
-          // 图片原始高度大于网页显示高度，图片原始宽度小于网页显示宽度
-          // 高度优先
-          finallyHeight = innerHeight;
-          scaleY = ralHeight / innerHeight;
-          // 最终显示宽度
-          finallyWidth = innerHeight * aspectRatioImage;
-        }
-
-        if (ralHeight >= innerHeight && ralWidth >= innerWidth) {
-          // 图片原始高度大于网页显示高度，图片原始宽度大于网页显示宽度
-          // 按照比例缩小
-          if (aspectRatioImage > aspectRatioWindow) {
-            // 宽度优先
-            finallyWidth = innerWidth;
-            finallyHeight = finallyWidth / aspectRatioImage;
-            scaleY = finallyHeight / ralHeight;
-          } else {
-            // 高度优先
-            finallyHeight = innerHeight;
-            scaleY = ralHeight / innerHeight;
-            finallyWidth = innerHeight * aspectRatioImage;
-          }
-        }
-
-        if (ralHeight < innerHeight && ralWidth >= innerWidth) {
-          // 图片原始高度小于网页显示高度，图片原始宽度大于网页显示宽度
-          // 宽度优先
-          finallyWidth = innerWidth;
-          finallyHeight = finallyWidth / aspectRatioImage;
-          scaleY = finallyHeight / ralHeight;
-        }
-
-        if (ralHeight < innerHeight && ralWidth < innerWidth) {
-          // 图片原始高度小于网页显示高度，图片原始宽度小于网页显示宽度
-          // 根据比例
-          finallyWidth = ralWidth;
-          finallyHeight = ralHeight;
-          scaleY = 1;
-        }
-
-        // 最终宽度缩放比例
-        const scaleX = finallyWidth / DIALOG_INNER_WIDTH;
-        const top = document.documentElement.scrollTop + (innerHeight / 2 - finallyHeight / 2);
-        const left = innerWidth / 2 - finallyWidth / 2;
+        const { width, height, top, left, scaleX, scaleY } = formatPreviewSize(nodeImage);
         nodeDialog.src = originSrc;
         nodeDialog.style.cssText =
           nodeDialog.style.cssText +
-          `width: ${DIALOG_INNER_WIDTH}px;` +
-          `height: ${finallyHeight / scaleY}px;` +
+          `width: ${width}px;` +
+          `height: ${height}px;` +
           `top: ${top}px;left: ${left}px;` +
           `transform: translateX(0) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;` +
           `transform-origin: 0 0;`;
