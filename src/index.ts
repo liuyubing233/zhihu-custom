@@ -5,7 +5,6 @@ import { dom, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathname
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS } from './configs/dom-name';
 import { initData } from './init/init-data';
-import { initFirstUse } from './init/init-fisrt-use';
 import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html';
 import { initResizeObserver } from './init/init-observer-resize';
@@ -62,24 +61,20 @@ import { INNER_CSS } from './web-resources';
     let config = await myStorage.getConfig();
     if (!config || config.fetchInterceptStatus === undefined) {
       fnLog('您好，欢迎使用本插件，第一次进入，初始化中...');
-      await myStorage.updateConfig({
-        ...CONFIG_DEFAULT,
-        isUsed2: false,
-      });
       config = CONFIG_DEFAULT;
     } else {
-      await myStorage.updateConfig({
+      config = {
         ...CONFIG_DEFAULT,
         ...config,
-        isUsed2: !!config.isUsed2
-      })
+      };
     }
+    await myStorage.updateConfig(config);
 
     // TODO: 更改黑名单列表字段，10个 feature 版本后删除(removeBlockUserContentList)，5.2.0 添加，5.12.0 删除
     if (config.removeBlockUserContentList && config.removeBlockUserContentList.length) {
       config.blockedUsers = [...config.removeBlockUserContentList];
       delete config.removeBlockUserContentList;
-      await myStorage.updateConfig(config)
+      await myStorage.updateConfig(config);
     }
 
     await myStorage.getHistory();
@@ -164,8 +159,6 @@ import { INNER_CSS } from './web-resources';
       initResizeObserver();
       myCtzTypeOperation.init();
       echoHistory();
-
-      initFirstUse();
 
       dom('[name="useSimple"]')!.onclick = async function () {
         const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');

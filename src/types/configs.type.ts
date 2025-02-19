@@ -444,8 +444,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   highPerformanceRecommend?: boolean;
   /** 回答页高性能模式 */
   highPerformanceAnswer?: boolean;
-  /** 修改器是否使用过 */
-  isUsed2: boolean;
   /** 评论图片预览不超出页面 */
   commentImageFullPage?: boolean;
 }

@@ -151,7 +151,6 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenAnswerItemTime: true,
   videoUseLink: true,
   commitModalSizeSameVersion: true,
-  isUsed2: true,
 };
 
 /** 默认配置 */
@@ -214,7 +213,6 @@ export const CONFIG_DEFAULT: IPfConfig = {
   zoomImageHeightSize: '100',
   highPerformanceRecommend: true,
   highPerformanceAnswer: true,
-  isUsed2: true,
   suspensionOpen: '0',
   showBlockUserCommentTag: true,
   showBlockUserTag: true,
