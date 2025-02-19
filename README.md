@@ -418,7 +418,7 @@ _注：需要开启接口拦截_<br>
 
 开启后评论区的弹窗图片预览将不超出页面最大尺寸<br>
 
-<img src="./static/comment-image-preview.png" alt="图片尺寸">
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/comment-image-preview.png" alt="图片尺寸">
 
 </details>
 
