@@ -199,7 +199,7 @@ export const myListenListItem = {
 
           fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
         }
-      }, 500);
+      }, 100);
     }
   },
   reset: function () {
