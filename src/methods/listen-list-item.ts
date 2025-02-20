@@ -1,7 +1,7 @@
 import { doFetchNotInterested } from '../commons/fetch';
 import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { createButtonFontSize12, domA, domP, fnLog } from '../commons/tools';
+import { createButtonFontSize12, dom, domA, domP, fnLog } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
@@ -11,6 +11,16 @@ import { doHighlightOriginal } from './background';
 export const myListenListItem = {
   index: 0,
   init: async function () {
+    const nodeLoading = dom('.Topstory-recommend .List-item.List-item');
+    // 存在此元素时为加载数据状态
+    // 半秒钟后再次加载
+    if (nodeLoading) {
+      setTimeout(() => {
+        this.init();
+      }, 500);
+      return;
+    }
+
     await this.traversal(domA('.TopstoryItem'));
     setTimeout(() => {
       this.traversal(domA('.TopstoryItem:not(.ctz-listened)'), false); // 每次执行后检测未检测到的项，解决内容重载的问题
