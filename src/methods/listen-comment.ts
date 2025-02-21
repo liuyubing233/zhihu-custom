@@ -29,10 +29,13 @@ export const formatCommentAuthors = (data: any[]) => {
   };
   fnAuthor(data);
   setCommentAuthors(commentAuthors);
+
+  // 处理完接口数据后扫描评论区
+  doListenComment();
 };
 
 /** 监听评论区 */
-export const doListenComment = () => {
+const doListenComment = () => {
   const { setCommentAuthors } = store;
   /** 页面中的评论容器 */
   const nodeCommentInPage = dom('.css-18ld3w0');

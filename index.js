@@ -2998,146 +2998,6 @@
       this.init();
     }
   };
-  var formatCommentAuthors = (data) => {
-    const { setCommentAuthors, getCommentAuthors } = store;
-    const commentAuthors = [...getCommentAuthors()];
-    const fnAuthor = (data2) => {
-      if (!data2) return;
-      data2.forEach((item) => {
-        const author = item.author;
-        if (author && !commentAuthors.find((i) => i.id === author.id)) {
-          commentAuthors.push({
-            id: author.id,
-            name: author.name,
-            urlToken: author.url_token
-          });
-        }
-        if (item.child_comments) {
-          fnAuthor(item.child_comments);
-        }
-      });
-    };
-    fnAuthor(data);
-    setCommentAuthors(commentAuthors);
-  };
-  var doListenComment = () => {
-    const { setCommentAuthors } = store;
-    const nodeCommentInPage = dom(".css-18ld3w0");
-    const nodeCommentDialog = dom(".css-16zdamy");
-    if (!nodeCommentInPage && !nodeCommentDialog) {
-      setCommentAuthors([]);
-      return;
-    }
-    formatComments(nodeCommentInPage);
-    formatComments(nodeCommentDialog);
-  };
-  var CLASS_BLOCK_ADD = "ctz-comment-block-add";
-  var CLASS_BLOCK_REMOVE = "ctz-comment-block-remove";
-  var CLASS_BLOCK_BOX = "ctz-comment-block-box";
-  var ATTR_ID = "data-id";
-  var formatComments = async (nodeComments, commentBoxClass = ".css-jp43l4") => {
-    if (!nodeComments) return;
-    if (nodeComments.querySelector(".css-1t6pvna")) {
-      setTimeout(() => {
-        formatComments(nodeComments, commentBoxClass);
-      }, 500);
-    }
-    const commentAuthors = store.getCommentAuthors();
-    const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
-    const comments = nodeComments.childNodes;
-    for (let i = 0, len = comments.length; i < len; i++) {
-      const item = comments[i];
-      if (item.nodeName === "BUTTON") {
-        item.addEventListener("click", () => {
-          setTimeout(() => {
-            doListenComment();
-          }, 500);
-        });
-      } else if (!item.getAttribute(ATTR_ID) || item.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) {
-        continue;
-      }
-      const itemUserBox = item.querySelector(`${commentBoxClass} .css-14nvvry .css-swj9d4`);
-      if (!itemUserBox) continue;
-      const itemCommentUsers = itemUserBox.querySelectorAll(".css-1tww9qq");
-      let isHidden = false;
-      for (let j = 0, lenUsers = itemCommentUsers.length; j < lenUsers; j++) {
-        if (isHidden) continue;
-        const user = itemCommentUsers[j];
-        const userLink = user.querySelector(".css-1gomreu a");
-        const userId = userLink.href.replace(/[\w\W]+\/people\//, "");
-        const findUser = (blockedUsers || []).find((i2) => i2.id === userId);
-        const isBlocked = !!findUser;
-        if (removeBlockUserComment && isBlocked) {
-          isHidden = true;
-          fnLog(`已隐藏一个黑名单用户的评论，${findUser.name}`);
-          continue;
-        }
-        if (user.querySelector(`.${CLASS_BLOCK_BOX}`)) continue;
-        const commentUserInfo = commentAuthors.find((i2) => i2.id === userId);
-        if (!commentUserInfo) continue;
-        const nBox = domC("div", {
-          className: CLASS_BLOCK_BOX,
-          innerHTML: await changeBoxHTML2(isBlocked)
-        });
-        nBox.onclick = async function(event) {
-          const me = this;
-          const target = event.target;
-          if (target.classList.contains(CLASS_BLOCK_REMOVE)) {
-            await removeBlockUser(commentUserInfo);
-            me.innerHTML = await changeBoxHTML2(false);
-            return;
-          }
-          if (target.classList.contains(CLASS_BLOCK_ADD)) {
-            await addBlockUser(commentUserInfo);
-            me.innerHTML = await changeBoxHTML2(true);
-            return;
-          }
-        };
-        user.append(nBox);
-      }
-      if (isHidden) {
-        item.style.display = "none";
-        item.classList.add(CTZ_HIDDEN_ITEM_CLASS);
-        continue;
-      }
-      item.querySelectorAll(".comment_img img").forEach((itemImage) => {
-        itemImage.onclick = () => {
-          setTimeout(commentImagePreview, 100);
-        };
-      });
-      formatComments(item, ".css-1kwt8l8");
-    }
-  };
-  var changeBoxHTML2 = async (isBlocked) => {
-    const { showBlockUserComment, showBlockUserCommentTag } = await myStorage.getConfig();
-    if (isBlocked) {
-      return fnReturnStr(`<div class="${CLASS_BLACK_TAG}">黑名单</div>`, showBlockUserCommentTag) + fnReturnStr(`<button class="${CLASS_BLOCK_REMOVE} ctz-button">解除屏蔽</button>`, showBlockUserComment);
-    } else {
-      return fnReturnStr(`<button class="${CLASS_BLOCK_ADD} ctz-button">屏蔽</button>`, showBlockUserComment);
-    }
-  };
-  var commentPreviewObserver = void 0;
-  var commentImagePreview = async () => {
-    const { commentImageFullPage } = await myStorage.getConfig();
-    if (commentImageFullPage) {
-      const commentPreviewImage = dom(".ImageView-img");
-      if (!commentPreviewImage) return;
-      const imageSrc = commentPreviewImage.src.replace("_r", "");
-      const commentImage = dom(`.comment_img img[data-original="${imageSrc}"]`);
-      if (!commentImage) return;
-      const { width, height, scaleX, scaleY } = formatPreviewSize(commentImage);
-      const { innerWidth } = window;
-      commentPreviewImage.style.cssText = `width: ${width}px;height: ${height}px;transform: translateX(${innerWidth / 2 - width * scaleX / 2}px) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;transform-origin: 0 0;transition: none;`;
-      const nodeImageBox = domP(commentPreviewImage, "class", "ImageView");
-      commentPreviewObserver && commentPreviewObserver.disconnect();
-      commentPreviewObserver = new MutationObserver((records) => {
-        if (!nodeImageBox.classList.contains("is-active")) {
-          commentPreviewImage.style.transition = "";
-        }
-      });
-      commentPreviewObserver.observe(nodeImageBox, { characterData: true, attributes: true });
-    }
-  };
   var myListenListItem = {
     initTimestamp: 0,
     init: async function() {
@@ -3513,7 +3373,6 @@
     initImagePreview();
     myListenSearchListItem.init();
     myListenAnswerItem.init();
-    doListenComment();
     pathnameHasFn({
       collection: () => myCollectionExport.init()
     });
@@ -3954,6 +3813,147 @@
       }
     },
     timer: void 0
+  };
+  var formatCommentAuthors = (data) => {
+    const { setCommentAuthors, getCommentAuthors } = store;
+    const commentAuthors = [...getCommentAuthors()];
+    const fnAuthor = (data2) => {
+      if (!data2) return;
+      data2.forEach((item) => {
+        const author = item.author;
+        if (author && !commentAuthors.find((i) => i.id === author.id)) {
+          commentAuthors.push({
+            id: author.id,
+            name: author.name,
+            urlToken: author.url_token
+          });
+        }
+        if (item.child_comments) {
+          fnAuthor(item.child_comments);
+        }
+      });
+    };
+    fnAuthor(data);
+    setCommentAuthors(commentAuthors);
+    doListenComment();
+  };
+  var doListenComment = () => {
+    const { setCommentAuthors } = store;
+    const nodeCommentInPage = dom(".css-18ld3w0");
+    const nodeCommentDialog = dom(".css-16zdamy");
+    if (!nodeCommentInPage && !nodeCommentDialog) {
+      setCommentAuthors([]);
+      return;
+    }
+    formatComments(nodeCommentInPage);
+    formatComments(nodeCommentDialog);
+  };
+  var CLASS_BLOCK_ADD = "ctz-comment-block-add";
+  var CLASS_BLOCK_REMOVE = "ctz-comment-block-remove";
+  var CLASS_BLOCK_BOX = "ctz-comment-block-box";
+  var ATTR_ID = "data-id";
+  var formatComments = async (nodeComments, commentBoxClass = ".css-jp43l4") => {
+    if (!nodeComments) return;
+    if (nodeComments.querySelector(".css-1t6pvna")) {
+      setTimeout(() => {
+        formatComments(nodeComments, commentBoxClass);
+      }, 500);
+    }
+    const commentAuthors = store.getCommentAuthors();
+    const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
+    const comments = nodeComments.childNodes;
+    for (let i = 0, len = comments.length; i < len; i++) {
+      const item = comments[i];
+      if (item.nodeName === "BUTTON") {
+        item.addEventListener("click", () => {
+          setTimeout(() => {
+            doListenComment();
+          }, 500);
+        });
+      } else if (!item.getAttribute(ATTR_ID) || item.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) {
+        continue;
+      }
+      const itemUserBox = item.querySelector(`${commentBoxClass} .css-14nvvry .css-swj9d4`);
+      if (!itemUserBox) continue;
+      const itemCommentUsers = itemUserBox.querySelectorAll(".css-1tww9qq");
+      let isHidden = false;
+      for (let j = 0, lenUsers = itemCommentUsers.length; j < lenUsers; j++) {
+        if (isHidden) continue;
+        const user = itemCommentUsers[j];
+        const userLink = user.querySelector(".css-1gomreu a");
+        const userId = userLink.href.replace(/[\w\W]+\/people\//, "");
+        const findUser = (blockedUsers || []).find((i2) => i2.id === userId);
+        const isBlocked = !!findUser;
+        if (removeBlockUserComment && isBlocked) {
+          isHidden = true;
+          fnLog(`已隐藏一个黑名单用户的评论，${findUser.name}`);
+          continue;
+        }
+        if (user.querySelector(`.${CLASS_BLOCK_BOX}`)) continue;
+        const commentUserInfo = commentAuthors.find((i2) => i2.id === userId);
+        if (!commentUserInfo) continue;
+        const nBox = domC("div", {
+          className: CLASS_BLOCK_BOX,
+          innerHTML: await changeBoxHTML2(isBlocked)
+        });
+        nBox.onclick = async function(event) {
+          const me = this;
+          const target = event.target;
+          if (target.classList.contains(CLASS_BLOCK_REMOVE)) {
+            await removeBlockUser(commentUserInfo);
+            me.innerHTML = await changeBoxHTML2(false);
+            return;
+          }
+          if (target.classList.contains(CLASS_BLOCK_ADD)) {
+            await addBlockUser(commentUserInfo);
+            me.innerHTML = await changeBoxHTML2(true);
+            return;
+          }
+        };
+        user.append(nBox);
+      }
+      if (isHidden) {
+        item.style.display = "none";
+        item.classList.add(CTZ_HIDDEN_ITEM_CLASS);
+        continue;
+      }
+      item.querySelectorAll(".comment_img img").forEach((itemImage) => {
+        itemImage.onclick = () => {
+          setTimeout(commentImagePreview, 100);
+        };
+      });
+      formatComments(item, ".css-1kwt8l8");
+    }
+  };
+  var changeBoxHTML2 = async (isBlocked) => {
+    const { showBlockUserComment, showBlockUserCommentTag } = await myStorage.getConfig();
+    if (isBlocked) {
+      return fnReturnStr(`<div class="${CLASS_BLACK_TAG}">黑名单</div>`, showBlockUserCommentTag) + fnReturnStr(`<button class="${CLASS_BLOCK_REMOVE} ctz-button">解除屏蔽</button>`, showBlockUserComment);
+    } else {
+      return fnReturnStr(`<button class="${CLASS_BLOCK_ADD} ctz-button">屏蔽</button>`, showBlockUserComment);
+    }
+  };
+  var commentPreviewObserver = void 0;
+  var commentImagePreview = async () => {
+    const { commentImageFullPage } = await myStorage.getConfig();
+    if (commentImageFullPage) {
+      const commentPreviewImage = dom(".ImageView-img");
+      if (!commentPreviewImage) return;
+      const imageSrc = commentPreviewImage.src.replace("_r", "");
+      const commentImage = dom(`.comment_img img[data-original="${imageSrc}"]`);
+      if (!commentImage) return;
+      const { width, height, scaleX, scaleY } = formatPreviewSize(commentImage);
+      const { innerWidth } = window;
+      commentPreviewImage.style.cssText = `width: ${width}px;height: ${height}px;transform: translateX(${innerWidth / 2 - width * scaleX / 2}px) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;transform-origin: 0 0;transition: none;`;
+      const nodeImageBox = domP(commentPreviewImage, "class", "ImageView");
+      commentPreviewObserver && commentPreviewObserver.disconnect();
+      commentPreviewObserver = new MutationObserver((records) => {
+        if (!nodeImageBox.classList.contains("is-active")) {
+          commentPreviewImage.style.transition = "";
+        }
+      });
+      commentPreviewObserver.observe(nodeImageBox, { characterData: true, attributes: true });
+    }
   };
   var initOneClickInvitation = () => {
     setTimeout(() => {
