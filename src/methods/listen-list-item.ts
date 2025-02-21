@@ -2,34 +2,33 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { createButtonFontSize12, dom, domA, domP, fnLog } from '../commons/tools';
-import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
+import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
 import { store } from '../store';
 import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { doHighlightOriginal } from './background';
 
 /** 监听列表内容 - 过滤  */
 export const myListenListItem = {
-  index: 0,
+  initTimestamp: 0,
   init: async function () {
     const nodeLoading = dom('.Topstory-recommend .List-item.List-item');
-    // 存在此元素时为加载数据状态
-    // 半秒钟后再次加载
-    if (nodeLoading) {
-      setTimeout(() => {
-        this.init();
-      }, 500);
+    const currentTime = +new Date();
+
+    // 存在此元素时为加载数据状态，半秒钟后再次加载
+    // 时间戳添加，解决重置问题
+    if (nodeLoading || currentTime - this.initTimestamp < 500) {
+      setTimeout(() => this.init(), 500);
       return;
     }
 
-    await this.traversal(domA('.TopstoryItem'));
+    this.initTimestamp = currentTime;
+    await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
     setTimeout(() => {
-      this.traversal(domA('.TopstoryItem:not(.ctz-listened)'), false); // 每次执行后检测未检测到的项，解决内容重载的问题
+      this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`)); // 每次执行后检测未检测到的项，解决内容重载的问题
     }, 500);
   },
-  traversal: async function (nodes: HTMLElement[], needIndex = true) {
-    const index = needIndex ? this.index : 0;
+  traversal: async function (nodes: HTMLElement[]) {
     if (!nodes.length) return;
-    if (needIndex && index + 1 === nodes.length) return;
     const userinfo = store.getUserinfo();
     const removeRecommends = store.getRemoveRecommends();
     const pfConfig = await myStorage.getConfig();
@@ -63,12 +62,10 @@ export const myListenListItem = {
     removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
 
     const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
-    // 如果 this.index 为 0 则从第 0 位开始
-    // 否则则从 this.index + 1 位开始，解决上一次遍历末尾跟这次便利开始重复的问题
-    for (let i = index === 0 ? 0 : index + 1, len = nodes.length; i < len; i++) {
+    for (let i = 0, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
       if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
-      nodeItem.classList.add('ctz-listened');
+      nodeItem.classList.add(CLASS_LISTENED);
       const nodeContentItem = nodeItem.querySelector('.ContentItem');
       if (!nodeItem.scrollHeight || !nodeContentItem) continue;
       let message = ''; // 屏蔽信息
@@ -179,11 +176,11 @@ export const myListenListItem = {
       }
       fnJustNum(nodeItem);
       if (i === len - 1) {
-        needIndex && (this.index = i);
         myStorage.updateHistoryItem('list', historyList);
       }
     }
 
+    // 高性能模式
     if (highPerformanceRecommend) {
       setTimeout(() => {
         const nodes = domA('.TopstoryItem');
@@ -199,7 +196,6 @@ export const myListenListItem = {
           nodes.forEach((item, index) => {
             index < nIndex && item.remove();
           });
-          this.index = this.index - nIndex;
 
           const nNodeLast = nodes[nodes.length - 1];
           /** 删除元素后最后一个元素的位置 */
@@ -213,7 +209,9 @@ export const myListenListItem = {
     }
   },
   reset: function () {
-    this.index = 0;
+    domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
+      item.classList.remove(CLASS_LISTENED);
+    });
   },
   restart: function () {
     this.reset();

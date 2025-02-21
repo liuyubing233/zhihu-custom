@@ -1,28 +1,35 @@
 import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { domA } from '../commons/tools';
+import { CLASS_LISTENED } from '../configs';
 
 /** 监听搜索列表 - 过滤  */
 export const myListenSearchListItem = {
-  index: 0,
+  initTimestamp: 0,
   init: async function () {
-    const nodes = domA('.SearchResult-Card[role="listitem"]');
+    const currentTime = +new Date();
+    if (currentTime - this.initTimestamp < 500) {
+      setTimeout(() => this.init(), 500);
+      return;
+    }
+    const nodes = domA(`.SearchResult-Card[role="listitem"]:not(.${CLASS_LISTENED})`);
     if (this.index + 1 === nodes.length) return;
     const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = await myStorage.getConfig();
-    for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
+    for (let i = 0, len = nodes.length; i < len; i++) {
       let message = ''; // 屏蔽信息
-      const elementThis = nodes[i];
-      if (!elementThis || elementThis.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
+      const nodeItem = nodes[i];
+      nodeItem.classList.add(CLASS_LISTENED);
+      if (!nodeItem || nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       // FIRST
       // 列表种类屏蔽
-      const haveAD = removeItemAboutAD && elementThis.querySelector('.KfeCollection-PcCollegeCard-root');
-      const haveArticle = removeItemAboutArticle && elementThis.querySelector('.ArticleItem');
-      const haveVideo = removeItemAboutVideo && elementThis.querySelector('.ZvideoItem');
+      const haveAD = removeItemAboutAD && nodeItem.querySelector('.KfeCollection-PcCollegeCard-root');
+      const haveArticle = removeItemAboutArticle && nodeItem.querySelector('.ArticleItem');
+      const haveVideo = removeItemAboutVideo && nodeItem.querySelector('.ZvideoItem');
       (haveAD || haveArticle || haveVideo) && (message = '列表种类屏蔽');
 
       // 低赞内容过滤
       if (removeLessVote && !message) {
-        const elementUpvote = elementThis.querySelector('.ContentItem-actions .VoteButton--up');
+        const elementUpvote = nodeItem.querySelector('.ContentItem-actions .VoteButton--up');
         if (elementUpvote) {
           const ariaLabel = elementUpvote.getAttribute('aria-label');
           if (ariaLabel) {
@@ -34,16 +41,15 @@ export const myListenSearchListItem = {
           }
         }
       }
-      fnJustNum(elementThis);
+      fnJustNum(nodeItem);
       // 最后信息 & 起点位置处理
-      message && fnHidden(elementThis, message);
-      if (i === len - 1) {
-        this.index = i;
-      }
+      message && fnHidden(nodeItem, message);
     }
   },
   reset: function () {
-    this.index = 0;
+    domA(`.SearchResult-Card[role="listitem"].${CLASS_LISTENED}`).forEach((item) => {
+      item.classList.remove(CLASS_LISTENED);
+    });
   },
   restart: function () {
     this.reset();

@@ -13,6 +13,8 @@ export const CLASS_TO_QUESTION = 'ctz-to-question';
 export const CLASS_TIME_ITEM = 'ctz-list-item-time';
 
 export const CLASS_SELECT = 'ctz-select';
+/** class: 列表、回答内容已经监听的类名 */
+export const CLASS_LISTENED = 'ctz-listened'
 
 /** class: 消息提示弹窗 */
 export const CLASS_MESSAGE = 'ctz-message';

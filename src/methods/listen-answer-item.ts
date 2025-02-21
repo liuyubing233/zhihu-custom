@@ -1,7 +1,7 @@
 import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
-import { HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
+import { CLASS_LISTENED, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
 import { answerAddBlockButton } from './black';
 import { addAnswerCopyLink } from './link';
@@ -12,11 +12,15 @@ import { initVideoDownload } from './video';
 
 /** 监听详情回答 - 过滤 */
 export const myListenAnswerItem = {
-  index: 0,
+  initTimestamp: 0,
   init: async function () {
-    const nodes = domA('.AnswersNavWrapper .List-item');
-    if (this.index + 1 === nodes.length) return;
+    const currentTime = +new Date();
+    if (currentTime - this.initTimestamp < 500) {
+      setTimeout(() => this.init(), 500);
+      return;
+    }
 
+    const nodes = domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`);
     const config = await myStorage.getConfig();
     const {
       removeLessVoteDetail,
@@ -53,9 +57,10 @@ export const myListenAnswerItem = {
     // 屏蔽用户名称列表
     let removeUsernames: string[] = [];
     removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
-    for (let i = this.index === 0 ? 0 : this.index + 1, len = nodes.length; i < len; i++) {
+    for (let i = 0, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];
+      nodeItem.classList.add(CLASS_LISTENED);
       if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       const nodeItemContent = nodeItem.querySelector('.ContentItem');
       if (!nodeItemContent) continue;
@@ -131,10 +136,6 @@ export const myListenAnswerItem = {
           }
         }
       }
-
-      if (i === len - 1) {
-        this.index = i;
-      }
     }
 
     if (highPerformanceAnswer) {
@@ -147,14 +148,15 @@ export const myListenAnswerItem = {
               item.remove();
             }
           });
-          this.index = this.index - nIndex;
           fnLog(`已开启高性能模式，删除${nIndex}条回答`);
         }
       }, 500);
     }
   },
   reset: function () {
-    this.index = 0;
+    domA(`.AnswersNavWrapper .List-item.${CLASS_LISTENED}`).forEach((item) => {
+      item.classList.remove(CLASS_LISTENED);
+    });
   },
   restart: function () {
     this.reset();
