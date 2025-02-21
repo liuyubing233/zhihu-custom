@@ -271,9 +271,9 @@ export interface IConfigFilter {
   showBlockUserComment?: boolean;
   /** 屏蔽黑名单用户发布的评论 */
   removeBlockUserComment?: boolean;
-  /** 黑名单用户发布的评论显示黑名单标签 */
+  /** 黑名单用户发布的评论显示黑名单标识 */
   showBlockUserCommentTag?: boolean;
-  /** 列表和回答用户显示黑名单标签 */
+  /** 列表和回答显示黑名单用户标识 */
   showBlockUserTag?: boolean;
 }
 
