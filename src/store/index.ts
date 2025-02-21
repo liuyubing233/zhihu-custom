@@ -1,6 +1,5 @@
 import { myStorage } from '../commons/storage';
 import {
-  IBlockedUser,
   IContentStorageConfig,
   IFindEvent,
   IFindEventEntries,
@@ -10,6 +9,7 @@ import {
   IStorageConfig,
   IZhihuUserinfo
 } from '../types';
+import { IBlockedUser } from '../types/blocked-users.type';
 import { IZhihuRecommendItem } from '../types/zhihu-recommend.type';
 
 class Store {

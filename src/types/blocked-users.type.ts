@@ -3,9 +3,9 @@
  */
 
 /** 黑名单 */
-export interface IBlacklistItem {
+export interface IBlockedUser {
   id: string;
   name: string;
-  token: string;
-  types: string[]; // 标签
+  urlToken: string;
+  types?: string[]; // 标签
 }

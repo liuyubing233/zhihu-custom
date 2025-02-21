@@ -3,7 +3,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
 import { CLASS_LISTENED, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
-import { answerAddBlockButton } from './black';
+import { answerAddBlockButton } from './blocked-users';
 import { addAnswerCopyLink } from './link';
 import { printAnswer, printArticle } from './print';
 import { updateItemTime } from './time';

@@ -1,14 +1,19 @@
 import { myStorage } from '../commons/storage';
-import { dom, domById, domC, fnDomReplace, fnReturnStr } from '../commons/tools';
+import { dom, domById, domC, fnDomReplace, fnReturnStr, message } from '../commons/tools';
 import { store } from '../store';
-import { IBlockedUser, IZhihuCardContent } from '../types';
+import { IZhihuCardContent } from '../types';
+import { IBlockedUser } from '../types/blocked-users.type';
 
 /** id: 同步黑名单按钮 */
 const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
 /** class: 黑名单元素删除按钮类名 */
 const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** id: 黑名单列表 */
-const ID_BLOCK_LIST = 'CTZ-BLACK-LIST';
+const ID_BLOCK_LIST = 'CTA_BLOCKED_USERS';
+/** id：黑名单标签列表 */
+const ID_BLOCKED_USERS_TAGS = 'CTZ_BLOCKED_USERS_TAGS';
+/** class: 黑名单标签删除按钮 */
+const CLASS_REMOVE_BLOCKED_TAG = 'ctz-remove-blocked-tag';
 
 export const CLASS_BLACK_TAG = 'ctz-black-tag';
 
@@ -75,16 +80,68 @@ const blackItemContent = ({ id, name }: IBlockedUser) =>
 
 /** 初始化黑名单列表 */
 export const initBlackList = async () => {
-  const nodeBlank = domById(ID_BLOCK_LIST);
-  if (!nodeBlank) return;
-  const { blockedUsers = [] } = await myStorage.getConfig();
-  nodeBlank.innerHTML = blockedUsers.map((i) => blackItem(i)).join('');
-  nodeBlank.onclick = (event) => {
+  const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
+  // 初始化黑名单列表
+  const nodeBlockedUsers = domById(ID_BLOCK_LIST)!;
+  nodeBlockedUsers.innerHTML = blockedUsers.map((i) => blackItem(i)).join('');
+  nodeBlockedUsers.onclick = (event) => {
     const target = event.target as HTMLElement;
     if (!target || !target.classList.contains(CLASS_REMOVE_BLOCK)) return;
     const item = target.parentElement as HTMLElement;
     const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
     removeBlockUser(info);
+  };
+
+  // 初始化黑名单标签列表
+  const nodeBlockedUsersTags = domById(ID_BLOCKED_USERS_TAGS)!;
+  nodeBlockedUsersTags.innerHTML = blockedUsersTags
+    .map(
+      (i) =>
+        `<span class="ctz-blocked-users-tag" data-info="${i}">${
+          i + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`
+        }</span>`
+    )
+    .join('');
+  nodeBlockedUsersTags.onclick = (event) => {
+    const target = event.target as HTMLElement;
+    if (!target || !target.classList.contains(CLASS_REMOVE_BLOCKED_TAG)) return;
+    const item = target.parentElement as HTMLElement;
+    const info = item.dataset.info || ''
+
+    const isUsed = blockedUsers.some((item) => {
+      if (item.types && item.types.length) {
+        return item.types.some((i) => i === info);
+      }
+      return false;
+    });
+
+    if (isUsed) {
+      message('此标签有黑名单用户在使用，请删除对应标签后再删除');
+      return;
+    }
+    item.remove();
+    const index = blockedUsersTags.findIndex((i) => i === info);
+    blockedUsersTags.splice(index, 1);
+    myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
+  };
+
+  dom('input[name="inputBlockedUsersTag"]')!.onchange = async (e) => {
+    const { blockedUsersTags = [] } = await myStorage.getConfig();
+    const target = e.target as HTMLInputElement;
+    const value = target.value.toLowerCase();
+    if (blockedUsersTags.includes(value)) {
+      message('该标签已经存在');
+      return;
+    }
+    blockedUsersTags.push(value);
+    await myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
+    const domItem = domC('span', {
+      innerHTML: value + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`,
+      className: 'ctz-blocked-users-tag',
+    });
+    domItem.dataset.info = value;
+    domById(ID_BLOCKED_USERS_TAGS)!.appendChild(domItem);
+    target.value = '';
   };
 };
 

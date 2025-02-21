@@ -2,7 +2,7 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { myStorage } from '../commons/storage';
 import { dom, domP } from '../commons/tools';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
-import { answerAddBlockButton } from '../methods/black';
+import { answerAddBlockButton } from '../methods/blocked-users';
 import { addAnswerCopyLink } from '../methods/link';
 import { printAnswer, printArticle } from '../methods/print';
 import { updateItemTime } from '../methods/time';

@@ -1,6 +1,7 @@
 @import './common.less';
 
-#CTZ-BLACK-LIST {
+#CTA_BLOCKED_USERS,
+#CTZ_BLOCKED_USERS_TAGS {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -8px -8px 0;
@@ -39,4 +40,25 @@
 .ctz-black-box > button,
 .ctz-button-black {
   margin-left: 8px;
+}
+
+.ctz-blocked-users-tag {
+  height: 24px;
+  line-height: 24px;
+  box-sizing: content-box;
+  padding: 0 6px;
+  margin: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid @gray1;
+  background: #fff;
+}
+
+.ctz-remove-blocked-tag {
+  &:hover {
+    color: @red1;
+    font-weight: 600;
+  }
+  .Active();
 }

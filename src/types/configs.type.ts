@@ -1,4 +1,5 @@
 import { ETheme, EThemeDark, EThemeLight } from './background.type';
+import { IBlockedUser } from './blocked-users.type';
 
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {
@@ -216,13 +217,6 @@ export interface IConfigHidden {
   hiddenItemActionsIsFixedUser?: boolean;
 }
 
-/** 自定义黑名单列表内容 */
-export interface IBlockedUser {
-  id?: string;
-  name?: string;
-  urlToken?: string;
-}
-
 /** 屏蔽内容模块默认配置 */
 export interface IConfigFilter {
   /** 屏蔽选自盐选专栏的回答 */
@@ -239,6 +233,8 @@ export interface IConfigFilter {
   removeBlockUserContent?: boolean;
   /** 黑名单列表 */
   blockedUsers?: IBlockedUser[];
+  /** 黑名单标签 */
+  blockedUsersTags?: string[];
   /** 屏蔽商业推广 */
   removeItemAboutAD?: boolean;
   /** 屏蔽文章 */
