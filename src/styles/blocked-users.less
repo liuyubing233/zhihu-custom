@@ -1,0 +1,127 @@
+@import './common.less';
+
+#CTA_BLOCKED_USERS,
+#CTZ_BLOCKED_USERS_TAGS {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -8px -8px 0;
+}
+
+.ctz-black-item {
+  height: 24px;
+  line-height: 24px;
+  box-sizing: content-box;
+  padding: 2px 6px;
+  margin: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid @gray1;
+  background: #fff;
+  transition: all 0.2s;
+
+  a:hover {
+    color: @primary;
+  }
+
+  .ctz-remove-block {
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    font-style: normal;
+    &:hover {
+      background: @gray01;
+    }
+  }
+}
+
+.ctz-black-box > button,
+.ctz-button-black {
+  margin-left: 8px;
+}
+
+.ctz-blocked-users-tag {
+  height: 24px;
+  line-height: 24px;
+  box-sizing: content-box;
+  padding: 0 6px;
+  margin: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid @gray1;
+  background: #fff;
+}
+
+.ctz-remove-blocked-tag {
+  &:hover {
+    color: @red1;
+    font-weight: 600;
+  }
+  .Active();
+}
+
+.ctz-black-tag {
+  padding: 0 6px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  margin-left: 8px;
+  display: inline-block;
+  line-height: 22px;
+}
+
+.ctz-in-blocked-user-tag {
+  margin-left: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  border: 1px solid @blue1;
+  color: @blue1;
+  background: @blue01;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 4px;
+}
+
+.ctz-edit-user-tag {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 4px;
+  .HoverText(@blue1);
+  .Active();
+}
+
+[data-type='chooseBlockedUserTags'] {
+  padding-top: 4px;
+  .ctz-title {
+    padding-left: 14px;
+    height: auto;
+  }
+  .ctz-choose-blocked-user-tags {
+    width: 420px;
+    padding: 6px 6px 6px 14px;
+    & > span {
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 6px;
+      margin: 0 8px 8px 0;
+      border: 1px solid @gray04;
+      padding: 0 8px;
+      .Hover();
+      &[data-choose='true'] {
+        color: @blue1;
+        border-color: @blue1;
+        background: @blue01;
+      }
+    }
+  }
+  .ctz-choose-blocked-user-tags-operate {
+    text-align: right;
+    padding: 14px;
+    border-top: 1px solid @gray01;
+  }
+}

@@ -7,5 +7,5 @@ export interface IBlockedUser {
   id: string;
   name: string;
   urlToken: string;
-  types?: string[]; // 标签
+  tags?: string[]; // 标签
 }

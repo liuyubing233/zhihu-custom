@@ -81,7 +81,7 @@
               <div class="ctz-form-box-item">
                 <div>网页标签名称</div>
                 <div>
-                  <input type="text" name="globalTitle" style="width: 300px" />
+                  <input type="text" name="globalTitle" style="width: 278px" />
                   <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 8px">确认</button>
                   <button class="ctz-button" name="buttonResetTitle">还原</button>
                 </div>
@@ -344,10 +344,6 @@
         <div id="CTZ_BLACKLIST" class="ctz-fetch-intercept" style="display: none">
           <div class="ctz-form-box">
             <div class="ctz-form-box-item">
-              <div></div>
-              <div><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button></div>
-            </div>
-            <div class="ctz-form-box-item">
               <div>回答列表用户名后显示"屏蔽用户"按钮</div>
               <div><input class="ctz-i ctz-switch" name="showBlockUser" type="checkbox" value="on" /></div>
             </div>
@@ -394,6 +390,10 @@
 
           <div class="ctz-title">黑名单列表</div>
           <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div></div>
+              <div><button id="CTZ-BUTTON-SYNC-BLOCK" name="syncBlack" class="ctz-button">同步黑名单</button></div>
+            </div>
             <div class="ctz-form-box-item">
               <div id="CTA_BLOCKED_USERS"></div>
             </div>
@@ -565,7 +565,7 @@
         </div>
 
         <!-- 更新日志 -->
-        <div id="CTZ_CHANGELOG" style="display: none;"></div>
+        <div id="CTZ_CHANGELOG" style="display: none"></div>
       </div>
     </div>
   </div>
@@ -589,3 +589,16 @@
   <span>hhhahahhahahahhahahahahhahaha</span>
 </span>
 -->
+
+<!-- 漂浮在设置弹窗上的弹窗 -->
+<div id="CTZ_EXTRA_OUTPUT_COVER" style="display: none"></div>
+<div id="CTZ_EXTRA_OUTPUT_DIALOG" style="display: none" data-status="close">
+  <!-- 选择黑名单标签 -->
+  <div data-type="chooseBlockedUserTags">
+    <div class="ctz-title">选择标签</div>
+    <div class="ctz-choose-blocked-user-tags"></div>
+    <div class="ctz-choose-blocked-user-tags-operate">
+      <button class="ctz-button" name="choose-blocked-user-tags-finish">完成</button>
+    </div>
+  </div>
+</div>

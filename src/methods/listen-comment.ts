@@ -72,7 +72,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
 
   const commentAuthors = store.getCommentAuthors();
   const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
-  const comments = nodeComments.childNodes;
+  const comments = nodeComments.children;
   for (let i = 0, len = comments.length; i < len; i++) {
     const item = comments[i] as HTMLElement;
     if (item.nodeName === 'BUTTON') {

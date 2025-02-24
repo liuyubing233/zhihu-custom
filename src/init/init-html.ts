@@ -1,7 +1,7 @@
 import { dom, domById, domC } from '../commons/tools';
 import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
 import { addBackgroundSetting } from '../methods/background';
-import { initBlackList } from '../methods/blocked-users';
+import { initBlockedUsers, initBlockedUserTags } from '../methods/blocked-users';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
 import { initMenu } from '../methods/menu';
 import { IRangeItem, IZhihuUserinfo } from '../types';
@@ -91,7 +91,8 @@ export const initHTML = () => {
   dom('#CTZ_HIGH_PERFORMANCE')!.innerHTML += commonFormBoxItem(HIGH_PERFORMANCE);
 
   initFetchInterceptStatus();
-  initBlackList()
+  initBlockedUsers();
+  initBlockedUserTags();
   initMenu();
 };
 
