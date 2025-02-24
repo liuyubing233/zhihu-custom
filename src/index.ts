@@ -3,7 +3,7 @@ import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
-import { EXTRA_CLASS_HTML, HTML_HOOTS } from './configs/dom-name';
+import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './configs/dom-name';
 import { initData } from './init/init-data';
 import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html';
@@ -22,7 +22,7 @@ import { formatCommentAuthors } from './methods/listen-comment';
 import { myListenListItem } from './methods/listen-list-item';
 import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { initOneClickInvitation } from './methods/one-click-invitation';
-import { openChange } from './methods/open';
+import { closeExtra, openChange } from './methods/open';
 import { myPageFilterSetting } from './methods/page-filter-setting';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './methods/print';
 import { addArticleTime, addQuestionTime } from './methods/time';
@@ -257,9 +257,14 @@ import { INNER_CSS } from './web-resources';
       }
     }
     // esc 关闭弹窗
-    if (event.key === 'Escape' && domById('CTZ_OPEN_CLOSE')!.getAttribute('data-close') === '0') {
-      openChange();
+    if (event.key === 'Escape') {
+      if (domById(ID_EXTRA_DIALOG)!.dataset.status === 'open') {
+        closeExtra();
+      } else if (domById('CTZ_OPEN_CLOSE')!.getAttribute('data-close') === '0') {
+        openChange();
+      }
     }
+
     keydownNextImage(event);
   });
   // 复制代码块删除版权信息

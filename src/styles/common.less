@@ -4,11 +4,12 @@
   margin: 8px 0;
 }
 
-.hover-style {
-  cursor: pointer;
-  &:hover {
-    color: @blue1!important;
-  }
+/** 居中定位 **/
+.PositionCenter {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .CommonTransition {
@@ -49,6 +50,14 @@
   }
 }
 
+.HoverText(@color: initial) {
+  cursor: pointer;
+  &:hover {
+    font-weight: 600 !important;
+    color: @color;
+  }
+}
+
 /** 禁止鼠标选中 */
 .MonUserSelect() {
   // 禁止文字被鼠标选中
@@ -61,7 +70,7 @@
   user-select: none;
 }
 
-.BackgroundLight(@primary) {
+.BackgroundLight(@primary, @primary01) {
   #CTZ_DIALOG_MENU > div.target,
   .ctz-switch:checked {
     background: @primary;
@@ -71,36 +80,46 @@
   .ctz-zhihu-key a,
   #CTZ_DIALOG_FOOTER a:hover,
   #CTZ_HISTORY_LIST a:hover,
-  #CTZ_HISTORY_VIEW a:hover {
+  #CTZ_HISTORY_VIEW a:hover,
+  .ctz-black-item a:hover,
+  .ctz-edit-user-tag:hover,
+  [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span:hover {
     color: @primary !important;
   }
   #CTZ_TITLE_ICO label input:checked + img,
   #CTZ_BACKGROUND .ctz-background-item input:checked + div + div {
     border-color: @primary;
   }
+
+  .ctz-in-blocked-user-tag,
+  [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span[data-choose='true'] {
+    border-color: @primary;
+    color: @primary;
+    background: @primary01;
+  }
 }
 
 // 主题颜色配置
 [theme-light='1'] {
-  .BackgroundLight(@red1);
+  .BackgroundLight(@red1, @red01);
 }
 [theme-light='2'] {
-  .BackgroundLight(@yellow1);
+  .BackgroundLight(@yellow1, @yellow01);
 }
 [theme-light='3'] {
-  .BackgroundLight(@green1);
+  .BackgroundLight(@green1, @green01);
 }
 [theme-light='4'] {
-  .BackgroundLight(@gray1);
+  .BackgroundLight(@gray1, @gray01);
 }
 [theme-light='5'] {
-  .BackgroundLight(@purple1);
+  .BackgroundLight(@purple1, @purple01);
 }
 [theme-light='6'] {
-  .BackgroundLight(@origin1);
+  .BackgroundLight(@origin1, @origin01);
 }
 [theme-light='7'] {
-  .BackgroundLight(@origin1);
+  .BackgroundLight(@origin1, @origin01);
 }
 
 .BackgroundDark(@primary: #175ac0) {
@@ -112,7 +131,11 @@
   #CTZ_DIALOG,
   #CTZ_DIALOG_LEFT,
   #CTZ_DIALOG_FOOTER,
-  .ctz-black-item {
+  #CTZ_EXTRA_OUTPUT_DIALOG,
+  .ctz-black-item,
+  .ctz-blocked-users-tag,
+  .ctz-in-blocked-user-tag,
+  [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span[data-choose='true'] {
     background: #504e4e;
   }
 
@@ -144,7 +167,9 @@
   }
 
   #CTZ_BACKGROUND .ctz-background-item input:checked + div + div,
-  #CTZ_TITLE_ICO label input:checked + img {
+  #CTZ_TITLE_ICO label input:checked + img,
+  .ctz-in-blocked-user-tag,
+  [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span[data-choose='true'] {
     border-color: @primary;
   }
 
@@ -152,7 +177,11 @@
   .ctz-zhihu-key a,
   #CTZ_DIALOG_FOOTER a:hover,
   #CTZ_HISTORY_LIST a:hover,
-  #CTZ_HISTORY_VIEW a:hover {
+  #CTZ_HISTORY_VIEW a:hover,
+  .ctz-black-item a:hover,
+  [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span:hover,
+  [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span[data-choose='true'],
+  .ctz-in-blocked-user-tag {
     color: @primary!important;
   }
 

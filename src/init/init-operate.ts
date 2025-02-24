@@ -2,7 +2,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC, message } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, CONFIG_DEFAULT } from '../configs';
 import { myCustomStyle, onUseThemeDark } from '../methods/background';
-import { syncBlackList } from '../methods/black';
+import { syncBlackList } from '../methods/blocked-users';
 import { fnChanger } from '../methods/fn-changer';
 import { echoHistory } from '../methods/history';
 import { onChangeMenu } from '../methods/menu';

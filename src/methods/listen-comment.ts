@@ -2,8 +2,8 @@ import { CTZ_HIDDEN_ITEM_CLASS } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domC, domP, fnLog, fnReturnStr } from '../commons/tools';
 import { store } from '../store';
-import { IBlockedUser } from '../types';
-import { addBlockUser, CLASS_BLACK_TAG, removeBlockUser } from './black';
+import { IBlockedUser } from '../types/blocked-users.type';
+import { addBlockUser, CLASS_BLACK_TAG, removeBlockUser } from './blocked-users';
 import { formatPreviewSize } from './image';
 
 /** 格式化评论区接口内的用户信息并储存 */
@@ -14,7 +14,7 @@ export const formatCommentAuthors = (data: any[]) => {
     if (!data) return;
     data.forEach((item) => {
       const author = item.author;
-      if (author && !commentAuthors.find((i) => i.id === author.id)) {
+      if (author && !commentAuthors.some((i) => i.id === author.id)) {
         commentAuthors.push({
           id: author.id,
           name: author.name,
@@ -72,7 +72,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
 
   const commentAuthors = store.getCommentAuthors();
   const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
-  const comments = nodeComments.childNodes;
+  const comments = nodeComments.children;
   for (let i = 0, len = comments.length; i < len; i++) {
     const item = comments[i] as HTMLElement;
     if (item.nodeName === 'BUTTON') {

@@ -34,7 +34,7 @@ export const myMove: IMyMove = {
           const evNX = eventN.clientX;
           let evenLeft = 0;
           let evenRight = 0;
-          const isR = this.useR.find((i: string) => i === name);
+          const isR = this.useR.some((i: string) => i === name);
           if (isR) {
             // 用 body 替代 window 获取宽度来解决右侧滚动条宽度不一致问题
             const right = bodyW - evNX - rx;

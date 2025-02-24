@@ -19,6 +19,8 @@ export const CLASS_LISTENED = 'ctz-listened'
 /** class: 消息提示弹窗 */
 export const CLASS_MESSAGE = 'ctz-message';
 export const ID_MESSAGE_BOX = 'CTZ_MESSAGE_BOX';
+/** ID: 额外的弹窗 */
+export const ID_EXTRA_DIALOG = 'CTZ_EXTRA_OUTPUT_DIALOG';
 
 /** 回答收起展开插入的类名 */
 export const OB_CLASS_FOLD = {
