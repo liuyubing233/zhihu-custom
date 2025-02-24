@@ -1,12 +1,10 @@
 import { myStorage } from '../commons/storage';
-import { dom, domById, domC, fnDomReplace, fnReturnStr, message } from '../commons/tools';
+import { dom, domA, domById, domC, fnDomReplace, fnReturnStr, message } from '../commons/tools';
 import { store } from '../store';
 import { IZhihuCardContent } from '../types';
 import { IBlockedUser } from '../types/blocked-users.type';
 import { closeExtra, openExtra } from './open';
 
-/** id: 同步黑名单按钮 */
-const ID_BUTTON_SYNC_BLOCK = 'CTZ-BUTTON-SYNC-BLOCK';
 /** class: 黑名单元素删除按钮类名 */
 const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** id: 黑名单列表 */
@@ -109,7 +107,7 @@ export const initBlockedUsers = async () => {
       openExtra('chooseBlockedUserTags');
       const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
       const currentTags = info.tags || [];
-      dom('[data-type="chooseBlockedUserTags"] .ctz-title')!.innerText = `设置标签：${info.name}`
+      dom('[data-type="chooseBlockedUserTags"] .ctz-title')!.innerText = `设置标签：${info.name}`;
 
       const boxTags = dom('.ctz-choose-blocked-user-tags')!;
       boxTags.innerHTML = blockedUsersTags.map((i) => `<span data-type="blockedUserTag" data-name="${i}" data-choose="${currentTags.includes(i)}">${i}</span>`).join('');
@@ -147,7 +145,7 @@ export function syncBlackList(offset = 0, l: IBlockedUser[] = []) {
     nodeList.innerHTML = '黑名单列表加载中...';
   }
 
-  const buttonSync = domById(ID_BUTTON_SYNC_BLOCK) as HTMLButtonElement;
+  const buttonSync = dom('button[name="syncBlack"]') as HTMLButtonElement;
   if (!buttonSync.querySelector('ctz-loading')) {
     fnDomReplace(buttonSync, { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
   }
@@ -211,9 +209,11 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
 };
 
 /** 解除拉黑用户 */
-export const removeBlockUser = (info: IBlockedUser) => {
-  const message = '取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。';
-  if (!confirm(message)) return Promise.reject();
+export const removeBlockUser = (info: IBlockedUser, needConfirm = true) => {
+  if (needConfirm) {
+    const message = '取消屏蔽之后，对方将可以：关注你、给你发私信、向你提问、评论你的答案、邀请你回答问题。';
+    if (!confirm(message)) return Promise.reject();
+  }
   return new Promise<void>((resolve) => {
     const { urlToken, id } = info;
     const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
@@ -302,5 +302,38 @@ const changeBoxHTML = async (isBlocked: boolean, showHidden?: boolean) => {
       `<button class="${CLASS_BTN_BLACK} ctz-button">屏蔽</button>` + fnReturnStr(`<button class="${CLASS_BTN_BLACK_FILTER} ctz-button">屏蔽并隐藏回答</button>`, showHidden),
       showBlockUser
     );
+  }
+};
+
+/** 清空黑名单列表 */
+export const syncRemoveBlockedUsers = () => {
+  if (!confirm('您确定要取消屏蔽所有黑名单用户吗？')) return;
+  if (!confirm('确定清空所有屏蔽用户？')) return;
+
+  const buttonSync = dom('button[name="syncBlackRemove"]') as HTMLButtonElement;
+  if (!buttonSync.querySelector('ctz-loading')) {
+    fnDomReplace(buttonSync, { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
+  }
+
+  const removeButtons = domA('.ctz-remove-block');
+  const len = removeButtons.length;
+  let finishNumber = 0;
+
+  if (!removeButtons.length) return;
+  for (let i = 0; i < len; i++) {
+    const item = removeButtons[i] as HTMLElement;
+    const itemParent = item.parentElement!;
+    const info = itemParent.dataset.info ? JSON.parse(itemParent.dataset.info) : {};
+    if (info.id) {
+      removeBlockUser(info, false).then(async () => {
+        finishNumber++;
+        itemParent.remove();
+        if (finishNumber === len) {
+          fnDomReplace(buttonSync, { innerHTML: '清空黑名单列表', disabled: false });
+          await myStorage.updateConfigItem('blockedUsers', []);
+          initBlockedUsers();
+        }
+      });
+    }
   }
 };
