@@ -363,9 +363,9 @@ _注：需要开启接口拦截_<br>
 2. 在黑名单用户名后的 ✎ 图标点击弹出选择标签弹窗进行添加删除<br>
 3. 设定了标签的黑名单用户在同步黑名单时标签仍然会存在<br>
 
-<img src="./static/blocked-user-tag-input.png" alt="黑名单标签" />
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/blocked-user-tag-input.png" alt="黑名单标签" />
 
-<img src="./static/blocked-user-tag-edit.png" alt="黑名单标签添加" />
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/blocked-user-tag-edit.png" alt="黑名单标签添加" />
 
 </details>
 
