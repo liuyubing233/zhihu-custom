@@ -1,3 +1,6 @@
+/**
+  * 修改器修改的知乎页面
+  */
 @import './common.less';
 
 .Profile-mainColumn,
@@ -50,4 +53,46 @@ body[data-suspension-pickup='true'] {
       border-radius: 12px;
     }
   }
+}
+
+// 首页列表宽度优化
+.Topstory-container,
+.css-knqde,
+.Search-container {
+  width: fit-content !important;
+}
+
+// 回答详情页面内容宽度优化
+.Question-main .Question-mainColumn,
+.QuestionHeader-main {
+  flex: 1;
+}
+
+.Question-main {
+  .List-item {
+    border-bottom: 1px dashed #ddd;
+  }
+  .Question-sideColumn {
+    margin-left: 12px;
+  }
+}
+
+.QuestionHeader {
+  min-width: auto; // 用来解决小屏幕下顶部偏移的问题
+  .QuestionHeader-content {
+    margin: 0 auto;
+    padding: 0;
+    max-width: initial !important;
+  }
+}
+
+// 文章页面内容宽度优化
+.zhuanlan .AuthorInfo,
+.zhuanlan .css-1xy3kyp {
+  max-width: initial;
+}
+
+// 图片
+.GifPlayer.isPlaying img {
+  cursor: pointer !important;
 }

@@ -73,15 +73,10 @@ export const myVersion = {
     // 页面内容宽度
     const xxxWidth =
       // 首页列表页面内容宽度
-      `.Topstory-mainColumn,.SearchMain{width: ${versionSizeHome}!important;}.Topstory-container,.css-knqde,.Search-container{width: fit-content!important;}` +
+      `.Topstory-mainColumn,.SearchMain{width: ${versionSizeHome}!important;}` +
       // 回答详情页面内容宽度
-      `.Question-main .Question-mainColumn,.QuestionHeader-main{flex: 1;}` +
-      `.Question-main .Question-sideColumn{margin-left: 12px;}` +
-      `.QuestionHeader .QuestionHeader-content{margin: 0 auto;padding: 0;max-width: initial!important;}` +
       `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${versionSizeAnswer}!important;}` +
-      `.Question-main .List-item{border-bottom: 1px dashed #ddd;}` +
       // 文章页面内容宽度
-      `.zhuanlan .AuthorInfo,.zhuanlan .css-1xy3kyp{max-width: initial;}` +
       `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd{width: ${versionSizeArticle}!important;}` +
       `.zhuanlan .Post-SideActions{right: ${
         !versionArticleIsPercent ? `calc(50vw - ${+(versionArticle || '1000') / 2 + 150}px)` : `calc(50vw - ${+(versionArticlePercent || '70') / 2}vw + 150px)`
@@ -99,14 +94,12 @@ export const myVersion = {
       );
 
     /** 图片尺寸修改 */
-    const xxxImage =
-      `.GifPlayer.isPlaying img {cursor:pointer!important;}` +
-      `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${
-        // 高度控制优先
-        (zoomImageHeight === '1' ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : '') ||
-        // 宽度控制在后
-        (zoomImageType === '2' ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : '')
-      }}`;
+    const xxxImage = `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${
+      // 高度控制优先
+      (zoomImageHeight === '1' ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : '') ||
+      // 宽度控制在后
+      (zoomImageType === '2' ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : '')
+    }}`;
 
     /** 列表视频回答内容尺寸修改 */
     const xxxVideo = `.ZVideoItem>div:first-of-type{${fnReturnStr(`width: ${zoomListVideoSize}px!important;`, zoomListVideoType === '2')}}`;
