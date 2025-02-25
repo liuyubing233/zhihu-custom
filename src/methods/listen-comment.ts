@@ -1,6 +1,6 @@
 import { CTZ_HIDDEN_ITEM_CLASS } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { dom, domC, domP, fnLog, fnReturnStr } from '../commons/tools';
+import { dom, domA, domC, domP, fnLog, fnReturnStr } from '../commons/tools';
 import { store } from '../store';
 import { IBlockedUser } from '../types/blocked-users.type';
 import { addBlockUser, CLASS_BLACK_TAG, removeBlockUser } from './blocked-users';
@@ -14,11 +14,20 @@ export const formatCommentAuthors = (data: any[]) => {
     if (!data) return;
     data.forEach((item) => {
       const author = item.author;
+      const replyToAuthor = item.reply_to_author;
       if (author && !commentAuthors.some((i) => i.id === author.id)) {
         commentAuthors.push({
           id: author.id,
           name: author.name,
           urlToken: author.url_token,
+        });
+      }
+
+      if (replyToAuthor && !commentAuthors.some((i) => i.id === replyToAuthor.id)) {
+        commentAuthors.push({
+          id: replyToAuthor.id,
+          name: replyToAuthor.name,
+          urlToken: replyToAuthor.url_token,
         });
       }
 
@@ -35,20 +44,22 @@ export const formatCommentAuthors = (data: any[]) => {
 };
 
 /** 监听评论区 */
-const doListenComment = () => {
+export const doListenComment = () => {
   const { setCommentAuthors } = store;
   /** 页面中的评论容器 */
-  const nodeCommentInPage = dom('.css-18ld3w0');
+  const nodeCommentInPages = domA(`.css-18ld3w0`);
   /** 弹窗中的评论容器 */
-  const nodeCommentDialog = dom('.css-16zdamy');
-  if (!nodeCommentInPage && !nodeCommentDialog) {
+  const nodeCommentDialogs = domA(`.css-16zdamy`);
+  if (!nodeCommentInPages.length && !nodeCommentDialogs.length) {
     // 不存在评论内容则清除评论用户信息
     setCommentAuthors([]);
     return;
   }
 
-  formatComments(nodeCommentInPage);
-  formatComments(nodeCommentDialog);
+  nodeCommentInPages.forEach((item) => formatComments(item));
+  nodeCommentInPages.forEach((item) => formatComments(item, '.css-13445jb'));
+  nodeCommentDialogs.forEach((item) => formatComments(item));
+  nodeCommentDialogs.forEach((item) => formatComments(item, '.css-13445jb'));
 };
 
 /** 评论区屏蔽用户按钮 */
@@ -60,30 +71,36 @@ const CLASS_BLOCK_BOX = 'ctz-comment-block-box';
 /** 元素上 data-id 属性 */
 const ATTR_ID = 'data-id';
 
+const buttonListener = () => {
+  setTimeout(() => {
+    doListenComment();
+  }, 500);
+};
+
 /** 处理评论 */
 const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.css-jp43l4') => {
   if (!nodeComments) return;
-  if (nodeComments.querySelector('.css-1t6pvna')) {
-    // 评论加载中
+  // 评论加载中
+  if (nodeComments.querySelector('.css-1t6pvna') || nodeComments.querySelector('.BounceLoading')) {
     setTimeout(() => {
       formatComments(nodeComments, commentBoxClass);
     }, 500);
+    return;
   }
-
   const commentAuthors = store.getCommentAuthors();
   const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
   const comments = nodeComments.children;
   for (let i = 0, len = comments.length; i < len; i++) {
     const item = comments[i] as HTMLElement;
+
+    // 按钮的处理
     if (item.nodeName === 'BUTTON') {
-      item.addEventListener('click', () => {
-        setTimeout(() => {
-          doListenComment();
-        }, 500);
-      });
-    } else if (!item.getAttribute(ATTR_ID) || item.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) {
+      item.removeEventListener('click', buttonListener);
+      item.addEventListener('click', buttonListener);
       continue;
     }
+
+    if (!item.getAttribute(ATTR_ID) || item.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
 
     const itemUserBox = item.querySelector(`${commentBoxClass} .css-14nvvry .css-swj9d4`) as HTMLElement;
     if (!itemUserBox) continue;
@@ -92,10 +109,9 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
     /** 当前 item 是否隐藏 */
     let isHidden = false;
 
-    for (let j = 0, lenUsers = itemCommentUsers.length; j < lenUsers; j++) {
-      if (isHidden) continue;
-      const user = itemCommentUsers[j] as HTMLElement;
-      const userLink = user.querySelector('.css-1gomreu a') as HTMLAnchorElement;
+    itemCommentUsers.forEach(async (userOne) => {
+      if (isHidden) return;
+      const userLink = userOne.querySelector('.css-1gomreu a') as HTMLAnchorElement;
       const userId = userLink.href.replace(/[\w\W]+\/people\//, '');
       /** 匹配在黑名单的位置 */
       const findUser = (blockedUsers || []).find((i) => i.id === userId);
@@ -106,12 +122,14 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
       if (removeBlockUserComment && isBlocked) {
         isHidden = true;
         fnLog('已隐藏一个黑名单用户的评论，' + `${findUser.name}`);
-        continue;
+        return;
       }
-      if (user.querySelector(`.${CLASS_BLOCK_BOX}`)) continue;
+      // 已经添加过盒子的内容不再处理
+      if (userOne.querySelector(`.${CLASS_BLOCK_BOX}`)) return;
 
+      /** 查找到的用户信息 */
       const commentUserInfo = commentAuthors.find((i) => i.id === userId);
-      if (!commentUserInfo) continue;
+      if (!commentUserInfo) return;
 
       const nBox = domC('div', {
         className: CLASS_BLOCK_BOX,
@@ -133,8 +151,8 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
           return;
         }
       };
-      user.append(nBox);
-    }
+      userOne.append(nBox);
+    });
 
     if (isHidden) {
       item.style.display = 'none';

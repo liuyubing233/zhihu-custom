@@ -1,5 +1,9 @@
 @import "./CHANGELOG_ICONS.md";
 
+## $version
+
+- 🐞 修复评论区内容未扫描到的问题；
+
 ## 5.3.0
 
 `2025-02-24`

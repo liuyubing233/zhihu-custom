@@ -5,6 +5,7 @@ import { fnContentRemoveKeywordSearch } from '../methods/content-remove-keyword-
 import { previewGIF } from '../methods/image';
 import { initLinkChanger } from '../methods/link';
 import { myListenAnswerItem } from '../methods/listen-answer-item';
+import { doListenComment } from '../methods/listen-comment';
 import { myListenListItem } from '../methods/listen-list-item';
 import { myListenSearchListItem } from '../methods/listen-search-list-item';
 import { changeTitle } from '../methods/page-title';
@@ -39,6 +40,7 @@ async function resizeFun() {
   initLinkChanger();
   previewGIF();
   initImagePreview();
+  doListenComment();
   myListenSearchListItem.init();
   myListenAnswerItem.init();
   pathnameHasFn({
