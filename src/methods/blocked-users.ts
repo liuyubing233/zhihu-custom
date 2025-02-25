@@ -195,7 +195,7 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
       credentials: 'include',
     }).then(async () => {
       const blockedUsers = (await myStorage.getConfig()).blockedUsers || [];
-      blockedUsers.push(userInfo);
+      blockedUsers.unshift(userInfo);
       myStorage.updateConfigItem('blockedUsers', blockedUsers);
       const nodeBlackItem = domC('div', {
         className: `ctz-black-item ctz-black-id-${userInfo.id}`,
