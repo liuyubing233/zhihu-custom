@@ -15,7 +15,7 @@ import { initTopStoryRecommendEvent } from './init-top-event-listener';
 
 /** 使用 ResizeObserver 监听body高度 */
 export const initResizeObserver = () => {
-  const resizeObserver = new ResizeObserver(throttle(resizeFun, 500));
+  const resizeObserver = new ResizeObserver(throttle(resizeFun));
   resizeObserver.observe(document.body);
 };
 

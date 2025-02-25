@@ -77,6 +77,9 @@ export const BASIC_SHOW_CONTENT: ICommonContent[][] = [
     { label: '回答置顶创建时间与最后修改时间', value: 'answerItemCreatedAndModifiedTime' },
     { label: '文章发布时间置顶', value: 'articleCreateTimeToTop' },
   ],
+  [
+    {label: '取消评论输入框自动聚焦', value: 'cancelCommentAutoFocus'}
+  ]
 ];
 
 export const HIGH_PERFORMANCE: ICommonContent[][] = [

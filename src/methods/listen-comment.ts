@@ -44,7 +44,23 @@ export const formatCommentAuthors = (data: any[]) => {
 };
 
 /** 监听评论区 */
-export const doListenComment = () => {
+export const doListenComment = async () => {
+  const { cancelCommentAutoFocus } = await myStorage.getConfig();
+  if (cancelCommentAutoFocus) {
+    domA('.notranslate').forEach((item) => {
+      // 取消评论输入框的自动聚焦
+      item.blur();
+
+      // 自动聚焦元素到详情内容，便于快速关闭评论
+      // .QuestionAnswer-content 从列表点进来时的回答内容
+      // .List-item 回答列表内容，搜索列表内容
+      // .TopstoryItem 关注、推荐列表内容
+      const parentBox = domP(item, 'class', 'QuestionAnswer-content') || domP(item, 'class', 'List-item') || domP(item, 'class', 'TopstoryItem');
+      console.log('parentBox', parentBox);
+      parentBox && parentBox.focus();
+    });
+  }
+
   const { setCommentAuthors } = store;
   /** 页面中的评论容器 */
   const nodeCommentInPages = domA(`.css-18ld3w0`);
