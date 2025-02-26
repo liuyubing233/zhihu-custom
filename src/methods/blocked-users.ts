@@ -197,12 +197,13 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
       const blockedUsers = (await myStorage.getConfig()).blockedUsers || [];
       blockedUsers.unshift(userInfo);
       myStorage.updateConfigItem('blockedUsers', blockedUsers);
-      const nodeBlackItem = domC('div', {
+      const nodeUserItem = domC('div', {
         className: `ctz-black-item ctz-black-id-${userInfo.id}`,
         innerHTML: blackItemContent(userInfo),
       });
-      nodeBlackItem.dataset.info = JSON.stringify(userInfo);
-      domById(ID_BLOCK_LIST)!.appendChild(nodeBlackItem);
+      nodeUserItem.dataset.info = JSON.stringify(userInfo);
+      const nodeUsers = domById(ID_BLOCK_LIST)!;
+      nodeUsers.insertBefore(nodeUserItem, nodeUsers.children[0])
       resolve();
     });
   });

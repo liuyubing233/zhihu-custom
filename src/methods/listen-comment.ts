@@ -56,7 +56,6 @@ export const doListenComment = async () => {
       // .List-item 回答列表内容，搜索列表内容
       // .TopstoryItem 关注、推荐列表内容
       const parentBox = domP(item, 'class', 'QuestionAnswer-content') || domP(item, 'class', 'List-item') || domP(item, 'class', 'TopstoryItem');
-      console.log('parentBox', parentBox);
       parentBox && parentBox.focus();
     });
   }
