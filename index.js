@@ -3279,8 +3279,8 @@
       const commentImage = dom(`.comment_img img[data-original="${imageSrc}"]`);
       if (!commentImage) return;
       const { width, height, scaleX, scaleY } = formatPreviewSize(commentImage);
-      const { innerWidth } = window;
-      commentPreviewImage.style.cssText = `width: ${width}px;height: ${height}px;transform: translateX(${innerWidth / 2 - width * scaleX / 2}px) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;transform-origin: 0 0;transition: none;`;
+      const { innerWidth, innerHeight } = window;
+      commentPreviewImage.style.cssText = `width: ${width}px;height: ${height}px;transform: translateX(${innerWidth / 2 - width * scaleX / 2}px) translateY(${innerHeight / 2 - height * scaleY / 2}px) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;transform-origin: 0 0;transition: none;`;
       const nodeImageBox = domP(commentPreviewImage, "class", "ImageView");
       commentPreviewObserver && commentPreviewObserver.disconnect();
       commentPreviewObserver = new MutationObserver((records) => {

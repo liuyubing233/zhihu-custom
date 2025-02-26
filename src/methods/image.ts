@@ -100,14 +100,6 @@ export const formatPreviewSize = (nodeImage: HTMLImageElement): { width: number;
   const scaleX = finallyWidth / DIALOG_INNER_WIDTH;
   const top = document.documentElement.scrollTop + (innerHeight / 2 - finallyHeight / 2);
   const left = innerWidth / 2 - finallyWidth / 2;
-  // previewImage.src = originSrc;
-  // previewImage.style.cssText =
-  //   previewImage.style.cssText +
-  //   `width: ${DIALOG_INNER_WIDTH}px;` +
-  //   `height: ${finallyHeight / scaleY}px;` +
-  //   `top: ${top}px;left: ${left}px;` +
-  //   `transform: translateX(0) translateY(0) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;` +
-  //   `transform-origin: 0 0;`;
 
   return {
     width: DIALOG_INNER_WIDTH,
