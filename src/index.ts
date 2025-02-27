@@ -1,7 +1,7 @@
 import { interceptionResponse } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
-import { dom, domById, fnAppendStyle, fnLog, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
+import { dom, domById, fnAppendStyle, fnLog, formatDataToHump, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './configs/dom-name';
 import { initData } from './init/init-data';
@@ -30,6 +30,7 @@ import { topBlockUser, userHomeAnswers } from './methods/user-home-content';
 import { myVersion } from './methods/version';
 import { fixVideoAutoPlay, initVideoDownload } from './methods/video';
 import { store } from './store';
+import { IZhihuAnswerTarget } from './types/zhihu-answer.type';
 import { INNER_CSS } from './web-resources';
 
 (function () {
@@ -41,7 +42,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href } = location;
-  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, setCommentAuthors } = store;
+  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
 
   /** 挂载脚本时 document.head 是否渲染 */
   let isHaveHeadWhenInit = true;
@@ -114,6 +115,11 @@ import { INNER_CSS } from './web-resources';
           });
           // 评论
           interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
+          // 回答内容
+          interceptionResponse(res, /\/api\/v4\/questions\/[^/]+\/feeds/, (r) => {
+            const answerTargets = r.data.map((i: any) => formatDataToHump(i.target));
+            findRemoveAnswers(answerTargets);
+          });
 
           return res;
         });
@@ -140,10 +146,18 @@ import { INNER_CSS } from './web-resources';
 
   const createLoad = async () => {
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
+      const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
+      // 获取JS默认缓存的列表数据
       try {
-        const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
-        const prevData = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
-        findRemoveRecommends(prevData || []);
+        const prevRecommend = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
+        findRemoveRecommends(prevRecommend || []);
+      } catch {}
+
+      // 获取JS默认缓存的回答数据
+      try {
+        const prevAnswers = JsData.initialState.entities.answers;
+        const answerTargets: IZhihuAnswerTarget[] = Object.values(prevAnswers);
+        answerTargets.length && findRemoveAnswers(answerTargets);
       } catch {}
 
       const { removeTopAD } = await myStorage.getConfig();

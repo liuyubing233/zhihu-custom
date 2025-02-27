@@ -334,11 +334,6 @@
     { key: "removeFollowVoteArticle", rep: "赞同了文章" },
     { key: "removeFollowFQuestion", rep: "关注了问题" }
   ];
-  var HIDDEN_ANSWER_TAG = {
-    removeFromYanxuan: "盐选专栏",
-    removeUnrealAnswer: "虚构创作",
-    removeFromEBook: "电子书"
-  };
   var HIDDEN_ARRAY = [
     {
       key: "CTZ_HIDDEN_COMMON",
@@ -1160,6 +1155,7 @@
       this.commendAuthors = [];
       this.userAnswers = [];
       this.userArticle = [];
+      this.removeAnswers = [];
       this.setUserinfo = this.setUserinfo.bind(this);
       this.getUserinfo = this.getUserinfo.bind(this);
       this.setFindEventItem = this.setFindEventItem.bind(this);
@@ -1174,6 +1170,8 @@
       this.getUserArticle = this.getUserArticle.bind(this);
       this.setCommentAuthors = this.setCommentAuthors.bind(this);
       this.getCommentAuthors = this.getCommentAuthors.bind(this);
+      this.findRemoveAnswers = this.findRemoveAnswers.bind(this);
+      this.getRemoveAnswers = this.getRemoveAnswers.bind(this);
     }
     setUserinfo(inner) {
       this.userinfo = inner;
@@ -1194,16 +1192,15 @@
       return this.storageConfig[key];
     }
     async findRemoveRecommends(recommends) {
-      const config = await myStorage.getConfig();
-      for (let i = 0, len = recommends.length; i < len; i++) {
-        const item = recommends[i];
+      const { removeAnonymousQuestion, removeFromYanxuan } = await myStorage.getConfig();
+      recommends.forEach((item) => {
         const target = item.target;
-        if (!target) continue;
+        if (!target) return;
         let message2 = "";
-        if (config.removeFromYanxuan && target.paid_info) {
+        if (removeFromYanxuan && target.paid_info) {
           message2 = "选自盐选专栏的回答";
         }
-        if (config.removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
+        if (removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
           message2 = "匿名用户的提问";
         }
         if (message2) {
@@ -1212,7 +1209,7 @@
             message: message2
           });
         }
-      }
+      });
     }
     getRemoveRecommends() {
       return this.removeRecommends;
@@ -1234,6 +1231,24 @@
     }
     getCommentAuthors() {
       return this.commendAuthors;
+    }
+    async findRemoveAnswers(answers) {
+      const { removeFromYanxuan } = await myStorage.getConfig();
+      answers.forEach((item) => {
+        let message2 = "";
+        if (removeFromYanxuan && item.answerType === "paid" && item.labelInfo) {
+          message2 = "已删除一条选自盐选专栏的回答";
+        }
+        if (message2) {
+          this.removeAnswers.push({
+            id: item.id,
+            message: message2
+          });
+        }
+      });
+    }
+    getRemoveAnswers() {
+      return this.removeAnswers;
     }
   };
   var store = new Store();
@@ -1356,6 +1371,22 @@
     return "Safari";
   };
   var isSafari = judgeBrowserType() === "Safari";
+  function formatDataToHump(data) {
+    if (!data) return data;
+    if (Array.isArray(data)) {
+      return data.map((item) => {
+        return typeof item === "object" ? formatDataToHump(item) : item;
+      });
+    } else if (typeof data === "object") {
+      const nData = {};
+      Object.keys(data).forEach((prevKey) => {
+        const nKey = prevKey.replace(/\_(\w)/g, (_, $1) => $1.toUpperCase());
+        nData[nKey] = formatDataToHump(data[prevKey]);
+      });
+      return nData;
+    }
+    return data;
+  }
   var doFetchNotInterested = ({ id, type }) => {
     const nHeader = store.getStorageConfigItem("fetchHeaders");
     delete nHeader["vod-authorization"];
@@ -3002,20 +3033,23 @@
         return;
       }
       const nodes = domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`);
-      const config = await myStorage.getConfig();
+      const removeAnswers = store.getRemoveAnswers();
       const {
+        removeFromYanxuan,
+        removeUnrealAnswer,
+        removeFromEBook,
+        removeAnonymousAnswer,
         removeLessVoteDetail,
         lessVoteNumberDetail = 0,
         answerOpen,
         removeBlockUserContent,
         blockedUsers,
-        removeAnonymousAnswer,
         topExportContent,
         blockWordsAnswer = [],
         fetchInterceptStatus,
         answerItemCreatedAndModifiedTime,
         highPerformanceAnswer
-      } = config;
+      } = await myStorage.getConfig();
       const addFnInNodeItem = (nodeItem, initThis) => {
         if (!nodeItem) return;
         updateTopVote(nodeItem);
@@ -3031,13 +3065,13 @@
         }
       };
       addFnInNodeItem(dom(".QuestionAnswer-content"));
-      const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
       let removeUsernames = [];
       removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ""));
       for (let i = 0, len = nodes.length; i < len; i++) {
         let message2 = "";
         const nodeItem = nodes[i];
         nodeItem.classList.add(CLASS_LISTENED);
+        nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
         if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
         const nodeItemContent = nodeItem.querySelector(".ContentItem");
         if (!nodeItemContent) continue;
@@ -3049,15 +3083,20 @@
         } catch {
         }
         (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message2 = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
+        if (!message2 && removeFromYanxuan) {
+          const itemId = String(dataZop.itemId || "");
+          const findItem = removeAnswers.find((i2) => i2.id === itemId);
+          findItem && (message2 = findItem.message);
+        }
         if (!message2) {
           const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
           const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
           const tagNames = (nodeTag1 ? nodeTag1.innerText : "") + (nodeTag2 ? nodeTag2.innerText : "");
-          for (let i2 of hiddenTags) {
-            if (config[i2]) {
-              const nReg = new RegExp(HIDDEN_ANSWER_TAG[i2]);
-              nReg.test(tagNames) && (message2 = `已删除一条标签${HIDDEN_ANSWER_TAG[i2]}的回答`);
-            }
+          if (removeUnrealAnswer) {
+            tagNames.includes("虚构创作") && (message2 = "已删除一条虚构创作的回答");
+          }
+          if (removeFromEBook) {
+            tagNames.includes("电子书") && (message2 = "已删除一条来自电子书的回答");
           }
         }
         if (!message2) {
@@ -4260,7 +4299,7 @@
     });
     const T0 = performance.now();
     const { hostname, href } = location;
-    const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, setCommentAuthors } = store;
+    const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
     let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
@@ -4313,6 +4352,10 @@
               setUserinfo(r);
             });
             interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
+            interceptionResponse(res, /\/api\/v4\/questions\/[^/]+\/feeds/, (r) => {
+              const answerTargets = r.data.map((i) => formatDataToHump(i.target));
+              findRemoveAnswers(answerTargets);
+            });
             return res;
           });
         };
@@ -4335,10 +4378,16 @@
     timerLoadBody();
     const createLoad = async () => {
       if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
+        const JsData = JSON.parse(domById("js-initialData") ? domById("js-initialData").innerText : "{}");
         try {
-          const JsData = JSON.parse(domById("js-initialData") ? domById("js-initialData").innerText : "{}");
-          const prevData = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
-          findRemoveRecommends(prevData || []);
+          const prevRecommend = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
+          findRemoveRecommends(prevRecommend || []);
+        } catch {
+        }
+        try {
+          const prevAnswers = JsData.initialState.entities.answers;
+          const answerTargets = Object.values(prevAnswers);
+          answerTargets.length && findRemoveAnswers(answerTargets);
         } catch {
         }
         const { removeTopAD } = await myStorage.getConfig();

@@ -1,15 +1,7 @@
 import { myStorage } from '../commons/storage';
-import {
-  IContentStorageConfig,
-  IFindEvent,
-  IFindEventEntries,
-  IKeyofFindEvent,
-  IKeyofStorageConfig,
-  IRecommendRemoved,
-  IStorageConfig,
-  IZhihuUserinfo
-} from '../types';
+import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig, IZhihuUserinfo } from '../types';
 import { IBlockedUser } from '../types/blocked-users.type';
+import { IZhihuAnswerTarget } from '../types/zhihu-answer.type';
 import { IZhihuRecommendItem } from '../types/zhihu-recommend.type';
 
 class Store {
@@ -35,6 +27,8 @@ class Store {
   userAnswers: any[] = [];
   /** 当前用户主页的文章内容 */
   userArticle: any[] = [];
+  /** 回答内容过滤的项 */
+  removeAnswers: IRecommendRemoved[] = [];
 
   constructor() {
     // fix this is undefined
@@ -52,6 +46,8 @@ class Store {
     this.getUserArticle = this.getUserArticle.bind(this);
     this.setCommentAuthors = this.setCommentAuthors.bind(this);
     this.getCommentAuthors = this.getCommentAuthors.bind(this);
+    this.findRemoveAnswers = this.findRemoveAnswers.bind(this);
+    this.getRemoveAnswers = this.getRemoveAnswers.bind(this);
   }
 
   setUserinfo(inner: IZhihuUserinfo) {
@@ -74,18 +70,17 @@ class Store {
   }
 
   async findRemoveRecommends(recommends: IZhihuRecommendItem[]) {
-    const config = await myStorage.getConfig();
-    for (let i = 0, len = recommends.length; i < len; i++) {
-      const item = recommends[i];
+    const { removeAnonymousQuestion, removeFromYanxuan } = await myStorage.getConfig();
+    recommends.forEach((item) => {
       const target = item.target;
-      if (!target) continue;
+      if (!target) return;
       let message = '';
       // 盐选专栏回答
-      if (config.removeFromYanxuan && target.paid_info) {
+      if (removeFromYanxuan && target.paid_info) {
         message = '选自盐选专栏的回答';
       }
       // 匿名用于的提问
-      if (config.removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
+      if (removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
         message = '匿名用户的提问';
       }
 
@@ -95,7 +90,7 @@ class Store {
           message,
         });
       }
-    }
+    });
   }
   getRemoveRecommends() {
     return this.removeRecommends;
@@ -118,6 +113,27 @@ class Store {
   }
   getCommentAuthors() {
     return this.commendAuthors;
+  }
+
+  async findRemoveAnswers(answers: IZhihuAnswerTarget[]) {
+    const { removeFromYanxuan } = await myStorage.getConfig();
+    // console.log(answers)
+    answers.forEach((item) => {
+      let message = '';
+      if (removeFromYanxuan && item.answerType === 'paid' && item.labelInfo) {
+        message = '已删除一条选自盐选专栏的回答';
+      }
+
+      if (message) {
+        this.removeAnswers.push({
+          id: item.id,
+          message,
+        });
+      }
+    });
+  }
+  getRemoveAnswers() {
+    return this.removeAnswers;
   }
 }
 

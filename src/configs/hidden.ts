@@ -1,12 +1,5 @@
 import { IHiddenArray } from '../types';
 
-/** 屏蔽带有标签的回答 */
-export const HIDDEN_ANSWER_TAG: Record<string, string> = {
-  removeFromYanxuan: '盐选专栏',
-  removeUnrealAnswer: '虚构创作',
-  removeFromEBook: '电子书',
-};
-
 // 勾选隐藏对应内容
 export const HIDDEN_ARRAY: IHiddenArray = [
   // 通用隐藏

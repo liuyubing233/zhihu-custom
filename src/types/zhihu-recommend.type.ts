@@ -11,7 +11,7 @@ export interface IZhihuRecommendItem {
   action_card: boolean;
 }
 
-export interface Target {
+interface Target {
   id: number;
   type: string;
   url: string;
@@ -39,7 +39,7 @@ export interface Target {
   paid_info?: PaidInfo;
 }
 
-export interface Author {
+interface Author {
   id: string;
   url: string;
   user_type: string;
@@ -54,13 +54,13 @@ export interface Author {
   is_followed: boolean;
 }
 
-export interface PaidInfo {
+interface PaidInfo {
   type: string;
   content: string;
   has_purchased: boolean;
 }
 
-export interface Question {
+interface Question {
   id: number;
   type: string;
   url: string;
@@ -78,11 +78,11 @@ export interface Question {
   question_type: string;
 }
 
-export interface QuestionRelationship {
+interface QuestionRelationship {
   is_author: boolean;
 }
 
-export interface TargetRelationship {
+interface TargetRelationship {
   is_thanked: boolean;
   is_nothelp: boolean;
   voting: number;

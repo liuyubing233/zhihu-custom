@@ -1,7 +1,8 @@
 import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
-import { CLASS_LISTENED, HIDDEN_ANSWER_TAG, OB_CLASS_FOLD } from '../configs';
+import { CLASS_LISTENED, OB_CLASS_FOLD } from '../configs';
+import { store } from '../store';
 import { IZhihuCardContent, IZhihuDataZop } from '../types';
 import { answerAddBlockButton } from './blocked-users';
 import { addAnswerCopyLink } from './link';
@@ -21,20 +22,23 @@ export const myListenAnswerItem = {
     }
 
     const nodes = domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`);
-    const config = await myStorage.getConfig();
+    const removeAnswers = store.getRemoveAnswers();
     const {
+      removeFromYanxuan,
+      removeUnrealAnswer,
+      removeFromEBook,
+      removeAnonymousAnswer,
       removeLessVoteDetail,
       lessVoteNumberDetail = 0,
       answerOpen,
       removeBlockUserContent,
       blockedUsers,
-      removeAnonymousAnswer,
       topExportContent,
       blockWordsAnswer = [],
       fetchInterceptStatus,
       answerItemCreatedAndModifiedTime,
       highPerformanceAnswer,
-    } = config;
+    } = await myStorage.getConfig();
 
     /** 添加功能 */
     const addFnInNodeItem = (nodeItem?: HTMLElement, initThis?: any) => {
@@ -53,7 +57,6 @@ export const myListenAnswerItem = {
     };
 
     addFnInNodeItem(dom('.QuestionAnswer-content'));
-    const hiddenTags = Object.keys(HIDDEN_ANSWER_TAG);
     // 屏蔽用户名称列表
     let removeUsernames: string[] = [];
     removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
@@ -61,6 +64,7 @@ export const myListenAnswerItem = {
       let message = '';
       const nodeItem = nodes[i];
       nodeItem.classList.add(CLASS_LISTENED);
+      nodeItem.dataset.code = `${+new Date()}-${i}`; // 添加唯一标识
       if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       const nodeItemContent = nodeItem.querySelector('.ContentItem');
       if (!nodeItemContent) continue;
@@ -74,18 +78,27 @@ export const myListenAnswerItem = {
       // 低赞回答过滤
       (dataCardContent['upvote_num'] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
 
+      // 屏蔽接口过滤的回答，如盐选专栏...
+      if (!message && removeFromYanxuan) {
+        const itemId = String(dataZop.itemId || '');
+        const findItem = removeAnswers.find((i) => i.id === itemId);
+        findItem && (message = findItem.message);
+      }
+
       // 屏蔽带有选中标签的回答
       if (!message) {
         const nodeTag1 = nodeItem.querySelector('.KfeCollection-AnswerTopCard-Container') as HTMLElement;
         const nodeTag2 = nodeItem.querySelector('.LabelContainer-wrapper') as HTMLElement;
         const tagNames = (nodeTag1 ? nodeTag1.innerText : '') + (nodeTag2 ? nodeTag2.innerText : '');
-        for (let i of hiddenTags) {
-          if (config[i]) {
-            const nReg = new RegExp(HIDDEN_ANSWER_TAG[i]);
-            nReg.test(tagNames) && (message = `已删除一条标签${HIDDEN_ANSWER_TAG[i]}的回答`);
-          }
+        if (removeUnrealAnswer) {
+          tagNames.includes('虚构创作') && (message = '已删除一条虚构创作的回答');
+        }
+
+        if (removeFromEBook) {
+          tagNames.includes('电子书') && (message = '已删除一条来自电子书的回答');
         }
       }
+
       // 屏蔽用户的回答
       if (!message) {
         removeUsernames.includes(dataZop.authorName || '') && (message = `已删除${dataZop.authorName}的回答`);
