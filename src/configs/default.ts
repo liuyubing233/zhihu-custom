@@ -217,6 +217,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   showBlockUserCommentTag: true,
   showBlockUserTag: true,
   commentImageFullPage: true,
+  keyEscCloseCommentDialog: true,
 };
 
 /** 缓存的历史记录数量 */

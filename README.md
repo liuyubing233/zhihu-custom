@@ -250,9 +250,9 @@
 
 开启后打开评论区不再自动聚焦到输入框，方便使用快捷键操作页面<br>
 
-<img src="./static/cancel-comment-auto-focus.png" alt="取消聚焦"><br>
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/cancel-comment-auto-focus.png" alt="取消聚焦"><br>
 
-<img src="./static/cancel-comment-auto-focus-after.png" alt="取消聚焦对比">
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/cancel-comment-auto-focus-after.png" alt="取消聚焦对比">
 
 </details>
 
