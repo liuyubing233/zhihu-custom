@@ -444,4 +444,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   commentImageFullPage?: boolean;
   /** 取消评论输入框自动聚焦 */
   cancelCommentAutoFocus?: boolean;
+  /** 键盘ESC键关闭评论弹窗 */
+  keyEscCloseCommentDialog?: boolean;
 }

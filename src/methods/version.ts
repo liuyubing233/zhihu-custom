@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
-import { THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, VERSION_MIN_WIDTH } from '../configs';
+import { CLASS_ZHIHU_COMMENT_DIALOG, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, VERSION_MIN_WIDTH } from '../configs';
 import { EThemeDark, EThemeLight } from '../types';
 import { isDark } from './background';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './video';
@@ -68,7 +68,6 @@ export const myVersion = {
     const versionSizeHome = !versionHomeIsPercent ? `${versionHome || '1000'}px` : `${versionHomePercent || '70'}vw`;
     const versionSizeAnswer = !versionAnswerIsPercent ? `${versionAnswer || '1000'}px` : `${versionAnswerPercent || '70'}vw`;
     const versionSizeArticle = !versionArticleIsPercent ? `${versionArticle || '1000'}px` : `${versionArticlePercent || '70'}vw`;
-    const CLASS_MODAL = '.css-1aq8hf9';
 
     // 页面内容宽度
     const xxxWidth =
@@ -84,12 +83,12 @@ export const myVersion = {
       // 页面最小宽度
       `.Topstory-mainColumn,.SearchMain,.Question-main,.QuestionHeader-footer-inner` +
       `,.QuestionHeader .QuestionHeader-content,.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div` +
-      `,${CLASS_MODAL},.Topstory-body ${CLASS_MODAL},.PostIndex-body ${CLASS_MODAL}` +
+      `,.${CLASS_ZHIHU_COMMENT_DIALOG},.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG},.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}` +
       `{min-width: ${VERSION_MIN_WIDTH}px!important;}` +
       // 弹窗宽度
       fnReturnStr(
-        `.Topstory-body ${CLASS_MODAL}{width: ${versionSizeHome}!important;}.PostIndex-body ${CLASS_MODAL}{width: ${versionSizeArticle}!important;}` +
-          fnReturnStr(`${CLASS_MODAL}{width: ${versionSizeAnswer}!important;}`, location.pathname.includes('question')) +
+        `.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeHome}!important;}.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeArticle}!important;}` +
+          fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeAnswer}!important;}`, location.pathname.includes('question')) +
           commitModalSizeSameVersion
       );
 

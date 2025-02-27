@@ -78,8 +78,9 @@ export const BASIC_SHOW_CONTENT: ICommonContent[][] = [
     { label: '文章发布时间置顶', value: 'articleCreateTimeToTop' },
   ],
   [
-    {label: '取消评论输入框自动聚焦', value: 'cancelCommentAutoFocus'}
-  ]
+    { label: '取消评论输入框自动聚焦', value: 'cancelCommentAutoFocus' },
+    { label: '键盘ESC键关闭评论弹窗', value: 'keyEscCloseCommentDialog' },
+  ],
 ];
 
 export const HIGH_PERFORMANCE: ICommonContent[][] = [

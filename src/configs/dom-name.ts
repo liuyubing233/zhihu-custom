@@ -22,6 +22,9 @@ export const ID_MESSAGE_BOX = 'CTZ_MESSAGE_BOX';
 /** ID: 额外的弹窗 */
 export const ID_EXTRA_DIALOG = 'CTZ_EXTRA_OUTPUT_DIALOG';
 
+/** class: 知乎评论弹窗 */
+export const CLASS_ZHIHU_COMMENT_DIALOG = 'css-1aq8hf9'
+
 /** 回答收起展开插入的类名 */
 export const OB_CLASS_FOLD = {
   on: 'ctz-fold-open',

@@ -3,7 +3,7 @@ import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domById, fnAppendStyle, fnLog, formatDataToHump, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
-import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './configs/dom-name';
+import { CLASS_ZHIHU_COMMENT_DIALOG, EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './configs/dom-name';
 import { initData } from './init/init-data';
 import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html';
@@ -263,7 +263,7 @@ import { INNER_CSS } from './web-resources';
   });
 
   window.addEventListener('keydown', async (event) => {
-    const { hotKey } = await myStorage.getConfig();
+    const { hotKey, keyEscCloseCommentDialog } = await myStorage.getConfig();
     if (hotKey) {
       // shift + . 唤醒关闭修改器弹窗
       if (event.key === '>' || event.key === '》') {
@@ -276,6 +276,11 @@ import { INNER_CSS } from './web-resources';
         closeExtra();
       } else if (domById('CTZ_OPEN_CLOSE')!.getAttribute('data-close') === '0') {
         openChange();
+      }
+
+      if (keyEscCloseCommentDialog) {
+        const button = dom(`.${CLASS_ZHIHU_COMMENT_DIALOG} button[aria-label="关闭"]`);
+        button && button.click();
       }
     }
 
