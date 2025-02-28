@@ -58,8 +58,8 @@ export const myListenAnswerItem = {
 
     addFnInNodeItem(dom('.QuestionAnswer-content'));
     // 屏蔽用户名称列表
-    let removeUsernames: string[] = [];
-    removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
+    // let removeUsernames: string[] = [];
+    // removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
     for (let i = 0, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];
@@ -100,9 +100,11 @@ export const myListenAnswerItem = {
       }
 
       // 屏蔽用户的回答
-      if (!message) {
-        removeUsernames.includes(dataZop.authorName || '') && (message = `已删除${dataZop.authorName}的回答`);
+      if (!message && removeBlockUserContent && blockedUsers && blockedUsers.length) {
+        const findBlocked = blockedUsers.find((i) => i.urlToken === dataCardContent.author_member_hash_id);
+        findBlocked && (message = `已删除黑名单用户${findBlocked.name}的回答`);
       }
+
       // 屏蔽「匿名用户」回答
       if (!message && removeAnonymousAnswer) {
         const userName = (nodeItem.querySelector('[itemprop="name"]') as HTMLMetaElement).content;

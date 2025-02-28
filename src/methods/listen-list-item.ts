@@ -53,13 +53,10 @@ export const myListenListItem = {
       listOutputToQuestion,
       fetchInterceptStatus,
       removeBlockUserContent,
-      blockedUsers,
+      blockedUsers = [],
     } = pfConfig;
     const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
-    let removeUsernames: string[] = [];
-    removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
-
     const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
     for (let i = 0, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
@@ -81,7 +78,7 @@ export const myListenListItem = {
         dataZop = JSON.parse(nodeContentItem.getAttribute('data-zop') || '{}');
         cardContent = JSON.parse(nodeContentItem.getAttribute('data-za-extra-module') || '{}').card.content;
       } catch {}
-      const { title = '', itemId, authorName } = dataZop || {};
+      const { title = '', itemId } = dataZop || {};
       // 关注列表屏蔽自己的操作
       if (removeMyOperateAtFollow && nodeItem.classList.contains('TopstoryItem-isFollow')) {
         try {
@@ -98,8 +95,9 @@ export const myListenListItem = {
       }
 
       // 屏蔽用户的内容
-      if (!message) {
-        removeUsernames.includes(authorName || '') && (message = `已删除${dataZop.authorName}的内容: ${title}`);
+      if (!message && removeBlockUserContent && blockedUsers && blockedUsers.length) {
+        const findBlocked = blockedUsers.find((i) => i.urlToken === cardContent.author_member_hash_id);
+        findBlocked && (message = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
       }
 
       // 列表种类过滤

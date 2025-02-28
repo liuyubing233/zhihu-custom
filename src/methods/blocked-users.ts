@@ -203,7 +203,7 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
       });
       nodeUserItem.dataset.info = JSON.stringify(userInfo);
       const nodeUsers = domById(ID_BLOCK_LIST)!;
-      nodeUsers.insertBefore(nodeUserItem, nodeUsers.children[0])
+      nodeUsers.insertBefore(nodeUserItem, nodeUsers.children[0]);
       resolve();
     });
   });
@@ -268,19 +268,19 @@ export const answerAddBlockButton = async (event: HTMLElement, objMy?: any) => {
     const me = this as HTMLElement;
     // 屏蔽用户
     if (target.classList.contains(CLASS_BTN_BLACK)) {
-      await addBlockUser({ urlToken, name: userName, id: userId });
+      await addBlockUser({ id: userId, name: userName, urlToken });
       me.innerHTML = await changeBoxHTML(true, !!objMy);
       return;
     }
     // 解除屏蔽
     if (target.classList.contains(CLASS_BTN_BLACK_REMOVE)) {
-      await removeBlockUser({ urlToken, name: userName, id: userId });
+      await removeBlockUser({ id: userId, name: userName, urlToken });
       me.innerHTML = await changeBoxHTML(false, !!objMy);
       return;
     }
     // 屏蔽并隐藏回答
     if (target.classList.contains(CLASS_BTN_BLACK_FILTER)) {
-      await addBlockUser({ urlToken, name: userName, id: userId });
+      await addBlockUser({ id: userId, name: userName, urlToken });
       event.style.display = 'none';
       if (objMy) {
         objMy.index = objMy.index - 1 > 0 ? objMy.index - 1 : 0;
