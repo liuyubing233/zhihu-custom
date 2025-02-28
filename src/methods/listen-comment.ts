@@ -138,6 +138,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
     itemCommentUsers.forEach(async (userOne) => {
       if (isHidden) return;
       const userLink = userOne.querySelector('.css-1gomreu a') as HTMLAnchorElement;
+      if (!userLink) return;
       const userId = userLink.href.replace(/[\w\W]+\/people\//, '');
       /** 匹配在黑名单的位置 */
       const findUser = (blockedUsers || []).find((i) => i.id === userId);
