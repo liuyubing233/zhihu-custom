@@ -31,7 +31,7 @@ import { myVersion } from './methods/version';
 import { fixVideoAutoPlay, initVideoDownload } from './methods/video';
 import { fnReplaceZhidaToSearch } from './methods/zhida-to-search';
 import { store } from './store';
-import { IZhihuAnswerTarget } from './types/zhihu-answer.type';
+import { IZhihuAnswerTarget } from './types/zhihu/zhihu-answer.type';
 import { INNER_CSS } from './web-resources';
 
 (function () {

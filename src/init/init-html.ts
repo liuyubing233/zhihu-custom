@@ -5,7 +5,8 @@ import { addBackgroundSetting } from '../methods/background';
 import { initBlockedUsers, initBlockedUserTags } from '../methods/blocked-users';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
 import { initMenu } from '../methods/menu';
-import { IRangeItem, IZhihuUserinfo } from '../types';
+import { IRangeItem } from '../types';
+import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../web-resources';
 
 const tooltipHTML = (value: string) => `<span class="ctz-tooltip"><span>?</span><span>${value}</span></span>`;

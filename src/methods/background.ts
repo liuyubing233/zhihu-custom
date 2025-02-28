@@ -14,15 +14,13 @@ export const myBackground = {
   init: async function () {
     const { themeDark = EThemeDark.深色一, themeLight = EThemeLight.默认, colorText1 } = await myStorage.getConfig();
     const useDark = await isDark();
-    const getBackground = async () => {
-      if (useDark) return this.dark(themeDark);
-      if (+themeLight === EThemeLight.默认) return this.default();
-      return this.light(themeLight);
-    };
-    fnAppendStyle('CTZ_STYLE_BACKGROUND', (await getBackground()) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
 
-    const domHTML = dom('html');
-    if (!domHTML) return;
+    fnAppendStyle(
+      'CTZ_STYLE_BACKGROUND',
+      (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)
+    );
+
+    const domHTML = dom('html')!;
     if (useDark) {
       domHTML.setAttribute('theme-dark', `${themeDark}`);
       domHTML.removeAttribute('theme-light');
@@ -40,8 +38,9 @@ export const myBackground = {
       `.SignContainer-content input:-webkit-autofill{-webkit-box-shadow: inset 0 0 0 30px ${bg2}!important;}`
     );
   },
-  default: () => '.GlobalSideBar-navList{background: #fff}',
   light: function (lightKey: EThemeLight) {
+    if (+lightKey === +EThemeLight.默认) return '';
+
     const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
     // Header 变化
     const nodeAppHeader = dom('.AppHeader');
@@ -52,8 +51,7 @@ export const myBackground = {
     return (
       this.doSetCSS(background, background2) +
       `.MenuBar-root-rQeFm{border-color: ${background}!important;}` +
-      `${headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : '.AppHeader'}{background-color:${background2}!important;background:${background2}!important;}` +
-      `.ctz-menu-top>a.target::before,.ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}`
+      `${headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : '.AppHeader'}{background-color:${background2}!important;background:${background2}!important;}`
     );
   },
   dark: function (darkKey: EThemeDark) {
@@ -150,13 +148,6 @@ export const myBackground = {
     `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k` +
     `,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`,
   cssBG1Color: `.css-z0izby`,
-  menuBeforeAfter: (color: string, size = '12px') =>
-    `background: radial-gradient(circle at top left, transparent ${size}, ${color} 0) top left,` +
-    `radial-gradient(circle at top right, transparent ${size}, ${color} 0) top right,` +
-    `radial-gradient(circle at bottom right, transparent ${size}, ${color} 0) bottom right,` +
-    `radial-gradient(circle at bottom left, transparent ${size}, ${color} 0) bottom left;` +
-    `background-size: 50% 50%;` +
-    `background-repeat: no-repeat;`,
 };
 
 /** 自定义样式方法 */

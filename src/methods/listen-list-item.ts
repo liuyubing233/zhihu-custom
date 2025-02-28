@@ -4,7 +4,8 @@ import { myStorage } from '../commons/storage';
 import { createButtonFontSize12, dom, domA, domP, fnLog } from '../commons/tools';
 import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
 import { store } from '../store';
-import { EThemeDark, EThemeLight, IZhihuCardContent, IZhihuDataZop } from '../types';
+import { EThemeDark, EThemeLight } from '../types';
+import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
 import { doHighlightOriginal } from './background';
 
 /** 监听列表内容 - 过滤  */

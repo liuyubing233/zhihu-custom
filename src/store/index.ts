@@ -1,8 +1,9 @@
 import { myStorage } from '../commons/storage';
-import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig, IZhihuUserinfo } from '../types';
+import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig } from '../types';
 import { IBlockedUser } from '../types/blocked-users.type';
-import { IZhihuAnswerTarget } from '../types/zhihu-answer.type';
-import { IZhihuRecommendItem } from '../types/zhihu-recommend.type';
+import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
+import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';
+import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
 
 class Store {
   /** 用户信息 更改prev: userInfo */

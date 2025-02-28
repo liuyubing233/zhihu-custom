@@ -1,8 +1,8 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC, fnDomReplace, fnReturnStr, message } from '../commons/tools';
 import { store } from '../store';
-import { IZhihuCardContent } from '../types';
 import { IBlockedUser } from '../types/blocked-users.type';
+import { IZhihuCardContent } from '../types/zhihu/zhihu.type';
 import { closeExtra, openExtra } from './open';
 
 /** class: 黑名单元素删除按钮类名 */

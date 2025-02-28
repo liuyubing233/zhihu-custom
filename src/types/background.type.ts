@@ -1,4 +1,3 @@
-import { IOptionItem } from './common.type';
 
 /** 主题风格 */
 export enum ETheme {
@@ -45,16 +44,4 @@ export interface IThemeValue {
   background2: string;
   /** 主题色 */
   primary: string;
-}
-
-export type IHiddenArray = IHiddenItem[];
-
-export interface IHiddenContentItem extends IOptionItem {
-  css: string;
-}
-export interface IHiddenItem {
-  key: string;
-  name: string;
-  desc: string;
-  content: IHiddenContentItem[][];
 }

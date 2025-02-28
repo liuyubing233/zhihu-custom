@@ -1849,14 +1849,11 @@
     init: async function() {
       const { themeDark = 1 /* 深色一 */, themeLight = 0 /* 默认 */, colorText1 } = await myStorage.getConfig();
       const useDark = await isDark();
-      const getBackground = async () => {
-        if (useDark) return this.dark(themeDark);
-        if (+themeLight === 0 /* 默认 */) return this.default();
-        return this.light(themeLight);
-      };
-      fnAppendStyle("CTZ_STYLE_BACKGROUND", await getBackground() + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1));
+      fnAppendStyle(
+        "CTZ_STYLE_BACKGROUND",
+        (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)
+      );
       const domHTML = dom("html");
-      if (!domHTML) return;
       if (useDark) {
         domHTML.setAttribute("theme-dark", `${themeDark}`);
         domHTML.removeAttribute("theme-light");
@@ -1868,15 +1865,15 @@
     doSetCSS: function(bg1, bg2) {
       return `${this.cssBG1}{background-color: ${bg1}!important;}${this.cssBG2}{background-color:${bg2}!important;background:${bg2}!important;}${this.cssBGTransparent}{background-color: transparent!important;background: transparent!important;}${this.cssBG1Color}{color: ${bg1}!important}.SignContainer-content input:-webkit-autofill{-webkit-box-shadow: inset 0 0 0 30px ${bg2}!important;}`;
     },
-    default: () => ".GlobalSideBar-navList{background: #fff}",
     light: function(lightKey) {
+      if (+lightKey === +0 /* 默认 */) return "";
       const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
       const nodeAppHeader = dom(".AppHeader");
       const nodeTopStoryC = dom(".Topstory>div:not(.Topstory-container)");
       const elementHC = nodeAppHeader ? nodeAppHeader.classList || [] : [];
       const haveTopAD = nodeTopStoryC && nodeTopStoryC.childElementCount;
       const headerBelongAd = haveTopAD ? elementHC[elementHC.length - 1] : "";
-      return this.doSetCSS(background, background2) + `.MenuBar-root-rQeFm{border-color: ${background}!important;}${headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : ".AppHeader"}{background-color:${background2}!important;background:${background2}!important;}.ctz-menu-top>a.target::before,.ctz-menu-top>a.target::after{${this.menuBeforeAfter(background2)}}`;
+      return this.doSetCSS(background, background2) + `.MenuBar-root-rQeFm{border-color: ${background}!important;}${headerBelongAd ? `.AppHeader:not(.${headerBelongAd})` : ".AppHeader"}{background-color:${background2}!important;background:${background2}!important;}`;
     },
     dark: function(darkKey) {
       const { background, background2 } = THEME_CONFIG_DARK[darkKey];
@@ -1892,8 +1889,7 @@
       "App-root,PcContent-root,TopNavBar-root,CourseConsultation-corner,CourseConsultation-cornerButton,CornerButtonToTop-cornerButton,LearningRouteCard-pathContent,index-item,index-hoverCard,ShelfTopNav-root,ProductCard-root,NewOrderedLayout-root,Tabs-tabHeader,ButtonBar-root,WebPage-root,LearningPathWayCard-pathItem,VideoCourseList-title,Article-header,PcContent-coverFix,index-module,TopNavBar-module,PcContent-module,CourseRecord-module,Learned-module,Tab-module,PcContentBought-module,Media-module"
     )}`,
     cssBGTransparent: `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`,
-    cssBG1Color: `.css-z0izby`,
-    menuBeforeAfter: (color, size = "12px") => `background: radial-gradient(circle at top left, transparent ${size}, ${color} 0) top left,radial-gradient(circle at top right, transparent ${size}, ${color} 0) top right,radial-gradient(circle at bottom right, transparent ${size}, ${color} 0) bottom right,radial-gradient(circle at bottom left, transparent ${size}, ${color} 0) bottom left;background-size: 50% 50%;background-repeat: no-repeat;`
+    cssBG1Color: `.css-z0izby`
   };
   var myCustomStyle = {
     init: async function() {
