@@ -86,19 +86,28 @@
 
 </details>
 
-<!-- 去除热词点击搜索 -->
+<!-- 替换知乎直达✦为搜索 -->
 
 <details>
 
-<summary>去除热词点击搜索</summary>
+<summary>替换知乎直达✦为搜索</summary>
 
-> 菜单目录：通用 - 显示修改
+> 菜单目录：通用 - 显示修改 - 替换知乎直达 ✦ 为搜索
 
 <br>
 
-开启后将页面中的搜索词、AI 搜索词将会显示为正常文本，并去除点击跳转<br>
+1. 设置知乎直达去除直达链接跳转，可以将知乎直达修改为普通文字内容<br>
+2. 设置为知乎、百度、必应、谷歌搜索，可以将知乎直达修改为对应的搜索链接，点击可跳转自动搜索<br>
 
-<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/word-search.png" alt="去除热词点击搜索">
+<img src="./static/setting-replace-zhida.png" alt="直达设置">
+
+<br>
+
+---
+
+<br>
+
+<img src="./static/replace-zhida.png" alt="直达">
 
 </details>
 
