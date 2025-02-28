@@ -3,13 +3,14 @@ import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
 import { CLASS_LISTENED, OB_CLASS_FOLD } from '../configs';
 import { store } from '../store';
-import { IZhihuCardContent, IZhihuDataZop } from '../types';
+import { EAnswerOpen, IZhihuCardContent, IZhihuDataZop } from '../types';
 import { answerAddBlockButton } from './blocked-users';
 import { addAnswerCopyLink } from './link';
 import { printAnswer, printArticle } from './print';
 import { updateItemTime } from './time';
 import { updateTopVote } from './topVote';
 import { initVideoDownload } from './video';
+import { fnReplaceZhidaToSearch } from './zhida-to-search';
 
 /** 监听详情回答 - 过滤 */
 export const myListenAnswerItem = {
@@ -30,7 +31,7 @@ export const myListenAnswerItem = {
       removeAnonymousAnswer,
       removeLessVoteDetail,
       lessVoteNumberDetail = 0,
-      answerOpen,
+      answerOpen = EAnswerOpen.默认,
       removeBlockUserContent,
       blockedUsers,
       topExportContent,
@@ -47,6 +48,7 @@ export const myListenAnswerItem = {
       answerItemCreatedAndModifiedTime && updateItemTime(nodeItem);
       initVideoDownload(nodeItem);
       addAnswerCopyLink(nodeItem);
+      fnReplaceZhidaToSearch(nodeItem)
       if (fetchInterceptStatus) {
         answerAddBlockButton(nodeItem, initThis);
         if (topExportContent) {
@@ -136,16 +138,16 @@ export const myListenAnswerItem = {
         addFnInNodeItem(nodeItem, this);
         fnJustNum(nodeItem);
         // 自动展开回答 和 默认收起长回答
-        if (answerOpen) {
+        if (answerOpen !== EAnswerOpen.默认) {
           const buttonUnfold = nodeItem.querySelector('.ContentItem-expandButton') as HTMLButtonElement;
           const buttonFold = nodeItem.querySelector('.RichContent-collapsedText') as HTMLButtonElement;
-          if (answerOpen === 'on' && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
+          if (answerOpen === EAnswerOpen.自动展开所有回答 && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
             buttonUnfold && buttonUnfold.click();
             nodeItem.classList.add(OB_CLASS_FOLD.on);
           }
           const isF = buttonFold && nodeItem.offsetHeight > 939;
           const isFC = buttonUnfold; // 已经收起的回答
-          if (answerOpen === 'off' && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
+          if (answerOpen === EAnswerOpen.默认收起长回答 && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
             nodeItem.classList.add(OB_CLASS_FOLD.off);
             isF && buttonFold && buttonFold.click();
           }

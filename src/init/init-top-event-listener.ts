@@ -8,6 +8,7 @@ import { printAnswer, printArticle } from '../methods/print';
 import { updateItemTime } from '../methods/time';
 import { updateTopVote } from '../methods/topVote';
 import { CLASS_VIDEO_ONE, initVideoDownload } from '../methods/video';
+import { fnReplaceZhidaToSearch } from '../methods/zhida-to-search';
 
 const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon'];
 const canFindTargeted = (e: HTMLElement) => {
@@ -46,6 +47,7 @@ const cbEventListener = async (event: Event) => {
       listItemCreatedAndModifiedTime && updateItemTime(nodeItem);
       initVideoDownload(nodeItem);
       addAnswerCopyLink(nodeItem);
+      fnReplaceZhidaToSearch(nodeItem)
       if (fetchInterceptStatus) {
         answerAddBlockButton(nodeItem.parentElement!);
         if (topExportContent) {

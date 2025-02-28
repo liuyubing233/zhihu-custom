@@ -1,5 +1,6 @@
 import { ETheme, EThemeDark, EThemeLight } from './background.type';
 import { IBlockedUser } from './blocked-users.type';
+import { EAnswerOpen, ELinkShopping, EReplaceZhidaToSearch, ESuspensionOpen, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from './select-options.type';
 
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {
@@ -304,7 +305,7 @@ export interface IConfigSuspension {
   /** 悬浮收起按钮位置，数字越大离右侧越远 */
   suspensionPickupRight?: number;
   /** 修改器弹出图标定位方式 */
-  suspensionOpen?: '0' | '1';
+  suspensionOpen?: ESuspensionOpen;
   suspensionOpenRight?: string;
   suspensionOpenLeft?: string;
   suspensionOpenBottom?: string;
@@ -321,7 +322,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 自定义样式 */
   customizeCss?: string;
   /** 知乎默认 | 自动展开所有回答 | 默认收起所有长回答 */
-  answerOpen?: '' | 'on' | 'off';
+  answerOpen?: EAnswerOpen;
   /** 屏蔽词方法：列表标题屏蔽 */
   filterKeywords?: string[];
   /** 屏蔽词方法：回答内容屏蔽 */
@@ -347,7 +348,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 文章页面内容宽度百分比内容 */
   versionArticlePercent?: string;
   /** 图片尺寸自定义类型 0 1 2 */
-  zoomImageType?: '0' | '1' | '2';
+  zoomImageType?: EZoomImageType;
   /** 图片尺寸自定义大小 */
   zoomImageSize?: string;
   /** 使用弹窗打开动图 */
@@ -377,7 +378,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 文章发布时间置顶 */
   articleCreateTimeToTop?: boolean;
   /** 购物链接显示设置 0 1 2 */
-  linkShopping?: '0' | '1' | '2';
+  linkShopping?: ELinkShopping;
   /** 列表标题文字大小 */
   fontSizeForListTitle?: string;
   /** 回答标题文字大小 */
@@ -393,7 +394,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 内容行高 */
   contentLineHeight?: string;
   /** 列表视频回答内容尺寸 */
-  zoomListVideoType?: string;
+  zoomListVideoType?: EZoomListVideoType;
   /** 列表视频回答内容缩放 */
   zoomListVideoSize?: string;
   /** 唤醒快捷键是否开启 */
@@ -428,12 +429,12 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   copyAnswerLink?: boolean;
   /** 时间戳 */
   t?: number;
-  /** 去除热词点击搜索 */
-  contentRemoveKeywordSearch?: boolean;
+  // /** 去除热词点击搜索 */
+  // contentRemoveKeywordSearch?: boolean;
   /** 去除浏览器标签上XX条私信/未读消息的提示 */
   globalTitleRemoveMessage?: boolean;
   /** 图片最大高度限制 */
-  zoomImageHeight?: '0' | '1';
+  zoomImageHeight?: EZoomImageHeight;
   /** 图片最大高度限制数 */
   zoomImageHeightSize?: string;
   /** 推荐列表高性能模式 */
@@ -446,4 +447,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   cancelCommentAutoFocus?: boolean;
   /** 键盘ESC键关闭评论弹窗 */
   keyEscCloseCommentDialog?: boolean;
+  /** 替换知乎直达为搜索 */
+  replaceZhidaToSearch?: EReplaceZhidaToSearch;
 }

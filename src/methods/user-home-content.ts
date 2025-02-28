@@ -72,9 +72,7 @@ export const topBlockUser = async () => {
   const domProfileHeader = domById('ProfileHeader');
   if (!domProfileHeader || !domProfileHeader.dataset.zaExtraModule) {
     // 解决用户主页重置的情况
-    setTimeout(() => {
-      topBlockUser();
-    }, 500);
+    setTimeout(topBlockUser, 500);
     return;
   }
 

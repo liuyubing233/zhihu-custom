@@ -41,7 +41,7 @@ export const DE = [
 
 /** 基础设置 - 显示设置部分 */
 export const BASIC_SHOW_CONTENT: ICommonContent[][] = [
-  [{ label: '去除热词点击搜索', value: 'contentRemoveKeywordSearch' }],
+  // [{ label: '去除热词点击搜索', value: 'contentRemoveKeywordSearch' }],
   [
     {
       label:

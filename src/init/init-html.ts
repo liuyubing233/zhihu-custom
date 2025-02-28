@@ -1,5 +1,6 @@
-import { dom, domById, domC } from '../commons/tools';
+import { dom, domA, domById, domC } from '../commons/tools';
 import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
+import { OPTIONS_MAP } from '../configs/select-options';
 import { addBackgroundSetting } from '../methods/background';
 import { initBlockedUsers, initBlockedUserTags } from '../methods/blocked-users';
 import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
@@ -89,6 +90,14 @@ export const initHTML = () => {
   dom('#CTZ_BASIS_SHOW_CONTENT')!.innerHTML += commonFormBoxItem(BASIC_SHOW_CONTENT);
   // 高性能
   dom('#CTZ_HIGH_PERFORMANCE')!.innerHTML += commonFormBoxItem(HIGH_PERFORMANCE);
+
+  // 添加 select 选择框内容
+  domA('.ctz-select').forEach((item) => {
+    const name = (item as HTMLSelectElement).name;
+    if (OPTIONS_MAP[name]) {
+      item.innerHTML = OPTIONS_MAP[name].map(({ value, label }) => `<option value="${value}">${label}</option>`).join('');
+    }
+  });
 
   initFetchInterceptStatus();
   initBlockedUsers();

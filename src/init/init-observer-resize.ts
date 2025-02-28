@@ -1,7 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/tools';
 import { HTML_HOOTS } from '../configs';
-import { fnContentRemoveKeywordSearch } from '../methods/content-remove-keyword-search';
 import { previewGIF } from '../methods/image';
 import { initLinkChanger } from '../methods/link';
 import { myListenAnswerItem } from '../methods/listen-answer-item';
@@ -36,7 +35,7 @@ async function resizeFun() {
     // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
     heightTopStoryContent < window.innerHeight && windowResize();
   }
-  contentRemoveKeywordSearch && fnContentRemoveKeywordSearch(document.body);
+  // contentRemoveKeywordSearch && fnContentRemoveKeywordSearch(document.body);
   initLinkChanger();
   previewGIF();
   initImagePreview();

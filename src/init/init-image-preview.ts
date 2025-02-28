@@ -1,6 +1,7 @@
 import { myStorage } from '../commons/storage';
 import { domA } from '../commons/tools';
 import { myPreview } from '../methods/preview';
+import { EZoomImageType } from '../types';
 
 /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
 export const initImagePreview = async () => {
@@ -16,7 +17,7 @@ export const initImagePreview = async () => {
     }
   }
 
-  if (zoomImageType === '2') {
+  if (zoomImageType === EZoomImageType.自定义尺寸) {
     const originImages = domA('.origin_image:not(.ctz-processed)');
     for (let i = 0, len = originImages.length; i < len; i++) {
       const nodeItem = originImages[i] as HTMLImageElement;

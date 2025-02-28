@@ -100,24 +100,27 @@
 
           <div class="ctz-form-box">
             <div class="ctz-form-box-item">
-              <div>购物链接显示</div>
+              <div>购物链接显示方式</div>
               <div>
-                <select class="ctz-select" name="linkShopping">
-                  <option value="0">默认</option>
-                  <option value="1">仅文字</option>
-                  <option value="2">隐藏</option>
-                </select>
+                <select class="ctz-select" name="linkShopping"></select>
               </div>
             </div>
 
             <div class="ctz-form-box-item">
               <div>回答内容收起/展开状态</div>
               <div>
-                <select class="ctz-select" name="answerOpen">
-                  <option value="">默认</option>
-                  <option value="on">自动展开所有回答</option>
-                  <option value="off">默认收起长回答</option>
-                </select>
+                <select class="ctz-select" name="answerOpen"></select>
+              </div>
+            </div>
+
+            <div class="ctz-form-box-item">
+              <div>
+                替换
+                <span class="ctz-zhida">知乎直达<span>✦</span></span>
+                为搜索
+              </div>
+              <div>
+                <select class="ctz-select" name="replaceZhidaToSearch"></select>
               </div>
             </div>
           </div>
@@ -131,10 +134,7 @@
             <div class="ctz-form-box-item">
               <div>修改器弹出图标 ⚙︎ 定位方式</div>
               <div>
-                <select class="ctz-select" name="suspensionOpen">
-                  <option value="0">左右</option>
-                  <option value="1">上下</option>
-                </select>
+                <select class="ctz-select" name="suspensionOpen"></select>
               </div>
             </div>
           </div>
@@ -489,11 +489,7 @@
             <div class="ctz-form-box-item">
               <div>回答和文章图片尺寸</div>
               <div>
-                <select class="ctz-select" name="zoomImageType">
-                  <option value="0">默认尺寸</option>
-                  <option value="1">原图尺寸</option>
-                  <option value="2">自定义尺寸</option>
-                </select>
+                <select class="ctz-select" name="zoomImageType"></select>
               </div>
             </div>
             <div id="CTZ_IMAGE_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div>
@@ -509,10 +505,7 @@
                 </span>
               </div>
               <div>
-                <select class="ctz-select" name="zoomImageHeight">
-                  <option value="0">关闭</option>
-                  <option value="1">开启</option>
-                </select>
+                <select class="ctz-select" name="zoomImageHeight"></select>
               </div>
             </div>
             <div id="CTZ_IMAGE_HEIGHT_CUSTOM" class="ctz-form-box-item" style="display: none"></div>
@@ -538,10 +531,7 @@
             <div class="ctz-form-box-item">
               <div>列表视频回答尺寸</div>
               <div>
-                <select class="ctz-select" name="zoomListVideoType">
-                  <option value="0">默认尺寸</option>
-                  <option value="2">自定义尺寸</option>
-                </select>
+                <select class="ctz-select" name="zoomListVideoType"></select>
               </div>
             </div>
             <div id="CTZ_LIST_VIDEO_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div>

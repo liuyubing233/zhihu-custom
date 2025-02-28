@@ -1,5 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById } from '../commons/tools';
+import { ESuspensionOpen } from '../types';
 import { openChange } from './open';
 
 /** 绑定页面元素的点击拖动方法 */
@@ -107,7 +108,7 @@ export const moveAndOpen = async () => {
   const openButton = domById('CTZ_OPEN_CLOSE')!;
   // 初始化
   const prevConfig = await myStorage.getConfig();
-  if (prevConfig.suspensionOpen === '1') {
+  if (prevConfig.suspensionOpen === ESuspensionOpen.上下) {
     // 上下定位
     if (prevConfig.suspensionOpenUseTop) {
       openButton.style.top = '0';
@@ -182,20 +183,22 @@ export const moveAndOpen = async () => {
     document.onmouseup = (eventFinally) => {
       const { useTop, useLeft, top, left, bottom, right } = formatPosition(me, eventFinally, dx, dy);
 
-      me.style.left = useLeft ? (config.suspensionOpen === '1' ? `${left}px` : '0') : '';
-      me.style.right = !useLeft ? (config.suspensionOpen === '1' ? `${right}px` : '0') : '';
-      me.style.top = useTop ? (config.suspensionOpen !== '1' ? `${top}px` : '0') : '';
-      me.style.bottom = !useTop ? (config.suspensionOpen !== '1' ? `${bottom}px` : '0') : '';
+      const isUpDown = config.suspensionOpen === ESuspensionOpen.上下
+
+      me.style.left = useLeft ? (isUpDown ? `${left}px` : '0') : '';
+      me.style.right = !useLeft ? (isUpDown ? `${right}px` : '0') : '';
+      me.style.top = useTop ? (!isUpDown ? `${top}px` : '0') : '';
+      me.style.bottom = !useTop ? (!isUpDown ? `${bottom}px` : '0') : '';
       me.style.transitionProperty = 'all';
 
       const suspension = {
-        suspensionOpen: config.suspensionOpen || '0',
+        suspensionOpen: config.suspensionOpen || ESuspensionOpen.左右,
         suspensionOpenUseTop: useTop,
         suspensionOpenUseLeft: useLeft,
-        suspensionOpenLeft: useLeft ? (config.suspensionOpen === '1' ? `${left}px` : '0') : '',
-        suspensionOpenRight: !useLeft ? (config.suspensionOpen === '1' ? `${right}px` : '0') : '',
-        suspensionOpenTop: useTop ? (config.suspensionOpen !== '1' ? `${top}px` : '0') : '',
-        suspensionOpenBottom: !useTop ? (config.suspensionOpen !== '1' ? `${bottom}px` : '0') : '',
+        suspensionOpenLeft: useLeft ? (isUpDown ? `${left}px` : '0') : '',
+        suspensionOpenRight: !useLeft ? (isUpDown ? `${right}px` : '0') : '',
+        suspensionOpenTop: useTop ? (!isUpDown ? `${top}px` : '0') : '',
+        suspensionOpenBottom: !useTop ? (!isUpDown ? `${bottom}px` : '0') : '',
       };
 
       myStorage.updateConfig({

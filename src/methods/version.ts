@@ -1,7 +1,7 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
 import { CLASS_ZHIHU_COMMENT_DIALOG, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, VERSION_MIN_WIDTH } from '../configs';
-import { EThemeDark, EThemeLight } from '../types';
+import { ELinkShopping, EThemeDark, EThemeLight, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../types';
 import { isDark } from './background';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './video';
 
@@ -17,11 +17,11 @@ export const myVersion = {
   initAfterLoad: async function () {
     const pfConfig = await myStorage.getConfig();
     // 自定义图片尺寸大小 range 显隐
-    domById('CTZ_IMAGE_SIZE_CUSTOM')!.style.display = pfConfig.zoomImageType === '2' ? 'flex' : 'none';
+    domById('CTZ_IMAGE_SIZE_CUSTOM')!.style.display = pfConfig.zoomImageType === EZoomImageType.自定义尺寸 ? 'flex' : 'none';
     // 自定义图片尺寸高度限制
-    domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.style.display = pfConfig.zoomImageHeight === '1' ? 'flex' : 'none';
+    domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.style.display = pfConfig.zoomImageHeight === EZoomImageHeight.开启 ? 'flex' : 'none';
     // 自定义列表视频回答内容 range 显隐
-    domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.style.display = pfConfig.zoomListVideoType === '2' ? 'flex' : 'none';
+    domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.style.display = pfConfig.zoomListVideoType === EZoomListVideoType.自定义尺寸 ? 'flex' : 'none';
   },
   content: async function () {
     const {
@@ -95,13 +95,13 @@ export const myVersion = {
     /** 图片尺寸修改 */
     const xxxImage = `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${
       // 高度控制优先
-      (zoomImageHeight === '1' ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : '') ||
+      (zoomImageHeight === EZoomImageHeight.开启 ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : '') ||
       // 宽度控制在后
-      (zoomImageType === '2' ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : '')
+      (zoomImageType === EZoomImageType.自定义尺寸 ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : '')
     }}`;
 
     /** 列表视频回答内容尺寸修改 */
-    const xxxVideo = `.ZVideoItem>div:first-of-type{${fnReturnStr(`width: ${zoomListVideoSize}px!important;`, zoomListVideoType === '2')}}`;
+    const xxxVideo = `.ZVideoItem>div:first-of-type{${fnReturnStr(`width: ${zoomListVideoSize}px!important;`, zoomListVideoType === EZoomListVideoType.自定义尺寸)}}`;
 
     /** 列表更多按钮移动至题目右侧 */
     const xxxListMore = fnReturnStr(
@@ -156,8 +156,8 @@ export const myVersion = {
 
     // 购物链接CSS
     const cssShoppingLinkObj = {
-      0: '',
-      1:
+      [ELinkShopping.默认]: '',
+      [ELinkShopping.仅文字]:
         '.MCNLinkCard-imageContainer,.MCNLinkCard-button,.MCNLinkCard-source' +
         ',.ecommerce-ad-commodity-img,.ecommerce-ad-commodity-box-icon,.RichText-MCNLinkCardContainer .BottomInfo' +
         ',.CPSCommonCard-imageBox,.RedPacketCard-imageBox,.CPSCommonCard-tool,.CPSCommonCard-subtitle' +
@@ -179,10 +179,11 @@ export const myVersion = {
         ',.CPSCommonCard-title::before,.RedPacketCard-title::before' +
         '{content: "购物链接："}' +
         '.MCNLinkCard-title{color: #fd8d55!important;}',
-      2: 'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box' + ',.RichText-MCNLinkCardContainer' + '{display: none!important;}',
+      [ELinkShopping.隐藏]:
+        'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box' + ',.RichText-MCNLinkCardContainer' + '{display: none!important;}',
     };
 
-    const xxxShoppingLink = cssShoppingLinkObj[linkShopping || '0'];
+    const xxxShoppingLink = cssShoppingLinkObj[linkShopping || ELinkShopping.默认];
 
     /** 调整文字大小 */
     const xxxFontSize =

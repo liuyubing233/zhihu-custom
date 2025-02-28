@@ -19,6 +19,7 @@
   overflow: hidden;
   z-index: 202;
   font-size: @fontSize;
+  border: 1px solid @gray01;
 
   input[type='text'],
   input[type='number'],
@@ -216,7 +217,7 @@
     color: #fff;
     font-size: 12px;
     line-height: 20px;
-    min-width: 0!important;
+    min-width: 0 !important;
   }
   [name='dialogClose'] {
     background: #fe6059;
@@ -285,5 +286,17 @@
   min-width: 420px;
   .ctz-button {
     min-width: 68px;
+  }
+}
+
+.ctz-zhida {
+  color: rgb(9, 64, 142);
+  margin: 0 2px;
+  span {
+    font-size: 10px;
+    display: inline-block;
+    vertical-align: top;
+    height: 15px;
+    line-height: 15px;
   }
 }

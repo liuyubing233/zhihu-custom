@@ -29,6 +29,7 @@ import { addArticleTime, addQuestionTime } from './methods/time';
 import { topBlockUser, userHomeAnswers } from './methods/user-home-content';
 import { myVersion } from './methods/version';
 import { fixVideoAutoPlay, initVideoDownload } from './methods/video';
+import { fnReplaceZhidaToSearch } from './methods/zhida-to-search';
 import { store } from './store';
 import { IZhihuAnswerTarget } from './types/zhihu-answer.type';
 import { INNER_CSS } from './web-resources';
@@ -250,6 +251,7 @@ import { INNER_CSS } from './web-resources';
     if (hostname === 'zhuanlan.zhihu.com') {
       setTimeout(() => {
         initVideoDownload(dom('.Post-content'));
+        fnReplaceZhidaToSearch()
       }, 500);
     }
 
