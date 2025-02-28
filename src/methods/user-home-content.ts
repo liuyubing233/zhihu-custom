@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { dom, domA, domC, insertAfter } from '../commons/tools';
+import { dom, domA, domById, domC, insertAfter } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
 import { formatTime } from './time';
 
@@ -7,7 +7,7 @@ let timer: NodeJS.Timeout | undefined = undefined;
 
 /** 用户主页回答内容修改、用户主页文章内容修改 */
 export const userHomeAnswers = async () => {
-  const { userHomeContentTimeTop } = await myStorage.getConfig()
+  const { userHomeContentTimeTop } = await myStorage.getConfig();
   if (!userHomeContentTimeTop) return;
 
   const doContent = (domList: NodeListOf<HTMLElement>) => {
@@ -62,12 +62,22 @@ let blockObserver: MutationObserver | undefined;
 
 /** 用户主页置顶「屏蔽用户」按钮 */
 export const topBlockUser = async () => {
-  const { userHomeTopBlockUser } = await myStorage.getConfig()
+  const { userHomeTopBlockUser } = await myStorage.getConfig();
   const nodeUserHeaderOperate = dom('.ProfileHeader-contentFooter .MemberButtonGroup');
   const nodeFooterOperations = dom('.Profile-footerOperations');
   if (!nodeUserHeaderOperate || !userHomeTopBlockUser || !nodeFooterOperations) return;
   const isMe = nodeUserHeaderOperate.innerText.includes('编辑个人资料');
   if (isMe) return;
+
+  const domProfileHeader = domById('ProfileHeader');
+  if (!domProfileHeader || !domProfileHeader.dataset.zaExtraModule) {
+    // 解决用户主页重置的情况
+    setTimeout(() => {
+      topBlockUser();
+    }, 500);
+    return;
+  }
+
   /** 是否是已经屏蔽的用户 */
   const isBlocked = nodeUserHeaderOperate.innerText.includes('已屏蔽');
   const domFind = dom(`.${CLASS_TOP_BLOCK}`);
@@ -81,7 +91,8 @@ export const topBlockUser = async () => {
   nDomButton.onclick = function () {
     isBlocked ? domUnblock.click() : domBlock.click();
   };
-  nodeUserHeaderOperate.insertBefore(nDomButton, domUnblock)
+  nodeUserHeaderOperate.insertBefore(nDomButton, domUnblock);
+  blockObserver && blockObserver.disconnect();
   blockObserver = new MutationObserver(() => {
     topBlockUser();
   });
