@@ -1,6 +1,7 @@
 import { CTZ_HIDDEN_ITEM_CLASS } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domA, domC, domP, fnLog, fnReturnStr } from '../commons/tools';
+import { CLASS_ZHIHU_COMMENT_DIALOG } from '../configs';
 import { store } from '../store';
 import { IBlockedUser } from '../types/blocked-users.type';
 import { addBlockUser, CLASS_BLACK_TAG, removeBlockUser } from './blocked-users';
@@ -43,9 +44,14 @@ export const formatCommentAuthors = (data: any[]) => {
   doListenComment();
 };
 
+/** 点击评论弹窗背景事件 */
+const commentMarkListen = (event: MouseEvent) => {
+  closeCommentDialog();
+};
+
 /** 监听评论区 */
 export const doListenComment = async () => {
-  const { cancelCommentAutoFocus } = await myStorage.getConfig();
+  const { cancelCommentAutoFocus, clickMarkCloseCommentDialog } = await myStorage.getConfig();
   if (cancelCommentAutoFocus) {
     domA('.notranslate').forEach((item) => {
       // 取消评论输入框的自动聚焦
@@ -75,6 +81,15 @@ export const doListenComment = async () => {
   nodeCommentInPages.forEach((item) => formatComments(item, '.css-13445jb'));
   nodeCommentDialogs.forEach((item) => formatComments(item));
   nodeCommentDialogs.forEach((item) => formatComments(item, '.css-13445jb'));
+
+  if (clickMarkCloseCommentDialog) {
+    /** 评论弹窗背景 */
+    const nodeCommentMark = dom('.css-5ym188');
+    if (nodeCommentMark) {
+      nodeCommentMark.removeEventListener('click', commentMarkListen);
+      nodeCommentMark.addEventListener('click', commentMarkListen);
+    }
+  }
 };
 
 /** 评论区屏蔽用户按钮 */
@@ -86,11 +101,7 @@ const CLASS_BLOCK_BOX = 'ctz-comment-block-box';
 /** 元素上 data-id 属性 */
 const ATTR_ID = 'data-id';
 
-const buttonListener = () => {
-  setTimeout(() => {
-    doListenComment();
-  }, 500);
-};
+const buttonListener = () => setTimeout(doListenComment, 500);
 
 /** 处理评论 */
 const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.css-jp43l4') => {
@@ -229,4 +240,10 @@ const commentImagePreview = async () => {
     });
     commentPreviewObserver.observe(nodeImageBox, { characterData: true, attributes: true });
   }
+};
+
+/** 关闭知乎评论弹窗 */
+export const closeCommentDialog = () => {
+  const button = dom(`.${CLASS_ZHIHU_COMMENT_DIALOG} button[aria-label="关闭"]`);
+  button && button.click();
 };

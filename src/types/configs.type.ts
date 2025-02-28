@@ -449,4 +449,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   keyEscCloseCommentDialog?: boolean;
   /** 替换知乎直达为搜索 */
   replaceZhidaToSearch?: EReplaceZhidaToSearch;
+  /** 点击空白处关闭评论弹窗 */
+  clickMarkCloseCommentDialog?: boolean;
 }

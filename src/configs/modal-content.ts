@@ -80,6 +80,7 @@ export const BASIC_SHOW_CONTENT: ICommonContent[][] = [
   [
     { label: '取消评论输入框自动聚焦', value: 'cancelCommentAutoFocus' },
     { label: '键盘ESC键关闭评论弹窗', value: 'keyEscCloseCommentDialog' },
+    { label: '点击空白处关闭评论弹窗', value: 'clickMarkCloseCommentDialog' },
   ],
 ];
 
