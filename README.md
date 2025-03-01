@@ -99,7 +99,7 @@
 1. 设置知乎直达去除直达链接跳转，可以将知乎直达修改为普通文字内容<br>
 2. 设置为知乎、百度、必应、谷歌搜索，可以将知乎直达修改为对应的搜索链接，点击可跳转自动搜索<br>
 
-<img src="./static/setting-replace-zhida.png" alt="直达设置">
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/setting-replace-zhida.png" alt="直达设置">
 
 <br>
 
@@ -107,7 +107,7 @@
 
 <br>
 
-<img src="./static/replace-zhida.png" alt="直达">
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/replace-zhida.png" alt="直达">
 
 </details>
 

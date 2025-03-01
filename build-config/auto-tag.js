@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
-const os = require('os')
+const os = require('os');
 const { exec, echo } = shell;
 
 const VERSION_TAG = '$version';
@@ -69,7 +69,7 @@ const doExec = async (commit) => {
 };
 
 (async function () {
-  await doExec( os.type() == 'Windows_NT' ? 'yarn build:win' : 'yarn build');
+  await doExec(os.type() == 'Windows_NT' ? 'yarn build:win' : 'yarn build');
   await doExec('git add .');
   await doExec(`git commit -m "docs: v${nVersion}"`);
   await doExec(`git push`);
