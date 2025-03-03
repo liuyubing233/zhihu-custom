@@ -9,32 +9,6 @@ import { IRangeItem } from '../types';
 import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../web-resources';
 
-const tooltipHTML = (value: string) => `<span class="ctz-tooltip"><span>?</span><span>${value}</span></span>`;
-
-const range = (v: string, min: number, max: number, unit = '') =>
-  `<div class="ctz-flex-wrap ctz-range-${v}">${
-    `<span style="font-size: 12px;margin-right: 8px;">当前：<span id="${v}">0</span>${unit}</span>` +
-    `<span style="margin-right: 2px;color: #757575;font-size: 12px;">${min}${unit}</span>` +
-    `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 200px" />` +
-    `<span style="margin-left: 2px;color: #757575;font-size: 12px;">${max}${unit}</span>`
-  }</div>`;
-
-const commonFormBoxItem = (con: ICommonContent[][]) =>
-  con
-    .map(
-      (item) =>
-        `<div class="ctz-form-box">${item
-          .map(
-            ({ label, value, needFetch, tooltip }) =>
-              `<div class="ctz-form-box-item ${needFetch ? 'ctz-fetch-intercept' : ''}">${
-                `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '') + (tooltip ? tooltipHTML(tooltip) : '')}</div>` +
-                `<div><input class="ctz-i ctz-switch" name="${value}" type="checkbox" value="on" /></div>`
-              }</div>`
-          )
-          .join('')}</div>`
-    )
-    .join('');
-
 /** 加载基础元素及绑定方法 */
 export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
@@ -106,6 +80,7 @@ export const initHTML = () => {
   initMenu();
 };
 
+/** 添加个人主页跳转 */
 export const appendHomeLink = (userinfo: IZhihuUserinfo) => {
   if (dom('.ctz-home-link')) return;
   const hrefUser = userinfo.url ? userinfo.url.replace('/api/v4', '') : '';
@@ -119,3 +94,31 @@ export const appendHomeLink = (userinfo: IZhihuUserinfo) => {
     })
   );
 };
+
+/** 提示 */
+const tooltipHTML = (value: string) => `<span class="ctz-tooltip"><span>?</span><span>${value}</span></span>`;
+
+/** 范围选择器 */
+const range = (v: string, min: number, max: number, unit = '') =>
+  `<div class="ctz-flex-wrap ctz-range-${v}">${
+    `<span style="font-size: 12px;margin-right: 8px;">当前：<span id="${v}">0</span>${unit}</span>` +
+    `<span style="margin-right: 2px;color: #757575;font-size: 12px;">${min}${unit}</span>` +
+    `<input class="ctz-i" type="range" min="${min}" max="${max}" name="${v}" style="width: 200px" />` +
+    `<span style="margin-left: 2px;color: #757575;font-size: 12px;">${max}${unit}</span>`
+  }</div>`;
+
+const commonFormBoxItem = (con: ICommonContent[][]) =>
+  con
+    .map(
+      (item) =>
+        `<div class="ctz-form-box">${item
+          .map(
+            ({ label, value, needFetch, tooltip }) =>
+              `<div class="ctz-form-box-item ${needFetch ? 'ctz-fetch-intercept' : ''}">${
+                `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '') + (tooltip ? tooltipHTML(tooltip) : '')}</div>` +
+                `<div><input class="ctz-i ctz-switch" name="${value}" type="checkbox" value="on" /></div>`
+              }</div>`
+          )
+          .join('')}</div>`
+    )
+    .join('');

@@ -13,6 +13,7 @@ const callbackGIF: MutationCallback = async (mutationsList) => {
   const srcImg = nodeImg ? nodeImg.src : '';
   nodeVideo ? myPreview.open(nodeVideo.src, target, true) : myPreview.open(srcImg, target);
 };
+
 const observerGIF = new MutationObserver(callbackGIF);
 /** 挂载预览 observe */
 export async function previewGIF() {
