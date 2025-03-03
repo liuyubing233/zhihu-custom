@@ -107,6 +107,7 @@ export const initBlockedUsers = async () => {
       openExtra('chooseBlockedUserTags');
       const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
       const currentTags = info.tags || [];
+
       dom('[data-type="chooseBlockedUserTags"] .ctz-title')!.innerText = `设置标签：${info.name}`;
 
       const boxTags = dom('.ctz-choose-blocked-user-tags')!;
@@ -129,7 +130,9 @@ export const initBlockedUsers = async () => {
             item.tags = chooseTags;
           }
         });
+
         item.innerHTML = blackItemContent(info);
+        item.dataset.info = JSON.stringify(info);
         await myStorage.updateConfigItem('blockedUsers', blockedUsers);
         closeExtra();
       };
