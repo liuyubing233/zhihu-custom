@@ -1798,6 +1798,7 @@
             }
           });
           item.innerHTML = blackItemContent(info);
+          item.dataset.info = JSON.stringify(info);
           await myStorage.updateConfigItem("blockedUsers", blockedUsers);
           closeExtra();
         };
