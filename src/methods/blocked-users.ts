@@ -242,10 +242,9 @@ export const removeBlockUser = (info: IBlockedUser, needConfirm = true) => {
 const CLASS_ANSWER_BLACK_BOX = 'ctz-answer-black-box';
 const CLASS_BTN_BLACK = 'ctz-answer-black-add';
 const CLASS_BTN_BLACK_REMOVE = 'ctz-answer-black-remove';
-const CLASS_BTN_BLACK_FILTER = 'ctz-answer-black-filter';
 
-/** 添加「屏蔽用户」按钮，第二个参数为监听方法对象 */
-export const answerAddBlockButton = async (event: HTMLElement, objMy?: any) => {
+/** 添加「屏蔽用户」按钮*/
+export const answerAddBlockButton = async (event: HTMLElement) => {
   if (event.querySelector(`.${CLASS_ANSWER_BLACK_BOX}`)) return;
   const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;
   if (!nodeUser || !nodeUser.offsetHeight) return;
@@ -260,7 +259,7 @@ export const answerAddBlockButton = async (event: HTMLElement, objMy?: any) => {
   const { blockedUsers = [] } = await myStorage.getConfig();
   const isBlocked = blockedUsers.findIndex((i) => i.id === userId) >= 0;
 
-  const nBlackBox = domC('div', { className: CLASS_ANSWER_BLACK_BOX, innerHTML: await changeBoxHTML(isBlocked, !!objMy) });
+  const nBlackBox = domC('div', { className: CLASS_ANSWER_BLACK_BOX, innerHTML: await changeBoxHTML(isBlocked) });
   nBlackBox.onclick = async function (ev) {
     const target = ev.target as HTMLElement;
     const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
@@ -269,29 +268,20 @@ export const answerAddBlockButton = async (event: HTMLElement, objMy?: any) => {
     // 屏蔽用户
     if (target.classList.contains(CLASS_BTN_BLACK)) {
       await addBlockUser({ id: userId, name: userName, urlToken });
-      me.innerHTML = await changeBoxHTML(true, !!objMy);
+      me.innerHTML = await changeBoxHTML(true);
       return;
     }
     // 解除屏蔽
     if (target.classList.contains(CLASS_BTN_BLACK_REMOVE)) {
       await removeBlockUser({ id: userId, name: userName, urlToken });
-      me.innerHTML = await changeBoxHTML(false, !!objMy);
-      return;
-    }
-    // 屏蔽并隐藏回答
-    if (target.classList.contains(CLASS_BTN_BLACK_FILTER)) {
-      await addBlockUser({ id: userId, name: userName, urlToken });
-      event.style.display = 'none';
-      if (objMy) {
-        objMy.index = objMy.index - 1 > 0 ? objMy.index - 1 : 0;
-      }
+      me.innerHTML = await changeBoxHTML(false);
       return;
     }
   };
   nodeUser.appendChild(nBlackBox);
 };
 
-const changeBoxHTML = async (isBlocked: boolean, showHidden?: boolean) => {
+const changeBoxHTML = async (isBlocked: boolean) => {
   const { showBlockUserTag, showBlockUser } = await myStorage.getConfig();
   if (isBlocked) {
     return (
@@ -299,10 +289,7 @@ const changeBoxHTML = async (isBlocked: boolean, showHidden?: boolean) => {
       fnReturnStr(`<button class="${CLASS_BTN_BLACK_REMOVE} ctz-button">解除屏蔽</button>`, showBlockUser)
     );
   } else {
-    return fnReturnStr(
-      `<button class="${CLASS_BTN_BLACK} ctz-button">屏蔽</button>` + fnReturnStr(`<button class="${CLASS_BTN_BLACK_FILTER} ctz-button">屏蔽并隐藏回答</button>`, showHidden),
-      showBlockUser
-    );
+    return fnReturnStr(`<button class="${CLASS_BTN_BLACK} ctz-button">屏蔽</button>`, showBlockUser);
   }
 };
 

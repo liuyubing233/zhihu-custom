@@ -10,7 +10,6 @@ import { myListenSearchListItem } from '../methods/listen-search-list-item';
 import { changeTitle } from '../methods/page-title';
 import { myCollectionExport } from '../methods/print';
 import { initImagePreview } from './init-image-preview';
-import { initTopStoryRecommendEvent } from './init-top-event-listener';
 
 /** 使用 ResizeObserver 监听body高度 */
 export const initResizeObserver = () => {
@@ -28,14 +27,13 @@ async function resizeFun() {
     if (heightTopStoryContent < 200) {
       // 小于200为自动加载数据（其实初始值为141）
       myListenListItem.restart();
-      initTopStoryRecommendEvent();
     } else {
       myListenListItem.init();
     }
     // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
     heightTopStoryContent < window.innerHeight && windowResize();
   }
-  // contentRemoveKeywordSearch && fnContentRemoveKeywordSearch(document.body);
+
   initLinkChanger();
   previewGIF();
   initImagePreview();

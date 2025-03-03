@@ -2425,8 +2425,7 @@
   var CLASS_ANSWER_BLACK_BOX = "ctz-answer-black-box";
   var CLASS_BTN_BLACK = "ctz-answer-black-add";
   var CLASS_BTN_BLACK_REMOVE = "ctz-answer-black-remove";
-  var CLASS_BTN_BLACK_FILTER = "ctz-answer-black-filter";
-  var answerAddBlockButton = async (event, objMy) => {
+  var answerAddBlockButton = async (event) => {
     if (event.querySelector(`.${CLASS_ANSWER_BLACK_BOX}`)) return;
     const nodeUser = event.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
     if (!nodeUser || !nodeUser.offsetHeight) return;
@@ -2440,7 +2439,7 @@
     if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, "")) return;
     const { blockedUsers = [] } = await myStorage.getConfig();
     const isBlocked = blockedUsers.findIndex((i) => i.id === userId) >= 0;
-    const nBlackBox = domC("div", { className: CLASS_ANSWER_BLACK_BOX, innerHTML: await changeBoxHTML(isBlocked, !!objMy) });
+    const nBlackBox = domC("div", { className: CLASS_ANSWER_BLACK_BOX, innerHTML: await changeBoxHTML(isBlocked) });
     nBlackBox.onclick = async function(ev) {
       const target = ev.target;
       const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
@@ -2448,34 +2447,23 @@
       const me = this;
       if (target.classList.contains(CLASS_BTN_BLACK)) {
         await addBlockUser({ id: userId, name: userName, urlToken });
-        me.innerHTML = await changeBoxHTML(true, !!objMy);
+        me.innerHTML = await changeBoxHTML(true);
         return;
       }
       if (target.classList.contains(CLASS_BTN_BLACK_REMOVE)) {
         await removeBlockUser({ id: userId, name: userName, urlToken });
-        me.innerHTML = await changeBoxHTML(false, !!objMy);
-        return;
-      }
-      if (target.classList.contains(CLASS_BTN_BLACK_FILTER)) {
-        await addBlockUser({ id: userId, name: userName, urlToken });
-        event.style.display = "none";
-        if (objMy) {
-          objMy.index = objMy.index - 1 > 0 ? objMy.index - 1 : 0;
-        }
+        me.innerHTML = await changeBoxHTML(false);
         return;
       }
     };
     nodeUser.appendChild(nBlackBox);
   };
-  var changeBoxHTML = async (isBlocked, showHidden) => {
+  var changeBoxHTML = async (isBlocked) => {
     const { showBlockUserTag, showBlockUser } = await myStorage.getConfig();
     if (isBlocked) {
       return fnReturnStr(`<span class="${CLASS_BLACK_TAG}">黑名单</span>`, showBlockUserTag) + fnReturnStr(`<button class="${CLASS_BTN_BLACK_REMOVE} ctz-button">解除屏蔽</button>`, showBlockUser);
     } else {
-      return fnReturnStr(
-        `<button class="${CLASS_BTN_BLACK} ctz-button">屏蔽</button>` + fnReturnStr(`<button class="${CLASS_BTN_BLACK_FILTER} ctz-button">屏蔽并隐藏回答</button>`, showHidden),
-        showBlockUser
-      );
+      return fnReturnStr(`<button class="${CLASS_BTN_BLACK} ctz-button">屏蔽</button>`, showBlockUser);
     }
   };
   var syncRemoveBlockedUsers = () => {
@@ -3081,6 +3069,80 @@
     ["google" /* 谷歌 */]: "https://www.google.com.hk/search?q=",
     ["bing" /* 必应 */]: "https://www.bing.com/search?q="
   };
+  var classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon", "ContentItem-expandButton", "is-collapsed"];
+  var verifyClickReadMore = (e) => {
+    let isFind = false;
+    classTarget.forEach((item) => {
+      (e.classList.contains(item) || e.parentElement.classList.contains(item)) && (isFind = true);
+    });
+    return isFind;
+  };
+  var initRootEvent = async () => {
+    const domRoot = dom("#root");
+    if (!domRoot) return;
+    const classForVideoOne = CLASS_VIDEO_ONE.replace(".", "");
+    domRoot.addEventListener("click", async function(event) {
+      const config = await myStorage.getConfig();
+      const { videoUseLink, fetchInterceptStatus } = config;
+      const target = event.target;
+      if (videoUseLink) {
+        if (target.classList.contains(classForVideoOne)) {
+          const domVideo = target.querySelector("video");
+          const videoSrc = domVideo ? domVideo.src : "";
+          if (!videoSrc) return;
+          window.open(videoSrc, "_blank");
+        }
+      }
+      if (target.classList.contains(CLASS_TO_QUESTION)) {
+        const { path } = target._params;
+        path && window.open(path);
+      }
+      if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
+        const { id, type } = target._params;
+        doFetchNotInterested({ id, type });
+        const nodeTopStoryItem = domP(target, "class", "TopstoryItem");
+        nodeTopStoryItem && (nodeTopStoryItem.style.display = "none");
+      }
+      if (verifyClickReadMore(target)) {
+        const nodeItem = domP(target, "class", "ContentItem");
+        const isRecommend = !!(dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1"));
+        const isQuestion = !!dom(".Question-main");
+        if (isRecommend || isQuestion) {
+          doContentItem(config, isRecommend, nodeItem, true);
+        }
+      }
+    });
+  };
+  var doContentItem = async (config, isRecommend, nodeItem, needTimeout = false) => {
+    if (!nodeItem) return;
+    const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, videoUseLink, answerItemCreatedAndModifiedTime } = config;
+    const doFun = (nodeItem2, parentItem2) => {
+      updateTopVote(nodeItem2);
+      if (isRecommend) {
+        listItemCreatedAndModifiedTime && updateItemTime(nodeItem2);
+      } else if (answerItemCreatedAndModifiedTime) {
+        updateItemTime(nodeItem2);
+      }
+      initVideoDownload(nodeItem2);
+      addAnswerCopyLink(nodeItem2);
+      fnReplaceZhidaToSearch(nodeItem2);
+      if (fetchInterceptStatus) {
+        answerAddBlockButton(parentItem2);
+        if (topExportContent) {
+          printAnswer(parentItem2);
+          printArticle(parentItem2);
+        }
+      }
+    };
+    const parentItem = isRecommend ? nodeItem.parentElement : nodeItem;
+    if (needTimeout) {
+      setTimeout(() => {
+        doFun(nodeItem, parentItem);
+      }, 500);
+    } else {
+      doFun(nodeItem, parentItem);
+    }
+  };
   var myListenAnswerItem = {
     initTimestamp: 0,
     init: async function() {
@@ -3091,6 +3153,7 @@
       }
       const nodes = domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`);
       const removeAnswers = store.getRemoveAnswers();
+      const config = await myStorage.getConfig();
       const {
         removeFromYanxuan,
         removeUnrealAnswer,
@@ -3101,28 +3164,10 @@
         answerOpen = "default" /* 默认 */,
         removeBlockUserContent,
         blockedUsers,
-        topExportContent,
         blockWordsAnswer = [],
-        fetchInterceptStatus,
-        answerItemCreatedAndModifiedTime,
         highPerformanceAnswer
-      } = await myStorage.getConfig();
-      const addFnInNodeItem = (nodeItem, initThis) => {
-        if (!nodeItem) return;
-        updateTopVote(nodeItem);
-        answerItemCreatedAndModifiedTime && updateItemTime(nodeItem);
-        initVideoDownload(nodeItem);
-        addAnswerCopyLink(nodeItem);
-        fnReplaceZhidaToSearch(nodeItem);
-        if (fetchInterceptStatus) {
-          answerAddBlockButton(nodeItem, initThis);
-          if (topExportContent) {
-            printAnswer(nodeItem);
-            printArticle(nodeItem);
-          }
-        }
-      };
-      addFnInNodeItem(dom(".QuestionAnswer-content"));
+      } = config;
+      doContentItem(config, false, dom(".QuestionAnswer-content"));
       for (let i = 0, len = nodes.length; i < len; i++) {
         let message2 = "";
         const nodeItem = nodes[i];
@@ -3183,7 +3228,7 @@
         if (message2) {
           fnHidden(nodeItem, message2);
         } else {
-          addFnInNodeItem(nodeItem, this);
+          doContentItem(config, false, nodeItem);
           fnJustNum(nodeItem);
           if (answerOpen !== "default" /* 默认 */) {
             const buttonUnfold = nodeItem.querySelector(".ContentItem-expandButton");
@@ -3682,79 +3727,6 @@
       }
     }
   };
-  var classTarget = ["RichContent-cover", "RichContent-inner", "ContentItem-more", "ContentItem-arrowIcon"];
-  var canFindTargeted = (e) => {
-    let isFind = false;
-    classTarget.forEach((item) => {
-      (e.classList.contains(item) || e.parentElement.classList.contains(item)) && (isFind = true);
-    });
-    return isFind;
-  };
-  var cbEventListener = async (event) => {
-    const target = event.target;
-    const nodeItem = domP(target, "class", "ContentItem");
-    if (!nodeItem) return;
-    const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime } = await myStorage.getConfig();
-    if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
-      const { id, type } = target._params;
-      doFetchNotInterested({ id, type });
-      const nodeTopStoryItem = domP(target, "class", "TopstoryItem");
-      nodeTopStoryItem && (nodeTopStoryItem.style.display = "none");
-    }
-    if (target.classList.contains(CLASS_TO_QUESTION)) {
-      const { path } = target._params;
-      path && window.open(path);
-    }
-    if (canFindTargeted(target)) {
-      setTimeout(() => {
-        updateTopVote(nodeItem);
-        listItemCreatedAndModifiedTime && updateItemTime(nodeItem);
-        initVideoDownload(nodeItem);
-        addAnswerCopyLink(nodeItem);
-        fnReplaceZhidaToSearch(nodeItem);
-        if (fetchInterceptStatus) {
-          answerAddBlockButton(nodeItem.parentElement);
-          if (topExportContent) {
-            printAnswer(nodeItem.parentElement);
-            printArticle(nodeItem.parentElement);
-          }
-        }
-      }, 100);
-    }
-  };
-  var recommendTimeout;
-  var indexTopStoryInit = 0;
-  var initTopStoryRecommendEvent = () => {
-    const nodeTopStoryRecommend = dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1");
-    if (nodeTopStoryRecommend) {
-      nodeTopStoryRecommend.removeEventListener("click", cbEventListener);
-      nodeTopStoryRecommend.addEventListener("click", cbEventListener);
-    }
-    if (indexTopStoryInit < 5) {
-      indexTopStoryInit++;
-      clearTimeout(recommendTimeout);
-      recommendTimeout = setTimeout(initTopStoryRecommendEvent, 500);
-    } else {
-      indexTopStoryInit = 0;
-    }
-  };
-  var initRootEvent = async () => {
-    const domRoot = dom("#root");
-    if (!domRoot) return;
-    const classForVideoOne = CLASS_VIDEO_ONE.replace(".", "");
-    const { videoUseLink } = await myStorage.getConfig();
-    domRoot.addEventListener("click", function(event) {
-      const target = event.target;
-      if (videoUseLink) {
-        if (target.classList.contains(classForVideoOne)) {
-          const domVideo = target.querySelector("video");
-          const videoSrc = domVideo ? domVideo.src : "";
-          if (!videoSrc) return;
-          window.open(videoSrc, "_blank");
-        }
-      }
-    });
-  };
   var initResizeObserver = () => {
     const resizeObserver = new ResizeObserver(throttle(resizeFun));
     resizeObserver.observe(document.body);
@@ -3767,7 +3739,6 @@
       const heightTopStoryContent = nodeTopStoryC.offsetHeight;
       if (heightTopStoryContent < 200) {
         myListenListItem.restart();
-        initTopStoryRecommendEvent();
       } else {
         myListenListItem.init();
       }
@@ -3906,12 +3877,6 @@
     }
     ob[name] && ob[name]();
   };
-  var onInitStyleExtra = () => {
-    appendHiddenStyle();
-    myBackground.init();
-    myVersion.init();
-    checkThemeDarkOrLight();
-  };
   var initOperate = () => {
     const nodeContent = domById("CTZ_DIALOG");
     nodeContent.onclick = (e) => {
@@ -3962,7 +3927,6 @@
       };
     });
     moveAndOpen();
-    initTopStoryRecommendEvent();
     initRootEvent();
   };
   var myButtonOperation = {
@@ -3990,7 +3954,6 @@
         filterKeywords,
         blockedUsers
       });
-      resetData();
       setTimeout(() => {
         location.reload();
       }, 300);
@@ -4026,6 +3989,18 @@
       const isHeight = nodeDialog.style.height === "100vh";
       nodeDialog.style.height = isHeight ? "" : "100vh";
       dom(`button[name="dialogBig"]`).innerText = isHeight ? "+" : "-";
+    },
+    useSimple: async () => {
+      const isUse = confirm("是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存");
+      if (!isUse) return;
+      const prevConfig = await myStorage.getConfig();
+      myStorage.updateConfig({
+        ...prevConfig,
+        ...CONFIG_SIMPLE
+      });
+      setTimeout(() => {
+        location.reload();
+      }, 300);
     }
   };
   var configImport = (e) => {
@@ -4039,18 +4014,12 @@
       if (typeof config === "string") {
         const nConfig = JSON.parse(config);
         await myStorage.updateConfig(nConfig);
-        resetData();
         setTimeout(() => {
           location.reload();
         }, 300);
       }
     };
     target.value = "";
-  };
-  var resetData = () => {
-    onInitStyleExtra();
-    initData();
-    onUseThemeDark();
   };
   var needRedirect = () => {
     const { pathname, origin } = location;
@@ -4376,8 +4345,7 @@
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
       if (!document.head) {
-        fnLog("not find document.head, waiting for reload...");
-        setTimeout(() => onDocumentStart(), 100);
+        setTimeout(onDocumentStart, 100);
         return;
       }
       fixVideoAutoPlay();
@@ -4399,11 +4367,14 @@
         await myStorage.updateConfig(config);
       }
       initHistoryView();
-      onInitStyleExtra();
+      appendHiddenStyle();
+      myBackground.init();
+      myVersion.init();
+      checkThemeDarkOrLight();
       dom("html").classList.add(/www\.zhihu\.com\/column/.test(href) ? "zhuanlan" : EXTRA_CLASS_HTML[hostname]);
       const { fetchInterceptStatus } = config;
       if (fetchInterceptStatus) {
-        fnLog("已开启 fetch 接口拦截");
+        fnLog("已开启接口拦截");
         const prevHeaders = getStorageConfigItem("fetchHeaders");
         const originFetch = fetch;
         const myWindow = isSafari ? window : unsafeWindow;
@@ -4436,7 +4407,7 @@
     onDocumentStart();
     const onBodyLoad = async () => {
       if (!document.body) {
-        setTimeout(() => onBodyLoad(), 100);
+        setTimeout(onBodyLoad, 100);
         return;
       }
       if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
@@ -4456,24 +4427,12 @@
         initHTML();
         initOperate();
         initData();
-        myBackground.init();
         myVersion.initAfterLoad();
         myCustomStyle.init();
         initBlockedWords();
         initResizeObserver();
         myCtzTypeOperation.init();
         echoHistory();
-        dom('[name="useSimple"]').onclick = async function() {
-          const isUse = confirm("是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存");
-          if (!isUse) return;
-          const prevConfig = await myStorage.getConfig();
-          myStorage.updateConfig({
-            ...prevConfig,
-            ...CONFIG_SIMPLE
-          });
-          onDocumentStart();
-          initData();
-        };
         if (removeTopAD) {
           setTimeout(() => {
             mouseEventClick(dom("svg.css-1p094v5"));

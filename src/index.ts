@@ -2,19 +2,19 @@ import { interceptionResponse } from './commons/fetch';
 import { fnJustNum } from './commons/math-for-my-listens';
 import { myStorage } from './commons/storage';
 import { dom, domById, fnAppendStyle, fnLog, formatDataToHump, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
-import { CONFIG_DEFAULT, CONFIG_SIMPLE } from './configs';
+import { CONFIG_DEFAULT } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './configs/dom-name';
 import { initData } from './init/init-data';
 import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html';
 import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
-import { onInitStyleExtra } from './init/init-style-extra';
 import { needRedirect } from './init/redirect';
-import { myBackground, myCustomStyle } from './methods/background';
+import { checkThemeDarkOrLight, myBackground, myCustomStyle } from './methods/background';
 import { initBlockedWords } from './methods/blocked-words';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
 import { myFollowRemove } from './methods/follow-remove';
+import { appendHiddenStyle } from './methods/hidden';
 import { echoHistory } from './methods/history';
 import { keydownNextImage } from './methods/image';
 import { myListenAnswerItem } from './methods/listen-answer-item';
@@ -49,8 +49,7 @@ import { INNER_CSS } from './web-resources';
   async function onDocumentStart() {
     if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
     if (!document.head) {
-      fnLog('not find document.head, waiting for reload...');
-      setTimeout(() => onDocumentStart(), 100);
+      setTimeout(onDocumentStart, 100);
       return;
     }
 
@@ -77,13 +76,16 @@ import { INNER_CSS } from './web-resources';
     }
 
     initHistoryView();
-    onInitStyleExtra();
+    appendHiddenStyle();
+    myBackground.init();
+    myVersion.init();
+    checkThemeDarkOrLight();
 
     dom('html')!.classList.add(/www\.zhihu\.com\/column/.test(href) ? 'zhuanlan' : EXTRA_CLASS_HTML[hostname]);
 
     const { fetchInterceptStatus } = config;
     if (fetchInterceptStatus) {
-      fnLog('已开启 fetch 接口拦截');
+      fnLog('已开启接口拦截');
       const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
       // 拦截 fetch 方法，获取接口内容，唯一
       const originFetch = fetch;
@@ -129,7 +131,7 @@ import { INNER_CSS } from './web-resources';
 
   const onBodyLoad = async () => {
     if (!document.body) {
-      setTimeout(() => onBodyLoad(), 100);
+      setTimeout(onBodyLoad, 100);
       return;
     }
 
@@ -149,30 +151,16 @@ import { INNER_CSS } from './web-resources';
       } catch {}
 
       const { removeTopAD } = await myStorage.getConfig();
-      // 不考虑在 iframe 中的情况
       initHTML();
       initOperate();
       initData();
-      // 页面加载完成后再进行加载背景色, 解决存在顶部推广的 header 颜色
-      myBackground.init();
+      // 以下设置都在 initHTML 之后执行
       myVersion.initAfterLoad();
       myCustomStyle.init();
       initBlockedWords();
       initResizeObserver();
       myCtzTypeOperation.init();
       echoHistory();
-
-      dom('[name="useSimple"]')!.onclick = async function () {
-        const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
-        if (!isUse) return;
-        const prevConfig = await myStorage.getConfig();
-        myStorage.updateConfig({
-          ...prevConfig,
-          ...CONFIG_SIMPLE,
-        });
-        onDocumentStart();
-        initData();
-      };
 
       if (removeTopAD) {
         setTimeout(() => {
@@ -182,6 +170,7 @@ import { INNER_CSS } from './web-resources';
     }
 
     historyToChangePathname();
+
     if (hostname === 'zhuanlan.zhihu.com') {
       addArticleTime();
       const nodeArticle = dom('.Post-content');
@@ -190,9 +179,11 @@ import { INNER_CSS } from './web-resources';
         initVideoDownload(nodeArticle);
       }
     }
+
     fnLog(`加载完毕, 加载时长: ${Math.floor((performance.now() - T0) / 10) / 100}s, 可使用 shift + . 或点击左侧眼睛按钮唤起修改器弹窗`);
   };
 
+  /** 根据页面路由不同执行的对应方法 */
   const historyToChangePathname = () => {
     pathnameHasFn({
       question: () => {
@@ -272,6 +263,7 @@ import { INNER_CSS } from './web-resources';
 
     keydownNextImage(event);
   });
+
   // 复制代码块删除版权信息
   document.addEventListener('copy', function (event) {
     // @ts-ignore window.clipboardData 是存在于IE中
