@@ -45,15 +45,12 @@ import { INNER_CSS } from './web-resources';
   const { hostname, href } = location;
   const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
 
-  /** 挂载脚本时 document.head 是否渲染 */
-  let isHaveHeadWhenInit = true;
-
   /** 在启动时注入的内容 */
   async function onDocumentStart() {
     if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
     if (!document.head) {
       fnLog('not find document.head, waiting for reload...');
-      isHaveHeadWhenInit = false;
+      setTimeout(() => onDocumentStart(), 100);
       return;
     }
 
@@ -79,13 +76,11 @@ import { INNER_CSS } from './web-resources';
       await myStorage.updateConfig(config);
     }
 
-    await myStorage.getHistory();
     initHistoryView();
     onInitStyleExtra();
 
     dom('html')!.classList.add(/www\.zhihu\.com\/column/.test(href) ? 'zhuanlan' : EXTRA_CLASS_HTML[hostname]);
 
-    // 获取最新的配置需要在此以后
     const { fetchInterceptStatus } = config;
     if (fetchInterceptStatus) {
       fnLog('已开启 fetch 接口拦截');
@@ -126,26 +121,18 @@ import { INNER_CSS } from './web-resources';
         });
       };
     }
+
+    // 再加载 body 上挂载的数据
+    onBodyLoad();
   }
   onDocumentStart();
 
-  const timerLoadHead = () => {
-    setTimeout(() => {
-      if (!isHaveHeadWhenInit) {
-        document.head ? onDocumentStart() : timerLoadHead();
-      }
-    }, 100);
-  };
-  timerLoadHead();
+  const onBodyLoad = async () => {
+    if (!document.body) {
+      setTimeout(() => onBodyLoad(), 100);
+      return;
+    }
 
-  const timerLoadBody = () => {
-    setTimeout(() => {
-      document.body ? createLoad() : timerLoadBody();
-    }, 100);
-  };
-  timerLoadBody();
-
-  const createLoad = async () => {
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
       const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
       // 获取JS默认缓存的列表数据
