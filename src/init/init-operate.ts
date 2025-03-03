@@ -1,7 +1,7 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC, message } from '../commons/tools';
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, CONFIG_DEFAULT } from '../configs';
-import { myCustomStyle, onUseThemeDark } from '../methods/background';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, CONFIG_DEFAULT, CONFIG_SIMPLE } from '../configs';
+import { myCustomStyle } from '../methods/background';
 import { syncBlackList, syncRemoveBlockedUsers } from '../methods/blocked-users';
 import { fnChanger } from '../methods/fn-changer';
 import { echoHistory } from '../methods/history';
@@ -13,9 +13,7 @@ import { myPreview } from '../methods/preview';
 import { formatTime } from '../methods/time';
 import { store } from '../store';
 import { IKeyofHistory } from '../types';
-import { initData } from './init-data';
-import { onInitStyleExtra } from './init-style-extra';
-import { initRootEvent, initTopStoryRecommendEvent } from './init-top-event-listener';
+import { initRootEvent } from './init-top-event-listener';
 
 /** 加载设置弹窗绑定方法 */
 export const initOperate = () => {
@@ -73,15 +71,13 @@ export const initOperate = () => {
     };
   });
 
-  // domById('CTZ_OPEN_CLOSE')!.onclick = openChange;
   moveAndOpen();
-  initTopStoryRecommendEvent();
   initRootEvent();
 };
 
-/** 编辑器按钮点击事件集合 */
+/** 编辑器弹窗按钮点击事件集合 */
 const myButtonOperation: Record<string, Function> = {
-  /** 导出配置 */
+  // 导出配置
   configExport: async () => {
     const config = (await myStorage.get('pfConfig')) || '{}';
     const dateNumber = +new Date();
@@ -93,10 +89,12 @@ const myButtonOperation: Record<string, Function> = {
     link.click();
     document.body.removeChild(link);
   },
+  // 清空配置
   configRemove: async () => {
     GM.deleteValue('pfConfig');
     localStorage.removeItem('pfConfig');
   },
+  // 恢复默认配置
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
@@ -106,19 +104,20 @@ const myButtonOperation: Record<string, Function> = {
       filterKeywords,
       blockedUsers,
     });
-    resetData();
     setTimeout(() => {
       location.reload();
     }, 300);
   },
-  /** 自定义样式 */
+  // 自定义样式
   styleCustom: async function () {
     const nodeText = dom('[name="textStyleCustom"]') as HTMLInputElement;
     const value = nodeText ? nodeText.value : '';
     await myStorage.updateConfigItem('customizeCss', value);
     myCustomStyle.change(value);
   },
+  // 同步黑名单
   syncBlack: () => syncBlackList(0),
+  // 清空黑名单列表
   syncBlackRemove: () => syncRemoveBlockedUsers(),
   /** 确认更改网页标题 */
   buttonConfirmTitle: async function () {
@@ -136,18 +135,35 @@ const myButtonOperation: Record<string, Function> = {
     changeTitle();
     message('网页标题已还原');
   },
+  // 导入配置
   configImport: () => {
     dom('#IMPORT_BY_FILE input')!.click();
   },
+  // 关闭修改器弹窗
   dialogClose: openChange,
+  // 放大缩小修改器弹窗
   dialogBig: () => {
     const nodeDialog = domById('CTZ_DIALOG')!;
     const isHeight = nodeDialog.style.height === '100vh';
     nodeDialog.style.height = isHeight ? '' : '100vh';
     dom(`button[name="dialogBig"]`)!.innerText = isHeight ? '+' : '-';
   },
+  // 启用极简模式
+  useSimple: async () => {
+    const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
+    if (!isUse) return;
+    const prevConfig = await myStorage.getConfig();
+    myStorage.updateConfig({
+      ...prevConfig,
+      ...CONFIG_SIMPLE,
+    });
+    setTimeout(() => {
+      location.reload();
+    }, 300);
+  },
 };
 
+/** 配置导入文件方法 */
 const configImport = (e: Event) => {
   const target = e.target as HTMLInputElement;
   const configFile = (target.files || [])[0];
@@ -159,18 +175,10 @@ const configImport = (e: Event) => {
     if (typeof config === 'string') {
       const nConfig = JSON.parse(config);
       await myStorage.updateConfig(nConfig);
-      resetData();
       setTimeout(() => {
         location.reload();
       }, 300);
     }
   };
   target.value = '';
-};
-
-/** 在重置数据时调用 */
-const resetData = () => {
-  onInitStyleExtra();
-  initData();
-  onUseThemeDark();
 };

@@ -2,16 +2,10 @@ import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-
 import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
 import { CLASS_LISTENED, OB_CLASS_FOLD } from '../configs';
+import { doContentItem } from '../init/init-top-event-listener';
 import { store } from '../store';
 import { EAnswerOpen } from '../types';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
-import { answerAddBlockButton } from './blocked-users';
-import { addAnswerCopyLink } from './link';
-import { printAnswer, printArticle } from './print';
-import { updateItemTime } from './time';
-import { updateTopVote } from './topVote';
-import { initVideoDownload } from './video';
-import { fnReplaceZhidaToSearch } from './zhida-to-search';
 
 /** 监听详情回答 - 过滤 */
 export const myListenAnswerItem = {
@@ -25,6 +19,7 @@ export const myListenAnswerItem = {
 
     const nodes = domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`);
     const removeAnswers = store.getRemoveAnswers();
+    const config = await myStorage.getConfig();
     const {
       removeFromYanxuan,
       removeUnrealAnswer,
@@ -35,34 +30,11 @@ export const myListenAnswerItem = {
       answerOpen = EAnswerOpen.默认,
       removeBlockUserContent,
       blockedUsers,
-      topExportContent,
       blockWordsAnswer = [],
-      fetchInterceptStatus,
-      answerItemCreatedAndModifiedTime,
       highPerformanceAnswer,
-    } = await myStorage.getConfig();
+    } = config;
 
-    /** 添加功能 */
-    const addFnInNodeItem = (nodeItem?: HTMLElement, initThis?: any) => {
-      if (!nodeItem) return;
-      updateTopVote(nodeItem);
-      answerItemCreatedAndModifiedTime && updateItemTime(nodeItem);
-      initVideoDownload(nodeItem);
-      addAnswerCopyLink(nodeItem);
-      fnReplaceZhidaToSearch(nodeItem)
-      if (fetchInterceptStatus) {
-        answerAddBlockButton(nodeItem, initThis);
-        if (topExportContent) {
-          printAnswer(nodeItem);
-          printArticle(nodeItem);
-        }
-      }
-    };
-
-    addFnInNodeItem(dom('.QuestionAnswer-content'));
-    // 屏蔽用户名称列表
-    // let removeUsernames: string[] = [];
-    // removeBlockUserContent && (removeUsernames = (blockedUsers || []).map((i) => i.name || ''));
+    doContentItem(config, false, dom('.QuestionAnswer-content'));
     for (let i = 0, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];
@@ -136,7 +108,7 @@ export const myListenAnswerItem = {
         // 最后信息 & 起点位置处理
         fnHidden(nodeItem, message);
       } else {
-        addFnInNodeItem(nodeItem, this);
+        doContentItem(config, false, nodeItem);
         fnJustNum(nodeItem);
         // 自动展开回答 和 默认收起长回答
         if (answerOpen !== EAnswerOpen.默认) {
