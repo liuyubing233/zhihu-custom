@@ -21,7 +21,7 @@ const verifyClickReadMore = (e: HTMLElement) => {
   return isFind;
 };
 
-/** 绑定顶部ROOT元素 */
+/** 顶部ROOT元素点击事件 */
 export const initRootEvent = async () => {
   const domRoot = dom('#root');
   if (!domRoot) return;
@@ -31,6 +31,7 @@ export const initRootEvent = async () => {
     const { videoUseLink, fetchInterceptStatus } = config;
     const target = event.target as HTMLElement;
     if (videoUseLink) {
+      // 回答内容中的视频回答替换为视频链接
       if (target.classList.contains(classForVideoOne)) {
         const domVideo = target.querySelector('video');
         const videoSrc = domVideo ? domVideo.src : '';

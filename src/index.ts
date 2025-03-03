@@ -4,7 +4,6 @@ import { myStorage } from './commons/storage';
 import { dom, domById, fnAppendStyle, fnLog, formatDataToHump, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { CONFIG_DEFAULT } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './configs/dom-name';
-import { initData } from './init/init-data';
 import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html';
 import { initResizeObserver } from './init/init-observer-resize';
@@ -13,6 +12,7 @@ import { needRedirect } from './init/redirect';
 import { checkThemeDarkOrLight, myBackground, myCustomStyle } from './methods/background';
 import { initBlockedWords } from './methods/blocked-words';
 import { myCtzTypeOperation } from './methods/ctz-type-operate';
+import { echoData } from './methods/echo-data';
 import { myFollowRemove } from './methods/follow-remove';
 import { appendHiddenStyle } from './methods/hidden';
 import { echoHistory } from './methods/history';
@@ -24,7 +24,9 @@ import { myListenSearchListItem } from './methods/listen-search-list-item';
 import { initOneClickInvitation } from './methods/one-click-invitation';
 import { closeExtra, openChange } from './methods/open';
 import { myPageFilterSetting } from './methods/page-filter-setting';
+import { changeICO, changeTitle } from './methods/page-title';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './methods/print';
+import { cacheHeader, changeSuspensionTab, suspensionPickupAttribute } from './methods/suspension';
 import { addArticleTime, addQuestionTime } from './methods/time';
 import { topBlockUser, userHomeAnswers } from './methods/user-home-content';
 import { myVersion } from './methods/version';
@@ -153,14 +155,20 @@ import { INNER_CSS } from './web-resources';
       const { removeTopAD } = await myStorage.getConfig();
       initHTML();
       initOperate();
-      initData();
+      setStorageConfigItem('cacheTitle', document.title);
       // 以下设置都在 initHTML 之后执行
+      echoData();
+      changeICO();
+      changeTitle();
+      changeSuspensionTab();
+      suspensionPickupAttribute();
       myVersion.initAfterLoad();
       myCustomStyle.init();
       initBlockedWords();
       initResizeObserver();
       myCtzTypeOperation.init();
       echoHistory();
+      cacheHeader();
 
       if (removeTopAD) {
         setTimeout(() => {
