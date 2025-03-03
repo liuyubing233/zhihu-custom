@@ -165,8 +165,11 @@ export const onUseThemeDark = async () => {
   dom('html')!.setAttribute('data-theme', (await isDark()) ? 'dark' : 'light');
 };
 
-/** 查找是否使用主题 */
-export const loadFindTheme = () => {
+/**
+ * 判断当前网站是否启用深色模式还是浅色模式
+ * 用来启用知乎默认的黑暗模式
+ */
+export const checkThemeDarkOrLight = () => {
   // 开始进入先修改一次
   onUseThemeDark();
   const elementHTML = dom('html');

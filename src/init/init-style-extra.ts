@@ -1,11 +1,17 @@
-import { loadFindTheme, myBackground } from "../methods/background";
-import { appendHidden } from "../methods/hidden";
+import { checkThemeDarkOrLight, myBackground } from "../methods/background";
+import { appendHiddenStyle } from "../methods/hidden";
 import { myVersion } from "../methods/version";
 
-/** 加载额外的样式文件 */
+/**
+ * 加载默认样式文件
+ * - 隐藏的项
+ * - 背景色
+ * - 版心宽度
+ * - 判断使用的白天还是黑夜模式
+ */
 export const onInitStyleExtra = () => {
-  appendHidden()
+  appendHiddenStyle()
   myBackground.init();
   myVersion.init();
-  loadFindTheme();
+  checkThemeDarkOrLight();
 };

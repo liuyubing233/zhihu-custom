@@ -1903,7 +1903,7 @@
   var onUseThemeDark = async () => {
     dom("html").setAttribute("data-theme", await isDark() ? "dark" : "light");
   };
-  var loadFindTheme = () => {
+  var checkThemeDarkOrLight = () => {
     onUseThemeDark();
     const elementHTML = dom("html");
     const muConfig = { attribute: true, attributeFilter: ["data-theme"] };
@@ -3788,7 +3788,7 @@
       nodeSearchBarInput.placeholder = "";
     }
   }
-  var appendHidden = async () => {
+  var appendHiddenStyle = async () => {
     const config = await myStorage.getConfig();
     let hiddenContent = "";
     HIDDEN_ARRAY.forEach((item) => {
@@ -3897,7 +3897,7 @@
       nodeName && (nodeName.innerText = value);
     }
     if (/^hidden/.test(name)) {
-      appendHidden();
+      appendHiddenStyle();
       return;
     }
     if (doCssVersion.includes(name)) {
@@ -3907,10 +3907,10 @@
     ob[name] && ob[name]();
   };
   var onInitStyleExtra = () => {
-    appendHidden();
+    appendHiddenStyle();
     myBackground.init();
     myVersion.init();
-    loadFindTheme();
+    checkThemeDarkOrLight();
   };
   var initOperate = () => {
     const nodeContent = domById("CTZ_DIALOG");
@@ -4373,12 +4373,11 @@
     const T0 = performance.now();
     const { hostname, href } = location;
     const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
-    let isHaveHeadWhenInit = true;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
       if (!document.head) {
         fnLog("not find document.head, waiting for reload...");
-        isHaveHeadWhenInit = false;
+        setTimeout(() => onDocumentStart(), 100);
         return;
       }
       fixVideoAutoPlay();
@@ -4399,7 +4398,6 @@
         delete config.removeBlockUserContentList;
         await myStorage.updateConfig(config);
       }
-      await myStorage.getHistory();
       initHistoryView();
       onInitStyleExtra();
       dom("html").classList.add(/www\.zhihu\.com\/column/.test(href) ? "zhuanlan" : EXTRA_CLASS_HTML[hostname]);
@@ -4433,23 +4431,14 @@
           });
         };
       }
+      onBodyLoad();
     }
     onDocumentStart();
-    const timerLoadHead = () => {
-      setTimeout(() => {
-        if (!isHaveHeadWhenInit) {
-          document.head ? onDocumentStart() : timerLoadHead();
-        }
-      }, 100);
-    };
-    timerLoadHead();
-    const timerLoadBody = () => {
-      setTimeout(() => {
-        document.body ? createLoad() : timerLoadBody();
-      }, 100);
-    };
-    timerLoadBody();
-    const createLoad = async () => {
+    const onBodyLoad = async () => {
+      if (!document.body) {
+        setTimeout(() => onBodyLoad(), 100);
+        return;
+      }
       if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
         const JsData = JSON.parse(domById("js-initialData") ? domById("js-initialData").innerText : "{}");
         try {
