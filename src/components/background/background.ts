@@ -1,7 +1,6 @@
 import { myStorage } from '../../commons/storage';
 import { dom, fnAppendStyle, fnReturnStr } from '../../commons/tools';
 import { CLASS_MESSAGE } from '../../configs';
-
 import { EThemeDark, EThemeLight, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../../types';
 import { isDark } from './dark';
 
@@ -17,7 +16,6 @@ export const myBackground = {
   init: async function () {
     const { themeDark = EThemeDark.深色一, themeLight = EThemeLight.默认, colorText1 } = await myStorage.getConfig();
     const useDark = await isDark();
-
     fnAppendStyle(
       'CTZ_STYLE_BACKGROUND',
       (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)

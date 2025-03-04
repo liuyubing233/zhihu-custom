@@ -217,6 +217,8 @@ export interface IConfigHidden {
   hiddenItemActionsUser?: boolean;
   /** 个人主页动态、回答、文章等操作栏 - 底部悬浮 */
   hiddenItemActionsIsFixedUser?: boolean;
+  /** 热榜顶部滚动新闻 */
+  hiddenHotTopNews?: boolean;
 }
 
 /** 屏蔽内容模块默认配置 */

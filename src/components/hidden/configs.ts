@@ -286,19 +286,24 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '热门排序编号',
+          label: '热榜排序编号',
           value: 'hiddenHotItemIndex',
           css: '.HotItem-index{display: none;}.HotItem{padding: 16px!important;}',
         },
         {
-          label: '热门"新"元素',
+          label: '热榜"新"元素',
           value: 'hiddenHotItemLabel',
           css: '.HotItem-label{display: none;}',
         },
         {
-          label: '热门热度值',
+          label: '热榜热度值',
           value: 'hiddenHotItemMetrics',
           css: '.HotItem-content .HotItem-metrics{display: none;}',
+        },
+        {
+          label: '热榜顶部滚动新闻',
+          value: 'hiddenHotTopNews',
+          css: '#TopstoryContent .css-172osot{display:none;}',
         },
       ],
       [
