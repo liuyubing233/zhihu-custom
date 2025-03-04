@@ -1,10 +1,11 @@
 import { CTZ_HIDDEN_ITEM_CLASS } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
-import { dom, domA, domC, domP, fnLog, fnReturnStr } from '../commons/tools';
+import { dom, domA, domC, domP, fnLog } from '../commons/tools';
 import { CLASS_ZHIHU_COMMENT_DIALOG } from '../configs';
 import { store } from '../store';
-import { IBlockedUser } from '../types/blocked-users.type';
-import { addBlockUser, CLASS_BLACK_TAG, removeBlockUser } from './blocked-users';
+import { changeBlockedUsersBox, CLASS_BLOCK_USER_BOX, CLASS_BTN_ADD_BLOCKED, CLASS_BTN_REMOVE_BLOCKED } from './blocked-users/add-block-button';
+import { addBlockUser, removeBlockUser } from './blocked-users/blocked-users';
+import { IBlockedUser } from './blocked-users/types';
 import { formatPreviewSize } from './image';
 
 /** 格式化评论区接口内的用户信息并储存 */
@@ -92,13 +93,6 @@ export const doListenComment = async () => {
   }
 };
 
-/** 评论区屏蔽用户按钮 */
-const CLASS_BLOCK_ADD = 'ctz-comment-block-add';
-/** 评论区移除黑名单用户按钮 */
-const CLASS_BLOCK_REMOVE = 'ctz-comment-block-remove';
-/** 按钮外层盒子 */
-const CLASS_BLOCK_BOX = 'ctz-comment-block-box';
-/** 元素上 data-id 属性 */
 const ATTR_ID = 'data-id';
 
 const buttonListener = () => setTimeout(doListenComment, 500);
@@ -114,7 +108,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
     return;
   }
   const commentAuthors = store.getCommentAuthors();
-  const { removeBlockUserComment, blockedUsers } = await myStorage.getConfig();
+  const { removeBlockUserComment, blockedUsers, showBlockUserComment, showBlockUserCommentTag } = await myStorage.getConfig();
   const comments = nodeComments.children;
   for (let i = 0, len = comments.length; i < len; i++) {
     const item = comments[i] as HTMLElement;
@@ -152,29 +146,29 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
         return;
       }
       // 已经添加过盒子的内容不再处理
-      if (userOne.querySelector(`.${CLASS_BLOCK_BOX}`)) return;
+      if (userOne.querySelector(`.${CLASS_BLOCK_USER_BOX}`)) return;
 
       /** 查找到的用户信息 */
       const commentUserInfo = commentAuthors.find((i) => i.id === userId);
       if (!commentUserInfo) return;
 
       const nBox = domC('div', {
-        className: CLASS_BLOCK_BOX,
-        innerHTML: await changeBoxHTML(isBlocked),
+        className: CLASS_BLOCK_USER_BOX,
+        innerHTML: changeBlockedUsersBox(isBlocked, showBlockUserComment, showBlockUserCommentTag),
       });
       nBox.onclick = async function (event) {
         const me = this as HTMLElement;
         const target = event.target as HTMLButtonElement;
         // 解除屏蔽
-        if (target.classList.contains(CLASS_BLOCK_REMOVE)) {
+        if (target.classList.contains(CLASS_BTN_REMOVE_BLOCKED)) {
           await removeBlockUser(commentUserInfo);
-          me.innerHTML = await changeBoxHTML(false);
+          me.innerHTML = changeBlockedUsersBox(false, showBlockUserComment, showBlockUserCommentTag);
           return;
         }
         // 添加屏蔽
-        if (target.classList.contains(CLASS_BLOCK_ADD)) {
+        if (target.classList.contains(CLASS_BTN_ADD_BLOCKED)) {
           await addBlockUser(commentUserInfo);
-          me.innerHTML = await changeBoxHTML(true);
+          me.innerHTML = changeBlockedUsersBox(true, showBlockUserComment, showBlockUserCommentTag);
           return;
         }
       };
@@ -194,18 +188,6 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
     });
 
     formatComments(item, '.css-1kwt8l8');
-  }
-};
-
-const changeBoxHTML = async (isBlocked: boolean) => {
-  const { showBlockUserComment, showBlockUserCommentTag } = await myStorage.getConfig();
-  if (isBlocked) {
-    return (
-      fnReturnStr(`<div class="${CLASS_BLACK_TAG}">黑名单</div>`, showBlockUserCommentTag) +
-      fnReturnStr(`<button class="${CLASS_BLOCK_REMOVE} ctz-button">解除屏蔽</button>`, showBlockUserComment)
-    );
-  } else {
-    return fnReturnStr(`<button class="${CLASS_BLOCK_ADD} ctz-button">屏蔽</button>`, showBlockUserComment);
   }
 };
 

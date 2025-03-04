@@ -1,6 +1,6 @@
 import { dom, domA, domById, domC } from '../commons/tools';
 import { addBackgroundSetting } from '../components/background';
-import { initBlockedUsers, initBlockedUserTags } from '../components/blocked-users';
+import { initHTMLBlockedUsers, initHTMLBlockedUserTags } from '../components/blocked-users/init-html';
 import { initFetchInterceptStatus } from '../components/fetch-intercept-status-change';
 import { initMenu } from '../components/menu';
 import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
@@ -9,7 +9,7 @@ import { IRangeItem } from '../types';
 import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../web-resources';
 
-/** 加载基础元素及绑定方法 */
+/** 添加修改器内元素 */
 export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
   dom('.ctz-version')!.innerText = GM_info.script.version;
@@ -75,8 +75,8 @@ export const initHTML = () => {
   });
 
   initFetchInterceptStatus();
-  initBlockedUsers();
-  initBlockedUserTags();
+  initHTMLBlockedUsers();
+  initHTMLBlockedUserTags();
   initMenu();
 };
 

@@ -1,7 +1,7 @@
 import { doFetchNotInterested } from '../commons/fetch';
 import { myStorage } from '../commons/storage';
 import { dom, domP } from '../commons/tools';
-import { answerAddBlockButton } from '../components/blocked-users';
+import { answerAddBlockButton } from '../components/blocked-users/add-block-button';
 import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
 import { updateItemTime } from '../components/time';

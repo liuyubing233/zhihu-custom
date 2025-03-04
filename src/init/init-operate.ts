@@ -1,7 +1,7 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById, domC, message } from '../commons/tools';
 import { myCustomStyle } from '../components/background';
-import { syncBlackList, syncRemoveBlockedUsers } from '../components/blocked-users';
+import { syncBlackList, syncRemoveBlockedUsers } from '../components/blocked-users/blocked-users';
 import { fnChanger } from '../components/fn-changer';
 import { echoHistory } from '../components/history';
 import { onChangeMenu } from '../components/menu';

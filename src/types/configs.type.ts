@@ -1,5 +1,5 @@
+import { IBlockedUser } from '../components/blocked-users/types';
 import { ETheme, EThemeDark, EThemeLight } from './background.type';
-import { IBlockedUser } from './blocked-users.type';
 import { EAnswerOpen, ELinkShopping, EReplaceZhidaToSearch, ESuspensionOpen, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from './select-options.type';
 
 /** 隐藏内容模块配置 */
