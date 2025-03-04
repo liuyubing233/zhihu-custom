@@ -1,8 +1,8 @@
 import { myStorage } from '../../commons/storage';
 import { dom, fnAppendStyle, fnReturnStr } from '../../commons/tools';
 import { CLASS_MESSAGE } from '../../configs';
-import { EThemeDark, EThemeLight, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../../types';
 import { isDark } from './dark';
+import { EThemeDark, EThemeLight, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from './types';
 
 /** 匹配类名以i开始部分 */
 const appendClassStart = (str: string) => appendPrefix(str, (i) => `[class|="${i}"]`);

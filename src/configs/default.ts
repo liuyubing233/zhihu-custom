@@ -1,11 +1,9 @@
+import { ETheme, EThemeDark, EThemeLight } from '../components/background/types';
 import {
   EAnswerOpen,
   ELinkShopping,
   EReplaceZhidaToSearch,
   ESuspensionOpen,
-  ETheme,
-  EThemeDark,
-  EThemeLight,
   EZoomImageHeight,
   EZoomImageType,
   EZoomListVideoType,

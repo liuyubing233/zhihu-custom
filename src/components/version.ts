@@ -1,8 +1,9 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
 import { CLASS_ZHIHU_COMMENT_DIALOG, VERSION_MIN_WIDTH } from '../configs';
-import { ELinkShopping, EThemeDark, EThemeLight, EZoomImageHeight, EZoomImageType, EZoomListVideoType, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../types';
+import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../types';
 import { isDark } from './background/dark';
+import { EThemeDark, EThemeLight, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from './background/types';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './video';
 
 /** 修改版心的 css */
