@@ -7,7 +7,7 @@ import { initBlockedWords } from './components/blocked-words';
 import { myCtzTypeOperation } from './components/ctz-type-operate';
 import { echoData } from './components/echo-data';
 import { myFollowRemove } from './components/follow-remove';
-import { appendHiddenStyle } from './components/hidden';
+import { appendHiddenStyle } from './components/hidden/append-style';
 import { echoHistory } from './components/history';
 import { keydownNextImage } from './components/image';
 import { myListenAnswerItem } from './components/listen-answer-item';

@@ -3,7 +3,7 @@ import { dom, domById } from '../commons/tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from '../configs';
 import { initImagePreview } from '../init/init-image-preview';
 import { myBackground, onUseThemeDark } from './background';
-import { appendHiddenStyle } from './hidden';
+import { appendHiddenStyle } from './hidden/append-style';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO, changeTitle } from './page-title';

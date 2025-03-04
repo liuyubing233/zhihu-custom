@@ -1,4 +1,4 @@
-import { IHiddenArray } from '../types';
+import { IHiddenArray } from '../../types';
 
 // 勾选隐藏对应内容
 export const HIDDEN_ARRAY: IHiddenArray = [
@@ -46,35 +46,22 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.AppHeader-Tab:nth-of-type(1){display: none}',
         },
         {
+          label: '发现模块-知乎直答',
+          value: 'hiddenAppHeaderTabFind',
+          css: '.AppHeader-Tab:nth-of-type(2){display: none}',
+        },
+        {
           label: '发现模块-知学堂',
           value: 'hiddenAppHeaderTabZhi',
-          css: '.AppHeader-Tab:nth-of-type(2){display: none}',
+          css: '.AppHeader-Tab:nth-of-type(3){display: none}',
         },
         {
           label: '发现模块-等你来答',
           value: 'hiddenAppHeaderTabWaitingForYou',
-          css: '.AppHeader-Tab:nth-of-type(3){display: none}',
-        },
-        {
-          label: '发现模块-知乎直达',
-          value: 'hiddenAppHeaderTabFind',
           css: '.AppHeader-Tab:nth-of-type(4){display: none}',
         },
       ],
       [
-        // {
-        //   label: '回答操作文字',
-        //   value: 'hiddenAnswerText',
-        //   css:
-        //     '.ContentItem-actions{padding: 0 20px!important;line-height: 38px!important;}' +
-        //     '.ContentItem-action,.ContentItem-action button,.ContentItem-actions button{font-size: 0!important;padding: 0!important;background: none!important;line-height:inherit!important;}' +
-        //     '.ContentItem-action span,.ContentItem-actions button span{font-size: 16px!important;}' +
-        //     '.ContentItem-action svg,.ContentItem-actions svg{width: 16px!important;height:16px!important;}' +
-        //     '.VoteButton{color: #8590a6!important; }' +
-        //     '.VoteButton.is-active{color: #056de8!important;}' +
-        //     '.ContentItem-action{margin-left:8px!important;}' +
-        //     '.Search-questionFollowButton{display: none}',
-        // },
         {
           label: '回答隐藏用户信息下的附加信息，比如：你赞同过、XXX赞同了等...',
           value: 'hiddenWhoVoters',

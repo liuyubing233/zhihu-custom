@@ -2,8 +2,9 @@ import { dom, domA, domById, domC } from '../../commons/tools';
 import { addBackgroundSetting } from '../../components/background';
 import { createHTMLBlockedUsers } from '../../components/blocked-users/init-html';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
+import { createHTMLHiddenConfig } from '../../components/hidden/init-html';
 import { initMenu } from '../../components/menu';
-import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, VERSION_RANGE } from '../../configs';
+import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIGH_PERFORMANCE, ICO_URL, VERSION_RANGE } from '../../configs';
 import { OPTIONS_MAP } from '../../configs/select-options';
 import { IRangeItem } from '../../types';
 import { IZhihuUserinfo } from '../../types/zhihu/zhihu.type';
@@ -46,11 +47,6 @@ export const initHTML = () => {
       }</div>`
   ).join('');
 
-  // 隐藏元素部分
-  domById('CTZ_HIDDEN')!.innerHTML = HIDDEN_ARRAY.map(
-    (item) => (item.name ? `<div class="ctz-title">${item.name}<span>${item.desc}</span></div>` : '') + createHTMLFormBoxSwitch(item.content)
-  ).join('');
-
   // 添加修改网页标题图片
   domById('CTZ_TITLE_ICO')!.innerHTML = Object.keys(ICO_URL)
     .map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`)
@@ -76,7 +72,8 @@ export const initHTML = () => {
   });
 
   initFetchInterceptStatus();
-  createHTMLBlockedUsers()
+  createHTMLHiddenConfig();
+  createHTMLBlockedUsers();
   initMenu();
 };
 

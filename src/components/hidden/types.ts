@@ -1,4 +1,4 @@
-import { IOptionItem } from "./common.type";
+import { IOptionItem } from "../../types/common.type";
 
 export type IHiddenArray = IHiddenItem[];
 

@@ -138,7 +138,8 @@ export interface IConfigHidden {
   hiddenAppHeaderTabZhi?: boolean;
   /** 发现模块-隐藏会员 */
   // hiddenAppHeaderTabVIP?: boolean;
-  /** 发现模块-隐藏发现 */
+  // /** 发现模块-隐藏发现 */
+  /** 发现模块-知乎直答 */
   hiddenAppHeaderTabFind?: boolean;
   /** 发现模块-隐藏等你来答 */
   hiddenAppHeaderTabWaitingForYou?: boolean;
