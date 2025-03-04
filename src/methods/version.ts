@@ -88,8 +88,8 @@ export const myVersion = {
       // 弹窗宽度
       fnReturnStr(
         `.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeHome}!important;}.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeArticle}!important;}` +
-          fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeAnswer}!important;}`, location.pathname.includes('question')) +
-          commitModalSizeSameVersion
+          fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeAnswer}!important;}`, location.pathname.includes('question')),
+        commitModalSizeSameVersion
       );
 
     /** 图片尺寸修改 */
