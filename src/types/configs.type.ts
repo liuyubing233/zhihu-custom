@@ -272,6 +272,8 @@ export interface IConfigFilter {
   showBlockUserCommentTag?: boolean;
   /** 列表和回答显示黑名单用户标识 */
   showBlockUserTag?: boolean;
+  /** 黑名单用户标识也显示标签分类 */
+  showBlockUserTagType?: boolean;
 }
 
 /** 悬浮模块默认配置 */

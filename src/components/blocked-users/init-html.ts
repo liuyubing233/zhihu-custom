@@ -1,5 +1,7 @@
 import { myStorage } from '../../commons/storage';
 import { dom, domById, domC, message } from '../../commons/tools';
+import { ICommonContent } from '../../configs';
+import { createHTMLFormBoxSwitch } from '../../init/init-html/common-html';
 import { closeExtra, openExtra } from '../open';
 import { removeBlockUser } from './blocked-users';
 import { IBlockedUser } from './types';
@@ -8,14 +10,13 @@ import { IBlockedUser } from './types';
 const ID_BLOCKED_USERS_TAGS = 'CTZ_BLOCKED_USERS_TAGS';
 /** class: 黑名单标签删除按钮 */
 const CLASS_REMOVE_BLOCKED_TAG = 'ctz-remove-blocked-tag';
-/** class: 黑名单元素删除按钮类名 */
-export const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** id: 黑名单列表 */
 export const ID_BLOCK_LIST = 'CTA_BLOCKED_USERS';
-
+/** class: 黑名单元素删除按钮类名 */
+export const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** class: 编辑用户标签 */
 export const CLASS_EDIT_USER_TAG = 'ctz-edit-user-tag';
-
+/** class: 黑名单标签 */
 export const CLASS_BLACK_TAG = 'ctz-black-tag';
 
 export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
@@ -25,7 +26,7 @@ export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
   `<i class="${CLASS_REMOVE_BLOCK}">✕</i>`;
 
 /** 初始化黑名单标签 */
-export const initHTMLBlockedUserTags = async () => {
+const initHTMLBlockedUserTags = async () => {
   const config = await myStorage.getConfig();
 
   // 初始化黑名单标签列表
@@ -140,3 +141,22 @@ export const initHTMLBlockedUsers = async () => {
     }
   };
 };
+
+/** 初始化黑名单设置，创建黑名单设置元素 */
+export const createHTMLBlockedUsers = () => {
+  domById('CTZ_BLACKLIST_COMMON')!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
+  initHTMLBlockedUserTags();
+  initHTMLBlockedUsers();
+};
+
+const BLOCKED_USER_COMMON: ICommonContent[][] = [
+  [
+    { label: '回答及列表用户名后显示"屏蔽用户"按钮', value: 'showBlockUser' },
+    { label: '评论区显示"屏蔽用户"按钮', value: 'showBlockUserComment' },
+    { label: '屏蔽黑名单用户发布的内容', value: 'removeBlockUserContent' },
+    { label: '屏蔽黑名单用户评论', value: 'removeBlockUserComment' },
+    { label: '回答及列表显示黑名单用户标识<div class="ctz-black-tag">黑名单</div>', value: 'showBlockUserTag' },
+    { label: '评论区显示黑名单用户标识<div class="ctz-black-tag">黑名单</div>', value: 'showBlockUserCommentTag' },
+    { label: '黑名单用户标识显示标签分类<div class="ctz-black-tag">黑名单：xx</div>', value: 'showBlockUserTagType' },
+  ],
+];

@@ -3,6 +3,7 @@ import { domC, fnReturnStr } from '../../commons/tools';
 import { IZhihuCardContent } from '../../types/zhihu/zhihu.type';
 import { addBlockUser, removeBlockUser } from './blocked-users';
 import { CLASS_BLACK_TAG } from './init-html';
+import { IBlockedUser } from './types';
 
 /** class：黑名单模块盒子 */
 export const CLASS_BLOCK_USER_BOX = 'ctz-block-user-box';
@@ -25,10 +26,13 @@ export const answerAddBlockButton = async (event: HTMLElement) => {
   const userId = aContent.author_member_hash_id || '';
   if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;
 
-  const { blockedUsers = [], showBlockUserTag, showBlockUser } = await myStorage.getConfig();
+  const { blockedUsers = [], showBlockUserTag, showBlockUser, showBlockUserTagType } = await myStorage.getConfig();
 
-  const isBlocked = blockedUsers.findIndex((i) => i.id === userId) >= 0;
-  const nBlackBox = domC('div', { className: CLASS_BLOCK_USER_BOX, innerHTML: changeBlockedUsersBox(isBlocked, showBlockUser, showBlockUserTag) });
+  const blockedUserInfo = blockedUsers.find((i) => i.id === userId);
+  const nBlackBox = domC('div', {
+    className: CLASS_BLOCK_USER_BOX,
+    innerHTML: changeBlockedUsersBox(!!blockedUserInfo, showBlockUser, showBlockUserTag, showBlockUserTagType, blockedUserInfo),
+  });
   nBlackBox.onclick = async function (ev) {
     const target = ev.target as HTMLElement;
     const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
@@ -37,13 +41,13 @@ export const answerAddBlockButton = async (event: HTMLElement) => {
     // 屏蔽用户
     if (target.classList.contains(CLASS_BTN_ADD_BLOCKED)) {
       await addBlockUser({ id: userId, name: userName, urlToken });
-      me.innerHTML = changeBlockedUsersBox(true, showBlockUser, showBlockUserTag);
+      me.innerHTML = changeBlockedUsersBox(true, showBlockUser, showBlockUserTag, showBlockUserTagType);
       return;
     }
     // 解除屏蔽
     if (target.classList.contains(CLASS_BTN_REMOVE_BLOCKED)) {
       await removeBlockUser({ id: userId, name: userName, urlToken });
-      me.innerHTML = changeBlockedUsersBox(false, showBlockUser, showBlockUserTag);
+      me.innerHTML = changeBlockedUsersBox(false, showBlockUser, showBlockUserTag, showBlockUserTagType);
       return;
     }
   };
@@ -56,12 +60,15 @@ export const answerAddBlockButton = async (event: HTMLElement) => {
  * @param showBlock 显示屏蔽用户按钮
  * @param showBlockTag 显示黑名单用户标签
  * @param showBlockTagType 黑名单用户标签显示类型
+ * @param userinfo 黑名单用户信息
  */
-export const changeBlockedUsersBox = (isBlocked: boolean, showBlock?: boolean, showBlockTag?: boolean, showBlockTagType?: boolean) => {
+export const changeBlockedUsersBox = (isBlocked: boolean, showBlock?: boolean, showBlockTag?: boolean, showBlockTagType?: boolean, userinfo?: IBlockedUser) => {
   if (isBlocked) {
     return (
-      fnReturnStr(`<span class="${CLASS_BLACK_TAG}">黑名单</span>`, showBlockTag) +
-      fnReturnStr(`<button class="${CLASS_BTN_REMOVE_BLOCKED} ctz-button">解除屏蔽</button>`, showBlock)
+      fnReturnStr(
+        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userinfo && userinfo.tags && userinfo.tags.length ? '：' + userinfo.tags.join('、') : ''}</span>`,
+        showBlockTag
+      ) + fnReturnStr(`<button class="${CLASS_BTN_REMOVE_BLOCKED} ctz-button">解除屏蔽</button>`, showBlock)
     );
   } else {
     return fnReturnStr(`<button class="${CLASS_BTN_ADD_BLOCKED} ctz-button">屏蔽用户</button>`, showBlock);

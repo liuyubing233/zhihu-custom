@@ -28,7 +28,7 @@ import { fnReplaceZhidaToSearch } from './components/zhida-to-search';
 import { CONFIG_DEFAULT } from './configs';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './configs/dom-name';
 import { initHistoryView } from './init/init-history-view';
-import { appendHomeLink, initHTML } from './init/init-html';
+import { appendHomeLink, initHTML } from './init/init-html/init-html';
 import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
 import { needRedirect } from './init/redirect';

@@ -108,7 +108,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
     return;
   }
   const commentAuthors = store.getCommentAuthors();
-  const { removeBlockUserComment, blockedUsers, showBlockUserComment, showBlockUserCommentTag } = await myStorage.getConfig();
+  const { removeBlockUserComment, blockedUsers, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType } = await myStorage.getConfig();
   const comments = nodeComments.children;
   for (let i = 0, len = comments.length; i < len; i++) {
     const item = comments[i] as HTMLElement;
@@ -154,7 +154,7 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
 
       const nBox = domC('div', {
         className: CLASS_BLOCK_USER_BOX,
-        innerHTML: changeBlockedUsersBox(isBlocked, showBlockUserComment, showBlockUserCommentTag),
+        innerHTML: changeBlockedUsersBox(isBlocked, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType, findUser),
       });
       nBox.onclick = async function (event) {
         const me = this as HTMLElement;
@@ -162,13 +162,13 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
         // 解除屏蔽
         if (target.classList.contains(CLASS_BTN_REMOVE_BLOCKED)) {
           await removeBlockUser(commentUserInfo);
-          me.innerHTML = changeBlockedUsersBox(false, showBlockUserComment, showBlockUserCommentTag);
+          me.innerHTML = changeBlockedUsersBox(false, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType);
           return;
         }
         // 添加屏蔽
         if (target.classList.contains(CLASS_BTN_ADD_BLOCKED)) {
           await addBlockUser(commentUserInfo);
-          me.innerHTML = changeBlockedUsersBox(true, showBlockUserComment, showBlockUserCommentTag);
+          me.innerHTML = changeBlockedUsersBox(true, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType);
           return;
         }
       };
