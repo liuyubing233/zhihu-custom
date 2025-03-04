@@ -1,14 +1,14 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/tools';
+import { previewGIF } from '../components/image';
+import { initLinkChanger } from '../components/link';
+import { myListenAnswerItem } from '../components/listen-answer-item';
+import { doListenComment } from '../components/listen-comment';
+import { myListenListItem } from '../components/listen-list-item';
+import { myListenSearchListItem } from '../components/listen-search-list-item';
+import { changeTitle } from '../components/page-title';
+import { myCollectionExport } from '../components/print';
 import { HTML_HOOTS } from '../configs';
-import { previewGIF } from '../methods/image';
-import { initLinkChanger } from '../methods/link';
-import { myListenAnswerItem } from '../methods/listen-answer-item';
-import { doListenComment } from '../methods/listen-comment';
-import { myListenListItem } from '../methods/listen-list-item';
-import { myListenSearchListItem } from '../methods/listen-search-list-item';
-import { changeTitle } from '../methods/page-title';
-import { myCollectionExport } from '../methods/print';
 import { initImagePreview } from './init-image-preview';
 
 /** 使用 ResizeObserver 监听body高度 */

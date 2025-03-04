@@ -1,14 +1,14 @@
 import { doFetchNotInterested } from '../commons/fetch';
 import { myStorage } from '../commons/storage';
 import { dom, domP } from '../commons/tools';
+import { answerAddBlockButton } from '../components/blocked-users';
+import { addAnswerCopyLink } from '../components/link';
+import { printAnswer, printArticle } from '../components/print';
+import { updateItemTime } from '../components/time';
+import { updateTopVote } from '../components/topVote';
+import { CLASS_VIDEO_ONE, initVideoDownload } from '../components/video';
+import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
-import { answerAddBlockButton } from '../methods/blocked-users';
-import { addAnswerCopyLink } from '../methods/link';
-import { printAnswer, printArticle } from '../methods/print';
-import { updateItemTime } from '../methods/time';
-import { updateTopVote } from '../methods/topVote';
-import { CLASS_VIDEO_ONE, initVideoDownload } from '../methods/video';
-import { fnReplaceZhidaToSearch } from '../methods/zhida-to-search';
 import { IPfConfig } from '../types';
 
 const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon', 'ContentItem-expandButton', 'is-collapsed'];

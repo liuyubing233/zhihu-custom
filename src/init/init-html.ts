@@ -1,10 +1,10 @@
 import { dom, domA, domById, domC } from '../commons/tools';
+import { addBackgroundSetting } from '../components/background';
+import { initBlockedUsers, initBlockedUserTags } from '../components/blocked-users';
+import { initFetchInterceptStatus } from '../components/fetch-intercept-status-change';
+import { initMenu } from '../components/menu';
 import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIDDEN_ARRAY, HIGH_PERFORMANCE, ICO_URL, ICommonContent, VERSION_RANGE } from '../configs';
 import { OPTIONS_MAP } from '../configs/select-options';
-import { addBackgroundSetting } from '../methods/background';
-import { initBlockedUsers, initBlockedUserTags } from '../methods/blocked-users';
-import { initFetchInterceptStatus } from '../methods/fetch-intercept-status-change';
-import { initMenu } from '../methods/menu';
 import { IRangeItem } from '../types';
 import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../web-resources';

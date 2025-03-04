@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { domA } from '../commons/tools';
-import { myPreview } from '../methods/preview';
+import { myPreview } from '../components/preview';
 import { EZoomImageType } from '../types';
 
 /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
