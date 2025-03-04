@@ -1,5 +1,5 @@
 import { myStorage } from '../commons/storage';
-import { IBlockedUser } from '../components/blocked-users/types';
+import { IBlockedUser } from '../components/blocked-users';
 import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig } from '../types';
 import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
 import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';

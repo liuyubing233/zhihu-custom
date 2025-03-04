@@ -1,4 +1,4 @@
-import { ETheme, EThemeDark, EThemeLight } from '../components/background/types';
+import { ETheme, EThemeDark, EThemeLight } from '../components/background';
 import {
   EAnswerOpen,
   ELinkShopping,

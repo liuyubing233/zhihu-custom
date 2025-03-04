@@ -3,9 +3,7 @@ import { myStorage } from '../commons/storage';
 import { dom, domA, domC, domP, fnLog } from '../commons/tools';
 import { CLASS_ZHIHU_COMMENT_DIALOG } from '../configs';
 import { store } from '../store';
-import { changeBlockedUsersBox, CLASS_BLOCK_USER_BOX, CLASS_BTN_ADD_BLOCKED, CLASS_BTN_REMOVE_BLOCKED } from './blocked-users/add-block-button';
-import { addBlockUser, removeBlockUser } from './blocked-users/blocked-users';
-import { IBlockedUser } from './blocked-users/types';
+import { addBlockUser, changeBlockedUsersBox, CLASS_BLOCK_USER_BOX, CLASS_BTN_ADD_BLOCKED, CLASS_BTN_REMOVE_BLOCKED, IBlockedUser, removeBlockUser } from './blocked-users';
 import { formatPreviewSize } from './image';
 
 /** 格式化评论区接口内的用户信息并储存 */

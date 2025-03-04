@@ -1,10 +1,8 @@
 import { myStorage } from '../commons/storage';
 import { dom, domById } from '../commons/tools';
 import { initImagePreview } from '../init/init-image-preview';
-import { myBackground } from './background/background';
-import { onUseThemeDark } from './background/dark';
-import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT } from './background/types';
-import { appendHiddenStyle } from './hidden/append-style';
+import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, myBackground, onUseThemeDark } from './background';
+import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO, changeTitle } from './page-title';

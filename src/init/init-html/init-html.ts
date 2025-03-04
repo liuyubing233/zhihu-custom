@@ -1,8 +1,8 @@
 import { dom, domA, domById, domC } from '../../commons/tools';
-import { createHTMLBackgroundSetting } from '../../components/background/init-html';
-import { createHTMLBlockedUsers } from '../../components/blocked-users/init-html';
+import { createHTMLBackgroundSetting } from '../../components/background';
+import { createHTMLBlockedUsers } from '../../components/blocked-users';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
-import { createHTMLHiddenConfig } from '../../components/hidden/init-html';
+import { createHTMLHiddenConfig } from '../../components/hidden';
 import { initMenu } from '../../components/menu';
 import { BASIC_SHOW_CONTENT, DE, FONT_SIZE_INPUT, HIGH_PERFORMANCE, ICO_URL, VERSION_RANGE } from '../../configs';
 import { OPTIONS_MAP } from '../../configs/select-options';
