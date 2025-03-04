@@ -1,6 +1,6 @@
 import { myStorage } from '../../commons/storage';
 import { fnAppendStyle } from '../../commons/tools';
-import { HIDDEN_ARRAY, HIDDEN_ARRAY_MORE } from '../../configs';
+import { HIDDEN_ARRAY, HIDDEN_ARRAY_MORE } from './configs';
 
 /** 加载隐藏模块的样式 */
 export const appendHiddenStyle = async () => {

@@ -6,7 +6,7 @@ import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWE
 import { store } from '../store';
 import { EThemeDark, EThemeLight } from '../types';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
-import { doHighlightOriginal } from './background';
+import { doHighlightOriginal } from './background/highlight';
 
 /** 监听列表内容 - 过滤  */
 export const myListenListItem = {

@@ -1,5 +1,5 @@
 import { dom, domA, domById, domC } from '../../commons/tools';
-import { addBackgroundSetting } from '../../components/background';
+import { createHTMLBackgroundSetting } from '../../components/background/init-html';
 import { createHTMLBlockedUsers } from '../../components/blocked-users/init-html';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
 import { createHTMLHiddenConfig } from '../../components/hidden/init-html';
@@ -15,8 +15,6 @@ import { createHTMLFormBoxSwitch, createHTMLRange, createHTMLTooltip } from './c
 export const initHTML = () => {
   document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
   dom('.ctz-version')!.innerText = GM_info.script.version;
-
-  addBackgroundSetting();
 
   // 滑动输入条部分 START
   domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE.map(
@@ -72,6 +70,8 @@ export const initHTML = () => {
   });
 
   initFetchInterceptStatus();
+
+  createHTMLBackgroundSetting();
   createHTMLHiddenConfig();
   createHTMLBlockedUsers();
   initMenu();
