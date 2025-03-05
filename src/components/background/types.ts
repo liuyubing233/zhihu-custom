@@ -26,6 +26,7 @@ export enum EThemeDark {
   高对比度蓝 = 4,
   高对比度红 = 5,
   高对比度绿 = 6,
+  纯黑 = 7,
 }
 
 /** 浅色主题色配置 */
@@ -70,6 +71,7 @@ export const THEME_CONFIG_DARK: IThemeConfigDark = {
   [EThemeDark.高对比度蓝]: { name: '高对比度蓝', background: '#1c0c59', background2: '#191970', primary: '#1c0c59' },
   [EThemeDark.高对比度红]: { name: '高对比度红', background: '#570D0D', background2: '#8B0000', primary: '#570D0D' },
   [EThemeDark.高对比度绿]: { name: '高对比度绿', background: '#093333', background2: '#0c403f', primary: '#093333' },
+  [EThemeDark.纯黑]: { name: '纯黑', background: '#202123', background2: '#000000', primary: '#121212' },
 };
 
 export const INPUT_NAME_THEME = 'theme';
