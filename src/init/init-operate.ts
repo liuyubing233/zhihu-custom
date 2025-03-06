@@ -83,7 +83,7 @@ const myButtonOperation: Record<string, Function> = {
     const dateNumber = +new Date();
     const link = domC('a', {
       href: 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config),
-      download: `知乎编辑器配置-${formatTime(dateNumber, 'YYYY-MM-DD_HH-mm-ss')}-${dateNumber}.txt`,
+      download: `知乎编辑器配置-${formatTime(dateNumber, 'YYYYMMDD-HHmmss')}-${dateNumber}.txt`,
     });
     document.body.appendChild(link);
     link.click();
