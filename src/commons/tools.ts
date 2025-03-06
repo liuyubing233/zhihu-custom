@@ -1,11 +1,11 @@
 import { CLASS_MESSAGE, ID_MESSAGE_BOX } from '../configs';
 
 /** 获取元素 */
-export const dom = (n: string): HTMLElement | undefined => document.querySelector(n) as HTMLElement;
+export const dom = (n: string, find: HTMLElement | Document = document): HTMLElement | undefined => find.querySelector(n) as HTMLElement;
 /** 使用 Id 获取元素 */
 export const domById = (id: string): HTMLElement | undefined => document.getElementById(id) as HTMLElement;
 /** 获取所有元素 */
-export const domA = (n: string): NodeListOf<HTMLElement> => document.querySelectorAll(n);
+export const domA = (n: string, find: HTMLElement | Document = document): NodeListOf<HTMLElement> => find.querySelectorAll(n);
 /**
  * 创建元素
  * attrObjs - className

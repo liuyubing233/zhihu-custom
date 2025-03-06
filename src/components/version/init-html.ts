@@ -1,4 +1,4 @@
-import { domById } from '../../commons/tools';
+import { dom } from '../../commons/tools';
 import { createHTMLRange, createHTMLTooltip } from '../../init/init-html/common-html';
 import { IOptionItem } from '../../types';
 
@@ -6,9 +6,9 @@ import { IOptionItem } from '../../types';
  * 尺寸设置部分元素添加
  * 页面宽度、字体大小、图片高度
  */
-export const createHTMLSizeSetting = () => {
+export const createHTMLSizeSetting = (domMain: HTMLElement) => {
   // 滑动输入条部分 START
-  domById('CTZ_VERSION_RANGE_ZHIHU')!.innerHTML = VERSION_RANGE_HAVE_PERCENT.map(
+  dom('#CTZ_VERSION_RANGE_ZHIHU', domMain)!.innerHTML = VERSION_RANGE_HAVE_PERCENT.map(
     (item) =>
       `<div class="ctz-form-box-item">${
         `<div>${item.label}${createHTMLTooltip('最小显示宽度为600像素，设置低于此值将按照600像素显示')}</div>` +
@@ -19,13 +19,13 @@ export const createHTMLSizeSetting = () => {
       }</div>`
   ).join('');
 
-  domById('CTZ_IMAGE_SIZE_CUSTOM')!.innerHTML = `<div>回答和文章图片宽度</div>` + createHTMLRange('zoomImageSize', 0, 1000);
-  domById('CTZ_IMAGE_HEIGHT_CUSTOM')!.innerHTML = `<div>图片最大高度</div>` + createHTMLRange('zoomImageHeightSize', 0, 1000);
-  domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.innerHTML = `<div>列表视频回答宽度</div>` + createHTMLRange('zoomListVideoSize', 0, 1000);
+  dom('#CTZ_IMAGE_SIZE_CUSTOM', domMain)!.innerHTML = `<div>回答和文章图片宽度</div>` + createHTMLRange('zoomImageSize', 0, 1000);
+  dom('#CTZ_IMAGE_HEIGHT_CUSTOM', domMain)!.innerHTML = `<div>图片最大高度</div>` + createHTMLRange('zoomImageHeightSize', 0, 1000);
+  dom('#CTZ_LIST_VIDEO_SIZE_CUSTOM', domMain)!.innerHTML = `<div>列表视频回答宽度</div>` + createHTMLRange('zoomListVideoSize', 0, 1000);
   // 滑动输入条部分 END
 
   // 文字大小调节
-  domById('CTZ_FONT_SIZE_IN_ZHIHU')!.innerHTML = FONT_SIZE_INPUT.map(
+  dom('#CTZ_FONT_SIZE_IN_ZHIHU', domMain)!.innerHTML = FONT_SIZE_INPUT.map(
     (item) =>
       `<div class="ctz-form-box-item">${
         `<div>${item.label}</div>` +

@@ -27,11 +27,11 @@ export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
   `<i class="${CLASS_REMOVE_BLOCK}">✕</i>`;
 
 /** 初始化黑名单标签 */
-const initHTMLBlockedUserTags = async () => {
+const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
   const config = await myStorage.getConfig();
 
   // 初始化黑名单标签列表
-  const nodeBlockedUsersTags = domById(ID_BLOCKED_USERS_TAGS)!;
+  const nodeBlockedUsersTags = dom(`#${ID_BLOCKED_USERS_TAGS}`, domMain)!;
   nodeBlockedUsersTags.innerHTML = (config.blockedUsersTags || [])
     .map(
       (i) =>
@@ -63,7 +63,7 @@ const initHTMLBlockedUserTags = async () => {
     myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
   };
 
-  dom('input[name="inputBlockedUsersTag"]')!.onchange = async (e) => {
+  dom('input[name="inputBlockedUsersTag"]', domMain)!.onchange = async (e) => {
     const { blockedUsersTags = [] } = await myStorage.getConfig();
     const target = e.target as HTMLInputElement;
     const value = target.value.toLowerCase();
@@ -84,10 +84,10 @@ const initHTMLBlockedUserTags = async () => {
 };
 
 /** 初始化黑名单列表 */
-export const initHTMLBlockedUsers = async () => {
+export const initHTMLBlockedUsers = async (domMain: HTMLElement) => {
   const config = await myStorage.getConfig();
   // 初始化黑名单列表
-  const nodeBlockedUsers = domById(ID_BLOCK_LIST)!;
+  const nodeBlockedUsers = dom(`#${ID_BLOCK_LIST}`, domMain)!;
   nodeBlockedUsers.innerHTML = (config.blockedUsers || [])
     .map((info) => `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${blackItemContent(info)}</div>`)
     .join('');
@@ -144,10 +144,10 @@ export const initHTMLBlockedUsers = async () => {
 };
 
 /** 初始化黑名单设置，创建黑名单设置元素 */
-export const createHTMLBlockedUsers = () => {
-  domById('CTZ_BLACKLIST_COMMON')!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
-  initHTMLBlockedUserTags();
-  initHTMLBlockedUsers();
+export const createHTMLBlockedUsers = (domMain: HTMLElement) => {
+  dom('#CTZ_BLACKLIST_COMMON', domMain)!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
+  initHTMLBlockedUserTags(domMain);
+  initHTMLBlockedUsers(domMain);
 };
 
 const BLOCKED_USER_COMMON: ICommonContent[][] = [

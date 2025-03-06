@@ -1,4 +1,4 @@
-import { dom, domA, domById, domC } from '../../commons/tools';
+import { dom, domA, domC } from '../../commons/tools';
 import { createHTMLBackgroundSetting } from '../../components/background';
 import { createHTMLBlockedUsers } from '../../components/blocked-users';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
@@ -14,41 +14,44 @@ import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE } from './c
 
 /** 添加修改器内元素 */
 export const initHTML = () => {
-  document.body.appendChild(domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML }));
-  dom('.ctz-version')!.innerText = GM_info.script.version;
+  const nDomMain = domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML });
+
+  dom('.ctz-version', nDomMain)!.innerText = GM_info.script.version;
 
   // 添加修改网页标题图片
-  domById('CTZ_TITLE_ICO')!.innerHTML = Object.keys(ICO_URL)
+  dom('#CTZ_TITLE_ICO', nDomMain)!.innerHTML = Object.keys(ICO_URL)
     .map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`)
     .join('');
 
   // 添加更多默认设置
-  domById('CTZ_DEFAULT_SELF')!.innerHTML = DEFAULT_FUNCTION.map(
+  dom('#CTZ_DEFAULT_SELF', nDomMain)!.innerHTML = DEFAULT_FUNCTION.map(
     ({ title, commit }) =>
       `<div class="ctz-form-box-item ctz-form-box-item-vertical">${`<div>${title}</div>` + `<div style="font-size: 12px;color:#999;">${commit || ''}</div>`}</div>`
   ).join('');
 
   // 添加基础设置显示修改
-  dom('#CTZ_BASIS_SHOW_CONTENT')!.innerHTML = createHTMLFormBoxSwitch(BASIC_SHOW);
+  dom('#CTZ_BASIS_SHOW_CONTENT', nDomMain)!.innerHTML = createHTMLFormBoxSwitch(BASIC_SHOW);
   // 高性能
-  dom('#CTZ_HIGH_PERFORMANCE')!.innerHTML = createHTMLFormBoxSwitch(HIGH_PERFORMANCE);
+  dom('#CTZ_HIGH_PERFORMANCE', nDomMain)!.innerHTML = createHTMLFormBoxSwitch(HIGH_PERFORMANCE);
   // 列表内容屏蔽
-  dom('#CTZ_FILTER_LIST_CONTENT')!.innerHTML = createHTMLFormBoxSwitch(FILTER_LIST);
+  dom('#CTZ_FILTER_LIST_CONTENT', nDomMain)!.innerHTML = createHTMLFormBoxSwitch(FILTER_LIST);
 
   // 添加 select 选择框内容
-  domA('.ctz-select').forEach((item) => {
+  domA('.ctz-select', nDomMain).forEach((item) => {
     const name = (item as HTMLSelectElement).name;
     if (OPTIONS_MAP[name]) {
       item.innerHTML = OPTIONS_MAP[name].map(({ value, label }) => `<option value="${value}">${label}</option>`).join('');
     }
   });
 
-  initFetchInterceptStatus();
-  initMenu();
-  createHTMLSizeSetting();
-  createHTMLBackgroundSetting();
-  createHTMLHiddenConfig();
-  createHTMLBlockedUsers();
+  initFetchInterceptStatus(nDomMain);
+  initMenu(nDomMain);
+  createHTMLSizeSetting(nDomMain);
+  createHTMLBackgroundSetting(nDomMain);
+  createHTMLHiddenConfig(nDomMain);
+  createHTMLBlockedUsers(nDomMain);
+
+  document.body.appendChild(nDomMain);
 };
 
 /** 添加个人主页跳转 */
