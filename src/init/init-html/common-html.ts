@@ -1,4 +1,4 @@
-import { ICommonContent } from '../../configs';
+import { ICommonContent } from "./types";
 
 /** 提示HTML */
 export const createHTMLTooltip = (value: string) => `<span class="ctz-tooltip"><span>?</span><span>${value}</span></span>`;

@@ -1,7 +1,7 @@
 import { myStorage } from '../../commons/storage';
 import { dom, domById, domC, message } from '../../commons/tools';
-import { ICommonContent } from '../../configs';
 import { createHTMLFormBoxSwitch } from '../../init/init-html/common-html';
+import { ICommonContent } from '../../init/init-html/types';
 import { closeExtra, openExtra } from '../open';
 import { removeBlockUser } from './blocked-users';
 import { IBlockedUser } from './types';
@@ -10,12 +10,13 @@ import { IBlockedUser } from './types';
 const ID_BLOCKED_USERS_TAGS = 'CTZ_BLOCKED_USERS_TAGS';
 /** class: 黑名单标签删除按钮 */
 const CLASS_REMOVE_BLOCKED_TAG = 'ctz-remove-blocked-tag';
+/** class: 黑名单元素删除按钮类名 */
+const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
+/** class: 编辑用户标签 */
+const CLASS_EDIT_USER_TAG = 'ctz-edit-user-tag';
+
 /** id: 黑名单列表 */
 export const ID_BLOCK_LIST = 'CTA_BLOCKED_USERS';
-/** class: 黑名单元素删除按钮类名 */
-export const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
-/** class: 编辑用户标签 */
-export const CLASS_EDIT_USER_TAG = 'ctz-edit-user-tag';
 /** class: 黑名单标签 */
 export const CLASS_BLACK_TAG = 'ctz-black-tag';
 

@@ -199,41 +199,7 @@
               列表内容屏蔽
               <span>此部分设置只在首页列表生效</span>
             </div>
-            <div class="ctz-form-box">
-              <div class="ctz-form-box-item">
-                <div>屏蔽顶部活动推广</div>
-                <div><input class="ctz-i ctz-switch" name="removeTopAD" type="checkbox" value="on" /></div>
-              </div>
-            </div>
-
-            <div class="ctz-form-box">
-              <div class="ctz-form-box-item ctz-fetch-intercept">
-                <div>
-                  屏蔽匿名用户提问
-                  <span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>
-                </div>
-                <div><input class="ctz-i ctz-switch" name="removeAnonymousQuestion" type="checkbox" value="on" /></div>
-              </div>
-            </div>
-
-            <div class="ctz-form-box">
-              <div class="ctz-form-box-item">
-                <div>关注列表屏蔽自己的操作</div>
-                <div><input class="ctz-i ctz-switch" name="removeMyOperateAtFollow" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>关注列表过滤关注人赞同回答</div>
-                <div><input class="ctz-i ctz-switch" name="removeFollowVoteAnswer" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>关注列表过滤关注人赞同文章</div>
-                <div><input class="ctz-i ctz-switch" name="removeFollowVoteArticle" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>关注列表过滤关注人关注问题</div>
-                <div><input class="ctz-i ctz-switch" name="removeFollowFQuestion" type="checkbox" value="on" /></div>
-              </div>
-            </div>
+            <div id="CTZ_FILTER_LIST_CONTENT"></div>
 
             <div class="ctz-form-box">
               <div class="ctz-form-box-item">
@@ -243,29 +209,6 @@
               <div class="ctz-form-box-item">
                 <div>关注、推荐、搜索屏蔽小于的点赞数量</div>
                 <div><input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px" /></div>
-              </div>
-            </div>
-
-            <div class="ctz-form-box">
-              <div class="ctz-form-box-item">
-                <div>列表过滤邀请回答</div>
-                <div><input class="ctz-i ctz-switch" name="removeItemQuestionAsk" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>列表过滤商业推广</div>
-                <div><input class="ctz-i ctz-switch" name="removeItemAboutAD" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>列表过滤文章</div>
-                <div><input class="ctz-i ctz-switch" name="removeItemAboutArticle" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>列表过滤视频</div>
-                <div><input class="ctz-i ctz-switch" name="removeItemAboutVideo" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>列表过滤想法</div>
-                <div><input class="ctz-i ctz-switch" name="removeItemAboutPin" type="checkbox" value="on" /></div>
               </div>
             </div>
           </div>
