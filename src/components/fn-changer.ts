@@ -6,7 +6,7 @@ import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO, changeTitle } from './page-title';
-import { cacheHeader, changeSuspensionTab, suspensionPickupAttribute } from './suspension';
+import { changeSuspensionTab, suspensionHeader, suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
 import { myVersion } from './version';
 
@@ -69,9 +69,9 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       myVersion.change();
       changeSuspensionTab();
     },
-    suspensionFind: cacheHeader,
-    suspensionSearch: cacheHeader,
-    suspensionUser: cacheHeader,
+    suspensionFind: () => suspensionHeader('suspensionFind'),
+    suspensionSearch: () => suspensionHeader('suspensionSearch'),
+    suspensionUser: () => suspensionHeader('suspensionUser'),
     titleIco: changeICO,
     showGIFinDialog: previewGIF,
     questionCreatedAndModifiedTime: addQuestionTime,

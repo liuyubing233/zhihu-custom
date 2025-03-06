@@ -20,7 +20,7 @@ import { closeExtra, openChange } from './components/open';
 import { myPageFilterSetting } from './components/page-filter-setting';
 import { changeICO, changeTitle } from './components/page-title';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';
-import { cacheHeader, changeSuspensionTab, suspensionPickupAttribute } from './components/suspension';
+import { changeSuspensionTab, initCacheHeader, suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
 import { topBlockUser, userHomeAnswers } from './components/user-home-content';
 import { myVersion } from './components/version';
@@ -169,7 +169,7 @@ import { INNER_CSS } from './web-resources';
       initResizeObserver();
       myCtzTypeOperation.init();
       echoHistory();
-      cacheHeader();
+      initCacheHeader();
 
       if (removeTopAD) {
         setTimeout(() => {
