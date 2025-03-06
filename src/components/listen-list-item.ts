@@ -2,7 +2,7 @@ import { doFetchNotInterested } from '../commons/fetch';
 import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { createButtonFontSize12, dom, domA, domP, fnLog } from '../commons/tools';
-import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION, FILTER_FOLLOWER_OPERATE } from '../configs';
+import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
 import { store } from '../store';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
 import { doHighlightOriginal } from './background/highlight';
@@ -80,13 +80,26 @@ export const myListenListItem = {
         cardContent = JSON.parse(nodeContentItem.getAttribute('data-za-extra-module') || '{}').card.content;
       } catch {}
       const { title = '', itemId } = dataZop || {};
-      // 关注列表屏蔽自己的操作
-      if (removeMyOperateAtFollow && nodeItem.classList.contains('TopstoryItem-isFollow')) {
-        try {
-          const findUserId = (nodeItem.querySelector('.UserLink .UserLink-link') as HTMLAnchorElement).href.match(/[^\/]+$/)![0];
-          const myUserId = userinfo!.url.match(/[^\/]+$/)![0];
-          findUserId === myUserId && (message = '关注列表屏蔽自己的操作');
-        } catch {}
+      // 未隐藏的元素需添加的内容
+      /** 存在 .FeedSource 元素为关注列表内容 */
+      const domFeedSource = nodeItem.querySelector('.FeedSource');
+      if (domFeedSource) {
+        // 关注列表屏蔽自己的操作
+        if (removeMyOperateAtFollow && nodeItem.classList.contains('TopstoryItem-isFollow')) {
+          try {
+            const findUserId = (nodeItem.querySelector('.UserLink .UserLink-link') as HTMLAnchorElement).href.match(/[^\/]+$/)![0];
+            const myUserId = userinfo!.url.match(/[^\/]+$/)![0];
+            findUserId === myUserId && (message = '关注列表屏蔽自己的操作');
+          } catch {}
+        }
+
+        // 关注人操作
+        if (nodeItem.classList.contains('TopstoryItem-isFollow')) {
+          const textFeed = domFeedSource.textContent || '';
+          !message && removeFollowVoteAnswer && textFeed.includes('赞同了回答') && (message = '屏蔽关注人赞同的回答操作');
+          !message && removeFollowVoteArticle && textFeed.includes('赞同了文章') && (message = '屏蔽关注人赞同了文章操作');
+          !message && removeFollowFQuestion && textFeed.includes('关注了问题') && (message = '屏蔽关注人关注了问题操作');
+        }
       }
 
       // 屏蔽盐选等...
@@ -102,9 +115,10 @@ export const myListenListItem = {
       }
 
       // 列表种类过滤
-      if (!message && ((isVideo && removeItemAboutVideo) || (isArticle && removeItemAboutArticle) || (isTip && removeItemAboutPin))) {
-        message = `列表种类屏蔽，${nodeContentItem.classList.value}`;
-      }
+      !message && isVideo && removeItemAboutVideo && (message = `列表屏蔽视频：${title}`);
+      !message && isArticle && removeItemAboutArticle && (message = `列表屏蔽文章：${title}`);
+      !message && isTip && removeItemAboutPin && (message = `列表屏蔽想法`);
+
       // 屏蔽低赞内容
       if (!message && removeLessVote && (cardContent['upvote_num'] || 0) < lessVoteNumber) {
         message = `屏蔽低赞内容: ${title}, ${cardContent['upvote_num'] || 0}`;
@@ -113,18 +127,7 @@ export const myListenListItem = {
       if (!message && removeItemQuestionAsk && nodeItem.querySelector('.TopstoryQuestionAskItem')) {
         message = '屏蔽邀请回答';
       }
-      // 关注列表屏蔽关注人操作
-      if (!message && (removeFollowVoteAnswer || removeFollowVoteArticle || removeFollowFQuestion) && nodeItem.classList.contains('TopstoryItem-isFollow')) {
-        const nodeFirstLine = nodeItem.querySelector('.FeedSource-firstline') as HTMLElement;
-        const textFollowerOperate = nodeFirstLine ? nodeFirstLine.innerText : '';
-        for (let itemOperate of FILTER_FOLLOWER_OPERATE) {
-          const thisRep = new RegExp(itemOperate.rep);
-          if (pfConfig[itemOperate.key] && thisRep.test(textFollowerOperate)) {
-            message = `屏蔽关注人操作: ${textFollowerOperate}`;
-            break;
-          }
-        }
-      }
+
       // 标题屏蔽词过滤
       !message && (message = this.replaceBlockWord(title, nodeContentItem, filterKeywords, title, '标题'));
       // 内容屏蔽词过滤
@@ -140,14 +143,17 @@ export const myListenListItem = {
         const { itemId, type } = dataZop;
         doFetchNotInterested({ id: `${itemId || ''}`, type: `${type}` });
       } else {
-        // 未隐藏的元素需添加的内容
-        // 高亮原创
-        const userNameE = nodeItem.querySelector('.FeedSource-firstline .UserLink-link') as HTMLElement;
-        const userName = userNameE ? userNameE.innerText : '';
-        if (dataZop && dataZop.authorName === userName) {
-          const nodeActions = nodeItem.querySelector('.ContentItem-actions') as HTMLElement;
-          nodeItem.style.cssText = highlightOriginal ? `${highlight}border: 1px solid #aaa;` : '';
-          nodeActions && (nodeActions.style.cssText = highlightOriginal ? highlight : '');
+        // 存在 domFeedSource 元素为关注列表
+        if (domFeedSource) {
+          const textFeed = domFeedSource.textContent || '';
+          const domUserLink = nodeItem.querySelector('.FeedSource-firstline .UserLink-link') as HTMLElement;
+          const userName = domUserLink ? domUserLink.innerText : '';
+          // 高亮原创
+          if (textFeed.includes('发布了想法') || (dataZop && dataZop.authorName === userName)) {
+            const nodeActions = nodeItem.querySelector('.ContentItem-actions') as HTMLElement;
+            nodeItem.style.cssText = highlightOriginal ? `${highlight}border: 1px solid #aaa;` : '';
+            nodeActions && (nodeActions.style.cssText = highlightOriginal ? highlight : '');
+          }
         }
 
         const nodeItemTitle = nodeItem.querySelector('.ContentItem-title');
