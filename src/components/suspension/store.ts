@@ -1,12 +1,3 @@
-export interface IHeaderDomEntries {
-  /** 定位元素的类名 */
-  class: string;
-  /** 定位的元素 */
-  even: HTMLElement;
-  /** 元素位置 */
-  index: number;
-}
-
 // 'suspensionHomeTab' |
 
 export type IHeaderName = 'suspensionFind' | 'suspensionUser' | 'suspensionSearch';

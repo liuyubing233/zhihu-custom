@@ -139,20 +139,21 @@ import { INNER_CSS } from './web-resources';
     }
 
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
-      const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
-      // 获取JS默认缓存的列表数据
       try {
-        const prevRecommend = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
-        findRemoveRecommends(prevRecommend || []);
-      } catch {}
+        const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
+        // 获取JS默认缓存的列表数据
+        try {
+          const prevRecommend = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
+          findRemoveRecommends(prevRecommend || []);
+        } catch {}
 
-      // 获取JS默认缓存的回答数据
-      try {
-        const prevAnswers = JsData.initialState.entities.answers;
-        const answerTargets: IZhihuAnswerTarget[] = Object.values(prevAnswers);
-        answerTargets.length && findRemoveAnswers(answerTargets);
+        // 获取JS默认缓存的回答数据
+        try {
+          const prevAnswers = JsData.initialState.entities.answers;
+          const answerTargets: IZhihuAnswerTarget[] = Object.values(prevAnswers);
+          answerTargets.length && findRemoveAnswers(answerTargets);
+        } catch {}
       } catch {}
-
       const { removeTopAD } = await myStorage.getConfig();
       initHTML();
       initOperate();

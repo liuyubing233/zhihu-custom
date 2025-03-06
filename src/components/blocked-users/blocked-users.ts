@@ -39,7 +39,7 @@ export function syncBlackList(offset = 0, l: IBlockedUser[] = []) {
         }
       } else {
         await myStorage.updateConfigItem('blockedUsers', l);
-        initHTMLBlockedUsers();
+        initHTMLBlockedUsers(document.body);
         fnDomReplace(buttonSync, { innerHTML: '同步黑名单', disabled: false });
       }
     });
@@ -131,7 +131,7 @@ export const syncRemoveBlockedUsers = () => {
         if (finishNumber === len) {
           fnDomReplace(buttonSync, { innerHTML: '清空黑名单列表', disabled: false });
           await myStorage.updateConfigItem('blockedUsers', []);
-          initHTMLBlockedUsers();
+          initHTMLBlockedUsers(document.body);
         }
       });
     }

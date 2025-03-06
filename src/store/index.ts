@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { IBlockedUser } from '../components/blocked-users';
-import { IContentStorageConfig, IFindEvent, IFindEventEntries, IKeyofFindEvent, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig } from '../types';
+import { IContentStorageConfig, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig } from '../types';
 import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
 import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';
 import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
@@ -9,15 +9,10 @@ class Store {
   /** 用户信息 更改prev: userInfo */
   userinfo: IZhihuUserinfo | undefined = undefined;
 
-  findEvent: IFindEvent = {
-    header: { fun: null, num: 0, isFind: false },
-  };
-
   /** 脚本内配置缓存 */
   storageConfig: IStorageConfig = {
     cacheTitle: '',
     fetchHeaders: {},
-    headerDoms: {},
   };
 
   /** 过滤的盐选回答ID */
@@ -35,8 +30,6 @@ class Store {
     // fix this is undefined
     this.setUserinfo = this.setUserinfo.bind(this);
     this.getUserinfo = this.getUserinfo.bind(this);
-    this.setFindEventItem = this.setFindEventItem.bind(this);
-    this.getFindEventItem = this.getFindEventItem.bind(this);
     this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
     this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
     this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
@@ -57,12 +50,7 @@ class Store {
   getUserinfo() {
     return this.userinfo;
   }
-  setFindEventItem(key: IKeyofFindEvent, content: IFindEventEntries) {
-    this.findEvent[key] = content;
-  }
-  getFindEventItem(key: IKeyofFindEvent) {
-    return this.findEvent[key];
-  }
+
   setStorageConfigItem(key: IKeyofStorageConfig, content: any) {
     (this.storageConfig[key] as IContentStorageConfig) = content;
   }
