@@ -1,4 +1,4 @@
-import { IHiddenArray } from '../../types';
+import { IHiddenArray } from "./types";
 
 // 勾选隐藏对应内容
 export const HIDDEN_ARRAY: IHiddenArray = [

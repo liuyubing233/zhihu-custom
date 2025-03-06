@@ -1,9 +1,10 @@
-import { myStorage } from '../commons/storage';
-import { dom, domById, fnAppendStyle, fnReturnStr } from '../commons/tools';
-import { CLASS_ZHIHU_COMMENT_DIALOG, VERSION_MIN_WIDTH } from '../configs';
-import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../types';
-import { EThemeDark, EThemeLight, isDark, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from './background';
-import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './video';
+import { myStorage } from '../../commons/storage';
+import { dom, domById, fnAppendStyle, fnReturnStr } from '../../commons/tools';
+import { CLASS_ZHIHU_COMMENT_DIALOG } from '../../configs';
+import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../../types';
+import { EThemeDark, EThemeLight, isDark, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../background';
+import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from '../video';
+import { VERSION_MIN_WIDTH } from './init-html';
 
 /** 修改版心的 css */
 export const myVersion = {
@@ -24,15 +25,10 @@ export const myVersion = {
     domById('CTZ_LIST_VIDEO_SIZE_CUSTOM')!.style.display = pfConfig.zoomListVideoType === EZoomListVideoType.自定义尺寸 ? 'flex' : 'none';
   },
   content: async function () {
+    const config = await myStorage.getConfig();
     const {
       commitModalSizeSameVersion,
-      versionHome,
-      versionAnswer,
       versionArticle,
-      versionHomeIsPercent,
-      versionHomePercent,
-      versionAnswerIsPercent,
-      versionAnswerPercent,
       versionArticleIsPercent,
       versionArticlePercent,
       zoomImageType,
@@ -62,33 +58,50 @@ export const myVersion = {
       videoUseLink,
       suspensionPickUp,
       suspensionPickupRight,
-    } = await myStorage.getConfig();
+    } = config;
     const dark = await isDark();
 
-    const versionSizeHome = !versionHomeIsPercent ? `${versionHome || '1000'}px` : `${versionHomePercent || '70'}vw`;
-    const versionSizeAnswer = !versionAnswerIsPercent ? `${versionAnswer || '1000'}px` : `${versionAnswerPercent || '70'}vw`;
-    const versionSizeArticle = !versionArticleIsPercent ? `${versionArticle || '1000'}px` : `${versionArticlePercent || '70'}vw`;
+    /** 格式化百分比宽度设置 */
+    const formatVersionPercentSize = (name: string) => (!config[`${name}IsPercent`] ? `${config[name] || '1000'}px` : `${config[`${name}Percent`] || '70'}vw`);
 
-    // 页面内容宽度
+    const versionSizeHome = formatVersionPercentSize('versionHome');
+    const versionSizeAnswer = formatVersionPercentSize('versionAnswer');
+    const versionSizeArticle = formatVersionPercentSize('versionArticle');
+    const versionSizeUserHome = formatVersionPercentSize('versionUserHome');
+    const versionSizeCollection = formatVersionPercentSize('versionCollection');
+
+    const NAME_HOME = '.Topstory-mainColumn,.SearchMain';
+    const NAME_ANSWER = '.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content';
+    const NAME_ARTICLE = '.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd';
+    const NAME_USER_HOME = '#ProfileHeader,[itemprop="people"] .Profile-main';
+    const NAME_COLLECTION = '.CollectionsDetailPage';
+
+    /** 页面内容宽度 */
     const xxxWidth =
       // 首页列表页面内容宽度
-      `.Topstory-mainColumn,.SearchMain{width: ${versionSizeHome}!important;}` +
+      `${NAME_HOME}{width: ${versionSizeHome}!important;}` +
       // 回答详情页面内容宽度
-      `.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content{width: ${versionSizeAnswer}!important;}` +
+      `${NAME_ANSWER}{width: ${versionSizeAnswer}!important;}` +
       // 文章页面内容宽度
-      `.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd{width: ${versionSizeArticle}!important;}` +
+      `${NAME_ARTICLE}{width: ${versionSizeArticle}!important;}` +
       `.zhuanlan .Post-SideActions{right: ${
         !versionArticleIsPercent ? `calc(50vw - ${+(versionArticle || '1000') / 2 + 150}px)` : `calc(50vw - ${+(versionArticlePercent || '70') / 2}vw + 150px)`
       }}` +
+      // 用户主页宽度
+      `${NAME_USER_HOME}{width: ${versionSizeUserHome}!important;}` +
+      // 收藏夹宽度
+      `${NAME_COLLECTION}{width: ${versionSizeCollection}!important}` +
       // 页面最小宽度
-      `.Topstory-mainColumn,.SearchMain,.Question-main,.QuestionHeader-footer-inner` +
-      `,.QuestionHeader .QuestionHeader-content,.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div` +
+      `${NAME_HOME},${NAME_ANSWER},${NAME_ARTICLE},${NAME_USER_HOME},${NAME_COLLECTION}` +
       `,.${CLASS_ZHIHU_COMMENT_DIALOG},.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG},.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}` +
       `{min-width: ${VERSION_MIN_WIDTH}px!important;}` +
       // 弹窗宽度
       fnReturnStr(
-        `.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeHome}!important;}.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeArticle}!important;}` +
-          fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeAnswer}!important;}`, location.pathname.includes('question')),
+        `.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeHome}!important;}` +
+          `.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeArticle}!important;}` +
+          fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeAnswer}!important;}`, location.pathname.includes('question')) +
+          fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeCollection}!important;}`, location.pathname.includes('collection')) +
+          fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeUserHome}!important;}`, location.pathname.includes('people')),
         commitModalSizeSameVersion
       );
 

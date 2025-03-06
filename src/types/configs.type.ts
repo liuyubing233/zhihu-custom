@@ -456,4 +456,16 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   replaceZhidaToSearch?: EReplaceZhidaToSearch;
   /** 点击空白处关闭评论弹窗 */
   clickMarkCloseCommentDialog?: boolean;
+  /** 用户主页宽度 */
+  versionUserHome?: string;
+  /** 用户主页宽度使用百分比 */
+  versionUserHomeIsPercent?: boolean;
+  /** 用户主页宽度百分比 */
+  versionUserHomePercent?: string;
+  /** 收藏夹宽度 */
+  versionCollection?: string;
+  /** 收藏夹宽度使用百分比 */
+  versionCollectionIsPercent?: boolean;
+  /** 收藏夹宽度百分比 */
+  versionCollectionPercent?: string;
 }

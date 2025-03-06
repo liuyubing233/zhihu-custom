@@ -1,6 +1,7 @@
 import { myStorage } from '../commons/storage';
 import { dom, domA, domById } from '../commons/tools';
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, VERSION_RANGE } from '../configs';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../configs';
+import { VERSION_RANGE_HAVE_PERCENT } from './version';
 
 /** 回填数据，供每次打开使用 */
 export const echoData = async () => {
@@ -45,10 +46,10 @@ export const echoData = async () => {
 
   echo.text(dom('[name="globalTitle"]'));
 
-  VERSION_RANGE.forEach((item) => {
-    const isPercent = pfConfig[item.percentChooseValue];
+  VERSION_RANGE_HAVE_PERCENT.forEach((item) => {
+    const isPercent = pfConfig[`${item.value}IsPercent`];
     const domRange = dom(`.ctz-range-${item.value}`);
-    const domRangePercent = dom(`.ctz-range-${item.percentValue}`);
+    const domRangePercent = dom(`.ctz-range-${item.value}Percent`);
     if (domRange && domRangePercent) {
       domRange.style.display = isPercent ? 'none' : 'flex';
       domRangePercent.style.display = !isPercent ? 'none' : 'flex';

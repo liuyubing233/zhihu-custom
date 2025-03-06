@@ -27,6 +27,10 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'versionHomePercent',
     'versionAnswerPercent',
     'versionArticlePercent',
+    'versionUserHome',
+    'versionUserHomePercent',
+    'versionCollection',
+    'versionCollectionPercent',
     'fontSizeForListTitle',
     'fontSizeForAnswerTitle',
     'fontSizeForArticleTitle',
@@ -81,6 +85,8 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     versionHomeIsPercent: rangeChoosePercent,
     versionAnswerIsPercent: rangeChoosePercent,
     versionArticleIsPercent: rangeChoosePercent,
+    versionUserHomeIsPercent: rangeChoosePercent,
+    versionCollectionIsPercent: rangeChoosePercent,
     zoomImageType: () => {
       myVersion.change();
       initImagePreview();
