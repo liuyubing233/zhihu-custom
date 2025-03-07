@@ -1,4 +1,4 @@
-import { CLASS_TIME_ITEM } from '../configs';
+import { CLASS_TIME_ITEM } from '../misc';
 import { dom, domC, myStorage } from '../tools';
 
 /** 时间格式化 */

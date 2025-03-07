@@ -1,4 +1,4 @@
-import { CLASS_INPUT_CLICK } from '../../configs';
+import { CLASS_INPUT_CLICK } from '../../misc';
 import { dom } from '../../tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT, THEMES } from './types';
 

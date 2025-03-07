@@ -6,7 +6,7 @@ import { myListenListItem } from '../components/listen-list-item';
 import { myListenSearchListItem } from '../components/listen-search-list-item';
 import { changeTitle } from '../components/page-title';
 import { myCollectionExport } from '../components/print';
-import { HTML_HOOTS } from '../configs';
+import { HTML_HOOTS } from '../misc';
 import { dom, domById, myStorage, pathnameHasFn, throttle, windowResize } from '../tools';
 import { initImagePreview } from './init-image-preview';
 

@@ -1,5 +1,5 @@
-import { CLASS_LISTENED } from '../configs';
 import { EReplaceZhidaToSearch } from '../init/init-html/configs';
+import { CLASS_LISTENED } from '../misc';
 import { myStorage } from '../tools';
 
 /** 替换知乎直达为搜索 */

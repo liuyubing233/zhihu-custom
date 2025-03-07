@@ -1,4 +1,4 @@
-import { CLASS_TIME_ITEM } from '../configs';
+import { CLASS_TIME_ITEM } from '../misc';
 import { dom, domA, domById, domC, insertAfter, myStorage } from '../tools';
 import { formatTime } from './time';
 

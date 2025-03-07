@@ -586,20 +586,6 @@
     replaceZhidaToSearch: "default" /* 不替换 */
   };
   var SAVE_HISTORY_NUMBER = 500;
-  var HTML_HOOTS = ["www.zhihu.com", "zhuanlan.zhihu.com"];
-  var CLASS_INPUT_CLICK = "ctz-i";
-  var CLASS_INPUT_CHANGE = "ctz-i-change";
-  var CLASS_NOT_INTERESTED = "ctz-not-interested";
-  var CLASS_TO_QUESTION = "ctz-to-question";
-  var CLASS_TIME_ITEM = "ctz-list-item-time";
-  var CLASS_SELECT = "ctz-select";
-  var CLASS_LISTENED = "ctz-listened";
-  var ID_EXTRA_DIALOG = "CTZ_EXTRA_OUTPUT_DIALOG";
-  var CLASS_ZHIHU_COMMENT_DIALOG = "css-1aq8hf9";
-  var EXTRA_CLASS_HTML = {
-    "zhuanlan.zhihu.com": "zhuanlan",
-    "www.zhihu.com": "zhihu"
-  };
   var myStorage = {
     set: async function(name, value) {
       value.t = +/* @__PURE__ */ new Date();
@@ -825,6 +811,20 @@
   )}`;
   var DARK_NAME_COLOR_BLACK = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v`;
   var DARK_NAME_COLOR_LIGHT_LINK = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.CreatorSalt-IdentitySelect-Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.css-vphnkw,.css-1aqu4xd,.css-6m0nd1,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a,.KfeCollection-OrdinaryLabel-newStyle-mobile .KfeCollection-OrdinaryLabel-content,.KfeCollection-OrdinaryLabel-newStyle-pc .KfeCollection-OrdinaryLabel-content,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore`;
+  var HTML_HOOTS = ["www.zhihu.com", "zhuanlan.zhihu.com"];
+  var CLASS_INPUT_CLICK = "ctz-i";
+  var CLASS_INPUT_CHANGE = "ctz-i-change";
+  var CLASS_NOT_INTERESTED = "ctz-not-interested";
+  var CLASS_TO_QUESTION = "ctz-to-question";
+  var CLASS_TIME_ITEM = "ctz-list-item-time";
+  var CLASS_SELECT = "ctz-select";
+  var CLASS_LISTENED = "ctz-listened";
+  var ID_EXTRA_DIALOG = "CTZ_EXTRA_OUTPUT_DIALOG";
+  var CLASS_ZHIHU_COMMENT_DIALOG = "css-1aq8hf9";
+  var EXTRA_CLASS_HTML = {
+    "zhuanlan.zhihu.com": "zhuanlan",
+    "www.zhihu.com": "zhihu"
+  };
   var createHTMLBackgroundSetting = (domMain) => {
     const radioBackground = (name, value, background, color, label, primary) => `<label class="ctz-background-item">${`<input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div class="ctz-background-item-div" style="background: ${primary || background};color: ${color}"></div><div class="ctz-background-item-border"></div><div class="ctz-background-item-name">${label}</div>`}</label>`;
     const themeToRadio = (o, className, color) => Object.keys(o).map((key) => radioBackground(className, key, o[key].background, color, o[key].name, o[key].primary)).join("");

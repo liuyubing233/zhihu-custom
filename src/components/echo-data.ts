@@ -1,4 +1,4 @@
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../configs';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../misc';
 import { dom, domA, domById, myStorage } from '../tools';
 import { VERSION_RANGE_HAVE_PERCENT } from './version';
 

@@ -1,4 +1,4 @@
-import { ID_EXTRA_DIALOG } from '../configs';
+import { ID_EXTRA_DIALOG } from '../misc';
 import { dom, domA, domById, myScroll } from '../tools';
 import { echoData } from './echo-data';
 import { echoHistory } from './history';

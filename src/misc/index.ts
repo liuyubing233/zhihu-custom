@@ -9,18 +9,14 @@ export const CLASS_NOT_INTERESTED = 'ctz-not-interested';
 export const CLASS_TO_QUESTION = 'ctz-to-question';
 /** class: 自定义的时间元素名称 */
 export const CLASS_TIME_ITEM = 'ctz-list-item-time';
-
+/** class: select 选择框 */
 export const CLASS_SELECT = 'ctz-select';
 /** class: 列表、回答内容已经监听的类名 */
 export const CLASS_LISTENED = 'ctz-listened';
-
-
 /** ID: 额外的弹窗 */
 export const ID_EXTRA_DIALOG = 'CTZ_EXTRA_OUTPUT_DIALOG';
-
 /** class: 知乎评论弹窗 */
 export const CLASS_ZHIHU_COMMENT_DIALOG = 'css-1aq8hf9';
-
 /** html 添加额外的类名 */
 export const EXTRA_CLASS_HTML: Record<string, string> = {
   'zhuanlan.zhihu.com': 'zhuanlan',

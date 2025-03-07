@@ -5,7 +5,7 @@ import { updateItemTime } from '../components/time';
 import { updateTopVote } from '../components/topVote';
 import { CLASS_VIDEO_ONE, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
-import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
+import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
 import { doFetchNotInterested, dom, domP, myStorage } from '../tools';
 import { IPfConfig } from '../types';
 

@@ -1,4 +1,4 @@
-import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
+import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
 import { store } from '../store';
 import { createButtonFontSize12, CTZ_HIDDEN_ITEM_CLASS, doFetchNotInterested, dom, domA, domP, fnHidden, fnJustNum, fnLog, myStorage } from '../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';

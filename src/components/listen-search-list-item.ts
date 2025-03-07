@@ -1,4 +1,4 @@
-import { CLASS_LISTENED } from '../configs';
+import { CLASS_LISTENED } from '../misc';
 import { CTZ_HIDDEN_ITEM_CLASS, domA, fnHidden, fnJustNum, myStorage } from '../tools';
 
 /** 监听搜索列表 - 过滤  */
