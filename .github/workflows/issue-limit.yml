@@ -1,0 +1,36 @@
+name: Limit Issue Creation
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  limit-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Issue Count
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const username = context.payload.issue.user.login;
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              creator: username,
+            });
+
+            if (issues.length > 5) {  // 设置最大数量，例如5个
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `🚫 @${username}, 你已经达到了最多 5 个 Issue 的限制！请先关闭一些 Issue 后再尝试。`,
+              });
+
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                state: "closed",
+              });
+            }
