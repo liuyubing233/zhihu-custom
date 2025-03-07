@@ -22,7 +22,7 @@ import { topBlockUser, userHomeAnswers } from './components/user-home-content';
 import { myVersion } from './components/version';
 import { fixVideoAutoPlay, initVideoDownload } from './components/video';
 import { fnReplaceZhidaToSearch } from './components/zhida-to-search';
-import { CONFIG_DEFAULT } from './configs';
+import { CONFIG_DEFAULT } from './config';
 import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html/init-html';
 import { initResizeObserver } from './init/init-observer-resize';

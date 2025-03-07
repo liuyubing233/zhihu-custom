@@ -8,10 +8,10 @@ import { buttonConfirmPageTitle, buttonResetPageTitle } from '../components/page
 import { myPreview } from '../components/preview';
 import { moveAndOpen } from '../components/suspension/move';
 import { formatTime } from '../components/time';
-import { CONFIG_DEFAULT, CONFIG_SIMPLE } from '../configs';
+import { CONFIG_DEFAULT, CONFIG_SIMPLE } from '../config';
+import { IKeyofHistory } from '../config/types';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../misc';
 import { dom, domA, domById, domC, myStorage } from '../tools';
-import { IKeyofHistory } from '../types';
 import { initRootEvent } from './init-top-event-listener';
 
 /** 加载设置弹窗绑定方法 */

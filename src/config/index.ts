@@ -1,6 +1,6 @@
 import { ETheme, EThemeDark, EThemeLight } from '../components/background';
 import { EAnswerOpen, ELinkShopping, EReplaceZhidaToSearch, ESuspensionOpen, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../init/init-html/configs';
-import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from '../types';
+import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from './types';
 
 /** 隐藏内容模块默认为 true 的配置 */
 export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
