@@ -1,4 +1,4 @@
-import { CLASS_MESSAGE, ID_MESSAGE_BOX } from '../configs';
+import { CLASS_MESSAGE } from '../configs';
 
 /** 获取元素 */
 export const dom = (n: string, find: HTMLElement | Document = document): HTMLElement | undefined => find.querySelector(n) as HTMLElement;
@@ -146,7 +146,7 @@ export const message = (value: string, t: number = 3000) => {
     innerHTML: value,
     className: `${CLASS_MESSAGE} ${classTime}`,
   });
-  const domBox = domById(ID_MESSAGE_BOX);
+  const domBox = domById('CTZ_MESSAGE_BOX');
   if (!domBox) return;
   domBox.appendChild(nDom);
   messageDoms.push(nDom);
@@ -157,7 +157,7 @@ export const message = (value: string, t: number = 3000) => {
   setTimeout(() => {
     const nPrevDom = dom(`.${classTime}`);
     if (nPrevDom) {
-      domById(ID_MESSAGE_BOX)!.removeChild(nPrevDom);
+      domById('CTZ_MESSAGE_BOX')!.removeChild(nPrevDom);
       messageDoms.shift();
     }
   }, t);

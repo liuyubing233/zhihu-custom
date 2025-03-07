@@ -1,6 +1,5 @@
 import { myStorage } from '../commons/storage';
 import { IBlockedUser } from '../components/blocked-users';
-import { IContentStorageConfig, IKeyofStorageConfig, IStorageConfig } from '../types';
 import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
 import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';
 import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
@@ -14,15 +13,8 @@ interface IRecommendRemoved {
 class Store {
   /** 用户信息 更改prev: userInfo */
   userinfo: IZhihuUserinfo | undefined = undefined;
-  /** 缓存的页面 */
-  // cachePageTitle = '';
-
-  /** 脚本内配置缓存 */
-  storageConfig: IStorageConfig = {
-    cacheTitle: '',
-    fetchHeaders: {},
-  };
-
+  /** 上一个请求的 Headers */
+  prevFetchHeaders: HeadersInit = {};
   /** 过滤的盐选回答ID */
   removeRecommends: IRecommendRemoved[] = [];
   /** 评论区用户信息集合 */
@@ -38,8 +30,8 @@ class Store {
     // fix this is undefined
     this.setUserinfo = this.setUserinfo.bind(this);
     this.getUserinfo = this.getUserinfo.bind(this);
-    this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
-    this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
+    this.setFetchHeaders = this.setFetchHeaders.bind(this);
+    this.getFetchHeaders = this.getFetchHeaders.bind(this);
     this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
     this.getRemoveRecommends = this.getRemoveRecommends.bind(this);
     this.setUserAnswer = this.setUserAnswer.bind(this);
@@ -59,11 +51,11 @@ class Store {
     return this.userinfo;
   }
 
-  setStorageConfigItem(key: IKeyofStorageConfig, content: any) {
-    (this.storageConfig[key] as IContentStorageConfig) = content;
+  setFetchHeaders(headers: HeadersInit) {
+    this.prevFetchHeaders = headers;
   }
-  getStorageConfigItem(key: IKeyofStorageConfig): IContentStorageConfig {
-    return this.storageConfig[key];
+  getFetchHeaders() {
+    return this.prevFetchHeaders;
   }
 
   async findRemoveRecommends(recommends: IZhihuRecommendItem[]) {

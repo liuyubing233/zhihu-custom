@@ -14,15 +14,12 @@ import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE, OPTIONS_MA
 /** 添加修改器内元素 */
 export const initHTML = () => {
   const nDomMain = domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML });
-
+  // 版本号
   dom('.ctz-version', nDomMain)!.innerText = GM_info.script.version;
-
-
 
   // 添加更多默认设置
   dom('#CTZ_DEFAULT_SELF', nDomMain)!.innerHTML = DEFAULT_FUNCTION.map(
-    ({ title, commit }) =>
-      `<div class="ctz-form-box-item ctz-form-box-item-vertical">${`<div>${title}</div>` + `<div style="font-size: 12px;color:#999;">${commit || ''}</div>`}</div>`
+    ({ title, commit }) => `<div class="ctz-form-box-item ctz-form-box-item-vertical"><div>${title}</div><div style="font-size: 12px;color:#999;">${commit || ''}</div></div>`
   ).join('');
 
   // 添加基础设置显示修改
@@ -42,7 +39,7 @@ export const initHTML = () => {
 
   initFetchInterceptStatus(nDomMain);
   initMenu(nDomMain);
-  createHTMLTitleICOChange(nDomMain)
+  createHTMLTitleICOChange(nDomMain);
   createHTMLSizeSetting(nDomMain);
   createHTMLBackgroundSetting(nDomMain);
   createHTMLHiddenConfig(nDomMain);

@@ -3,7 +3,7 @@ import { fnLog } from './tools';
 
 /** 调用「不感兴趣」接口 */
 export const doFetchNotInterested = ({ id, type }: { id: string; type: string }) => {
-  const nHeader = store.getStorageConfigItem('fetchHeaders') as Record<string, string>;
+  const nHeader = store.getFetchHeaders() as Record<string, string>;
   delete nHeader['vod-authorization'];
   delete nHeader['content-encoding'];
   delete nHeader['Content-Type'];

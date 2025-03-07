@@ -81,7 +81,7 @@ export const myCollectionExport = {
         if (!id) return;
         const nodeCurrent = dom('.Pagination .PaginationButton--current');
         const offset = 20 * (nodeCurrent ? Number(nodeCurrent.innerText) - 1 : 0);
-        const fetchHeaders = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
+        const fetchHeaders = store.getFetchHeaders();
 
         fetch(`/api/v4/collections/${id}/items?offset=${offset}&limit=20`, {
           method: 'GET',

@@ -46,7 +46,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href } = location;
-  const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
+  const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
 
   /** 在启动时注入的内容 */
   async function onDocumentStart() {
@@ -89,14 +89,14 @@ import { INNER_CSS } from './web-resources';
     const { fetchInterceptStatus } = config;
     if (fetchInterceptStatus) {
       fnLog('已开启接口拦截');
-      const prevHeaders = getStorageConfigItem('fetchHeaders') as HeadersInit;
+      const prevHeaders = getFetchHeaders();
       // 拦截 fetch 方法，获取接口内容，唯一
       const originFetch = fetch;
       const myWindow = isSafari ? window : unsafeWindow;
       myWindow.fetch = (url: any, opt) => {
         // 缓存 header
         if (opt && opt.headers) {
-          setStorageConfigItem('fetchHeaders', {
+          setFetchHeaders( {
             ...prevHeaders,
             ...opt.headers,
           });

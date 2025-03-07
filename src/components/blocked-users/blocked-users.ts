@@ -17,7 +17,7 @@ export function syncBlackList(offset = 0, l: IBlockedUser[] = []) {
   }
 
   const limit = 20;
-  const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
+  const headers = store.getFetchHeaders();
   fetch(`https://www.zhihu.com/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     headers: new Headers(headers),
@@ -51,7 +51,7 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
   const message = `是否要屏蔽${name}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。`;
   if (!confirm(message)) return Promise.reject();
   return new Promise<void>((resolve) => {
-    const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
+    const headers = store.getFetchHeaders();
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
       method: 'POST',
       headers: new Headers({
@@ -83,7 +83,7 @@ export const removeBlockUser = (info: IBlockedUser, needConfirm = true) => {
   }
   return new Promise<void>((resolve) => {
     const { urlToken, id } = info;
-    const headers = store.getStorageConfigItem('fetchHeaders') as HeadersInit;
+    const headers = store.getFetchHeaders();
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
       method: 'DELETE',
       headers: new Headers({

@@ -469,3 +469,11 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 收藏夹宽度百分比 */
   versionCollectionPercent?: string;
 }
+
+/** 缓存浏览历史记录 */
+export interface IPfHistory {
+  list: string[];
+  view: string[];
+}
+
+export type IKeyofHistory = keyof IPfHistory;

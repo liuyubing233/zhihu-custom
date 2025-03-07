@@ -1,4 +1,3 @@
-
 export const HTML_HOOTS = ['www.zhihu.com', 'zhuanlan.zhihu.com'];
 /** class: INPUT 点击元素类名 */
 export const CLASS_INPUT_CLICK = 'ctz-i';
@@ -13,22 +12,15 @@ export const CLASS_TIME_ITEM = 'ctz-list-item-time';
 
 export const CLASS_SELECT = 'ctz-select';
 /** class: 列表、回答内容已经监听的类名 */
-export const CLASS_LISTENED = 'ctz-listened'
+export const CLASS_LISTENED = 'ctz-listened';
 
 /** class: 消息提示弹窗 */
 export const CLASS_MESSAGE = 'ctz-message';
-export const ID_MESSAGE_BOX = 'CTZ_MESSAGE_BOX';
 /** ID: 额外的弹窗 */
 export const ID_EXTRA_DIALOG = 'CTZ_EXTRA_OUTPUT_DIALOG';
 
 /** class: 知乎评论弹窗 */
-export const CLASS_ZHIHU_COMMENT_DIALOG = 'css-1aq8hf9'
-
-/** 回答收起展开插入的类名 */
-export const OB_CLASS_FOLD = {
-  on: 'ctz-fold-open',
-  off: 'ctz-fold-close',
-};
+export const CLASS_ZHIHU_COMMENT_DIALOG = 'css-1aq8hf9';
 
 /** html 添加额外的类名 */
 export const EXTRA_CLASS_HTML: Record<string, string> = {

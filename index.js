@@ -116,7 +116,7 @@
       innerHTML: value,
       className: `${CLASS_MESSAGE} ${classTime}`
     });
-    const domBox = domById(ID_MESSAGE_BOX);
+    const domBox = domById("CTZ_MESSAGE_BOX");
     if (!domBox) return;
     domBox.appendChild(nDom);
     messageDoms.push(nDom);
@@ -127,7 +127,7 @@
     setTimeout(() => {
       const nPrevDom = dom(`.${classTime}`);
       if (nPrevDom) {
-        domById(ID_MESSAGE_BOX).removeChild(nPrevDom);
+        domById("CTZ_MESSAGE_BOX").removeChild(nPrevDom);
         messageDoms.shift();
       }
     }, t);
@@ -624,13 +624,8 @@
   var CLASS_SELECT = "ctz-select";
   var CLASS_LISTENED = "ctz-listened";
   var CLASS_MESSAGE = "ctz-message";
-  var ID_MESSAGE_BOX = "CTZ_MESSAGE_BOX";
   var ID_EXTRA_DIALOG = "CTZ_EXTRA_OUTPUT_DIALOG";
   var CLASS_ZHIHU_COMMENT_DIALOG = "css-1aq8hf9";
-  var OB_CLASS_FOLD = {
-    on: "ctz-fold-open",
-    off: "ctz-fold-close"
-  };
   var EXTRA_CLASS_HTML = {
     "zhuanlan.zhihu.com": "zhuanlan",
     "www.zhihu.com": "zhihu"
@@ -688,10 +683,7 @@
   var Store = class {
     constructor() {
       this.userinfo = void 0;
-      this.storageConfig = {
-        cacheTitle: "",
-        fetchHeaders: {}
-      };
+      this.prevFetchHeaders = {};
       this.removeRecommends = [];
       this.commendAuthors = [];
       this.userAnswers = [];
@@ -699,8 +691,8 @@
       this.removeAnswers = [];
       this.setUserinfo = this.setUserinfo.bind(this);
       this.getUserinfo = this.getUserinfo.bind(this);
-      this.setStorageConfigItem = this.setStorageConfigItem.bind(this);
-      this.getStorageConfigItem = this.getStorageConfigItem.bind(this);
+      this.setFetchHeaders = this.setFetchHeaders.bind(this);
+      this.getFetchHeaders = this.getFetchHeaders.bind(this);
       this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
       this.getRemoveRecommends = this.getRemoveRecommends.bind(this);
       this.setUserAnswer = this.setUserAnswer.bind(this);
@@ -718,11 +710,11 @@
     getUserinfo() {
       return this.userinfo;
     }
-    setStorageConfigItem(key, content) {
-      this.storageConfig[key] = content;
+    setFetchHeaders(headers) {
+      this.prevFetchHeaders = headers;
     }
-    getStorageConfigItem(key) {
-      return this.storageConfig[key];
+    getFetchHeaders() {
+      return this.prevFetchHeaders;
     }
     async findRemoveRecommends(recommends) {
       const { removeAnonymousQuestion, removeFromYanxuan } = await myStorage.getConfig();
@@ -786,7 +778,7 @@
   };
   var store = new Store();
   var doFetchNotInterested = ({ id, type }) => {
-    const nHeader = store.getStorageConfigItem("fetchHeaders");
+    const nHeader = store.getFetchHeaders();
     delete nHeader["vod-authorization"];
     delete nHeader["content-encoding"];
     delete nHeader["Content-Type"];
@@ -2267,7 +2259,7 @@
       fnDomReplace(buttonSync, { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
     }
     const limit = 20;
-    const headers = store.getStorageConfigItem("fetchHeaders");
+    const headers = store.getFetchHeaders();
     fetch(`https://www.zhihu.com/api/v3/settings/blocked_users?offset=${offset}&limit=${limit}`, {
       method: "GET",
       headers: new Headers(headers),
@@ -2297,7 +2289,7 @@
 屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。`;
     if (!confirm(message2)) return Promise.reject();
     return new Promise((resolve) => {
-      const headers = store.getStorageConfigItem("fetchHeaders");
+      const headers = store.getFetchHeaders();
       fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
         method: "POST",
         headers: new Headers({
@@ -2327,7 +2319,7 @@
     }
     return new Promise((resolve) => {
       const { urlToken, id } = info;
-      const headers = store.getStorageConfigItem("fetchHeaders");
+      const headers = store.getFetchHeaders();
       fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
         method: "DELETE",
         headers: new Headers({
@@ -2542,7 +2534,7 @@
         if (!id) return;
         const nodeCurrent = dom(".Pagination .PaginationButton--current");
         const offset = 20 * (nodeCurrent ? Number(nodeCurrent.innerText) - 1 : 0);
-        const fetchHeaders = store.getStorageConfigItem("fetchHeaders");
+        const fetchHeaders = store.getFetchHeaders();
         fetch(`/api/v4/collections/${id}/items?offset=${offset}&limit=20`, {
           method: "GET",
           headers: new Headers(fetchHeaders)
@@ -2996,6 +2988,10 @@
       this.reset();
       this.init();
     }
+  };
+  var OB_CLASS_FOLD = {
+    on: "ctz-fold-open",
+    off: "ctz-fold-close"
   };
   var formatCommentAuthors = (data) => {
     const { setCommentAuthors, getCommentAuthors } = store;
@@ -3995,7 +3991,7 @@
     const nDomMain = domC("div", { id: "CTZ_MAIN", innerHTML: INNER_HTML });
     dom(".ctz-version", nDomMain).innerText = GM_info.script.version;
     dom("#CTZ_DEFAULT_SELF", nDomMain).innerHTML = DEFAULT_FUNCTION.map(
-      ({ title, commit }) => `<div class="ctz-form-box-item ctz-form-box-item-vertical">${`<div>${title}</div><div style="font-size: 12px;color:#999;">${commit || ""}</div>`}</div>`
+      ({ title, commit }) => `<div class="ctz-form-box-item ctz-form-box-item-vertical"><div>${title}</div><div style="font-size: 12px;color:#999;">${commit || ""}</div></div>`
     ).join("");
     dom("#CTZ_BASIS_SHOW_CONTENT", nDomMain).innerHTML = createHTMLFormBoxSwitch(BASIC_SHOW);
     dom("#CTZ_HIGH_PERFORMANCE", nDomMain).innerHTML = createHTMLFormBoxSwitch(HIGH_PERFORMANCE);
@@ -4344,7 +4340,7 @@
     });
     const T0 = performance.now();
     const { hostname, href } = location;
-    const { setStorageConfigItem, getStorageConfigItem, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
+    const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
       if (!document.head) {
@@ -4378,12 +4374,12 @@
       const { fetchInterceptStatus } = config;
       if (fetchInterceptStatus) {
         fnLog("已开启接口拦截");
-        const prevHeaders = getStorageConfigItem("fetchHeaders");
+        const prevHeaders = getFetchHeaders();
         const originFetch = fetch;
         const myWindow = isSafari ? window : unsafeWindow;
         myWindow.fetch = (url, opt) => {
           if (opt && opt.headers) {
-            setStorageConfigItem("fetchHeaders", {
+            setFetchHeaders({
               ...prevHeaders,
               ...opt.headers
             });

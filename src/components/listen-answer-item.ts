@@ -1,7 +1,7 @@
 import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
 import { myStorage } from '../commons/storage';
 import { dom, domA, fnLog } from '../commons/tools';
-import { CLASS_LISTENED, OB_CLASS_FOLD } from '../configs';
+import { CLASS_LISTENED } from '../configs';
 import { EAnswerOpen } from '../init/init-html/configs';
 import { doContentItem } from '../init/init-top-event-listener';
 import { store } from '../store';
@@ -152,4 +152,9 @@ export const myListenAnswerItem = {
     this.reset();
     this.init();
   },
+};
+
+const OB_CLASS_FOLD = {
+  on: 'ctz-fold-open',
+  off: 'ctz-fold-close',
 };
