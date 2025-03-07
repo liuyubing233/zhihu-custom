@@ -1,6 +1,5 @@
-import { myStorage } from '../../commons/storage';
-import { dom, domA, domById, domC, fnDomReplace } from '../../commons/tools';
 import { store } from '../../store';
+import { dom, domA, domById, domC, fnDomReplace, myStorage } from '../../tools';
 import { blackItemContent, ID_BLOCK_LIST, initHTMLBlockedUsers } from './create-html';
 import { IBlockedUser } from './types';
 

@@ -1,5 +1,3 @@
-import { myStorage } from '../commons/storage';
-import { dom, domA, domById, domC } from '../commons/tools';
 import { syncBlackList, syncRemoveBlockedUsers } from '../components/blocked-users';
 import { myCustomStyle } from '../components/custom-style';
 import { fnChanger } from '../components/fn-changer';
@@ -11,6 +9,7 @@ import { myPreview } from '../components/preview';
 import { moveAndOpen } from '../components/suspension/move';
 import { formatTime } from '../components/time';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, CONFIG_DEFAULT, CONFIG_SIMPLE } from '../configs';
+import { dom, domA, domById, domC, myStorage } from '../tools';
 import { IKeyofHistory } from '../types';
 import { initRootEvent } from './init-top-event-listener';
 

@@ -27,243 +27,6 @@
 
 "use strict";
 (() => {
-  var dom = (n, find = document) => find.querySelector(n);
-  var domById = (id) => document.getElementById(id);
-  var domA = (n, find = document) => find.querySelectorAll(n);
-  var domC = (name, attrObjs) => {
-    const node = document.createElement(name);
-    for (let key in attrObjs) {
-      node[key] = attrObjs[key];
-    }
-    return node;
-  };
-  var domP = (node, attrName, attrValue) => {
-    const nodeP = node.parentElement;
-    if (!nodeP) return void 0;
-    if (!attrName || !attrValue) return nodeP;
-    if (nodeP === document.body) return void 0;
-    const attrValueList = (nodeP.getAttribute(attrName) || "").split(" ");
-    return attrValueList.includes(attrValue) ? nodeP : domP(nodeP, attrName, attrValue);
-  };
-  var insertAfter = (newElement, targetElement) => {
-    const parent = targetElement.parentNode;
-    if (parent.lastChild === targetElement) {
-      parent.appendChild(newElement);
-    } else {
-      parent.insertBefore(newElement, targetElement.nextSibling);
-    }
-  };
-  var fnReturnStr = (str, isHave = false, strFalse = "") => isHave ? str : strFalse;
-  var fnLog = (...str) => console.log("%c「知乎修改器」", "color: green;font-weight: bold;", ...str);
-  var fnAppendStyle = (id, innerHTML) => {
-    const element = domById(id);
-    element ? element.innerHTML = innerHTML : document.head.appendChild(domC("style", { id, type: "text/css", innerHTML }));
-  };
-  var fnDomReplace = (node, attrObjs) => {
-    if (!node) return;
-    for (let key in attrObjs) {
-      node[key] = attrObjs[key];
-    }
-  };
-  function throttle(fn, time = 300) {
-    let tout = void 0;
-    return function() {
-      clearTimeout(tout);
-      tout = setTimeout(() => {
-        fn.apply(this, arguments);
-      }, time);
-    };
-  }
-  var pathnameHasFn = (obj) => {
-    const { pathname } = location;
-    for (let name in obj) {
-      pathname.includes(name) && obj[name]();
-    }
-  };
-  var windowResize = () => {
-    window.dispatchEvent(new Event("resize"));
-  };
-  var mouseEventClick = (element) => {
-    if (!element) return;
-    const myWindow = isSafari ? window : unsafeWindow;
-    const event = new MouseEvent("click", {
-      view: myWindow,
-      bubbles: true,
-      cancelable: true
-    });
-    element.dispatchEvent(event);
-  };
-  var copy = async (value) => {
-    if (navigator.clipboard && navigator.permissions) {
-      await navigator.clipboard.writeText(value);
-    } else {
-      const domTextarea = domC("textArea", {
-        value,
-        style: "width: 0px;position: fixed;left: -999px;top: 10px;"
-      });
-      domTextarea.setAttribute("readonly", "readonly");
-      document.body.appendChild(domTextarea);
-      domTextarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(domTextarea);
-    }
-  };
-  var messageDoms = [];
-  var message = (value, t = 3e3) => {
-    const time = +/* @__PURE__ */ new Date();
-    const classTime = `ctz-message-${time}`;
-    const nDom = domC("div", {
-      innerHTML: value,
-      className: `${CLASS_MESSAGE} ${classTime}`
-    });
-    const domBox = domById("CTZ_MESSAGE_BOX");
-    if (!domBox) return;
-    domBox.appendChild(nDom);
-    messageDoms.push(nDom);
-    if (messageDoms.length > 3) {
-      const prevDom = messageDoms.shift();
-      prevDom && domBox.removeChild(prevDom);
-    }
-    setTimeout(() => {
-      const nPrevDom = dom(`.${classTime}`);
-      if (nPrevDom) {
-        domById("CTZ_MESSAGE_BOX").removeChild(nPrevDom);
-        messageDoms.shift();
-      }
-    }, t);
-  };
-  var createButtonFontSize12 = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
-    innerHTML,
-    className: `ctz-button ${extraCLass}`,
-    style: "margin-left: 8px;font-size: 12px;",
-    ...extra
-  });
-  var judgeBrowserType = () => {
-    const userAgent = navigator.userAgent;
-    if (userAgent.includes("Firefox")) return "Firefox";
-    if (userAgent.includes("Edg")) return "Edge";
-    if (userAgent.includes("Chrome")) return "Chrome";
-    return "Safari";
-  };
-  var isSafari = judgeBrowserType() === "Safari";
-  function formatDataToHump(data) {
-    if (!data) return data;
-    if (Array.isArray(data)) {
-      return data.map((item) => {
-        return typeof item === "object" ? formatDataToHump(item) : item;
-      });
-    } else if (typeof data === "object") {
-      const nData = {};
-      Object.keys(data).forEach((prevKey) => {
-        const nKey = prevKey.replace(/\_(\w)/g, (_, $1) => $1.toUpperCase());
-        nData[nKey] = formatDataToHump(data[prevKey]);
-      });
-      return nData;
-    }
-    return data;
-  }
-  var THEMES = [
-    { label: "浅色", value: 0 /* 浅色 */, background: "#fff", color: "#69696e" },
-    { label: "深色", value: 1 /* 深色 */, background: "#000", color: "#fff" },
-    { label: "自动", value: 2 /* 自动 */, background: "linear-gradient(to right, #fff, #000)", color: "#000" }
-  ];
-  var THEME_CONFIG_LIGHT = {
-    [0 /* 默认 */]: { name: "默认", background: "#ffffff", background2: "", primary: "rgb(0, 122, 255)" },
-    [2 /* 黄 */]: { name: "黄", background: "#faf9de", background2: "#fdfdf2", primary: "rgb(160, 90, 0)" },
-    [3 /* 绿 */]: { name: "绿", background: "#cce8cf", background2: "#e5f1e7", primary: "rgb(0, 125, 27)" },
-    [4 /* 灰 */]: { name: "灰", background: "#eaeaef", background2: "#f3f3f5", primary: "rgb(142, 142, 147)" },
-    [5 /* 紫 */]: { name: "紫", background: "#e9ebfe", background2: "#f2f3fb", primary: "rgb(175, 82, 222)" },
-    [6 /* 橙 */]: { name: "橙", background: "#FFD39B", background2: "#ffe4c4", primary: "rgb(201, 52, 0)" },
-    [7 /* 浅橙 */]: { name: "浅橙", background: "#ffe4c4", background2: "#fff4e7", primary: "rgb(255, 159, 10)" },
-    [1 /* 红 */]: { name: "红", background: "#ffd6d4", background2: "#f8ebeb", primary: "rgb(255, 59, 48)" }
-  };
-  var THEME_CONFIG_DARK = {
-    [0 /* 默认 */]: { name: "默认", background: "#121212", background2: "#333333", primary: "#121212" },
-    [1 /* 深色一 */]: { name: "深色一", background: "#15202b", background2: "#38444d", primary: "#15202b" },
-    [2 /* 深色二 */]: { name: "深色二", background: "#1f1f1f", background2: "#303030", primary: "#1f1f1f" },
-    [3 /* 深色三 */]: { name: "深色三", background: "#272822", background2: "#383932", primary: "#272822" },
-    [4 /* 高对比度蓝 */]: { name: "高对比度蓝", background: "#1c0c59", background2: "#191970", primary: "#1c0c59" },
-    [5 /* 高对比度红 */]: { name: "高对比度红", background: "#570D0D", background2: "#8B0000", primary: "#570D0D" },
-    [6 /* 高对比度绿 */]: { name: "高对比度绿", background: "#093333", background2: "#0c403f", primary: "#093333" },
-    [7 /* 纯黑 */]: { name: "纯黑", background: "#202123", background2: "#000000", primary: "#121212" }
-  };
-  var INPUT_NAME_THEME = "theme";
-  var INPUT_NAME_THEME_DARK = "themeDark";
-  var INPUT_NAME_ThEME_LIGHT = "themeLight";
-  var onUseThemeDark = async () => {
-    dom("html").setAttribute("data-theme", await isDark() ? "dark" : "light");
-  };
-  var checkThemeDarkOrLight = () => {
-    onUseThemeDark();
-    const elementHTML = dom("html");
-    const muConfig = { attribute: true, attributeFilter: ["data-theme"] };
-    if (!elementHTML) return;
-    const muCallback = async function() {
-      const themeName = elementHTML.getAttribute("data-theme");
-      const dark = await isDark();
-      if (themeName === "dark" && !dark || themeName === "light" && dark) {
-        onUseThemeDark();
-      }
-    };
-    const muObserver = new MutationObserver(muCallback);
-    muObserver.observe(elementHTML, muConfig);
-  };
-  var isDark = async () => {
-    const { theme = 2 /* 自动 */ } = await myStorage.getConfig();
-    if (+theme === 2 /* 自动 */) {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return +theme === 1 /* 深色 */;
-  };
-  var appendClassStart = (str) => appendPrefix(str, (i) => `[class|="${i}"]`);
-  var appendPrefix = (str, mapCB) => str.split(",").map(mapCB).join(",");
-  var myBackground = {
-    init: async function() {
-      const { themeDark = 1 /* 深色一 */, themeLight = 0 /* 默认 */, colorText1 } = await myStorage.getConfig();
-      const useDark = await isDark();
-      fnAppendStyle(
-        "CTZ_STYLE_BACKGROUND",
-        (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)
-      );
-      const domHTML = dom("html");
-      if (useDark) {
-        domHTML.setAttribute("theme-dark", `${themeDark}`);
-        domHTML.removeAttribute("theme-light");
-      } else {
-        domHTML.setAttribute("theme-light", `${themeLight}`);
-        domHTML.removeAttribute("theme-dark");
-      }
-    },
-    light: function(lightKey) {
-      if (+lightKey === +0 /* 默认 */) return "";
-      const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
-      return cssBackground(background, background2) + `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
-    },
-    dark: function(darkKey) {
-      const { background, background2 } = THEME_CONFIG_DARK[darkKey];
-      return appendPrefix(
-        cssBackground(background, background2) + `${DARK_NAME_COLOR_WHITE}{color: #f7f9f9!important}${DARK_NAME_COLOR_BLACK}{color: ${background2}!important}${DARK_NAME_COLOR_LIGHT_LINK}{color: deepskyblue!important;}.css-1tu59u4,.ZDI,.ZDI--PencilCircleFill24,.Zi,.Zi--ArrowDown{fill: deepskyblue!important;}.ztext pre,.ztext code{background: ${background}!important;}.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
-        (i) => `html[data-theme=dark] ${i}`
-      );
-    }
-  };
-  var cssBackground = (background1, background2) => `${NAME_BACKGROUND_1}{background-color: ${background1}!important;}${NAME_BACKGROUND_2}{background-color:${background2}!important;background:${background2}!important;}${NAME_BACKGROUND_TRANSPARENT}{background-color: transparent!important;background: transparent!important;}`;
-  var NAME_BACKGROUND_1 = `body,.Input-wrapper,.toolbar-section button:hover,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover,.Popover-content button:hover,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp,.index-videoCardItem-bzeJ1,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar,.TextMessage-sender,.ChatUserListItem--active,.css-yoby3j,.css-wmwsyx,.css-wmwsyx button,.css-82b621,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-item:hover,.index-learnPath-dfrcu .index-learnContainer-9QR37 .index-learnShow-p3yvw .index-learnCard-vuCza,.index-courseCard-ebw4r,${appendClassStart("Tabs-container,EpisodeList-sectionItem")}`;
-  var NAME_BACKGROUND_2 = `.${CLASS_MESSAGE},.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ,.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item,.CreatorSalt-letter-wrapper,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div,.Creator-salt-new-author-content,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ZVideoToolbar button,.Creator-salt-author-welfare .Creator-salt-author-welfare-card,.Creator-salt-author-welfare-banner,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5),.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div,.css-1i12cbe,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer,.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-table,.Popover-content,.Notifications-footer,.Messages-footer,.Popover-arrow:after,.css-97fdvh>div,.css-4lspwd,.css-1e6hvbc,.css-k32okj,.ant-table-tbody>tr.ant-table-placeholder:hover>td,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div),.CreatorSalt-community-story-wrapper,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root,.CreatorSalt-sideBar-wrapper,.ant-menu,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask,.Write-school-search-bar .CreatorSalt-management-search,.CreatorSalt-Content-Management-Index,.Topstory-container .TopstoryTabs>a::after,.ZVideo,.KfeCollection-CreateSaltCard,.CreatorSalt-personalInfo,.CreatorSalt-sideBar-item,.css-d1sc5t,.css-1gvsmgz,.css-u56wtg,.css-1hrberl,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-header,.ant-table-tbody>tr>td,.CreatorSalt-management-wrapper .CreatorSalt-management-search,.ant-table-thead .ant-table-cell,.QuestionWaiting-typesTopper,${appendClassStart(
-    "App-root,PcContent-root,TopNavBar-root,CourseConsultation-corner,CourseConsultation-cornerButton,CornerButtonToTop-cornerButton,LearningRouteCard-pathContent,index-item,index-hoverCard,ShelfTopNav-root,ProductCard-root,NewOrderedLayout-root,Tabs-tabHeader,ButtonBar-root,WebPage-root,LearningPathWayCard-pathItem,VideoCourseList-title,Article-header,PcContent-coverFix,index-module,TopNavBar-module,PcContent-module,CourseRecord-module,Learned-module,Tab-module,PcContentBought-module,Media-module"
-  )}`;
-  var NAME_BACKGROUND_TRANSPARENT = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`;
-  var DARK_NAME_COLOR_WHITE = `.${CLASS_MESSAGE},.ctz-export-collection-box p,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.Modal-title,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.FeedbackModal-title,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.css-10ub9de,.css-1wbvd3d,.css-1f4cz9u,.css-y42e6l,.css-jiu0xt,.css-1myqwel,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ChatListGroup-SectionTitle .Zi,.Qrcode-container>div,.Qrcode-guide-message>div,.signQr-leftContainer button,.signQr-leftContainer a,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,.CreatorSalt-personalInfo-name,.css-c3gbo3,.css-1ygg4xu blockquote,.css-r8ate4,.ant-collapse>.ant-collapse-item>.ant-collapse-header,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-author-welfare .Creator-salt-author-welfare-card h1,.css-u56wtg,.css-1hrberl,.css-13e6wvn,.css-i0heim,.CommentContent,${appendClassStart(
-    "index-title,CourseConsultation-tip,index-text,index-number,CourseDescription-playCount,LecturerList-title,LearningRouteCard-title,index-tabItemLabel,VideoCourseCard-module,TextTruncation-module"
-  )}`;
-  var DARK_NAME_COLOR_BLACK = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v`;
-  var DARK_NAME_COLOR_LIGHT_LINK = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.CreatorSalt-IdentitySelect-Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.css-vphnkw,.css-1aqu4xd,.css-6m0nd1,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a,.KfeCollection-OrdinaryLabel-newStyle-mobile .KfeCollection-OrdinaryLabel-content,.KfeCollection-OrdinaryLabel-newStyle-pc .KfeCollection-OrdinaryLabel-content,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore`;
-  var createHTMLBackgroundSetting = (domMain) => {
-    const radioBackground = (name, value, background, color, label, primary) => `<label class="ctz-background-item">${`<input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div class="ctz-background-item-div" style="background: ${primary || background};color: ${color}"></div><div class="ctz-background-item-border"></div><div class="ctz-background-item-name">${label}</div>`}</label>`;
-    const themeToRadio = (o, className, color) => Object.keys(o).map((key) => radioBackground(className, key, o[key].background, color, o[key].name, o[key].primary)).join("");
-    dom(".ctz-set-background", domMain).innerHTML = `<div class="ctz-form-box-item">${`<div>主题</div><div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label, i.background)).join("")}</div>`}</div><div class="ctz-form-box-item">${`<div>浅色主题</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div>`}</div><div class="ctz-form-box-item">${`<div>深色主题</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`}</div>`;
-  };
-  var doHighlightOriginal = async (backgroundHighlightOriginal = "", themeDark, themeLight) => "background: " + (backgroundHighlightOriginal ? `${backgroundHighlightOriginal}!important;` : await isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "rgb(251,248,241)!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`);
   var BASIC_SHOW = [
     [
       {
@@ -630,56 +393,6 @@
     "zhuanlan.zhihu.com": "zhuanlan",
     "www.zhihu.com": "zhihu"
   };
-  var myStorage = {
-    set: async function(name, value) {
-      value.t = +/* @__PURE__ */ new Date();
-      const v = JSON.stringify(value);
-      localStorage.setItem(name, v);
-      await GM.setValue(name, v);
-    },
-    get: async function(name) {
-      const config = await GM.getValue(name);
-      const configLocal = localStorage.getItem(name);
-      const cParse = config ? JSON.parse(config) : null;
-      const cLParse = configLocal ? JSON.parse(configLocal) : null;
-      if (!cParse && !cLParse) return "";
-      if (!cParse) return configLocal;
-      if (!cLParse) return config;
-      if (cParse.t < cLParse.t) return configLocal;
-      return config;
-    },
-    getConfig: async function() {
-      const nConfig = await this.get("pfConfig");
-      return Promise.resolve(nConfig ? JSON.parse(nConfig) : {});
-    },
-    getHistory: async function() {
-      const nHistory = await myStorage.get("pfHistory");
-      const h = nHistory ? JSON.parse(nHistory) : { list: [], view: [] };
-      return Promise.resolve(h);
-    },
-    updateConfigItem: async function(key, value) {
-      const config = await this.getConfig();
-      if (typeof key === "string") {
-        config[key] = value;
-      } else {
-        for (let itemKey in key) {
-          config[itemKey] = key[itemKey];
-        }
-      }
-      await this.updateConfig(config);
-    },
-    updateConfig: async function(params) {
-      await this.set("pfConfig", params);
-    },
-    updateHistoryItem: async function(key, params) {
-      const pfHistory = await this.getHistory();
-      pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
-      await this.set("pfHistory", pfHistory);
-    },
-    updateHistory: async function(value) {
-      await this.set("pfHistory", value);
-    }
-  };
   var Store = class {
     constructor() {
       this.userinfo = void 0;
@@ -777,6 +490,141 @@
     }
   };
   var store = new Store();
+  var dom = (n, find = document) => find.querySelector(n);
+  var domById = (id) => document.getElementById(id);
+  var domA = (n, find = document) => find.querySelectorAll(n);
+  var domC = (name, attrObjs) => {
+    const node = document.createElement(name);
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
+    return node;
+  };
+  var domP = (node, attrName, attrValue) => {
+    const nodeP = node.parentElement;
+    if (!nodeP) return void 0;
+    if (!attrName || !attrValue) return nodeP;
+    if (nodeP === document.body) return void 0;
+    const attrValueList = (nodeP.getAttribute(attrName) || "").split(" ");
+    return attrValueList.includes(attrValue) ? nodeP : domP(nodeP, attrName, attrValue);
+  };
+  var insertAfter = (newElement, targetElement) => {
+    const parent = targetElement.parentNode;
+    if (parent.lastChild === targetElement) {
+      parent.appendChild(newElement);
+    } else {
+      parent.insertBefore(newElement, targetElement.nextSibling);
+    }
+  };
+  var fnReturnStr = (str, isHave = false, strFalse = "") => isHave ? str : strFalse;
+  var fnLog = (...str) => console.log("%c「知乎修改器」", "color: green;font-weight: bold;", ...str);
+  var fnAppendStyle = (id, innerHTML) => {
+    const element = domById(id);
+    element ? element.innerHTML = innerHTML : document.head.appendChild(domC("style", { id, type: "text/css", innerHTML }));
+  };
+  var fnDomReplace = (node, attrObjs) => {
+    if (!node) return;
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
+  };
+  function throttle(fn, time = 300) {
+    let tout = void 0;
+    return function() {
+      clearTimeout(tout);
+      tout = setTimeout(() => {
+        fn.apply(this, arguments);
+      }, time);
+    };
+  }
+  var pathnameHasFn = (obj) => {
+    const { pathname } = location;
+    for (let name in obj) {
+      pathname.includes(name) && obj[name]();
+    }
+  };
+  var windowResize = () => {
+    window.dispatchEvent(new Event("resize"));
+  };
+  var mouseEventClick = (element) => {
+    if (!element) return;
+    const myWindow = isSafari ? window : unsafeWindow;
+    const event = new MouseEvent("click", {
+      view: myWindow,
+      bubbles: true,
+      cancelable: true
+    });
+    element.dispatchEvent(event);
+  };
+  var copy = async (value) => {
+    if (navigator.clipboard && navigator.permissions) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      const domTextarea = domC("textArea", {
+        value,
+        style: "width: 0px;position: fixed;left: -999px;top: 10px;"
+      });
+      domTextarea.setAttribute("readonly", "readonly");
+      document.body.appendChild(domTextarea);
+      domTextarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(domTextarea);
+    }
+  };
+  var messageDoms = [];
+  var message = (value, t = 3e3) => {
+    const time = +/* @__PURE__ */ new Date();
+    const classTime = `ctz-message-${time}`;
+    const nDom = domC("div", {
+      innerHTML: value,
+      className: `${CLASS_MESSAGE} ${classTime}`
+    });
+    const domBox = domById("CTZ_MESSAGE_BOX");
+    if (!domBox) return;
+    domBox.appendChild(nDom);
+    messageDoms.push(nDom);
+    if (messageDoms.length > 3) {
+      const prevDom = messageDoms.shift();
+      prevDom && domBox.removeChild(prevDom);
+    }
+    setTimeout(() => {
+      const nPrevDom = dom(`.${classTime}`);
+      if (nPrevDom) {
+        domById("CTZ_MESSAGE_BOX").removeChild(nPrevDom);
+        messageDoms.shift();
+      }
+    }, t);
+  };
+  var createButtonFontSize12 = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
+    innerHTML,
+    className: `ctz-button ${extraCLass}`,
+    style: "margin-left: 8px;font-size: 12px;",
+    ...extra
+  });
+  var judgeBrowserType = () => {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes("Firefox")) return "Firefox";
+    if (userAgent.includes("Edg")) return "Edge";
+    if (userAgent.includes("Chrome")) return "Chrome";
+    return "Safari";
+  };
+  var isSafari = judgeBrowserType() === "Safari";
+  function formatDataToHump(data) {
+    if (!data) return data;
+    if (Array.isArray(data)) {
+      return data.map((item) => {
+        return typeof item === "object" ? formatDataToHump(item) : item;
+      });
+    } else if (typeof data === "object") {
+      const nData = {};
+      Object.keys(data).forEach((prevKey) => {
+        const nKey = prevKey.replace(/\_(\w)/g, (_, $1) => $1.toUpperCase());
+        nData[nKey] = formatDataToHump(data[prevKey]);
+      });
+      return nData;
+    }
+    return data;
+  }
   var doFetchNotInterested = ({ id, type }) => {
     const nHeader = store.getFetchHeaders();
     delete nHeader["vod-authorization"];
@@ -800,6 +648,56 @@
   var interceptionResponse = (res, pathRegexp, fn) => {
     if (pathRegexp.test(res.url)) {
       res.clone().json().then((r) => fn(r));
+    }
+  };
+  var myStorage = {
+    set: async function(name, value) {
+      value.t = +/* @__PURE__ */ new Date();
+      const v = JSON.stringify(value);
+      localStorage.setItem(name, v);
+      await GM.setValue(name, v);
+    },
+    get: async function(name) {
+      const config = await GM.getValue(name);
+      const configLocal = localStorage.getItem(name);
+      const cParse = config ? JSON.parse(config) : null;
+      const cLParse = configLocal ? JSON.parse(configLocal) : null;
+      if (!cParse && !cLParse) return "";
+      if (!cParse) return configLocal;
+      if (!cLParse) return config;
+      if (cParse.t < cLParse.t) return configLocal;
+      return config;
+    },
+    getConfig: async function() {
+      const nConfig = await this.get("pfConfig");
+      return Promise.resolve(nConfig ? JSON.parse(nConfig) : {});
+    },
+    getHistory: async function() {
+      const nHistory = await myStorage.get("pfHistory");
+      const h = nHistory ? JSON.parse(nHistory) : { list: [], view: [] };
+      return Promise.resolve(h);
+    },
+    updateConfigItem: async function(key, value) {
+      const config = await this.getConfig();
+      if (typeof key === "string") {
+        config[key] = value;
+      } else {
+        for (let itemKey in key) {
+          config[itemKey] = key[itemKey];
+        }
+      }
+      await this.updateConfig(config);
+    },
+    updateConfig: async function(params) {
+      await this.set("pfConfig", params);
+    },
+    updateHistoryItem: async function(key, params) {
+      const pfHistory = await this.getHistory();
+      pfHistory[key] = params.slice(0, SAVE_HISTORY_NUMBER);
+      await this.set("pfHistory", pfHistory);
+    },
+    updateHistory: async function(value) {
+      await this.set("pfHistory", value);
     }
   };
   var CTZ_HIDDEN_ITEM_CLASS = "ctz-hidden-item";
@@ -827,6 +725,112 @@
       }
     }
   };
+  var myScroll = {
+    stop: () => dom("body").classList.add("ctz-stop-scroll"),
+    on: () => dom("body").classList.remove("ctz-stop-scroll")
+  };
+  var THEMES = [
+    { label: "浅色", value: 0 /* 浅色 */, background: "#fff", color: "#69696e" },
+    { label: "深色", value: 1 /* 深色 */, background: "#000", color: "#fff" },
+    { label: "自动", value: 2 /* 自动 */, background: "linear-gradient(to right, #fff, #000)", color: "#000" }
+  ];
+  var THEME_CONFIG_LIGHT = {
+    [0 /* 默认 */]: { name: "默认", background: "#ffffff", background2: "", primary: "rgb(0, 122, 255)" },
+    [2 /* 黄 */]: { name: "黄", background: "#faf9de", background2: "#fdfdf2", primary: "rgb(160, 90, 0)" },
+    [3 /* 绿 */]: { name: "绿", background: "#cce8cf", background2: "#e5f1e7", primary: "rgb(0, 125, 27)" },
+    [4 /* 灰 */]: { name: "灰", background: "#eaeaef", background2: "#f3f3f5", primary: "rgb(142, 142, 147)" },
+    [5 /* 紫 */]: { name: "紫", background: "#e9ebfe", background2: "#f2f3fb", primary: "rgb(175, 82, 222)" },
+    [6 /* 橙 */]: { name: "橙", background: "#FFD39B", background2: "#ffe4c4", primary: "rgb(201, 52, 0)" },
+    [7 /* 浅橙 */]: { name: "浅橙", background: "#ffe4c4", background2: "#fff4e7", primary: "rgb(255, 159, 10)" },
+    [1 /* 红 */]: { name: "红", background: "#ffd6d4", background2: "#f8ebeb", primary: "rgb(255, 59, 48)" }
+  };
+  var THEME_CONFIG_DARK = {
+    [0 /* 默认 */]: { name: "默认", background: "#121212", background2: "#333333", primary: "#121212" },
+    [1 /* 深色一 */]: { name: "深色一", background: "#15202b", background2: "#38444d", primary: "#15202b" },
+    [2 /* 深色二 */]: { name: "深色二", background: "#1f1f1f", background2: "#303030", primary: "#1f1f1f" },
+    [3 /* 深色三 */]: { name: "深色三", background: "#272822", background2: "#383932", primary: "#272822" },
+    [4 /* 高对比度蓝 */]: { name: "高对比度蓝", background: "#1c0c59", background2: "#191970", primary: "#1c0c59" },
+    [5 /* 高对比度红 */]: { name: "高对比度红", background: "#570D0D", background2: "#8B0000", primary: "#570D0D" },
+    [6 /* 高对比度绿 */]: { name: "高对比度绿", background: "#093333", background2: "#0c403f", primary: "#093333" },
+    [7 /* 纯黑 */]: { name: "纯黑", background: "#202123", background2: "#000000", primary: "#121212" }
+  };
+  var INPUT_NAME_THEME = "theme";
+  var INPUT_NAME_THEME_DARK = "themeDark";
+  var INPUT_NAME_ThEME_LIGHT = "themeLight";
+  var onUseThemeDark = async () => {
+    dom("html").setAttribute("data-theme", await isDark() ? "dark" : "light");
+  };
+  var checkThemeDarkOrLight = () => {
+    onUseThemeDark();
+    const elementHTML = dom("html");
+    const muConfig = { attribute: true, attributeFilter: ["data-theme"] };
+    if (!elementHTML) return;
+    const muCallback = async function() {
+      const themeName = elementHTML.getAttribute("data-theme");
+      const dark = await isDark();
+      if (themeName === "dark" && !dark || themeName === "light" && dark) {
+        onUseThemeDark();
+      }
+    };
+    const muObserver = new MutationObserver(muCallback);
+    muObserver.observe(elementHTML, muConfig);
+  };
+  var isDark = async () => {
+    const { theme = 2 /* 自动 */ } = await myStorage.getConfig();
+    if (+theme === 2 /* 自动 */) {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    return +theme === 1 /* 深色 */;
+  };
+  var appendClassStart = (str) => appendPrefix(str, (i) => `[class|="${i}"]`);
+  var appendPrefix = (str, mapCB) => str.split(",").map(mapCB).join(",");
+  var myBackground = {
+    init: async function() {
+      const { themeDark = 1 /* 深色一 */, themeLight = 0 /* 默认 */, colorText1 } = await myStorage.getConfig();
+      const useDark = await isDark();
+      fnAppendStyle(
+        "CTZ_STYLE_BACKGROUND",
+        (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)
+      );
+      const domHTML = dom("html");
+      if (useDark) {
+        domHTML.setAttribute("theme-dark", `${themeDark}`);
+        domHTML.removeAttribute("theme-light");
+      } else {
+        domHTML.setAttribute("theme-light", `${themeLight}`);
+        domHTML.removeAttribute("theme-dark");
+      }
+    },
+    light: function(lightKey) {
+      if (+lightKey === +0 /* 默认 */) return "";
+      const { background, background2 } = THEME_CONFIG_LIGHT[lightKey];
+      return cssBackground(background, background2) + `.MenuBar-root-rQeFm{border-color: ${background}!important;}`;
+    },
+    dark: function(darkKey) {
+      const { background, background2 } = THEME_CONFIG_DARK[darkKey];
+      return appendPrefix(
+        cssBackground(background, background2) + `${DARK_NAME_COLOR_WHITE}{color: #f7f9f9!important}${DARK_NAME_COLOR_BLACK}{color: ${background2}!important}${DARK_NAME_COLOR_LIGHT_LINK}{color: deepskyblue!important;}.css-1tu59u4,.ZDI,.ZDI--PencilCircleFill24,.Zi,.Zi--ArrowDown{fill: deepskyblue!important;}.ztext pre,.ztext code{background: ${background}!important;}.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
+        (i) => `html[data-theme=dark] ${i}`
+      );
+    }
+  };
+  var cssBackground = (background1, background2) => `${NAME_BACKGROUND_1}{background-color: ${background1}!important;}${NAME_BACKGROUND_2}{background-color:${background2}!important;background:${background2}!important;}${NAME_BACKGROUND_TRANSPARENT}{background-color: transparent!important;background: transparent!important;}`;
+  var NAME_BACKGROUND_1 = `body,.Input-wrapper,.toolbar-section button:hover,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active,.css-djayhh,.css-5i468k,.css-1iazx5e div,.LiveDetailsPage-root-aLVPj,.WikiLanding,.GlobalSideBar-navLink:hover,.Popover-arrow:after,.Sticky button:hover,.Sticky button:hover div,.Sticky button:hover span,.Sticky a:hover,.Sticky a:hover button,.Sticky a:hover div,.Sticky a:hover span,.Sticky li:hover,.Popover-content button:hover,.css-1j8bif6>.css-11v6bw0,.css-1e1wubc,.css-1svx44c,.css-5d3bqp,.index-videoCardItem-bzeJ1,.KfeCollection-IntroCard-newStyle-mobile,.KfeCollection-IntroCard-newStyle-pc,.FeeConsultCard,.Avatar,.TextMessage-sender,.ChatUserListItem--active,.css-yoby3j,.css-wmwsyx,.css-wmwsyx button,.css-82b621,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-item:hover,.index-learnPath-dfrcu .index-learnContainer-9QR37 .index-learnShow-p3yvw .index-learnCard-vuCza,.index-courseCard-ebw4r,${appendClassStart("Tabs-container,EpisodeList-sectionItem")}`;
+  var NAME_BACKGROUND_2 = `.${CLASS_MESSAGE},.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div,.css-1j23ebo,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 h1,.css-2lvw8d,.css-1os3m0m,.css-r38x5n div,.css-1mbpn2d,.css-1yjqd5z,.Creator-mainColumn .Card>div,.Creator-mainColumn section,.Topbar,.AutoInviteItem-wrapper--desktop,.ProfileHeader-wrapper,.NotificationList,.SettingsFAQ,.SelectorField-options .Select-option.is-selected,.SelectorField-options .Select-option:focus,.KfeCollection-PayModal-modal,.KfeCollection-PayModal-modal div,.Community,.Report-header th,.Report-list tr:nth-child(2n),.Report-Pagination,.CreatorIndex-BottomBox-Item,.CreatorSalt-letter-wrapper,.ColumnPageHeader,.WriteIndexLayout-main>div,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.PostEditor-wrapper>div:last-of-type div,.Creator-salt-new-author-content,.Select-option:focus,.ToolsQuestion div,[role="tablist"],.Topic-bar,.List-item .ZVideoToolbar button,.Creator-salt-author-welfare .Creator-salt-author-welfare-card,.Creator-salt-author-welfare-banner,#AnswerFormPortalContainer div,.CreatorTable-tableHead,.BalanceTransactionList-Item,.utils-frostedGlassEffect-2unM,#feedLives,#feedLives div,#feedLives a,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.css-1o83xzo,.css-1o83xzo .section,.css-1cr4989,.css-xoei2t,.css-slqtjm,.css-1615dnb div,.css-1oqbvad,.css-1oqbvad div,.css-lxxesj div:not(.css-zprod5),.Card-card-2K6v,.Card-card-2K6v div,.LiveDetailsPage-root-aLVPj div,.LiveFooter-root-rXuoG,.css-1b0ypf8 div,.css-np3nxw div,.css-1i12cbe,.PubIndex-CategoriesHeader,.ColumnHomeColumnCard,.Home-tabs,.Home-tabs div,.Home-swiper-container,.Home-swiper-container div,.BottomBarContainer,.ResponderPage-root div,.WikiLandingItemCard,.WikiLandingEntryCard,._Invite_container_30SP,._Invite_container_30SP div,._Coupon_intro_1kIo,._Coupon_list_2uTb div,.ExploreHomePage-square div,.ExploreHomePage-ContentSection-moreButton a,.ExploreSpecialCard,.ExploreRoundtableCard,.ExploreCollectionCard,.ExploreColumnCard,.Notification-white,.QuestionAnswers-answerAdd .InputLike,.QuestionAnswers-answerAdd .InputLike div,.InputLike,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-table,.Popover-content,.Notifications-footer,.Messages-footer,.Popover-arrow:after,.css-97fdvh>div,.css-4lspwd,.css-1e6hvbc,.css-k32okj,.ant-table-tbody>tr.ant-table-placeholder:hover>td,.SettingsMain>div div:not(.StickerItem-Border):not(.SettingsMain-sideColumn):not(.UserHeader-VipBtn):not(.UserHeader-VipTip):not(.css-60n72z div),.CreatorSalt-community-story-wrapper,.css-guh6n2,.css-yqosku,.css-kt4t4n,.css-1j8bif6>div,.css-nffy12:hover,.css-1eltcns,.css-9kvgnm,.css-jd7qm7,.css-19vq0tc,.css-rzwcnm,.css-1akh9z6,.ListShortcut>div:not(.Question-mainColumn),.Chat,.ActionMenu,.Recommendations-Main,.KfeCollection-PcCollegeCard-root,.CreatorSalt-sideBar-wrapper,.ant-menu,.signQr-container,.signQr-rightContainer>div,.Login-options,.Input-wrapper>input,.SignFlowInput-errorMask,.Write-school-search-bar .CreatorSalt-management-search,.CreatorSalt-Content-Management-Index,.Topstory-container .TopstoryTabs>a::after,.ZVideo,.KfeCollection-CreateSaltCard,.CreatorSalt-personalInfo,.CreatorSalt-sideBar-item,.css-d1sc5t,.css-1gvsmgz,.css-u56wtg,.css-1hrberl,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-header,.ant-table-tbody>tr>td,.CreatorSalt-management-wrapper .CreatorSalt-management-search,.ant-table-thead .ant-table-cell,.QuestionWaiting-typesTopper,${appendClassStart(
+    "App-root,PcContent-root,TopNavBar-root,CourseConsultation-corner,CourseConsultation-cornerButton,CornerButtonToTop-cornerButton,LearningRouteCard-pathContent,index-item,index-hoverCard,ShelfTopNav-root,ProductCard-root,NewOrderedLayout-root,Tabs-tabHeader,ButtonBar-root,WebPage-root,LearningPathWayCard-pathItem,VideoCourseList-title,Article-header,PcContent-coverFix,index-module,TopNavBar-module,PcContent-module,CourseRecord-module,Learned-module,Tab-module,PcContentBought-module,Media-module"
+  )}`;
+  var NAME_BACKGROUND_TRANSPARENT = `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button,.ChatUserListItem .Chat-ActionMenuPopover-Button`;
+  var DARK_NAME_COLOR_WHITE = `.${CLASS_MESSAGE},.ctz-export-collection-box p,.Modal-content,.Modal-content div,.Menu-item.is-active,.Select-list button:active,.Select-list button:hover,.Popover-content button,.Modal-title,.zu-main div,.modal-dialog,.zh-profile-card div,.QuestionAnswers-answerAdd div,.QuestionAnswers-answerAdd label,.Tabs-link,.toolbar-section button,.css-yd95f6,.css-g9ynb2,.css-i9srcr,.css-i9srcr div,.Modal-modal-wf58 div,.css-arjme8 div,.css-arjme8 label,.css-arjme8 h1,.css-13brsx3,.css-1ta275q div,.Creator-mainColumn .Card div,.Comments-container div,.SettingsMain div,.KfeCollection-PayModal-modal div,.KfeCollection-CouponCard-selectLabel,.KfeCollection-CouponCard-optionItem-text,.KfeCollection-PayModal-modal-icon,.NavItemClassName,.LinkCard-title,.Creator div,.Creator span,.Modal-wrapper textarea,.EditorHelpDoc,.EditorHelpDoc div,.EditorHelpDoc h1,.FeedbackModal-title,.css-r38x5n div,.css-1dwlho,.LiveDetailsPage-root-aLVPj div,.css-1b0ypf8 div,.css-1b0ypf8 a,.css-np3nxw div,.css-10ub9de,.css-1wbvd3d,.css-1f4cz9u,.css-y42e6l,.css-jiu0xt,.css-1myqwel,.PostEditor-wrapper>div:last-of-type div,.PostEditor-wrapper>div:last-of-type label,.ToolsQuestion a,.ToolsQuestion font,.utils-frostedGlassEffect-2unM div,.utils-frostedGlassEffect-2unM span,.aria-primary-color-style.aria-secondary-background,.aria-primary-color-style.aria-secondary-background div,.aria-primary-color-style.aria-secondary-background h1,.aria-primary-color-style.aria-secondary-background a,.aria-primary-color-style.aria-secondary-background p,.aria-primary-color-style.aria-secondary-background h2,#feedLives div,#feedLives a,.Card-card-2K6v,.Card-card-2K6v div,.Card-card-2K6v h3,._Invite_container_30SP h2,._Invite_container_30SP h1,.ChatListGroup-SectionTitle .Zi,.Qrcode-container>div,.Qrcode-guide-message>div,.signQr-leftContainer button,.signQr-leftContainer a,.ExploreHomePage-square div,.ExploreHomePage-square a,.jsNavigable a,#TopstoryContent h2,[role="contentinfo"] div,.css-1e1wubc,.css-1e1wubc div,.css-12kq1qx,.css-172osot div,.css-172osot a:last-child,.css-f2jj4r,.css-10u695f,.css-wqf2py,.css-wmwsyx,.css-wmwsyx div,.CreatorSalt-personalInfo-name,.css-c3gbo3,.css-1ygg4xu blockquote,.css-r8ate4,.ant-collapse>.ant-collapse-item>.ant-collapse-header,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover,.Creator-salt-author-welfare .Creator-salt-author-welfare-card h1,.css-u56wtg,.css-1hrberl,.css-13e6wvn,.css-i0heim,.CommentContent,${appendClassStart(
+    "index-title,CourseConsultation-tip,index-text,index-number,CourseDescription-playCount,LecturerList-title,LearningRouteCard-title,index-tabItemLabel,VideoCourseCard-module,TextTruncation-module"
+  )}`;
+  var DARK_NAME_COLOR_BLACK = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v`;
+  var DARK_NAME_COLOR_LIGHT_LINK = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.CreatorSalt-IdentitySelect-Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.css-vphnkw,.css-1aqu4xd,.css-6m0nd1,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a,.KfeCollection-OrdinaryLabel-newStyle-mobile .KfeCollection-OrdinaryLabel-content,.KfeCollection-OrdinaryLabel-newStyle-pc .KfeCollection-OrdinaryLabel-content,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore`;
+  var createHTMLBackgroundSetting = (domMain) => {
+    const radioBackground = (name, value, background, color, label, primary) => `<label class="ctz-background-item">${`<input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div class="ctz-background-item-div" style="background: ${primary || background};color: ${color}"></div><div class="ctz-background-item-border"></div><div class="ctz-background-item-name">${label}</div>`}</label>`;
+    const themeToRadio = (o, className, color) => Object.keys(o).map((key) => radioBackground(className, key, o[key].background, color, o[key].name, o[key].primary)).join("");
+    dom(".ctz-set-background", domMain).innerHTML = `<div class="ctz-form-box-item">${`<div>主题</div><div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label, i.background)).join("")}</div>`}</div><div class="ctz-form-box-item">${`<div>浅色主题</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div>`}</div><div class="ctz-form-box-item">${`<div>深色主题</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`}</div>`;
+  };
+  var doHighlightOriginal = async (backgroundHighlightOriginal = "", themeDark, themeLight) => "background: " + (backgroundHighlightOriginal ? `${backgroundHighlightOriginal}!important;` : await isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "rgb(251,248,241)!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`);
   var BLOCK_WORDS_LIST = `#CTZ_FILTER_BLOCK_WORDS .ctz-block-words-content`;
   var BLOCK_WORDS_ANSWER = `#CTZ_FILTER_BLOCK_WORDS_CONTENT .ctz-block-words-content`;
   var NAME_BY_KEY = {
@@ -1935,10 +1939,6 @@
     const nodeView = dom("#CTZ_HISTORY_VIEW .ctz-set-content");
     nodeList && (nodeList.innerHTML = list.join(""));
     nodeView && (nodeView.innerHTML = view.join(""));
-  };
-  var myScroll = {
-    stop: () => dom("body").classList.add("ctz-stop-scroll"),
-    on: () => dom("body").classList.remove("ctz-stop-scroll")
   };
   var myPreview = {
     open: function(src, even, isVideo) {

@@ -1,4 +1,3 @@
-import { dom, domA, domC } from '../../commons/tools';
 import { createHTMLBackgroundSetting } from '../../components/background';
 import { createHTMLBlockedUsers } from '../../components/blocked-users';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
@@ -6,6 +5,7 @@ import { createHTMLHiddenConfig } from '../../components/hidden';
 import { initMenu } from '../../components/menu';
 import { createHTMLTitleICOChange } from '../../components/page-title';
 import { createHTMLSizeSetting } from '../../components/version';
+import { dom, domA, domC } from '../../tools';
 import { IZhihuUserinfo } from '../../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../../web-resources';
 import { createHTMLFormBoxSwitch } from './common-html';

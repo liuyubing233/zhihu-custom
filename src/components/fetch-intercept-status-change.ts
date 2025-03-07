@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { dom, domA } from '../commons/tools';
+import { dom, domA, myStorage } from '../tools';
 
 /** 接口拦截开启关闭 */
 export const initFetchInterceptStatus = async (domMain: HTMLElement) => {

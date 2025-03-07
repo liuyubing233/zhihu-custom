@@ -1,4 +1,4 @@
-import { dom } from '../../commons/tools';
+import { dom } from '../../tools';
 import { IHeaderName, storeSuspension } from './store';
 import { suspensionHeader } from './suspension-header';
 

@@ -1,8 +1,6 @@
-import { CTZ_HIDDEN_ITEM_CLASS } from '../commons/math-for-my-listens';
-import { myStorage } from '../commons/storage';
-import { dom, domA, domC, domP, fnLog } from '../commons/tools';
 import { CLASS_ZHIHU_COMMENT_DIALOG } from '../configs';
 import { store } from '../store';
+import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, domC, domP, fnLog, myStorage } from '../tools';
 import { addBlockUser, changeBlockedUsersBox, CLASS_BLOCK_USER_BOX, CLASS_BTN_ADD_BLOCKED, CLASS_BTN_REMOVE_BLOCKED, IBlockedUser, removeBlockUser } from './blocked-users';
 import { formatPreviewSize } from './image';
 

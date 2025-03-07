@@ -1,5 +1,5 @@
-import { dom } from '../../commons/tools';
 import { createHTMLFormBoxSwitch } from '../../init/init-html/common-html';
+import { dom } from '../../tools';
 import { HIDDEN_ARRAY } from './configs';
 
 /** 初始化隐藏元素设置，添加修改器隐藏模块设置元素 */

@@ -1,5 +1,4 @@
-import { myStorage } from '../../commons/storage';
-import { dom } from '../../commons/tools';
+import { dom, myStorage } from '../../tools';
 import { myVersion } from '../version';
 
 /** 长回答和列表收起按钮悬浮 */

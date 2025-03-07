@@ -1,4 +1,4 @@
-import { dom } from '../../commons/tools';
+import { dom } from '../../tools';
 
 /** 网页标题图片集合 */
 export const ICO_URL: Record<string, string> = {

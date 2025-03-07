@@ -1,5 +1,4 @@
-import { myStorage } from '../../commons/storage';
-import { dom } from '../../commons/tools';
+import { dom, myStorage } from '../../tools';
 import { ETheme } from './types';
 
 /** 启用知乎默认的黑暗模式 */

@@ -1,5 +1,4 @@
-import { myStorage } from '../../commons/storage';
-import { fnAppendStyle } from '../../commons/tools';
+import { fnAppendStyle, myStorage } from '../../tools';
 import { HIDDEN_ARRAY, HIDDEN_ARRAY_MORE } from './configs';
 
 /** 加载隐藏模块的样式 */

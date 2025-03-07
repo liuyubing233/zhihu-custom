@@ -1,6 +1,6 @@
-import { myStorage } from '../commons/storage';
 import { CLASS_LISTENED } from '../configs';
 import { EReplaceZhidaToSearch } from '../init/init-html/configs';
+import { myStorage } from '../tools';
 
 /** 替换知乎直达为搜索 */
 export const fnReplaceZhidaToSearch = async (domFind: HTMLElement = document.body) => {

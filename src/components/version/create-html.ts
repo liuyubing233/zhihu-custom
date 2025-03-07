@@ -1,5 +1,5 @@
-import { dom } from '../../commons/tools';
 import { createHTMLRange, createHTMLTooltip } from '../../init/init-html/common-html';
+import { dom } from '../../tools';
 import { IOptionItem } from '../../types';
 
 /**

@@ -1,6 +1,3 @@
-import { doFetchNotInterested } from '../commons/fetch';
-import { myStorage } from '../commons/storage';
-import { dom, domP } from '../commons/tools';
 import { answerAddBlockButton } from '../components/blocked-users/add-block-button';
 import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
@@ -9,6 +6,7 @@ import { updateTopVote } from '../components/topVote';
 import { CLASS_VIDEO_ONE, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
+import { doFetchNotInterested, dom, domP, myStorage } from '../tools';
 import { IPfConfig } from '../types';
 
 const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon', 'ContentItem-expandButton', 'is-collapsed'];

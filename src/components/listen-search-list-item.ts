@@ -1,7 +1,5 @@
-import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
-import { myStorage } from '../commons/storage';
-import { domA } from '../commons/tools';
 import { CLASS_LISTENED } from '../configs';
+import { CTZ_HIDDEN_ITEM_CLASS, domA, fnHidden, fnJustNum, myStorage } from '../tools';
 
 /** 监听搜索列表 - 过滤  */
 export const myListenSearchListItem = {

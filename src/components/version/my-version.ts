@@ -1,10 +1,9 @@
-import { myStorage } from '../../commons/storage';
-import { dom, domById, fnAppendStyle, fnReturnStr } from '../../commons/tools';
 import { CLASS_ZHIHU_COMMENT_DIALOG } from '../../configs';
 import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../../init/init-html/configs';
+import { dom, domById, fnAppendStyle, fnReturnStr, myStorage } from '../../tools';
 import { EThemeDark, EThemeLight, isDark, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../background';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from '../video';
-import { VERSION_MIN_WIDTH } from './init-html';
+import { VERSION_MIN_WIDTH } from './create-html';
 
 /** 修改版心的 css */
 export const myVersion = {

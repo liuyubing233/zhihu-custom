@@ -1,6 +1,5 @@
-import { myScroll } from '../commons/scroll-stop-on';
-import { dom, domA, domById } from '../commons/tools';
 import { ID_EXTRA_DIALOG } from '../configs';
+import { dom, domA, domById, myScroll } from '../tools';
 import { echoData } from './echo-data';
 import { echoHistory } from './history';
 import { CLASS_OPENED } from './menu';

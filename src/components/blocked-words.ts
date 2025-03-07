@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { dom, domC, message } from '../commons/tools';
+import { dom, domC, message, myStorage } from "../tools";
 
 interface IFindDomName {
   /** 列表标题屏蔽词 */

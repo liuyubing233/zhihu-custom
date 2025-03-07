@@ -1,4 +1,4 @@
-import { dom } from '../commons/tools';
+import { dom } from '../tools';
 
 /** 路径上存在 ctzType的操作, 一键设置 */
 export const myCtzTypeOperation = {

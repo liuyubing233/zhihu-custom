@@ -1,6 +1,5 @@
-import { myStorage } from '../commons/storage';
-import { createButtonFontSize12, dom, domC, insertAfter } from '../commons/tools';
 import { store } from '../store';
+import { createButtonFontSize12, dom, domC, insertAfter, myStorage } from '../tools';
 import { INNER_CSS } from '../web-resources';
 
 const loadIframePrint = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText: string) => {

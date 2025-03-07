@@ -1,5 +1,4 @@
-import { myScroll } from '../commons/scroll-stop-on';
-import { dom, domById } from '../commons/tools';
+import { dom, domById, myScroll } from '../tools';
 
 /** 自定义预览方法 */
 export const myPreview = {

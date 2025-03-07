@@ -1,4 +1,4 @@
-import { dom, domA, domC, domP, pathnameHasFn } from '../commons/tools';
+import { dom, domA, domC, domP, pathnameHasFn } from '../tools';
 
 /** 关注的内容一键移除 */
 export const myFollowRemove = {

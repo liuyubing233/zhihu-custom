@@ -1,6 +1,5 @@
-import { myStorage } from '../commons/storage';
-import { dom, domById } from '../commons/tools';
 import { initImagePreview } from '../init/init-image-preview';
+import { dom, domById, myStorage } from '../tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, myBackground, onUseThemeDark } from './background';
 import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';

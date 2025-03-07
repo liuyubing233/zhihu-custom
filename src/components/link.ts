@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { copy, createButtonFontSize12, domA, message } from '../commons/tools';
+import { copy, createButtonFontSize12, domA, message, myStorage } from '../tools';
 
 /** 知乎外链直接打开(修改外链内容，去除知乎重定向) */
 export const initLinkChanger = () => {
@@ -30,13 +29,13 @@ export const initLinkChanger = () => {
 const CLASS_COPY_LINK = 'ctz-copy-answer-link';
 /** 回答内容意见分享 */
 export const addAnswerCopyLink = async (nodeItem: HTMLElement) => {
-  const { copyAnswerLink } = await myStorage.getConfig()
+  const { copyAnswerLink } = await myStorage.getConfig();
   if (!copyAnswerLink) return;
   const prevButton = nodeItem.querySelector(`.${CLASS_COPY_LINK}`);
   prevButton && prevButton.remove();
   const nodeUser = nodeItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nDomButton = createButtonFontSize12('获取回答链接', CLASS_COPY_LINK)
+  const nDomButton = createButtonFontSize12('获取回答链接', CLASS_COPY_LINK);
   nDomButton.onclick = function () {
     const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
     if (!metaUrl) return;

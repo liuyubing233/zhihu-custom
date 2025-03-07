@@ -1,4 +1,4 @@
-import { domA, domC } from '../commons/tools';
+import { domA, domC } from '../tools';
 
 /** 屏蔽页面设置 */
 export const myPageFilterSetting = {

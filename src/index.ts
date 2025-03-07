@@ -1,7 +1,3 @@
-import { interceptionResponse } from './commons/fetch';
-import { fnJustNum } from './commons/math-for-my-listens';
-import { myStorage } from './commons/storage';
-import { dom, domById, fnAppendStyle, fnLog, formatDataToHump, isSafari, mouseEventClick, pathnameHasFn, throttle } from './commons/tools';
 import { checkThemeDarkOrLight, myBackground } from './components/background';
 import { initBlockedWords } from './components/blocked-words';
 import { myCtzTypeOperation } from './components/ctz-type-operate';
@@ -34,6 +30,7 @@ import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
 import { needRedirect } from './init/redirect';
 import { store } from './store';
+import { dom, domById, fnAppendStyle, fnJustNum, fnLog, formatDataToHump, interceptionResponse, isSafari, mouseEventClick, myStorage, pathnameHasFn, throttle } from './tools';
 import { IZhihuAnswerTarget } from './types/zhihu/zhihu-answer.type';
 import { INNER_CSS } from './web-resources';
 
@@ -96,7 +93,7 @@ import { INNER_CSS } from './web-resources';
       myWindow.fetch = (url: any, opt) => {
         // 缓存 header
         if (opt && opt.headers) {
-          setFetchHeaders( {
+          setFetchHeaders({
             ...prevHeaders,
             ...opt.headers,
           });
@@ -157,7 +154,7 @@ import { INNER_CSS } from './web-resources';
       const { removeTopAD } = await myStorage.getConfig();
       initHTML();
       initOperate();
-      myCachePageTitle.set(document.title)
+      myCachePageTitle.set(document.title);
       // 以下设置都在 initHTML 之后执行
       echoData();
       changeICO();

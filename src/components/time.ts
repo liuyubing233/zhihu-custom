@@ -1,6 +1,5 @@
-import { myStorage } from '../commons/storage';
-import { dom, domC } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
+import { dom, domC, myStorage } from '../tools';
 
 /** 时间格式化 */
 export const formatTime = (t: string | number, f = 'YYYY-MM-DD HH:mm:ss') => {

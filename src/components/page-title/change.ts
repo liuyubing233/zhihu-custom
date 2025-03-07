@@ -1,5 +1,4 @@
-import { myStorage } from '../../commons/storage';
-import { dom, domById, domC } from '../../commons/tools';
+import { dom, domById, domC, myStorage } from '../../tools';
 import { myCachePageTitle } from './cache';
 import { ICO_URL } from './create-html';
 

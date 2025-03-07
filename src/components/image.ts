@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { dom, domA, domById, domP, message } from '../commons/tools';
+import { dom, domA, domById, domP, message, myStorage } from '../tools';
 import { myPreview } from './preview';
 
 /** 预览动图回调 */

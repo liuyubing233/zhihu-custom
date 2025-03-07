@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { domC } from '../commons/tools';
+import { domC, myStorage } from '../tools';
 
 /** 视频回答的包裹元素1 */
 export const CLASS_VIDEO_ONE = '.css-1h1xzpn';

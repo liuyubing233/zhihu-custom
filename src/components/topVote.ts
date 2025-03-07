@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { domC } from '../commons/tools';
+import { domC, myStorage } from "../tools";
 
 /** 内容顶部显示赞同数 nodeItem className: ContentItem-meta */
 export const updateTopVote = async (nodeItem?: HTMLElement) => {

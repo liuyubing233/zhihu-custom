@@ -1,5 +1,4 @@
-import { myStorage } from '../../commons/storage';
-import { dom, domC } from '../../commons/tools';
+import { dom, domC, myStorage } from '../../tools';
 import { myVersion } from '../version';
 import { myMove } from './move';
 import { IHeaderName, storeSuspension } from './store';

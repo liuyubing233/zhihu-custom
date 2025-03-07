@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { dom } from '../commons/tools';
+import { dom, myStorage } from '../tools';
 
 /** 添加浏览历史 */
 export const initHistoryView = async () => {
@@ -11,9 +10,7 @@ export const initHistoryView = async () => {
       dom('.QuestionPage [itemprop="name"]') &&
       (name = `<b style="color: #ec7259">「问题」</b>${(dom('.QuestionPage [itemprop="name"]') as HTMLMetaElement)!.content}`);
     href.includes('zhuanlan.zhihu.com/p/') && dom('.Post-Title') && (name = `<b style="color: #00965e">「文章」</b>${dom('.Post-Title')!.innerText}`);
-    href.includes('www.zhihu.com/zvideo/') &&
-      dom('.ZVideo .ZVideo-title') &&
-      (name = `<b style="color: #12c2e9">「视频」</b>${dom('.ZVideo .ZVideo-title')!.innerText}`);
+    href.includes('www.zhihu.com/zvideo/') && dom('.ZVideo .ZVideo-title') && (name = `<b style="color: #12c2e9">「视频」</b>${dom('.ZVideo .ZVideo-title')!.innerText}`);
 
     if (!name) {
       initHistoryView();

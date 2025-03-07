@@ -1,6 +1,5 @@
-import { myStorage } from '../../commons/storage';
-import { dom, fnAppendStyle, fnReturnStr } from '../../commons/tools';
 import { CLASS_MESSAGE } from '../../configs';
+import { dom, fnAppendStyle, fnReturnStr, myStorage } from '../../tools';
 import { isDark } from './dark';
 import { EThemeDark, EThemeLight, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from './types';
 

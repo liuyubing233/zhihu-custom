@@ -1,6 +1,5 @@
-import { myStorage } from '../commons/storage';
-import { dom, domA, domById } from '../commons/tools';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../configs';
+import { dom, domA, domById, myStorage } from '../tools';
 import { VERSION_RANGE_HAVE_PERCENT } from './version';
 
 /** 回填数据，供每次打开使用 */

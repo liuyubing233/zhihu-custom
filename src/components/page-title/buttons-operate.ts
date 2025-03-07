@@ -1,5 +1,4 @@
-import { myStorage } from '../../commons/storage';
-import { dom, message } from '../../commons/tools';
+import { dom, message, myStorage } from '../../tools';
 import { myCachePageTitle } from './cache';
 import { changeTitle } from './change';
 

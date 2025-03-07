@@ -1,5 +1,5 @@
-import { myStorage } from '../commons/storage';
 import { IBlockedUser } from '../components/blocked-users';
+import { myStorage } from '../tools';
 import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
 import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';
 import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';

@@ -1,7 +1,6 @@
-import { myStorage } from '../../commons/storage';
-import { dom, domById, domC, message } from '../../commons/tools';
 import { createHTMLFormBoxSwitch } from '../../init/init-html/common-html';
 import { ICommonContent } from '../../init/init-html/types';
+import { dom, domById, domC, message, myStorage } from '../../tools';
 import { closeExtra, openExtra } from '../open';
 import { removeBlockUser } from './blocked-users';
 import { IBlockedUser } from './types';

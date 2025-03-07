@@ -1,10 +1,8 @@
-import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
-import { myStorage } from '../commons/storage';
-import { dom, domA, fnLog } from '../commons/tools';
 import { CLASS_LISTENED } from '../configs';
 import { EAnswerOpen } from '../init/init-html/configs';
 import { doContentItem } from '../init/init-top-event-listener';
 import { store } from '../store';
+import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, fnHidden, fnJustNum, fnLog, myStorage } from '../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
 
 /** 监听详情回答 - 过滤 */

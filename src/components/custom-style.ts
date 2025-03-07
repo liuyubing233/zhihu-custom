@@ -1,5 +1,4 @@
-import { myStorage } from "../commons/storage";
-import { dom, fnAppendStyle } from "../commons/tools";
+import { dom, fnAppendStyle, myStorage } from '../tools';
 
 /** 自定义样式方法 */
 export const myCustomStyle = {

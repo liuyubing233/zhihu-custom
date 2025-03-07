@@ -1,5 +1,3 @@
-import { myStorage } from '../commons/storage';
-import { dom, domById, pathnameHasFn, throttle, windowResize } from '../commons/tools';
 import { previewGIF } from '../components/image';
 import { initLinkChanger } from '../components/link';
 import { myListenAnswerItem } from '../components/listen-answer-item';
@@ -9,6 +7,7 @@ import { myListenSearchListItem } from '../components/listen-search-list-item';
 import { changeTitle } from '../components/page-title';
 import { myCollectionExport } from '../components/print';
 import { HTML_HOOTS } from '../configs';
+import { dom, domById, myStorage, pathnameHasFn, throttle, windowResize } from '../tools';
 import { initImagePreview } from './init-image-preview';
 
 /** 使用 ResizeObserver 监听body高度 */

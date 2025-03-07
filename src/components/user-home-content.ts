@@ -1,6 +1,5 @@
-import { myStorage } from '../commons/storage';
-import { dom, domA, domById, domC, insertAfter } from '../commons/tools';
 import { CLASS_TIME_ITEM } from '../configs';
+import { dom, domA, domById, domC, insertAfter, myStorage } from '../tools';
 import { formatTime } from './time';
 
 let timer: NodeJS.Timeout | undefined = undefined;

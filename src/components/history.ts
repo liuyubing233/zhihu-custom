@@ -1,5 +1,4 @@
-import { myStorage } from '../commons/storage';
-import { dom } from '../commons/tools';
+import { dom, myStorage } from '../tools';
 
 /** 回填历史记录 */
 export const echoHistory = async () => {

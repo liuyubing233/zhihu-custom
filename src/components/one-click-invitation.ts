@@ -1,4 +1,4 @@
-import { dom, domA, domC } from '../commons/tools';
+import { dom, domA, domC } from '../tools';
 
 /** 初始化一键邀请功能 */
 export const initOneClickInvitation = () => {

@@ -1,9 +1,6 @@
-import { doFetchNotInterested } from '../commons/fetch';
-import { CTZ_HIDDEN_ITEM_CLASS, fnHidden, fnJustNum } from '../commons/math-for-my-listens';
-import { myStorage } from '../commons/storage';
-import { createButtonFontSize12, dom, domA, domP, fnLog } from '../commons/tools';
 import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../configs';
 import { store } from '../store';
+import { createButtonFontSize12, CTZ_HIDDEN_ITEM_CLASS, doFetchNotInterested, dom, domA, domP, fnHidden, fnJustNum, fnLog, myStorage } from '../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
 import { doHighlightOriginal } from './background/highlight';
 import { EThemeDark, EThemeLight } from './background/types';

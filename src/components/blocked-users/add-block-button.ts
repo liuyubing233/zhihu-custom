@@ -1,5 +1,4 @@
-import { myStorage } from '../../commons/storage';
-import { domC, fnReturnStr } from '../../commons/tools';
+import { domC, fnReturnStr, myStorage } from '../../tools';
 import { IZhihuCardContent } from '../../types/zhihu/zhihu.type';
 import { addBlockUser, removeBlockUser } from './blocked-users';
 import { CLASS_BLACK_TAG } from './create-html';

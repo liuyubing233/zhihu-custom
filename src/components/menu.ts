@@ -1,5 +1,5 @@
 /** 页面操作 */
-import { dom, domA } from '../commons/tools';
+import { dom, domA } from '../tools';
 
 /** 菜单初始化 */
 export const initMenu = (domMain: HTMLElement) => {
