@@ -715,6 +715,18 @@
       }, time);
     };
   }
+  var formatTime = (t, f = "YYYY-MM-DD HH:mm:ss") => {
+    if (!t) return "";
+    const d = new Date(t);
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    const hour = d.getHours();
+    const min = d.getMinutes();
+    const sec = d.getSeconds();
+    const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
+    return f.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
+  };
   var THEMES = [
     { label: "浅色", value: 0 /* 浅色 */, background: "#fff", color: "#69696e" },
     { label: "深色", value: 1 /* 深色 */, background: "#000", color: "#fff" },
@@ -1026,7 +1038,7 @@
       return originalPlay.apply(this, arguments);
     };
   };
-  var myVersion = {
+  var mySize = {
     init: async function() {
       fnAppendStyle("CTZ_STYLE_VERSION", await this.content());
     },
@@ -2640,18 +2652,6 @@
       printPeopleArticles();
     }, 500);
   };
-  var formatTime = (t, f = "YYYY-MM-DD HH:mm:ss") => {
-    if (!t) return "";
-    const d = new Date(t);
-    const year = d.getFullYear();
-    const month = d.getMonth() + 1;
-    const day = d.getDate();
-    const hour = d.getHours();
-    const min = d.getMinutes();
-    const sec = d.getSeconds();
-    const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
-    return f.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
-  };
   var updateItemTime = (e) => {
     const nodeCreated = e.querySelector('[itemprop="dateCreated"]');
     const nodePublished = e.querySelector('[itemprop="datePublished"]');
@@ -3797,7 +3797,7 @@
       nodeHeaderInner && nodeHeaderInner.appendChild(domCached);
       myMove.destroy(domCached);
     }
-    myVersion.change();
+    mySize.change();
   };
   var myLock = {
     append: async function(el, name) {
@@ -3861,7 +3861,7 @@
     } else {
       dom("body").removeAttribute("data-suspension-pickup");
     }
-    myVersion.change();
+    mySize.change();
   };
   var timer = void 0;
   var userHomeAnswers = async () => {
@@ -3878,18 +3878,15 @@
         let innerHTML = "";
         if (nodeDateCreate) {
           const dateCreate = nodeDateCreate.getAttribute("content") || "";
-          const dateCreateFormatter = formatTime(dateCreate);
-          innerHTML += `<div>创建时间：${dateCreateFormatter}</div>`;
+          innerHTML += `<div>创建时间：${formatTime(dateCreate)}</div>`;
         }
         if (nodeDatePublished) {
           const datePublished = nodeDatePublished.getAttribute("content") || "";
-          const datePublishedFormatter = formatTime(datePublished);
-          innerHTML += `<div>发布时间：${datePublishedFormatter}</div>`;
+          innerHTML += `<div>发布时间：${formatTime(datePublished)}</div>`;
         }
         if (nodeDateModified) {
           const dateModified = nodeDateModified.getAttribute("content") || "";
-          const dateModifiedFormatter = formatTime(dateModified);
-          innerHTML += `<div>最后修改时间：${dateModifiedFormatter}</div>`;
+          innerHTML += `<div>最后修改时间：${formatTime(dateModified)}</div>`;
         }
         insertAfter(
           domC("div", {
@@ -4111,7 +4108,7 @@
     ];
     const { name, value, checked, type } = ev;
     const changeBackground = () => {
-      myVersion.change();
+      mySize.change();
       myBackground.init();
       myListenListItem.restart();
       onUseThemeDark();
@@ -4125,7 +4122,7 @@
         domRange.style.display = checked ? "none" : "flex";
         domRangePercent.style.display = !checked ? "none" : "flex";
       }
-      myVersion.change();
+      mySize.change();
     };
     const ob = {
       [INPUT_NAME_THEME]: changeBackground,
@@ -4134,7 +4131,7 @@
       colorText1: changeBackground,
       backgroundHighlightOriginal: changeBackground,
       suspensionHomeTab: () => {
-        myVersion.change();
+        mySize.change();
         changeSuspensionTab();
       },
       suspensionFind: () => suspensionHeader("suspensionFind"),
@@ -4152,7 +4149,7 @@
       versionUserHomeIsPercent: rangeChoosePercent,
       versionCollectionIsPercent: rangeChoosePercent,
       zoomImageType: () => {
-        myVersion.change();
+        mySize.change();
         initImagePreview();
       },
       globalTitleRemoveMessage: changeTitle,
@@ -4180,7 +4177,7 @@
       return;
     }
     if (doCssVersion.includes(name)) {
-      myVersion.change();
+      mySize.change();
       return;
     }
     ob[name] && ob[name]();
@@ -4368,7 +4365,7 @@
       initHistoryView();
       appendHiddenStyle();
       myBackground.init();
-      myVersion.init();
+      mySize.init();
       checkThemeDarkOrLight();
       dom("html").classList.add(/www\.zhihu\.com\/column/.test(href) ? "zhuanlan" : EXTRA_CLASS_HTML[hostname]);
       const { fetchInterceptStatus } = config;
@@ -4434,7 +4431,7 @@
         changeTitle();
         changeSuspensionTab();
         suspensionPickupAttribute();
-        myVersion.initAfterLoad();
+        mySize.initAfterLoad();
         myCustomStyle.init();
         initBlockedWords();
         initResizeObserver();

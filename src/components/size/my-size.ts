@@ -6,7 +6,7 @@ import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from '../video';
 import { VERSION_MIN_WIDTH } from './create-html';
 
 /** 修改版心的 css */
-export const myVersion = {
+export const mySize = {
   init: async function () {
     fnAppendStyle('CTZ_STYLE_VERSION', await this.content());
   },

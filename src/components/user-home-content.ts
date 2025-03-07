@@ -1,6 +1,5 @@
 import { CLASS_TIME_ITEM } from '../misc';
-import { dom, domA, domById, domC, insertAfter, myStorage } from '../tools';
-import { formatTime } from './time';
+import { dom, domA, domById, domC, formatTime, insertAfter, myStorage } from '../tools';
 
 let timer: NodeJS.Timeout | undefined = undefined;
 
@@ -21,20 +20,17 @@ export const userHomeAnswers = async () => {
       let innerHTML = '';
       if (nodeDateCreate) {
         const dateCreate = nodeDateCreate.getAttribute('content') || '';
-        const dateCreateFormatter = formatTime(dateCreate);
-        innerHTML += `<div>创建时间：${dateCreateFormatter}</div>`;
+        innerHTML += `<div>创建时间：${formatTime(dateCreate)}</div>`;
       }
 
       if (nodeDatePublished) {
         const datePublished = nodeDatePublished.getAttribute('content') || '';
-        const datePublishedFormatter = formatTime(datePublished);
-        innerHTML += `<div>发布时间：${datePublishedFormatter}</div>`;
+        innerHTML += `<div>发布时间：${formatTime(datePublished)}</div>`;
       }
 
       if (nodeDateModified) {
         const dateModified = nodeDateModified.getAttribute('content') || '';
-        const dateModifiedFormatter = formatTime(dateModified);
-        innerHTML += `<div>最后修改时间：${dateModifiedFormatter}</div>`;
+        innerHTML += `<div>最后修改时间：${formatTime(dateModified)}</div>`;
       }
 
       insertAfter(

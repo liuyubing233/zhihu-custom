@@ -1,6 +1,6 @@
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../misc';
 import { dom, domA, domById, myStorage } from '../tools';
-import { VERSION_RANGE_HAVE_PERCENT } from './version';
+import { VERSION_RANGE_HAVE_PERCENT } from './size';
 
 /** 回填数据，供每次打开使用 */
 export const echoData = async () => {

@@ -1,5 +1,5 @@
 import { dom, domC, myStorage } from '../../tools';
-import { myVersion } from '../version';
+import { mySize } from '../size';
 import { myMove } from './move';
 import { IHeaderName, storeSuspension } from './store';
 
@@ -71,7 +71,7 @@ export const suspensionHeader = async (name: IHeaderName) => {
     nodeHeaderInner && nodeHeaderInner.appendChild(domCached);
     myMove.destroy(domCached);
   }
-  myVersion.change();
+  mySize.change();
 };
 
 /** 悬浮模块开关锁添加移除方法 */

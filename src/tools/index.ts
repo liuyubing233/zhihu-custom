@@ -12,4 +12,5 @@ export * from './percent';
 export * from './scroll-stop-on';
 export * from './storage';
 export * from './throttle';
+export * from './time';
 

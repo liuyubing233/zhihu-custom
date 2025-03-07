@@ -7,11 +7,10 @@ import { openChange } from '../components/open';
 import { buttonConfirmPageTitle, buttonResetPageTitle } from '../components/page-title';
 import { myPreview } from '../components/preview';
 import { moveAndOpen } from '../components/suspension/move';
-import { formatTime } from '../components/time';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from '../config';
 import { IKeyofHistory } from '../config/types';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../misc';
-import { dom, domA, domById, domC, myStorage } from '../tools';
+import { dom, domA, domById, domC, formatTime, myStorage } from '../tools';
 import { initRootEvent } from './init-top-event-listener';
 
 /** 加载设置弹窗绑定方法 */

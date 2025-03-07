@@ -5,13 +5,13 @@ import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
 import { myListenListItem } from './listen-list-item';
 import { changeICO, changeTitle } from './page-title';
+import { mySize } from './size';
 import { changeSuspensionTab, suspensionHeader, suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
-import { myVersion } from './version';
 
 /** 更改编辑器方法 */
 export const fnChanger = async (ev: HTMLInputElement) => {
-  // onchange 时只调用 myVersion 的 name
+  // onchange 时只调用 mySize 的 name
   const doCssVersion = [
     'questionTitleTag',
     'fixedListItemMore',
@@ -44,7 +44,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   ];
   const { name, value, checked, type } = ev;
   const changeBackground = () => {
-    myVersion.change();
+    mySize.change();
     myBackground.init();
     myListenListItem.restart();
     onUseThemeDark();
@@ -59,7 +59,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       domRange.style.display = checked ? 'none' : 'flex';
       domRangePercent.style.display = !checked ? 'none' : 'flex';
     }
-    myVersion.change();
+    mySize.change();
   };
 
   const ob: Record<string, Function> = {
@@ -69,7 +69,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     colorText1: changeBackground,
     backgroundHighlightOriginal: changeBackground,
     suspensionHomeTab: () => {
-      myVersion.change();
+      mySize.change();
       changeSuspensionTab();
     },
     suspensionFind: () => suspensionHeader('suspensionFind'),
@@ -87,7 +87,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     versionUserHomeIsPercent: rangeChoosePercent,
     versionCollectionIsPercent: rangeChoosePercent,
     zoomImageType: () => {
-      myVersion.change();
+      mySize.change();
       initImagePreview();
     },
     globalTitleRemoveMessage: changeTitle,
@@ -123,7 +123,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     return;
   }
   if (doCssVersion.includes(name)) {
-    myVersion.change();
+    mySize.change();
     return;
   }
   ob[name] && ob[name]();
