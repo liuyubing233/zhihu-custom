@@ -1,4 +1,4 @@
-import { ICommonContent } from "./types";
+import { ICommonContent } from './types';
 
 /** 提示HTML */
 export const createHTMLTooltip = (value: string) => `<span class="ctz-tooltip"><span>?</span><span>${value}</span></span>`;
@@ -22,13 +22,29 @@ export const createHTMLFormBoxSwitch = (con: ICommonContent[][]) =>
     .map(
       (item) =>
         `<div class="ctz-form-box">${item
-          .map(
-            ({ label, value, needFetch, tooltip }) =>
-              `<div class="ctz-form-box-item ${needFetch ? 'ctz-fetch-intercept' : ''}">${
-                `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '') + (tooltip ? createHTMLTooltip(tooltip) : '')}</div>` +
-                `<div><input class="ctz-i ctz-switch" name="${value}" type="checkbox" value="on" /></div>`
-              }</div>`
+          .map(({ label, value, needFetch, tooltip }) =>
+            createHTMLFormItem({ label, value: `<input class="ctz-i ctz-switch" name="${value}" type="checkbox" value="on" />`, needFetch, tooltip })
           )
           .join('')}</div>`
     )
     .join('');
+
+/** 创建 formItem */
+export const createHTMLFormItem = ({ label, value, needFetch, tooltip, extraClass }: ICreateFormItem) =>
+  `<div class="ctz-form-box-item${needFetch ? ' ctz-fetch-intercept' : ''}${extraClass ? ` ${extraClass}` : ''}">${
+    `<div>${label + (needFetch ? '<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>' : '') + (tooltip ? createHTMLTooltip(tooltip) : '')}</div>` +
+    `<div>${value}</div>`
+  }</div>`;
+
+interface ICreateFormItem {
+  /** 名称 */
+  label: string;
+  /** 内容 */
+  value: string;
+  /** 是否需要接口支持 */
+  needFetch?: boolean;
+  /** 提示 */
+  tooltip?: string;
+  /** 额外的样式 */
+  extraClass?: string;
+}

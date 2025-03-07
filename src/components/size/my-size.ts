@@ -2,7 +2,6 @@ import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } f
 import { CLASS_ZHIHU_COMMENT_DIALOG } from '../../misc';
 import { dom, domById, fnAppendStyle, fnReturnStr, myStorage } from '../../tools';
 import { EThemeDark, EThemeLight, isDark, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../background';
-import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from '../video';
 import { VERSION_MIN_WIDTH } from './create-html';
 
 /** 修改版心的 css */
@@ -54,7 +53,6 @@ export const mySize = {
       fontSizeForAnswerTitle,
       fontSizeForArticleTitle,
       contentLineHeight,
-      videoUseLink,
       suspensionPickUp,
       suspensionPickupRight,
     } = config;
@@ -219,16 +217,6 @@ export const mySize = {
       // 行高
       fnReturnStr(`p {line-height: ${contentLineHeight}px;}`, !!contentLineHeight);
 
-    /** 视频是否只显示链接 */
-    const xxxVideoLink = fnReturnStr(
-      `${CLASS_VIDEO_ONE}>div,${CLASS_VIDEO_ONE}>i{display: none;}` +
-        `${CLASS_VIDEO_ONE}{padding: 0!important;height:24px!important;width: fit-content!important;}` +
-        `${CLASS_VIDEO_ONE}::before{content: '视频链接，点击跳转 >>';cursor:pointer;color: #1677ff}` +
-        `${CLASS_VIDEO_ONE}:hover::before{color: #b0b0b0}` +
-        `${CLASS_VIDEO_TWO}::before,${CLASS_VIDEO_TWO}>i{display: none;}`,
-      videoUseLink
-    );
-
     const nodeContentBox =
       domById('TopstoryContent') || dom('.Question-mainColumn') || domById('SearchMain') || dom('.Profile-mainColumn') || dom('.CollectionsDetailPage-mainColumn') || document.body;
     let suspensionRight = +(suspensionPickupRight || 0);
@@ -249,7 +237,6 @@ export const mySize = {
       xxxSusHomeTab +
       xxxTitleTag +
       xxxVideo +
-      xxxVideoLink +
       xxxWidth +
       xxxSuspensionPickUp
     );

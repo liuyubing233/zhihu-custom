@@ -1,4 +1,5 @@
 import { IBlockedUser } from '../components/blocked-users';
+import { EVideoInAnswerArticle } from '../init/init-html/configs';
 import { myStorage } from '../tools';
 import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
 import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';
@@ -15,7 +16,7 @@ class Store {
   userinfo: IZhihuUserinfo | undefined = undefined;
   /** 上一个请求的 Headers */
   prevFetchHeaders: HeadersInit = {};
-  /** 过滤的盐选回答ID */
+  /** 推荐类别过滤的内容 */
   removeRecommends: IRecommendRemoved[] = [];
   /** 评论区用户信息集合 */
   commendAuthors: IBlockedUser[] = [];
@@ -59,7 +60,8 @@ class Store {
   }
 
   async findRemoveRecommends(recommends: IZhihuRecommendItem[]) {
-    const { removeAnonymousQuestion, removeFromYanxuan } = await myStorage.getConfig();
+    const { removeAnonymousQuestion, removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
+    console.log('recommends', recommends);
     recommends.forEach((item) => {
       const target = item.target;
       if (!target) return;
@@ -71,6 +73,10 @@ class Store {
       // 匿名用于的提问
       if (removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
         message = '匿名用户的提问';
+      }
+
+      if (videoInAnswerArticle === EVideoInAnswerArticle.隐藏视频 && target.attachment && target.attachment.video) {
+        message = '已删除一条视频回答';
       }
 
       if (message) {
@@ -105,12 +111,16 @@ class Store {
   }
 
   async findRemoveAnswers(answers: IZhihuAnswerTarget[]) {
-    const { removeFromYanxuan } = await myStorage.getConfig();
-    // console.log(answers)
+    console.log('answers', answers);
+    const { removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
     answers.forEach((item) => {
       let message = '';
       if (removeFromYanxuan && item.answerType === 'paid' && item.labelInfo) {
         message = '已删除一条选自盐选专栏的回答';
+      }
+
+      if (videoInAnswerArticle === EVideoInAnswerArticle.隐藏视频 && item.attachment && item.attachment.video) {
+        message = '已删除一条视频回答';
       }
 
       if (message) {

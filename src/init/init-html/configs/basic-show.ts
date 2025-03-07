@@ -26,7 +26,6 @@ export const BASIC_SHOW: ICommonContent[][] = [
     { label: '回答顶部显示赞同人数', value: 'topVote' },
     { label: '回答一键获取回答链接', value: 'copyAnswerLink' },
     { label: '回答、文章顶部显示导出当前内容/回答按钮', value: 'topExportContent' },
-    { label: '回答、文章中视频替换为链接', value: 'videoUseLink' },
   ],
   [
     { label: '用户主页内容置顶发布、修改时间', value: 'userHomeContentTimeTop' },

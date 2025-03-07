@@ -37,6 +37,7 @@ interface Target {
   favorite_count: number;
   answer_type: string;
   paid_info?: PaidInfo;
+  attachment?: IAttachment;
 }
 
 interface Author {
@@ -86,4 +87,51 @@ interface TargetRelationship {
   is_thanked: boolean;
   is_nothelp: boolean;
   voting: number;
+}
+
+interface IAttachment {
+  video: Video;
+  attachment_id: string;
+  type: string;
+}
+
+interface Video {
+  zvideo_id: string;
+  title: string;
+  start_time: number;
+  play_count: number;
+  video_info: VideoInfo;
+  parent_video_id: string;
+  end_time: number;
+  sub_video_id: string;
+  voteup_count: number;
+}
+
+interface VideoInfo {
+  status: string;
+  playlist: Playlist;
+  is_deleted: boolean;
+  created_at: number;
+  updated_at: number;
+  play_count: number;
+  width: number;
+  id: number;
+  duration: number;
+  height: number;
+  thumbnail: string;
+}
+
+interface Playlist {
+  ld: HD;
+  hd: HD;
+  sd: HD;
+}
+
+interface HD {
+  width: number;
+  format: string;
+  play_url: string;
+  duration: number;
+  height: number;
+  size: number;
 }

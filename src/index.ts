@@ -20,7 +20,7 @@ import { mySize } from './components/size';
 import { changeSuspensionTab, initCacheHeader, suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
 import { topBlockUser, userHomeAnswers } from './components/user-home-content';
-import { fixVideoAutoPlay, initVideoDownload } from './components/video';
+import { changeVideoStyle, fixVideoAutoPlay, initVideoDownload } from './components/video';
 import { fnReplaceZhidaToSearch } from './components/zhida-to-search';
 import { CONFIG_DEFAULT } from './config';
 import { initHistoryView } from './init/init-history-view';
@@ -80,6 +80,7 @@ import { INNER_CSS } from './web-resources';
     myBackground.init();
     mySize.init();
     checkThemeDarkOrLight();
+    changeVideoStyle()
 
     dom('html')!.classList.add(/www\.zhihu\.com\/column/.test(href) ? 'zhuanlan' : EXTRA_CLASS_HTML[hostname]);
 

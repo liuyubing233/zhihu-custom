@@ -1,5 +1,14 @@
 import { ETheme, EThemeDark, EThemeLight } from '../components/background';
-import { EAnswerOpen, ELinkShopping, EReplaceZhidaToSearch, ESuspensionOpen, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../init/init-html/configs';
+import {
+  EAnswerOpen,
+  ELinkShopping,
+  EReplaceZhidaToSearch,
+  ESuspensionOpen,
+  EVideoInAnswerArticle,
+  EZoomImageHeight,
+  EZoomImageType,
+  EZoomListVideoType,
+} from '../init/init-html/configs';
 import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from './types';
 
 /** 隐藏内容模块默认为 true 的配置 */
@@ -150,7 +159,6 @@ export const CONFIG_SIMPLE: IPfConfig = {
   linkShopping: ELinkShopping.仅文字,
   hiddenAnswerItemActions: true,
   hiddenAnswerItemTime: true,
-  videoUseLink: true,
   commitModalSizeSameVersion: true,
 };
 
@@ -226,6 +234,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   commentImageFullPage: true,
   keyEscCloseCommentDialog: true,
   replaceZhidaToSearch: EReplaceZhidaToSearch.不替换,
+  videoInAnswerArticle: EVideoInAnswerArticle.默认,
 };
 
 /** 缓存的历史记录数量 */

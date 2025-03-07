@@ -1,4 +1,4 @@
-import { IOptionItem } from "../../../types/common.type";
+import { IOptionItem } from '../../../types/common.type';
 
 /** 枚举: 替换知乎直达为搜索 */
 export enum EReplaceZhidaToSearch {
@@ -49,6 +49,13 @@ export enum EZoomListVideoType {
   自定义尺寸 = '2',
 }
 
+/** 回答和文章中的视频显示方式 */
+export enum EVideoInAnswerArticle {
+  默认 = '0',
+  修改为链接 = '1',
+  隐藏视频 = '2',
+}
+
 /** select 选择框 */
 export const OPTIONS_MAP: Record<string, IOptionItem[]> = {
   // 替换知乎直达为搜索
@@ -93,4 +100,18 @@ export const OPTIONS_MAP: Record<string, IOptionItem[]> = {
     { label: '默认尺寸', value: EZoomListVideoType.默认尺寸 },
     { label: '自定义尺寸', value: EZoomListVideoType.自定义尺寸 },
   ],
+  // 回答和文章中的视频显示方式
+  videoInAnswerArticle: [
+    { label: '默认', value: EVideoInAnswerArticle.默认 },
+    { label: '修改为链接', value: EVideoInAnswerArticle.修改为链接 },
+    { label: '隐藏视频/过滤视频回答', value: EVideoInAnswerArticle.隐藏视频 },
+  ],
 };
+
+/** 显示修改部分的 select 选择 */
+export const SELECT_BASIS_SHOW: IOptionItem[] = [
+  { label: '购物链接显示方式', value: 'linkShopping' },
+  { label: '回答内容收起/展开状态', value: 'answerOpen' },
+  { label: '替换<span class="ctz-zhida">知乎直达<span>✦</span></span>为搜索', value: 'replaceZhidaToSearch' },
+  { label: '回答和文章中的视频显示方式', value: 'videoInAnswerArticle' },
+];

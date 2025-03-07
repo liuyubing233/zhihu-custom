@@ -3,11 +3,13 @@ import { dom, domById, myStorage } from '../tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, myBackground, onUseThemeDark } from './background';
 import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
+import { myListenAnswerItem } from './listen-answer-item';
 import { myListenListItem } from './listen-list-item';
 import { changeICO, changeTitle } from './page-title';
 import { mySize } from './size';
 import { changeSuspensionTab, suspensionHeader, suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
+import { changeVideoStyle } from './video';
 
 /** 更改编辑器方法 */
 export const fnChanger = async (ev: HTMLInputElement) => {
@@ -40,7 +42,6 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'zoomListVideoType',
     'zoomListVideoSize',
     'commitModalSizeSameVersion',
-    'videoUseLink',
   ];
   const { name, value, checked, type } = ev;
   const changeBackground = () => {
@@ -93,6 +94,11 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     globalTitleRemoveMessage: changeTitle,
     suspensionPickUp: suspensionPickupAttribute,
     suspensionPickupRight: suspensionPickupAttribute,
+    videoInAnswerArticle: () => {
+      changeVideoStyle();
+      myListenListItem.restart();
+      myListenAnswerItem.restart();
+    },
   };
 
   if (name === 'fetchInterceptStatus') {

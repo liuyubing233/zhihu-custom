@@ -1,30 +1,23 @@
-import { domC, myStorage } from '../tools';
+import { EVideoInAnswerArticle } from '../../init/init-html/configs';
+import { domC, myStorage } from '../../tools';
 
 /** 视频回答的包裹元素1 */
 export const CLASS_VIDEO_ONE = '.css-1h1xzpn';
 /** 视频回答的包裹元素2 */
 export const CLASS_VIDEO_TWO = '.VideoAnswerPlayer-video';
+export const CLASS_VIDEO_TWO_BOX = '.VideoAnswerPlayer';
+
 /** 需要转链接的视频元素类名 */
 const NEED_LINK_CLASS = [CLASS_VIDEO_ONE, CLASS_VIDEO_TWO];
-
-const findDoms = (nodeFound: HTMLElement, domNames: string[]): NodeListOf<Element> => {
-  const doms = domNames.map((i) => nodeFound.querySelectorAll(i));
-  for (let i = 0, len = doms.length; i < len; i++) {
-    if (doms[i].length) {
-      return doms[i];
-    }
-  }
-  return doms[doms.length - 1];
-};
 
 /** 加载视频下载方法 */
 export const initVideoDownload = async (nodeFound?: HTMLElement) => {
   if (!nodeFound) return;
-  const { videoUseLink } = await myStorage.getConfig();
+  const { videoInAnswerArticle } = await myStorage.getConfig();
   const domVideos = findDoms(
     nodeFound,
     ['.ZVideo-player>div', CLASS_VIDEO_ONE, CLASS_VIDEO_TWO].filter((i) => {
-      return videoUseLink ? !NEED_LINK_CLASS.includes(i) : true;
+      return videoInAnswerArticle === EVideoInAnswerArticle.修改为链接 ? !NEED_LINK_CLASS.includes(i) : true;
     })
   );
   for (let i = 0, len = domVideos.length; i < len; i++) {
@@ -50,6 +43,16 @@ export const initVideoDownload = async (nodeFound?: HTMLElement) => {
   }
 };
 
+const findDoms = (nodeFound: HTMLElement, domNames: string[]): NodeListOf<Element> => {
+  const doms = domNames.map((i) => nodeFound.querySelectorAll(i));
+  for (let i = 0, len = doms.length; i < len; i++) {
+    if (doms[i].length) {
+      return doms[i];
+    }
+  }
+  return doms[doms.length - 1];
+};
+
 /** 视频下载 */
 const videoDownload = async (url: string, name: string) => {
   return fetch(url)
@@ -64,20 +67,4 @@ const videoDownload = async (url: string, name: string) => {
       window.URL.revokeObjectURL(objectUrl);
       elementA.remove();
     });
-};
-
-/** 解决视频自动播放问题 */
-export const fixVideoAutoPlay = () => {
-  // 拦截 video.play() 指令
-  var originalPlay = HTMLMediaElement.prototype.play;
-  // @ts-ignore
-  HTMLMediaElement.prototype.play = function () {
-    // 如果视频隐藏则退出
-    if (!this.offsetHeight) {
-      return;
-    }
-    // @ts-ignore
-    // 否则正常执行 video.play() 指令
-    return originalPlay.apply(this, arguments);
-  };
 };

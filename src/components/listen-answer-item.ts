@@ -30,6 +30,7 @@ export const myListenAnswerItem = {
       blockedUsers,
       blockWordsAnswer = [],
       highPerformanceAnswer,
+      videoInAnswerArticle,
     } = config;
 
     doContentItem(config, false, dom('.QuestionAnswer-content'));
@@ -83,6 +84,7 @@ export const myListenAnswerItem = {
         const userName = (nodeItem.querySelector('[itemprop="name"]') as HTMLMetaElement).content;
         userName === '匿名用户' && (message = `已屏蔽一条「匿名用户」回答`);
       }
+
       // 屏蔽词
       if (!message) {
         const domRichContent = nodeItem.querySelector('.RichContent');

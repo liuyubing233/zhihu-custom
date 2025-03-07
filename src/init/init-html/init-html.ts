@@ -8,8 +8,8 @@ import { createHTMLSizeSetting } from '../../components/size';
 import { dom, domA, domC } from '../../tools';
 import { IZhihuUserinfo } from '../../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../../web-resources';
-import { createHTMLFormBoxSwitch } from './common-html';
-import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE, OPTIONS_MAP } from './configs';
+import { createHTMLFormBoxSwitch, createHTMLFormItem } from './common-html';
+import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE, OPTIONS_MAP, SELECT_BASIS_SHOW } from './configs';
 
 /** 添加修改器内元素 */
 export const initHTML = () => {
@@ -18,8 +18,8 @@ export const initHTML = () => {
   dom('.ctz-version', nDomMain)!.innerText = GM_info.script.version;
 
   // 添加更多默认设置
-  dom('#CTZ_DEFAULT_SELF', nDomMain)!.innerHTML = DEFAULT_FUNCTION.map(
-    ({ title, commit }) => `<div class="ctz-form-box-item ctz-form-box-item-vertical"><div>${title}</div><div style="font-size: 12px;color:#999;">${commit || ''}</div></div>`
+  dom('#CTZ_DEFAULT_SELF', nDomMain)!.innerHTML = DEFAULT_FUNCTION.map(({ title, commit }) =>
+    createHTMLFormItem({ label: title, value: commit || '', extraClass: 'ctz-form-box-item-vertical' })
   ).join('');
 
   // 添加基础设置显示修改
@@ -29,7 +29,12 @@ export const initHTML = () => {
   // 列表内容屏蔽
   dom('#CTZ_FILTER_LIST_CONTENT', nDomMain)!.innerHTML = createHTMLFormBoxSwitch(FILTER_LIST);
 
-  // 添加 select 选择框内容
+  // 添加下拉选择
+  dom('#CTZ_BASIC_SHOW_SELECT', nDomMain)!.innerHTML = SELECT_BASIS_SHOW.map(({ label, value }) =>
+    createHTMLFormItem({ label, value: `<select class="ctz-select" name="${value}"></select>` })
+  ).join('');
+
+  // 添加下拉选择内容
   domA('.ctz-select', nDomMain).forEach((item) => {
     const name = (item as HTMLSelectElement).name;
     if (OPTIONS_MAP[name]) {

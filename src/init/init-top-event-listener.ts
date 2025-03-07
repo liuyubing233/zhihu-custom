@@ -3,11 +3,12 @@ import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
 import { updateItemTime } from '../components/time';
 import { updateTopVote } from '../components/topVote';
-import { CLASS_VIDEO_ONE, initVideoDownload } from '../components/video';
+import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO_BOX, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { IPfConfig } from '../config/types';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
 import { doFetchNotInterested, dom, domP, myStorage } from '../tools';
+import { EVideoInAnswerArticle } from './init-html/configs';
 
 const classTarget = ['RichContent-cover', 'RichContent-inner', 'ContentItem-more', 'ContentItem-arrowIcon', 'ContentItem-expandButton', 'is-collapsed'];
 /** 判断是否点击阅读全文 */
@@ -23,14 +24,13 @@ const verifyClickReadMore = (e: HTMLElement) => {
 export const initRootEvent = async () => {
   const domRoot = dom('#root');
   if (!domRoot) return;
-  const classForVideoOne = CLASS_VIDEO_ONE.replace('.', '');
   domRoot.addEventListener('click', async function (event) {
     const config = await myStorage.getConfig();
-    const { videoUseLink, fetchInterceptStatus } = config;
+    const { fetchInterceptStatus, videoInAnswerArticle } = config;
     const target = event.target as HTMLElement;
-    if (videoUseLink) {
+    if (videoInAnswerArticle === EVideoInAnswerArticle.修改为链接) {
       // 回答内容中的视频回答替换为视频链接
-      if (target.classList.contains(classForVideoOne)) {
+      if (target.classList.contains(CLASS_VIDEO_ONE.replace('.', '')) || target.classList.contains(CLASS_VIDEO_TWO_BOX.replace('.', ''))) {
         const domVideo = target.querySelector('video');
         const videoSrc = domVideo ? domVideo.src : '';
         if (!videoSrc) return;
@@ -78,7 +78,7 @@ export const initRootEvent = async () => {
  */
 export const doContentItem = async (config: IPfConfig, isRecommend: boolean, nodeItem?: HTMLElement, needTimeout = false) => {
   if (!nodeItem) return;
-  const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, videoUseLink, answerItemCreatedAndModifiedTime } = config;
+  const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, answerItemCreatedAndModifiedTime } = config;
   const doFun = (nodeItem: HTMLElement, parentItem: HTMLElement) => {
     updateTopVote(nodeItem);
     if (isRecommend) {

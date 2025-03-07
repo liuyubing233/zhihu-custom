@@ -111,6 +111,37 @@
 
 </details>
 
+<!-- 回答和文章中的视频显示方式 -->
+
+
+<details>
+
+<summary>回答和文章中的视频显示方式</summary>
+
+> 菜单目录：通用 - 显示修改 - 回答和文章中的视频显示方式
+
+<br>
+
+- 默认<br>
+- 修改为链接<br>
+- 隐藏视频/过滤视频回答<br>
+
+<img src="./static/video-link.png" alt="视频修改为链接">
+
+<br>
+
+<img src="./static/video-hidden.png" alt="隐藏视频">
+
+<br>
+
+---
+
+<br>
+
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/replace-zhida.png" alt="直达">
+
+</details>
+
 <!-- 列表标题类别显示 -->
 
 <details>
@@ -212,22 +243,6 @@
 点击后自动复制当前回答内容的链接到剪贴板<br>
 
 <img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/copy-link.png" alt="回答一键获取回答链接">
-
-</details>
-
-<!-- 回答和文章中的视频替换为链接 -->
-
-<details>
-
-<summary>回答和文章中的视频替换为链接</summary>
-
-> 菜单目录：通用 - 显示修改
-
-<br>
-
-勾选后回答和文章中的视频内容将修改为超链接的形式<br>
-
-<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/video-link.png" alt="回答和文章中的视频替换为链接">
 
 </details>
 

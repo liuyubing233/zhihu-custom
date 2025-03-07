@@ -45,6 +45,7 @@ export interface IZhihuAnswerTarget {
   visibleOnlyToAuthor: boolean;
   voteupCount: number;
   labelInfo?: LabelInfo;
+  attachment?: IAttachment;
 }
 
 interface LabelInfo {
@@ -164,6 +165,51 @@ interface Thumbnail {
   height: number;
   token: string;
   type: string;
+  url: string;
+  width: number;
+}
+
+interface IAttachment {
+  attachmentId: string;
+  type: string;
+  video: Video;
+}
+
+interface Video {
+  endTime: number;
+  parentVideoId: string;
+  playCount: number;
+  startTime: number;
+  subVideoId: string;
+  title: string;
+  videoInfo: VideoInfo;
+  voteupCount: number;
+  zvideoId: string;
+}
+
+interface VideoInfo {
+  duration: number;
+  height: number;
+  isPaid: boolean;
+  isTrial: boolean;
+  playCount: number;
+  playlist: Playlist;
+  thumbnail: string;
+  type: string;
+  videoId: number;
+  width: number;
+}
+
+interface Playlist {
+  fhd: Fhd;
+  hd: Fhd;
+  ld: Fhd;
+  sd: Fhd;
+}
+
+interface Fhd {
+  bitrate: number;
+  height: number;
   url: string;
   width: number;
 }
