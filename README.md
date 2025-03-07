@@ -126,11 +126,11 @@
 - 修改为链接<br>
 - 隐藏视频/过滤视频回答<br>
 
-<img src="./static/video-link.png" alt="视频修改为链接">
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/video-link.png" alt="视频修改为链接">
 
 <br>
 
-<img src="./static/video-hidden.png" alt="隐藏视频">
+<img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/video-hidden.png" alt="隐藏视频">
 
 <br>
 
