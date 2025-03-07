@@ -1,6 +1,6 @@
 import { ETheme, EThemeDark, EThemeLight } from '../components/background';
 import { IBlockedUser } from '../components/blocked-users';
-import { EAnswerOpen, ELinkShopping, EReplaceZhidaToSearch, ESuspensionOpen, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from './select-options.type';
+import { EAnswerOpen, ELinkShopping, EReplaceZhidaToSearch, ESuspensionOpen, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../init/init-html/configs';
 
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {

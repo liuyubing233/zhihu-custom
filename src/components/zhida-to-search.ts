@@ -1,6 +1,6 @@
 import { myStorage } from '../commons/storage';
 import { CLASS_LISTENED } from '../configs';
-import { EReplaceZhidaToSearch } from '../types/select-options.type';
+import { EReplaceZhidaToSearch } from '../init/init-html/configs';
 
 /** 替换知乎直达为搜索 */
 export const fnReplaceZhidaToSearch = async (domFind: HTMLElement = document.body) => {
@@ -33,7 +33,7 @@ export const fnReplaceZhidaToSearch = async (domFind: HTMLElement = document.bod
   }
 };
 
-const SEARCH_PATH = {
+const SEARCH_PATH: Record<string, string> = {
   [EReplaceZhidaToSearch.知乎]: 'https://www.zhihu.com/search?type=content&q=',
   [EReplaceZhidaToSearch.百度]: 'https://www.baidu.com/s?wd=',
   [EReplaceZhidaToSearch.谷歌]: 'https://www.google.com.hk/search?q=',

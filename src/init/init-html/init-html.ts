@@ -6,11 +6,10 @@ import { createHTMLHiddenConfig } from '../../components/hidden';
 import { initMenu } from '../../components/menu';
 import { createHTMLTitleICOChange } from '../../components/page-title';
 import { createHTMLSizeSetting } from '../../components/version';
-import { OPTIONS_MAP } from '../../configs/select-options';
 import { IZhihuUserinfo } from '../../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../../web-resources';
 import { createHTMLFormBoxSwitch } from './common-html';
-import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE } from './config';
+import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE, OPTIONS_MAP } from './configs';
 
 /** 添加修改器内元素 */
 export const initHTML = () => {

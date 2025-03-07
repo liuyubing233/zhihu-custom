@@ -1,6 +1,6 @@
 import { myStorage } from '../../commons/storage';
 import { domById } from '../../commons/tools';
-import { ESuspensionOpen } from '../../types';
+import { ESuspensionOpen } from '../../init/init-html/configs';
 import { openChange } from '../open';
 
 /** 绑定页面元素的点击拖动方法 */
