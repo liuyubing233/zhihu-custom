@@ -1,6 +1,6 @@
 import { createHTMLRange, createHTMLTooltip } from '../../init/init-html/common-html';
 import { dom } from '../../tools';
-import { IOptionItem } from '../../types';
+import { IOptionItem } from '../../types/common.type';
 
 /**
  * 尺寸设置部分元素添加
