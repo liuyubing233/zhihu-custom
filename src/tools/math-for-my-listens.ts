@@ -1,5 +1,5 @@
+import { fnLog } from './dom';
 import { myStorage } from './storage';
-import { fnLog } from './tools';
 
 export const CTZ_HIDDEN_ITEM_CLASS = 'ctz-hidden-item'
 

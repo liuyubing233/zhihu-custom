@@ -1,5 +1,5 @@
 import { store } from '../store';
-import { fnLog } from './tools';
+import { fnLog } from './dom';
 
 /** 调用「不感兴趣」接口 */
 export const doFetchNotInterested = ({ id, type }: { id: string; type: string }) => {

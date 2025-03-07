@@ -14,8 +14,7 @@ export const CLASS_SELECT = 'ctz-select';
 /** class: 列表、回答内容已经监听的类名 */
 export const CLASS_LISTENED = 'ctz-listened';
 
-/** class: 消息提示弹窗 */
-export const CLASS_MESSAGE = 'ctz-message';
+
 /** ID: 额外的弹窗 */
 export const ID_EXTRA_DIALOG = 'CTZ_EXTRA_OUTPUT_DIALOG';
 

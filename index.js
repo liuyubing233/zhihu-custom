@@ -27,6 +27,214 @@
 
 "use strict";
 (() => {
+  var judgeBrowserType = () => {
+    const userAgent = navigator.userAgent;
+    if (userAgent.includes("Firefox")) return "Firefox";
+    if (userAgent.includes("Edg")) return "Edge";
+    if (userAgent.includes("Chrome")) return "Chrome";
+    return "Safari";
+  };
+  var isSafari = judgeBrowserType() === "Safari";
+  var dom = (n, find = document) => find.querySelector(n);
+  var domById = (id) => document.getElementById(id);
+  var domA = (n, find = document) => find.querySelectorAll(n);
+  var domC = (name, attrObjs) => {
+    const node = document.createElement(name);
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
+    return node;
+  };
+  var domP = (node, attrName, attrValue) => {
+    const nodeP = node.parentElement;
+    if (!nodeP) return void 0;
+    if (!attrName || !attrValue) return nodeP;
+    if (nodeP === document.body) return void 0;
+    const attrValueList = (nodeP.getAttribute(attrName) || "").split(" ");
+    return attrValueList.includes(attrValue) ? nodeP : domP(nodeP, attrName, attrValue);
+  };
+  var insertAfter = (newElement, targetElement) => {
+    const parent = targetElement.parentNode;
+    if (parent.lastChild === targetElement) {
+      parent.appendChild(newElement);
+    } else {
+      parent.insertBefore(newElement, targetElement.nextSibling);
+    }
+  };
+  var fnReturnStr = (str, isHave = false, strFalse = "") => isHave ? str : strFalse;
+  var fnLog = (...str) => console.log("%c「知乎修改器」", "color: green;font-weight: bold;", ...str);
+  var fnAppendStyle = (id, innerHTML) => {
+    const element = domById(id);
+    element ? element.innerHTML = innerHTML : document.head.appendChild(domC("style", { id, type: "text/css", innerHTML }));
+  };
+  var fnDomReplace = (node, attrObjs) => {
+    if (!node) return;
+    for (let key in attrObjs) {
+      node[key] = attrObjs[key];
+    }
+  };
+  var createButtonFontSize12 = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
+    innerHTML,
+    className: `ctz-button ${extraCLass}`,
+    style: "margin-left: 8px;font-size: 12px;",
+    ...extra
+  });
+  var copy = async (value) => {
+    if (navigator.clipboard && navigator.permissions) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      const domTextarea = domC("textArea", {
+        value,
+        style: "width: 0px;position: fixed;left: -999px;top: 10px;"
+      });
+      domTextarea.setAttribute("readonly", "readonly");
+      document.body.appendChild(domTextarea);
+      domTextarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(domTextarea);
+    }
+  };
+  var windowResize = () => {
+    window.dispatchEvent(new Event("resize"));
+  };
+  var Store = class {
+    constructor() {
+      this.userinfo = void 0;
+      this.prevFetchHeaders = {};
+      this.removeRecommends = [];
+      this.commendAuthors = [];
+      this.userAnswers = [];
+      this.userArticle = [];
+      this.removeAnswers = [];
+      this.setUserinfo = this.setUserinfo.bind(this);
+      this.getUserinfo = this.getUserinfo.bind(this);
+      this.setFetchHeaders = this.setFetchHeaders.bind(this);
+      this.getFetchHeaders = this.getFetchHeaders.bind(this);
+      this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
+      this.getRemoveRecommends = this.getRemoveRecommends.bind(this);
+      this.setUserAnswer = this.setUserAnswer.bind(this);
+      this.getUserAnswer = this.getUserAnswer.bind(this);
+      this.setUserArticle = this.setUserArticle.bind(this);
+      this.getUserArticle = this.getUserArticle.bind(this);
+      this.setCommentAuthors = this.setCommentAuthors.bind(this);
+      this.getCommentAuthors = this.getCommentAuthors.bind(this);
+      this.findRemoveAnswers = this.findRemoveAnswers.bind(this);
+      this.getRemoveAnswers = this.getRemoveAnswers.bind(this);
+    }
+    setUserinfo(inner) {
+      this.userinfo = inner;
+    }
+    getUserinfo() {
+      return this.userinfo;
+    }
+    setFetchHeaders(headers) {
+      this.prevFetchHeaders = headers;
+    }
+    getFetchHeaders() {
+      return this.prevFetchHeaders;
+    }
+    async findRemoveRecommends(recommends) {
+      const { removeAnonymousQuestion, removeFromYanxuan } = await myStorage.getConfig();
+      recommends.forEach((item) => {
+        const target = item.target;
+        if (!target) return;
+        let message2 = "";
+        if (removeFromYanxuan && target.paid_info) {
+          message2 = "选自盐选专栏的回答";
+        }
+        if (removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
+          message2 = "匿名用户的提问";
+        }
+        if (message2) {
+          this.removeRecommends.push({
+            id: String(item.target.id),
+            message: message2
+          });
+        }
+      });
+    }
+    getRemoveRecommends() {
+      return this.removeRecommends;
+    }
+    setUserAnswer(data) {
+      this.userAnswers = data;
+    }
+    getUserAnswer() {
+      return this.userAnswers;
+    }
+    setUserArticle(data) {
+      this.userArticle = data;
+    }
+    getUserArticle() {
+      return this.userArticle;
+    }
+    async setCommentAuthors(authors) {
+      this.commendAuthors = authors;
+    }
+    getCommentAuthors() {
+      return this.commendAuthors;
+    }
+    async findRemoveAnswers(answers) {
+      const { removeFromYanxuan } = await myStorage.getConfig();
+      answers.forEach((item) => {
+        let message2 = "";
+        if (removeFromYanxuan && item.answerType === "paid" && item.labelInfo) {
+          message2 = "已删除一条选自盐选专栏的回答";
+        }
+        if (message2) {
+          this.removeAnswers.push({
+            id: item.id,
+            message: message2
+          });
+        }
+      });
+    }
+    getRemoveAnswers() {
+      return this.removeAnswers;
+    }
+  };
+  var store = new Store();
+  var doFetchNotInterested = ({ id, type }) => {
+    const nHeader = store.getFetchHeaders();
+    delete nHeader["vod-authorization"];
+    delete nHeader["content-encoding"];
+    delete nHeader["Content-Type"];
+    delete nHeader["content-type"];
+    const idToNum = +id;
+    if (String(idToNum) === "NaN") {
+      fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
+      return;
+    }
+    fetch("/api/v3/feed/topstory/uninterestv2", {
+      body: `item_brief=${encodeURIComponent(JSON.stringify({ source: "TS", type, id: idToNum }))}`,
+      method: "POST",
+      headers: new Headers({
+        ...nHeader,
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      })
+    }).then((res) => res.json());
+  };
+  var interceptionResponse = (res, pathRegexp, fn) => {
+    if (pathRegexp.test(res.url)) {
+      res.clone().json().then((r) => fn(r));
+    }
+  };
+  function formatDataToHump(data) {
+    if (!data) return data;
+    if (Array.isArray(data)) {
+      return data.map((item) => {
+        return typeof item === "object" ? formatDataToHump(item) : item;
+      });
+    } else if (typeof data === "object") {
+      const nData = {};
+      Object.keys(data).forEach((prevKey) => {
+        const nKey = prevKey.replace(/\_(\w)/g, (_, $1) => $1.toUpperCase());
+        nData[nKey] = formatDataToHump(data[prevKey]);
+      });
+      return nData;
+    }
+    return data;
+  }
   var BASIC_SHOW = [
     [
       {
@@ -386,269 +594,11 @@
   var CLASS_TIME_ITEM = "ctz-list-item-time";
   var CLASS_SELECT = "ctz-select";
   var CLASS_LISTENED = "ctz-listened";
-  var CLASS_MESSAGE = "ctz-message";
   var ID_EXTRA_DIALOG = "CTZ_EXTRA_OUTPUT_DIALOG";
   var CLASS_ZHIHU_COMMENT_DIALOG = "css-1aq8hf9";
   var EXTRA_CLASS_HTML = {
     "zhuanlan.zhihu.com": "zhuanlan",
     "www.zhihu.com": "zhihu"
-  };
-  var Store = class {
-    constructor() {
-      this.userinfo = void 0;
-      this.prevFetchHeaders = {};
-      this.removeRecommends = [];
-      this.commendAuthors = [];
-      this.userAnswers = [];
-      this.userArticle = [];
-      this.removeAnswers = [];
-      this.setUserinfo = this.setUserinfo.bind(this);
-      this.getUserinfo = this.getUserinfo.bind(this);
-      this.setFetchHeaders = this.setFetchHeaders.bind(this);
-      this.getFetchHeaders = this.getFetchHeaders.bind(this);
-      this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
-      this.getRemoveRecommends = this.getRemoveRecommends.bind(this);
-      this.setUserAnswer = this.setUserAnswer.bind(this);
-      this.getUserAnswer = this.getUserAnswer.bind(this);
-      this.setUserArticle = this.setUserArticle.bind(this);
-      this.getUserArticle = this.getUserArticle.bind(this);
-      this.setCommentAuthors = this.setCommentAuthors.bind(this);
-      this.getCommentAuthors = this.getCommentAuthors.bind(this);
-      this.findRemoveAnswers = this.findRemoveAnswers.bind(this);
-      this.getRemoveAnswers = this.getRemoveAnswers.bind(this);
-    }
-    setUserinfo(inner) {
-      this.userinfo = inner;
-    }
-    getUserinfo() {
-      return this.userinfo;
-    }
-    setFetchHeaders(headers) {
-      this.prevFetchHeaders = headers;
-    }
-    getFetchHeaders() {
-      return this.prevFetchHeaders;
-    }
-    async findRemoveRecommends(recommends) {
-      const { removeAnonymousQuestion, removeFromYanxuan } = await myStorage.getConfig();
-      recommends.forEach((item) => {
-        const target = item.target;
-        if (!target) return;
-        let message2 = "";
-        if (removeFromYanxuan && target.paid_info) {
-          message2 = "选自盐选专栏的回答";
-        }
-        if (removeAnonymousQuestion && target.question && target.question.author && !target.question.author.id) {
-          message2 = "匿名用户的提问";
-        }
-        if (message2) {
-          this.removeRecommends.push({
-            id: String(item.target.id),
-            message: message2
-          });
-        }
-      });
-    }
-    getRemoveRecommends() {
-      return this.removeRecommends;
-    }
-    setUserAnswer(data) {
-      this.userAnswers = data;
-    }
-    getUserAnswer() {
-      return this.userAnswers;
-    }
-    setUserArticle(data) {
-      this.userArticle = data;
-    }
-    getUserArticle() {
-      return this.userArticle;
-    }
-    async setCommentAuthors(authors) {
-      this.commendAuthors = authors;
-    }
-    getCommentAuthors() {
-      return this.commendAuthors;
-    }
-    async findRemoveAnswers(answers) {
-      const { removeFromYanxuan } = await myStorage.getConfig();
-      answers.forEach((item) => {
-        let message2 = "";
-        if (removeFromYanxuan && item.answerType === "paid" && item.labelInfo) {
-          message2 = "已删除一条选自盐选专栏的回答";
-        }
-        if (message2) {
-          this.removeAnswers.push({
-            id: item.id,
-            message: message2
-          });
-        }
-      });
-    }
-    getRemoveAnswers() {
-      return this.removeAnswers;
-    }
-  };
-  var store = new Store();
-  var dom = (n, find = document) => find.querySelector(n);
-  var domById = (id) => document.getElementById(id);
-  var domA = (n, find = document) => find.querySelectorAll(n);
-  var domC = (name, attrObjs) => {
-    const node = document.createElement(name);
-    for (let key in attrObjs) {
-      node[key] = attrObjs[key];
-    }
-    return node;
-  };
-  var domP = (node, attrName, attrValue) => {
-    const nodeP = node.parentElement;
-    if (!nodeP) return void 0;
-    if (!attrName || !attrValue) return nodeP;
-    if (nodeP === document.body) return void 0;
-    const attrValueList = (nodeP.getAttribute(attrName) || "").split(" ");
-    return attrValueList.includes(attrValue) ? nodeP : domP(nodeP, attrName, attrValue);
-  };
-  var insertAfter = (newElement, targetElement) => {
-    const parent = targetElement.parentNode;
-    if (parent.lastChild === targetElement) {
-      parent.appendChild(newElement);
-    } else {
-      parent.insertBefore(newElement, targetElement.nextSibling);
-    }
-  };
-  var fnReturnStr = (str, isHave = false, strFalse = "") => isHave ? str : strFalse;
-  var fnLog = (...str) => console.log("%c「知乎修改器」", "color: green;font-weight: bold;", ...str);
-  var fnAppendStyle = (id, innerHTML) => {
-    const element = domById(id);
-    element ? element.innerHTML = innerHTML : document.head.appendChild(domC("style", { id, type: "text/css", innerHTML }));
-  };
-  var fnDomReplace = (node, attrObjs) => {
-    if (!node) return;
-    for (let key in attrObjs) {
-      node[key] = attrObjs[key];
-    }
-  };
-  function throttle(fn, time = 300) {
-    let tout = void 0;
-    return function() {
-      clearTimeout(tout);
-      tout = setTimeout(() => {
-        fn.apply(this, arguments);
-      }, time);
-    };
-  }
-  var pathnameHasFn = (obj) => {
-    const { pathname } = location;
-    for (let name in obj) {
-      pathname.includes(name) && obj[name]();
-    }
-  };
-  var windowResize = () => {
-    window.dispatchEvent(new Event("resize"));
-  };
-  var mouseEventClick = (element) => {
-    if (!element) return;
-    const myWindow = isSafari ? window : unsafeWindow;
-    const event = new MouseEvent("click", {
-      view: myWindow,
-      bubbles: true,
-      cancelable: true
-    });
-    element.dispatchEvent(event);
-  };
-  var copy = async (value) => {
-    if (navigator.clipboard && navigator.permissions) {
-      await navigator.clipboard.writeText(value);
-    } else {
-      const domTextarea = domC("textArea", {
-        value,
-        style: "width: 0px;position: fixed;left: -999px;top: 10px;"
-      });
-      domTextarea.setAttribute("readonly", "readonly");
-      document.body.appendChild(domTextarea);
-      domTextarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(domTextarea);
-    }
-  };
-  var messageDoms = [];
-  var message = (value, t = 3e3) => {
-    const time = +/* @__PURE__ */ new Date();
-    const classTime = `ctz-message-${time}`;
-    const nDom = domC("div", {
-      innerHTML: value,
-      className: `${CLASS_MESSAGE} ${classTime}`
-    });
-    const domBox = domById("CTZ_MESSAGE_BOX");
-    if (!domBox) return;
-    domBox.appendChild(nDom);
-    messageDoms.push(nDom);
-    if (messageDoms.length > 3) {
-      const prevDom = messageDoms.shift();
-      prevDom && domBox.removeChild(prevDom);
-    }
-    setTimeout(() => {
-      const nPrevDom = dom(`.${classTime}`);
-      if (nPrevDom) {
-        domById("CTZ_MESSAGE_BOX").removeChild(nPrevDom);
-        messageDoms.shift();
-      }
-    }, t);
-  };
-  var createButtonFontSize12 = (innerHTML, extraCLass = "", extra = {}) => domC("button", {
-    innerHTML,
-    className: `ctz-button ${extraCLass}`,
-    style: "margin-left: 8px;font-size: 12px;",
-    ...extra
-  });
-  var judgeBrowserType = () => {
-    const userAgent = navigator.userAgent;
-    if (userAgent.includes("Firefox")) return "Firefox";
-    if (userAgent.includes("Edg")) return "Edge";
-    if (userAgent.includes("Chrome")) return "Chrome";
-    return "Safari";
-  };
-  var isSafari = judgeBrowserType() === "Safari";
-  function formatDataToHump(data) {
-    if (!data) return data;
-    if (Array.isArray(data)) {
-      return data.map((item) => {
-        return typeof item === "object" ? formatDataToHump(item) : item;
-      });
-    } else if (typeof data === "object") {
-      const nData = {};
-      Object.keys(data).forEach((prevKey) => {
-        const nKey = prevKey.replace(/\_(\w)/g, (_, $1) => $1.toUpperCase());
-        nData[nKey] = formatDataToHump(data[prevKey]);
-      });
-      return nData;
-    }
-    return data;
-  }
-  var doFetchNotInterested = ({ id, type }) => {
-    const nHeader = store.getFetchHeaders();
-    delete nHeader["vod-authorization"];
-    delete nHeader["content-encoding"];
-    delete nHeader["Content-Type"];
-    delete nHeader["content-type"];
-    const idToNum = +id;
-    if (String(idToNum) === "NaN") {
-      fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
-      return;
-    }
-    fetch("/api/v3/feed/topstory/uninterestv2", {
-      body: `item_brief=${encodeURIComponent(JSON.stringify({ source: "TS", type, id: idToNum }))}`,
-      method: "POST",
-      headers: new Headers({
-        ...nHeader,
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-      })
-    }).then((res) => res.json());
-  };
-  var interceptionResponse = (res, pathRegexp, fn) => {
-    if (pathRegexp.test(res.url)) {
-      res.clone().json().then((r) => fn(r));
-    }
   };
   var myStorage = {
     set: async function(name, value) {
@@ -725,10 +675,60 @@
       }
     }
   };
+  var CLASS_MESSAGE = "ctz-message";
+  var messageDoms = [];
+  var message = (value, t = 3e3) => {
+    const time = +/* @__PURE__ */ new Date();
+    const classTime = `ctz-message-${time}`;
+    const nDom = domC("div", {
+      innerHTML: value,
+      className: `${CLASS_MESSAGE} ${classTime}`
+    });
+    const domBox = domById("CTZ_MESSAGE_BOX");
+    if (!domBox) return;
+    domBox.appendChild(nDom);
+    messageDoms.push(nDom);
+    if (messageDoms.length > 3) {
+      const prevDom = messageDoms.shift();
+      prevDom && domBox.removeChild(prevDom);
+    }
+    setTimeout(() => {
+      const nPrevDom = dom(`.${classTime}`);
+      if (nPrevDom) {
+        domById("CTZ_MESSAGE_BOX").removeChild(nPrevDom);
+        messageDoms.shift();
+      }
+    }, t);
+  };
+  var mouseEventClick = (element) => {
+    if (!element) return;
+    const myWindow = isSafari ? window : unsafeWindow;
+    const event = new MouseEvent("click", {
+      view: myWindow,
+      bubbles: true,
+      cancelable: true
+    });
+    element.dispatchEvent(event);
+  };
+  var pathnameHasFn = (obj) => {
+    const { pathname } = location;
+    for (let name in obj) {
+      pathname.includes(name) && obj[name]();
+    }
+  };
   var myScroll = {
     stop: () => dom("body").classList.add("ctz-stop-scroll"),
     on: () => dom("body").classList.remove("ctz-stop-scroll")
   };
+  function throttle(fn, time = 300) {
+    let tout = void 0;
+    return function() {
+      clearTimeout(tout);
+      tout = setTimeout(() => {
+        fn.apply(this, arguments);
+      }, time);
+    };
+  }
   var THEMES = [
     { label: "浅色", value: 0 /* 浅色 */, background: "#fff", color: "#69696e" },
     { label: "深色", value: 1 /* 深色 */, background: "#000", color: "#fff" },
