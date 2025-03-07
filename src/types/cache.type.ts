@@ -1,4 +1,3 @@
-
 /** 脚本内配置缓存 */
 export interface IStorageConfig {
   /** 缓存页面原标题 */
@@ -16,8 +15,3 @@ export interface IPfHistory {
 export type IKeyofHistory = keyof IPfHistory;
 export type IKeyofStorageConfig = keyof IStorageConfig;
 export type IContentStorageConfig = string | HeadersInit;
-
-export interface IRecommendRemoved {
-  id: string;
-  message: string;
-}

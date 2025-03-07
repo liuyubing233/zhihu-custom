@@ -4,8 +4,8 @@ import { createHTMLBlockedUsers } from '../../components/blocked-users';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
 import { createHTMLHiddenConfig } from '../../components/hidden';
 import { initMenu } from '../../components/menu';
+import { createHTMLTitleICOChange } from '../../components/page-title';
 import { createHTMLSizeSetting } from '../../components/version';
-import { ICO_URL } from '../../configs';
 import { OPTIONS_MAP } from '../../configs/select-options';
 import { IZhihuUserinfo } from '../../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../../web-resources';
@@ -18,10 +18,7 @@ export const initHTML = () => {
 
   dom('.ctz-version', nDomMain)!.innerText = GM_info.script.version;
 
-  // 添加修改网页标题图片
-  dom('#CTZ_TITLE_ICO', nDomMain)!.innerHTML = Object.keys(ICO_URL)
-    .map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`)
-    .join('');
+
 
   // 添加更多默认设置
   dom('#CTZ_DEFAULT_SELF', nDomMain)!.innerHTML = DEFAULT_FUNCTION.map(
@@ -46,6 +43,7 @@ export const initHTML = () => {
 
   initFetchInterceptStatus(nDomMain);
   initMenu(nDomMain);
+  createHTMLTitleICOChange(nDomMain)
   createHTMLSizeSetting(nDomMain);
   createHTMLBackgroundSetting(nDomMain);
   createHTMLHiddenConfig(nDomMain);

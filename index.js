@@ -258,12 +258,12 @@
   )}`;
   var DARK_NAME_COLOR_BLACK = `css-1x3upj1,.PlaceHolder-inner,.PlaceHolder-mask path,.css-1kxql2v`;
   var DARK_NAME_COLOR_LIGHT_LINK = `.css-1esjagr,.css-ruirke,.css-117anjg a.UserLink-link,.RichContent--unescapable.is-collapsed .ContentItem-rightButton,.css-1qap1n7,.ContentItem-more,.ContentItem-title a:hover,.Profile-lightItem:hover,.Profile-lightItem:hover .Profile-lightItemValue,.css-p54aph:hover,.PushNotifications-item a:hover,.PushNotifications-item a,.NotificationList-Item-content .NotificationList-Item-link:hover,.SettingsQA a,a.QuestionMainAction:hover,.SimilarQuestions-item .Button,.CreatorSalt-IdentitySelect-Button,.signQr-leftContainer button:hover,.signQr-leftContainer a:hover,.Profile-sideColumnItemLink:hover,.FollowshipCard-link,.css-zzimsj:hover,.css-vphnkw,.css-1aqu4xd,.css-6m0nd1,.NumberBoard-item.Button:hover .NumberBoard-itemName, .NumberBoard-item.Button:hover .NumberBoard-itemValue, .NumberBoard-itema:hover .NumberBoard-itemName, .NumberBoard-itema:hover .NumberBoard-itemValue,a.external,.RichContent-EntityWord,.SideBarCollectionItem-title,.Tag-content,.LabelContainer div,.LabelContainer a,.KfeCollection-OrdinaryLabel-newStyle-mobile .KfeCollection-OrdinaryLabel-content,.KfeCollection-OrdinaryLabel-newStyle-pc .KfeCollection-OrdinaryLabel-content,.KfeCollection-CreateSaltCard-button,.KfeCollection-PcCollegeCard-searchMore`;
-  var doHighlightOriginal = async (backgroundHighlightOriginal = "", themeDark, themeLight) => "background: " + (backgroundHighlightOriginal ? `${backgroundHighlightOriginal}!important;` : await isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "rgb(251,248,241)!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`);
   var createHTMLBackgroundSetting = (domMain) => {
     const radioBackground = (name, value, background, color, label, primary) => `<label class="ctz-background-item">${`<input class="${CLASS_INPUT_CLICK}" name="${name}" type="radio" value="${value}"/><div class="ctz-background-item-div" style="background: ${primary || background};color: ${color}"></div><div class="ctz-background-item-border"></div><div class="ctz-background-item-name">${label}</div>`}</label>`;
     const themeToRadio = (o, className, color) => Object.keys(o).map((key) => radioBackground(className, key, o[key].background, color, o[key].name, o[key].primary)).join("");
     dom(".ctz-set-background", domMain).innerHTML = `<div class="ctz-form-box-item">${`<div>主题</div><div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label, i.background)).join("")}</div>`}</div><div class="ctz-form-box-item">${`<div>浅色主题</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div>`}</div><div class="ctz-form-box-item">${`<div>深色主题</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`}</div>`;
   };
+  var doHighlightOriginal = async (backgroundHighlightOriginal = "", themeDark, themeLight) => "background: " + (backgroundHighlightOriginal ? `${backgroundHighlightOriginal}!important;` : await isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "rgb(251,248,241)!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`);
   var CONFIG_HIDDEN_DEFAULT = {
     hiddenAnswerRightFooter: true,
     hiddenReadMoreText: true,
@@ -535,20 +535,6 @@
       { label: "默认尺寸", value: "0" /* 默认尺寸 */ },
       { label: "自定义尺寸", value: "2" /* 自定义尺寸 */ }
     ]
-  };
-  var ICO_URL = {
-    zhihu: "https://static.zhihu.com/heifetz/favicon.ico",
-    github: "https://github.githubassets.com/pinned-octocat.svg",
-    juejin: "https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png",
-    csdn: "https://g.csdnimg.cn/static/logo/favicon32.ico",
-    bilibili: "https://www.bilibili.com/favicon.ico",
-    lanhu: "https://sso-cdn.lanhuapp.com/ssoweb/favicon.ico",
-    yuque: "https://mdn.alipayobjects.com/huamei_0prmtq/afts/img/A*vMxOQIh4KBMAAAAAAAAAAAAADvuFAQ/original",
-    mailQQ: "https://mail.qq.com/zh_CN/htmledition/images/favicon/qqmail_favicon_96h.png",
-    mail163: "https://mail.163.com/favicon.ico",
-    weibo: "https://weibo.com/favicon.ico",
-    qzone: "https://qzonestyle.gtimg.cn/aoi/img/logo/favicon.ico?max_age=31536000",
-    baidu: "https://www.baidu.com/favicon.ico"
   };
   var myStorage = {
     set: async function(name, value) {
@@ -3396,12 +3382,36 @@
       });
     }
   };
+  var myCachePageTitle = {
+    value: "",
+    set: function(v = "") {
+      this.value = v;
+    },
+    get: function() {
+      return this.value;
+    }
+  };
+  var ICO_URL = {
+    zhihu: "https://static.zhihu.com/heifetz/favicon.ico",
+    github: "https://github.githubassets.com/pinned-octocat.svg",
+    juejin: "https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web//static/favicons/favicon-32x32.png",
+    csdn: "https://g.csdnimg.cn/static/logo/favicon32.ico",
+    bilibili: "https://www.bilibili.com/favicon.ico",
+    lanhu: "https://sso-cdn.lanhuapp.com/ssoweb/favicon.ico",
+    yuque: "https://mdn.alipayobjects.com/huamei_0prmtq/afts/img/A*vMxOQIh4KBMAAAAAAAAAAAAADvuFAQ/original",
+    mailQQ: "https://mail.qq.com/zh_CN/htmledition/images/favicon/qqmail_favicon_96h.png",
+    mail163: "https://mail.163.com/favicon.ico",
+    weibo: "https://weibo.com/favicon.ico",
+    qzone: "https://qzonestyle.gtimg.cn/aoi/img/logo/favicon.ico?max_age=31536000",
+    baidu: "https://www.baidu.com/favicon.ico"
+  };
+  var createHTMLTitleICOChange = (nDomMain) => {
+    dom("#CTZ_TITLE_ICO", nDomMain).innerHTML = Object.entries(ICO_URL).map(([key, value]) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${value}" alt="${key}"></label>`).join("");
+  };
   var REGEXP_MESSAGE = /^\([^()]+\)/;
   var changeTitle = async () => {
-    const { getStorageConfigItem } = store;
     const { globalTitle, globalTitleRemoveMessage } = await myStorage.getConfig();
-    const cacheTitle = getStorageConfigItem("cacheTitle");
-    let prevTitle = globalTitle || cacheTitle;
+    let prevTitle = globalTitle || myCachePageTitle.get();
     if (globalTitleRemoveMessage) {
       if (REGEXP_MESSAGE.test(prevTitle)) {
         prevTitle = prevTitle.replace(REGEXP_MESSAGE, "").trim();
@@ -3425,6 +3435,19 @@
         rel: "icon"
       })
     );
+  };
+  var buttonConfirmPageTitle = async () => {
+    const nodeTitle = dom('[name="globalTitle"]');
+    await myStorage.updateConfigItem("globalTitle", nodeTitle ? nodeTitle.value : "");
+    changeTitle();
+    message("网页标题修改成功");
+  };
+  var buttonResetPageTitle = async () => {
+    const domGlobalTitle = dom('[name="globalTitle"]');
+    domGlobalTitle && (domGlobalTitle.value = myCachePageTitle.get());
+    await myStorage.updateConfigItem("globalTitle", "");
+    changeTitle();
+    message("网页标题已还原");
   };
   var Store2 = class {
     constructor() {
@@ -3971,7 +3994,6 @@
   var initHTML = () => {
     const nDomMain = domC("div", { id: "CTZ_MAIN", innerHTML: INNER_HTML });
     dom(".ctz-version", nDomMain).innerText = GM_info.script.version;
-    dom("#CTZ_TITLE_ICO", nDomMain).innerHTML = Object.keys(ICO_URL).map((key) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${ICO_URL[key]}" alt="${key}"></label>`).join("");
     dom("#CTZ_DEFAULT_SELF", nDomMain).innerHTML = DEFAULT_FUNCTION.map(
       ({ title, commit }) => `<div class="ctz-form-box-item ctz-form-box-item-vertical">${`<div>${title}</div><div style="font-size: 12px;color:#999;">${commit || ""}</div>`}</div>`
     ).join("");
@@ -3986,6 +4008,7 @@
     });
     initFetchInterceptStatus(nDomMain);
     initMenu(nDomMain);
+    createHTMLTitleICOChange(nDomMain);
     createHTMLSizeSetting(nDomMain);
     createHTMLBackgroundSetting(nDomMain);
     createHTMLHiddenConfig(nDomMain);
@@ -4254,21 +4277,9 @@
       myCustomStyle.change(value);
     },
     syncBlack: () => syncBlackList(0),
-    syncBlackRemove: () => syncRemoveBlockedUsers(),
-    buttonConfirmTitle: async function() {
-      const nodeTitle = dom('[name="globalTitle"]');
-      await myStorage.updateConfigItem("globalTitle", nodeTitle ? nodeTitle.value : "");
-      changeTitle();
-      message("网页标题修改成功");
-    },
-    buttonResetTitle: async function() {
-      const { getStorageConfigItem } = store;
-      const nodeTitle = dom('[name="globalTitle"]');
-      nodeTitle && (nodeTitle.value = getStorageConfigItem("cacheTitle"));
-      await myStorage.updateConfigItem("globalTitle", "");
-      changeTitle();
-      message("网页标题已还原");
-    },
+    syncBlackRemove: syncRemoveBlockedUsers,
+    buttonConfirmTitle: buttonConfirmPageTitle,
+    buttonResetTitle: buttonResetPageTitle,
     configImport: () => {
       dom("#IMPORT_BY_FILE input").click();
     },
@@ -4421,7 +4432,7 @@
         const { removeTopAD } = await myStorage.getConfig();
         initHTML();
         initOperate();
-        setStorageConfigItem("cacheTitle", document.title);
+        myCachePageTitle.set(document.title);
         echoData();
         changeICO();
         changeTitle();

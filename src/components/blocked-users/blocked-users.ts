@@ -1,7 +1,7 @@
 import { myStorage } from '../../commons/storage';
 import { dom, domA, domById, domC, fnDomReplace } from '../../commons/tools';
 import { store } from '../../store';
-import { blackItemContent, ID_BLOCK_LIST, initHTMLBlockedUsers } from './init-html';
+import { blackItemContent, ID_BLOCK_LIST, initHTMLBlockedUsers } from './create-html';
 import { IBlockedUser } from './types';
 
 /** 同步黑名单 */

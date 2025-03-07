@@ -18,7 +18,7 @@ import { myListenSearchListItem } from './components/listen-search-list-item';
 import { initOneClickInvitation } from './components/one-click-invitation';
 import { closeExtra, openChange } from './components/open';
 import { myPageFilterSetting } from './components/page-filter-setting';
-import { changeICO, changeTitle } from './components/page-title';
+import { changeICO, changeTitle, myCachePageTitle } from './components/page-title';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';
 import { changeSuspensionTab, initCacheHeader, suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
@@ -157,7 +157,7 @@ import { INNER_CSS } from './web-resources';
       const { removeTopAD } = await myStorage.getConfig();
       initHTML();
       initOperate();
-      setStorageConfigItem('cacheTitle', document.title);
+      myCachePageTitle.set(document.title)
       // 以下设置都在 initHTML 之后执行
       echoData();
       changeICO();

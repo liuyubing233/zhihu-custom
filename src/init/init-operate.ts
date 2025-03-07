@@ -1,17 +1,16 @@
 import { myStorage } from '../commons/storage';
-import { dom, domA, domById, domC, message } from '../commons/tools';
+import { dom, domA, domById, domC } from '../commons/tools';
 import { syncBlackList, syncRemoveBlockedUsers } from '../components/blocked-users';
 import { myCustomStyle } from '../components/custom-style';
 import { fnChanger } from '../components/fn-changer';
 import { echoHistory } from '../components/history';
 import { onChangeMenu } from '../components/menu';
 import { openChange } from '../components/open';
-import { changeTitle } from '../components/page-title';
+import { buttonConfirmPageTitle, buttonResetPageTitle } from '../components/page-title';
 import { myPreview } from '../components/preview';
 import { moveAndOpen } from '../components/suspension/move';
 import { formatTime } from '../components/time';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT, CONFIG_DEFAULT, CONFIG_SIMPLE } from '../configs';
-import { store } from '../store';
 import { IKeyofHistory } from '../types';
 import { initRootEvent } from './init-top-event-listener';
 
@@ -118,23 +117,11 @@ const myButtonOperation: Record<string, Function> = {
   // 同步黑名单
   syncBlack: () => syncBlackList(0),
   // 清空黑名单列表
-  syncBlackRemove: () => syncRemoveBlockedUsers(),
-  /** 确认更改网页标题 */
-  buttonConfirmTitle: async function () {
-    const nodeTitle = dom('[name="globalTitle"]') as HTMLInputElement;
-    await myStorage.updateConfigItem('globalTitle', nodeTitle ? nodeTitle.value : '');
-    changeTitle();
-    message('网页标题修改成功');
-  },
-  /** 还原网页标题 */
-  buttonResetTitle: async function () {
-    const { getStorageConfigItem } = store;
-    const nodeTitle = dom('[name="globalTitle"]') as HTMLInputElement;
-    nodeTitle && (nodeTitle.value = getStorageConfigItem('cacheTitle') as string);
-    await myStorage.updateConfigItem('globalTitle', '');
-    changeTitle();
-    message('网页标题已还原');
-  },
+  syncBlackRemove: syncRemoveBlockedUsers,
+  // 确认更改网页标题
+  buttonConfirmTitle: buttonConfirmPageTitle,
+  // 还原网页标题
+  buttonResetTitle: buttonResetPageTitle,
   // 导入配置
   configImport: () => {
     dom('#IMPORT_BY_FILE input')!.click();

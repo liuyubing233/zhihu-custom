@@ -1,3 +1,5 @@
+import { dom } from '../../commons/tools';
+
 /** 网页标题图片集合 */
 export const ICO_URL: Record<string, string> = {
   zhihu: 'https://static.zhihu.com/heifetz/favicon.ico',
@@ -12,4 +14,11 @@ export const ICO_URL: Record<string, string> = {
   weibo: 'https://weibo.com/favicon.ico',
   qzone: 'https://qzonestyle.gtimg.cn/aoi/img/logo/favicon.ico?max_age=31536000',
   baidu: 'https://www.baidu.com/favicon.ico',
+};
+
+/** 添加修改网页图标设置 */
+export const createHTMLTitleICOChange = (nDomMain: HTMLElement) => {
+  dom('#CTZ_TITLE_ICO', nDomMain)!.innerHTML = Object.entries(ICO_URL)
+    .map(([key, value]) => `<label><input class="ctz-i" name="titleIco" type="radio" value="${key}" /><img src="${value}" alt="${key}"></label>`)
+    .join('');
 };

@@ -2,7 +2,7 @@ import { myStorage } from '../../commons/storage';
 import { domC, fnReturnStr } from '../../commons/tools';
 import { IZhihuCardContent } from '../../types/zhihu/zhihu.type';
 import { addBlockUser, removeBlockUser } from './blocked-users';
-import { CLASS_BLACK_TAG } from './init-html';
+import { CLASS_BLACK_TAG } from './create-html';
 import { IBlockedUser } from './types';
 
 /** class：黑名单模块盒子 */

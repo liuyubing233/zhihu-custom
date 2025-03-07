@@ -1,13 +1,21 @@
 import { myStorage } from '../commons/storage';
 import { IBlockedUser } from '../components/blocked-users';
-import { IContentStorageConfig, IKeyofStorageConfig, IRecommendRemoved, IStorageConfig } from '../types';
+import { IContentStorageConfig, IKeyofStorageConfig, IStorageConfig } from '../types';
 import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
 import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';
 import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
 
+/** 回答需要移除的ID和移除信息 */
+interface IRecommendRemoved {
+  id: string;
+  message: string;
+}
+
 class Store {
   /** 用户信息 更改prev: userInfo */
   userinfo: IZhihuUserinfo | undefined = undefined;
+  /** 缓存的页面 */
+  // cachePageTitle = '';
 
   /** 脚本内配置缓存 */
   storageConfig: IStorageConfig = {

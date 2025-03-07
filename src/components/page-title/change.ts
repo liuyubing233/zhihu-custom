@@ -1,17 +1,14 @@
-import { myStorage } from '../commons/storage';
-import { dom, domById, domC } from '../commons/tools';
-import { ICO_URL } from '../configs';
-import { store } from '../store';
+import { myStorage } from '../../commons/storage';
+import { dom, domById, domC } from '../../commons/tools';
+import { myCachePageTitle } from './cache';
+import { ICO_URL } from './create-html';
 
 const REGEXP_MESSAGE = /^\([^()]+\)/;
 
 /** 修改网页标题 */
 export const changeTitle = async () => {
-  const { getStorageConfigItem } = store;
   const { globalTitle, globalTitleRemoveMessage } = await myStorage.getConfig();
-  const cacheTitle = getStorageConfigItem('cacheTitle') as string;
-  let prevTitle = globalTitle || cacheTitle;
-
+  let prevTitle = globalTitle || myCachePageTitle.get();
   if (globalTitleRemoveMessage) {
     if (REGEXP_MESSAGE.test(prevTitle)) {
       prevTitle = prevTitle.replace(REGEXP_MESSAGE, '').trim();
