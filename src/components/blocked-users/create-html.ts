@@ -13,6 +13,8 @@ const CLASS_REMOVE_BLOCKED_TAG = 'ctz-remove-blocked-tag';
 const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
 /** class: 编辑用户标签 */
 const CLASS_EDIT_USER_TAG = 'ctz-edit-user-tag';
+/** class: 修改标签名 */
+const CLASS_EDIT_TAG = 'ctz-edit-blocked-tag';
 
 /** id: 黑名单列表 */
 export const ID_BLOCK_LIST = 'CTA_BLOCKED_USERS';
@@ -27,39 +29,82 @@ export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
 
 /** 初始化黑名单标签 */
 const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
-  const config = await myStorage.getConfig();
+  const prevConfig = await myStorage.getConfig();
 
   // 初始化黑名单标签列表
   const nodeBlockedUsersTags = dom(`#${ID_BLOCKED_USERS_TAGS}`, domMain)!;
-  nodeBlockedUsersTags.innerHTML = (config.blockedUsersTags || [])
+  nodeBlockedUsersTags.innerHTML = (prevConfig.blockedUsersTags || [])
     .map(
       (i) =>
         `<span class="ctz-blocked-users-tag" data-info="${i}">${
-          i + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`
+          i + `<span class="${CLASS_EDIT_TAG}">✎</span>` + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`
         }</span>`
     )
     .join('');
   nodeBlockedUsersTags.onclick = async (event) => {
-    const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
+    const nConfig = await myStorage.getConfig();
+    const { blockedUsers = [], blockedUsersTags = [] } = nConfig;
     const target = event.target as HTMLElement;
-    if (!target || !target.classList.contains(CLASS_REMOVE_BLOCKED_TAG)) return;
-    const item = target.parentElement as HTMLElement;
-    const info = item.dataset.info || '';
-    const isUsed = blockedUsers.some((item) => {
-      if (item.tags && item.tags.length) {
-        return item.tags.some((i) => i === info);
-      }
-      return false;
-    });
 
-    if (isUsed) {
-      message('此标签有黑名单用户正在使用');
-      return;
+    // 删除标签
+    if (target.classList.contains(CLASS_REMOVE_BLOCKED_TAG)) {
+      const item = target.parentElement as HTMLElement;
+      const info = item.dataset.info || '';
+      const isUsed = blockedUsers.some((item) => {
+        if (item.tags && item.tags.length) {
+          return item.tags.some((i) => i === info);
+        }
+        return false;
+      });
+
+      if (isUsed) {
+        message('此标签有黑名单用户正在使用');
+        return;
+      }
+      item.remove();
+      const index = blockedUsersTags.findIndex((i) => i === info);
+      blockedUsersTags.splice(index, 1);
+      myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
     }
-    item.remove();
-    const index = blockedUsersTags.findIndex((i) => i === info);
-    blockedUsersTags.splice(index, 1);
-    myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
+
+    // 修改标签名
+    if (target.classList.contains(CLASS_EDIT_TAG)) {
+      const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
+      const item = target.parentElement as HTMLElement;
+      const info = item.dataset.info || '';
+      openExtra('changeBlockedUserTagName');
+
+      dom('[data-type="changeBlockedUserTagName"] .ctz-title')!.innerHTML = `修改标签名（原名称： ${info}）`;
+      (dom('[name="blocked-user-tag-name"]') as HTMLInputElement).value = info;
+
+      // 确认
+      dom('[name="confirm-change-blocked-user-tag-name"]')!.onclick = async function () {
+        const nInfo = (dom('[name="blocked-user-tag-name"]') as HTMLInputElement).value;
+        const indexTag = blockedUsersTags.findIndex((i) => i === info);
+        blockedUsersTags.splice(indexTag, 1, nInfo);
+        blockedUsers.forEach((item) => {
+          if (!item.tags) return;
+          const nIndex = (item.tags || []).findIndex((i) => i === info);
+          if (nIndex >= 0) {
+            item.tags.splice(indexTag, 1, nInfo);
+          }
+        });
+        await myStorage.updateConfig({
+          ...nConfig,
+          blockedUsersTags,
+          blockedUsers,
+        });
+
+        initHTMLBlockedUserTags(domMain);
+        initHTMLBlockedUsers(domMain);
+        closeExtra();
+      };
+
+      // 取消
+      dom('[name="cancel-change-blocked-user-tag-name"]')!.onclick = function () {
+        closeExtra();
+      };
+    }
   };
 
   dom('input[name="inputBlockedUsersTag"]', domMain)!.onchange = async (e) => {

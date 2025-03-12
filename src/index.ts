@@ -59,7 +59,7 @@ import { INNER_CSS } from './web-resources';
 
     let config = await myStorage.getConfig();
     if (!config || config.fetchInterceptStatus === undefined) {
-      fnLog('您好，欢迎使用本插件，第一次进入，初始化中...');
+      fnLog('欢迎使用，初始化中...');
       config = CONFIG_DEFAULT;
     } else {
       config = {

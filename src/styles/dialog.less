@@ -20,7 +20,10 @@
   z-index: 202;
   font-size: @fontSize;
   border: 1px solid @gray01;
+}
 
+#CTZ_DIALOG,
+#CTZ_EXTRA_OUTPUT_DIALOG {
   input[type='text'],
   input[type='number'],
   textarea {
@@ -284,8 +287,50 @@
   border-radius: 8px;
   overflow: hidden;
   min-width: 420px;
-  .ctz-button {
-    min-width: 68px;
+
+  .ctz-extra-footer {
+    text-align: right;
+    padding: 14px;
+    border-top: 1px solid @gray01;
+    button {
+      margin-left: 12px;
+    }
+  }
+
+  .ctz-title {
+    padding-left: 14px;
+    height: auto;
+  }
+
+  & > div {
+    padding-top: 4px;
+  }
+
+  .ctz-change-blocked-user-tag-name {
+    width: 420px;
+    padding: 0 14px 14px;
+    input[name='blocked-user-tag-name'] {
+      width: 100%;
+    }
+  }
+
+  .ctz-choose-blocked-user-tags {
+    width: 600px;
+    padding: 6px 6px 6px 14px;
+    & > span {
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 6px;
+      margin: 0 8px 8px 0;
+      border: 1px solid @gray04;
+      padding: 0 8px;
+      .Hover();
+      &[data-choose='true'] {
+        color: @blue1;
+        border-color: @blue1;
+        background: @blue01;
+      }
+    }
   }
 }
 

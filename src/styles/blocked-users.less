@@ -86,42 +86,12 @@
   padding: 0 4px;
 }
 
-.ctz-edit-user-tag {
+.ctz-edit-user-tag,
+.ctz-edit-blocked-tag {
   display: inline-block;
   cursor: pointer;
   font-size: 14px;
   margin-left: 4px;
   .HoverText(@blue1);
   .Active();
-}
-
-[data-type='chooseBlockedUserTags'] {
-  padding-top: 4px;
-  .ctz-title {
-    padding-left: 14px;
-    height: auto;
-  }
-  .ctz-choose-blocked-user-tags {
-    width: 420px;
-    padding: 6px 6px 6px 14px;
-    & > span {
-      cursor: pointer;
-      display: inline-block;
-      border-radius: 6px;
-      margin: 0 8px 8px 0;
-      border: 1px solid @gray04;
-      padding: 0 8px;
-      .Hover();
-      &[data-choose='true'] {
-        color: @blue1;
-        border-color: @blue1;
-        background: @blue01;
-      }
-    }
-  }
-  .ctz-choose-blocked-user-tags-operate {
-    text-align: right;
-    padding: 14px;
-    border-top: 1px solid @gray01;
-  }
 }
