@@ -1,5 +1,5 @@
 import { createHTMLBackgroundSetting } from '../../components/background';
-import { createHTMLBlockedUsers } from '../../components/blocked-users';
+import { BLOCKED_USER_COMMON } from '../../components/blocked-users';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
 import { createHTMLHiddenConfig } from '../../components/hidden';
 import { initMenu } from '../../components/menu';
@@ -48,8 +48,9 @@ export const initHTML = () => {
   createHTMLSizeSetting(nDomMain);
   createHTMLBackgroundSetting(nDomMain);
   createHTMLHiddenConfig(nDomMain);
-  createHTMLBlockedUsers(nDomMain);
 
+  dom('#CTZ_BLACKLIST_COMMON', nDomMain)!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
+  // echoBlockedContent(nDomMain); // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容
   document.body.appendChild(nDomMain);
 };
 
