@@ -150,42 +150,51 @@ export const initHTMLBlockedUsers = async (domMain: HTMLElement) => {
 
     // 编辑用户标签
     if (target.classList.contains(CLASS_EDIT_USER_TAG)) {
-      openExtra('chooseBlockedUserTags');
-      const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
-      const currentTags = info.tags || [];
-
-      dom('[data-type="chooseBlockedUserTags"] .ctz-title')!.innerText = `设置标签：${info.name}`;
-
-      const boxTags = dom('.ctz-choose-blocked-user-tags')!;
-      boxTags.innerHTML = blockedUsersTags.map((i) => `<span data-type="blockedUserTag" data-name="${i}" data-choose="${currentTags.includes(i)}">${i}</span>`).join('');
-      boxTags.onclick = (event) => {
-        const target = event.target as HTMLElement;
-        if (target.dataset.type === 'blockedUserTag') {
-          target.dataset.choose = target.dataset.choose === 'true' ? 'false' : 'true';
-        }
-      };
-
-      dom('[name="choose-blocked-user-tags-finish"]')!.onclick = async () => {
-        const chooseTags: string[] = [...dom('.ctz-choose-blocked-user-tags')!.children]
-          .filter((i) => (i as HTMLElement).dataset.choose === 'true')
-          .map((i) => (i as HTMLElement).dataset.name!);
-
-        info.tags = chooseTags;
-        blockedUsers.forEach((item) => {
-          if (item.id === info.id) {
-            item.tags = chooseTags;
-          }
-        });
-
-        item.innerHTML = blackItemContent(info);
-        item.dataset.info = JSON.stringify(info);
-        await myStorage.updateConfigItem('blockedUsers', blockedUsers);
-        closeExtra();
-      };
+      chooseBlockedUserTags(item)
       return;
     }
   };
 };
+
+/**
+ * 编辑用户标签
+ * @param item 黑名单列表ITEM
+ */
+export const chooseBlockedUserTags = async (item: HTMLElement) => {
+  const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
+  openExtra('chooseBlockedUserTags');
+  const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
+  const currentTags = info.tags || [];
+
+  dom('[data-type="chooseBlockedUserTags"] .ctz-title')!.innerText = `选择用户标签：${info.name}`;
+
+  const boxTags = dom('.ctz-choose-blocked-user-tags')!;
+  boxTags.innerHTML = blockedUsersTags.map((i) => `<span data-type="blockedUserTag" data-name="${i}" data-choose="${currentTags.includes(i)}">${i}</span>`).join('');
+  boxTags.onclick = (event) => {
+    const target = event.target as HTMLElement;
+    if (target.dataset.type === 'blockedUserTag') {
+      target.dataset.choose = target.dataset.choose === 'true' ? 'false' : 'true';
+    }
+  };
+
+  dom('[name="choose-blocked-user-tags-finish"]')!.onclick = async () => {
+    const chooseTags: string[] = [...dom('.ctz-choose-blocked-user-tags')!.children]
+      .filter((i) => (i as HTMLElement).dataset.choose === 'true')
+      .map((i) => (i as HTMLElement).dataset.name!);
+
+    info.tags = chooseTags;
+    blockedUsers.forEach((i) => {
+      if (i.id === info.id) {
+        i.tags = chooseTags;
+      }
+    });
+
+    item.innerHTML = blackItemContent(info);
+    item.dataset.info = JSON.stringify(info);
+    await myStorage.updateConfigItem('blockedUsers', blockedUsers);
+    closeExtra();
+  };
+}
 
 /** 初始化黑名单设置，创建黑名单设置元素 */
 export const createHTMLBlockedUsers = (domMain: HTMLElement) => {

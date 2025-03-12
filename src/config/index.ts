@@ -235,6 +235,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   keyEscCloseCommentDialog: true,
   replaceZhidaToSearch: EReplaceZhidaToSearch.不替换,
   videoInAnswerArticle: EVideoInAnswerArticle.默认,
+  openTagChooseAfterBlockedUser: true,
 };
 
 /** 缓存的历史记录数量 */

@@ -1,6 +1,6 @@
 import { store } from '../../store';
 import { dom, domA, domById, domC, fnDomReplace, myStorage } from '../../tools';
-import { blackItemContent, ID_BLOCK_LIST, initHTMLBlockedUsers } from './create-html';
+import { blackItemContent, chooseBlockedUserTags, ID_BLOCK_LIST, initHTMLBlockedUsers } from './create-html';
 import { IBlockedUser } from './types';
 
 /** 同步黑名单 */
@@ -59,9 +59,9 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
       }),
       credentials: 'include',
     }).then(async () => {
-      const blockedUsers = (await myStorage.getConfig()).blockedUsers || [];
+      const { blockedUsers = [], openTagChooseAfterBlockedUser } = await myStorage.getConfig();
       blockedUsers.unshift(userInfo);
-      myStorage.updateConfigItem('blockedUsers', blockedUsers);
+      await myStorage.updateConfigItem('blockedUsers', blockedUsers);
       const nodeUserItem = domC('div', {
         className: `ctz-black-item ctz-black-id-${userInfo.id}`,
         innerHTML: blackItemContent(userInfo),
@@ -69,6 +69,9 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
       nodeUserItem.dataset.info = JSON.stringify(userInfo);
       const nodeUsers = domById(ID_BLOCK_LIST)!;
       nodeUsers.insertBefore(nodeUserItem, nodeUsers.children[0]);
+      if (openTagChooseAfterBlockedUser) {
+        chooseBlockedUserTags(nodeUserItem);
+      }
       resolve();
     });
   });
@@ -91,7 +94,7 @@ export const removeBlockUser = (info: IBlockedUser, needConfirm = true) => {
       }),
       credentials: 'include',
     }).then(async () => {
-      const blockedUsers = (await myStorage.getConfig()).blockedUsers || [];
+      const { blockedUsers = [] } = await myStorage.getConfig();
       const itemIndex = blockedUsers.findIndex((i) => i.id === info.id);
       if (itemIndex >= 0) {
         blockedUsers.splice(itemIndex, 1);

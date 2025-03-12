@@ -277,6 +277,8 @@ export interface IConfigFilter {
   showBlockUserTag?: boolean;
   /** 黑名单用户标识也显示标签分类 */
   showBlockUserTagType?: boolean;
+  /** 屏蔽用户后弹出标签选择 */
+  openTagChooseAfterBlockedUser?: boolean;
 }
 
 /** 悬浮模块默认配置 */
