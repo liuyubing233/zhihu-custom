@@ -61,7 +61,6 @@ class Store {
 
   async findRemoveRecommends(recommends: IZhihuRecommendItem[]) {
     const { removeAnonymousQuestion, removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
-    console.log('recommends', recommends);
     recommends.forEach((item) => {
       const target = item.target;
       if (!target) return;
@@ -111,7 +110,6 @@ class Store {
   }
 
   async findRemoveAnswers(answers: IZhihuAnswerTarget[]) {
-    console.log('answers', answers);
     const { removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
     answers.forEach((item) => {
       let message = '';

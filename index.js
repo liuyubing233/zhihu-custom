@@ -281,7 +281,6 @@
     }
     async findRemoveRecommends(recommends) {
       const { removeAnonymousQuestion, removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
-      console.log("recommends", recommends);
       recommends.forEach((item) => {
         const target = item.target;
         if (!target) return;
@@ -325,7 +324,6 @@
       return this.commendAuthors;
     }
     async findRemoveAnswers(answers) {
-      console.log("answers", answers);
       const { removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
       answers.forEach((item) => {
         let message2 = "";
@@ -2781,10 +2779,17 @@
       return originalPlay.apply(this, arguments);
     };
   };
-  var fnReplaceZhidaToSearch = async (domFind = document.body) => {
+  var fnReplaceZhidaToSearch = async (domFind = document.body, index = 0) => {
+    if (index === 10) return;
     const { replaceZhidaToSearch = "default" /* 不替换 */ } = await myStorage.getConfig();
     if (replaceZhidaToSearch === "default" /* 不替换 */) return;
     const domsZhida = domFind.querySelectorAll(".RichContent-EntityWord");
+    if (!domsZhida.length) {
+      setTimeout(() => {
+        fnReplaceZhidaToSearch(domFind, ++index);
+      }, 500);
+      return;
+    }
     for (let i = 0, len = domsZhida.length; i < len; i++) {
       const domItem = domsZhida[i];
       if (domItem.classList.contains(CLASS_LISTENED)) continue;
@@ -4536,7 +4541,8 @@
       });
     });
     window.addEventListener("keydown", async (event) => {
-      const { hotKey, keyEscCloseCommentDialog } = await myStorage.getConfig();
+      const config = await myStorage.getConfig();
+      const { hotKey, keyEscCloseCommentDialog } = config;
       if (hotKey) {
         if (event.key === ">" || event.key === "》") {
           openChange();
@@ -4549,6 +4555,12 @@
           openChange();
         }
         keyEscCloseCommentDialog && closeCommentDialog();
+      }
+      if (event.key === "o") {
+        const currentDom = document.activeElement;
+        if (currentDom && (currentDom.classList.contains("Card") || currentDom.classList.contains("List-item"))) {
+          doContentItem(config, !!currentDom.classList.contains("Card"), currentDom, true);
+        }
       }
       keydownNextImage(event);
     });

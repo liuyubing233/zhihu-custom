@@ -27,6 +27,7 @@ import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html/init-html';
 import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
+import { doContentItem } from './init/init-top-event-listener';
 import { needRedirect } from './init/redirect';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './misc';
 import { store } from './store';
@@ -80,7 +81,7 @@ import { INNER_CSS } from './web-resources';
     myBackground.init();
     mySize.init();
     checkThemeDarkOrLight();
-    changeVideoStyle()
+    changeVideoStyle();
 
     dom('html')!.classList.add(/www\.zhihu\.com\/column/.test(href) ? 'zhuanlan' : EXTRA_CLASS_HTML[hostname]);
 
@@ -251,13 +252,15 @@ import { INNER_CSS } from './web-resources';
   });
 
   window.addEventListener('keydown', async (event) => {
-    const { hotKey, keyEscCloseCommentDialog } = await myStorage.getConfig();
+    const config = await myStorage.getConfig();
+    const { hotKey, keyEscCloseCommentDialog } = config;
     if (hotKey) {
       // shift + . 唤醒关闭修改器弹窗
       if (event.key === '>' || event.key === '》') {
         openChange();
       }
     }
+
     // esc 关闭弹窗
     if (event.key === 'Escape') {
       if (domById(ID_EXTRA_DIALOG)!.dataset.status === 'open') {
@@ -267,6 +270,15 @@ import { INNER_CSS } from './web-resources';
       }
 
       keyEscCloseCommentDialog && closeCommentDialog();
+    }
+
+    if (event.key === 'o') {
+      // 是否是快捷键展开阅读全文
+      const currentDom = document.activeElement;
+      if (currentDom && (currentDom.classList.contains('Card') || currentDom.classList.contains('List-item'))) {
+        // .Card 为列表页面
+        doContentItem(config, !!currentDom.classList.contains('Card'), currentDom as HTMLElement, true)
+      }
     }
 
     keydownNextImage(event);

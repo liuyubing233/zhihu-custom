@@ -3,11 +3,19 @@ import { CLASS_LISTENED } from '../misc';
 import { myStorage } from '../tools';
 
 /** 替换知乎直达为搜索 */
-export const fnReplaceZhidaToSearch = async (domFind: HTMLElement = document.body) => {
+export const fnReplaceZhidaToSearch = async (domFind: HTMLElement = document.body, index = 0) => {
+  if (index === 10) return;
   const { replaceZhidaToSearch = EReplaceZhidaToSearch.不替换 } = await myStorage.getConfig();
   if (replaceZhidaToSearch === EReplaceZhidaToSearch.不替换) return;
 
   const domsZhida = domFind.querySelectorAll('.RichContent-EntityWord');
+
+  if (!domsZhida.length) {
+    setTimeout(() => {
+      fnReplaceZhidaToSearch(domFind, ++index);
+    }, 500);
+    return;
+  }
 
   for (let i = 0, len = domsZhida.length; i < len; i++) {
     const domItem = domsZhida[i] as HTMLAnchorElement;
