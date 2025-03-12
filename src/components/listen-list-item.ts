@@ -107,7 +107,7 @@ export const myListenListItem = {
 
       // 屏蔽用户的内容
       if (!message && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-        const findBlocked = blockedUsers.find((i) => i.urlToken === cardContent.author_member_hash_id);
+        const findBlocked = blockedUsers.find((i) => i.id === cardContent.author_member_hash_id);
         findBlocked && (message = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
       }
 

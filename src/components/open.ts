@@ -27,7 +27,7 @@ export const openChange = () => {
 };
 
 /** 打开额外的弹窗 */
-export const openExtra = (type: string) => {
+export const openExtra = (type: string, needCover = true) => {
   const extra = domById(ID_EXTRA_DIALOG)!;
   const extraCover = domById('CTZ_EXTRA_OUTPUT_COVER')!;
   const elementsTypes = extra.children;
@@ -36,7 +36,7 @@ export const openExtra = (type: string) => {
     item.style.display = item.dataset.type === type ? 'block' : 'none';
   }
   extra.style.display = 'block';
-  extraCover.style.display = 'block';
+  needCover && (extraCover.style.display = 'block');
   extra.dataset.status = 'open';
 };
 

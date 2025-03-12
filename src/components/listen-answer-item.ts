@@ -30,7 +30,6 @@ export const myListenAnswerItem = {
       blockedUsers,
       blockWordsAnswer = [],
       highPerformanceAnswer,
-      videoInAnswerArticle,
     } = config;
 
     doContentItem(config, false, dom('.QuestionAnswer-content'));
@@ -75,7 +74,7 @@ export const myListenAnswerItem = {
 
       // 屏蔽用户的回答
       if (!message && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-        const findBlocked = blockedUsers.find((i) => i.urlToken === dataCardContent.author_member_hash_id);
+        const findBlocked = blockedUsers.find((i) => i.id === dataCardContent.author_member_hash_id);
         findBlocked && (message = `已删除黑名单用户${findBlocked.name}的回答`);
       }
 

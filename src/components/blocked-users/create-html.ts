@@ -158,9 +158,9 @@ export const initHTMLBlockedUsers = async (domMain: HTMLElement) => {
  * 编辑用户标签
  * @param item 黑名单列表ITEM
  */
-export const chooseBlockedUserTags = async (item: HTMLElement) => {
+export const chooseBlockedUserTags = async (item: HTMLElement, needCover = true) => {
   const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
-  openExtra('chooseBlockedUserTags');
+  openExtra('chooseBlockedUserTags', needCover);
   const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
   const currentTags = info.tags || [];
 

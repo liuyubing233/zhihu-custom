@@ -70,7 +70,7 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
       const nodeUsers = domById(ID_BLOCK_LIST)!;
       nodeUsers.insertBefore(nodeUserItem, nodeUsers.children[0]);
       if (openTagChooseAfterBlockedUser) {
-        chooseBlockedUserTags(nodeUserItem);
+        chooseBlockedUserTags(nodeUserItem, false);
       }
       resolve();
     });
