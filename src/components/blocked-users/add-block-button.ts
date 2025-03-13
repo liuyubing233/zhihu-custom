@@ -12,14 +12,13 @@ export const CLASS_BTN_ADD_BLOCKED = 'ctz-block-add-blocked';
 export const CLASS_BTN_REMOVE_BLOCKED = 'ctz-block-remove-blocked';
 
 /** 添加「屏蔽用户」按钮*/
-export const answerAddBlockButton = async (event: HTMLElement) => {
-  const nodeUser = event.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;
+export const answerAddBlockButton = async (contentItem: HTMLElement) => {
+  const nodeUser = contentItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;
   if (!nodeUser || !nodeUser.offsetHeight) return;
   if (nodeUser.querySelector(`.${CLASS_BLOCK_USER_BOX}`)) return;
   const userUrl = (nodeUser.querySelector('meta[itemprop="url"]') as HTMLMetaElement).content;
   const userName = (nodeUser.querySelector('meta[itemprop="name"]') as HTMLMetaElement).content;
-  const nodeAnswerItem = event.querySelector('.AnswerItem');
-  const mo = nodeAnswerItem ? nodeAnswerItem.getAttribute('data-za-extra-module') || '{}' : '{}';
+  const mo =  contentItem.getAttribute('data-za-extra-module') || '{}'
   if (!JSON.parse(mo).card) return;
   const aContent: IZhihuCardContent = JSON.parse(mo).card.content;
   const userId = aContent.author_member_hash_id || '';

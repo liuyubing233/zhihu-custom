@@ -1,6 +1,16 @@
 import { ETheme, EThemeDark, EThemeLight } from '../components/background';
 import { IBlockedUser } from '../components/blocked-users';
-import { EAnswerOpen, ELinkShopping, EReplaceZhidaToSearch, ESuspensionOpen, EVideoInAnswerArticle, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../init/init-html/configs';
+import {
+  EAnswerOpen,
+  EHomeContentOpen,
+  ELinkShopping,
+  EReplaceZhidaToSearch,
+  ESuspensionOpen,
+  EVideoInAnswerArticle,
+  EZoomImageHeight,
+  EZoomImageType,
+  EZoomListVideoType,
+} from '../init/init-html/configs';
 
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {
@@ -471,7 +481,9 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 收藏夹宽度百分比 */
   versionCollectionPercent?: string;
   /** 回答和文章中的视频显示方式 */
-  videoInAnswerArticle?: EVideoInAnswerArticle
+  videoInAnswerArticle?: EVideoInAnswerArticle;
+  /** 用户主页 - 动态、回答、文章收起/展开状态 */
+  homeContentOpen?: EHomeContentOpen;
 }
 
 /** 缓存浏览历史记录 */

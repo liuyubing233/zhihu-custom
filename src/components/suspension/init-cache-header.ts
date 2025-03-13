@@ -14,6 +14,7 @@ export const initCacheHeader = () => {
 
 /** 查找缓存顶部元素 */
 const cacheSuspension = (name: IHeaderName, classname: string, index = 0) => {
+  console.log(index, name);
   const { setHeaderCache, getHeaderCache, setHeaderFound } = storeSuspension;
   const prevDom = getHeaderCache(name);
 

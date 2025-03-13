@@ -1,6 +1,7 @@
 import { ETheme, EThemeDark, EThemeLight } from '../components/background';
 import {
   EAnswerOpen,
+  EHomeContentOpen,
   ELinkShopping,
   EReplaceZhidaToSearch,
   ESuspensionOpen,
@@ -143,7 +144,7 @@ export const CONFIG_SIMPLE: IPfConfig = {
   suspensionUserPo: 'right: 60px; top: 100px;',
   suspensionUserFixed: true,
   suspensionPickUp: true,
-  answerOpen: EAnswerOpen.默认收起长回答,
+  answerOpen: EAnswerOpen.收起长回答,
   showBlockUser: false,
   zoomImageType: EZoomImageType.自定义尺寸,
   zoomImageSize: '200',
@@ -236,6 +237,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   replaceZhidaToSearch: EReplaceZhidaToSearch.不替换,
   videoInAnswerArticle: EVideoInAnswerArticle.默认,
   openTagChooseAfterBlockedUser: true,
+  homeContentOpen: EHomeContentOpen.默认,
 };
 
 /** 缓存的历史记录数量 */

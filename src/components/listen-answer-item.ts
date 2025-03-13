@@ -32,7 +32,10 @@ export const myListenAnswerItem = {
       highPerformanceAnswer,
     } = config;
 
-    doContentItem(config, false, dom('.QuestionAnswer-content'));
+    const questionAnswerContent = dom('.QuestionAnswer-content');
+    if (questionAnswerContent) {
+      doContentItem('QUESTION', questionAnswerContent.querySelector('.ContentItem') as HTMLElement);
+    }
     for (let i = 0, len = nodes.length; i < len; i++) {
       let message = '';
       const nodeItem = nodes[i];
@@ -107,7 +110,7 @@ export const myListenAnswerItem = {
         // 最后信息 & 起点位置处理
         fnHidden(nodeItem, message);
       } else {
-        doContentItem(config, false, nodeItem);
+        doContentItem('QUESTION', nodeItemContent as HTMLElement);
         fnJustNum(nodeItem);
         // 自动展开回答 和 默认收起长回答
         if (answerOpen !== EAnswerOpen.默认) {
@@ -119,7 +122,7 @@ export const myListenAnswerItem = {
           }
           const isF = buttonFold && nodeItem.offsetHeight > 939;
           const isFC = buttonUnfold; // 已经收起的回答
-          if (answerOpen === EAnswerOpen.默认收起长回答 && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
+          if (answerOpen === EAnswerOpen.收起长回答 && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
             nodeItem.classList.add(OB_CLASS_FOLD.off);
             isF && buttonFold && buttonFold.click();
           }

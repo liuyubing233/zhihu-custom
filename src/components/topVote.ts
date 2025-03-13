@@ -1,10 +1,9 @@
 import { domC, myStorage } from "../tools";
 
 /** 内容顶部显示赞同数 nodeItem className: ContentItem-meta */
-export const updateTopVote = async (nodeItem?: HTMLElement) => {
-  if (!nodeItem) return;
-  const nodeItemMeta = nodeItem.querySelector('.ContentItem-meta');
-  const nodeVote = nodeItem.querySelector('[itemprop="upvoteCount"]') as HTMLMetaElement;
+export const updateTopVote = async (contentItem: HTMLElement) => {
+  const nodeItemMeta = contentItem.querySelector('.ContentItem-meta');
+  const nodeVote = contentItem.querySelector('[itemprop="upvoteCount"]') as HTMLMetaElement;
   const { topVote } = await myStorage.getConfig()
   if (!nodeVote || !topVote || !nodeItemMeta) return;
   const vote = nodeVote.content;
@@ -22,7 +21,7 @@ export const updateTopVote = async (nodeItem?: HTMLElement) => {
     });
     nodeItemMeta.appendChild(domVote);
     const metaObserver = new MutationObserver(() => {
-      updateTopVote(nodeItem);
+      updateTopVote(contentItem);
     });
     metaObserver.observe(nodeVote, {
       attributes: true,

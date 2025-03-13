@@ -1,4 +1,5 @@
 import { checkThemeDarkOrLight, myBackground } from './components/background';
+import { topBlockUser } from './components/blocked-users';
 import { initBlockedWords } from './components/blocked-words';
 import { myCtzTypeOperation } from './components/ctz-type-operate';
 import { myCustomStyle } from './components/custom-style';
@@ -19,7 +20,7 @@ import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticle
 import { mySize } from './components/size';
 import { changeSuspensionTab, initCacheHeader, suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
-import { topBlockUser, userHomeAnswers } from './components/user-home-content';
+import { myListenUserHomeList } from './components/user-home';
 import { changeVideoStyle, fixVideoAutoPlay, initVideoDownload } from './components/video';
 import { fnReplaceZhidaToSearch } from './components/zhida-to-search';
 import { CONFIG_DEFAULT } from './config';
@@ -27,7 +28,7 @@ import { initHistoryView } from './init/init-history-view';
 import { appendHomeLink, initHTML } from './init/init-html/init-html';
 import { initResizeObserver } from './init/init-observer-resize';
 import { initOperate } from './init/init-operate';
-import { doContentItem } from './init/init-top-event-listener';
+import { doReadMore } from './init/init-top-event-listener';
 import { needRedirect } from './init/redirect';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './misc';
 import { store } from './store';
@@ -206,13 +207,12 @@ import { INNER_CSS } from './web-resources';
       following: () => myFollowRemove.init(),
       answers: () => {
         throttle(printPeopleAnswer)();
-        userHomeAnswers();
       },
       posts: () => {
         throttle(printPeopleArticles)();
-        userHomeAnswers();
       },
       people: topBlockUser,
+      org: topBlockUser,
     });
   };
 
@@ -223,6 +223,7 @@ import { INNER_CSS } from './web-resources';
     myListenListItem.reset();
     myListenSearchListItem.reset();
     myListenAnswerItem.reset();
+    myListenUserHomeList.reset();
   };
   /** history 变化 */
   window.addEventListener('popstate', throttle(changeHistory));
@@ -275,10 +276,7 @@ import { INNER_CSS } from './web-resources';
     if (event.key === 'o') {
       // 是否是快捷键展开阅读全文
       const currentDom = document.activeElement;
-      if (currentDom && (currentDom.classList.contains('Card') || currentDom.classList.contains('List-item'))) {
-        // .Card 为列表页面
-        doContentItem(config, !!currentDom.classList.contains('Card'), currentDom as HTMLElement, true)
-      }
+      currentDom && doReadMore(currentDom as HTMLElement);
     }
 
     keydownNextImage(event);

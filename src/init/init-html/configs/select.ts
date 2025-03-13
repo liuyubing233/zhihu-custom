@@ -21,7 +21,7 @@ export enum ELinkShopping {
 export enum EAnswerOpen {
   默认 = 'default',
   自动展开所有回答 = 'on',
-  默认收起长回答 = 'off',
+  收起长回答 = 'off',
 }
 
 /** 枚举: 修改器弹出图标 ⚙︎ 定位方式 */
@@ -56,6 +56,11 @@ export enum EVideoInAnswerArticle {
   隐藏视频 = '2',
 }
 
+export enum EHomeContentOpen {
+  默认 = '0',
+  自动展开内容 = '1',
+}
+
 /** select 选择框 */
 export const OPTIONS_MAP: Record<string, IOptionItem[]> = {
   // 替换知乎直达为搜索
@@ -76,8 +81,8 @@ export const OPTIONS_MAP: Record<string, IOptionItem[]> = {
   // 回答内容收起/展开状态
   answerOpen: [
     { label: '默认', value: EAnswerOpen.默认 },
+    { label: '收起长回答', value: EAnswerOpen.收起长回答 },
     { label: '自动展开所有回答', value: EAnswerOpen.自动展开所有回答 },
-    { label: '默认收起长回答', value: EAnswerOpen.默认收起长回答 },
   ],
   // 修改器弹出图标 ⚙︎ 定位方式
   suspensionOpen: [
@@ -106,12 +111,18 @@ export const OPTIONS_MAP: Record<string, IOptionItem[]> = {
     { label: '修改为链接', value: EVideoInAnswerArticle.修改为链接 },
     { label: '隐藏视频/过滤视频回答', value: EVideoInAnswerArticle.隐藏视频 },
   ],
+  // 用户主页 - 动态、回答、文章收起/展开状态
+  homeContentOpen: [
+    { label: '默认', value: EHomeContentOpen.默认 },
+    { label: '自动展开内容', value: EHomeContentOpen.自动展开内容 },
+  ],
 };
 
 /** 显示修改部分的 select 选择 */
 export const SELECT_BASIS_SHOW: IOptionItem[] = [
   { label: '购物链接显示方式', value: 'linkShopping' },
-  { label: '回答内容收起/展开状态', value: 'answerOpen' },
   { label: '替换<span class="ctz-zhida">知乎直达<span>✦</span></span>为搜索', value: 'replaceZhidaToSearch' },
   { label: '回答和文章中的视频显示方式', value: 'videoInAnswerArticle' },
+  { label: '问题页面 - 回答收起/展开状态', value: 'answerOpen' },
+  { label: '用户主页 - 内容收起/展开状态', value: 'homeContentOpen' },
 ];

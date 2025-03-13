@@ -133,40 +133,40 @@ export const myCollectionExport = {
 };
 
 /** 导出当前回答 */
-export const printAnswer = (e: HTMLElement) => {
-  const prevButton = e.querySelector('.ctz-answer-print');
+export const printAnswer = (contentItem: HTMLElement) => {
+  const prevButton = contentItem.querySelector('.ctz-answer-print');
   if (prevButton) return;
-  const nodeUser = e.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
+  const nodeUser = contentItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
   const nButton = createButtonFontSize12('导出回答', 'ctz-answer-print');
   nButton.onclick = function () {
-    const nodeUser = e.querySelector('.AuthorInfo-name .UserLink-link');
-    const nodeContent = e.querySelector('.RichContent-inner');
-    const innerHTML = `<h1>${JSON.parse(e.querySelector('.AnswerItem')!.getAttribute('data-zop') || '{}').title}</h1>${nodeUser!.outerHTML + nodeContent!.innerHTML}`;
+    const nodeUser = contentItem.querySelector('.AuthorInfo-name .UserLink-link');
+    const nodeContent = contentItem.querySelector('.RichContent-inner');
+    const innerHTML = `<h1>${JSON.parse(contentItem.querySelector('.AnswerItem')!.getAttribute('data-zop') || '{}').title}</h1>${nodeUser!.outerHTML + nodeContent!.innerHTML}`;
     loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出回答');
   };
   nodeUser.appendChild(nButton);
 };
 
 /** 导出当前文章 */
-export const printArticle = async (e: HTMLElement) => {
+export const printArticle = async (contentItem: HTMLElement) => {
   const { topExportContent } = await myStorage.getConfig();
-  const prevButton = e.querySelector('.ctz-article-print');
+  const prevButton = contentItem.querySelector('.ctz-article-print');
   if (prevButton || !topExportContent) return;
-  const nodeHeader = e.querySelector('.ArticleItem-authorInfo') || e.querySelector('.Post-Header .Post-Title');
+  const nodeHeader = contentItem.querySelector('.ArticleItem-authorInfo') || contentItem.querySelector('.Post-Header .Post-Title');
   if (!nodeHeader) return;
   const nButton = createButtonFontSize12('导出文章', 'ctz-article-print', { style: 'margin: 12px 0;' });
   nButton.onclick = function () {
-    const nodeTitle = e.querySelector('.ContentItem.ArticleItem .ContentItem-title>span') || e.querySelector('.Post-Header .Post-Title');
-    const nodeUser = e.querySelector('.AuthorInfo-name');
-    const nodeContent = e.querySelector('.RichContent-inner') || e.querySelector('.Post-RichTextContainer');
+    const nodeTitle = contentItem.querySelector('.ContentItem-title>span') || contentItem.querySelector('.Post-Header .Post-Title');
+    const nodeUser = contentItem.querySelector('.AuthorInfo-name');
+    const nodeContent = contentItem.querySelector('.RichContent-inner') || contentItem.querySelector('.Post-RichTextContainer');
     const innerHTML = `<h1>${nodeTitle!.innerHTML}</h1>${nodeUser!.innerHTML + nodeContent!.innerHTML}`;
     loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出文章');
   };
   insertAfter(nButton, nodeHeader);
   setTimeout(() => {
     // 是为了解决页面内容被刷新的掉的问题
-    printArticle(e);
+    printArticle(contentItem);
   }, 500);
 };
 

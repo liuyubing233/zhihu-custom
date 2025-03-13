@@ -28,16 +28,16 @@ export const initLinkChanger = () => {
 
 const CLASS_COPY_LINK = 'ctz-copy-answer-link';
 /** 回答内容意见分享 */
-export const addAnswerCopyLink = async (nodeItem: HTMLElement) => {
+export const addAnswerCopyLink = async (contentItem: HTMLElement) => {
   const { copyAnswerLink } = await myStorage.getConfig();
   if (!copyAnswerLink) return;
-  const prevButton = nodeItem.querySelector(`.${CLASS_COPY_LINK}`);
+  const prevButton = contentItem.querySelector(`.${CLASS_COPY_LINK}`);
   prevButton && prevButton.remove();
-  const nodeUser = nodeItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
+  const nodeUser = contentItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
   const nDomButton = createButtonFontSize12('获取回答链接', CLASS_COPY_LINK);
   nDomButton.onclick = function () {
-    const metaUrl = nodeItem.querySelector('.ContentItem>[itemprop="url"]');
+    const metaUrl = contentItem.querySelector('[itemprop="url"]');
     if (!metaUrl) return;
     const link = metaUrl.getAttribute('content') || '';
     if (link) {

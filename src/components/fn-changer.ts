@@ -9,6 +9,7 @@ import { changeICO, changeTitle } from './page-title';
 import { mySize } from './size';
 import { changeSuspensionTab, suspensionHeader, suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
+import { myListenUserHomeList } from './user-home';
 import { changeVideoStyle } from './video';
 
 /** 更改编辑器方法 */
@@ -98,6 +99,9 @@ export const fnChanger = async (ev: HTMLInputElement) => {
       changeVideoStyle();
       myListenListItem.restart();
       myListenAnswerItem.restart();
+    },
+    homeContentOpen: () => {
+      myListenUserHomeList.restart();
     },
   };
 
