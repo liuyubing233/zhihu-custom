@@ -1,6 +1,7 @@
 import { checkThemeDarkOrLight, myBackground } from './components/background';
 import { interceptResponseForBlocked, topBlockUser } from './components/blocked-users';
 import { initBlockedWords } from './components/blocked-words';
+import { canCopy, eventCopy } from './components/copy';
 import { myCtzTypeOperation } from './components/ctz-type-operate';
 import { myCustomStyle } from './components/custom-style';
 import { echoData } from './components/echo-data';
@@ -122,7 +123,7 @@ import { INNER_CSS } from './web-resources';
             const answerTargets = r.data.map((i: any) => formatDataToHump(i.target));
             findRemoveAnswers(answerTargets);
           });
-          interceptResponseForBlocked(res, opt)
+          interceptResponseForBlocked(res, opt);
 
           return res;
         });
@@ -143,7 +144,7 @@ import { INNER_CSS } from './web-resources';
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
       try {
         const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
-        setJsInitialData(JsData)
+        setJsInitialData(JsData);
         // 获取JS默认缓存的列表数据
         try {
           const prevRecommend = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;
@@ -258,6 +259,7 @@ import { INNER_CSS } from './web-resources';
     'scroll',
     throttle(() => {
       fnJustNumberInAction();
+      canCopy()
     })
   );
 
@@ -293,14 +295,6 @@ import { INNER_CSS } from './web-resources';
 
   // 复制代码块删除版权信息
   document.addEventListener('copy', function (event) {
-    // @ts-ignore window.clipboardData 是存在于IE中
-    let clipboardData = event.clipboardData || window.clipboardData;
-    if (!clipboardData) return;
-    const selection = window.getSelection();
-    let text = selection ? selection.toString() : '';
-    if (text) {
-      event.preventDefault();
-      clipboardData.setData('text/plain', text);
-    }
+    eventCopy(event)
   });
 })();

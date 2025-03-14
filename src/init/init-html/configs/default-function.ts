@@ -1,4 +1,3 @@
-
 /** 默认功能 */
 export const DEFAULT_FUNCTION = [
   {
@@ -38,5 +37,9 @@ export const DEFAULT_FUNCTION = [
   {
     title: '一键邀请',
     commit: '问题邀请用户添加一键邀请按钮，点击可邀请所有推荐用户',
+  },
+  {
+    title: '解除禁止转载的限制',
+    commit: '无视禁止转载提示强行复制',
   },
 ];

@@ -1,5 +1,4 @@
 export * from './browser';
-export * from './copy';
 export * from './do-window-resize';
 export * from './dom';
 export * from './fetch';

@@ -1,4 +1,5 @@
-import { copy, createButtonFontSize12, domA, message, myStorage } from '../tools';
+import { createButtonFontSize12, domA, message, myStorage } from '../tools';
+import { copy } from './copy';
 
 /** 知乎外链直接打开(修改外链内容，去除知乎重定向) */
 export const initLinkChanger = () => {

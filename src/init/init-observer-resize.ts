@@ -1,3 +1,4 @@
+import { canCopy } from '../components/copy';
 import { previewGIF } from '../components/image';
 import { fnJustNumberInAction } from '../components/just-number';
 import { initLinkChanger } from '../components/link';
@@ -39,10 +40,11 @@ async function resizeFun() {
   previewGIF();
   initImagePreview();
   doListenComment();
-  fnJustNumberInAction()
+  fnJustNumberInAction();
   myListenSearchListItem.init();
   myListenAnswerItem.init();
   myListenUserHomeList.init();
+  canCopy();
   pathnameHasFn({
     collection: () => myCollectionExport.init(),
   });
