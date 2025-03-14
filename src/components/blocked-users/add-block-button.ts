@@ -1,7 +1,7 @@
 import { domC, fnReturnStr, myStorage } from '../../tools';
 import { IZhihuCardContent } from '../../types/zhihu/zhihu.type';
-import { addBlockUser, removeBlockUser } from './blocked-users';
 import { CLASS_BLACK_TAG } from './create-html';
+import { addBlockUser, removeBlockUser } from './do-fetch';
 import { IBlockedUser } from './types';
 
 /** class：黑名单模块盒子 */

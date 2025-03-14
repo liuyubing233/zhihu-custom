@@ -1,9 +1,7 @@
 import { IBlockedUser } from '../components/blocked-users';
 import { EVideoInAnswerArticle } from '../init/init-html/configs';
 import { myStorage } from '../tools';
-import { IZhihuAnswerTarget } from '../types/zhihu/zhihu-answer.type';
-import { IZhihuRecommendItem } from '../types/zhihu/zhihu-recommend.type';
-import { IZhihuUserinfo } from '../types/zhihu/zhihu.type';
+import { IJsInitialData, IZhihuAnswerTarget, IZhihuRecommendItem, IZhihuUserinfo } from '../types/zhihu';
 
 /** 回答需要移除的ID和移除信息 */
 interface IRecommendRemoved {
@@ -26,6 +24,8 @@ class Store {
   userArticle: any[] = [];
   /** 回答内容过滤的项 */
   removeAnswers: IRecommendRemoved[] = [];
+  /** 页面初始化的数据，取自 document.getElementById('js-initialData') */
+  jsInitialData: IJsInitialData | undefined = undefined;
 
   constructor() {
     // fix this is undefined
@@ -43,6 +43,8 @@ class Store {
     this.getCommentAuthors = this.getCommentAuthors.bind(this);
     this.findRemoveAnswers = this.findRemoveAnswers.bind(this);
     this.getRemoveAnswers = this.getRemoveAnswers.bind(this);
+    this.setJsInitialData = this.setJsInitialData.bind(this);
+    this.getJsInitialData = this.getJsInitialData.bind(this);
   }
 
   setUserinfo(inner: IZhihuUserinfo) {
@@ -131,6 +133,13 @@ class Store {
   }
   getRemoveAnswers() {
     return this.removeAnswers;
+  }
+
+  setJsInitialData(data: IJsInitialData) {
+    this.jsInitialData = data;
+  }
+  getJsInitialData() {
+    return this.jsInitialData;
   }
 }
 

@@ -6,6 +6,7 @@ let blockObserver: MutationObserver | undefined;
 /** 用户主页置顶「屏蔽用户」按钮 */
 export const topBlockUser = async () => {
   const { userHomeTopBlockUser } = await myStorage.getConfig();
+  // const { getJsInitialData, getUserinfo } = store;
   const nodeUserHeaderOperate = dom('.ProfileHeader-contentFooter .MemberButtonGroup');
   const nodeFooterOperations = dom('.Profile-footerOperations');
   if (!nodeUserHeaderOperate || !userHomeTopBlockUser || !nodeFooterOperations) return;
@@ -30,7 +31,26 @@ export const topBlockUser = async () => {
   const domUnblock = nodeUserHeaderOperate.firstChild as HTMLButtonElement;
   const domBlock = nodeFooterOperations.firstChild as HTMLButtonElement;
   nDomButton.onclick = function () {
-    isBlocked ? domUnblock.click() : domBlock.click();
+    // const jsInitData = getJsInitialData();
+    // let userInfo: IBlockedUser | undefined = undefined;
+    // try {
+    //   const currentUserInfo = jsInitData!.initialState!.entities.users;
+    //   Object.entries(currentUserInfo).forEach(([key, value]) => {
+    //     if ((value as IJsInitialDataUsersAnSENI).name && location.pathname.includes(key)) {
+    //       const { id, name, urlToken } = value as IJsInitialDataUsersAnSENI;
+    //       userInfo = { id, name, urlToken };
+    //     }
+    //   });
+    // } catch {}
+
+    if (isBlocked) {
+      // 解除屏蔽
+      domUnblock.click();
+      // userInfo && removeItemAfterBlock(userInfo);
+    } else {
+      domBlock.click();
+      // userInfo && updateItemAfterBlock(userInfo);
+    }
   };
   nodeUserHeaderOperate.insertBefore(nDomButton, domUnblock);
   blockObserver && blockObserver.disconnect();

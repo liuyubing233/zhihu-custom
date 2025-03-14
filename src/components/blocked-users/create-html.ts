@@ -1,6 +1,6 @@
 import { dom, domById, domC, message, myStorage } from '../../tools';
 import { closeExtra, openExtra } from '../open';
-import { removeBlockUser } from './blocked-users';
+import { removeBlockUser } from './do-fetch';
 import { IBlockedUser } from './types';
 
 /** id：黑名单标签列表 */

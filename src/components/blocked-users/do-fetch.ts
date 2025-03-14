@@ -1,7 +1,8 @@
 import { store } from '../../store';
-import { dom, domA, domById, domC, fnDomReplace, myStorage } from '../../tools';
-import { blackItemContent, chooseBlockedUserTags, ID_BLOCK_LIST, initHTMLBlockedUsers } from './create-html';
+import { dom, domA, domById, fnDomReplace, myStorage } from '../../tools';
+import { ID_BLOCK_LIST, initHTMLBlockedUsers } from './create-html';
 import { IBlockedUser } from './types';
+import { removeItemAfterBlock, updateItemAfterBlock } from './update';
 
 /** 同步黑名单 */
 export function syncBlackList(offset = 0, l: IBlockedUser[] = []) {
@@ -59,19 +60,7 @@ export const addBlockUser = (userInfo: IBlockedUser) => {
       }),
       credentials: 'include',
     }).then(async () => {
-      const { blockedUsers = [], openTagChooseAfterBlockedUser } = await myStorage.getConfig();
-      blockedUsers.unshift(userInfo);
-      await myStorage.updateConfigItem('blockedUsers', blockedUsers);
-      const nodeUserItem = domC('div', {
-        className: `ctz-black-item ctz-black-id-${userInfo.id}`,
-        innerHTML: blackItemContent(userInfo),
-      });
-      nodeUserItem.dataset.info = JSON.stringify(userInfo);
-      const nodeUsers = domById(ID_BLOCK_LIST)!;
-      nodeUsers.insertBefore(nodeUserItem, nodeUsers.children[0]);
-      if (openTagChooseAfterBlockedUser) {
-        chooseBlockedUserTags(nodeUserItem, false);
-      }
+      await updateItemAfterBlock(userInfo);
       resolve();
     });
   });
@@ -94,14 +83,7 @@ export const removeBlockUser = (info: IBlockedUser, needConfirm = true) => {
       }),
       credentials: 'include',
     }).then(async () => {
-      const { blockedUsers = [] } = await myStorage.getConfig();
-      const itemIndex = blockedUsers.findIndex((i) => i.id === info.id);
-      if (itemIndex >= 0) {
-        blockedUsers.splice(itemIndex, 1);
-        const removeItem = dom(`.ctz-black-id-${id}`);
-        removeItem && removeItem.remove();
-        myStorage.updateConfigItem('blockedUsers', blockedUsers);
-      }
+      await removeItemAfterBlock(info);
       resolve();
     });
   });

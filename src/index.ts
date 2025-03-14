@@ -1,5 +1,5 @@
 import { checkThemeDarkOrLight, myBackground } from './components/background';
-import { topBlockUser } from './components/blocked-users';
+import { interceptResponseForBlocked, topBlockUser } from './components/blocked-users';
 import { initBlockedWords } from './components/blocked-words';
 import { myCtzTypeOperation } from './components/ctz-type-operate';
 import { myCustomStyle } from './components/custom-style';
@@ -46,7 +46,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href } = location;
-  const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers } = store;
+  const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers, setJsInitialData } = store;
 
   /** 在启动时注入的内容 */
   async function onDocumentStart() {
@@ -122,6 +122,7 @@ import { INNER_CSS } from './web-resources';
             const answerTargets = r.data.map((i: any) => formatDataToHump(i.target));
             findRemoveAnswers(answerTargets);
           });
+          interceptResponseForBlocked(res, opt)
 
           return res;
         });
@@ -142,6 +143,7 @@ import { INNER_CSS } from './web-resources';
     if (HTML_HOOTS.includes(hostname) && !window.frameElement) {
       try {
         const JsData = JSON.parse(domById('js-initialData') ? domById('js-initialData')!.innerText : '{}');
+        setJsInitialData(JsData)
         // 获取JS默认缓存的列表数据
         try {
           const prevRecommend = JsData.initialState.topstory.recommend.serverPayloadOrigin.data;

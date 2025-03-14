@@ -24,7 +24,7 @@ export const doFetchNotInterested = ({ id, type }: { id: string; type: string })
 };
 
 /** 拦截请求 */
-export const interceptionResponse = ( res: Response, pathRegexp: RegExp, fn: (r: any) => void) => {
+export const interceptionResponse = (res: Response, pathRegexp: RegExp, fn: (r: any) => void) => {
   if (pathRegexp.test(res.url)) {
     res
       .clone()
