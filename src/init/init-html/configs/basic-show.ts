@@ -18,8 +18,9 @@ export const BASIC_SHOW: ICommonContent[][] = [
     { label: '列表 - 「直达问题」按钮', value: 'listOutputToQuestion' },
   ],
   [
-    { label: '赞同按钮仅显示数字', value: 'justVoteNum' },
-    { label: '评论按钮仅显示数字', value: 'justCommitNum' },
+    // { label: '赞同按钮仅显示数字', value: 'justVoteNum' },
+    // { label: '评论按钮仅显示数字', value: 'justCommitNum' },
+    { label: '操作栏仅显示数字和图标', value: 'justNumberInAction' },
   ],
   [
     { label: '问题详情 - 回答顶部显示赞同人数', value: 'topVote' },

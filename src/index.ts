@@ -8,6 +8,7 @@ import { myFollowRemove } from './components/follow-remove';
 import { appendHiddenStyle } from './components/hidden';
 import { echoHistory } from './components/history';
 import { keydownNextImage } from './components/image';
+import { fnJustNumberInAction } from './components/just-number';
 import { myListenAnswerItem } from './components/listen-answer-item';
 import { closeCommentDialog, formatCommentAuthors } from './components/listen-comment';
 import { myListenListItem } from './components/listen-list-item';
@@ -32,7 +33,7 @@ import { doReadMore } from './init/init-top-event-listener';
 import { needRedirect } from './init/redirect';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './misc';
 import { store } from './store';
-import { dom, domById, fnAppendStyle, fnJustNum, fnLog, formatDataToHump, interceptionResponse, isSafari, mouseEventClick, myStorage, pathnameHasFn, throttle } from './tools';
+import { dom, domById, fnAppendStyle, fnLog, formatDataToHump, interceptionResponse, isSafari, mouseEventClick, myStorage, pathnameHasFn, throttle } from './tools';
 import { IZhihuAnswerTarget } from './types/zhihu/zhihu-answer.type';
 import { INNER_CSS } from './web-resources';
 
@@ -198,8 +199,6 @@ import { INNER_CSS } from './web-resources';
     pathnameHasFn({
       question: () => {
         addQuestionTime();
-        const nodeQuestionAnswer = dom('.QuestionAnswer-content');
-        nodeQuestionAnswer && fnJustNum(nodeQuestionAnswer);
         initOneClickInvitation();
       },
       filter: () => myPageFilterSetting.init(),
@@ -251,6 +250,14 @@ import { INNER_CSS } from './web-resources';
       },
     });
   });
+
+  // 监听页面滚动
+  window.addEventListener(
+    'scroll',
+    throttle(() => {
+      fnJustNumberInAction();
+    })
+  );
 
   window.addEventListener('keydown', async (event) => {
     const config = await myStorage.getConfig();

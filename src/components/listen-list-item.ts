@@ -1,6 +1,6 @@
 import { CLASS_LISTENED, CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
 import { store } from '../store';
-import { createButtonFontSize12, CTZ_HIDDEN_ITEM_CLASS, doFetchNotInterested, dom, domA, domP, fnHidden, fnJustNum, fnLog, myStorage } from '../tools';
+import { createButtonFontSize12, CTZ_HIDDEN_ITEM_CLASS, doFetchNotInterested, dom, domA, domP, fnHidden, fnLog, myStorage } from '../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
 import { doHighlightOriginal } from './background/highlight';
 import { EThemeDark, EThemeLight } from './background/types';
@@ -176,7 +176,6 @@ export const myListenListItem = {
           !historyList.includes(historyItem) && historyList.unshift(historyItem);
         }
       }
-      fnJustNum(nodeItem);
       if (i === len - 1) {
         myStorage.updateHistoryItem('list', historyList);
       }

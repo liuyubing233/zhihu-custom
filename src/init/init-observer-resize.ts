@@ -1,4 +1,5 @@
 import { previewGIF } from '../components/image';
+import { fnJustNumberInAction } from '../components/just-number';
 import { initLinkChanger } from '../components/link';
 import { myListenAnswerItem } from '../components/listen-answer-item';
 import { doListenComment } from '../components/listen-comment';
@@ -38,6 +39,7 @@ async function resizeFun() {
   previewGIF();
   initImagePreview();
   doListenComment();
+  fnJustNumberInAction()
   myListenSearchListItem.init();
   myListenAnswerItem.init();
   myListenUserHomeList.init();

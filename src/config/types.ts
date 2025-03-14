@@ -424,10 +424,12 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   themeDark?: EThemeDark;
   /** 字体颜色 */
   colorText1?: '';
-  /** 回答操作 - 赞同按钮仅显示赞同数 */
-  justVoteNum?: boolean;
-  /** 回答操作 - 评论按钮仅显示评论数 */
-  justCommitNum?: boolean;
+  // /** 回答操作 - 赞同按钮仅显示赞同数 */
+  // justVoteNum?: boolean;
+  // /** 回答操作 - 评论按钮仅显示评论数 */
+  // justCommitNum?: boolean;
+  /** 操作栏仅显示数字和图标 */
+  justNumberInAction?: boolean;
   /** 内容顶部是否显示赞同数 */
   topVote?: boolean;
   /** 文档或回答顶部显示导出当前内容/回答按钮 */

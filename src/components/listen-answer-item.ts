@@ -2,7 +2,7 @@ import { EAnswerOpen } from '../init/init-html/configs';
 import { doContentItem } from '../init/init-top-event-listener';
 import { CLASS_LISTENED } from '../misc';
 import { store } from '../store';
-import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, fnHidden, fnJustNum, fnLog, myStorage } from '../tools';
+import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, fnHidden, fnLog, myStorage } from '../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
 
 /** 监听详情回答 - 过滤 */
@@ -111,7 +111,6 @@ export const myListenAnswerItem = {
         fnHidden(nodeItem, message);
       } else {
         doContentItem('QUESTION', nodeItemContent as HTMLElement);
-        fnJustNum(nodeItem);
         // 自动展开回答 和 默认收起长回答
         if (answerOpen !== EAnswerOpen.默认) {
           const buttonUnfold = nodeItem.querySelector('.ContentItem-expandButton') as HTMLButtonElement;

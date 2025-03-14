@@ -340,7 +340,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         {
           label: '问题分享',
           value: 'hiddenQuestionShare',
-          css: '.zhihu .Popover.ShareMenu{display: none!important;}',
+          css: '.zhihu .QuestionHeaderActions .Popover.ShareMenu{display: none!important;}',
         },
         {
           label: '「好问题」按钮',

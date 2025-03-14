@@ -11,6 +11,7 @@ export const myListenUserHomeList = {
       setTimeout(() => this.init(), 500);
       return;
     }
+    this.timestamp = nTimestamp
 
     const { homeContentOpen } = await myStorage.getConfig();
     const nodes = domA(`.Profile-main .ListShortcut .List-item .ContentItem:not(.${CLASS_LISTENED})`);

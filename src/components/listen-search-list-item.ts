@@ -1,5 +1,5 @@
 import { CLASS_LISTENED } from '../misc';
-import { CTZ_HIDDEN_ITEM_CLASS, domA, fnHidden, fnJustNum, myStorage } from '../tools';
+import { CTZ_HIDDEN_ITEM_CLASS, domA, fnHidden, myStorage } from '../tools';
 
 /** 监听搜索列表 - 过滤  */
 export const myListenSearchListItem = {
@@ -39,7 +39,6 @@ export const myListenSearchListItem = {
           }
         }
       }
-      fnJustNum(nodeItem);
       // 最后信息 & 起点位置处理
       message && fnHidden(nodeItem, message);
     }
