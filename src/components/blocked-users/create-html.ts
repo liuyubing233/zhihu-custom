@@ -127,10 +127,12 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
 
 /** 初始化黑名单列表 */
 export const initHTMLBlockedUsers = async (domMain: HTMLElement) => {
-  const config = await myStorage.getConfig();
-  // 初始化黑名单列表
+  const { blockedUsers = [] } = await myStorage.getConfig();
+
+  dom('#CTZ_BLOCKED_NUMBER', domMain)!.innerText = blockedUsers.length ? `黑名单数量：${blockedUsers.length}` : '';
+
   const nodeBlockedUsers = dom(`#${ID_BLOCK_LIST}`, domMain)!;
-  nodeBlockedUsers.innerHTML = (config.blockedUsers || [])
+  nodeBlockedUsers.innerHTML = blockedUsers
     .map((info) => `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${blackItemContent(info)}</div>`)
     .join('');
 
