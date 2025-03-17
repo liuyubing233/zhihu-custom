@@ -83,7 +83,6 @@ import { INNER_CSS } from './web-resources';
     appendHiddenStyle();
     myBackground.init();
     mySize.init();
-    changeSizeBeforeResize();
     checkThemeDarkOrLight();
     changeVideoStyle();
 
@@ -114,8 +113,8 @@ import { INNER_CSS } from './web-resources';
           interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
           // 个人信息
           interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
-            appendHomeLink(r);
             setUserinfo(r);
+            appendHomeLink();
           });
           // 评论
           interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
@@ -176,6 +175,7 @@ import { INNER_CSS } from './web-resources';
       myCtzTypeOperation.init();
       echoHistory();
       initCacheHeader();
+      changeSizeBeforeResize();
 
       if (removeTopAD) {
         setTimeout(() => {

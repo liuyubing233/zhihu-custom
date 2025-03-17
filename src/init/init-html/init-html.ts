@@ -5,8 +5,8 @@ import { createHTMLHiddenConfig } from '../../components/hidden';
 import { initMenu } from '../../components/menu';
 import { createHTMLTitleICOChange } from '../../components/page-title';
 import { createHTMLSizeSetting } from '../../components/size';
+import { store } from '../../store';
 import { dom, domA, domC } from '../../tools';
-import { IZhihuUserinfo } from '../../types/zhihu/zhihu.type';
 import { INNER_HTML } from '../../web-resources';
 import { createHTMLFormBoxSwitch, createHTMLFormItem } from './common-html';
 import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE, OPTIONS_MAP, SELECT_BASIS_SHOW } from './configs';
@@ -51,15 +51,18 @@ export const initHTML = () => {
 
   dom('#CTZ_BLACKLIST_COMMON', nDomMain)!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
   // echoBlockedContent(nDomMain); // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容
+  appendHomeLink(nDomMain);
   document.body.appendChild(nDomMain);
 };
 
 /** 添加个人主页跳转 */
-export const appendHomeLink = (userinfo: IZhihuUserinfo) => {
-  if (dom('.ctz-home-link')) return;
-  const hrefUser = userinfo.url ? userinfo.url.replace('/api/v4', '') : '';
+export const appendHomeLink = (domMain: HTMLElement = document.body) => {
+  const userInfo = store.getUserinfo();
+  const boxToZhihu = dom('.ctz-to-zhihu', domMain);
+  if (dom('.ctz-home-link') || !userInfo || !boxToZhihu) return;
+  const hrefUser = userInfo.url ? userInfo.url.replace('/api/v4', '') : '';
   if (!hrefUser) return;
-  dom('.ctz-to-zhihu')!.appendChild(
+  boxToZhihu.appendChild(
     domC('a', {
       href: hrefUser,
       target: '_blank',

@@ -1,5 +1,5 @@
 /** 获取元素 */
-export const dom = (n: string, find: HTMLElement | Document = document): HTMLElement | undefined => find.querySelector(n) as HTMLElement;
+export const dom = (n: string, find: HTMLElement | Document = document): HTMLElement | undefined => (find ? (find.querySelector(n) as HTMLElement) : undefined);
 /** 使用 Id 获取元素 */
 export const domById = (id: string): HTMLElement | undefined => document.getElementById(id) as HTMLElement;
 /** 获取所有元素 */
