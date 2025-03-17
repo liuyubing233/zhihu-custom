@@ -8,6 +8,7 @@ import { myListenListItem } from '../components/listen-list-item';
 import { myListenSearchListItem } from '../components/listen-search-list-item';
 import { changeTitle } from '../components/page-title';
 import { myCollectionExport } from '../components/print';
+import { changeSizeBeforeResize } from '../components/size';
 import { myListenUserHomeList } from '../components/user-home';
 import { HTML_HOOTS } from '../misc';
 import { dom, domById, myStorage, pathnameHasFn, throttle, windowResize } from '../tools';
@@ -45,6 +46,7 @@ async function resizeFun() {
   myListenAnswerItem.init();
   myListenUserHomeList.init();
   canCopy();
+  changeSizeBeforeResize();
   pathnameHasFn({
     collection: () => myCollectionExport.init(),
   });

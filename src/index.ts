@@ -19,7 +19,7 @@ import { closeExtra, openChange } from './components/open';
 import { myPageFilterSetting } from './components/page-filter-setting';
 import { changeICO, changeTitle, myCachePageTitle } from './components/page-title';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';
-import { mySize } from './components/size';
+import { changeSizeBeforeResize, mySize } from './components/size';
 import { changeSuspensionTab, initCacheHeader, suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
 import { myListenUserHomeList } from './components/user-home';
@@ -83,6 +83,7 @@ import { INNER_CSS } from './web-resources';
     appendHiddenStyle();
     myBackground.init();
     mySize.init();
+    changeSizeBeforeResize();
     checkThemeDarkOrLight();
     changeVideoStyle();
 

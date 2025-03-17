@@ -1,5 +1,9 @@
 @import "./CHANGELOG_ICONS.md";
 
+## $version
+
+- 💄 页面尺寸修改后调整收起悬浮按钮位置；
+
 ## 5.8.0
 
 `2025-03-14`

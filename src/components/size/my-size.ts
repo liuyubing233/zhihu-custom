@@ -1,6 +1,6 @@
 import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../../init/init-html/configs';
 import { CLASS_ZHIHU_COMMENT_DIALOG } from '../../misc';
-import { dom, domById, fnAppendStyle, fnReturnStr, myStorage } from '../../tools';
+import { domById, fnAppendStyle, fnReturnStr, myStorage } from '../../tools';
 import { EThemeDark, EThemeLight, isDark, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../background';
 import { VERSION_MIN_WIDTH } from './create-html';
 
@@ -53,8 +53,6 @@ export const mySize = {
       fontSizeForAnswerTitle,
       fontSizeForArticleTitle,
       contentLineHeight,
-      suspensionPickUp,
-      suspensionPickupRight,
     } = config;
     const dark = await isDark();
 
@@ -217,28 +215,6 @@ export const mySize = {
       // 行高
       fnReturnStr(`p {line-height: ${contentLineHeight}px;}`, !!contentLineHeight);
 
-    const nodeContentBox =
-      domById('TopstoryContent') || dom('.Question-mainColumn') || domById('SearchMain') || dom('.Profile-mainColumn') || dom('.CollectionsDetailPage-mainColumn') || document.body;
-    let suspensionRight = +(suspensionPickupRight || 0);
-    if (nodeContentBox) {
-      suspensionRight = window.innerWidth - nodeContentBox.getBoundingClientRect().width - nodeContentBox.getBoundingClientRect().left + +(suspensionPickupRight || 0);
-    }
-    /** 收起按钮悬浮 */
-    const xxxSuspensionPickUp = fnReturnStr(`.ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question="true"]{right: ${suspensionRight}px;}`, suspensionPickUp);
-
-    return (
-      xxxFontSize +
-      xxxHighlight +
-      xxxImage +
-      xxxListMore +
-      xxxShoppingLink +
-      xxxShoppingLink +
-      xxxSusHeader +
-      xxxSusHomeTab +
-      xxxTitleTag +
-      xxxVideo +
-      xxxWidth +
-      xxxSuspensionPickUp
-    );
+    return xxxFontSize + xxxHighlight + xxxImage + xxxListMore + xxxShoppingLink + xxxShoppingLink + xxxSusHeader + xxxSusHomeTab + xxxTitleTag + xxxVideo + xxxWidth;
   },
 };

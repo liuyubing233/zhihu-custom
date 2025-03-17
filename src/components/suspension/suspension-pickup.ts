@@ -1,5 +1,5 @@
 import { dom, myStorage } from '../../tools';
-import { mySize } from '../size';
+import { changeSizeBeforeResize } from '../size';
 
 /** 长回答和列表收起按钮悬浮 */
 export const suspensionPickupAttribute = async () => {
@@ -9,5 +9,6 @@ export const suspensionPickupAttribute = async () => {
   } else {
     dom('body')!.removeAttribute('data-suspension-pickup');
   }
-  mySize.change();
+  // mySize.change();
+  changeSizeBeforeResize();
 };
