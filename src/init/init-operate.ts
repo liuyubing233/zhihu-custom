@@ -71,6 +71,15 @@ export const initOperate = () => {
 
   moveAndOpen();
   initRootEvent();
+
+  dom('#CTZ_DEFAULT input[name="searchInZhihu"]')!.onchange = function (e) {
+    console.log('e', e);
+    const domInput = e.target as HTMLInputElement;
+    const value = domInput.value;
+    if (value) {
+      window.open(`https://www.zhihu.com/search?q=${value}`);
+    }
+  };
 };
 
 /** 编辑器弹窗按钮点击事件集合 */
