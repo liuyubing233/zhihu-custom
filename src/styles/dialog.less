@@ -155,28 +155,26 @@
   overflow: hidden;
 }
 
-#CTZ_DIALOG_FOOTER {
-  border-top: 1px solid @gray02;
-  box-sizing: border-box;
-  padding: 6px 12px;
-
-  & > div {
-    display: inline-block;
+.ctz-zhihu-key a,
+.ctz-default-bottom a {
+  color: @blue1!important;
+  &:hover {
+    color: #bbb !important;
   }
+}
 
-  .ctz-version {
-    float: right;
-    line-height: 24px;
-  }
-
+.ctz-default-bottom {
+  margin-top: 12px;
   a {
-    .Hover();
-    display: inline-block;
-    border-radius: 8px;
-    height: 24px;
-    line-height: 24px;
-    padding: 0 12px;
+    margin-right: 12px;
   }
+}
+
+.ctz-version {
+  float: right;
+  margin-right: 12px;
+  font-size: 12px;
+  line-height: 20px;
 }
 
 /** 打开关闭抽屉按钮 */

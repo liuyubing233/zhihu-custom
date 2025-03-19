@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const less = require('less');
-const showdown = require('showdown');
 
 const envLoad = {
   name: 'envLoad',
@@ -26,15 +25,7 @@ const envLoad = {
         const nRegExp = (name) => new RegExp('(' + name + '\\s\\=\\s`)()(`)');
         const regexpHTML = nRegExp(NAME_HTML);
 
-        const changelog = fs
-          .readFileSync(path.join(__dirname, '../CHANGELOG.md'))
-          .toString()
-          .replace(/@import[^\n]+\n/, '');
-        const converter = new showdown.Converter(); // 生成转换器对象
-        const changelogHTML = converter.makeHtml(changelog); // 转换 content 内容
-
         const innerHTML = strHTML
-          .replace(/(?<=id="CTZ_CHANGELOG"[^>]+)>/, `>${changelogHTML}`) // 添加更新日志
           .replace(REGEXP_REPLACE, '') // 删除回车及前后空格
           .replace(REGEXP_REPLACE_COMMIT, ''); // 删除HTML注释
 

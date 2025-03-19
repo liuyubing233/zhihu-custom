@@ -25,6 +25,7 @@
       <div id="CTZ_LEFT_BUTTONS">
         <button class="ctz-button" name="dialogClose">✕</button>
         <button class="ctz-button" name="dialogBig">+</button>
+        <div class="ctz-version"></div>
       </div>
       <div id="CTZ_DIALOG_MENU">
         <div data-href="#CTZ_BASIS">通用</div>
@@ -40,7 +41,6 @@
         <div data-href="#CTZ_HISTORY_LIST" data-commit="最多缓存500条, 包含已过滤项">推荐列表缓存</div>
         <div data-href="#CTZ_HISTORY_VIEW" data-commit="最多缓存500条">浏览历史记录</div>
         <div data-href="#CTZ_DEFAULT" data-commit="修改器自带功能, 不需要额外开启">默认功能</div>
-        <div data-href="#CTZ_CHANGELOG">更新日志</div>
       </div>
     </div>
 
@@ -315,6 +315,15 @@
 
         <!-- 默认功能 -->
         <div id="CTZ_DEFAULT" style="display: none">
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div></div>
+              <div class="ctz-to-zhihu">
+                <a href="https://www.zhihu.com" target="_self" class="ctz-button" style="margin-right: 8px;">返回知乎主页</a>
+              </div>
+            </div>
+          </div>
+
           <div id="CTZ_DEFAULT_SELF" class="ctz-form-box"></div>
 
           <div class="ctz-zhihu-self" style="margin-top: 18px">
@@ -322,8 +331,15 @@
               更加方便的浏览，按
               <span class="key-shadow">?</span>
               （<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。
-              <a href="/settings/preference" target="_blank">前往开启快捷键功能</a>
+              <a href="https://www.zhihu.com/settings/preference" target="_blank">前往开启快捷键功能</a>
             </div>
+          </div>
+
+          <div class="ctz-default-bottom">
+            <a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a>
+            <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
+            <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">修改器介绍</a>
+            <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
           </div>
         </div>
 
@@ -451,20 +467,8 @@
           </div>
         </div>
 
-        <!-- 更新日志 -->
-        <div id="CTZ_CHANGELOG" style="display: none"></div>
       </div>
     </div>
-  </div>
-
-  <div id="CTZ_DIALOG_FOOTER">
-    <div class="ctz-to-zhihu">
-      <a href="https://www.zhihu.com" target="_self">返回主页</a>
-    </div>
-    <a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a>
-    <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
-    <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">修改器介绍</a>
-    <div class="ctz-version"></div>
   </div>
 </div>
 

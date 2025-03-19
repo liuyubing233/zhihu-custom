@@ -67,7 +67,7 @@ export const appendHomeLink = (domMain: HTMLElement = document.body) => {
       href: hrefUser,
       target: '_blank',
       innerText: '前往个人主页',
-      className: 'ctz-home-link',
+      className: 'ctz-home-link ctz-button',
     })
   );
 };
