@@ -3007,7 +3007,7 @@
     const contentItem = currentDom.classList.contains("ContentItem") ? currentDom : currentDom.querySelector(".ContentItem") || domP(currentDom, "class", "ContentItem");
     if (!contentItem || !contentItem.querySelector(".is-collapsed")) return;
     let pageType = void 0;
-    (dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1")) && (pageType = "LIST");
+    (dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1") || dom(".SearchMain")) && (pageType = "LIST");
     dom(".Question-main") && (pageType = "QUESTION");
     dom(".Profile-main") && (pageType = "USER_HOME");
     doContentItem(pageType, contentItem, true);

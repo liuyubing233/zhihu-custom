@@ -54,7 +54,7 @@ export const doReadMore = (currentDom: HTMLElement) => {
   if (!contentItem || !contentItem.querySelector('.is-collapsed')) return;
   // 展开
   let pageType: IPageType | undefined = undefined;
-  (dom('.Topstory-recommend') || dom('.Topstory-follow') || dom('.zhuanlan .css-1voxft1')) && (pageType = 'LIST');
+  (dom('.Topstory-recommend') || dom('.Topstory-follow') || dom('.zhuanlan .css-1voxft1') || dom('.SearchMain')) && (pageType = 'LIST');
   dom('.Question-main') && (pageType = 'QUESTION');
   dom('.Profile-main') && (pageType = 'USER_HOME');
   doContentItem(pageType, contentItem as HTMLElement, true);
