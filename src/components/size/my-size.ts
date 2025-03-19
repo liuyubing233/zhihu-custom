@@ -171,24 +171,34 @@ export const mySize = {
         ',.CPSCommonCard-imageBox,.RedPacketCard-imageBox,.CPSCommonCard-tool,.CPSCommonCard-subtitle' +
         ',.RedPacketCard-subtitle,.RedPacketCard-tool' +
         '{display: none!important;}' +
+        //
         '.MCNLinkCard,.MCNLinkCard-card,.ecommerce-ad-commodity' +
         ',.RichText-MCNLinkCardContainer .GoodsRecommendCard,.CPSCommonCard,.RedPacketCard-info,.RedPacketCard' +
         '{min-height: 0!important;background: transparent!important;width:100%!important;max-width:100%!important;}' +
+        //
         '.MCNLinkCard-cardContainer,.ecommerce-ad-commodity,.ecommerce-ad-commodity-main,.RedPacketCard,.CPSCommonCard' +
         '{padding: 0!important;}' +
+        //
         '.MCNLinkCard,.MCNLinkCard-info{margin: 0!important;}' +
+        //
         '.MCNLinkCard-info,.ecommerce-ad-commodity-main{flex-direction: row!important;}' +
+        //
         '.MCNLinkCard-price{padding-left: 12px;}' +
+        //
         '.ecommerce-ad-commodity-box .ecommerce-ad-commodity{height: auto!important;}' +
+        //
         '.ecommerce-ad-commodity-box-main-second{width: auto!important;}' +
+        //
         '.MCNLinkCard-titleContainer,.ecommerce-ad-commodity-main-content-des span,.CPSCommonCard-title,.RedPacketCard-title' +
         '{color: #fd8d55!important;justify-content: start!important;}' +
+        //
         '.MCNLinkCard-titleContainer::before,.ecommerce-ad-commodity-main-content-des span::before' +
         ',.CPSCommonCard-title::before,.RedPacketCard-title::before' +
         '{content: "购物链接："}' +
+        //
         '.MCNLinkCard-title{color: #fd8d55!important;}',
       [ELinkShopping.隐藏]:
-        'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box' + ',.RichText-MCNLinkCardContainer' + '{display: none!important;}',
+        'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box,.RichText-MCNLinkCardContainer{display: none!important;}',
     };
 
     const xxxShoppingLink = cssShoppingLinkObj[linkShopping || ELinkShopping.默认];
