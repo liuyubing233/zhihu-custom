@@ -2,7 +2,7 @@
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
 // @version      5.8.1
-// @description  知乎高性能模式，页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，视频下载，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及深色模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容、回答、文章导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，更多功能请在插件里体验...
+// @description  知乎高性能模式，页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，视频下载，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及深色模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容、回答、文章导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，快捷键收起时修正定位，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
 // @compatible   chrome Violentmonkey
@@ -155,6 +155,10 @@
     {
       title: "解除禁止转载的限制",
       commit: "无视禁止转载提示强行复制"
+    },
+    {
+      title: "快捷键收起时修正定位",
+      commit: "推荐列表，快捷键收起时修正定位，解决部分情况下收起的内容在页面很上方的问题，方便阅读"
     }
   ];
   var FILTER_LIST = [
@@ -2543,6 +2547,56 @@
       buttonLike && (buttonLike.innerHTML = (buttonLike.innerHTML || "").replace(/喜欢/, ""));
     });
   };
+  var myRecommendClosePosition = {
+    prevY: 0,
+    yDocument: 0,
+    savePosition: function(currentItem) {
+      if (currentItem.querySelector(".is-collapsed")) return;
+      if (!dom(".Topstory-recommend")) return;
+      const topstoryItem = currentItem.classList.contains("TopstoryItem") ? currentItem : domP(currentItem, "class", "TopstoryItem");
+      if (!topstoryItem || !topstoryItem.nextElementSibling) return;
+      const nextDom = topstoryItem.nextElementSibling;
+      if (nextDom.getBoundingClientRect().y > 0 && nextDom.getBoundingClientRect().y - window.innerHeight < 0) {
+        this.prevY = nextDom.offsetTop;
+        this.yDocument = document.documentElement.scrollTop;
+      } else {
+        this.prevY = 0;
+        this.yDocument = 0;
+      }
+    },
+    doPosition: function(currentItem) {
+      if (this.prevY === 0 || this.yDocument === 0) return;
+      if (!currentItem.querySelector(".is-collapsed")) return;
+      if (!dom(".Topstory-recommend")) return;
+      const topstoryItem = currentItem.classList.contains("TopstoryItem") ? currentItem : domP(currentItem, "class", "TopstoryItem");
+      if (!topstoryItem || !topstoryItem.nextElementSibling) return;
+      const nextDom = topstoryItem.nextElementSibling;
+      window.scrollTo({ top: this.yDocument - (this.prevY - nextDom.offsetTop) });
+    }
+  };
+  var recommendHighPerformance = async () => {
+    const { highPerformanceRecommend } = await myStorage.getConfig();
+    if (!highPerformanceRecommend) return;
+    setTimeout(() => {
+      const nodes = domA(`.${CLASS_LISTENED}`);
+      if (nodes.length > 50) {
+        const nodeLast = nodes[nodes.length - 1];
+        const yLastPrev = nodeLast.offsetTop;
+        const yDocument = document.documentElement.scrollTop;
+        const code = nodeLast.dataset.code;
+        const nIndex = nodes.length - 50;
+        nodes.forEach((item, index) => {
+          index < nIndex && item.remove();
+        });
+        const nNodeLast = dom(`[data-code="${code}"]`);
+        if (nNodeLast) {
+          const nYLast = nNodeLast.offsetTop;
+          window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
+        }
+        fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
+      }
+    }, 100);
+  };
   var initLinkChanger = () => {
     const esName = ["a.external", "a.LinkCard"];
     const operaLink = "ctz-link-changed";
@@ -3537,29 +3591,6 @@
       name: "想法",
       style: "color: #9c27b0"
     }
-  };
-  var recommendHighPerformance = async () => {
-    const { highPerformanceRecommend } = await myStorage.getConfig();
-    if (!highPerformanceRecommend) return;
-    setTimeout(() => {
-      const nodes = domA(`.${CLASS_LISTENED}`);
-      if (nodes.length > 50) {
-        const nodeLast = nodes[nodes.length - 1];
-        const yLastPrev = nodeLast.offsetTop;
-        const yDocument = document.documentElement.scrollTop;
-        const code = nodeLast.dataset.code;
-        const nIndex = nodes.length - 50;
-        nodes.forEach((item, index) => {
-          index < nIndex && item.remove();
-        });
-        const nNodeLast = dom(`[data-code="${code}"]`);
-        if (nNodeLast) {
-          const nYLast = nNodeLast.offsetTop;
-          window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
-        }
-        fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
-      }
-    }, 100);
   };
   var myListenSearchListItem = {
     initTimestamp: 0,
@@ -4682,6 +4713,9 @@
         canCopy();
       })
     );
+    window.addEventListener("keyup", async () => {
+      myRecommendClosePosition.doPosition(document.activeElement);
+    });
     window.addEventListener("keydown", async (event) => {
       const config = await myStorage.getConfig();
       const { hotKey, keyEscCloseCommentDialog } = config;
@@ -4701,6 +4735,7 @@
       if (event.key === "o") {
         const currentDom = document.activeElement;
         currentDom && doReadMore(currentDom);
+        myRecommendClosePosition.savePosition(currentDom);
       }
       keydownNextImage(event);
     });

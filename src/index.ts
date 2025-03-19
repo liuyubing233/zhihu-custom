@@ -10,6 +10,7 @@ import { appendHiddenStyle } from './components/hidden';
 import { echoHistory } from './components/history';
 import { keydownNextImage } from './components/image';
 import { fnJustNumberInAction } from './components/just-number';
+import { myRecommendClosePosition } from './components/list-position';
 import { myListenAnswerItem } from './components/listen-answer-item';
 import { closeCommentDialog, formatCommentAuthors } from './components/listen-comment';
 import { myListenListItem } from './components/listen-list-item';
@@ -264,6 +265,10 @@ import { INNER_CSS } from './web-resources';
     })
   );
 
+  window.addEventListener('keyup', async () => {
+    myRecommendClosePosition.doPosition(document.activeElement as HTMLElement)
+  })
+
   window.addEventListener('keydown', async (event) => {
     const config = await myStorage.getConfig();
     const { hotKey, keyEscCloseCommentDialog } = config;
@@ -289,6 +294,7 @@ import { INNER_CSS } from './web-resources';
       // 是否是快捷键展开阅读全文
       const currentDom = document.activeElement;
       currentDom && doReadMore(currentDom as HTMLElement);
+      myRecommendClosePosition.savePosition(currentDom as HTMLElement)
     }
 
     keydownNextImage(event);

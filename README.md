@@ -113,7 +113,6 @@
 
 <!-- 回答和文章中的视频显示方式 -->
 
-
 <details>
 
 <summary>回答和文章中的视频显示方式</summary>
@@ -1024,6 +1023,20 @@ _注：由于知乎接口的限制，关注及移除只能在对应页面中进�
 _注：由于知乎屏蔽话题每次只显示部分内容，建议解除屏蔽后刷新页面查看是否仍然存在新的屏蔽话题。_<br>
 
 <img src="https://raw.githubusercontent.com/liuyubing233/zhihu-custom/refs/heads/main/static/remove-filter-tag.png" alt="一键移除屏蔽话题">
+
+</details>
+
+<!-- 快捷键收起时修正定位 -->
+
+<details>
+
+<summary>快捷键收起时修正定位</summary>
+
+> 修改器默认功能，无需主动开启
+
+<br>
+
+推荐列表，快捷键收起时修正定位，解决部分情况下收起的内容在页面很上方的问题，方便阅读；
 
 </details>
 
