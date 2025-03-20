@@ -1,11 +1,11 @@
-import { IHiddenArray } from "./types";
+import { IHiddenArray } from './types';
 
 // 勾选隐藏对应内容
 export const HIDDEN_ARRAY: IHiddenArray = [
   // 通用隐藏
   {
     key: 'CTZ_HIDDEN_COMMON',
-    name: '',
+    name: '通用',
     desc: '',
     content: [
       [
@@ -24,7 +24,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: 'logo',
+          label: 'LOGO',
           value: 'hiddenLogo',
           css: '.ZhihuLogoLink,.TopTabNavBar-logo-3d0k,[aria-label="知乎"],.TopNavBar-logoContainer-vDhU2,.zu-top-link-logo{display: none!important;}',
         },
@@ -41,22 +41,22 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '发现模块-首页',
+          label: '顶部发现模块-首页',
           value: 'hiddenAppHeaderTabHome',
           css: '.AppHeader-Tab:nth-of-type(1){display: none}',
         },
         {
-          label: '发现模块-知乎直答',
+          label: '顶部发现模块-知乎直答',
           value: 'hiddenAppHeaderTabFind',
           css: '.AppHeader-Tab:nth-of-type(2){display: none}',
         },
         {
-          label: '发现模块-知学堂',
+          label: '顶部发现模块-知学堂',
           value: 'hiddenAppHeaderTabZhi',
           css: '.AppHeader-Tab:nth-of-type(3){display: none}',
         },
         {
-          label: '发现模块-等你来答',
+          label: '顶部发现模块-等你来答',
           value: 'hiddenAppHeaderTabWaitingForYou',
           css: '.AppHeader-Tab:nth-of-type(4){display: none}',
         },
@@ -68,30 +68,13 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       //     css: '.css-1vqda4a{display: none!important;}',
       //   },
       // ],
-      [
-        {
-          label: '评论「回复」按钮',
-          value: 'hiddenCommitReply',
-          css: '.Comments-container .css-140jo2 button:first-of-type{display:none;}',
-        },
-        {
-          label: '评论「点赞」按钮',
-          value: 'hiddenCommitVote',
-          css: '.Comments-container .css-140jo2 button:last-of-type{display:none;}',
-        },
-        {
-          label: '评论底部信息',
-          value: 'hiddenCommitBottom',
-          css: '.Comments-container .css-140jo2{display:none;}',
-        },
-      ],
-      [
-        {
-          label: '知乎知学堂教育推广商品模块',
-          value: 'hiddenZhihuZhiShop',
-          css: '.RichText-EduCardContainer{display:none;}',
-        },
-      ],
+      // [
+      //   {
+      //     label: '知乎知学堂教育推广商品模块',
+      //     value: 'hiddenZhihuZhiShop',
+      //     css: '.RichText-EduCardContainer{display:none;}',
+      //   },
+      // ],
     ],
   },
   // 操作栏
@@ -126,26 +109,24 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       ],
       [
         {
-          label: '回答页问题操作栏',
+          label: '问题页面详情操作栏',
           value: 'hiddenQuestionActions',
           css: '.QuestionButtonGroup,.QuestionHeaderActions{display: none!important;}',
         },
-      ],
-      [
         {
-          label: '回答页回答内容操作栏',
+          label: '问题页面回答内容操作栏',
           value: 'hiddenAnswerItemActions',
           css: '.Question-mainColumn .RichContent .ContentItem-actions:not(.is-fixed) {visibility:hidden;height:0;}',
         },
         {
-          label: '回答页回答内容操作栏 - 底部悬浮',
+          label: '问题页面回答内容操作栏 - 底部悬浮',
           value: 'hiddenFixedActions',
           css: '.Question-mainColumn .RichContent .ContentItem-actions.is-fixed{bottom: -60px!important;}',
         },
       ],
       [
         {
-          label: '文章底部悬浮操作栏',
+          label: '文章页面底部悬浮操作栏',
           value: 'hiddenZhuanlanActions',
           css: '.zhuanlan .RichContent-actions.is-fixed>.ContentItem-actions{display: none;}',
         },
@@ -174,6 +155,23 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.Profile-mainColumn .RichContent .ContentItem-actions.is-fixed{bottom: -60px!important;}',
         },
       ],
+      [
+        {
+          label: '评论「回复」按钮',
+          value: 'hiddenCommitReply',
+          css: '.Comments-container .css-140jo2 button:first-of-type{display:none;}',
+        },
+        {
+          label: '评论「点赞」按钮',
+          value: 'hiddenCommitVote',
+          css: '.Comments-container .css-140jo2 button:last-of-type{display:none;}',
+        },
+        {
+          label: '评论底部信息',
+          value: 'hiddenCommitBottom',
+          css: '.Comments-container .css-140jo2{display:none;}',
+        },
+      ],
     ],
   },
   // 列表
@@ -189,6 +187,11 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.Topstory .css-19idom{display: none;}',
         },
         {
+          label: '盐选作者平台',
+          value: 'hiddenYanXuanWriter',
+          css: '.KfeCollection-CreateSaltCard{display:none!important;}',
+        },
+        {
           label: '推荐关注',
           value: 'hiddenHomeRecommendFollow',
           css: '.Topstory .css-173vipd{display: none;}',
@@ -199,7 +202,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.Topstory .GlobalSideBar-category{display: none;}',
         },
         {
-          label: '更多分类',
+          label: '更多分类（我的收藏、关注的问题等...）',
           value: 'hiddenHomeCategoryMore',
           css: '.Topstory .Card[aria-label="更多分类入口"]{display:none;}',
         },
@@ -208,35 +211,30 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           value: 'hiddenHomeFooter',
           css: '.Topstory .Footer,.Topstory footer{display: none;}',
         },
-        {
-          label: '盐选作者平台',
-          value: 'hiddenYanXuanWriter',
-          css: '.KfeCollection-CreateSaltCard{display:none!important;}',
-        },
       ],
       [
         {
-          label: '首页列表切换模块',
+          label: '列表切换模块',
           value: 'hiddenHomeListTab',
           css: '.Topstory-container .TopstoryTabs{display: none}',
         },
         {
-          label: '首页列表切换 - 关注',
+          label: '列表切换 - 关注',
           value: 'hiddenHomeListTabFollow',
           css: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-follow"]{display: none}',
         },
         {
-          label: '首页列表切换 - 推荐',
+          label: '列表切换 - 推荐',
           value: 'hiddenHomeListTabRecommend',
           css: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-recommend"]{display: none}',
         },
         {
-          label: '首页列表切换 - 热榜',
+          label: '列表切换 - 热榜',
           value: 'hiddenHomeListTabHot',
           css: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-hot"]{display: none}',
         },
         {
-          label: '首页列表切换 - 视频',
+          label: '列表切换 - 视频',
           value: 'hiddenHomeListTabVideo',
           css: '.Topstory-container .TopstoryTabs [aria-controls="Topstory-zvideo"]{display: none}',
         },
@@ -252,7 +250,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
             '{display: none;}',
         },
         {
-          label: '推荐、关注列表的视频',
+          label: '列表视频',
           value: 'hiddenListVideoContent',
           css: '.Topstory-recommend .ZVideoItem-video,.Topstory-recommend .VideoAnswerPlayer,.Topstory-recommend .ZVideoItem .RichContent{display: none;}',
         },
@@ -262,28 +260,28 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.RichContent-cover,.HotItem-img,.TopstoryItem .Image-Wrapper-Preview{display:none!important;}.HotItem-metrics--bottom{position: initial!important;}',
         },
         {
-          label: '问题列表阅读全文文字',
+          label: '列表阅读全文文字',
           value: 'hiddenReadMoreText',
           css: '.ContentItem-more{font-size:0!important;}',
         },
         {
-          label: '列表「亲自答」标签',
+          label: '列表"亲自答"标签',
           value: 'hiddenListAnswerInPerson',
           css: '.Topstory-mainColumn .LabelContainer{display: none;}',
         },
       ],
-      [
-        {
-          label: '关注列表关注人操作',
-          value: 'hiddenFollowAction',
-          css: '.TopstoryItem-isFollow .FeedSource-firstline{display: none;}',
-        },
-        {
-          label: '关注列表用户信息',
-          value: 'hiddenFollowChooseUser',
-          css: '.TopstoryItem-isFollow .AuthorInfo{display: none;}',
-        },
-      ],
+      // [
+      //   {
+      //     label: '关注列表关注人操作',
+      //     value: 'hiddenFollowAction',
+      //     css: '.TopstoryItem-isFollow .FeedSource-firstline{display: none;}',
+      //   },
+      //   {
+      //     label: '关注列表用户信息',
+      //     value: 'hiddenFollowChooseUser',
+      //     css: '.TopstoryItem-isFollow .AuthorInfo{display: none;}',
+      //   },
+      // ],
       [
         {
           label: '热榜排序编号',
@@ -328,8 +326,8 @@ export const HIDDEN_ARRAY: IHiddenArray = [
   // 问答
   {
     key: 'CTZ_HIDDEN_ANSWER',
-    name: '回答页面',
-    desc: '只在回答页面中隐藏相应内容',
+    name: '问答页面/回答内容',
+    desc: '只在问答页面/回答内容中隐藏相应内容',
     content: [
       [
         {
@@ -338,22 +336,22 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.QuestionHeader-tags,.QuestionHeader .css-wmwsyx{display: none!important;}',
         },
         {
-          label: '问题分享',
+          label: '问题分享按钮',
           value: 'hiddenQuestionShare',
           css: '.zhihu .QuestionHeaderActions .Popover.ShareMenu{display: none!important;}',
         },
         {
-          label: '「好问题」按钮',
+          label: '"好问题"按钮',
           value: 'hiddenQuestionGoodQuestion',
           css: '.QuestionPage .QuestionHeader .GoodQuestionAction{display: none}',
         },
         {
-          label: '添加评论',
+          label: '问题添加评论按钮',
           value: 'hiddenQuestionComment',
           css: '.QuestionPage .QuestionHeader .QuestionHeader-Comment{display: none}',
         },
         {
-          label: '问题更多「...」按钮',
+          label: '问题"..."按钮',
           value: 'hiddenQuestionMore',
           css: '.QuestionPage .QuestionHeader [aria-label="更多"]{display: none;}',
         },
@@ -381,6 +379,11 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           label: '问题标题卡片广告和榜单',
           value: 'hiddenQuestionAD',
           css: '.css-e69dqy,.Card.css-15hh8yc{display: none;}',
+        },
+        {
+          label: '问题关注和被浏览数模块',
+          value: 'hiddenQuestionSide',
+          css: '.QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}',
         },
       ],
       [
@@ -417,17 +420,12 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.AnswerItem .css-dvccr2{display: none;}',
         },
         {
-          label: '问题关注和被浏览数',
-          value: 'hiddenQuestionSide',
-          css: '.QuestionHeader-side{display: none;}.QuestionHeader-main{flex: 1!important;}',
-        },
-        {
-          label: '赞赏按钮',
+          label: '回答内容赞赏按钮',
           value: 'hiddenReward',
           css: '.Reward{display: none!important;}',
         },
         {
-          label: '618红包链接',
+          label: '回答内容618红包链接',
           value: 'hidden618HongBao',
           css: '.MCNLinkCard[data-mcn-source="淘宝"],.MCNLinkCard[data-mcn-source="京东"],.MCNLinkCard[data-mcn-source="知乎"]{display:none;}',
         },
@@ -444,39 +442,39 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}',
         },
         {
-          label: '回答底部「继续追问」模块',
+          label: '回答底部"继续追问"模块',
           value: 'hiddenAnswerKeepAsking',
           css: '.css-jghqwm{display: none!important;}',
         },
       ],
       [
         {
-          label: '详情右侧信息栏',
+          label: '问答页面右侧信息栏',
           value: 'hiddenAnswerRightFooter',
           css: '.Question-sideColumn{display: none!important;}.Question-main .Question-mainColumn,.ListShortcut{width: inherit;}',
         },
         {
-          label: '信息栏关于作者',
+          label: '问答页面信息栏关于作者',
           value: 'hiddenAnswerRightFooterAnswerAuthor',
           css: '.Question-sideColumn .AnswerAuthor{display: none;}',
         },
         {
-          label: '信息栏被收藏次数',
+          label: '问答页面信息栏被收藏次数',
           value: 'hiddenAnswerRightFooterFavorites',
           css: '.Question-sideColumn .AnswerAuthor + .Card{display: none;}',
         },
         {
-          label: '信息栏相关问题',
+          label: '问答页面信息栏相关问题',
           value: 'hiddenAnswerRightFooterRelatedQuestions',
           css: '.Question-sideColumn [data-za-detail-view-path-module="RelatedQuestions"]{display: none;}',
         },
         {
-          label: '信息栏相关推荐',
+          label: '问答页面信息栏相关推荐',
           value: 'hiddenAnswerRightFooterContentList',
           css: '.Question-sideColumn [data-za-detail-view-path-module="ContentList"]{display: none;}',
         },
         {
-          label: '信息栏知乎指南',
+          label: '问答页面信息栏知乎指南',
           value: 'hiddenAnswerRightFooterFooter',
           css: '.Question-sideColumn .Footer{display: none;}',
         },
@@ -486,8 +484,8 @@ export const HIDDEN_ARRAY: IHiddenArray = [
   // 文章
   {
     key: 'CTZ_HIDDEN_ARTICLE',
-    name: '文章专栏',
-    desc: '只在文章页面中隐藏相应内容',
+    name: '文章页面/文章内容',
+    desc: '只在文章页面/文章内容中隐藏相应内容',
     content: [
       [
         {
@@ -536,7 +534,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.zhuanlan .Post-Sub .css-1ildg7g{display: none;}',
         },
         {
-          label: '内容所属专栏',
+          label: '文章所属专栏',
           value: 'hiddenZhuanlanContributions',
           css: '.zhuanlan .PostIndex-Contributions{display: none;}',
         },

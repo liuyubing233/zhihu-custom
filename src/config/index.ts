@@ -19,7 +19,7 @@ export const CONFIG_HIDDEN_DEFAULT: IConfigHidden = {
   hiddenAD: true,
   hiddenDetailFollow: true,
   hidden618HongBao: true,
-  hiddenZhihuZhiShop: true,
+  // hiddenZhihuZhiShop: true,
   hiddenQuestionAD: true,
 };
 
@@ -103,8 +103,8 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenZhuanlanShare: true,
   hiddenZhuanlanVoters: true,
   hiddenListAnswerInPerson: true,
-  hiddenFollowAction: true,
-  hiddenFollowChooseUser: true,
+  // hiddenFollowAction: true,
+  // hiddenFollowChooseUser: true,
   hidden618HongBao: true,
   hiddenZhuanlanFollowButton: true,
   hiddenZhuanlanAvatarWrapper: true,

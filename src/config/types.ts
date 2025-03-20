@@ -99,9 +99,9 @@ export interface IConfigHidden {
   /** 列表[亲自答]隐藏标签 */
   hiddenListAnswerInPerson?: boolean;
   /** 隐藏关注列表关注人操作栏 */
-  hiddenFollowAction?: boolean;
+  // hiddenFollowAction?: boolean;
   /** 隐藏关注列表用户信息 */
-  hiddenFollowChooseUser?: boolean;
+  // hiddenFollowChooseUser?: boolean;
   /** 隐藏信息栏关于作者 */
   hiddenAnswerRightFooterAnswerAuthor?: boolean;
   /** 隐藏信息栏被收藏次数 */
@@ -202,7 +202,7 @@ export interface IConfigHidden {
   /** 收藏夹知乎指南 */
   hiddenCollectionsFooter?: boolean;
   /** 知乎知学堂教育推广商品模块 */
-  hiddenZhihuZhiShop?: boolean;
+  // hiddenZhihuZhiShop?: boolean;
   /** 话题主页右侧浏览/讨论量模块 */
   hiddenTopicRightNumberBoard?: boolean;
   /** 话题主页右侧父子话题模块 */
