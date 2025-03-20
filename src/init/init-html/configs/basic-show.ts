@@ -13,9 +13,9 @@ export const BASIC_SHOW: ICommonContent[][] = [
       value: 'questionTitleTag',
     },
     { label: '列表和回答 - 点击高亮边框', value: 'highlightListItem' },
-    { label: '列表 -「···」按钮移动到最右侧', value: 'fixedListItemMore' },
-    { label: '列表 - 「不感兴趣」按钮', value: 'listOutPutNotInterested', needFetch: true },
-    { label: '列表 - 「直达问题」按钮', value: 'listOutputToQuestion' },
+    { label: '列表 - "···"按钮移动到最右侧', value: 'fixedListItemMore' },
+    { label: '列表 - 显示"不感兴趣"按钮', value: 'listOutPutNotInterested', needFetch: true },
+    { label: '列表 - 显示"直达问题"按钮', value: 'listOutputToQuestion' },
   ],
   [
     // { label: '赞同按钮仅显示数字', value: 'justVoteNum' },
