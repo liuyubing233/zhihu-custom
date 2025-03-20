@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      5.8.1
+// @version      5.8.2
 // @description  知乎高性能模式，页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，视频下载，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及深色模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容、回答、文章导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，快捷键收起时修正定位，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -2996,7 +2996,6 @@
     const contentItem = currentDom.classList.contains("ContentItem") ? currentDom : currentDom.querySelector(".ContentItem") || domP(currentDom, "class", "ContentItem");
     if (!contentItem || !contentItem.querySelector(".is-collapsed")) return;
     let pageType = void 0;
-    console.log("???");
     (dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1") || dom(".SearchMain")) && (pageType = "LIST");
     dom(".Question-main") && (pageType = "QUESTION");
     dom(".Profile-main") && (pageType = "USER_HOME");
@@ -4362,7 +4361,6 @@
     moveAndOpen();
     initRootEvent();
     dom('#CTZ_DEFAULT input[name="searchInZhihu"]').onchange = function(e) {
-      console.log("e", e);
       const domInput = e.target;
       const value = domInput.value;
       if (value) {

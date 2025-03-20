@@ -54,8 +54,6 @@ export const doReadMore = (currentDom: HTMLElement) => {
   // 展开
   let pageType: IPageType | undefined = undefined;
 
-  console.log('???');
-
   (dom('.Topstory-recommend') || dom('.Topstory-follow') || dom('.zhuanlan .css-1voxft1') || dom('.SearchMain')) && (pageType = 'LIST');
   dom('.Question-main') && (pageType = 'QUESTION');
   dom('.Profile-main') && (pageType = 'USER_HOME');

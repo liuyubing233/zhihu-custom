@@ -73,7 +73,6 @@ export const initOperate = () => {
   initRootEvent();
 
   dom('#CTZ_DEFAULT input[name="searchInZhihu"]')!.onchange = function (e) {
-    console.log('e', e);
     const domInput = e.target as HTMLInputElement;
     const value = domInput.value;
     if (value) {
