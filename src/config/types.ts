@@ -71,7 +71,7 @@ export interface IConfigHidden {
   /** 隐藏详情回答人下赞同数 */
   hiddenDetailVoters?: boolean;
   /** 回答隐藏用户信息下的附加信息，例如：「你赞同过」 */
-  hiddenWhoVoters?: boolean;
+  // hiddenWhoVoters?: boolean;
   /** 隐藏详情回答人姓名 */
   hiddenDetailName?: boolean;
   /** 隐藏详情回答人关注按钮 */

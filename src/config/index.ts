@@ -90,7 +90,7 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenHotItemLabel: true,
   hiddenDetailAvatar: true,
   hiddenDetailBadge: true,
-  hiddenWhoVoters: true,
+  // hiddenWhoVoters: true,
   hiddenDetailName: true,
   hiddenDetailFollow: true,
   hiddenQuestionSide: true,

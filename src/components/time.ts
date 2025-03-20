@@ -16,7 +16,7 @@ export const updateItemTime = (contentItem: HTMLElement) => {
     domC('div', {
       className: CLASS_TIME_ITEM,
       innerHTML,
-      style: 'line-height: 24px;padding-top: 2px;font-size: 14px;',
+      style: 'line-height: 24px;padding-top: 2px;font-size: 14px;color: rgb(132, 145, 165);',
     }),
     nodeBox
   );
@@ -50,6 +50,7 @@ export const addQuestionTime = async () => {
       domC('div', {
         className: 'ctz-question-time',
         innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,
+        style: 'color: rgb(132, 145, 165);'
       })
     );
   resetQuestionTime();
@@ -67,7 +68,7 @@ export const addArticleTime = async () => {
   nodeBox.appendChild(
     domC('span', {
       className: C_ARTICLE_TIME,
-      style: 'color: #8590a6;line-height: 30px;',
+      style: 'line-height: 30px;color: rgb(132, 145, 165);',
       innerHTML: nodeContentTime.innerText || '',
     })
   );

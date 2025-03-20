@@ -61,13 +61,13 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.AppHeader-Tab:nth-of-type(4){display: none}',
         },
       ],
-      [
-        {
-          label: '回答隐藏用户信息下的附加信息，比如：你赞同过、XXX赞同了等...',
-          value: 'hiddenWhoVoters',
-          css: '.css-1vqda4a{display: none!important;}',
-        },
-      ],
+      // [
+      //   {
+      //     label: '回答隐藏用户信息下的附加信息，比如：你赞同过、XXX赞同了等...',
+      //     value: 'hiddenWhoVoters',
+      //     css: '.css-1vqda4a{display: none!important;}',
+      //   },
+      // ],
       [
         {
           label: '评论「回复」按钮',
