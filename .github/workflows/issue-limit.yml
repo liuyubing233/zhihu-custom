@@ -24,7 +24,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: `🚫 @${username}, 你已经达到了最多 5 个 Issue 的限制！请先关闭一些 Issue 后再尝试。`,
+                body: `🚫 你已经达到了最多 5 个 Issue 的限制！请先关闭一些 Issue 后再尝试。`,
               });
 
               await github.rest.issues.update({
