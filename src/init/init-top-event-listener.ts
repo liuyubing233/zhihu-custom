@@ -2,7 +2,6 @@ import { answerAddBlockButton } from '../components/blocked-users/add-block-butt
 import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
 import { updateItemTime } from '../components/time';
-import { updateTopVote } from '../components/topVote';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO_BOX, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
@@ -54,6 +53,9 @@ export const doReadMore = (currentDom: HTMLElement) => {
   if (!contentItem || !contentItem.querySelector('.is-collapsed')) return;
   // 展开
   let pageType: IPageType | undefined = undefined;
+
+  console.log('???');
+
   (dom('.Topstory-recommend') || dom('.Topstory-follow') || dom('.zhuanlan .css-1voxft1') || dom('.SearchMain')) && (pageType = 'LIST');
   dom('.Question-main') && (pageType = 'QUESTION');
   dom('.Profile-main') && (pageType = 'USER_HOME');
@@ -93,7 +95,7 @@ export const doContentItem = async (pageType?: IPageType, contentItem?: HTMLElem
     };
 
     doByPageType[pageType]();
-    updateTopVote(contentItem);
+    // updateTopVote(contentItem);
     initVideoDownload(contentItem);
     addAnswerCopyLink(contentItem);
     fnReplaceZhidaToSearch(contentItem);

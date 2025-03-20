@@ -97,7 +97,6 @@
       { label: "操作栏仅显示数字和图标", value: "justNumberInAction" }
     ],
     [
-      { label: "问题详情 - 回答顶部显示赞同人数", value: "topVote" },
       { label: "问题详情 - 一键获取回答链接", value: "copyAnswerLink" },
       { label: "回答、文章顶部显示导出当前内容/回答按钮", value: "topExportContent" }
     ],
@@ -511,11 +510,9 @@
     hiddenHotItemLabel: true,
     hiddenDetailAvatar: true,
     hiddenDetailBadge: true,
-    hiddenDetailVoters: false,
     hiddenWhoVoters: true,
     hiddenDetailName: true,
     hiddenDetailFollow: true,
-    hiddenHomeTab: false,
     hiddenQuestionSide: true,
     hiddenQuestionFollowing: true,
     hiddenQuestionAnswer: true,
@@ -2887,37 +2884,6 @@
       addArticleTime();
     }, 500);
   };
-  var updateTopVote = async (contentItem) => {
-    const nodeItemMeta = contentItem.querySelector(".ContentItem-meta");
-    const nodeVote = contentItem.querySelector('[itemprop="upvoteCount"]');
-    const { topVote } = await myStorage.getConfig();
-    if (!nodeVote || !topVote || !nodeItemMeta) return;
-    const vote = nodeVote.content;
-    if (+vote === 0) return;
-    const className = "ctz-top-vote";
-    const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
-    const innerHTML = `${vote} 人赞同了该回答`;
-    if (domVotePrev) {
-      domVotePrev.innerHTML = innerHTML;
-    } else {
-      const domVote = domC("div", {
-        className,
-        innerHTML,
-        style: "font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0;"
-      });
-      nodeItemMeta.appendChild(domVote);
-      const metaObserver = new MutationObserver(() => {
-        updateTopVote(contentItem);
-      });
-      metaObserver.observe(nodeVote, {
-        attributes: true,
-        childList: false,
-        characterData: false,
-        characterDataOldValue: false,
-        subtree: false
-      });
-    }
-  };
   var CLASS_VIDEO_ONE = ".css-1h1xzpn";
   var CLASS_VIDEO_TWO = ".VideoAnswerPlayer-video";
   var CLASS_VIDEO_TWO_BOX = ".VideoAnswerPlayer";
@@ -3061,6 +3027,7 @@
     const contentItem = currentDom.classList.contains("ContentItem") ? currentDom : currentDom.querySelector(".ContentItem") || domP(currentDom, "class", "ContentItem");
     if (!contentItem || !contentItem.querySelector(".is-collapsed")) return;
     let pageType = void 0;
+    console.log("???");
     (dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1") || dom(".SearchMain")) && (pageType = "LIST");
     dom(".Question-main") && (pageType = "QUESTION");
     dom(".Profile-main") && (pageType = "USER_HOME");
@@ -3088,7 +3055,6 @@
         }
       };
       doByPageType[pageType]();
-      updateTopVote(contentItem);
       initVideoDownload(contentItem);
       addAnswerCopyLink(contentItem);
       fnReplaceZhidaToSearch(contentItem);
