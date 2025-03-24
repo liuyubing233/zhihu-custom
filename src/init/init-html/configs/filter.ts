@@ -3,7 +3,7 @@ import { ICommonContent } from '../types';
 /** 列表内容屏蔽 */
 export const FILTER_LIST: ICommonContent[][] = [
   [{ label: '屏蔽顶部活动推广', value: 'removeTopAD' }],
-  [{ label: '屏蔽匿名用户提问', value: 'removeAnonymousQuestion', needFetch: true }],
+  [{ label: '屏蔽匿名用户提出的问题', value: 'removeAnonymousQuestion', needFetch: true }],
   [
     { label: '关注列表屏蔽自己的操作', value: 'removeMyOperateAtFollow' },
     { label: '关注列表过滤关注人赞同回答', value: 'removeFollowVoteAnswer' },

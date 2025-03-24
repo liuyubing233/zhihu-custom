@@ -157,6 +157,10 @@
         <!-- 屏蔽内容 -->
         <div id="CTZ_FILTER" style="display: none">
           <div id="CTZ_FILTER_COMMEN">
+            <div class="ctz-title">
+              通用屏蔽
+              <span>在首页列表和回答中均生效</span>
+            </div>
             <div class="ctz-form-box">
               <div class="ctz-form-box-item ctz-fetch-intercept">
                 <div>
@@ -197,6 +201,14 @@
                 <div>屏蔽匿名用户回答</div>
                 <div><input class="ctz-i ctz-switch" name="removeAnonymousAnswer" type="checkbox" value="on" /></div>
               </div>
+              <div class="ctz-form-box-item">
+                <div>屏蔽带有虚构创作标签的回答</div>
+                <div><input class="ctz-i ctz-switch" name="removeUnrealAnswer" type="checkbox" value="on" /></div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>屏蔽选自电子书标签的回答</div>
+                <div><input class="ctz-i ctz-switch" name="removeFromEBook" type="checkbox" value="on" /></div>
+              </div>
             </div>
 
             <div class="ctz-form-box">
@@ -207,17 +219,6 @@
               <div class="ctz-form-box-item">
                 <div>问题回答屏蔽小于的点赞数量</div>
                 <div><input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px" /></div>
-              </div>
-            </div>
-
-            <div class="ctz-form-box">
-              <div class="ctz-form-box-item">
-                <div>屏蔽带有虚构创作标签的回答</div>
-                <div><input class="ctz-i ctz-switch" name="removeUnrealAnswer" type="checkbox" value="on" /></div>
-              </div>
-              <div class="ctz-form-box-item">
-                <div>屏蔽选自电子书标签的回答</div>
-                <div><input class="ctz-i ctz-switch" name="removeFromEBook" type="checkbox" value="on" /></div>
               </div>
             </div>
           </div>
@@ -350,6 +351,7 @@
         <!-- 页面尺寸 -->
         <div id="CTZ_VERSION" style="display: none">
           <!-- 页面内容宽度 -->
+          <div class="ctz-title">页面内容宽度</div>
           <div id="CTZ_VERSION_RANGE_ZHIHU" class="ctz-form-box"></div>
           <div class="ctz-form-box">
             <div class="ctz-form-box-item">
@@ -395,9 +397,6 @@
               <div>弹窗打开动图</div>
               <div><input class="ctz-i ctz-switch" name="showGIFinDialog" type="checkbox" value="on" /></div>
             </div>
-          </div>
-
-          <div class="ctz-form-box">
             <div class="ctz-form-box-item">
               <div>评论图片预览不超出页面</div>
               <div><input class="ctz-i ctz-switch" name="commentImageFullPage" type="checkbox" value="on" /></div>
