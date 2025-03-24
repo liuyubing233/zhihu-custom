@@ -1,4 +1,3 @@
-
 .ctz-fetch-intercept .ctz-need-fetch {
   display: none;
 }
@@ -27,5 +26,9 @@
 
   .ctz-switch {
     background-color: rgba(0, 0, 0, 0.08);
+    cursor: not-allowed !important;
+    &::before {
+      background: #ffffff !important;
+    }
   }
 }

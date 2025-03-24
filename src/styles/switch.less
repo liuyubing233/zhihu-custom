@@ -5,7 +5,8 @@
   height: 24px;
   position: relative;
   background-color: #dcdfe6;
-  border-radius: 20px;
+  // border-radius: 20px;
+  border-radius: 6px;
   background-clip: content-box;
   display: inline-block;
   appearance: none;
@@ -22,7 +23,8 @@
     width: 22px;
     height: 22px;
     background-color: #ffffff;
-    border-radius: 50%;
+    // border-radius: 50%;
+    border-radius: 5px;
     left: 2px;
     top: 0;
     bottom: 0;
@@ -38,5 +40,9 @@
   &:checked::before {
     left: 17px;
     transition: 0.3s;
+  }
+
+  &:hover::before {
+    background: #f0f0f0;
   }
 }
