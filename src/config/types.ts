@@ -92,6 +92,8 @@ export interface IConfigHidden {
   hiddenSearchPageTopSearch?: boolean;
   /** 隐藏搜索页知乎指南 */
   hiddenSearchPageFooter?: boolean;
+  /** 隐藏搜索结果知乎直达 */
+  hiddenSearchResultZhida?: boolean;
   /** 隐藏专栏悬浮分享按钮 */
   hiddenZhuanlanShare?: boolean;
   /** 隐藏专栏悬浮赞同按钮 */

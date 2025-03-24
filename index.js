@@ -1973,6 +1973,11 @@
             label: "搜索页知乎指南",
             value: "hiddenSearchPageFooter",
             css: ".Search-container .Footer,.Search-container footer{display: none;}"
+          },
+          {
+            label: "搜索结果知乎直达",
+            value: "hiddenSearchResultZhida",
+            css: ".Search-container .css-q1rdu9{display: none;}"
           }
         ]
       ]
