@@ -36,7 +36,7 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         {
           label: '滚动顶部悬浮模块/问题名称',
           value: 'hiddenHeaderScroll',
-          css: '.AppHeader.is-fixed{display:none!important;}',
+          css: '.AppHeader.is-fixed{display:none!important;}.zhuanlan .css-f2kkrj{top:0;}',
         },
       ],
       [
@@ -323,8 +323,8 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         {
           label: '搜索结果知乎直达',
           value: 'hiddenSearchResultZhida',
-          css: '.Search-container .css-q1rdu9{display: none;}'
-        }
+          css: '.Search-container .css-q1rdu9{display: none;}',
+        },
       ],
     ],
   },

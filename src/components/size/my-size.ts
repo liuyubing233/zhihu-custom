@@ -67,7 +67,8 @@ export const mySize = {
 
     const NAME_HOME = '.Topstory-mainColumn,.SearchMain';
     const NAME_ANSWER = '.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content';
-    const NAME_ARTICLE = '.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd';
+    const NAME_ARTICLE =
+      '.Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd,.zhuanlan .css-15k5nix,.zhuanlan .css-1byd3cx';
     const NAME_USER_HOME = '#ProfileHeader,[itemprop="people"] .Profile-main';
     const NAME_COLLECTION = '.CollectionsDetailPage';
 
@@ -197,8 +198,7 @@ export const mySize = {
         '{content: "购物链接："}' +
         //
         '.MCNLinkCard-title{color: #fd8d55!important;}',
-      [ELinkShopping.隐藏]:
-        'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box,.RichText-MCNLinkCardContainer{display: none!important;}',
+      [ELinkShopping.隐藏]: 'a.MCNLinkCard,.RichText-ADLinkCardContainer,.ecommerce-ad-commodity-box,.ecommerce-ad-box,.RichText-MCNLinkCardContainer{display: none!important;}',
     };
 
     const xxxShoppingLink = cssShoppingLinkObj[linkShopping || ELinkShopping.默认];

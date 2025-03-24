@@ -929,7 +929,7 @@
       const versionSizeCollection = formatVersionPercentSize("versionCollection");
       const NAME_HOME = ".Topstory-mainColumn,.SearchMain";
       const NAME_ANSWER = ".Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content";
-      const NAME_ARTICLE = ".Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd";
+      const NAME_ARTICLE = ".Post-NormalMain .Post-Header,.Post-NormalMain>div,.Post-NormalSub>div,.zhuanlan .css-1xy3kyp,.zhuanlan .css-1voxft1,.zhuanlan .css-9w3zhd,.zhuanlan .css-15k5nix,.zhuanlan .css-1byd3cx";
       const NAME_USER_HOME = '#ProfileHeader,[itemprop="people"] .Profile-main';
       const NAME_COLLECTION = ".CollectionsDetailPage";
       const xxxWidth = `${NAME_HOME}{width: ${versionSizeHome}!important;}${NAME_ANSWER}{width: ${versionSizeAnswer}!important;}${NAME_ARTICLE}{width: ${versionSizeArticle}!important;}.zhuanlan .Post-SideActions{right: ${!versionArticleIsPercent ? `calc(50vw - ${+(versionArticle || "1000") / 2 + 150}px)` : `calc(50vw - ${+(versionArticlePercent || "70") / 2}vw + 150px)`}}${NAME_USER_HOME}{width: ${versionSizeUserHome}!important;}${NAME_COLLECTION}{width: ${versionSizeCollection}!important}${NAME_HOME},${NAME_ANSWER},${NAME_ARTICLE},${NAME_USER_HOME},${NAME_COLLECTION},.${CLASS_ZHIHU_COMMENT_DIALOG},.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG},.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{min-width: ${VERSION_MIN_WIDTH}px!important;}` + fnReturnStr(
@@ -1722,7 +1722,7 @@
           {
             label: "滚动顶部悬浮模块/问题名称",
             value: "hiddenHeaderScroll",
-            css: ".AppHeader.is-fixed{display:none!important;}"
+            css: ".AppHeader.is-fixed{display:none!important;}.zhuanlan .css-f2kkrj{top:0;}"
           }
         ],
         [
