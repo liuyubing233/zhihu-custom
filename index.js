@@ -1746,6 +1746,13 @@
             value: "hiddenAppHeaderTabWaitingForYou",
             css: ".AppHeader-Tab:nth-of-type(4){display: none}"
           }
+        ],
+        [
+          {
+            label: "回答和文章中的知学堂推广商品模块",
+            value: "hiddenZhihuZhiShop",
+            css: ".RichText-EduCardContainer{display:none;}"
+          }
         ]
       ]
     },

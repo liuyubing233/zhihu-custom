@@ -68,13 +68,13 @@ export const HIDDEN_ARRAY: IHiddenArray = [
       //     css: '.css-1vqda4a{display: none!important;}',
       //   },
       // ],
-      // [
-      //   {
-      //     label: '知乎知学堂教育推广商品模块',
-      //     value: 'hiddenZhihuZhiShop',
-      //     css: '.RichText-EduCardContainer{display:none;}',
-      //   },
-      // ],
+      [
+        {
+          label: '回答和文章中的知学堂推广商品模块',
+          value: 'hiddenZhihuZhiShop',
+          css: '.RichText-EduCardContainer{display:none;}',
+        },
+      ],
     ],
   },
   // 操作栏
