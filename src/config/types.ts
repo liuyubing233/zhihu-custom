@@ -10,7 +10,7 @@ import {
   EZoomImageHeight,
   EZoomImageType,
   EZoomListVideoType,
-} from '../init/init-html/configs';
+} from '../components/select';
 
 /** 隐藏内容模块配置 */
 export interface IConfigHidden {

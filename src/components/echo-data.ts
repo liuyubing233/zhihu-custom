@@ -1,6 +1,7 @@
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../misc';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../misc';
 import { dom, domA, domById, myStorage } from '../tools';
 import { echoBlockedContent } from './blocked-users';
+import { echoMySelect } from './select';
 import { VERSION_RANGE_HAVE_PERCENT } from './size';
 
 /** 回填数据，供每次打开使用 */
@@ -38,12 +39,6 @@ export const echoData = async () => {
     doEcho(nodeArrInputChange[i] as HTMLInputElement);
   }
 
-  const nodeArrSelect = domA(`.${CLASS_SELECT}`);
-  for (let i = 0, len = nodeArrSelect.length; i < len; i++) {
-    const item = nodeArrSelect[i] as HTMLSelectElement;
-    item.value = config[item.name];
-  }
-
   echo.text(dom('[name="globalTitle"]'));
 
   VERSION_RANGE_HAVE_PERCENT.forEach((item) => {
@@ -56,6 +51,7 @@ export const echoData = async () => {
     }
   });
 
+  echoMySelect();
   // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容
-  echoBlockedContent(document.body)
+  echoBlockedContent(document.body);
 };

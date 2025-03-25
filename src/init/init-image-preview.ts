@@ -1,6 +1,6 @@
 import { myPreview } from '../components/preview';
+import { EZoomImageType } from '../components/select';
 import { domA, myStorage } from '../tools';
-import { EZoomImageType } from './init-html/configs';
 
 /** 加载预览图片方法，解决部分图片无法点击预览的问题 */
 export const initImagePreview = async () => {

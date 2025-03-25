@@ -1,12 +1,12 @@
 import { answerAddBlockButton } from '../components/blocked-users/add-block-button';
 import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
+import { EVideoInAnswerArticle } from '../components/select';
 import { updateItemTime } from '../components/time';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO_BOX, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
 import { doFetchNotInterested, dom, domP, myStorage } from '../tools';
-import { EVideoInAnswerArticle } from './init-html/configs';
 
 /** 顶部ROOT元素点击事件 */
 export const initRootEvent = async () => {

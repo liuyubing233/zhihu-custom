@@ -9,7 +9,7 @@ import {
   EZoomImageHeight,
   EZoomImageType,
   EZoomListVideoType,
-} from '../init/init-html/configs';
+} from '../components/select';
 import { IConfigFilter, IConfigHidden, IConfigSuspension, IPfConfig } from './types';
 
 /** 隐藏内容模块默认为 true 的配置 */

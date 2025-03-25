@@ -1,7 +1,7 @@
-import { EHomeContentOpen } from '../../init/init-html/configs';
 import { doContentItem } from '../../init/init-top-event-listener';
 import { CLASS_LISTENED } from '../../misc';
 import { domA, myStorage } from '../../tools';
+import { EHomeContentOpen } from '../select';
 
 export const myListenUserHomeList = {
   timestamp: 0,

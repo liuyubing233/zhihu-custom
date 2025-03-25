@@ -1,4 +1,4 @@
-import { IOptionItem } from '../../../types/common.type';
+import { IOptionItem } from '../../types/common.type';
 
 /** 枚举: 替换知乎直达为搜索 */
 export enum EReplaceZhidaToSearch {

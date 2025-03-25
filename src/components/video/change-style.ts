@@ -1,4 +1,4 @@
-import { EVideoInAnswerArticle } from '../../init/init-html/configs';
+import { EVideoInAnswerArticle } from '../../components/select';
 import { fnAppendStyle, myStorage } from '../../tools';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO } from './download';
 

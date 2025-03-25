@@ -1,5 +1,5 @@
-import { EVideoInAnswerArticle } from '../../init/init-html/configs';
 import { domC, myStorage } from '../../tools';
+import { EVideoInAnswerArticle } from '../select';
 
 /** 视频回答的包裹元素1 */
 export const CLASS_VIDEO_ONE = '.css-1h1xzpn';

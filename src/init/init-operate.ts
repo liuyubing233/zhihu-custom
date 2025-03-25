@@ -9,7 +9,7 @@ import { myPreview } from '../components/preview';
 import { moveAndOpen } from '../components/suspension/move';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from '../config';
 import { IKeyofHistory } from '../config/types';
-import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK, CLASS_SELECT } from '../misc';
+import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../misc';
 import { dom, domA, domById, domC, formatTime, myStorage } from '../tools';
 import { initRootEvent } from './init-top-event-listener';
 
@@ -39,7 +39,7 @@ export const initOperate = () => {
   };
   nodeContent.onchange = (e) => {
     const target = e.target as HTMLInputElement;
-    if (target.classList.contains(CLASS_INPUT_CHANGE) || target.classList.contains(CLASS_SELECT)) {
+    if (target.classList.contains(CLASS_INPUT_CHANGE)) {
       fnChanger(target);
       return;
     }

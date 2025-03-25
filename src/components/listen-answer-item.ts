@@ -1,9 +1,9 @@
-import { EAnswerOpen } from '../init/init-html/configs';
 import { doContentItem } from '../init/init-top-event-listener';
 import { CLASS_LISTENED } from '../misc';
 import { store } from '../store';
 import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, fnHidden, fnLog, myStorage } from '../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../types/zhihu/zhihu.type';
+import { EAnswerOpen } from './select';
 
 /** 监听详情回答 - 过滤 */
 export const myListenAnswerItem = {

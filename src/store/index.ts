@@ -1,5 +1,5 @@
 import { IBlockedUser } from '../components/blocked-users';
-import { EVideoInAnswerArticle } from '../init/init-html/configs';
+import { EVideoInAnswerArticle } from '../components/select';
 import { myStorage } from '../tools';
 import { IJsInitialData, IZhihuAnswerTarget, IZhihuRecommendItem, IZhihuUserinfo } from '../types/zhihu';
 

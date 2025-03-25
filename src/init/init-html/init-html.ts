@@ -4,12 +4,13 @@ import { initFetchInterceptStatus } from '../../components/fetch-intercept-statu
 import { createHTMLHiddenConfig } from '../../components/hidden';
 import { initMenu } from '../../components/menu';
 import { createHTMLTitleICOChange } from '../../components/page-title';
+import { createHTMLMySelect } from '../../components/select';
 import { createHTMLSizeSetting } from '../../components/size';
 import { store } from '../../store';
-import { dom, domA, domC } from '../../tools';
+import { dom, domC } from '../../tools';
 import { INNER_HTML } from '../../web-resources';
 import { createHTMLFormBoxSwitch, createHTMLFormItem } from './common-html';
-import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE, OPTIONS_MAP, SELECT_BASIS_SHOW } from './configs';
+import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE } from './configs';
 
 /** 添加修改器内元素 */
 export const initHTML = () => {
@@ -29,25 +30,13 @@ export const initHTML = () => {
   // 列表内容屏蔽
   dom('#CTZ_FILTER_LIST_CONTENT', nDomMain)!.innerHTML = createHTMLFormBoxSwitch(FILTER_LIST);
 
-  // 添加下拉选择
-  dom('#CTZ_BASIC_SHOW_SELECT', nDomMain)!.innerHTML = SELECT_BASIS_SHOW.map(({ label, value }) =>
-    createHTMLFormItem({ label, value: `<select class="ctz-select" name="${value}"></select>` })
-  ).join('');
-
-  // 添加下拉选择内容
-  domA('.ctz-select', nDomMain).forEach((item) => {
-    const name = (item as HTMLSelectElement).name;
-    if (OPTIONS_MAP[name]) {
-      item.innerHTML = OPTIONS_MAP[name].map(({ value, label }) => `<option value="${value}">${label}</option>`).join('');
-    }
-  });
-
   initFetchInterceptStatus(nDomMain);
   initMenu(nDomMain);
   createHTMLTitleICOChange(nDomMain);
   createHTMLSizeSetting(nDomMain);
   createHTMLBackgroundSetting(nDomMain);
   createHTMLHiddenConfig(nDomMain);
+  createHTMLMySelect(nDomMain);
 
   dom('#CTZ_BLACKLIST_COMMON', nDomMain)!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
   // echoBlockedContent(nDomMain); // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容

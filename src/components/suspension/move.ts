@@ -1,6 +1,6 @@
-import { ESuspensionOpen } from '../../init/init-html/configs';
 import { domById, myStorage } from '../../tools';
 import { openChange } from '../open';
+import { ESuspensionOpen } from '../select';
 
 /** 绑定页面元素的点击拖动方法 */
 export const myMove: IMyMove = {

@@ -1,7 +1,7 @@
-import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../../init/init-html/configs';
 import { CLASS_ZHIHU_COMMENT_DIALOG } from '../../misc';
 import { domById, fnAppendStyle, fnReturnStr, myStorage } from '../../tools';
 import { EThemeDark, EThemeLight, isDark, THEME_CONFIG_DARK, THEME_CONFIG_LIGHT } from '../background';
+import { ELinkShopping, EZoomImageHeight, EZoomImageType, EZoomListVideoType } from '../select';
 import { VERSION_MIN_WIDTH } from './create-html';
 
 /** 修改版心的 css */

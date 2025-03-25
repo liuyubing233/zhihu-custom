@@ -20,6 +20,7 @@ import { closeExtra, openChange } from './components/open';
 import { myPageFilterSetting } from './components/page-filter-setting';
 import { changeICO, changeTitle, myCachePageTitle } from './components/page-title';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';
+import { closeAllSelect } from './components/select';
 import { changeSizeBeforeResize, mySize } from './components/size';
 import { changeSuspensionTab, initCacheHeader, suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
@@ -35,7 +36,7 @@ import { doReadMore } from './init/init-top-event-listener';
 import { needRedirect } from './init/redirect';
 import { EXTRA_CLASS_HTML, HTML_HOOTS, ID_EXTRA_DIALOG } from './misc';
 import { store } from './store';
-import { dom, domById, fnAppendStyle, fnLog, formatDataToHump, interceptionResponse, isSafari, mouseEventClick, myStorage, pathnameHasFn, throttle } from './tools';
+import { dom, domById, domP, fnAppendStyle, fnLog, formatDataToHump, interceptionResponse, isSafari, mouseEventClick, myStorage, pathnameHasFn, throttle } from './tools';
 import { IZhihuAnswerTarget } from './types/zhihu/zhihu-answer.type';
 import { INNER_CSS } from './web-resources';
 
@@ -261,13 +262,13 @@ import { INNER_CSS } from './web-resources';
     'scroll',
     throttle(() => {
       fnJustNumberInAction();
-      canCopy()
+      canCopy();
     })
   );
 
   window.addEventListener('keyup', async () => {
-    myRecommendClosePosition.doPosition(document.activeElement as HTMLElement)
-  })
+    myRecommendClosePosition.doPosition(document.activeElement as HTMLElement);
+  });
 
   window.addEventListener('keydown', async (event) => {
     const config = await myStorage.getConfig();
@@ -294,7 +295,7 @@ import { INNER_CSS } from './web-resources';
       // 是否是快捷键展开阅读全文
       const currentDom = document.activeElement;
       currentDom && doReadMore(currentDom as HTMLElement);
-      myRecommendClosePosition.savePosition(currentDom as HTMLElement)
+      myRecommendClosePosition.savePosition(currentDom as HTMLElement);
     }
 
     keydownNextImage(event);
@@ -302,6 +303,14 @@ import { INNER_CSS } from './web-resources';
 
   // 复制代码块删除版权信息
   document.addEventListener('copy', function (event) {
-    eventCopy(event)
+    eventCopy(event);
+  });
+
+  document.addEventListener('click', function (event) {
+    const target = event.target as HTMLElement;
+    // 如果不是下拉选择则关闭所有
+    if (!target.classList.contains('ctz-select') && !domP(target, 'class', 'ctz-select')) {
+      closeAllSelect();
+    }
   });
 })();
