@@ -1,4 +1,4 @@
-import { syncBlackList, syncRemoveBlockedUsers } from '../components/blocked-users';
+import { onExportBlack, onImportBlack, onSyncBlackList, onSyncRemoveBlockedUsers } from '../components/black-list';
 import { myCustomStyle } from '../components/custom-style';
 import { fnChanger } from '../components/fn-changer';
 import { echoHistory } from '../components/history';
@@ -10,7 +10,7 @@ import { moveAndOpen } from '../components/suspension/move';
 import { CONFIG_DEFAULT, CONFIG_SIMPLE } from '../config';
 import { IKeyofHistory } from '../config/types';
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../misc';
-import { dom, domA, domById, domC, formatTime, myStorage } from '../tools';
+import { dom, domA, domById, domC, formatTime, inputImportFile, myStorage } from '../tools';
 import { initRootEvent } from './init-top-event-listener';
 
 /** 加载设置弹窗绑定方法 */
@@ -41,10 +41,6 @@ export const initOperate = () => {
     const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CHANGE)) {
       fnChanger(target);
-      return;
-    }
-    if (target.classList.contains('ctz-input-config-import')) {
-      configImport(e);
       return;
     }
   };
@@ -79,6 +75,20 @@ export const initOperate = () => {
       window.open(`https://www.zhihu.com/search?q=${value}`);
     }
   };
+
+  // 配置导入
+  inputImportFile(dom('.ctz-input-config-import') as HTMLInputElement, async (oFREvent) => {
+    let config = oFREvent.target ? oFREvent.target.result : '';
+    if (typeof config === 'string') {
+      const nConfig = JSON.parse(config);
+      await myStorage.updateConfig(nConfig);
+      setTimeout(() => {
+        location.reload();
+      }, 300);
+    }
+  });
+  // 黑名单配置导入
+  inputImportFile(dom('.ctz-input-import-black') as HTMLInputElement, onImportBlack);
 };
 
 /** 编辑器弹窗按钮点击事件集合 */
@@ -121,17 +131,13 @@ const myButtonOperation: Record<string, Function> = {
     await myStorage.updateConfigItem('customizeCss', value);
     myCustomStyle.change(value);
   },
-  // 同步黑名单
-  syncBlack: () => syncBlackList(0),
-  // 清空黑名单列表
-  syncBlackRemove: syncRemoveBlockedUsers,
   // 确认更改网页标题
   buttonConfirmTitle: buttonConfirmPageTitle,
   // 还原网页标题
   buttonResetTitle: buttonResetPageTitle,
   // 导入配置
   configImport: () => {
-    dom('#IMPORT_BY_FILE input')!.click();
+    dom('.ctz-input-config-import')!.click();
   },
   // 关闭修改器弹窗
   dialogClose: openChange,
@@ -154,6 +160,16 @@ const myButtonOperation: Record<string, Function> = {
     setTimeout(() => {
       location.reload();
     }, 300);
+  },
+  // 同步黑名单
+  syncBlack: () => onSyncBlackList(0),
+  // 清空黑名单列表
+  syncBlackRemove: onSyncRemoveBlockedUsers,
+  // 黑名单部分配置导出
+  exportBlackConfig: onExportBlack,
+  // 黑名单部分配置导入
+  importBlackConfig: () => {
+    dom('.ctz-input-import-black')!.click();
   },
 };
 

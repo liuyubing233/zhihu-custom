@@ -261,7 +261,21 @@
 
         <!-- 黑名单设置 -->
         <div id="CTZ_BLACKLIST" class="ctz-fetch-intercept" style="display: none">
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>黑名单部分配置导出和导入</div>
+              <div>
+                <button class="ctz-button" name="exportBlackConfig" style="margin-right: 8px;">配置导出</button>
+                <div id="IMPORT_BLACK">
+                  <input type="file" class="ctz-input-import-black" accept=".txt" />
+                  <button class="ctz-button" name="importBlackConfig">配置导入并合并</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- 黑名单通用设置 -->
+          <div class="ctz-title">通用设置</div>
           <div id="CTZ_BLACKLIST_COMMON"></div>
 
           <!-- 黑名单标签 -->

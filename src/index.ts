@@ -1,5 +1,5 @@
 import { checkThemeDarkOrLight, myBackground } from './components/background';
-import { interceptResponseForBlocked, topBlockUser } from './components/blocked-users';
+import { interceptResponseForBlocked, topBlockUser } from './components/black-list';
 import { initBlockedWords } from './components/blocked-words';
 import { canCopy, eventCopy } from './components/copy';
 import { myCtzTypeOperation } from './components/ctz-type-operate';

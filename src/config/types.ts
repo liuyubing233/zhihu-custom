@@ -1,5 +1,5 @@
 import { ETheme, EThemeDark, EThemeLight } from '../components/background';
-import { IBlockedUser } from '../components/blocked-users';
+import { IConfigBlackList } from '../components/black-list';
 import {
   EAnswerOpen,
   EHomeContentOpen,
@@ -245,12 +245,6 @@ export interface IConfigFilter {
   removeFollowVoteArticle?: boolean;
   /** 屏蔽关注人关注问题 */
   removeFollowFQuestion?: boolean;
-  /** 屏蔽不再显示黑名单用户发布的内容 */
-  removeBlockUserContent?: boolean;
-  /** 黑名单列表 */
-  blockedUsers?: IBlockedUser[];
-  /** 黑名单标签 */
-  blockedUsersTags?: string[];
   /** 屏蔽商业推广 */
   removeItemAboutAD?: boolean;
   /** 屏蔽文章 */
@@ -279,18 +273,6 @@ export interface IConfigFilter {
   removeFromEBook?: boolean;
   /** 屏蔽匿名用户提问 */
   removeAnonymousQuestion?: boolean;
-  /** 评论用户名后显示"屏蔽用户"按钮 */
-  showBlockUserComment?: boolean;
-  /** 屏蔽黑名单用户发布的评论 */
-  removeBlockUserComment?: boolean;
-  /** 黑名单用户发布的评论显示黑名单标识 */
-  showBlockUserCommentTag?: boolean;
-  /** 列表和回答显示黑名单用户标识 */
-  showBlockUserTag?: boolean;
-  /** 黑名单用户标识也显示标签分类 */
-  showBlockUserTagType?: boolean;
-  /** 屏蔽用户后弹出标签选择 */
-  openTagChooseAfterBlockedUser?: boolean;
 }
 
 /** 悬浮模块默认配置 */
@@ -334,7 +316,7 @@ export interface IConfigSuspension {
 }
 
 /** 配置参数 */
-export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspension {
+export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspension, IConfigBlackList {
   [key: string]: any;
   /** 是否开启接口拦截，默认开启 */
   fetchInterceptStatus?: boolean;
@@ -346,8 +328,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   filterKeywords?: string[];
   /** 屏蔽词方法：回答内容屏蔽 */
   blockWordsAnswer?: string[];
-  /** 列表用户名后显示「屏蔽用户」按钮 */
-  showBlockUser?: boolean;
+
   /** 列表页面内容宽度 */
   versionHome?: string;
   /** 列表页面内容宽度是否使用百分比 */
@@ -444,8 +425,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   listOutputToQuestion?: boolean;
   /** 用户主页内容发布、修改时间置顶 */
   userHomeContentTimeTop?: boolean;
-  /** 用户主页置顶「屏蔽用户」按钮 */
-  userHomeTopBlockUser?: boolean;
+
   /** 一键获取回答链接 */
   copyAnswerLink?: boolean;
   /** 时间戳 */

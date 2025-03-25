@@ -1,4 +1,4 @@
-import { IBlockedUser } from '../components/blocked-users';
+import { IBlockedUser } from '../components/black-list';
 import { EVideoInAnswerArticle } from '../components/select';
 import { myStorage } from '../tools';
 import { IJsInitialData, IZhihuAnswerTarget, IZhihuRecommendItem, IZhihuUserinfo } from '../types/zhihu';

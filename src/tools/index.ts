@@ -3,6 +3,7 @@ export * from './do-window-resize';
 export * from './dom';
 export * from './fetch';
 export * from './format-data-to-hump';
+export * from './import-file';
 export * from './math-for-my-listens';
 export * from './message';
 export * from './mouse-event-click';

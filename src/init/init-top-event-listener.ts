@@ -1,4 +1,4 @@
-import { answerAddBlockButton } from '../components/blocked-users/add-block-button';
+import { answerAddBlockButton } from '../components/black-list/add-block-button';
 import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
 import { EVideoInAnswerArticle } from '../components/select';

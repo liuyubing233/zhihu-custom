@@ -31,8 +31,6 @@ export const CONFIG_FILTER_DEFAULT: IConfigFilter = {
   removeFollowVoteAnswer: false,
   removeFollowVoteArticle: false,
   removeFollowFQuestion: false,
-  removeBlockUserContent: true,
-  blockedUsers: [],
   removeItemAboutAD: false,
   removeItemAboutArticle: false,
   removeItemAboutVideo: false,
@@ -236,6 +234,8 @@ export const CONFIG_DEFAULT: IPfConfig = {
   videoInAnswerArticle: EVideoInAnswerArticle.默认,
   openTagChooseAfterBlockedUser: true,
   homeContentOpen: EHomeContentOpen.默认,
+  removeBlockUserContent: true,
+  blockedUsers: [],
 };
 
 /** 缓存的历史记录数量 */

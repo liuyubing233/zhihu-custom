@@ -16,6 +16,7 @@ export const updateItemAfterBlock = async (userInfo: IBlockedUser) => {
   nodeUsers.insertBefore(nodeUserItem, nodeUsers.children[0]);
   if (openTagChooseAfterBlockedUser) {
     chooseBlockedUserTags(nodeUserItem, false);
+    dom('#CTZ_BLOCKED_NUMBER', document.body)!.innerText = blockedUsers.length ? `黑名单数量：${blockedUsers.length}` : '';
   }
 };
 
@@ -29,4 +30,5 @@ export const removeItemAfterBlock = async (userInfo: IBlockedUser) => {
     removeItem && removeItem.remove();
     myStorage.updateConfigItem('blockedUsers', blockedUsers);
   }
+  dom('#CTZ_BLOCKED_NUMBER', document.body)!.innerText = blockedUsers.length ? `黑名单数量：${blockedUsers.length}` : '';
 };

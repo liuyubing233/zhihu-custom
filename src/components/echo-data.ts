@@ -1,6 +1,6 @@
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../misc';
 import { dom, domA, domById, myStorage } from '../tools';
-import { echoBlockedContent } from './blocked-users';
+import { echoBlockedContent } from './black-list';
 import { echoMySelect } from './select';
 import { VERSION_RANGE_HAVE_PERCENT } from './size';
 
