@@ -20,7 +20,6 @@ export const changeSuspensionTab = async (index = 0, prevDom?: HTMLElement) => {
     return;
   }
   if (index >= 5) return;
-  console.log('Timeout changeSuspensionTab', index);
   timeoutChangeSuspensionTab && clearTimeout(timeoutChangeSuspensionTab);
   timeoutChangeSuspensionTab = setTimeout(() => changeSuspensionTab(++index, dom('.Topstory-container .TopstoryTabs')), 500);
 };
@@ -30,7 +29,6 @@ export const suspensionHeader = async (name: IHeaderName) => {
   const { getHeaderCache, getHeaderFound } = storeSuspension;
   // 如果没有 Found 到则1s后重新执行（2s内未查找到元素 Found 会为true）
   if (!getHeaderFound(name)) {
-    console.log('Timeout suspensionHeader');
     setTimeout(() => suspensionHeader(name), 1000);
     return;
   }

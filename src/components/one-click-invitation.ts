@@ -3,7 +3,6 @@ import { dom, domA, domC } from '../tools';
 /** 初始化一键邀请功能 */
 export const initOneClickInvitation = () => {
   setTimeout(() => {
-    console.log('Timeout initOneClickInvitation')
     const domInvitation = dom('.QuestionInvitation');
     if (!domInvitation || dom('.ctz-invite-once')) return;
     const nButton = domC('button', {
@@ -17,7 +16,6 @@ export const initOneClickInvitation = () => {
         if (moreAction) {
           moreAction.click();
           setTimeout(() => {
-            console.log('Timeout fnToMore')
             fnToMore();
           }, 50);
         } else {

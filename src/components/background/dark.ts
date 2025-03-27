@@ -18,7 +18,6 @@ export const checkThemeDarkOrLight = () => {
   if (!elementHTML) return;
   // 监听 html 元素属性变化
   const muCallback = async function () {
-    console.log('MutationObserver checkThemeDarkOrLight')
     const themeName = elementHTML.getAttribute('data-theme');
     const dark = await isDark();
     if ((themeName === 'dark' && !dark) || (themeName === 'light' && dark)) {

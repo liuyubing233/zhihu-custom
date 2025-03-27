@@ -11,7 +11,6 @@ export const initHistoryView = async () => {
   if (!isContentHref) return;
 
   setTimeout(async () => {
-    console.log('Timeout initHistoryView');
     let name = '';
     const isQuestion = href.includes('www.zhihu.com/question/');
     isQuestion &&
@@ -21,7 +20,6 @@ export const initHistoryView = async () => {
     href.includes('www.zhihu.com/zvideo/') && dom('.ZVideo .ZVideo-title') && (name = `<b style="color: #12c2e9">「视频」</b>${dom('.ZVideo .ZVideo-title')!.innerText}`);
 
     if (!name) {
-      console.log('!name???????????');
       initHistoryView();
       return;
     }

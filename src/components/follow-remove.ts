@@ -5,7 +5,6 @@ export const myFollowRemove = {
   init: function () {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      console.log('Timeout myFollowRemove')
       pathnameHasFn({
         questions: () => this.addButtons(this.classOb.questions),
         // topics: () => this.addButtons(this.classOb.topics), // 话题跳转页面内会重定向，暂时隐藏

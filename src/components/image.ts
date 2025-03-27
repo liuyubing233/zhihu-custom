@@ -3,7 +3,6 @@ import { myPreview } from './preview';
 
 /** 预览动图回调 */
 const callbackGIF: MutationCallback = async (mutationsList) => {
-  console.log('MutationObserver callbackGIF')
   const target = mutationsList[0].target as HTMLElement;
   const targetClassList = target.classList;
   const { showGIFinDialog } = await myStorage.getConfig();

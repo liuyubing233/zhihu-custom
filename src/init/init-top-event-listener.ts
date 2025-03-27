@@ -55,7 +55,6 @@ export const doReadMore = (currentDom: HTMLElement) => {
   let pageType: IPageType | undefined = undefined;
 
   const domPByClass = (name: string) => domP(currentDom, 'class', name);
-
   (domPByClass('Topstory-recommend') || domPByClass('Topstory-follow') || domPByClass('zhuanlan .css-1voxft1') || domPByClass('SearchMain')) && (pageType = 'LIST');
   domPByClass('Question-main') && (pageType = 'QUESTION');
   domPByClass('Profile-main') && (pageType = 'USER_HOME');
@@ -73,7 +72,6 @@ type IPageType = 'LIST' | 'QUESTION' | 'USER_HOME';
  * @param needTimeout 是否需要延时500ms执行
  */
 export const doContentItem = async (pageType?: IPageType, contentItem?: HTMLElement, needTimeout = false) => {
-  console.log('??????? doContentItem', pageType);
   if (!contentItem || !pageType) return;
   const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, answerItemCreatedAndModifiedTime, userHomeContentTimeTop } = await myStorage.getConfig();
   const doFun = () => {
@@ -110,7 +108,6 @@ export const doContentItem = async (pageType?: IPageType, contentItem?: HTMLElem
 
   // 如果是回答内容，则 parentItem 设置为 nodeItem 自身
   if (needTimeout) {
-    console.log('Timeout doFun');
     setTimeout(doFun, 500);
   } else {
     doFun();

@@ -50,7 +50,6 @@ export const myMove: IMyMove = {
         this.isMove = true;
         this.timer[configName] && clearTimeout(this.timer[configName]);
         this.timer[configName] = setTimeout(async () => {
-          console.log('Timeout this.timer[configName]')
           clearTimeout(this.timer[configName]);
           await myStorage.updateConfigItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`);
         }, 500);

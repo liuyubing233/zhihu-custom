@@ -21,7 +21,6 @@ export const initResizeObserver = () => {
 };
 
 async function resizeFun() {
-  console.log('Timeout resizeFun')
   if (!HTML_HOOTS.includes(location.hostname)) return;
   const { hiddenSearchBoxTopSearch, globalTitle } = await myStorage.getConfig();
   // 比较列表缓存的高度是否大于当前高度，如果大于则是从 index = 0 遍历

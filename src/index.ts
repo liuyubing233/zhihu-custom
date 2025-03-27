@@ -55,7 +55,6 @@ import { INNER_CSS } from './web-resources';
   async function onDocumentStart() {
     if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
     if (!document.head) {
-      console.log('Timeout onDocumentStart');
       setTimeout(onDocumentStart, 100);
       return;
     }
@@ -149,7 +148,6 @@ import { INNER_CSS } from './web-resources';
 
   const onBodyLoad = async () => {
     if (!document.body) {
-      console.log('Timeout onBodyLoad');
       setTimeout(onBodyLoad, 100);
       return;
     }
@@ -192,7 +190,6 @@ import { INNER_CSS } from './web-resources';
 
       if (removeTopAD) {
         setTimeout(() => {
-          console.log('Timeout removeTopAD');
           mouseEventClick(dom('svg.css-1p094v5'));
         }, 300);
       }
@@ -223,11 +220,9 @@ import { INNER_CSS } from './web-resources';
       collection: () => myCollectionExport.init(),
       following: () => myFollowRemove.init(),
       answers: () => {
-        console.log('Timeout historyToChangePathnameAnswer');
         throttle(printPeopleAnswer)();
       },
       posts: () => {
-        console.log('Timeout historyToChangePathnamePost');
         throttle(printPeopleArticles)();
       },
       people: topBlockUser,
@@ -239,7 +234,6 @@ import { INNER_CSS } from './web-resources';
   let prevPathname = pathname;
   /** 页面路由变化, 部分操作方法 */
   const changeHistory = () => {
-    console.log('Timeout changeHistory', location.hash !== prevHash && prevPathname === location.pathname);
     // 只改动 hash 的情况下不进行更新
     if (location.hash !== prevHash && prevPathname === location.pathname) return;
     prevHash = location.hash;
@@ -264,7 +258,6 @@ import { INNER_CSS } from './web-resources';
 
     if (hostname === 'zhuanlan.zhihu.com') {
       setTimeout(() => {
-        console.log('Timeout addEventListener load');
         initVideoDownload(dom('.Post-content'));
         fnReplaceZhidaToSearch();
       }, 500);
@@ -273,7 +266,6 @@ import { INNER_CSS } from './web-resources';
     pathnameHasFn({
       zvideo: () => {
         setTimeout(() => {
-          console.log('Timeout zvideo');
           initVideoDownload(dom('.ZVideo-mainColumn'));
         }, 500);
       },
@@ -284,7 +276,6 @@ import { INNER_CSS } from './web-resources';
   window.addEventListener(
     'scroll',
     throttle(() => {
-      console.log('Timeout scroll');
       fnJustNumberInAction();
       canCopy();
     })

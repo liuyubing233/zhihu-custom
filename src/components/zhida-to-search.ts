@@ -14,7 +14,6 @@ export const fnReplaceZhidaToSearch = async (domFind: HTMLElement = document.bod
   if (!domsZhida.length) {
     timeout && clearTimeout(timeout);
     timeout = setTimeout(() => {
-      console.log('Timeout fnReplaceZhidaToSearch', index);
       fnReplaceZhidaToSearch(domFind, ++index);
     }, 500);
     return;

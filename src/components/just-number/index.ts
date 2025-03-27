@@ -9,9 +9,8 @@ export const fnJustNumberInAction = async () => {
   if (!justNumberInAction) return;
 
   const nTimestamp = +new Date();
-  if (nTimestamp - timestamp < 300) {
-    console.log('Timeout fnJustNumberInAction')
-    setTimeout(fnJustNumberInAction, 300);
+  if (nTimestamp - timestamp < 500) {
+    setTimeout(fnJustNumberInAction, 500);
     return;
   }
 

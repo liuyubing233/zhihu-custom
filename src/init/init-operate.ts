@@ -82,7 +82,6 @@ export const initOperate = () => {
       const nConfig = JSON.parse(config);
       await myStorage.updateConfig(nConfig);
       setTimeout(() => {
-        console.log('Timeout inputImportFile')
         location.reload();
       }, 300);
     }
@@ -121,7 +120,6 @@ const myButtonOperation: Record<string, Function> = {
       blockedUsers,
     });
     setTimeout(() => {
-      console.log('Timeout configReset')
       location.reload();
     }, 300);
   },
@@ -159,7 +157,6 @@ const myButtonOperation: Record<string, Function> = {
       ...CONFIG_SIMPLE,
     });
     setTimeout(() => {
-      console.log('Timeout useSimple')
       location.reload();
     }, 300);
   },

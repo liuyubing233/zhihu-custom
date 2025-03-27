@@ -7,7 +7,6 @@ export const myPageFilterSetting = {
     clearTimeout(this.timeout);
     if (/\/settings\/filter/.test(location.pathname)) {
       this.timeout = setTimeout(() => {
-        console.log('Timeout myPageFilterSetting')
         this.addHTML();
         this.init();
       }, 500);

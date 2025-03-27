@@ -154,7 +154,6 @@ const processingData = async (nodes: NodeListOf<HTMLElement>) => {
 
   if (highPerformanceAnswer) {
     setTimeout(() => {
-      console.log('Timeout highPerformanceAnswer');
       const nodes = domA('.AnswersNavWrapper .List-item');
       if (nodes.length > 30) {
         const nIndex = nodes.length - 30;

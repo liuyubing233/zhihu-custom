@@ -8,7 +8,6 @@ export const myListenUserHomeList = {
   init: async function () {
     const nTimestamp = +new Date();
     if (nTimestamp - this.timestamp < 500) {
-      console.log('Timeout myListenUserHomeList')
       setTimeout(() => this.init(), 500);
       return;
     }

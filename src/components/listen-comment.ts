@@ -99,7 +99,6 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
   // 评论加载中
   if (nodeComments.querySelector('.css-1t6pvna') || nodeComments.querySelector('.BounceLoading')) {
     setTimeout(() => {
-      console.log('Timeout formatComments')
       formatComments(nodeComments, commentBoxClass);
     }, 500);
     return;
@@ -112,7 +111,6 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
 
     // 按钮的处理
     if (item.nodeName === 'BUTTON') {
-      console.log('Timeout buttonListener')
       item.removeEventListener('click', buttonListener);
       item.addEventListener('click', buttonListener);
       continue;
@@ -181,7 +179,6 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
 
     item.querySelectorAll('.comment_img img').forEach((itemImage) => {
       (itemImage as HTMLImageElement).onclick = () => {
-        console.log('Timeout beforeCommentImagePreview')
         setTimeout(commentImagePreview, 100);
       };
     });
@@ -216,7 +213,6 @@ const commentImagePreview = async () => {
     const nodeImageBox = domP(commentPreviewImage, 'class', 'ImageView')!;
     commentPreviewObserver && commentPreviewObserver.disconnect();
     commentPreviewObserver = new MutationObserver((records) => {
-      console.log('MutationObserver commentPreviewObserver')
       if (!nodeImageBox.classList.contains('is-active')) {
         commentPreviewImage.style.transition = '';
       }

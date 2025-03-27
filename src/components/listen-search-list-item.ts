@@ -7,7 +7,6 @@ export const myListenSearchListItem = {
   init: async function () {
     const currentTime = +new Date();
     if (currentTime - this.initTimestamp < 500) {
-      console.log('Timeout myListenSearchListItem')
       setTimeout(() => this.init(), 500);
       return;
     }

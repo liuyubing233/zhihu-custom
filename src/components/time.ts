@@ -30,7 +30,6 @@ const resetQuestionTime = () => {
   }
   questionFindIndex++;
   clearTimeout(questionTimeout);
-  console.log('Timeout addQuestionTime')
   questionTimeout = setTimeout(addQuestionTime, 500);
 };
 
@@ -74,7 +73,6 @@ export const addArticleTime = async () => {
     })
   );
   setTimeout(() => {
-    console.log('Timeout addArticleTime')
     // 解决页面重载问题
     addArticleTime();
   }, 500);
