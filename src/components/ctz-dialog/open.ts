@@ -1,8 +1,7 @@
-import { ID_EXTRA_DIALOG } from '../misc';
-import { dom, domA, domById, myScroll } from '../tools';
-import { echoData } from './echo-data';
-import { echoHistory } from './history';
-import { CLASS_OPENED } from './menu';
+import { ID_EXTRA_DIALOG } from '../../misc';
+import { dom, domById, myScroll } from '../../tools';
+import { echoData } from '../echo-data';
+import { echoHistory } from '../history';
 
 /** 修改器弹窗打开关闭 */
 export const openChange = () => {
@@ -16,7 +15,6 @@ export const openChange = () => {
     myScroll.stop();
   } else {
     // 关闭
-    domA('.ctz-dropdown-icon').forEach((item) => item.classList.remove(CLASS_OPENED));
     const nodeDialog = domById('CTZ_DIALOG')!;
     nodeDialog.style.display = 'none';
     nodeDialog.style.height = '';

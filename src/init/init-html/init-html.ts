@@ -1,8 +1,8 @@
 import { createHTMLBackgroundSetting } from '../../components/background';
 import { BLOCKED_USER_COMMON } from '../../components/black-list';
+import { initMenu } from '../../components/ctz-dialog';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
 import { createHTMLHiddenConfig } from '../../components/hidden';
-import { initMenu } from '../../components/menu';
 import { createHTMLTitleICOChange } from '../../components/page-title';
 import { createHTMLMySelect } from '../../components/select';
 import { createHTMLSizeSetting } from '../../components/size';

@@ -824,6 +824,30 @@
     dom(".ctz-set-background", domMain).innerHTML = `<div class="ctz-form-box-item">${`<div>主题</div><div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label, i.background)).join("")}</div>`}</div><div class="ctz-form-box-item">${`<div>浅色主题</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div>`}</div><div class="ctz-form-box-item">${`<div>深色主题</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`}</div>`;
   };
   var doHighlightOriginal = async (backgroundHighlightOriginal = "", themeDark, themeLight) => "background: " + (backgroundHighlightOriginal ? `${backgroundHighlightOriginal}!important;` : await isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "rgb(251,248,241)!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`);
+  var initMenu = (domMain) => {
+    const { hash } = location;
+    const arrayHash = [...domA("#CTZ_DIALOG_MENU>div", domMain)].map((i) => i.getAttribute("data-href"));
+    const chooseId = arrayHash.find((i) => i === hash || hash.replace(i, "") !== hash);
+    fnChangeMenu(dom(`#CTZ_DIALOG_MENU>div[data-href="${chooseId || arrayHash[0]}"]`, domMain), domMain);
+  };
+  var onChangeMenu = (event) => {
+    const target = event.target;
+    if (target.getAttribute("data-href")) {
+      const dataHref = target.getAttribute("data-href") || "";
+      location.hash = dataHref;
+      fnChangeMenu(target, document.body);
+      return;
+    }
+  };
+  var fnChangeMenu = (target, domMain) => {
+    const chooseId = (target.getAttribute("data-href") || "").replace(/#/, "");
+    if (!chooseId) return;
+    domA("#CTZ_DIALOG_MENU>div", domMain).forEach((item) => item.classList.remove("target"));
+    domA("#CTZ_DIALOG_MAIN>div", domMain).forEach((item) => item.style.display = chooseId === item.id ? "block" : "none");
+    target.classList.add("target");
+    const commit = target.getAttribute("data-commit") || "";
+    dom("#CTZ_DIALOG_RIGHT_TITLE", domMain).innerHTML = `${target.innerText}<span>${commit}</span>`;
+  };
   var createHTMLSizeSetting = (domMain) => {
     dom("#CTZ_VERSION_RANGE_ZHIHU", domMain).innerHTML = VERSION_RANGE_HAVE_PERCENT.map(
       (item) => `<div class="ctz-form-box-item">${`<div>${item.label}${createHTMLTooltip("最小显示宽度为600像素，设置低于此值将按照600像素显示")}</div><div>${createHTMLRange(item.value, VERSION_MIN_WIDTH, 1500) + createHTMLRange(`${item.value}Percent`, 20, 100, "%")}</div>`}</div><div class="ctz-form-box-item">${`<div>${item.label}使用百分比设置</div><div><input class="ctz-i ctz-switch" name="${item.value}IsPercent" type="checkbox" value="on" /></div>`}</div>`
@@ -1010,31 +1034,6 @@
     nodeList && (nodeList.innerHTML = list.join(""));
     nodeView && (nodeView.innerHTML = view.join(""));
   };
-  var initMenu = (domMain) => {
-    const { hash } = location;
-    const arrayHash = [...domA("#CTZ_DIALOG_MENU>div", domMain)].map((i) => i.getAttribute("data-href"));
-    const chooseId = arrayHash.find((i) => i === hash || hash.replace(i, "") !== hash);
-    fnChangeMenu(dom(`#CTZ_DIALOG_MENU>div[data-href="${chooseId || arrayHash[0]}"]`, domMain), domMain);
-  };
-  var CLASS_OPENED = "ctz-dropdown-open";
-  var onChangeMenu = (event) => {
-    const target = event.target;
-    if (target.getAttribute("data-href")) {
-      const dataHref = target.getAttribute("data-href") || "";
-      location.hash = dataHref;
-      fnChangeMenu(target, document.body);
-      return;
-    }
-  };
-  var fnChangeMenu = (target, domMain) => {
-    const chooseId = (target.getAttribute("data-href") || "").replace(/#/, "");
-    if (!chooseId) return;
-    domA("#CTZ_DIALOG_MENU>div", domMain).forEach((item) => item.classList.remove("target"));
-    domA("#CTZ_DIALOG_MAIN>div", domMain).forEach((item) => item.style.display = chooseId === item.id ? "block" : "none");
-    target.classList.add("target");
-    const commit = target.getAttribute("data-commit") || "";
-    dom("#CTZ_DIALOG_RIGHT_TITLE", domMain).innerHTML = `${target.innerText}<span>${commit}</span>`;
-  };
   var openChange = () => {
     const nodeButton = domById("CTZ_OPEN_CLOSE");
     if (nodeButton.dataset.close === "1") {
@@ -1044,7 +1043,6 @@
       nodeButton.dataset.close = "0";
       myScroll.stop();
     } else {
-      domA(".ctz-dropdown-icon").forEach((item) => item.classList.remove(CLASS_OPENED));
       const nodeDialog = domById("CTZ_DIALOG");
       nodeDialog.style.display = "none";
       nodeDialog.style.height = "";

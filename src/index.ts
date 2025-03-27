@@ -2,6 +2,7 @@ import { checkThemeDarkOrLight, myBackground } from './components/background';
 import { interceptResponseForBlocked, topBlockUser } from './components/black-list';
 import { initBlockedWords } from './components/blocked-words';
 import { canCopy, eventCopy } from './components/copy';
+import { closeExtra, openChange } from './components/ctz-dialog';
 import { myCtzTypeOperation } from './components/ctz-type-operate';
 import { myCustomStyle } from './components/custom-style';
 import { echoData } from './components/echo-data';
@@ -16,7 +17,6 @@ import { closeCommentDialog, formatCommentAuthors } from './components/listen-co
 import { myListenList } from './components/listen-list';
 import { myListenSearchListItem } from './components/listen-search-list-item';
 import { initOneClickInvitation } from './components/one-click-invitation';
-import { closeExtra, openChange } from './components/open';
 import { myPageFilterSetting } from './components/page-filter-setting';
 import { changeICO, changeTitle, myCachePageTitle } from './components/page-title';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';

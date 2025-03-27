@@ -1,9 +1,8 @@
 import { onExportBlack, onImportBlack, onSyncBlackList, onSyncRemoveBlockedUsers } from '../components/black-list';
+import { onChangeMenu, openChange } from '../components/ctz-dialog';
 import { myCustomStyle } from '../components/custom-style';
 import { fnChanger } from '../components/fn-changer';
 import { echoHistory } from '../components/history';
-import { onChangeMenu } from '../components/menu';
-import { openChange } from '../components/open';
 import { buttonConfirmPageTitle, buttonResetPageTitle } from '../components/page-title';
 import { myPreview } from '../components/preview';
 import { moveAndOpen } from '../components/suspension/move';

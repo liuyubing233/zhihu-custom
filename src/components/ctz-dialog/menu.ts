@@ -1,5 +1,5 @@
 /** 页面操作 */
-import { dom, domA } from '../tools';
+import { dom, domA } from '../../tools';
 
 /** 菜单初始化 */
 export const initMenu = (domMain: HTMLElement) => {
@@ -9,7 +9,6 @@ export const initMenu = (domMain: HTMLElement) => {
   fnChangeMenu(dom(`#CTZ_DIALOG_MENU>div[data-href="${chooseId || arrayHash[0]}"]`, domMain) as HTMLElement, domMain);
 };
 
-export const CLASS_OPENED = 'ctz-dropdown-open';
 
 export const onChangeMenu = (event: MouseEvent) => {
   const target = event.target as HTMLElement;
