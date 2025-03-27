@@ -43,6 +43,7 @@ const loadIframePrint = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText
   if (nodePDFView.querySelectorAll('img').length) {
     nodePDFView.querySelectorAll('img').forEach((imageItem, index) => {
       setTimeout(function () {
+        console.log('Timeout nodePDFView')
         imageItem.src = imageItem.getAttribute('data-original')!;
         imageItem.onload = function () {
           finish++;
@@ -165,6 +166,7 @@ export const printArticle = async (contentItem: HTMLElement) => {
   };
   insertAfter(nButton, nodeHeader);
   setTimeout(() => {
+    console.log('Timeout printArticle')
     // 是为了解决页面内容被刷新的掉的问题
     printArticle(contentItem);
   }, 500);
@@ -187,6 +189,7 @@ export const printPeopleAnswer = async () => {
   };
   nodeListHeader.appendChild(nButton);
   setTimeout(() => {
+    console.log('Timeout printPeopleAnswer')
     printPeopleAnswer();
   }, 500);
 };
@@ -208,6 +211,7 @@ export const printPeopleArticles = async () => {
   };
   nodeListHeader.appendChild(nButton);
   setTimeout(() => {
+    console.log('Timeout printPeopleArticles')
     printPeopleArticles();
   }, 500);
 };

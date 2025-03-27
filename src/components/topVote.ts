@@ -21,6 +21,7 @@ export const updateTopVote = async (contentItem: HTMLElement) => {
     });
     nodeItemMeta.appendChild(domVote);
     const metaObserver = new MutationObserver(() => {
+      console.log('MutationObserver updateTopVote')
       updateTopVote(contentItem);
     });
     metaObserver.observe(nodeVote, {

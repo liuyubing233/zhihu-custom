@@ -9,8 +9,12 @@ import { EAnswerOpen } from './select';
 export const myListenAnswerItem = {
   initTimestamp: 0,
   init: async function () {
+    if (!location.pathname.includes('/question/')) return;
+
+    console.log('??????????myListenAnswerItem');
     const currentTime = +new Date();
     if (currentTime - this.initTimestamp < 500) {
+      console.log('Timeout myListenAnswerItem');
       setTimeout(() => this.init(), 500);
       return;
     }
@@ -131,6 +135,7 @@ export const myListenAnswerItem = {
 
     if (highPerformanceAnswer) {
       setTimeout(() => {
+        console.log('Timeout highPerformanceAnswer');
         const nodes = domA('.AnswersNavWrapper .List-item');
         if (nodes.length > 30) {
           const nIndex = nodes.length - 30;

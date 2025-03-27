@@ -1,9 +1,17 @@
 import { dom, myStorage } from '../tools';
 
+const CONTENT_HREF = ['www.zhihu.com/question/', 'zhuanlan.zhihu.com/p/', 'www.zhihu.com/zvideo/'];
+
 /** 添加浏览历史 */
 export const initHistoryView = async () => {
   const { href, origin, pathname } = location;
+  // 判断是否在内容页面中（回答、文章、视频）
+  let isContentHref = false;
+  CONTENT_HREF.forEach((item) => href.includes(item) && (isContentHref = true));
+  if (!isContentHref) return;
+
   setTimeout(async () => {
+    console.log('Timeout initHistoryView');
     let name = '';
     const isQuestion = href.includes('www.zhihu.com/question/');
     isQuestion &&
@@ -13,6 +21,7 @@ export const initHistoryView = async () => {
     href.includes('www.zhihu.com/zvideo/') && dom('.ZVideo .ZVideo-title') && (name = `<b style="color: #12c2e9">「视频」</b>${dom('.ZVideo .ZVideo-title')!.innerText}`);
 
     if (!name) {
+      console.log('!name???????????');
       initHistoryView();
       return;
     }

@@ -27,6 +27,7 @@ const cacheSuspension = (name: IHeaderName, classname: string, index = 0) => {
   const nextDom = dom(classname);
   if (nextDom) {
     setHeaderCache(name, nextDom);
+    console.log('Timeout cacheSuspension11', index, classname);
     setTimeout(() => cacheSuspension(name, classname, index), 500);
     return;
   }
@@ -36,5 +37,6 @@ const cacheSuspension = (name: IHeaderName, classname: string, index = 0) => {
     setHeaderFound(name);
     return;
   }
+  console.log('Timeout cacheSuspension22', index, classname);
   setTimeout(() => cacheSuspension(name, classname, ++index), 500);
 };

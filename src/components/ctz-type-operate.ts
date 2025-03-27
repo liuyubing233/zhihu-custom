@@ -14,6 +14,7 @@ export const myCtzTypeOperation = {
       this.clickAndClose('.QuestionButtonGroup button');
     } else {
       setTimeout(() => {
+        console.log('Timeout myCtzTypeOperation1')
         this['1']();
       }, 500);
     }
@@ -29,6 +30,7 @@ export const myCtzTypeOperation = {
       this.clickAndClose('.CollectionDetailPageHeader-actions .FollowButton');
     } else {
       setTimeout(() => {
+        console.log('Timeout myCtzTypeOperation3')
         this['3']();
       }, 500);
     }
@@ -38,6 +40,7 @@ export const myCtzTypeOperation = {
     if (nodeItem) {
       nodeItem.click();
       setTimeout(() => {
+        console.log('Timeout clickAndClose')
         window.close();
       }, 300);
     }

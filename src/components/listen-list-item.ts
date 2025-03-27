@@ -9,19 +9,23 @@ import { recommendHighPerformance } from './list-position';
 /** 监听列表内容 - 过滤  */
 export const myListenListItem = {
   initTimestamp: 0,
+  loaded: true,
   init: async function () {
+    if (!this.loaded) return;
     const nodeLoading = dom('.Topstory-recommend .List-item.List-item');
     const currentTime = +new Date();
     // 存在此元素时为加载数据状态，半秒钟后再次加载
     // 时间戳添加，解决重置问题
     if (nodeLoading || currentTime - this.initTimestamp < 500) {
+      console.log('Timeout myListenListItem111');
       setTimeout(() => this.init(), 500);
       return;
     }
     this.initTimestamp = currentTime;
-
+    this.finish();
     await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
     setTimeout(async () => {
+      console.log('Timeout myListenListItem222');
       await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`)); // 每次执行后检测未检测到的项，解决内容重载的问题
     }, 500);
     await recommendHighPerformance();
@@ -57,6 +61,26 @@ export const myListenListItem = {
     const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
     const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
+
+    const replaceBlockWord = (innerText: string, nodeItemContent: Element, blockWords: string[], title: string, byWhat: string) => {
+      if (innerText) {
+        let matchedWord = '';
+        for (let word of blockWords) {
+          const rep = new RegExp(word.toLowerCase());
+          if (rep.test(innerText.toLowerCase())) {
+            matchedWord += `「${word}」`;
+            break;
+          }
+        }
+        if (matchedWord) {
+          const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+          const routeURL = elementItemProp && elementItemProp.getAttribute('content');
+          return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+        }
+      }
+      return '';
+    };
+
     for (let i = 0, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
       if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
@@ -127,12 +151,12 @@ export const myListenListItem = {
       }
 
       // 标题屏蔽词过滤
-      !message && (message = this.replaceBlockWord(title, nodeContentItem, filterKeywords, title, '标题'));
+      !message && (message = replaceBlockWord(title, nodeContentItem, filterKeywords, title, '标题'));
       // 内容屏蔽词过滤
       if (!message) {
         const domRichContent = nodeItem.querySelector('.RichContent');
         const innerText = domRichContent ? (domRichContent as HTMLElement).innerText : '';
-        message = this.replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, '内容');
+        message = replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, '内容');
       }
 
       if (message) {
@@ -188,26 +212,15 @@ export const myListenListItem = {
     });
   },
   restart: function () {
+    this.doLoad();
     this.reset();
     this.init();
   },
-  replaceBlockWord: function (innerText: string, nodeItemContent: Element, blockWords: string[], title: string, byWhat: string) {
-    if (innerText) {
-      let matchedWord = '';
-      for (let word of blockWords) {
-        const rep = new RegExp(word.toLowerCase());
-        if (rep.test(innerText.toLowerCase())) {
-          matchedWord += `「${word}」`;
-          break;
-        }
-      }
-      if (matchedWord) {
-        const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-        const routeURL = elementItemProp && elementItemProp.getAttribute('content');
-        return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
-      }
-    }
-    return '';
+  doLoad: function () {
+    this.loaded = true;
+  },
+  finish: function () {
+    this.loaded = false;
   },
 };
 

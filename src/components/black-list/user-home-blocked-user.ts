@@ -16,6 +16,7 @@ export const topBlockUser = async () => {
   const domProfileHeader = domById('ProfileHeader');
   if (!domProfileHeader || !domProfileHeader.dataset.zaExtraModule) {
     // 解决用户主页重置的情况
+    console.log('Timeout topBlockUser11')
     setTimeout(topBlockUser, 500);
     return;
   }
@@ -41,6 +42,7 @@ export const topBlockUser = async () => {
   nodeUserHeaderOperate.insertBefore(nDomButton, domUnblock);
   blockObserver && blockObserver.disconnect();
   blockObserver = new MutationObserver(() => {
+    console.log('MutationObserver blockObserver')
     topBlockUser();
   });
   blockObserver.observe(nodeFooterOperations, {
@@ -53,6 +55,7 @@ export const topBlockUser = async () => {
 
   if (index === 0) {
     index++
+    console.log('Timeout topBlockUser22')
     setTimeout(topBlockUser, 1000);
   }
 };

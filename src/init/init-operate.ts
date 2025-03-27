@@ -83,6 +83,7 @@ export const initOperate = () => {
       const nConfig = JSON.parse(config);
       await myStorage.updateConfig(nConfig);
       setTimeout(() => {
+        console.log('Timeout inputImportFile')
         location.reload();
       }, 300);
     }
@@ -121,6 +122,7 @@ const myButtonOperation: Record<string, Function> = {
       blockedUsers,
     });
     setTimeout(() => {
+      console.log('Timeout configReset')
       location.reload();
     }, 300);
   },
@@ -158,6 +160,7 @@ const myButtonOperation: Record<string, Function> = {
       ...CONFIG_SIMPLE,
     });
     setTimeout(() => {
+      console.log('Timeout useSimple')
       location.reload();
     }, 300);
   },
@@ -171,24 +174,4 @@ const myButtonOperation: Record<string, Function> = {
   importBlackConfig: () => {
     dom('.ctz-input-import-black')!.click();
   },
-};
-
-/** 配置导入文件方法 */
-const configImport = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  const configFile = (target.files || [])[0];
-  if (!configFile) return;
-  const reader = new FileReader();
-  reader.readAsText(configFile);
-  reader.onload = async (oFREvent) => {
-    let config = oFREvent.target ? oFREvent.target.result : '';
-    if (typeof config === 'string') {
-      const nConfig = JSON.parse(config);
-      await myStorage.updateConfig(nConfig);
-      setTimeout(() => {
-        location.reload();
-      }, 300);
-    }
-  };
-  target.value = '';
 };

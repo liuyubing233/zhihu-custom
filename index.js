@@ -398,6 +398,7 @@
       prevDom && domBox.removeChild(prevDom);
     }
     setTimeout(() => {
+      console.log("Timeout message", value);
       const nPrevDom = dom(`.${classTime}`);
       if (nPrevDom) {
         domById("CTZ_MESSAGE_BOX").removeChild(nPrevDom);
@@ -744,6 +745,7 @@
     const muConfig = { attribute: true, attributeFilter: ["data-theme"] };
     if (!elementHTML) return;
     const muCallback = async function() {
+      console.log("MutationObserver checkThemeDarkOrLight");
       const themeName = elementHTML.getAttribute("data-theme");
       const dark = await isDark();
       if (themeName === "dark" && !dark || themeName === "light" && dark) {
@@ -1487,6 +1489,7 @@
     if (isMe) return;
     const domProfileHeader = domById("ProfileHeader");
     if (!domProfileHeader || !domProfileHeader.dataset.zaExtraModule) {
+      console.log("Timeout topBlockUser11");
       setTimeout(topBlockUser, 500);
       return;
     }
@@ -1509,6 +1512,7 @@
     nodeUserHeaderOperate.insertBefore(nDomButton, domUnblock);
     blockObserver && blockObserver.disconnect();
     blockObserver = new MutationObserver(() => {
+      console.log("MutationObserver blockObserver");
       topBlockUser();
     });
     blockObserver.observe(nodeFooterOperations, {
@@ -1520,6 +1524,7 @@
     });
     if (index === 0) {
       index++;
+      console.log("Timeout topBlockUser22");
       setTimeout(topBlockUser, 1e3);
     }
   };
@@ -1623,6 +1628,7 @@
         this.clickAndClose(".QuestionButtonGroup button");
       } else {
         setTimeout(() => {
+          console.log("Timeout myCtzTypeOperation1");
           this["1"]();
         }, 500);
       }
@@ -1636,6 +1642,7 @@
         this.clickAndClose(".CollectionDetailPageHeader-actions .FollowButton");
       } else {
         setTimeout(() => {
+          console.log("Timeout myCtzTypeOperation3");
           this["3"]();
         }, 500);
       }
@@ -1645,6 +1652,7 @@
       if (nodeItem) {
         nodeItem.click();
         setTimeout(() => {
+          console.log("Timeout clickAndClose");
           window.close();
         }, 300);
       }
@@ -1662,6 +1670,7 @@
     init: function() {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => {
+        console.log("Timeout myFollowRemove");
         pathnameHasFn({
           questions: () => this.addButtons(this.classOb.questions),
           collections: () => this.addButtons(this.classOb.collections)
@@ -2425,6 +2434,7 @@
     idVideo: "CTZ_PREVIEW_VIDEO"
   };
   var callbackGIF = async (mutationsList) => {
+    console.log("MutationObserver callbackGIF");
     const target = mutationsList[0].target;
     const targetClassList = target.classList;
     const { showGIFinDialog } = await myStorage.getConfig();
@@ -2539,6 +2549,7 @@
     if (!justNumberInAction) return;
     const nTimestamp = +/* @__PURE__ */ new Date();
     if (nTimestamp - timestamp < 300) {
+      console.log("Timeout fnJustNumberInAction");
       setTimeout(fnJustNumberInAction, 300);
       return;
     }
@@ -2590,6 +2601,7 @@
     const { highPerformanceRecommend } = await myStorage.getConfig();
     if (!highPerformanceRecommend) return;
     setTimeout(() => {
+      console.log("Timeout recommendHighPerformance");
       const nodes = domA(`.${CLASS_LISTENED}`);
       if (nodes.length > 50) {
         const nodeLast = nodes[nodes.length - 1];
@@ -2692,6 +2704,7 @@
     if (nodePDFView.querySelectorAll("img").length) {
       nodePDFView.querySelectorAll("img").forEach((imageItem, index2) => {
         setTimeout(function() {
+          console.log("Timeout nodePDFView");
           imageItem.src = imageItem.getAttribute("data-original");
           imageItem.onload = function() {
             finish++;
@@ -2791,6 +2804,7 @@
     };
     insertAfter(nButton, nodeHeader);
     setTimeout(() => {
+      console.log("Timeout printArticle");
       printArticle(contentItem);
     }, 500);
   };
@@ -2810,6 +2824,7 @@
     };
     nodeListHeader.appendChild(nButton);
     setTimeout(() => {
+      console.log("Timeout printPeopleAnswer");
       printPeopleAnswer();
     }, 500);
   };
@@ -2829,6 +2844,7 @@
     };
     nodeListHeader.appendChild(nButton);
     setTimeout(() => {
+      console.log("Timeout printPeopleArticles");
       printPeopleArticles();
     }, 500);
   };
@@ -2859,6 +2875,7 @@
     }
     questionFindIndex++;
     clearTimeout(questionTimeout);
+    console.log("Timeout addQuestionTime");
     questionTimeout = setTimeout(addQuestionTime, 500);
   };
   var addQuestionTime = async () => {
@@ -2897,6 +2914,7 @@
       })
     );
     setTimeout(() => {
+      console.log("Timeout addArticleTime");
       addArticleTime();
     }, 500);
   };
@@ -2974,13 +2992,16 @@
       return originalPlay.apply(this, arguments);
     };
   };
+  var timeout;
   var fnReplaceZhidaToSearch = async (domFind = document.body, index2 = 0) => {
-    if (index2 === 10) return;
+    if (index2 === 5) return;
     const { replaceZhidaToSearch = "default" /* 不替换 */ } = await myStorage.getConfig();
     if (replaceZhidaToSearch === "default" /* 不替换 */) return;
     const domsZhida = domFind.querySelectorAll(".RichContent-EntityWord");
     if (!domsZhida.length) {
-      setTimeout(() => {
+      timeout && clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        console.log("Timeout fnReplaceZhidaToSearch", index2);
         fnReplaceZhidaToSearch(domFind, ++index2);
       }, 500);
       return;
@@ -3049,6 +3070,7 @@
     doContentItem(pageType, contentItem, true);
   };
   var doContentItem = async (pageType, contentItem, needTimeout = false) => {
+    console.log("??????? doContentItem", pageType);
     if (!contentItem || !pageType) return;
     const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, answerItemCreatedAndModifiedTime, userHomeContentTimeTop } = await myStorage.getConfig();
     const doFun = () => {
@@ -3081,6 +3103,7 @@
       }
     };
     if (needTimeout) {
+      console.log("Timeout doFun");
       setTimeout(doFun, 500);
     } else {
       doFun();
@@ -3089,8 +3112,11 @@
   var myListenAnswerItem = {
     initTimestamp: 0,
     init: async function() {
+      if (!location.pathname.includes("/question/")) return;
+      console.log("??????????myListenAnswerItem");
       const currentTime = +/* @__PURE__ */ new Date();
       if (currentTime - this.initTimestamp < 500) {
+        console.log("Timeout myListenAnswerItem");
         setTimeout(() => this.init(), 500);
         return;
       }
@@ -3193,6 +3219,7 @@
       }
       if (highPerformanceAnswer) {
         setTimeout(() => {
+          console.log("Timeout highPerformanceAnswer");
           const nodes2 = domA(".AnswersNavWrapper .List-item");
           if (nodes2.length > 30) {
             const nIndex = nodes2.length - 30;
@@ -3288,6 +3315,7 @@
     if (!nodeComments) return;
     if (nodeComments.querySelector(".css-1t6pvna") || nodeComments.querySelector(".BounceLoading")) {
       setTimeout(() => {
+        console.log("Timeout formatComments");
         formatComments(nodeComments, commentBoxClass);
       }, 500);
       return;
@@ -3298,6 +3326,7 @@
     for (let i = 0, len = comments.length; i < len; i++) {
       const item = comments[i];
       if (item.nodeName === "BUTTON") {
+        console.log("Timeout buttonListener");
         item.removeEventListener("click", buttonListener);
         item.addEventListener("click", buttonListener);
         continue;
@@ -3349,6 +3378,7 @@
       }
       item.querySelectorAll(".comment_img img").forEach((itemImage) => {
         itemImage.onclick = () => {
+          console.log("Timeout beforeCommentImagePreview");
           setTimeout(commentImagePreview, 100);
         };
       });
@@ -3370,6 +3400,7 @@
       const nodeImageBox = domP(commentPreviewImage, "class", "ImageView");
       commentPreviewObserver && commentPreviewObserver.disconnect();
       commentPreviewObserver = new MutationObserver((records) => {
+        console.log("MutationObserver commentPreviewObserver");
         if (!nodeImageBox.classList.contains("is-active")) {
           commentPreviewImage.style.transition = "";
         }
@@ -3383,16 +3414,21 @@
   };
   var myListenListItem = {
     initTimestamp: 0,
+    loaded: true,
     init: async function() {
+      if (!this.loaded) return;
       const nodeLoading = dom(".Topstory-recommend .List-item.List-item");
       const currentTime = +/* @__PURE__ */ new Date();
       if (nodeLoading || currentTime - this.initTimestamp < 500) {
+        console.log("Timeout myListenListItem111");
         setTimeout(() => this.init(), 500);
         return;
       }
       this.initTimestamp = currentTime;
+      this.finish();
       await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
       setTimeout(async () => {
+        console.log("Timeout myListenListItem222");
         await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
       }, 500);
       await recommendHighPerformance();
@@ -3428,6 +3464,24 @@
       const pfHistory = await myStorage.getHistory();
       const historyList = pfHistory.list;
       const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
+      const replaceBlockWord = (innerText, nodeItemContent, blockWords, title, byWhat) => {
+        if (innerText) {
+          let matchedWord = "";
+          for (let word of blockWords) {
+            const rep = new RegExp(word.toLowerCase());
+            if (rep.test(innerText.toLowerCase())) {
+              matchedWord += `「${word}」`;
+              break;
+            }
+          }
+          if (matchedWord) {
+            const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+            const routeURL = elementItemProp && elementItemProp.getAttribute("content");
+            return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+          }
+        }
+        return "";
+      };
       for (let i = 0, len = nodes.length; i < len; i++) {
         const nodeItem = nodes[i];
         if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
@@ -3481,11 +3535,11 @@
         if (!message2 && removeItemQuestionAsk && nodeItem.querySelector(".TopstoryQuestionAskItem")) {
           message2 = "屏蔽邀请回答";
         }
-        !message2 && (message2 = this.replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
+        !message2 && (message2 = replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
         if (!message2) {
           const domRichContent = nodeItem.querySelector(".RichContent");
           const innerText = domRichContent ? domRichContent.innerText : "";
-          message2 = this.replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
+          message2 = replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
         }
         if (message2) {
           fnHidden(nodeItem, message2);
@@ -3533,26 +3587,15 @@
       });
     },
     restart: function() {
+      this.doLoad();
       this.reset();
       this.init();
     },
-    replaceBlockWord: function(innerText, nodeItemContent, blockWords, title, byWhat) {
-      if (innerText) {
-        let matchedWord = "";
-        for (let word of blockWords) {
-          const rep = new RegExp(word.toLowerCase());
-          if (rep.test(innerText.toLowerCase())) {
-            matchedWord += `「${word}」`;
-            break;
-          }
-        }
-        if (matchedWord) {
-          const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-          const routeURL = elementItemProp && elementItemProp.getAttribute("content");
-          return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
-        }
-      }
-      return "";
+    doLoad: function() {
+      this.loaded = true;
+    },
+    finish: function() {
+      this.loaded = false;
     }
   };
   var RECOMMEND_TYPE = {
@@ -3578,6 +3621,7 @@
     init: async function() {
       const currentTime = +/* @__PURE__ */ new Date();
       if (currentTime - this.initTimestamp < 500) {
+        console.log("Timeout myListenSearchListItem");
         setTimeout(() => this.init(), 500);
         return;
       }
@@ -3621,6 +3665,7 @@
   };
   var initOneClickInvitation = () => {
     setTimeout(() => {
+      console.log("Timeout initOneClickInvitation");
       const domInvitation = dom(".QuestionInvitation");
       if (!domInvitation || dom(".ctz-invite-once")) return;
       const nButton = domC("button", {
@@ -3634,6 +3679,7 @@
           if (moreAction) {
             moreAction.click();
             setTimeout(() => {
+              console.log("Timeout fnToMore");
               fnToMore();
             }, 50);
           } else {
@@ -3658,6 +3704,7 @@
       clearTimeout(this.timeout);
       if (/\/settings\/filter/.test(location.pathname)) {
         this.timeout = setTimeout(() => {
+          console.log("Timeout myPageFilterSetting");
           this.addHTML();
           this.init();
         }, 500);
@@ -3809,6 +3856,7 @@
           this.isMove = true;
           this.timer[configName] && clearTimeout(this.timer[configName]);
           this.timer[configName] = setTimeout(async () => {
+            console.log("Timeout this.timer[configName]");
             clearTimeout(this.timer[configName]);
             await myStorage.updateConfigItem(configName, `${isR ? `right: ${evenRight}px;` : `left: ${evenLeft}px;`}top: ${evenTop}px;`);
           }, 500);
@@ -3941,6 +3989,7 @@
       };
     };
   };
+  var timeoutChangeSuspensionTab;
   var changeSuspensionTab = async (index2 = 0, prevDom) => {
     const name = "suspensionHomeTab";
     const { suspensionHomeTab } = await myStorage.getConfig();
@@ -3954,12 +4003,15 @@
       }
       return;
     }
-    if (index2 >= 10) return;
-    setTimeout(() => changeSuspensionTab(++index2, dom(".Topstory-container .TopstoryTabs")), 500);
+    if (index2 >= 5) return;
+    console.log("Timeout changeSuspensionTab", index2);
+    timeoutChangeSuspensionTab && clearTimeout(timeoutChangeSuspensionTab);
+    timeoutChangeSuspensionTab = setTimeout(() => changeSuspensionTab(++index2, dom(".Topstory-container .TopstoryTabs")), 500);
   };
   var suspensionHeader = async (name) => {
     const { getHeaderCache, getHeaderFound } = storeSuspension;
     if (!getHeaderFound(name)) {
+      console.log("Timeout suspensionHeader");
       setTimeout(() => suspensionHeader(name), 1e3);
       return;
     }
@@ -4047,6 +4099,7 @@
     const nextDom = dom(classname);
     if (nextDom) {
       setHeaderCache(name, nextDom);
+      console.log("Timeout cacheSuspension11", index2, classname);
       setTimeout(() => cacheSuspension(name, classname, index2), 500);
       return;
     }
@@ -4054,6 +4107,7 @@
       setHeaderFound(name);
       return;
     }
+    console.log("Timeout cacheSuspension22", index2, classname);
     setTimeout(() => cacheSuspension(name, classname, ++index2), 500);
   };
   var suspensionPickupAttribute = async () => {
@@ -4070,6 +4124,7 @@
     init: async function() {
       const nTimestamp = +/* @__PURE__ */ new Date();
       if (nTimestamp - this.timestamp < 500) {
+        console.log("Timeout myListenUserHomeList");
         setTimeout(() => this.init(), 500);
         return;
       }
@@ -4101,15 +4156,21 @@
       this.init();
     }
   };
+  var CONTENT_HREF = ["www.zhihu.com/question/", "zhuanlan.zhihu.com/p/", "www.zhihu.com/zvideo/"];
   var initHistoryView = async () => {
     const { href, origin, pathname } = location;
+    let isContentHref = false;
+    CONTENT_HREF.forEach((item) => href.includes(item) && (isContentHref = true));
+    if (!isContentHref) return;
     setTimeout(async () => {
+      console.log("Timeout initHistoryView");
       let name = "";
       const isQuestion = href.includes("www.zhihu.com/question/");
       isQuestion && dom('.QuestionPage [itemprop="name"]') && (name = `<b style="color: #ec7259">「问题」</b>${dom('.QuestionPage [itemprop="name"]').content}`);
       href.includes("zhuanlan.zhihu.com/p/") && dom(".Post-Title") && (name = `<b style="color: #00965e">「文章」</b>${dom(".Post-Title").innerText}`);
       href.includes("www.zhihu.com/zvideo/") && dom(".ZVideo .ZVideo-title") && (name = `<b style="color: #12c2e9">「视频」</b>${dom(".ZVideo .ZVideo-title").innerText}`);
       if (!name) {
+        console.log("!name???????????");
         initHistoryView();
         return;
       }
@@ -4304,6 +4365,7 @@
     resizeObserver.observe(document.body);
   };
   async function resizeFun() {
+    console.log("Timeout resizeFun");
     if (!HTML_HOOTS.includes(location.hostname)) return;
     const { hiddenSearchBoxTopSearch, globalTitle } = await myStorage.getConfig();
     const nodeTopStoryC = domById("TopstoryContent");
@@ -4509,6 +4571,7 @@
         const nConfig = JSON.parse(config);
         await myStorage.updateConfig(nConfig);
         setTimeout(() => {
+          console.log("Timeout inputImportFile");
           location.reload();
         }, 300);
       }
@@ -4541,6 +4604,7 @@
         blockedUsers
       });
       setTimeout(() => {
+        console.log("Timeout configReset");
         location.reload();
       }, 300);
     },
@@ -4571,6 +4635,7 @@
         ...CONFIG_SIMPLE
       });
       setTimeout(() => {
+        console.log("Timeout useSimple");
         location.reload();
       }, 300);
     },
@@ -4603,11 +4668,12 @@
       openChange();
     });
     const T0 = performance.now();
-    const { hostname, href } = location;
+    const { hostname, href, pathname, hash } = location;
     const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers, setJsInitialData } = store;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
       if (!document.head) {
+        console.log("Timeout onDocumentStart");
         setTimeout(onDocumentStart, 100);
         return;
       }
@@ -4650,7 +4716,13 @@
             });
           }
           return originFetch(url, opt).then((res) => {
-            interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => findRemoveRecommends(r.data));
+            interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => {
+              myListenListItem.doLoad();
+              findRemoveRecommends(r.data);
+            });
+            interceptionResponse(res, /\/api\/v3\/moments/, (r) => {
+              myListenListItem.doLoad();
+            });
             interceptionResponse(res, /\api\/v4\/members\/[^/]+\/answers/, (r) => setUserAnswer(r.data));
             interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
             interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
@@ -4672,6 +4744,7 @@
     onDocumentStart();
     const onBodyLoad = async () => {
       if (!document.body) {
+        console.log("Timeout onBodyLoad");
         setTimeout(onBodyLoad, 100);
         return;
       }
@@ -4711,6 +4784,7 @@
         changeSizeBeforeResize();
         if (removeTopAD) {
           setTimeout(() => {
+            console.log("Timeout removeTopAD");
             mouseEventClick(dom("svg.css-1p094v5"));
           }, 300);
         }
@@ -4736,16 +4810,24 @@
         collection: () => myCollectionExport.init(),
         following: () => myFollowRemove.init(),
         answers: () => {
+          console.log("Timeout historyToChangePathnameAnswer");
           throttle(printPeopleAnswer)();
         },
         posts: () => {
+          console.log("Timeout historyToChangePathnamePost");
           throttle(printPeopleArticles)();
         },
         people: topBlockUser,
         org: topBlockUser
       });
     };
+    let prevHash = hash;
+    let prevPathname = pathname;
     const changeHistory = () => {
+      console.log("Timeout changeHistory", location.hash !== prevHash && prevPathname === location.pathname);
+      if (location.hash !== prevHash && prevPathname === location.pathname) return;
+      prevHash = location.hash;
+      prevPathname = location.pathname;
       historyToChangePathname();
       myListenListItem.reset();
       myListenSearchListItem.reset();
@@ -4760,6 +4842,7 @@
       nodeSignClose && nodeSignClose.click();
       if (hostname === "zhuanlan.zhihu.com") {
         setTimeout(() => {
+          console.log("Timeout addEventListener load");
           initVideoDownload(dom(".Post-content"));
           fnReplaceZhidaToSearch();
         }, 500);
@@ -4767,6 +4850,7 @@
       pathnameHasFn({
         zvideo: () => {
           setTimeout(() => {
+            console.log("Timeout zvideo");
             initVideoDownload(dom(".ZVideo-mainColumn"));
           }, 500);
         }
@@ -4775,6 +4859,7 @@
     window.addEventListener(
       "scroll",
       throttle(() => {
+        console.log("Timeout scroll");
         fnJustNumberInAction();
         canCopy();
       })

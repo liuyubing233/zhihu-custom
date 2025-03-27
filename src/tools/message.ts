@@ -25,6 +25,7 @@ export const message = (value: string, t: number = 3000) => {
     prevDom && domBox.removeChild(prevDom);
   }
   setTimeout(() => {
+    console.log('Timeout message', value)
     const nPrevDom = dom(`.${classTime}`);
     if (nPrevDom) {
       domById('CTZ_MESSAGE_BOX')!.removeChild(nPrevDom);
