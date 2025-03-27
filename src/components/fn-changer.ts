@@ -4,7 +4,7 @@ import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, myBack
 import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
 import { myListenAnswerItem } from './listen-answer-item';
-import { myListenListItem } from './listen-list-item';
+import { myListenList } from './listen-list';
 import { changeICO, changeTitle } from './page-title';
 import { mySize } from './size';
 import { changeSuspensionTab, suspensionHeader, suspensionPickupAttribute } from './suspension';
@@ -48,7 +48,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   const changeBackground = () => {
     mySize.change();
     myBackground.init();
-    myListenListItem.restart();
+    myListenList.restart();
     onUseThemeDark();
   };
 
@@ -80,8 +80,8 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     titleIco: changeICO,
     showGIFinDialog: previewGIF,
     questionCreatedAndModifiedTime: addQuestionTime,
-    highlightOriginal: () => myListenListItem.restart(),
-    listOutPutNotInterested: () => myListenListItem.restart(),
+    highlightOriginal: () => myListenList.restart(),
+    listOutPutNotInterested: () => myListenList.restart(),
     articleCreateTimeToTop: addArticleTime,
     versionHomeIsPercent: rangeChoosePercent,
     versionAnswerIsPercent: rangeChoosePercent,
@@ -97,7 +97,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     suspensionPickupRight: suspensionPickupAttribute,
     videoInAnswerArticle: () => {
       changeVideoStyle();
-      myListenListItem.restart();
+      myListenList.restart();
       myListenAnswerItem.restart();
     },
     homeContentOpen: () => {

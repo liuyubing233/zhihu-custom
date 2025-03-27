@@ -24,7 +24,7 @@ export interface IZhihuDataZop {
 }
 
 /** 用户信息 */
-export interface IZhihuUserinfo {
+export interface IZhihuUserInfo {
   id: string;
   url_token: string;
   name: string;

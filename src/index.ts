@@ -13,7 +13,7 @@ import { fnJustNumberInAction } from './components/just-number';
 import { myRecommendClosePosition } from './components/list-position';
 import { myListenAnswerItem } from './components/listen-answer-item';
 import { closeCommentDialog, formatCommentAuthors } from './components/listen-comment';
-import { myListenListItem } from './components/listen-list-item';
+import { myListenList } from './components/listen-list';
 import { myListenSearchListItem } from './components/listen-search-list-item';
 import { initOneClickInvitation } from './components/one-click-invitation';
 import { closeExtra, openChange } from './components/open';
@@ -49,7 +49,7 @@ import { INNER_CSS } from './web-resources';
 
   const T0 = performance.now();
   const { hostname, href, pathname, hash } = location;
-  const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers, setJsInitialData } = store;
+  const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserInfo, findRemoveAnswers, setJsInitialData } = store;
 
   /** 在启动时注入的内容 */
   async function onDocumentStart() {
@@ -110,12 +110,12 @@ import { INNER_CSS } from './web-resources';
         return originFetch(url, opt).then((res) => {
           // 推荐列表
           interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => {
-            myListenListItem.doLoad();
+            myListenList.dataLoad();
             findRemoveRecommends(r.data);
           });
           // 关注列表
           interceptionResponse(res, /\/api\/v3\/moments/, (r) => {
-            myListenListItem.doLoad();
+            myListenList.dataLoad();
           });
 
           // 用户主页回答
@@ -124,7 +124,7 @@ import { INNER_CSS } from './web-resources';
           interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
           // 个人信息
           interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
-            setUserinfo(r);
+            setUserInfo(r);
             appendHomeLink();
           });
           // 评论
@@ -245,7 +245,7 @@ import { INNER_CSS } from './web-resources';
     prevPathname = location.pathname;
     historyToChangePathname();
     // 重置监听起点
-    myListenListItem.reset();
+    myListenList.reset();
     myListenSearchListItem.reset();
     myListenAnswerItem.reset();
     myListenUserHomeList.reset();

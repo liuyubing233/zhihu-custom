@@ -4,7 +4,7 @@ import { fnJustNumberInAction } from '../components/just-number';
 import { initLinkChanger } from '../components/link';
 import { myListenAnswerItem } from '../components/listen-answer-item';
 import { doListenComment } from '../components/listen-comment';
-import { myListenListItem } from '../components/listen-list-item';
+import { myListenList } from '../components/listen-list';
 import { myListenSearchListItem } from '../components/listen-search-list-item';
 import { changeTitle } from '../components/page-title';
 import { myCollectionExport } from '../components/print';
@@ -30,9 +30,9 @@ async function resizeFun() {
     const heightTopStoryContent = nodeTopStoryC.offsetHeight;
     if (heightTopStoryContent < 200) {
       // 小于200为自动加载数据（其实初始值为141）
-      myListenListItem.restart();
+      myListenList.restart();
     } else {
-      myListenListItem.init();
+      myListenList.init();
     }
     // 如果列表模块高度小于网页高度则手动触发 resize 使其加载数据
     heightTopStoryContent < window.innerHeight && windowResize();

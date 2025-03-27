@@ -212,7 +212,7 @@
   };
   var Store = class {
     constructor() {
-      this.userinfo = void 0;
+      this.userInfo = void 0;
       this.prevFetchHeaders = {};
       this.removeRecommends = [];
       this.commendAuthors = [];
@@ -220,8 +220,8 @@
       this.userArticle = [];
       this.removeAnswers = [];
       this.jsInitialData = void 0;
-      this.setUserinfo = this.setUserinfo.bind(this);
-      this.getUserinfo = this.getUserinfo.bind(this);
+      this.setUserInfo = this.setUserInfo.bind(this);
+      this.getUserInfo = this.getUserInfo.bind(this);
       this.setFetchHeaders = this.setFetchHeaders.bind(this);
       this.getFetchHeaders = this.getFetchHeaders.bind(this);
       this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
@@ -237,11 +237,11 @@
       this.setJsInitialData = this.setJsInitialData.bind(this);
       this.getJsInitialData = this.getJsInitialData.bind(this);
     }
-    setUserinfo(inner) {
-      this.userinfo = inner;
+    setUserInfo(inner) {
+      this.userInfo = inner;
     }
-    getUserinfo() {
-      return this.userinfo;
+    getUserInfo() {
+      return this.userInfo;
     }
     setFetchHeaders(headers) {
       this.prevFetchHeaders = headers;
@@ -1315,10 +1315,10 @@
     };
     nodeUser.appendChild(nBlackBox);
   };
-  var changeBlockedUsersBox = (isBlocked, showBlock, showBlockTag, showBlockTagType, userinfo) => {
+  var changeBlockedUsersBox = (isBlocked, showBlock, showBlockTag, showBlockTagType, userInfo) => {
     if (isBlocked) {
       return fnReturnStr(
-        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userinfo && userinfo.tags && userinfo.tags.length ? "：" + userinfo.tags.join("、") : ""}</span>`,
+        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userInfo && userInfo.tags && userInfo.tags.length ? "：" + userInfo.tags.join("、") : ""}</span>`,
         showBlockTag
       ) + fnReturnStr(`<button class="${CLASS_BTN_REMOVE_BLOCKED} ctz-button">解除屏蔽</button>`, showBlock);
     } else {
@@ -3412,7 +3412,7 @@
     const button = dom(`.${CLASS_ZHIHU_COMMENT_DIALOG} button[aria-label="关闭"]`);
     button && button.click();
   };
-  var myListenListItem = {
+  var myListenList = {
     initTimestamp: 0,
     loaded: true,
     init: async function() {
@@ -3420,182 +3420,29 @@
       const nodeLoading = dom(".Topstory-recommend .List-item.List-item");
       const currentTime = +/* @__PURE__ */ new Date();
       if (nodeLoading || currentTime - this.initTimestamp < 500) {
-        console.log("Timeout myListenListItem111");
         setTimeout(() => this.init(), 500);
         return;
       }
       this.initTimestamp = currentTime;
-      this.finish();
-      await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+      this.loaded = false;
+      await processingData(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
       setTimeout(async () => {
-        console.log("Timeout myListenListItem222");
-        await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+        await processingData(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
       }, 500);
       await recommendHighPerformance();
     },
-    traversal: async function(nodes) {
-      if (!nodes.length) return;
-      const userinfo = store.getUserinfo();
-      const removeRecommends = store.getRemoveRecommends();
-      const pfConfig = await myStorage.getConfig();
-      const {
-        filterKeywords = [],
-        blockWordsAnswer = [],
-        removeItemAboutVideo,
-        removeItemAboutPin,
-        removeItemAboutArticle,
-        removeLessVote,
-        lessVoteNumber = 0,
-        removeItemQuestionAsk,
-        removeFollowVoteAnswer,
-        removeFollowVoteArticle,
-        removeFollowFQuestion,
-        listOutPutNotInterested,
-        highlightOriginal,
-        backgroundHighlightOriginal,
-        themeDark = 1 /* 深色一 */,
-        themeLight = 0 /* 默认 */,
-        removeMyOperateAtFollow,
-        listOutputToQuestion,
-        fetchInterceptStatus,
-        removeBlockUserContent,
-        blockedUsers = []
-      } = pfConfig;
-      const pfHistory = await myStorage.getHistory();
-      const historyList = pfHistory.list;
-      const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
-      const replaceBlockWord = (innerText, nodeItemContent, blockWords, title, byWhat) => {
-        if (innerText) {
-          let matchedWord = "";
-          for (let word of blockWords) {
-            const rep = new RegExp(word.toLowerCase());
-            if (rep.test(innerText.toLowerCase())) {
-              matchedWord += `「${word}」`;
-              break;
-            }
-          }
-          if (matchedWord) {
-            const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-            const routeURL = elementItemProp && elementItemProp.getAttribute("content");
-            return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
-          }
-        }
-        return "";
-      };
-      for (let i = 0, len = nodes.length; i < len; i++) {
-        const nodeItem = nodes[i];
-        if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
-        nodeItem.classList.add(CLASS_LISTENED);
-        nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
-        const nodeContentItem = nodeItem.querySelector(".ContentItem");
-        if (!nodeItem.scrollHeight || !nodeContentItem) continue;
-        let message2 = "";
-        let dataZop = {};
-        let cardContent = {};
-        const isVideo = nodeContentItem.classList.contains("ZVideoItem");
-        const isArticle = nodeContentItem.classList.contains("ArticleItem");
-        const isTip = nodeContentItem.classList.contains("PinItem");
-        try {
-          dataZop = JSON.parse(nodeContentItem.getAttribute("data-zop") || "{}");
-          cardContent = JSON.parse(nodeContentItem.getAttribute("data-za-extra-module") || "{}").card.content;
-        } catch {
-        }
-        const { title = "", itemId } = dataZop || {};
-        const domFeedSource = nodeItem.querySelector(".FeedSource");
-        if (domFeedSource) {
-          if (removeMyOperateAtFollow && nodeItem.classList.contains("TopstoryItem-isFollow")) {
-            try {
-              const findUserId = nodeItem.querySelector(".UserLink .UserLink-link").href.match(/[^\/]+$/)[0];
-              const myUserId = userinfo.url.match(/[^\/]+$/)[0];
-              findUserId === myUserId && (message2 = "关注列表屏蔽自己的操作");
-            } catch {
-            }
-          }
-          if (nodeItem.classList.contains("TopstoryItem-isFollow")) {
-            const textFeed = domFeedSource.textContent || "";
-            !message2 && removeFollowVoteAnswer && textFeed.includes("赞同了回答") && (message2 = "屏蔽关注人赞同的回答操作");
-            !message2 && removeFollowVoteArticle && textFeed.includes("赞同了文章") && (message2 = "屏蔽关注人赞同了文章操作");
-            !message2 && removeFollowFQuestion && textFeed.includes("关注了问题") && (message2 = "屏蔽关注人关注了问题操作");
-          }
-        }
-        if (!message2) {
-          const removeItem = removeRecommends.find((i2) => i2.id === String(itemId));
-          removeItem && (message2 = `推荐列表已屏蔽${removeItem.message}: ${title}`);
-        }
-        if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-          const findBlocked = blockedUsers.find((i2) => i2.id === cardContent.author_member_hash_id);
-          findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
-        }
-        !message2 && isVideo && removeItemAboutVideo && (message2 = `列表屏蔽视频：${title}`);
-        !message2 && isArticle && removeItemAboutArticle && (message2 = `列表屏蔽文章：${title}`);
-        !message2 && isTip && removeItemAboutPin && (message2 = `列表屏蔽想法`);
-        if (!message2 && removeLessVote && (cardContent["upvote_num"] || 0) < lessVoteNumber) {
-          message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`;
-        }
-        if (!message2 && removeItemQuestionAsk && nodeItem.querySelector(".TopstoryQuestionAskItem")) {
-          message2 = "屏蔽邀请回答";
-        }
-        !message2 && (message2 = replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
-        if (!message2) {
-          const domRichContent = nodeItem.querySelector(".RichContent");
-          const innerText = domRichContent ? domRichContent.innerText : "";
-          message2 = replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
-        }
-        if (message2) {
-          fnHidden(nodeItem, message2);
-          const { itemId: itemId2, type } = dataZop;
-          doFetchNotInterested({ id: `${itemId2 || ""}`, type: `${type}` });
-        } else {
-          if (domFeedSource) {
-            const textFeed = domFeedSource.textContent || "";
-            const domUserLink = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
-            const userName = domUserLink ? domUserLink.innerText : "";
-            if (textFeed.includes("发布了想法") || dataZop && dataZop.authorName === userName) {
-              const nodeActions = nodeItem.querySelector(".ContentItem-actions");
-              nodeItem.style.cssText = highlightOriginal ? `${highlight}border: 1px solid #aaa;` : "";
-              nodeActions && (nodeActions.style.cssText = highlightOriginal ? highlight : "");
-            }
-          }
-          const nodeItemTitle = nodeItem.querySelector(".ContentItem-title");
-          if (nodeItemTitle) {
-            if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
-              nodeItemTitle.appendChild(createButtonFontSize12("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
-            }
-            if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
-              const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
-              const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
-              nodeItemTitle.appendChild(createButtonFontSize12("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
-            }
-          }
-        }
-        if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
-          const nodeA = nodeItem.querySelector(".ContentItem-title a");
-          if (nodeA) {
-            const typeObj = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
-            const historyItem = `<a href="${nodeA.href}" target="_blank"><b style="${typeObj.style}">「${typeObj.name}」</b>${nodeA.innerText}</a>`;
-            !historyList.includes(historyItem) && historyList.unshift(historyItem);
-          }
-        }
-        if (i === len - 1) {
-          myStorage.updateHistoryItem("list", historyList);
-        }
-      }
-    },
     reset: function() {
+      this.dataLoad();
       domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
         item.classList.remove(CLASS_LISTENED);
       });
     },
     restart: function() {
-      this.doLoad();
       this.reset();
       this.init();
     },
-    doLoad: function() {
+    dataLoad: function() {
       this.loaded = true;
-    },
-    finish: function() {
-      this.loaded = false;
     }
   };
   var RECOMMEND_TYPE = {
@@ -3614,6 +3461,154 @@
     pin: {
       name: "想法",
       style: "color: #9c27b0"
+    }
+  };
+  var processingData = async (nodes) => {
+    if (!nodes.length) return;
+    const userInfo = store.getUserInfo();
+    const removeRecommends = store.getRemoveRecommends();
+    const pfConfig = await myStorage.getConfig();
+    const {
+      filterKeywords = [],
+      blockWordsAnswer = [],
+      removeItemAboutVideo,
+      removeItemAboutPin,
+      removeItemAboutArticle,
+      removeLessVote,
+      lessVoteNumber = 0,
+      removeItemQuestionAsk,
+      removeFollowVoteAnswer,
+      removeFollowVoteArticle,
+      removeFollowFQuestion,
+      listOutPutNotInterested,
+      highlightOriginal,
+      backgroundHighlightOriginal,
+      themeDark = 1 /* 深色一 */,
+      themeLight = 0 /* 默认 */,
+      removeMyOperateAtFollow,
+      listOutputToQuestion,
+      fetchInterceptStatus,
+      removeBlockUserContent,
+      blockedUsers = []
+    } = pfConfig;
+    const pfHistory = await myStorage.getHistory();
+    const historyList = pfHistory.list;
+    const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
+    const replaceBlockWord = (innerText, nodeItemContent, blockWords, title, byWhat) => {
+      if (innerText) {
+        let matchedWord = "";
+        for (let word of blockWords) {
+          const rep = new RegExp(word.toLowerCase());
+          if (rep.test(innerText.toLowerCase())) {
+            matchedWord += `「${word}」`;
+            break;
+          }
+        }
+        if (matchedWord) {
+          const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+          const routeURL = elementItemProp && elementItemProp.getAttribute("content");
+          return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+        }
+      }
+      return "";
+    };
+    for (let i = 0, len = nodes.length; i < len; i++) {
+      const nodeItem = nodes[i];
+      if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
+      nodeItem.classList.add(CLASS_LISTENED);
+      nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
+      const nodeContentItem = nodeItem.querySelector(".ContentItem");
+      if (!nodeItem.scrollHeight || !nodeContentItem) continue;
+      let message2 = "";
+      let dataZop = {};
+      let cardContent = {};
+      const isVideo = nodeContentItem.classList.contains("ZVideoItem");
+      const isArticle = nodeContentItem.classList.contains("ArticleItem");
+      const isTip = nodeContentItem.classList.contains("PinItem");
+      try {
+        dataZop = JSON.parse(nodeContentItem.getAttribute("data-zop") || "{}");
+        cardContent = JSON.parse(nodeContentItem.getAttribute("data-za-extra-module") || "{}").card.content;
+      } catch {
+      }
+      const { title = "", itemId } = dataZop || {};
+      const domFeedSource = nodeItem.querySelector(".FeedSource");
+      if (domFeedSource) {
+        if (removeMyOperateAtFollow && nodeItem.classList.contains("TopstoryItem-isFollow")) {
+          try {
+            const findUserId = nodeItem.querySelector(".UserLink .UserLink-link").href.match(/[^\/]+$/)[0];
+            const myUserId = userInfo.url.match(/[^\/]+$/)[0];
+            findUserId === myUserId && (message2 = "关注列表屏蔽自己的操作");
+          } catch {
+          }
+        }
+        if (nodeItem.classList.contains("TopstoryItem-isFollow")) {
+          const textFeed = domFeedSource.textContent || "";
+          !message2 && removeFollowVoteAnswer && textFeed.includes("赞同了回答") && (message2 = "屏蔽关注人赞同的回答操作");
+          !message2 && removeFollowVoteArticle && textFeed.includes("赞同了文章") && (message2 = "屏蔽关注人赞同了文章操作");
+          !message2 && removeFollowFQuestion && textFeed.includes("关注了问题") && (message2 = "屏蔽关注人关注了问题操作");
+        }
+      }
+      if (!message2) {
+        const removeItem = removeRecommends.find((i2) => i2.id === String(itemId));
+        removeItem && (message2 = `推荐列表已屏蔽${removeItem.message}: ${title}`);
+      }
+      if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
+        const findBlocked = blockedUsers.find((i2) => i2.id === cardContent.author_member_hash_id);
+        findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
+      }
+      !message2 && isVideo && removeItemAboutVideo && (message2 = `列表屏蔽视频：${title}`);
+      !message2 && isArticle && removeItemAboutArticle && (message2 = `列表屏蔽文章：${title}`);
+      !message2 && isTip && removeItemAboutPin && (message2 = `列表屏蔽想法`);
+      if (!message2 && removeLessVote && (cardContent["upvote_num"] || 0) < lessVoteNumber) {
+        message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`;
+      }
+      if (!message2 && removeItemQuestionAsk && nodeItem.querySelector(".TopstoryQuestionAskItem")) {
+        message2 = "屏蔽邀请回答";
+      }
+      !message2 && (message2 = replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
+      if (!message2) {
+        const domRichContent = nodeItem.querySelector(".RichContent");
+        const innerText = domRichContent ? domRichContent.innerText : "";
+        message2 = replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
+      }
+      if (message2) {
+        fnHidden(nodeItem, message2);
+        const { itemId: itemId2, type } = dataZop;
+        doFetchNotInterested({ id: `${itemId2 || ""}`, type: `${type}` });
+      } else {
+        if (domFeedSource) {
+          const textFeed = domFeedSource.textContent || "";
+          const domUserLink = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
+          const userName = domUserLink ? domUserLink.innerText : "";
+          if (textFeed.includes("发布了想法") || dataZop && dataZop.authorName === userName) {
+            const nodeActions = nodeItem.querySelector(".ContentItem-actions");
+            nodeItem.style.cssText = highlightOriginal ? `${highlight}border: 1px solid #aaa;` : "";
+            nodeActions && (nodeActions.style.cssText = highlightOriginal ? highlight : "");
+          }
+        }
+        const nodeItemTitle = nodeItem.querySelector(".ContentItem-title");
+        if (nodeItemTitle) {
+          if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
+            nodeItemTitle.appendChild(createButtonFontSize12("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
+          }
+          if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
+            const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
+            const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
+            nodeItemTitle.appendChild(createButtonFontSize12("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
+          }
+        }
+      }
+      if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
+        const nodeA = nodeItem.querySelector(".ContentItem-title a");
+        if (nodeA) {
+          const typeObj = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
+          const historyItem = `<a href="${nodeA.href}" target="_blank"><b style="${typeObj.style}">「${typeObj.name}」</b>${nodeA.innerText}</a>`;
+          !historyList.includes(historyItem) && historyList.unshift(historyItem);
+        }
+      }
+      if (i === len - 1) {
+        myStorage.updateHistoryItem("list", historyList);
+      }
     }
   };
   var myListenSearchListItem = {
@@ -4324,7 +4319,7 @@
     document.body.appendChild(nDomMain);
   };
   var appendHomeLink = (domMain = document.body) => {
-    const userInfo = store.getUserinfo();
+    const userInfo = store.getUserInfo();
     const boxToZhihu = dom(".ctz-to-zhihu", domMain);
     if (dom(".ctz-home-link") || !userInfo || !boxToZhihu) return;
     const hrefUser = userInfo.url ? userInfo.url.replace("/api/v4", "") : "";
@@ -4372,9 +4367,9 @@
     if (nodeTopStoryC) {
       const heightTopStoryContent = nodeTopStoryC.offsetHeight;
       if (heightTopStoryContent < 200) {
-        myListenListItem.restart();
+        myListenList.restart();
       } else {
-        myListenListItem.init();
+        myListenList.init();
       }
       heightTopStoryContent < window.innerHeight && windowResize();
     }
@@ -4431,7 +4426,7 @@
     const changeBackground = () => {
       mySize.change();
       myBackground.init();
-      myListenListItem.restart();
+      myListenList.restart();
       onUseThemeDark();
     };
     const rangeChoosePercent = () => {
@@ -4461,8 +4456,8 @@
       titleIco: changeICO,
       showGIFinDialog: previewGIF,
       questionCreatedAndModifiedTime: addQuestionTime,
-      highlightOriginal: () => myListenListItem.restart(),
-      listOutPutNotInterested: () => myListenListItem.restart(),
+      highlightOriginal: () => myListenList.restart(),
+      listOutPutNotInterested: () => myListenList.restart(),
       articleCreateTimeToTop: addArticleTime,
       versionHomeIsPercent: rangeChoosePercent,
       versionAnswerIsPercent: rangeChoosePercent,
@@ -4478,7 +4473,7 @@
       suspensionPickupRight: suspensionPickupAttribute,
       videoInAnswerArticle: () => {
         changeVideoStyle();
-        myListenListItem.restart();
+        myListenList.restart();
         myListenAnswerItem.restart();
       },
       homeContentOpen: () => {
@@ -4669,7 +4664,7 @@
     });
     const T0 = performance.now();
     const { hostname, href, pathname, hash } = location;
-    const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers, setJsInitialData } = store;
+    const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserInfo, findRemoveAnswers, setJsInitialData } = store;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
       if (!document.head) {
@@ -4717,16 +4712,16 @@
           }
           return originFetch(url, opt).then((res) => {
             interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => {
-              myListenListItem.doLoad();
+              myListenList.dataLoad();
               findRemoveRecommends(r.data);
             });
             interceptionResponse(res, /\/api\/v3\/moments/, (r) => {
-              myListenListItem.doLoad();
+              myListenList.dataLoad();
             });
             interceptionResponse(res, /\api\/v4\/members\/[^/]+\/answers/, (r) => setUserAnswer(r.data));
             interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
             interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
-              setUserinfo(r);
+              setUserInfo(r);
               appendHomeLink();
             });
             interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
@@ -4829,7 +4824,7 @@
       prevHash = location.hash;
       prevPathname = location.pathname;
       historyToChangePathname();
-      myListenListItem.reset();
+      myListenList.reset();
       myListenSearchListItem.reset();
       myListenAnswerItem.reset();
       myListenUserHomeList.reset();

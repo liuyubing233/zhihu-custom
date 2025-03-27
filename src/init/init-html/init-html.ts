@@ -46,7 +46,7 @@ export const initHTML = () => {
 
 /** 添加个人主页跳转 */
 export const appendHomeLink = (domMain: HTMLElement = document.body) => {
-  const userInfo = store.getUserinfo();
+  const userInfo = store.getUserInfo();
   const boxToZhihu = dom('.ctz-to-zhihu', domMain);
   if (dom('.ctz-home-link') || !userInfo || !boxToZhihu) return;
   const hrefUser = userInfo.url ? userInfo.url.replace('/api/v4', '') : '';
