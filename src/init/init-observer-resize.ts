@@ -2,7 +2,7 @@ import { canCopy } from '../components/copy';
 import { previewGIF } from '../components/image';
 import { fnJustNumberInAction } from '../components/just-number';
 import { initLinkChanger } from '../components/link';
-import { myListenAnswerItem } from '../components/listen-answer-item';
+import { myListenAnswer } from '../components/listen-answer';
 import { doListenComment } from '../components/listen-comment';
 import { myListenList } from '../components/listen-list';
 import { myListenSearchListItem } from '../components/listen-search-list-item';
@@ -44,7 +44,7 @@ async function resizeFun() {
   doListenComment();
   fnJustNumberInAction();
   myListenSearchListItem.init();
-  myListenAnswerItem.init();
+  myListenAnswer.init();
   myListenUserHomeList.init();
   canCopy();
   changeSizeBeforeResize();

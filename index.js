@@ -3109,131 +3109,23 @@
       doFun();
     }
   };
-  var myListenAnswerItem = {
+  var myListenAnswer = {
     initTimestamp: 0,
+    loaded: true,
     init: async function() {
-      if (!location.pathname.includes("/question/")) return;
-      console.log("??????????myListenAnswerItem");
+      if (!location.pathname.includes("/question/") || !this.loaded) return;
       const currentTime = +/* @__PURE__ */ new Date();
       if (currentTime - this.initTimestamp < 500) {
-        console.log("Timeout myListenAnswerItem");
         setTimeout(() => this.init(), 500);
         return;
       }
-      const nodes = domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`);
-      const removeAnswers = store.getRemoveAnswers();
-      const config = await myStorage.getConfig();
-      const {
-        removeFromYanxuan,
-        removeUnrealAnswer,
-        removeFromEBook,
-        removeAnonymousAnswer,
-        removeLessVoteDetail,
-        lessVoteNumberDetail = 0,
-        answerOpen = "default" /* 默认 */,
-        removeBlockUserContent,
-        blockedUsers,
-        blockWordsAnswer = [],
-        highPerformanceAnswer
-      } = config;
+      this.loaded = false;
       const questionAnswerContent = dom(".QuestionAnswer-content");
-      if (questionAnswerContent) {
-        doContentItem("QUESTION", questionAnswerContent.querySelector(".ContentItem"));
-      }
-      for (let i = 0, len = nodes.length; i < len; i++) {
-        let message2 = "";
-        const nodeItem = nodes[i];
-        nodeItem.classList.add(CLASS_LISTENED);
-        nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
-        if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
-        const nodeItemContent = nodeItem.querySelector(".ContentItem");
-        if (!nodeItemContent) continue;
-        let dataZop = {};
-        let dataCardContent = {};
-        try {
-          dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
-          dataCardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
-        } catch {
-        }
-        (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message2 = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
-        if (!message2 && removeFromYanxuan) {
-          const itemId = String(dataZop.itemId || "");
-          const findItem = removeAnswers.find((i2) => i2.id === itemId);
-          findItem && (message2 = findItem.message);
-        }
-        if (!message2) {
-          const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
-          const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
-          const tagNames = (nodeTag1 ? nodeTag1.innerText : "") + (nodeTag2 ? nodeTag2.innerText : "");
-          if (removeUnrealAnswer) {
-            tagNames.includes("虚构创作") && (message2 = "已删除一条虚构创作的回答");
-          }
-          if (removeFromEBook) {
-            tagNames.includes("电子书") && (message2 = "已删除一条来自电子书的回答");
-          }
-        }
-        if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-          const findBlocked = blockedUsers.find((i2) => i2.id === dataCardContent.author_member_hash_id);
-          findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}的回答`);
-        }
-        if (!message2 && removeAnonymousAnswer) {
-          const userName = nodeItem.querySelector('[itemprop="name"]').content;
-          userName === "匿名用户" && (message2 = `已屏蔽一条「匿名用户」回答`);
-        }
-        if (!message2) {
-          const domRichContent = nodeItem.querySelector(".RichContent");
-          const innerText = domRichContent ? domRichContent.innerText : "";
-          if (innerText) {
-            let matchedWord = "";
-            for (let itemWord of blockWordsAnswer) {
-              const rep = new RegExp(itemWord.toLowerCase());
-              if (rep.test(innerText.toLowerCase())) {
-                matchedWord += `「${itemWord}」`;
-                break;
-              }
-            }
-            if (matchedWord) {
-              message2 = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
-            }
-          }
-        }
-        if (message2) {
-          fnHidden(nodeItem, message2);
-        } else {
-          doContentItem("QUESTION", nodeItemContent);
-          if (answerOpen !== "default" /* 默认 */) {
-            const buttonUnfold = nodeItem.querySelector(".ContentItem-expandButton");
-            const buttonFold = nodeItem.querySelector(".RichContent-collapsedText");
-            if (answerOpen === "on" /* 自动展开所有回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
-              buttonUnfold && buttonUnfold.click();
-              nodeItem.classList.add(OB_CLASS_FOLD.on);
-            }
-            const isF = buttonFold && nodeItem.offsetHeight > 939;
-            const isFC = buttonUnfold;
-            if (answerOpen === "off" /* 收起长回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
-              nodeItem.classList.add(OB_CLASS_FOLD.off);
-              isF && buttonFold && buttonFold.click();
-            }
-          }
-        }
-      }
-      if (highPerformanceAnswer) {
-        setTimeout(() => {
-          console.log("Timeout highPerformanceAnswer");
-          const nodes2 = domA(".AnswersNavWrapper .List-item");
-          if (nodes2.length > 30) {
-            const nIndex = nodes2.length - 30;
-            nodes2.forEach((item, index2) => {
-              if (index2 < nIndex) {
-                item.remove();
-              }
-            });
-            fnLog(`已开启高性能模式，删除${nIndex}条回答`);
-          }
-        }, 500);
-      }
+      questionAnswerContent && doContentItem("QUESTION", questionAnswerContent.querySelector(".ContentItem"));
+      processingData(domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`));
     },
     reset: function() {
+      this.dataLoad();
       domA(`.AnswersNavWrapper .List-item.${CLASS_LISTENED}`).forEach((item) => {
         item.classList.remove(CLASS_LISTENED);
       });
@@ -3241,11 +3133,123 @@
     restart: function() {
       this.reset();
       this.init();
+    },
+    dataLoad: function() {
+      this.loaded = true;
     }
   };
   var OB_CLASS_FOLD = {
     on: "ctz-fold-open",
     off: "ctz-fold-close"
+  };
+  var processingData = async (nodes) => {
+    const removeAnswers = store.getRemoveAnswers();
+    const config = await myStorage.getConfig();
+    const {
+      removeFromYanxuan,
+      removeUnrealAnswer,
+      removeFromEBook,
+      removeAnonymousAnswer,
+      removeLessVoteDetail,
+      lessVoteNumberDetail = 0,
+      answerOpen = "default" /* 默认 */,
+      removeBlockUserContent,
+      blockedUsers,
+      blockWordsAnswer = [],
+      highPerformanceAnswer
+    } = config;
+    for (let i = 0, len = nodes.length; i < len; i++) {
+      let message2 = "";
+      const nodeItem = nodes[i];
+      nodeItem.classList.add(CLASS_LISTENED);
+      nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
+      if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
+      const nodeItemContent = nodeItem.querySelector(".ContentItem");
+      if (!nodeItemContent) continue;
+      let dataZop = {};
+      let dataCardContent = {};
+      try {
+        dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
+        dataCardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
+      } catch {
+      }
+      (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message2 = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
+      if (!message2 && removeFromYanxuan) {
+        const itemId = String(dataZop.itemId || "");
+        const findItem = removeAnswers.find((i2) => i2.id === itemId);
+        findItem && (message2 = findItem.message);
+      }
+      if (!message2) {
+        const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
+        const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
+        const tagNames = (nodeTag1 ? nodeTag1.innerText : "") + (nodeTag2 ? nodeTag2.innerText : "");
+        if (removeUnrealAnswer) {
+          tagNames.includes("虚构创作") && (message2 = "已删除一条虚构创作的回答");
+        }
+        if (removeFromEBook) {
+          tagNames.includes("电子书") && (message2 = "已删除一条来自电子书的回答");
+        }
+      }
+      if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
+        const findBlocked = blockedUsers.find((i2) => i2.id === dataCardContent.author_member_hash_id);
+        findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}的回答`);
+      }
+      if (!message2 && removeAnonymousAnswer) {
+        const userName = nodeItem.querySelector('[itemprop="name"]').content;
+        userName === "匿名用户" && (message2 = `已屏蔽一条「匿名用户」回答`);
+      }
+      if (!message2) {
+        const domRichContent = nodeItem.querySelector(".RichContent");
+        const innerText = domRichContent ? domRichContent.innerText : "";
+        if (innerText) {
+          let matchedWord = "";
+          for (let itemWord of blockWordsAnswer) {
+            const rep = new RegExp(itemWord.toLowerCase());
+            if (rep.test(innerText.toLowerCase())) {
+              matchedWord += `「${itemWord}」`;
+              break;
+            }
+          }
+          if (matchedWord) {
+            message2 = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
+          }
+        }
+      }
+      if (message2) {
+        fnHidden(nodeItem, message2);
+      } else {
+        doContentItem("QUESTION", nodeItemContent);
+        if (answerOpen !== "default" /* 默认 */) {
+          const buttonUnfold = nodeItem.querySelector(".ContentItem-expandButton");
+          const buttonFold = nodeItem.querySelector(".RichContent-collapsedText");
+          if (answerOpen === "on" /* 自动展开所有回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
+            buttonUnfold && buttonUnfold.click();
+            nodeItem.classList.add(OB_CLASS_FOLD.on);
+          }
+          const isF = buttonFold && nodeItem.offsetHeight > 939;
+          const isFC = buttonUnfold;
+          if (answerOpen === "off" /* 收起长回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
+            nodeItem.classList.add(OB_CLASS_FOLD.off);
+            isF && buttonFold && buttonFold.click();
+          }
+        }
+      }
+    }
+    if (highPerformanceAnswer) {
+      setTimeout(() => {
+        console.log("Timeout highPerformanceAnswer");
+        const nodes2 = domA(".AnswersNavWrapper .List-item");
+        if (nodes2.length > 30) {
+          const nIndex = nodes2.length - 30;
+          nodes2.forEach((item, index2) => {
+            if (index2 < nIndex) {
+              item.remove();
+            }
+          });
+          fnLog(`已开启高性能模式，删除${nIndex}条回答`);
+        }
+      }, 500);
+    }
   };
   var formatCommentAuthors = (data) => {
     const { setCommentAuthors, getCommentAuthors } = store;
@@ -3425,9 +3429,9 @@
       }
       this.initTimestamp = currentTime;
       this.loaded = false;
-      await processingData(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+      await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
       setTimeout(async () => {
-        await processingData(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+        await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
       }, 500);
       await recommendHighPerformance();
     },
@@ -3463,7 +3467,7 @@
       style: "color: #9c27b0"
     }
   };
-  var processingData = async (nodes) => {
+  var processingData2 = async (nodes) => {
     if (!nodes.length) return;
     const userInfo = store.getUserInfo();
     const removeRecommends = store.getRemoveRecommends();
@@ -4379,7 +4383,7 @@
     doListenComment();
     fnJustNumberInAction();
     myListenSearchListItem.init();
-    myListenAnswerItem.init();
+    myListenAnswer.init();
     myListenUserHomeList.init();
     canCopy();
     changeSizeBeforeResize();
@@ -4474,7 +4478,7 @@
       videoInAnswerArticle: () => {
         changeVideoStyle();
         myListenList.restart();
-        myListenAnswerItem.restart();
+        myListenAnswer.restart();
       },
       homeContentOpen: () => {
         myListenUserHomeList.restart();
@@ -4726,6 +4730,7 @@
             });
             interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
             interceptionResponse(res, /\/api\/v4\/questions\/[^/]+\/feeds/, (r) => {
+              myListenAnswer.dataLoad();
               const answerTargets = r.data.map((i) => formatDataToHump(i.target));
               findRemoveAnswers(answerTargets);
             });
@@ -4826,7 +4831,7 @@
       historyToChangePathname();
       myListenList.reset();
       myListenSearchListItem.reset();
-      myListenAnswerItem.reset();
+      myListenAnswer.reset();
       myListenUserHomeList.reset();
     };
     window.addEventListener("popstate", throttle(changeHistory));

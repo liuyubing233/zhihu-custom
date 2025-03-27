@@ -11,7 +11,7 @@ import { echoHistory } from './components/history';
 import { keydownNextImage } from './components/image';
 import { fnJustNumberInAction } from './components/just-number';
 import { myRecommendClosePosition } from './components/list-position';
-import { myListenAnswerItem } from './components/listen-answer-item';
+import { myListenAnswer } from './components/listen-answer';
 import { closeCommentDialog, formatCommentAuthors } from './components/listen-comment';
 import { myListenList } from './components/listen-list';
 import { myListenSearchListItem } from './components/listen-search-list-item';
@@ -131,6 +131,7 @@ import { INNER_CSS } from './web-resources';
           interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
           // 回答内容
           interceptionResponse(res, /\/api\/v4\/questions\/[^/]+\/feeds/, (r) => {
+            myListenAnswer.dataLoad();
             const answerTargets = r.data.map((i: any) => formatDataToHump(i.target));
             findRemoveAnswers(answerTargets);
           });
@@ -247,7 +248,7 @@ import { INNER_CSS } from './web-resources';
     // 重置监听起点
     myListenList.reset();
     myListenSearchListItem.reset();
-    myListenAnswerItem.reset();
+    myListenAnswer.reset();
     myListenUserHomeList.reset();
   };
   /** history 变化 */

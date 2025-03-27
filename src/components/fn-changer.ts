@@ -3,7 +3,7 @@ import { dom, domById, myStorage } from '../tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, myBackground, onUseThemeDark } from './background';
 import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
-import { myListenAnswerItem } from './listen-answer-item';
+import { myListenAnswer } from './listen-answer';
 import { myListenList } from './listen-list';
 import { changeICO, changeTitle } from './page-title';
 import { mySize } from './size';
@@ -98,7 +98,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     videoInAnswerArticle: () => {
       changeVideoStyle();
       myListenList.restart();
-      myListenAnswerItem.restart();
+      myListenAnswer.restart();
     },
     homeContentOpen: () => {
       myListenUserHomeList.restart();
