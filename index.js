@@ -2597,30 +2597,6 @@
       window.scrollTo({ top: this.yDocument - (this.prevY - nextDom.offsetTop) });
     }
   };
-  var recommendHighPerformance = async () => {
-    const { highPerformanceRecommend } = await myStorage.getConfig();
-    if (!highPerformanceRecommend) return;
-    setTimeout(() => {
-      console.log("Timeout recommendHighPerformance");
-      const nodes = domA(`.${CLASS_LISTENED}`);
-      if (nodes.length > 50) {
-        const nodeLast = nodes[nodes.length - 1];
-        const yLastPrev = nodeLast.offsetTop;
-        const yDocument = document.documentElement.scrollTop;
-        const code = nodeLast.dataset.code;
-        const nIndex = nodes.length - 50;
-        nodes.forEach((item, index2) => {
-          index2 < nIndex && item.remove();
-        });
-        const nNodeLast = dom(`[data-code="${code}"]`);
-        if (nNodeLast) {
-          const nYLast = nNodeLast.offsetTop;
-          window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
-        }
-        fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
-      }
-    }, 100);
-  };
   var initLinkChanger = () => {
     const esName = ["a.external", "a.LinkCard"];
     const operaLink = "ctz-link-changed";
@@ -3416,57 +3392,6 @@
     const button = dom(`.${CLASS_ZHIHU_COMMENT_DIALOG} button[aria-label="关闭"]`);
     button && button.click();
   };
-  var myListenList = {
-    initTimestamp: 0,
-    loaded: true,
-    init: async function() {
-      if (!this.loaded) return;
-      const nodeLoading = dom(".Topstory-recommend .List-item.List-item");
-      const currentTime = +/* @__PURE__ */ new Date();
-      if (nodeLoading || currentTime - this.initTimestamp < 500) {
-        setTimeout(() => this.init(), 500);
-        return;
-      }
-      this.initTimestamp = currentTime;
-      this.loaded = false;
-      await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
-      setTimeout(async () => {
-        await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
-      }, 500);
-      await recommendHighPerformance();
-    },
-    reset: function() {
-      this.dataLoad();
-      domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
-        item.classList.remove(CLASS_LISTENED);
-      });
-    },
-    restart: function() {
-      this.reset();
-      this.init();
-    },
-    dataLoad: function() {
-      this.loaded = true;
-    }
-  };
-  var RECOMMEND_TYPE = {
-    answer: {
-      name: "问题",
-      style: "color: #ec7259"
-    },
-    article: {
-      name: "文章",
-      style: "color: #00965e"
-    },
-    zvideo: {
-      name: "视频",
-      style: "color: #12c2e9"
-    },
-    pin: {
-      name: "想法",
-      style: "color: #9c27b0"
-    }
-  };
   var processingData2 = async (nodes) => {
     if (!nodes.length) return;
     const userInfo = store.getUserInfo();
@@ -3498,24 +3423,6 @@
     const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
     const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
-    const replaceBlockWord = (innerText, nodeItemContent, blockWords, title, byWhat) => {
-      if (innerText) {
-        let matchedWord = "";
-        for (let word of blockWords) {
-          const rep = new RegExp(word.toLowerCase());
-          if (rep.test(innerText.toLowerCase())) {
-            matchedWord += `「${word}」`;
-            break;
-          }
-        }
-        if (matchedWord) {
-          const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-          const routeURL = elementItemProp && elementItemProp.getAttribute("content");
-          return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
-        }
-      }
-      return "";
-    };
     for (let i = 0, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
       if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
@@ -3613,6 +3520,98 @@
       if (i === len - 1) {
         myStorage.updateHistoryItem("list", historyList);
       }
+    }
+  };
+  var RECOMMEND_TYPE = {
+    answer: {
+      name: "问题",
+      style: "color: #ec7259"
+    },
+    article: {
+      name: "文章",
+      style: "color: #00965e"
+    },
+    zvideo: {
+      name: "视频",
+      style: "color: #12c2e9"
+    },
+    pin: {
+      name: "想法",
+      style: "color: #9c27b0"
+    }
+  };
+  var replaceBlockWord = (innerText, nodeItemContent, blockWords, title, byWhat) => {
+    if (innerText) {
+      let matchedWord = "";
+      for (let word of blockWords) {
+        const rep = new RegExp(word.toLowerCase());
+        if (rep.test(innerText.toLowerCase())) {
+          matchedWord += `「${word}」`;
+          break;
+        }
+      }
+      if (matchedWord) {
+        const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+        const routeURL = elementItemProp && elementItemProp.getAttribute("content");
+        return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+      }
+    }
+    return "";
+  };
+  var recommendHighPerformance = async () => {
+    const { highPerformanceRecommend } = await myStorage.getConfig();
+    if (!highPerformanceRecommend) return;
+    setTimeout(() => {
+      const nodes = domA(`.${CLASS_LISTENED}`);
+      if (nodes.length > 50) {
+        const nodeLast = nodes[nodes.length - 1];
+        const yLastPrev = nodeLast.offsetTop;
+        const yDocument = document.documentElement.scrollTop;
+        const code = nodeLast.dataset.code;
+        const nIndex = nodes.length - 50;
+        nodes.forEach((item, index2) => {
+          index2 < nIndex && item.remove();
+        });
+        const nNodeLast = dom(`[data-code="${code}"]`);
+        if (nNodeLast) {
+          const nYLast = nNodeLast.offsetTop;
+          window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
+        }
+        fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
+      }
+    }, 100);
+  };
+  var myListenList = {
+    initTimestamp: 0,
+    loaded: true,
+    init: async function() {
+      if (!this.loaded) return;
+      const nodeLoading = dom(".Topstory-recommend .List-item.List-item");
+      const currentTime = +/* @__PURE__ */ new Date();
+      if (nodeLoading || currentTime - this.initTimestamp < 500) {
+        setTimeout(() => this.init(), 500);
+        return;
+      }
+      this.initTimestamp = currentTime;
+      this.loaded = false;
+      await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+      setTimeout(async () => {
+        await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+      }, 500);
+      await recommendHighPerformance();
+    },
+    reset: function() {
+      this.dataLoad();
+      domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
+        item.classList.remove(CLASS_LISTENED);
+      });
+    },
+    restart: function() {
+      this.reset();
+      this.init();
+    },
+    dataLoad: function() {
+      this.loaded = true;
     }
   };
   var myListenSearchListItem = {

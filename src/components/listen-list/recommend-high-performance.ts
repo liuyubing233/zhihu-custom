@@ -6,7 +6,6 @@ export const recommendHighPerformance = async () => {
   const { highPerformanceRecommend } = await myStorage.getConfig();
   if (!highPerformanceRecommend) return;
   setTimeout(() => {
-    console.log('Timeout recommendHighPerformance')
     const nodes = domA(`.${CLASS_LISTENED}`);
     if (nodes.length > 50) {
       // 查找最后一个元素显示位置，并在删除最前方元素后将页面位置调整回删除前，解决闪烁问题
