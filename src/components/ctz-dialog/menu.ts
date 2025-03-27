@@ -9,7 +9,6 @@ export const initMenu = (domMain: HTMLElement) => {
   fnChangeMenu(dom(`#CTZ_DIALOG_MENU>div[data-href="${chooseId || arrayHash[0]}"]`, domMain) as HTMLElement, domMain);
 };
 
-
 export const onChangeMenu = (event: MouseEvent) => {
   const target = event.target as HTMLElement;
   if (target.getAttribute('data-href')) {

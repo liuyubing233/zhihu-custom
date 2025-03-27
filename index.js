@@ -2597,35 +2597,31 @@
   };
   var initLinkChanger = () => {
     const esName = ["a.external", "a.LinkCard"];
-    const operaLink = "ctz-link-changed";
-    const hrefChanger = (item) => {
-      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
-      let href = "";
-      try {
-        href = decodeURIComponent(hrefFormat);
-      } catch {
-        href = hrefFormat;
-      }
-      item.href = href;
-      item.classList.add(operaLink);
-    };
     for (let i = 0, len = esName.length; i < len; i++) {
       const name = esName[i];
-      const links = domA(`${name}:not(.${operaLink})`);
+      const links = domA(`${name}:not(.ctz-link-changed)`);
       for (let index2 = 0, linkLen = links.length; index2 < linkLen; index2++) {
-        hrefChanger(links[index2]);
+        const item = links[index2];
+        const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
+        let href = "";
+        try {
+          href = decodeURIComponent(hrefFormat);
+        } catch {
+          href = hrefFormat;
+        }
+        item.href = href;
+        item.classList.add("ctz-link-changed");
       }
     }
   };
-  var CLASS_COPY_LINK = "ctz-copy-answer-link";
   var addAnswerCopyLink = async (contentItem) => {
     const { copyAnswerLink } = await myStorage.getConfig();
     if (!copyAnswerLink) return;
-    const prevButton = contentItem.querySelector(`.${CLASS_COPY_LINK}`);
+    const prevButton = contentItem.querySelector(`.ctz-copy-answer-link`);
     prevButton && prevButton.remove();
     const nodeUser = contentItem.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
     if (!nodeUser) return;
-    const nDomButton = createButtonFontSize12("获取回答链接", CLASS_COPY_LINK);
+    const nDomButton = createButtonFontSize12("获取回答链接", "ctz-copy-answer-link");
     nDomButton.onclick = function() {
       const metaUrl = contentItem.querySelector('[itemprop="url"]');
       if (!metaUrl) return;
@@ -3038,9 +3034,10 @@
     const contentItem = currentDom.classList.contains("ContentItem") ? currentDom : currentDom.querySelector(".ContentItem") || domP(currentDom, "class", "ContentItem");
     if (!contentItem || !contentItem.querySelector(".is-collapsed")) return;
     let pageType = void 0;
-    (dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1") || dom(".SearchMain")) && (pageType = "LIST");
-    dom(".Question-main") && (pageType = "QUESTION");
-    dom(".Profile-main") && (pageType = "USER_HOME");
+    const domPByClass = (name) => domP(currentDom, "class", name);
+    (domPByClass("Topstory-recommend") || domPByClass("Topstory-follow") || domPByClass("zhuanlan .css-1voxft1") || domPByClass("SearchMain")) && (pageType = "LIST");
+    domPByClass("Question-main") && (pageType = "QUESTION");
+    domPByClass("Profile-main") && (pageType = "USER_HOME");
     doContentItem(pageType, contentItem, true);
   };
   var doContentItem = async (pageType, contentItem, needTimeout = false) => {
