@@ -2,47 +2,48 @@
 
 #CTZ_BACKGROUND {
   gap: 12px;
-  .ctz-background-item {
-    position: relative;
+}
 
-    @width: 68px;
-    @height: 46px;
+.ctz-background-item {
+  position: relative;
+  @width: 68px;
+  @height: 46px;
 
-    input {
-      position: absolute;
-      visibility: hidden;
-      &:checked + div + div {
-        border-color: @blue1;
-      }
-
-      &:checked + div + div + div {
-        color: #272726;
-      }
-    }
-    &-div {
-      border-radius: 8px;
-      height: @height;
-      width: @width;
-      margin: 4px;
+  input {
+    position: absolute;
+    visibility: hidden;
+    &:checked + div + div {
+      border-color: @blue1;
     }
 
-    &-border {
-      height: @height;
-      width: @width;
-      border-radius: 12px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      border: 4px solid transparent;
-    }
-
-    &-name {
-      font-size: 12px;
-      text-align: center;
-      padding-top: 8px;
-      color: #777776;
+    &:checked + div + div + div {
+      color: #272726;
     }
   }
+}
+
+.ctz-background-item-div {
+  border-radius: 8px;
+  height: @height;
+  width: @width;
+  margin: 4px;
+}
+
+.ctz-background-item-border {
+  height: @height;
+  width: @width;
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 4px solid transparent;
+}
+
+.ctz-background-item-name {
+  font-size: 12px;
+  text-align: center;
+  padding-top: 8px;
+  color: #777776;
 }
 
 #CTZ_BACKGROUND_LIGHT,

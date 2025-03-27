@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const less = require('less');
+const htmlMinify = require('html-minifier').minify;
 
 const envLoad = {
   name: 'envLoad',
@@ -20,18 +21,23 @@ const envLoad = {
         const NAME_CSS = 'INNER_CSS';
         const pathHTML = path.join(__dirname, '../src/index.html');
         const REGEXP_REPLACE = /\s*\n\s*/g; // 删除回车及前后空格
-        const REGEXP_REPLACE_COMMIT = /\<\!\-\-[^(\<\!)]*\-\-\>/g; // 删除HTML注释
         const strHTML = fs.readFileSync(pathHTML).toString();
         const nRegExp = (name) => new RegExp('(' + name + '\\s\\=\\s`)()(`)');
-        const regexpHTML = nRegExp(NAME_HTML);
-
-        const innerHTML = strHTML
-          .replace(REGEXP_REPLACE, '') // 删除回车及前后空格
-          .replace(REGEXP_REPLACE_COMMIT, ''); // 删除HTML注释
 
         const regexpCSS = nRegExp(NAME_CSS);
         const innerCSS = res.css.replace(REGEXP_REPLACE, '');
-        return { contents: prevContent.replace(regexpHTML, `$1${innerHTML}$3`).replace(regexpCSS, `$1${innerCSS}$3`), loader: 'ts' };
+        return {
+          contents: prevContent
+            .replace(
+              nRegExp(NAME_HTML),
+              `$1${htmlMinify(strHTML, {
+                removeComments: true,
+                collapseWhitespace: true,
+              })}$3`
+            )
+            .replace(regexpCSS, `$1${innerCSS}$3`),
+          loader: 'ts',
+        };
       }
 
       const REGEXP_ANNOTATE_1 = /\/\*\*[\s\S]*?\*\//g; // 匹配 /** */ 格式注释
