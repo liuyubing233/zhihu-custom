@@ -16,7 +16,10 @@ export const myListenAnswer = {
       setTimeout(() => this.init(), 500);
       return;
     }
-    this.loaded = false;
+    if (this.initTimestamp !== 0) {
+      this.loaded = false;
+    }
+    this.initTimestamp = currentTime;
 
     const questionAnswerContent = dom('.QuestionAnswer-content');
     questionAnswerContent && doContentItem('QUESTION', questionAnswerContent.querySelector('.ContentItem') as HTMLElement);

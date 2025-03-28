@@ -30,8 +30,11 @@ export const myListenList: IMyListenList = {
       setTimeout(() => this.init(), 500);
       return;
     }
+    if (this.initTimestamp !== 0) {
+      this.loaded = false;
+    }
+
     this.initTimestamp = currentTime;
-    this.loaded = false;
     await processingData(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
     setTimeout(async () => {
       await processingData(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`)); // 每次执行后检测未检测到的项，解决内容重载的问题

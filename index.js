@@ -3090,7 +3090,10 @@
         setTimeout(() => this.init(), 500);
         return;
       }
-      this.loaded = false;
+      if (this.initTimestamp !== 0) {
+        this.loaded = false;
+      }
+      this.initTimestamp = currentTime;
       const questionAnswerContent = dom(".QuestionAnswer-content");
       questionAnswerContent && doContentItem("QUESTION", questionAnswerContent.querySelector(".ContentItem"));
       processingData(domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`));
@@ -3582,8 +3585,10 @@
         setTimeout(() => this.init(), 500);
         return;
       }
+      if (this.initTimestamp !== 0) {
+        this.loaded = false;
+      }
       this.initTimestamp = currentTime;
-      this.loaded = false;
       await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
       setTimeout(async () => {
         await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
