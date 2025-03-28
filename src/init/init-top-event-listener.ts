@@ -2,7 +2,7 @@ import { answerAddBlockButton } from '../components/black-list/add-block-button'
 import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
 import { EVideoInAnswerArticle } from '../components/select';
-import { updateItemTime } from '../components/time';
+import { removeItemTime, updateItemTime } from '../components/time';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO_BOX, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
@@ -50,7 +50,7 @@ export const initRootEvent = async () => {
 /** 点击阅读全文后的操作 */
 export const doReadMore = (currentDom: HTMLElement) => {
   const contentItem = currentDom.classList.contains('ContentItem') ? currentDom : currentDom.querySelector('.ContentItem') || domP(currentDom, 'class', 'ContentItem');
-  if (!contentItem || !contentItem.querySelector('.is-collapsed')) return;
+  if (!contentItem) return;
   // 展开
   let pageType: IPageType | undefined = undefined;
 
@@ -58,7 +58,12 @@ export const doReadMore = (currentDom: HTMLElement) => {
   (domPByClass('Topstory-recommend') || domPByClass('Topstory-follow') || domPByClass('zhuanlan .css-1voxft1') || domPByClass('SearchMain')) && (pageType = 'LIST');
   domPByClass('Question-main') && (pageType = 'QUESTION');
   domPByClass('Profile-main') && (pageType = 'USER_HOME');
-  doContentItem(pageType, contentItem as HTMLElement, true);
+
+  if (!contentItem.querySelector('.is-collapsed')) {
+    pageType === 'LIST' && removeItemTime(contentItem);
+  } else {
+    doContentItem(pageType, contentItem as HTMLElement, true);
+  }
 };
 
 type IPageType = 'LIST' | 'QUESTION' | 'USER_HOME';
