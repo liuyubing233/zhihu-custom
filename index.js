@@ -2397,6 +2397,9 @@
       keys.forEach((key) => config[key] && trueNumber++);
       trueNumber === keys.length && (hiddenContent += value);
     });
+    if (config.topVote) {
+      hiddenContent += `.css-dvccr2{display: none!important;}`;
+    }
     fnAppendStyle("CTZ_STYLE_HIDDEN", hiddenContent);
   };
   var createHTMLHiddenConfig = (domMain) => {
@@ -2833,11 +2836,6 @@
       nodeBox
     );
   };
-  var removeItemTime = (contentItem) => {
-    if (!contentItem) return;
-    const prevTime = contentItem.querySelector(`.${CLASS_TIME_ITEM}`);
-    prevTime && prevTime.remove();
-  };
   var questionTimeout;
   var questionFindIndex = 0;
   var resetQuestionTime = () => {
@@ -2886,6 +2884,37 @@
     setTimeout(() => {
       addArticleTime();
     }, 500);
+  };
+  var updateTopVote = async (contentItem) => {
+    const nodeItemMeta = contentItem.querySelector(".ContentItem-meta");
+    const nodeVote = contentItem.querySelector('[itemprop="upvoteCount"]');
+    const { topVote } = await myStorage.getConfig();
+    if (!nodeVote || !topVote || !nodeItemMeta) return;
+    const vote = nodeVote.content;
+    if (+vote === 0) return;
+    const className = "ctz-top-vote";
+    const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
+    const innerHTML = `${vote} 人赞同`;
+    if (domVotePrev) {
+      domVotePrev.innerHTML = innerHTML;
+    } else {
+      const domVote = domC("div", {
+        className,
+        innerHTML,
+        style: "font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0;"
+      });
+      nodeItemMeta.appendChild(domVote);
+      const metaObserver = new MutationObserver(() => {
+        updateTopVote(contentItem);
+      });
+      metaObserver.observe(nodeVote, {
+        attributes: true,
+        childList: false,
+        characterData: false,
+        characterDataOldValue: false,
+        subtree: false
+      });
+    }
   };
   var CLASS_VIDEO_ONE = ".css-1h1xzpn";
   var CLASS_VIDEO_TWO = ".VideoAnswerPlayer-video";
@@ -3036,11 +3065,7 @@
     (domPByClass("Topstory-recommend") || domPByClass("Topstory-follow") || domPByClass("zhuanlan .css-1voxft1") || domPByClass("SearchMain")) && (pageType = "LIST");
     domPByClass("Question-main") && (pageType = "QUESTION");
     domPByClass("Profile-main") && (pageType = "USER_HOME");
-    if (!contentItem.querySelector(".is-collapsed")) {
-      pageType === "LIST" && removeItemTime(contentItem);
-    } else {
-      doContentItem(pageType, contentItem, true);
-    }
+    doContentItem(pageType, contentItem, true);
   };
   var doContentItem = async (pageType, contentItem, needTimeout = false) => {
     if (!contentItem || !pageType) return;
@@ -3064,6 +3089,7 @@
         }
       };
       doByPageType[pageType]();
+      updateTopVote(contentItem);
       initVideoDownload(contentItem);
       addAnswerCopyLink(contentItem);
       fnReplaceZhidaToSearch(contentItem);
@@ -4198,6 +4224,7 @@
       { label: "操作栏仅显示数字和图标", value: "justNumberInAction" }
     ],
     [
+      { label: "问题详情 - 替换回答顶部赞同数显示（实时显示点赞数量）", value: "topVote" },
       { label: "问题详情 - 一键获取回答链接", value: "copyAnswerLink" },
       { label: "回答、文章顶部显示导出当前内容/回答按钮", value: "topExportContent" }
     ],
@@ -4464,6 +4491,9 @@
       },
       homeContentOpen: () => {
         myListenUserHomeList.restart();
+      },
+      topVote: () => {
+        appendHiddenStyle();
       }
     };
     if (name === "fetchInterceptStatus") {

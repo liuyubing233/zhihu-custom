@@ -2,7 +2,8 @@ import { answerAddBlockButton } from '../components/black-list/add-block-button'
 import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
 import { EVideoInAnswerArticle } from '../components/select';
-import { removeItemTime, updateItemTime } from '../components/time';
+import { updateItemTime } from '../components/time';
+import { updateTopVote } from '../components/topVote';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO_BOX, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
@@ -58,12 +59,7 @@ export const doReadMore = (currentDom: HTMLElement) => {
   (domPByClass('Topstory-recommend') || domPByClass('Topstory-follow') || domPByClass('zhuanlan .css-1voxft1') || domPByClass('SearchMain')) && (pageType = 'LIST');
   domPByClass('Question-main') && (pageType = 'QUESTION');
   domPByClass('Profile-main') && (pageType = 'USER_HOME');
-
-  if (!contentItem.querySelector('.is-collapsed')) {
-    pageType === 'LIST' && removeItemTime(contentItem);
-  } else {
-    doContentItem(pageType, contentItem as HTMLElement, true);
-  }
+  doContentItem(pageType, contentItem as HTMLElement, true);
 };
 
 type IPageType = 'LIST' | 'QUESTION' | 'USER_HOME';
@@ -99,7 +95,7 @@ export const doContentItem = async (pageType?: IPageType, contentItem?: HTMLElem
     };
 
     doByPageType[pageType]();
-    // updateTopVote(contentItem);
+    updateTopVote(contentItem);
     initVideoDownload(contentItem);
     addAnswerCopyLink(contentItem);
     fnReplaceZhidaToSearch(contentItem);

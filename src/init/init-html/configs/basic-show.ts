@@ -23,7 +23,7 @@ export const BASIC_SHOW: ICommonContent[][] = [
     { label: '操作栏仅显示数字和图标', value: 'justNumberInAction' },
   ],
   [
-    // { label: '问题详情 - 回答顶部显示赞同人数', value: 'topVote' },
+    { label: '问题详情 - 替换回答顶部赞同数显示（实时显示点赞数量）', value: 'topVote' },
     { label: '问题详情 - 一键获取回答链接', value: 'copyAnswerLink' },
     { label: '回答、文章顶部显示导出当前内容/回答按钮', value: 'topExportContent' },
   ],

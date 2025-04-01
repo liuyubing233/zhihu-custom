@@ -103,6 +103,9 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     homeContentOpen: () => {
       myListenUserHomeList.restart();
     },
+    topVote: () => {
+      appendHiddenStyle()
+    }
   };
 
   if (name === 'fetchInterceptStatus') {
