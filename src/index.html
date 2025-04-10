@@ -53,6 +53,37 @@
           <div id="CTZ_BASIS_DEFAULT">
             <div class="ctz-form-box">
               <div class="ctz-form-box-item">
+                <div>知乎搜索</div>
+                <div>
+                  <input type="text" name="searchInZhihu" style="width: 278px" placeholder="回车搜索" />
+                </div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div></div>
+                <div class="ctz-to-zhihu">
+                  <a href="https://www.zhihu.com" target="_self" class="ctz-button" style="margin-right: 8px">返回知乎主页</a>
+                </div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div></div>
+                <div class="ctz-default-bottom">
+                  <a href="https://github.com/liuyubing233/zhihu-custom" target="_blank" class="ctz-button">Github⭐</a>
+                  <a
+                    href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8"
+                    target="_blank"
+                    class="ctz-button"
+                    style="width: 92px"
+                  >
+                    GreasyFork
+                  </a>
+                  <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank" class="ctz-button">修改器介绍</a>
+                  <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank" class="ctz-button">更新日志</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
                 <div id="CTZ_FETCH_STATUS">状态获取中...</div>
                 <div>
                   <input id="CTZ_CHANGE_FETCH" class="ctz-i ctz-switch" name="fetchInterceptStatus" type="checkbox" value="on" />
@@ -265,7 +296,7 @@
             <div class="ctz-form-box-item">
               <div>黑名单部分配置导出和导入</div>
               <div>
-                <button class="ctz-button" name="exportBlackConfig" style="margin-right: 8px;">配置导出</button>
+                <button class="ctz-button" name="exportBlackConfig" style="margin-right: 8px">配置导出</button>
                 <div id="IMPORT_BLACK">
                   <input type="file" class="ctz-input-import-black" accept=".txt" />
                   <button class="ctz-button" name="importBlackConfig">配置导入并合并</button>
@@ -465,21 +496,6 @@
 
         <!-- 默认功能 -->
         <div id="CTZ_DEFAULT" style="display: none">
-          <div class="ctz-form-box">
-            <div class="ctz-form-box-item">
-              <div>知乎搜索</div>
-              <div>
-                <input type="text" name="searchInZhihu" style="width: 278px" placeholder="回车搜索" />
-              </div>
-            </div>
-            <div class="ctz-form-box-item">
-              <div></div>
-              <div class="ctz-to-zhihu">
-                <a href="https://www.zhihu.com" target="_self" class="ctz-button" style="margin-right: 8px">返回知乎主页</a>
-              </div>
-            </div>
-          </div>
-
           <div id="CTZ_DEFAULT_SELF" class="ctz-form-box"></div>
 
           <div class="ctz-zhihu-self" style="margin-top: 18px">
@@ -489,13 +505,6 @@
               （<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。
               <a href="https://www.zhihu.com/settings/preference" target="_blank">前往开启快捷键功能</a>
             </div>
-          </div>
-
-          <div class="ctz-default-bottom">
-            <a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a>
-            <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a>
-            <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">修改器介绍</a>
-            <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a>
           </div>
         </div>
       </div>

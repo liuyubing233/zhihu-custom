@@ -212,7 +212,7 @@
   };
   var Store = class {
     constructor() {
-      this.userinfo = void 0;
+      this.userInfo = void 0;
       this.prevFetchHeaders = {};
       this.removeRecommends = [];
       this.commendAuthors = [];
@@ -220,8 +220,8 @@
       this.userArticle = [];
       this.removeAnswers = [];
       this.jsInitialData = void 0;
-      this.setUserinfo = this.setUserinfo.bind(this);
-      this.getUserinfo = this.getUserinfo.bind(this);
+      this.setUserInfo = this.setUserInfo.bind(this);
+      this.getUserInfo = this.getUserInfo.bind(this);
       this.setFetchHeaders = this.setFetchHeaders.bind(this);
       this.getFetchHeaders = this.getFetchHeaders.bind(this);
       this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
@@ -237,11 +237,11 @@
       this.setJsInitialData = this.setJsInitialData.bind(this);
       this.getJsInitialData = this.getJsInitialData.bind(this);
     }
-    setUserinfo(inner) {
-      this.userinfo = inner;
+    setUserInfo(inner) {
+      this.userInfo = inner;
     }
-    getUserinfo() {
-      return this.userinfo;
+    getUserInfo() {
+      return this.userInfo;
     }
     setFetchHeaders(headers) {
       this.prevFetchHeaders = headers;
@@ -822,6 +822,44 @@
     dom(".ctz-set-background", domMain).innerHTML = `<div class="ctz-form-box-item">${`<div>主题</div><div id="CTZ_BACKGROUND">${THEMES.map((i) => radioBackground(INPUT_NAME_THEME, i.value, i.background, i.color, i.label, i.background)).join("")}</div>`}</div><div class="ctz-form-box-item">${`<div>浅色主题</div><div id="CTZ_BACKGROUND_LIGHT">${themeToRadio(THEME_CONFIG_LIGHT, INPUT_NAME_ThEME_LIGHT, "#000")}</div>`}</div><div class="ctz-form-box-item">${`<div>深色主题</div><div id="CTZ_BACKGROUND_DARK">${themeToRadio(THEME_CONFIG_DARK, INPUT_NAME_THEME_DARK, "#f7f9f9")}</div>`}</div>`;
   };
   var doHighlightOriginal = async (backgroundHighlightOriginal = "", themeDark, themeLight) => "background: " + (backgroundHighlightOriginal ? `${backgroundHighlightOriginal}!important;` : await isDark() ? `${THEME_CONFIG_DARK[themeDark].background2}!important;` : +themeLight === 0 /* 默认 */ ? "rgb(251,248,241)!important;" : `${THEME_CONFIG_LIGHT[themeLight].background}!important;`);
+  var initMenu = (domMain) => {
+    const { hash } = location;
+    const arrayHash = [...domA("#CTZ_DIALOG_MENU>div", domMain)].map((i) => i.dataset.href || "");
+    const chooseId = arrayHash.find((i) => i === hash || hash.replace(i, "") !== hash);
+    fnChangeMenu(dom(`#CTZ_DIALOG_MENU>div[data-href="${chooseId || arrayHash[0]}"]`, domMain), domMain);
+  };
+  var onChangeMenu = (event) => {
+    const target = event.target;
+    const dataHref = target.dataset.href || "";
+    if (dataHref) {
+      location.hash = dataHref;
+      fnChangeMenu(target, document.body);
+      return;
+    }
+  };
+  var fnChangeMenu = (target, domMain) => {
+    const currentHref = target.dataset.href || "";
+    const chooseId = currentHref.replace(/#/, "");
+    if (!chooseId) return;
+    domA("#CTZ_DIALOG_MENU>div", domMain).forEach((item) => item.classList.remove("target"));
+    domA("#CTZ_DIALOG_MAIN>div", domMain).forEach((item) => item.style.display = chooseId === item.id ? "block" : "none");
+    domA("#CTZ_DIALOG_RIGHT_TITLE>div", domMain).forEach((item) => item.style.display = currentHref === item.dataset.id ? "block" : "none");
+    target.classList.add("target");
+  };
+  var createHTMLRightTitle = (domMain = document.body) => {
+    const { hash } = location;
+    const arr = [...dom("#CTZ_DIALOG_MENU", domMain).childNodes].map((item) => {
+      const itemDom = item;
+      return {
+        name: itemDom.textContent,
+        commit: itemDom.dataset.commit || "",
+        href: itemDom.dataset.href || ""
+      };
+    });
+    dom("#CTZ_DIALOG_RIGHT_TITLE", domMain).innerHTML = arr.map(
+      ({ name, commit, href }, index2) => `<div data-id="${href}" style="display: ${!hash && index2 === 0 || hash === href ? "block" : "none"}">${name}<span>${commit}</span></div>`
+    ).join("");
+  };
   var createHTMLSizeSetting = (domMain) => {
     dom("#CTZ_VERSION_RANGE_ZHIHU", domMain).innerHTML = VERSION_RANGE_HAVE_PERCENT.map(
       (item) => `<div class="ctz-form-box-item">${`<div>${item.label}${createHTMLTooltip("最小显示宽度为600像素，设置低于此值将按照600像素显示")}</div><div>${createHTMLRange(item.value, VERSION_MIN_WIDTH, 1500) + createHTMLRange(`${item.value}Percent`, 20, 100, "%")}</div>`}</div><div class="ctz-form-box-item">${`<div>${item.label}使用百分比设置</div><div><input class="ctz-i ctz-switch" name="${item.value}IsPercent" type="checkbox" value="on" /></div>`}</div>`
@@ -1008,31 +1046,6 @@
     nodeList && (nodeList.innerHTML = list.join(""));
     nodeView && (nodeView.innerHTML = view.join(""));
   };
-  var initMenu = (domMain) => {
-    const { hash } = location;
-    const arrayHash = [...domA("#CTZ_DIALOG_MENU>div", domMain)].map((i) => i.getAttribute("data-href"));
-    const chooseId = arrayHash.find((i) => i === hash || hash.replace(i, "") !== hash);
-    fnChangeMenu(dom(`#CTZ_DIALOG_MENU>div[data-href="${chooseId || arrayHash[0]}"]`, domMain), domMain);
-  };
-  var CLASS_OPENED = "ctz-dropdown-open";
-  var onChangeMenu = (event) => {
-    const target = event.target;
-    if (target.getAttribute("data-href")) {
-      const dataHref = target.getAttribute("data-href") || "";
-      location.hash = dataHref;
-      fnChangeMenu(target, document.body);
-      return;
-    }
-  };
-  var fnChangeMenu = (target, domMain) => {
-    const chooseId = (target.getAttribute("data-href") || "").replace(/#/, "");
-    if (!chooseId) return;
-    domA("#CTZ_DIALOG_MENU>div", domMain).forEach((item) => item.classList.remove("target"));
-    domA("#CTZ_DIALOG_MAIN>div", domMain).forEach((item) => item.style.display = chooseId === item.id ? "block" : "none");
-    target.classList.add("target");
-    const commit = target.getAttribute("data-commit") || "";
-    dom("#CTZ_DIALOG_RIGHT_TITLE", domMain).innerHTML = `${target.innerText}<span>${commit}</span>`;
-  };
   var openChange = () => {
     const nodeButton = domById("CTZ_OPEN_CLOSE");
     if (nodeButton.dataset.close === "1") {
@@ -1042,7 +1055,6 @@
       nodeButton.dataset.close = "0";
       myScroll.stop();
     } else {
-      domA(".ctz-dropdown-icon").forEach((item) => item.classList.remove(CLASS_OPENED));
       const nodeDialog = domById("CTZ_DIALOG");
       nodeDialog.style.display = "none";
       nodeDialog.style.height = "";
@@ -1313,10 +1325,10 @@
     };
     nodeUser.appendChild(nBlackBox);
   };
-  var changeBlockedUsersBox = (isBlocked, showBlock, showBlockTag, showBlockTagType, userinfo) => {
+  var changeBlockedUsersBox = (isBlocked, showBlock, showBlockTag, showBlockTagType, userInfo) => {
     if (isBlocked) {
       return fnReturnStr(
-        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userinfo && userinfo.tags && userinfo.tags.length ? "：" + userinfo.tags.join("、") : ""}</span>`,
+        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userInfo && userInfo.tags && userInfo.tags.length ? "：" + userInfo.tags.join("、") : ""}</span>`,
         showBlockTag
       ) + fnReturnStr(`<button class="${CLASS_BTN_REMOVE_BLOCKED} ctz-button">解除屏蔽</button>`, showBlock);
     } else {
@@ -1574,14 +1586,11 @@
   };
   var CLASS_CAN_COPY = "ctz-can-copy";
   var canCopy = () => {
-    nodeArrCopy(domA(`.RichContent-inner:not(.${CLASS_CAN_COPY})`));
-  };
-  var nodeArrCopy = (nodes) => {
-    nodes.forEach((item) => {
+    domA(`.RichContent-inner:not(.${CLASS_CAN_COPY})`).forEach((item) => {
       item.classList.add(CLASS_CAN_COPY);
       item.oncopy = (event) => {
         eventCopy(event);
-        message("已复制内容，禁止转载提示无视掉即可");
+        message("已复制内容，若有禁止转载提示可无视");
         return true;
       };
     });
@@ -2388,6 +2397,9 @@
       keys.forEach((key) => config[key] && trueNumber++);
       trueNumber === keys.length && (hiddenContent += value);
     });
+    if (config.topVote) {
+      hiddenContent += `.css-dvccr2{display: none!important;}`;
+    }
     fnAppendStyle("CTZ_STYLE_HIDDEN", hiddenContent);
   };
   var createHTMLHiddenConfig = (domMain) => {
@@ -2538,8 +2550,8 @@
     const { justNumberInAction } = await myStorage.getConfig();
     if (!justNumberInAction) return;
     const nTimestamp = +/* @__PURE__ */ new Date();
-    if (nTimestamp - timestamp < 300) {
-      setTimeout(fnJustNumberInAction, 300);
+    if (nTimestamp - timestamp < 500) {
+      setTimeout(fnJustNumberInAction, 500);
       return;
     }
     timestamp = nTimestamp;
@@ -2586,60 +2598,33 @@
       window.scrollTo({ top: this.yDocument - (this.prevY - nextDom.offsetTop) });
     }
   };
-  var recommendHighPerformance = async () => {
-    const { highPerformanceRecommend } = await myStorage.getConfig();
-    if (!highPerformanceRecommend) return;
-    setTimeout(() => {
-      const nodes = domA(`.${CLASS_LISTENED}`);
-      if (nodes.length > 50) {
-        const nodeLast = nodes[nodes.length - 1];
-        const yLastPrev = nodeLast.offsetTop;
-        const yDocument = document.documentElement.scrollTop;
-        const code = nodeLast.dataset.code;
-        const nIndex = nodes.length - 50;
-        nodes.forEach((item, index2) => {
-          index2 < nIndex && item.remove();
-        });
-        const nNodeLast = dom(`[data-code="${code}"]`);
-        if (nNodeLast) {
-          const nYLast = nNodeLast.offsetTop;
-          window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
-        }
-        fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
-      }
-    }, 100);
-  };
   var initLinkChanger = () => {
     const esName = ["a.external", "a.LinkCard"];
-    const operaLink = "ctz-link-changed";
-    const hrefChanger = (item) => {
-      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
-      let href = "";
-      try {
-        href = decodeURIComponent(hrefFormat);
-      } catch {
-        href = hrefFormat;
-      }
-      item.href = href;
-      item.classList.add(operaLink);
-    };
     for (let i = 0, len = esName.length; i < len; i++) {
       const name = esName[i];
-      const links = domA(`${name}:not(.${operaLink})`);
+      const links = domA(`${name}:not(.ctz-link-changed)`);
       for (let index2 = 0, linkLen = links.length; index2 < linkLen; index2++) {
-        hrefChanger(links[index2]);
+        const item = links[index2];
+        const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, "") || "";
+        let href = "";
+        try {
+          href = decodeURIComponent(hrefFormat);
+        } catch {
+          href = hrefFormat;
+        }
+        item.href = href;
+        item.classList.add("ctz-link-changed");
       }
     }
   };
-  var CLASS_COPY_LINK = "ctz-copy-answer-link";
   var addAnswerCopyLink = async (contentItem) => {
     const { copyAnswerLink } = await myStorage.getConfig();
     if (!copyAnswerLink) return;
-    const prevButton = contentItem.querySelector(`.${CLASS_COPY_LINK}`);
+    const prevButton = contentItem.querySelector(`.ctz-copy-answer-link`);
     prevButton && prevButton.remove();
     const nodeUser = contentItem.querySelector(".AnswerItem-authorInfo>.AuthorInfo");
     if (!nodeUser) return;
-    const nDomButton = createButtonFontSize12("获取回答链接", CLASS_COPY_LINK);
+    const nDomButton = createButtonFontSize12("获取回答链接", "ctz-copy-answer-link");
     nDomButton.onclick = function() {
       const metaUrl = contentItem.querySelector('[itemprop="url"]');
       if (!metaUrl) return;
@@ -2652,8 +2637,8 @@
     };
     nodeUser.appendChild(nDomButton);
   };
-  var INNER_HTML = `<div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE"><div><img src="" /></div></div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO"><div><video src="" autoplay loop></video></div></div><iframe class="ctz-pdf-box-content" style="display: none"></iframe><div id="CTZ_MESSAGE_BOX"></div><div id="CTZ_OPEN_CLOSE" data-close="1"><div class="gear"><div class="gear_line_1"></div><div class="gear_line_2"></div><div class="gear_line_3"></div><div class="gear_line_4"></div></div></div><div id="CTZ_DIALOG" style="display: none"><div id="CTZ_DIALOG_CONTENT"><div id="CTZ_DIALOG_LEFT"><div id="CTZ_LEFT_BUTTONS"><button class="ctz-button" name="dialogClose">✕</button><button class="ctz-button" name="dialogBig">+</button><div class="ctz-version"></div></div><div id="CTZ_DIALOG_MENU"><div data-href="#CTZ_BASIS">通用</div><div data-href="#CTZ_HIGH_PERFORMANCE">高性能</div><div data-href="#CTZ_POSITION">悬浮模块</div><div data-href="#CTZ_HIDDEN">隐藏模块</div><div data-href="#CTZ_FILTER" data-commit="更改后请重新刷新页面">屏蔽内容</div><div data-href="#CTZ_BLOCK_WORDS" data-commit="更改后请重新刷新页面, 点击屏蔽词删除">屏蔽词</div><div data-href="#CTZ_BLACKLIST" data-commit="更改后请重新刷新页面, 需开启接口拦截">黑名单</div><div data-href="#CTZ_VERSION">页面尺寸</div><div data-href="#CTZ_THEME">颜色</div><div data-href="#CTZ_CONFIG">配置操作</div><div data-href="#CTZ_HISTORY_LIST" data-commit="最多缓存500条, 包含已过滤项">推荐列表缓存</div><div data-href="#CTZ_HISTORY_VIEW" data-commit="最多缓存500条">浏览历史记录</div><div data-href="#CTZ_DEFAULT" data-commit="修改器自带功能, 不需要额外开启">默认功能</div></div></div><div id="CTZ_DIALOG_RIGHT"><div id="CTZ_DIALOG_RIGHT_TITLE"></div><div id="CTZ_DIALOG_MAIN"><div id="CTZ_BASIS" style="display: none"><div id="CTZ_BASIS_DEFAULT"><div class="ctz-form-box"><div class="ctz-form-box-item"><div id="CTZ_FETCH_STATUS">状态获取中...</div><div><input id="CTZ_CHANGE_FETCH" class="ctz-i ctz-switch" name="fetchInterceptStatus" type="checkbox" value="on" /></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>快捷键打开修改器<span class="key-shadow">></span>(<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)</div><div><input class="ctz-i ctz-switch" name="hotKey" type="checkbox" value="on" /></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>去除浏览器标签上XX条私信/未读消息的提示</div><div><input class="ctz-i ctz-switch" name="globalTitleRemoveMessage" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>网页标签名称</div><div><input type="text" name="globalTitle" style="width: 278px" /><button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 8px">确认</button><button class="ctz-button" name="buttonResetTitle">还原</button></div></div><div class="ctz-form-box-item"><div>网页标签图标</div><div id="CTZ_TITLE_ICO"></div></div></div></div><div class="ctz-title">显示修改<span class="ctz-commit" style="color: red">修改后刷新页面生效</span></div><div id="CTZ_BASIC_SHOW_SELECT" class="ctz-form-box"></div><div id="CTZ_BASIS_SHOW_CONTENT"></div></div><div id="CTZ_POSITION" style="display: none"><div class="ctz-form-box"><div class="ctz-form-box-item"><div>修改器弹出图标 ⚙︎ 定位方式</div><div><div class="ctz-select" name="suspensionOpen"></div><!-- <select class="ctz-select" name="suspensionOpen"></select> --></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>回答内容「收起」按钮悬浮</div><div><input class="ctz-i ctz-switch" name="suspensionPickUp" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>悬浮收起按钮位置，数字越大离右侧越远：</div><div><input name="suspensionPickupRight" type="number" class="ctz-i-change" style="width: 80px" /></div></div></div><div class="ctz-title">信息模块悬浮<span>拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>首页列表切换</div><div><input class="ctz-i ctz-switch" name="suspensionHomeTab" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>顶部发现模块</div><div><input class="ctz-i ctz-switch" name="suspensionFind" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>个人中心模块</div><div><input class="ctz-i ctz-switch" name="suspensionUser" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>搜索栏模块</div><div><input class="ctz-i ctz-switch" name="suspensionSearch" type="checkbox" value="on" /></div></div></div></div><div id="CTZ_HIGH_PERFORMANCE" style="display: none"></div><div id="CTZ_HIDDEN" style="display: none"></div><div id="CTZ_FILTER" style="display: none"><div id="CTZ_FILTER_COMMEN"><div class="ctz-title">通用屏蔽<span>在首页列表和回答中均生效</span></div><div class="ctz-form-box"><div class="ctz-form-box-item ctz-fetch-intercept"><div>屏蔽选自盐选专栏的内容<span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span></div><div><input class="ctz-i ctz-switch" name="removeFromYanxuan" type="checkbox" value="on" /></div></div></div></div><div id="CTZ_FILTER_LIST"><div class="ctz-title">列表内容屏蔽<span>此部分设置只在首页列表生效</span></div><div id="CTZ_FILTER_LIST_CONTENT"></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>列表低赞内容屏蔽</div><div><input class="ctz-i ctz-switch" name="removeLessVote" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>关注、推荐、搜索屏蔽小于的点赞数量</div><div><input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px" /></div></div></div></div><div id="CTZ_FILTER_ANSWER"><div class="ctz-title">回答内容屏蔽<span>此部分设置只在回答页面生效</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>屏蔽匿名用户回答</div><div><input class="ctz-i ctz-switch" name="removeAnonymousAnswer" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>屏蔽带有虚构创作标签的回答</div><div><input class="ctz-i ctz-switch" name="removeUnrealAnswer" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>屏蔽选自电子书标签的回答</div><div><input class="ctz-i ctz-switch" name="removeFromEBook" type="checkbox" value="on" /></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>回答页面低赞回答屏蔽</div><div><input class="ctz-i ctz-switch" name="removeLessVoteDetail" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>问题回答屏蔽小于的点赞数量</div><div><input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px" /></div></div></div></div></div><div id="CTZ_BLOCK_WORDS" style="display: none"><div class="ctz-title">标题屏蔽词<span>匹配位置：列表标题</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div><input name="inputBlockedWord" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px" /></div></div><div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS"><div class="ctz-block-words-content"></div></div></div><div class="ctz-title">内容屏蔽词<span>匹配位置：列表、回答页内容</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div><input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px" /></div></div><div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS_CONTENT"><div class="ctz-block-words-content"></div></div></div></div><div id="CTZ_BLACKLIST" class="ctz-fetch-intercept" style="display: none"><div class="ctz-form-box"><div class="ctz-form-box-item"><div>黑名单部分配置导出和导入</div><div><button class="ctz-button" name="exportBlackConfig" style="margin-right: 8px;">配置导出</button><div id="IMPORT_BLACK"><input type="file" class="ctz-input-import-black" accept=".txt" /><button class="ctz-button" name="importBlackConfig">配置导入并合并</button></div></div></div></div><div class="ctz-title">通用设置</div><div id="CTZ_BLACKLIST_COMMON"></div><div class="ctz-title">黑名单标签</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>屏蔽用户后弹出标签选择</div><div><input class="ctz-i ctz-switch" name="openTagChooseAfterBlockedUser" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div></div><div><input name="inputBlockedUsersTag" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px" /></div></div><div class="ctz-form-box-item"><div id="CTZ_BLOCKED_USERS_TAGS"></div></div></div><div class="ctz-title">黑名单列表</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div><button name="syncBlack" class="ctz-button">同步黑名单</button></div></div><div class="ctz-form-box-item"><div id="CTZ_BLOCKED_NUMBER"></div><div><button name="syncBlackRemove" class="ctz-button">清空黑名单列表</button></div></div><div class="ctz-form-box-item"><div id="CTA_BLOCKED_USERS"></div></div></div></div><div id="CTZ_HISTORY_LIST" style="display: none"><div style="margin-bottom: 12px; text-align: right"><button class="ctz-button" name="button_history_clear" data-id="list">清空列表缓存</button></div><div class="ctz-set-content"></div></div><div id="CTZ_HISTORY_VIEW" style="display: none"><div style="margin-bottom: 12px; text-align: right"><button class="ctz-button" name="button_history_clear" data-id="view">清空历史记录</button></div><div class="ctz-set-content"></div></div><div id="CTZ_THEME" style="display: none"><div class="ctz-set-background ctz-form-box"></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>修改文字颜色</div><div><input type="text" class="ctz-i-change" name="colorText1" style="width: 148px; margin-right: 8px" placeholder="例如：#f7f9f9" /><button class="ctz-button ctz-reset-font-size" name="reset-colorText1">↺</button></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>关注列表高亮原创内容</div><div><div><input class="ctz-i ctz-switch" name="highlightOriginal" type="checkbox" value="on" /></div></div></div><div class="ctz-form-box-item"><div>关注列表高亮原创内容背景色</div><div><div><input type="text" class="ctz-i-change" name="backgroundHighlightOriginal" style="width: 148px; margin-right: 8px" placeholder="例如：#fbf8f1" /><button class="ctz-button ctz-reset-font-size" name="reset-backgroundHighlightOriginal">↺</button></div></div></div></div></div><div id="CTZ_VERSION" style="display: none"><div class="ctz-title">页面内容宽度</div><div id="CTZ_VERSION_RANGE_ZHIHU" class="ctz-form-box"></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>评论弹窗匹配页面宽度</div><div><input class="ctz-i ctz-switch" name="commitModalSizeSameVersion" type="checkbox" value="on" /></div></div></div><div class="ctz-title">字体大小</div><div id="CTZ_FONT_SIZE_IN_ZHIHU" class="ctz-form-box"></div><div class="ctz-title">图片尺寸</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>回答和文章图片尺寸</div><div><div class="ctz-select" name="zoomImageType"></div><!-- <select class="ctz-select" name="zoomImageType"></select> --></div></div><div id="CTZ_IMAGE_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>图片最大高度限制<span class="ctz-tooltip"><span>?</span><span>开启高度限制后，图片将按照高度等比例缩放，宽度限制将失效</span></span></div><div><div class="ctz-select" name="zoomImageHeight"></div><!-- <select class="ctz-select" name="zoomImageHeight"></select> --></div></div><div id="CTZ_IMAGE_HEIGHT_CUSTOM" class="ctz-form-box-item" style="display: none"></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>弹窗打开动图</div><div><input class="ctz-i ctz-switch" name="showGIFinDialog" type="checkbox" value="on" /></div></div><div class="ctz-form-box-item"><div>评论图片预览不超出页面</div><div><input class="ctz-i ctz-switch" name="commentImageFullPage" type="checkbox" value="on" /></div></div></div><div class="ctz-title">视频尺寸</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>列表视频回答尺寸</div><div><div class="ctz-select" name="zoomListVideoType"></div><!-- <select class="ctz-select" name="zoomListVideoType"></select> --></div></div><div id="CTZ_LIST_VIDEO_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div></div></div><div id="CTZ_CONFIG" style="display: none"><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div class="ctz-config-buttons"><button class="ctz-button" name="useSimple">启用极简模式</button><button class="ctz-button" name="configReset">恢复默认配置</button><button class="ctz-button" name="configExport">配置导出</button><!-- <button class="ctz-button" name="configRemove">清空配置</button> --><div id="IMPORT_BY_FILE"><input type="file" class="ctz-input-config-import" accept=".txt" /><button class="ctz-button" name="configImport">配置导入</button></div></div></div></div><div class="ctz-title">自定义样式</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div style="align-items: start; padding: 0; text-align: right"><textarea name="textStyleCustom" placeholder="内容为CSS"></textarea><button class="ctz-button" name="styleCustom">确定</button></div></div></div></div><div id="CTZ_DEFAULT" style="display: none"><div class="ctz-form-box"><div class="ctz-form-box-item"><div>知乎搜索</div><div><input type="text" name="searchInZhihu" style="width: 278px" placeholder="回车搜索" /></div></div><div class="ctz-form-box-item"><div></div><div class="ctz-to-zhihu"><a href="https://www.zhihu.com" target="_self" class="ctz-button" style="margin-right: 8px">返回知乎主页</a></div></div></div><div id="CTZ_DEFAULT_SELF" class="ctz-form-box"></div><div class="ctz-zhihu-self" style="margin-top: 18px"><div class="ctz-zhihu-key">更加方便的浏览，按<span class="key-shadow">?</span>（<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。<a href="https://www.zhihu.com/settings/preference" target="_blank">前往开启快捷键功能</a></div></div><div class="ctz-default-bottom"><a href="https://github.com/liuyubing233/zhihu-custom" target="_blank">Github⭐</a><a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank">GreasyFork</a><a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank">修改器介绍</a><a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank">更新日志</a></div></div></div></div></div></div><div id="CTZ_COVER"></div><!--<span class="ctz-tooltip"><span>?</span><span>hhhahahhahahahhahahahahhahaha</span></span>--><div id="CTZ_EXTRA_OUTPUT_COVER" style="display: none"></div><div id="CTZ_EXTRA_OUTPUT_DIALOG" style="display: none" data-status="close"><div data-type="chooseBlockedUserTags"><div class="ctz-title">选择标签</div><div class="ctz-choose-blocked-user-tags"></div><div class="ctz-extra-footer"><button class="ctz-button" name="choose-blocked-user-tags-finish">完成</button></div></div><div data-type="changeBlockedUserTagName"><div class="ctz-title">修改标签名</div><div class="ctz-change-blocked-user-tag-name"><input type="text" name="blocked-user-tag-name" /></div><div class="ctz-extra-footer"><button class="ctz-button" name="confirm-change-blocked-user-tag-name">修改</button><button class="ctz-button" name="cancel-change-blocked-user-tag-name">取消</button></div></div></div>`;
-  var INNER_CSS = `.marginTB8{margin:8px 0}.PositionCenter{position:fixed;left:50%;top:50%;transform:translate(-50%, -50%)}.CommonTransition{transition-property:transform;transition-duration:500ms;transition-timing-function:cubic-bezier(.2, 0, 0, 1)}[theme-light='1'] #CTZ_DIALOG_MENU>div.target,[theme-light='1'] .ctz-switch:checked{background:#ff3b30}[theme-light='1'] #CTZ_DEFAULT_SELF a,[theme-light='1'] .ctz-zhihu-key a,[theme-light='1'] .ctz-default-bottom a,[theme-light='1'] #CTZ_HISTORY_LIST a:hover,[theme-light='1'] #CTZ_HISTORY_VIEW a:hover,[theme-light='1'] .ctz-black-item a:hover,[theme-light='1'] .ctz-edit-user-tag:hover,[theme-light='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#ff3b30 !important}[theme-light='1'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='1'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#ff3b30}[theme-light='1'] .ctz-in-blocked-user-tag,[theme-light='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#ff3b30;color:#ff3b30;background:rgba(255,59,48,0.1)}[theme-light='2'] #CTZ_DIALOG_MENU>div.target,[theme-light='2'] .ctz-switch:checked{background:#a05a00}[theme-light='2'] #CTZ_DEFAULT_SELF a,[theme-light='2'] .ctz-zhihu-key a,[theme-light='2'] .ctz-default-bottom a,[theme-light='2'] #CTZ_HISTORY_LIST a:hover,[theme-light='2'] #CTZ_HISTORY_VIEW a:hover,[theme-light='2'] .ctz-black-item a:hover,[theme-light='2'] .ctz-edit-user-tag:hover,[theme-light='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#a05a00 !important}[theme-light='2'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='2'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#a05a00}[theme-light='2'] .ctz-in-blocked-user-tag,[theme-light='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#a05a00;color:#a05a00;background:rgba(160,90,0,0.1)}[theme-light='3'] #CTZ_DIALOG_MENU>div.target,[theme-light='3'] .ctz-switch:checked{background:#007d1b}[theme-light='3'] #CTZ_DEFAULT_SELF a,[theme-light='3'] .ctz-zhihu-key a,[theme-light='3'] .ctz-default-bottom a,[theme-light='3'] #CTZ_HISTORY_LIST a:hover,[theme-light='3'] #CTZ_HISTORY_VIEW a:hover,[theme-light='3'] .ctz-black-item a:hover,[theme-light='3'] .ctz-edit-user-tag:hover,[theme-light='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#007d1b !important}[theme-light='3'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='3'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#007d1b}[theme-light='3'] .ctz-in-blocked-user-tag,[theme-light='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#007d1b;color:#007d1b;background:rgba(0,125,27,0.1)}[theme-light='4'] #CTZ_DIALOG_MENU>div.target,[theme-light='4'] .ctz-switch:checked{background:#8e8e93}[theme-light='4'] #CTZ_DEFAULT_SELF a,[theme-light='4'] .ctz-zhihu-key a,[theme-light='4'] .ctz-default-bottom a,[theme-light='4'] #CTZ_HISTORY_LIST a:hover,[theme-light='4'] #CTZ_HISTORY_VIEW a:hover,[theme-light='4'] .ctz-black-item a:hover,[theme-light='4'] .ctz-edit-user-tag:hover,[theme-light='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#8e8e93 !important}[theme-light='4'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='4'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#8e8e93}[theme-light='4'] .ctz-in-blocked-user-tag,[theme-light='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#8e8e93;color:#8e8e93;background:rgba(142,142,147,0.1)}[theme-light='5'] #CTZ_DIALOG_MENU>div.target,[theme-light='5'] .ctz-switch:checked{background:#af52de}[theme-light='5'] #CTZ_DEFAULT_SELF a,[theme-light='5'] .ctz-zhihu-key a,[theme-light='5'] .ctz-default-bottom a,[theme-light='5'] #CTZ_HISTORY_LIST a:hover,[theme-light='5'] #CTZ_HISTORY_VIEW a:hover,[theme-light='5'] .ctz-black-item a:hover,[theme-light='5'] .ctz-edit-user-tag:hover,[theme-light='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#af52de !important}[theme-light='5'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='5'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#af52de}[theme-light='5'] .ctz-in-blocked-user-tag,[theme-light='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#af52de;color:#af52de;background:rgba(175,82,222,0.1)}[theme-light='6'] #CTZ_DIALOG_MENU>div.target,[theme-light='6'] .ctz-switch:checked{background:#ff9500}[theme-light='6'] #CTZ_DEFAULT_SELF a,[theme-light='6'] .ctz-zhihu-key a,[theme-light='6'] .ctz-default-bottom a,[theme-light='6'] #CTZ_HISTORY_LIST a:hover,[theme-light='6'] #CTZ_HISTORY_VIEW a:hover,[theme-light='6'] .ctz-black-item a:hover,[theme-light='6'] .ctz-edit-user-tag:hover,[theme-light='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#ff9500 !important}[theme-light='6'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='6'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#ff9500}[theme-light='6'] .ctz-in-blocked-user-tag,[theme-light='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#ff9500;color:#ff9500;background:rgba(255,179,64,0.1)}[theme-light='7'] #CTZ_DIALOG_MENU>div.target,[theme-light='7'] .ctz-switch:checked{background:#ff9500}[theme-light='7'] #CTZ_DEFAULT_SELF a,[theme-light='7'] .ctz-zhihu-key a,[theme-light='7'] .ctz-default-bottom a,[theme-light='7'] #CTZ_HISTORY_LIST a:hover,[theme-light='7'] #CTZ_HISTORY_VIEW a:hover,[theme-light='7'] .ctz-black-item a:hover,[theme-light='7'] .ctz-edit-user-tag:hover,[theme-light='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#ff9500 !important}[theme-light='7'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='7'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#ff9500}[theme-light='7'] .ctz-in-blocked-user-tag,[theme-light='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#ff9500;color:#ff9500;background:rgba(255,179,64,0.1)}[theme-dark='0'] #CTZ_DIALOG,[theme-dark='1'] #CTZ_DIALOG,[theme-dark='2'] #CTZ_DIALOG,[theme-dark='3'] #CTZ_DIALOG,[theme-dark='4'] #CTZ_DIALOG,[theme-dark='7'] #CTZ_DIALOG{color:#dfdfdf;box-shadow:2px 2px 4px #4a4848,-2px -2px 4px #4a4848}[theme-dark='0'] #CTZ_DIALOG,[theme-dark='1'] #CTZ_DIALOG,[theme-dark='2'] #CTZ_DIALOG,[theme-dark='3'] #CTZ_DIALOG,[theme-dark='4'] #CTZ_DIALOG,[theme-dark='7'] #CTZ_DIALOG,[theme-dark='0'] #CTZ_DIALOG_LEFT,[theme-dark='1'] #CTZ_DIALOG_LEFT,[theme-dark='2'] #CTZ_DIALOG_LEFT,[theme-dark='3'] #CTZ_DIALOG_LEFT,[theme-dark='4'] #CTZ_DIALOG_LEFT,[theme-dark='7'] #CTZ_DIALOG_LEFT,[theme-dark='0'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='1'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='2'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='3'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='4'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='7'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='0'] .ctz-black-item,[theme-dark='1'] .ctz-black-item,[theme-dark='2'] .ctz-black-item,[theme-dark='3'] .ctz-black-item,[theme-dark='4'] .ctz-black-item,[theme-dark='7'] .ctz-black-item,[theme-dark='0'] .ctz-blocked-users-tag,[theme-dark='1'] .ctz-blocked-users-tag,[theme-dark='2'] .ctz-blocked-users-tag,[theme-dark='3'] .ctz-blocked-users-tag,[theme-dark='4'] .ctz-blocked-users-tag,[theme-dark='7'] .ctz-blocked-users-tag,[theme-dark='0'] .ctz-in-blocked-user-tag,[theme-dark='1'] .ctz-in-blocked-user-tag,[theme-dark='2'] .ctz-in-blocked-user-tag,[theme-dark='3'] .ctz-in-blocked-user-tag,[theme-dark='4'] .ctz-in-blocked-user-tag,[theme-dark='7'] .ctz-in-blocked-user-tag,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{background:#504e4e}[theme-dark='0'] #CTZ_DIALOG_RIGHT,[theme-dark='1'] #CTZ_DIALOG_RIGHT,[theme-dark='2'] #CTZ_DIALOG_RIGHT,[theme-dark='3'] #CTZ_DIALOG_RIGHT,[theme-dark='4'] #CTZ_DIALOG_RIGHT,[theme-dark='7'] #CTZ_DIALOG_RIGHT,[theme-dark='0'] #CTZ_HIDDEN .ctz-title,[theme-dark='1'] #CTZ_HIDDEN .ctz-title,[theme-dark='2'] #CTZ_HIDDEN .ctz-title,[theme-dark='3'] #CTZ_HIDDEN .ctz-title,[theme-dark='4'] #CTZ_HIDDEN .ctz-title,[theme-dark='7'] #CTZ_HIDDEN .ctz-title{background:#2f2c2b}[theme-dark='0'] .ctz-form-box,[theme-dark='1'] .ctz-form-box,[theme-dark='2'] .ctz-form-box,[theme-dark='3'] .ctz-form-box,[theme-dark='4'] .ctz-form-box,[theme-dark='7'] .ctz-form-box{background:#312e2e}[theme-dark='0'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='1'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='2'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='3'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='4'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='7'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div{color:#b8b7b7}[theme-dark='0'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='1'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='2'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='3'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='4'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='7'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='0'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='1'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='2'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='3'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='4'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='7'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='0'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='1'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='2'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='3'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='4'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='7'] #CTZ_BACKGROUND_DARK .ctz-background-item-name{color:#989796}[theme-dark='0'] .ctz-switch,[theme-dark='1'] .ctz-switch,[theme-dark='2'] .ctz-switch,[theme-dark='3'] .ctz-switch,[theme-dark='4'] .ctz-switch,[theme-dark='7'] .ctz-switch{background:#474443}[theme-dark='0'] #CTZ_DIALOG_MENU>div.target,[theme-dark='1'] #CTZ_DIALOG_MENU>div.target,[theme-dark='2'] #CTZ_DIALOG_MENU>div.target,[theme-dark='3'] #CTZ_DIALOG_MENU>div.target,[theme-dark='4'] #CTZ_DIALOG_MENU>div.target,[theme-dark='7'] #CTZ_DIALOG_MENU>div.target,[theme-dark='0'] .ctz-switch:checked,[theme-dark='1'] .ctz-switch:checked,[theme-dark='2'] .ctz-switch:checked,[theme-dark='3'] .ctz-switch:checked,[theme-dark='4'] .ctz-switch:checked,[theme-dark='7'] .ctz-switch:checked{background:#175ac0}[theme-dark='0'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='1'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='2'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='3'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='4'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='7'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='0'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='1'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='2'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='3'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='4'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='7'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='0'] .ctz-in-blocked-user-tag,[theme-dark='1'] .ctz-in-blocked-user-tag,[theme-dark='2'] .ctz-in-blocked-user-tag,[theme-dark='3'] .ctz-in-blocked-user-tag,[theme-dark='4'] .ctz-in-blocked-user-tag,[theme-dark='7'] .ctz-in-blocked-user-tag,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#175ac0}[theme-dark='0'] #CTZ_DEFAULT_SELF a,[theme-dark='1'] #CTZ_DEFAULT_SELF a,[theme-dark='2'] #CTZ_DEFAULT_SELF a,[theme-dark='3'] #CTZ_DEFAULT_SELF a,[theme-dark='4'] #CTZ_DEFAULT_SELF a,[theme-dark='7'] #CTZ_DEFAULT_SELF a,[theme-dark='0'] .ctz-zhihu-key a,[theme-dark='1'] .ctz-zhihu-key a,[theme-dark='2'] .ctz-zhihu-key a,[theme-dark='3'] .ctz-zhihu-key a,[theme-dark='4'] .ctz-zhihu-key a,[theme-dark='7'] .ctz-zhihu-key a,[theme-dark='0'] .ctz-default-bottom a,[theme-dark='1'] .ctz-default-bottom a,[theme-dark='2'] .ctz-default-bottom a,[theme-dark='3'] .ctz-default-bottom a,[theme-dark='4'] .ctz-default-bottom a,[theme-dark='7'] .ctz-default-bottom a,[theme-dark='0'] #CTZ_HISTORY_LIST a:hover,[theme-dark='1'] #CTZ_HISTORY_LIST a:hover,[theme-dark='2'] #CTZ_HISTORY_LIST a:hover,[theme-dark='3'] #CTZ_HISTORY_LIST a:hover,[theme-dark='4'] #CTZ_HISTORY_LIST a:hover,[theme-dark='7'] #CTZ_HISTORY_LIST a:hover,[theme-dark='0'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='1'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='2'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='3'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='4'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='7'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='0'] .ctz-black-item a:hover,[theme-dark='1'] .ctz-black-item a:hover,[theme-dark='2'] .ctz-black-item a:hover,[theme-dark='3'] .ctz-black-item a:hover,[theme-dark='4'] .ctz-black-item a:hover,[theme-dark='7'] .ctz-black-item a:hover,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='0'] .ctz-in-blocked-user-tag,[theme-dark='1'] .ctz-in-blocked-user-tag,[theme-dark='2'] .ctz-in-blocked-user-tag,[theme-dark='3'] .ctz-in-blocked-user-tag,[theme-dark='4'] .ctz-in-blocked-user-tag,[theme-dark='7'] .ctz-in-blocked-user-tag{color:#175ac0 !important}[theme-dark='0'] .ctz-form-box,[theme-dark='1'] .ctz-form-box,[theme-dark='2'] .ctz-form-box,[theme-dark='3'] .ctz-form-box,[theme-dark='4'] .ctz-form-box,[theme-dark='7'] .ctz-form-box{border-color:#514e4e}[theme-dark='0'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='1'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='2'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='3'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='4'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='7'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='0'] .key-shadow,[theme-dark='1'] .key-shadow,[theme-dark='2'] .key-shadow,[theme-dark='3'] .key-shadow,[theme-dark='4'] .key-shadow,[theme-dark='7'] .key-shadow{background:#383534}[theme-dark='0'] #CTZ_DIALOG input[type='range'],[theme-dark='1'] #CTZ_DIALOG input[type='range'],[theme-dark='2'] #CTZ_DIALOG input[type='range'],[theme-dark='3'] #CTZ_DIALOG input[type='range'],[theme-dark='4'] #CTZ_DIALOG input[type='range'],[theme-dark='7'] #CTZ_DIALOG input[type='range']{background:#474443;box-shadow:inset 1px 1px 2px #474443,inset -1px -1px 2px #474443}[theme-dark='0'] #CTZ_DIALOG input[type='range']::before,[theme-dark='1'] #CTZ_DIALOG input[type='range']::before,[theme-dark='2'] #CTZ_DIALOG input[type='range']::before,[theme-dark='3'] #CTZ_DIALOG input[type='range']::before,[theme-dark='4'] #CTZ_DIALOG input[type='range']::before,[theme-dark='7'] #CTZ_DIALOG input[type='range']::before,[theme-dark='0'] #CTZ_DIALOG input[type='range']::after,[theme-dark='1'] #CTZ_DIALOG input[type='range']::after,[theme-dark='2'] #CTZ_DIALOG input[type='range']::after,[theme-dark='3'] #CTZ_DIALOG input[type='range']::after,[theme-dark='4'] #CTZ_DIALOG input[type='range']::after,[theme-dark='7'] #CTZ_DIALOG input[type='range']::after{background:#5a5958}[theme-dark='0'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='1'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='2'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='3'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='4'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='7'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb{background:#989797;border:1px solid #b0b0af}[theme-dark='0'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='1'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='2'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='3'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='4'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='7'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#b0b0af}[theme-dark='0'] .ctz-button,[theme-dark='1'] .ctz-button,[theme-dark='2'] .ctz-button,[theme-dark='3'] .ctz-button,[theme-dark='4'] .ctz-button,[theme-dark='7'] .ctz-button{background:#62605e;border-color:#62605e;color:#dcdcdc}[theme-dark='5'] #CTZ_DIALOG{color:#dfdfdf;box-shadow:2px 2px 4px #4a4848,-2px -2px 4px #4a4848}[theme-dark='5'] #CTZ_DIALOG,[theme-dark='5'] #CTZ_DIALOG_LEFT,[theme-dark='5'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='5'] .ctz-black-item,[theme-dark='5'] .ctz-blocked-users-tag,[theme-dark='5'] .ctz-in-blocked-user-tag,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{background:#504e4e}[theme-dark='5'] #CTZ_DIALOG_RIGHT,[theme-dark='5'] #CTZ_HIDDEN .ctz-title{background:#2f2c2b}[theme-dark='5'] .ctz-form-box{background:#312e2e}[theme-dark='5'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div{color:#b8b7b7}[theme-dark='5'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='5'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='5'] #CTZ_BACKGROUND_DARK .ctz-background-item-name{color:#989796}[theme-dark='5'] .ctz-switch{background:#474443}[theme-dark='5'] #CTZ_DIALOG_MENU>div.target,[theme-dark='5'] .ctz-switch:checked{background:#570d0d}[theme-dark='5'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='5'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='5'] .ctz-in-blocked-user-tag,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#570d0d}[theme-dark='5'] #CTZ_DEFAULT_SELF a,[theme-dark='5'] .ctz-zhihu-key a,[theme-dark='5'] .ctz-default-bottom a,[theme-dark='5'] #CTZ_HISTORY_LIST a:hover,[theme-dark='5'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='5'] .ctz-black-item a:hover,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='5'] .ctz-in-blocked-user-tag{color:#570d0d !important}[theme-dark='5'] .ctz-form-box{border-color:#514e4e}[theme-dark='5'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='5'] .key-shadow{background:#383534}[theme-dark='5'] #CTZ_DIALOG input[type='range']{background:#474443;box-shadow:inset 1px 1px 2px #474443,inset -1px -1px 2px #474443}[theme-dark='5'] #CTZ_DIALOG input[type='range']::before,[theme-dark='5'] #CTZ_DIALOG input[type='range']::after{background:#5a5958}[theme-dark='5'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb{background:#989797;border:1px solid #b0b0af}[theme-dark='5'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#b0b0af}[theme-dark='5'] .ctz-button{background:#62605e;border-color:#62605e;color:#dcdcdc}[theme-dark='6'] #CTZ_DIALOG{color:#dfdfdf;box-shadow:2px 2px 4px #4a4848,-2px -2px 4px #4a4848}[theme-dark='6'] #CTZ_DIALOG,[theme-dark='6'] #CTZ_DIALOG_LEFT,[theme-dark='6'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='6'] .ctz-black-item,[theme-dark='6'] .ctz-blocked-users-tag,[theme-dark='6'] .ctz-in-blocked-user-tag,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{background:#504e4e}[theme-dark='6'] #CTZ_DIALOG_RIGHT,[theme-dark='6'] #CTZ_HIDDEN .ctz-title{background:#2f2c2b}[theme-dark='6'] .ctz-form-box{background:#312e2e}[theme-dark='6'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div{color:#b8b7b7}[theme-dark='6'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='6'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='6'] #CTZ_BACKGROUND_DARK .ctz-background-item-name{color:#989796}[theme-dark='6'] .ctz-switch{background:#474443}[theme-dark='6'] #CTZ_DIALOG_MENU>div.target,[theme-dark='6'] .ctz-switch:checked{background:#093333}[theme-dark='6'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='6'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='6'] .ctz-in-blocked-user-tag,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#093333}[theme-dark='6'] #CTZ_DEFAULT_SELF a,[theme-dark='6'] .ctz-zhihu-key a,[theme-dark='6'] .ctz-default-bottom a,[theme-dark='6'] #CTZ_HISTORY_LIST a:hover,[theme-dark='6'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='6'] .ctz-black-item a:hover,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='6'] .ctz-in-blocked-user-tag{color:#093333 !important}[theme-dark='6'] .ctz-form-box{border-color:#514e4e}[theme-dark='6'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='6'] .key-shadow{background:#383534}[theme-dark='6'] #CTZ_DIALOG input[type='range']{background:#474443;box-shadow:inset 1px 1px 2px #474443,inset -1px -1px 2px #474443}[theme-dark='6'] #CTZ_DIALOG input[type='range']::before,[theme-dark='6'] #CTZ_DIALOG input[type='range']::after{background:#5a5958}[theme-dark='6'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb{background:#989797;border:1px solid #b0b0af}[theme-dark='6'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#b0b0af}[theme-dark='6'] .ctz-button{background:#62605e;border-color:#62605e;color:#dcdcdc}.ctz-button{outline:none;position:relative;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;user-select:none;touch-action:manipulation;font-size:14px;height:24px;padding:0px 8px;border-radius:4px;border:1px solid transparent;background-color:#fff;border-color:rgba(150,162,170,0.4);font-weight:400}.ctz-button:hover{font-weight:600;background:#eeeeee}.ctz-button:active{background:#e0e0e0;font-weight:400}.ctz-button.ctz-button-primary{background:#007aff;color:#fff;border-color:transparent}.ctz-button.ctz-button-primary:hover{background:#0040dd}.ctz-button.ctz-button-primary:active{background:#007aff}.ctz-button-red{color:#ff3b30 !important;border:1px solid #ff3b30 !important}.ctz-button-red:hover{color:#ff453a !important;border:1px solid #ff453a !important}.ctz-button:disabled{border-color:#d0d0d0;background-color:rgba(0,0,0,0.08);color:#b0b0b0;cursor:not-allowed}.Profile-mainColumn,.Collections-mainColumn,.CollectionsDetailPage-mainColumn{flex:1}#root .css-1liaddi{margin-right:0}.ContentItem-title div{display:inline}.css-1acwmmj:empty{display:none !important}.css-hr0k1l::after{content:'点击键盘左、右按键切换图片';position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#fff}.HotLanding-contentItemCount.HotLanding-contentItemCountWithoutSub{margin-top:12px}body[data-suspension-pickup='true'] .ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question='true']{position:fixed;bottom:50px;background:#fff;padding:6px 12px;box-shadow:0 2px 8px #c9c9c9,0 -2px 8px #ffffff;border-radius:8px}body[data-suspension-pickup='true'] .ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question='true']:hover{background:#fff;color:#007aff !important;font-weight:600}body[data-suspension-pickup='true'] .ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question='true']:active{font-weight:200 !important}.Topstory-container,.css-knqde,.Search-container{width:fit-content !important}.Question-main .Question-mainColumn,.QuestionHeader-main{flex:1}.Question-main .List-item{border-bottom:1px dashed #ddd}.Question-main .Question-sideColumn{margin-left:12px}.QuestionHeader{min-width:auto}.QuestionHeader .QuestionHeader-content{margin:0 auto;padding:0;max-width:initial !important}.zhuanlan .AuthorInfo,.zhuanlan .css-1xy3kyp{max-width:initial}.GifPlayer.isPlaying img{cursor:pointer !important}.AppHeader-inner{margin:0 auto !important;padding:0 !important;min-width:min-content !important;width:fit-content !important}#CTZ_DIALOG{transition-property:transform;transition-duration:500ms;transition-timing-function:cubic-bezier(.2, 0, 0, 1);position:fixed;left:50%;top:50%;transform:translate(-50%, -50%);transition-property:height;width:800px;height:600px;max-width:100vw;max-height:100vh;border-radius:8px;box-shadow:2px 2px 4px #dbdbdb,-2px -2px 4px #dbdbdb;background:#e0e0e0;flex-direction:column;overflow:hidden;z-index:202;font-size:14px;border:1px solid rgba(142,142,147,0.1)}#CTZ_DIALOG input[type='text'],#CTZ_EXTRA_OUTPUT_DIALOG input[type='text'],#CTZ_DIALOG input[type='number'],#CTZ_EXTRA_OUTPUT_DIALOG input[type='number'],#CTZ_DIALOG textarea,#CTZ_EXTRA_OUTPUT_DIALOG textarea{box-sizing:border-box;margin:0;padding:0px 4px;font-size:14px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border:1px solid rgba(150,162,170,0.4);border-radius:4px;transition:all .2s;background:transparent}#CTZ_DIALOG label,#CTZ_EXTRA_OUTPUT_DIALOG label{cursor:pointer;transition:all .2s}#CTZ_DIALOG label:hover,#CTZ_EXTRA_OUTPUT_DIALOG label:hover{color:#007aff !important}#CTZ_DIALOG label .ctz-i[type='checkbox']~div,#CTZ_EXTRA_OUTPUT_DIALOG label .ctz-i[type='checkbox']~div{margin-left:8px;display:inline-block}#CTZ_DIALOG ::-webkit-scrollbar,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar{width:8px;height:8px;background:transparent}#CTZ_DIALOG ::-webkit-scrollbar-track,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar-track{border-radius:0}#CTZ_DIALOG ::-webkit-scrollbar-thumb,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar-thumb{background:#bbb;transition:all .2s;border-radius:8px}#CTZ_DIALOG ::-webkit-scrollbar-thumb:hover,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}#CTZ_DIALOG a,#CTZ_EXTRA_OUTPUT_DIALOG a{transition:all .2s;text-decoration:none}#CTZ_DIALOG .ctz-button,#CTZ_EXTRA_OUTPUT_DIALOG .ctz-button{min-width:68px}#CTZ_DIALOG_LEFT{width:160px;display:flex;flex-direction:column;overflow:hidden;background:#e0e0e0}#CTZ_DIALOG_MENU{flex:1;overflow:hidden auto;padding:8px 12px 0}#CTZ_DIALOG_MENU>div{box-sizing:border-box;line-height:38px;padding-left:12px;border-radius:6px;font-size:14px;margin-bottom:2px;cursor:pointer}#CTZ_DIALOG_MENU>div:active{font-weight:200 !important}#CTZ_DIALOG_MENU>div:hover{background:rgba(77,66,86,0.08)}#CTZ_DIALOG_MENU>div.target{color:#fff !important;background:#007aff}#CTZ_DIALOG_RIGHT{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#ededec}#CTZ_DIALOG_RIGHT_TITLE{height:52px;line-height:52px;font-size:16px;font-weight:600;box-sizing:border-box;padding-left:18px;border-bottom:1px solid rgba(150,162,170,0.2)}#CTZ_DIALOG_RIGHT_TITLE>span{font-size:12px;color:#ff3b30;padding-left:8px}#CTZ_DIALOG_MAIN{flex:1;overflow-y:auto}#CTZ_DIALOG_MAIN>div{box-sizing:border-box;width:100%;padding:18px}#CTZ_DIALOG_CONTENT{flex:1;display:flex;overflow:hidden}.ctz-zhihu-key a,.ctz-default-bottom a{color:#007aff !important}.ctz-zhihu-key a:hover,.ctz-default-bottom a:hover{color:#bbb !important}.ctz-default-bottom{margin-top:12px}.ctz-default-bottom a{margin-right:12px}.ctz-version{float:right;margin-right:12px;font-size:12px;line-height:20px}#CTZ_OPEN_CLOSE{transition-property:none;transition-duration:300ms;transition-timing-function:cubic-bezier(.2, 0, 0, 1);user-select:none;width:48px;height:48px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(150,162,170,0.4);border-radius:8px;opacity:.8;font-size:44px;cursor:pointer;z-index:201;position:fixed;bottom:0;right:0;box-sizing:border-box;border:2px solid rgba(150,162,170,0.2)}#CTZ_OPEN_CLOSE:hover{opacity:1}#CTZ_LEFT_BUTTONS{margin:8px 0 0 8px}#CTZ_LEFT_BUTTONS button{height:20px;width:20px;border-radius:6px;padding:0;border:0;transform:scale(.75);color:#fff;font-size:12px;line-height:20px;min-width:0 !important}#CTZ_LEFT_BUTTONS [name='dialogClose']{background:#fe6059}#CTZ_LEFT_BUTTONS [name='dialogClose']:hover{background:#d70015;color:#fff !important;font-weight:600}#CTZ_LEFT_BUTTONS [name='dialogBig']{background:#27c93f}#CTZ_LEFT_BUTTONS [name='dialogBig']:hover{background:#28cd41;color:#fff !important;font-weight:600}.gear{width:24px;height:24px;position:relative;border-radius:50%;box-sizing:border-box;border:6px solid #8e8e93;background:transparent}.gear_line_1,.gear_line_2,.gear_line_3,.gear_line_4{position:absolute;box-sizing:border-box;width:30px;height:6px;border-radius:2px;border-left:6px solid #8e8e93;border-right:6px solid #8e8e93;left:50%;top:50%;transform:translate(-50%, -50%)}.gear_line_2{transform:translate(-50%, -50%) rotate(45deg)}.gear_line_3{transform:translate(-50%, -50%) rotate(90deg)}.gear_line_4{transform:translate(-50%, -50%) rotate(135deg)}#CTZ_EXTRA_OUTPUT_COVER{position:fixed;left:50%;top:50%;transform:translate(-50%, -50%);width:800px;height:600px;background:rgba(0,0,0,0.4);z-index:203;border-radius:8px}#CTZ_EXTRA_OUTPUT_DIALOG{position:fixed;left:50%;top:50%;transform:translate(-50%, -50%);z-index:204;background:#ededec;border-radius:8px;overflow:hidden;min-width:420px;border:1px solid rgba(142,142,147,0.1);box-shadow:2px 2px 4px #dbdbdb,-2px -2px 4px #dbdbdb}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-extra-footer{text-align:right;padding:14px;border-top:1px solid rgba(142,142,147,0.1)}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-extra-footer button{margin-left:12px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-title{padding-left:14px;height:auto;font-size:16px}#CTZ_EXTRA_OUTPUT_DIALOG>div{padding-top:4px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-change-blocked-user-tag-name{width:420px;padding:0 14px 14px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-change-blocked-user-tag-name input[name='blocked-user-tag-name']{width:100%}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags{width:600px;padding:6px 6px 6px 14px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags>span{cursor:pointer;display:inline-block;border-radius:6px;margin:0 8px 8px 0;border:1px solid rgba(150,162,170,0.4);padding:0 8px;background:#fff}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags>span:hover{background:rgba(77,66,86,0.08);color:#007aff !important;font-weight:600}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags>span[data-choose='true']{color:#007aff;border-color:#007aff;background:rgba(0,122,255,0.1)}.ctz-zhida{color:#09408e;margin:0 2px}.ctz-zhida span{font-size:10px;display:inline-block;vertical-align:top;height:15px;line-height:15px}#CTZ_HIDDEN,#CTZ_VERSION,#CTZ_FILTER{padding-top:0 !important}#CTZ_HIDDEN .ctz-title{position:sticky;top:0;margin:0 -18px;padding:0 18px 0 28px;background:#ededec}.ctz-radio-group{display:flex}.ctz-radio-group label{cursor:pointer;position:relative;margin:0 !important}.ctz-radio-group label div{box-sizing:border-box;padding:0 8px;height:24px;display:flex;align-items:center;justify-content:center;border-top:1px solid rgba(150,162,170,0.4);border-bottom:1px solid rgba(150,162,170,0.4);position:relative}.ctz-radio-group label div::after{content:'';position:absolute;height:100%;width:1px;background:rgba(150,162,170,0.4);right:0;top:0}.ctz-radio-group label:first-of-type div{border-radius:8px 0 0 8px;border-left:1px solid rgba(150,162,170,0.4)}.ctz-radio-group label:first-of-type div::before{display:none}.ctz-radio-group label:last-of-type div{border-radius:0 8px 8px 0;border-right:1px solid rgba(150,162,170,0.4)}.ctz-radio-group label:last-of-type div::after{display:none}.ctz-radio-group label:hover div{background:rgba(0,122,255,0.1)}.ctz-radio-group input{visibility:hidden;position:absolute}.ctz-radio-group input:checked+div{background:#007aff;color:#fff;border-color:#007aff;z-index:1}.ctz-radio-group input:checked+div::after{background:#007aff;z-index:1}.ctz-radio-group input:checked+div::before{content:'';position:absolute;height:100%;width:1px;background:#007aff;left:0;top:0;z-index:1}.ctz-radio{display:inline-block;padding-left:24px;line-height:24px}.ctz-radio input[type='radio']{display:none}.ctz-radio input[type='radio']+div{position:relative;cursor:pointer}.ctz-radio input[type='radio']+div::before{content:'';position:absolute;left:-20px;top:4px;border-radius:50%;border:1px solid #cecece;width:14px;height:14px;background:#fff;box-shadow:inset 5px 5px 5px #f0f0f0,inset -5px -5px 5px #ffffff}.ctz-radio input[type='radio']+div::after{content:'';position:absolute;left:-16px;top:8px;border-radius:50%;width:8px;height:8px}.ctz-radio input[type='radio']:checked+div::before{background:#007aff;border-color:#007aff;box-shadow:none}.ctz-radio input[type='radio']:checked+div::after{background:#fff}.ctz-radio input[type='radio']:focus+div::before{box-shadow:0 0 8px #007aff}.ctz-radio input[type='radio']:disabled+div::before{border:1px solid #cecece;box-shadow:0 0 4px #ddd}.ctz-i:not(.ctz-switch)[type='checkbox']{appearance:none;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;transition:all .2s;width:22px;height:22px;margin:0;position:relative;border-radius:4px;box-sizing:border-box;border:none;cursor:pointer}.ctz-i:not(.ctz-switch)[type='checkbox']::after{cursor:pointer;transition:all .2s;content:' ';width:22px;height:22px;border-radius:4px;border:1px solid rgba(150,162,170,0.4);box-sizing:border-box;left:0px;top:0px;z-index:1;position:absolute;font-weight:600;display:flex;align-items:center;justify-content:center}.ctz-i:not(.ctz-switch)[type='checkbox']:hover::after{border-color:#007aff}.ctz-i:not(.ctz-switch)[type='checkbox']:checked::after{content:'✓';font-size:16px;font-weight:600;color:#fff;background:#007aff;border-color:#007aff}.ctz-checkbox-group label{display:inline-flex !important;padding-right:12px}.ctz-checkbox-group label div{margin-right:12px}.ctz-checkbox-group label::after{content:'';height:12px;width:1px;background:rgba(150,162,170,0.4)}.ctz-checkbox-group label:last-of-type::after{display:none}.ctz-tooltip{position:relative;display:inline-block;margin-left:4px}.ctz-tooltip>span:first-child{display:inline-block;font-size:12px;border-radius:50%;border:1px solid #98989d;color:#98989d;width:12px;height:12px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.ctz-tooltip>span:last-child{display:none;position:absolute;top:30px;left:-50px;background-color:rgba(0,0,0,0.65);color:#fff;padding:8px 12px;z-index:10;border-radius:6px;width:max-content;line-height:24px}.ctz-tooltip>span:last-child::after{content:'';width:0;height:0;position:absolute;border-bottom:6px solid rgba(0,0,0,0.65);border-left:8px solid transparent;border-right:8px solid transparent;top:-6px;left:50px}.ctz-tooltip:hover>span:first-child{border-color:#007aff;color:#007aff}.ctz-tooltip:hover>span:last-child{display:block}.ctz-form-box{background:#e9e9e8;border:1px solid #dfdfde;border-radius:8px;margin-bottom:14px}.ctz-form-box .ctz-form-box-item{display:flex;padding:8px 12px;min-height:24px;position:relative}.ctz-form-box .ctz-form-box-item>div:first-of-type{flex:1;line-height:24px;word-break:keep-all;padding-right:12px}.ctz-form-box .ctz-form-box-item>div:nth-child(2){display:flex;flex-wrap:wrap;align-items:center}.ctz-form-box .ctz-form-box-item::after{content:'';position:absolute;background:#e0e0df;height:1px;width:96%;bottom:0;left:50%;transform:translateX(-50%)}.ctz-form-box .ctz-form-box-item:last-of-type::after{display:none}.ctz-form-box .ctz-form-box-item.ctz-form-box-item-vertical{display:block}.ctz-form-box .ctz-form-box-item.ctz-form-box-item-vertical>div:nth-child(2){display:block;padding-top:4px;font-size:12px;color:#999}.ctz-title{font-weight:bold;font-size:14px;display:flex;align-items:center;height:42px;line-height:42px;padding-left:10px}.ctz-title>span{font-size:12px;color:#999;padding-left:8px}.ctz-title>span b{color:#ff3b30}.ctz-switch{width:40px;height:24px;position:relative;background-color:#dcdfe6;border-radius:6px;background-clip:content-box;display:inline-block;appearance:none;-webkit-appearance:none;-moz-appearance:none;user-select:none;outline:none;margin:0;cursor:pointer}.ctz-switch::before{content:'';position:absolute;width:22px;height:22px;background-color:#ffffff;border-radius:5px;left:2px;top:0;bottom:0;margin:auto;transition:.3s}.ctz-switch:checked{background-color:#007aff;transition:.6s}.ctz-switch:checked::before{left:17px;transition:.3s}.ctz-switch:hover::before{background:#f0f0f0}.ctz-fetch-intercept .ctz-need-fetch{display:none}.ctz-fetch-intercept.ctz-fetch-intercept-close{color:#b0b0b0 !important;cursor:not-allowed !important;text-decoration:line-through}.ctz-fetch-intercept.ctz-fetch-intercept-close span.ctz-need-fetch{display:inline}.ctz-fetch-intercept.ctz-fetch-intercept-close div.ctz-need-fetch{display:block}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-remove-block{cursor:not-allowed !important}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-black-item .ctz-remove-block:hover,.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-black-item a:hover{background:transparent !important;color:#b0b0b0 !important}.ctz-fetch-intercept.ctz-fetch-intercept-close:hover{color:#b0b0b0 !important}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-switch{background-color:rgba(0,0,0,0.08);cursor:not-allowed !important}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-switch::before{background:#ffffff !important}#CTZ_DIALOG input[type='range']{outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;height:6px;border-radius:8px;background:#dddddc;position:relative;box-shadow:inset 1px 1px 2px #d4d4d3,inset -1px -1px 2px #d4d4d3}#CTZ_DIALOG input[type='range']::before,#CTZ_DIALOG input[type='range']::after{content:'';background:#c6c6c5;position:absolute;height:10px;width:3px;border-radius:4px;top:-2px}#CTZ_DIALOG input[type='range']::before{left:-2px}#CTZ_DIALOG input[type='range']::after{right:-2px}#CTZ_DIALOG input[type='range']::-webkit-slider-thumb{-webkit-appearance:none;-moz-appearance:none;appearance:none;transition:all .2s;width:10px;height:25px;border-radius:16px;background:#fff;border:1px solid #c7c7c6;z-index:5}#CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#f0f0f0}.ctz-select{position:relative;width:fit-content}.ctz-select-input{background:transparent;text-align:right;height:22px;border-radius:6px;border:1px solid transparent;padding:0 8px;line-height:22px;cursor:pointer}.ctz-select-input:hover{background:#ffffff;border:1px solid #e0e0e0}.ctz-select-icon{margin-left:4px}.ctz-option-box{position:absolute;top:24px;right:0;background:#e9e9e8;z-index:10;padding:6px;border-radius:6px;border:1px solid #e0e0e0;box-shadow:2px 2px 4px #dbdbdb,-2px -2px 4px #dbdbdb}.ctz-option-item{white-space:pre;cursor:default;padding:0 6px 0 24px;border-radius:4px;height:24px;line-height:24px;position:relative}.ctz-option-item:hover{color:#fff;background:#007aff}.ctz-option-item[data-choose="true"]::before{content:'✓';position:absolute;left:6px}#CTZ_BACKGROUND{gap:12px}#CTZ_BACKGROUND .ctz-background-item{position:relative}#CTZ_BACKGROUND .ctz-background-item input{position:absolute;visibility:hidden}#CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#007aff}#CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div{color:#272726}#CTZ_BACKGROUND .ctz-background-item-div{border-radius:8px;height:46px;width:68px;margin:4px}#CTZ_BACKGROUND .ctz-background-item-border{height:46px;width:68px;border-radius:12px;position:absolute;top:0;left:0;border:4px solid transparent}#CTZ_BACKGROUND .ctz-background-item-name{font-size:12px;text-align:center;padding-top:8px;color:#777776}#CTZ_BACKGROUND_LIGHT,#CTZ_BACKGROUND_DARK{gap:10px;padding:4px 4px 24px 0}#CTZ_BACKGROUND_LIGHT .ctz-background-item,#CTZ_BACKGROUND_DARK .ctz-background-item{position:relative}#CTZ_BACKGROUND_LIGHT .ctz-background-item input,#CTZ_BACKGROUND_DARK .ctz-background-item input{position:absolute;visibility:hidden}#CTZ_BACKGROUND_LIGHT .ctz-background-item input:checked+div+div,#CTZ_BACKGROUND_DARK .ctz-background-item input:checked+div+div,#CTZ_BACKGROUND_LIGHT .ctz-background-item input:checked+div+div+div,#CTZ_BACKGROUND_DARK .ctz-background-item input:checked+div+div+div{opacity:1}#CTZ_BACKGROUND_LIGHT .ctz-background-item-div,#CTZ_BACKGROUND_DARK .ctz-background-item-div{height:18px;width:18px;border-radius:50%}#CTZ_BACKGROUND_LIGHT .ctz-background-item-border,#CTZ_BACKGROUND_DARK .ctz-background-item-border{height:calc(18px / 2);width:calc(18px / 2);border-radius:50%;position:absolute;top:calc(18px / 4);left:calc(18px / 4);background:#fff;opacity:0}#CTZ_BACKGROUND_LIGHT .ctz-background-item-name,#CTZ_BACKGROUND_DARK .ctz-background-item-name{font-size:12px;text-align:center;padding-top:8px;color:#777776;opacity:0;position:absolute;word-break:keep-all;left:50%;transform:translateX(-50%)}#CTZ_CONFIG .ctz-title{padding-left:0}#CTZ_CONFIG .ctz-config-buttons{text-align:right}#CTZ_CONFIG .ctz-config-buttons button{margin-left:8px}#CTZ_CONFIG textarea{resize:vertical;width:100%;margin-bottom:6px}#CTZ_DEFAULT_SELF a{color:#007aff}#CTZ_DEFAULT_SELF a:hover{color:#bbb}#CTZ_BLOCK_WORDS{padding-top:0 !important}.ctz-block-words-content{display:flex;flex-wrap:wrap;cursor:default;margin-bottom:-4px}.ctz-block-words-content>span{padding:0px 6px;border-radius:4px;font-size:14px;margin:0 4px 4px 0;border:1px solid rgba(150,162,170,0.4);cursor:pointer;background:#fff}.ctz-block-words-content>span:hover{color:#ff3b30;border-color:#ff3b30}#CTA_BLOCKED_USERS,#CTZ_BLOCKED_USERS_TAGS{display:flex;flex-wrap:wrap;margin:0 -8px -8px 0}.ctz-black-item{height:24px;line-height:24px;box-sizing:content-box;padding:2px 6px;margin:0 8px 8px 0;display:flex;align-items:center;border-radius:4px;border:1px solid #8e8e93;background:#fff;transition:all .2s}.ctz-black-item a:hover{color:#007aff}.ctz-black-item .ctz-remove-block{width:24px;height:24px;text-align:center;border-radius:8px;cursor:pointer;font-style:normal}.ctz-black-item .ctz-remove-block:hover{background:rgba(142,142,147,0.1)}.ctz-black-box>button,.ctz-button-black{margin-left:8px}.ctz-blocked-users-tag{height:24px;line-height:24px;box-sizing:content-box;padding:0 6px;margin:0 8px 8px 0;display:flex;align-items:center;border-radius:6px;border:1px solid #8e8e93;background:#fff}.ctz-remove-blocked-tag:hover{color:#ff3b30;font-weight:600}.ctz-remove-blocked-tag:active{font-weight:200 !important}.ctz-black-tag{padding:0 6px;background:#000;color:#fff;font-size:12px;border-radius:4px;margin-left:8px;display:inline-block;line-height:22px}.ctz-in-blocked-user-tag{margin-left:4px;border-radius:4px;font-size:12px;border:1px solid #007aff;color:#007aff;background:rgba(0,122,255,0.1);height:16px;line-height:16px;padding:0 4px}.ctz-edit-user-tag,.ctz-edit-blocked-tag{display:inline-block;font-size:14px;margin-left:4px;cursor:pointer}.ctz-edit-user-tag:hover,.ctz-edit-blocked-tag:hover{font-weight:600 !important;color:#007aff}.ctz-edit-user-tag:active,.ctz-edit-blocked-tag:active{font-weight:200 !important}.ctz-set-content:not(.ctz-flex-wrap)>div,.ctz-set-content:not(.ctz-flex-wrap)>label{margin-bottom:18px}.ctz-commit{font-size:12px;color:#999}.ctz-commit b{color:#ff3b30}.ctz-flex-wrap{display:flex;flex-wrap:wrap;min-height:24px;align-items:center}.ctz-flex-wrap label{margin-right:4px;display:flex;align-items:center}.ctz-flex-wrap label input[type='radio']{margin:0 4px 0 0}.ctz-video-download{position:absolute;top:20px;left:20px;font-size:24px;color:#fff;cursor:pointer}.ctz-loading{animation:loadingAnimation 2s infinite;font-size:24px;color:#91919d;cursor:none}@keyframes loadingAnimation{from{transform:rotate(0)}to{transform:rotate(360deg)}}.ctz-preview{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;overflow-y:auto;z-index:200;background-color:rgba(18,18,18,0.4)}.ctz-preview div{display:flex;justify-content:center;align-items:center;min-height:100%;width:100%}.ctz-preview div img{cursor:zoom-out;user-select:none}#CTZ_TITLE_ICO label input{display:none}#CTZ_TITLE_ICO label input:checked+img{border-color:#007aff}#CTZ_TITLE_ICO label img{width:28px;height:28px;border:4px solid transparent;border-radius:8px}#CTZ_TITLE_ICO label:hover img{border-color:#e0e0e0}.ctz-question-time{font-size:14px !important;font-weight:normal !important;line-height:24px}.ctz-stop-scroll{height:100% !important;overflow:hidden !important}.ctz-export-collection-box{float:right;text-align:right}.ctz-export-collection-box p{font-size:14px;color:#666;margin:4px 0}.ctz-pdf-dialog-item{padding:12px;border-bottom:1px solid #eee;margin:12px;background:#ffffff}.ctz-pdf-dialog-title{margin:0 0 1.4em;font-size:20px;font-weight:bold}.ctz-pdf-box-content{width:100%;background:#ffffff}.ctz-pdf-view{width:100%;background:#ffffff;word-break:break-all;white-space:pre-wrap;font-size:14px;overflow-x:hidden}.ctz-pdf-view a{color:#0066ff}.ctz-pdf-view img{max-width:100%}.ctz-pdf-view p{margin:1.4em 0}.ctz-unlock,.ctz-lock,.ctz-lock-mask{display:none;color:#999;cursor:pointer}.ctz-unlock,.ctz-lock{font-size:20px;align-items:center;justify-content:center}.ctz-lock-mask{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:198}.position-suspensionSearch,.position-suspensionFind,.position-suspensionUser{position:fixed;z-index:100}.position-suspensionSearch:hover .ctz-unlock,.position-suspensionFind:hover .ctz-unlock,.position-suspensionUser:hover .ctz-unlock,.Topstory-container .TopstoryTabs:hover .ctz-unlock{display:flex}.position-suspensionSearch.ctz-move-this .ctz-unlock,.position-suspensionFind.ctz-move-this .ctz-unlock,.position-suspensionUser.ctz-move-this .ctz-unlock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-unlock{display:none !important}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock,.position-suspensionSearch.ctz-move-this .ctz-lock-mask,.position-suspensionFind.ctz-move-this .ctz-lock-mask,.position-suspensionUser.ctz-move-this .ctz-lock-mask,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock-mask{display:flex}.position-suspensionSearch.ctz-move-this .ctz-lock,.position-suspensionFind.ctz-move-this .ctz-lock,.position-suspensionUser.ctz-move-this .ctz-lock,.Topstory-container .TopstoryTabs.ctz-move-this .ctz-lock{z-index:199;color:#cccccc}.position-suspensionFind{display:flex;flex-direction:column;margin:0 !important}.position-suspensionFind .Tabs-item{padding:0 !important;margin-bottom:4px}.position-suspensionFind .Tabs-item .Tabs-link{padding:8px !important;border-radius:4px}.position-suspensionFind .Tabs-item .Tabs-link::after{content:'' !important;display:none !important}.position-suspensionUser{width:fit-content !important;margin:0 !important;display:flex;flex-direction:column}.position-suspensionUser .AppHeader-messages,.position-suspensionUser .AppHeader-notifications,.position-suspensionUser .css-18vqx7l{margin-right:0 !important;margin-bottom:12px}.position-suspensionUser .AppHeader-login,.position-suspensionUser .AppHeader-login~button{display:none}.position-suspensionSearch{line-height:30px;border-radius:16px;width:20px;transition:width .5s}.position-suspensionSearch .ctz-search-icon{font-size:24px;transform:rotate(-60deg)}.position-suspensionSearch .SearchBar-input-focus .ctz-search-pickup{display:none}.position-suspensionSearch.focus{width:300px}.position-suspensionSearch.focus>form,.position-suspensionSearch.focus>button,.position-suspensionSearch.focus .ctz-search-pickup{display:block}.position-suspensionSearch.focus .ctz-search-icon{display:none}.position-suspensionSearch.focus:hover{width:324px}.position-suspensionSearch .ctz-search-icon,.position-suspensionSearch .ctz-search-pickup{cursor:pointer;color:#0066ff;margin-right:6px}.position-suspensionSearch .ctz-search-icon:hover,.position-suspensionSearch .ctz-search-pickup:hover{color:#005ce6}.position-suspensionSearch .ctz-search-pickup{font-size:24px;margin-left:4px}.position-suspensionSearch>form,.position-suspensionSearch>button,.position-suspensionSearch .ctz-search-pickup{display:none}.position-suspensionSearch .ctz-search-icon{display:block}.key-shadow{border:1px solid #e0e0e0;border-radius:4px;box-shadow:rgba(0,0,0,0.06) 0 1px 1px 0;font-weight:600;min-width:26px;height:26px;padding:0px 6px;text-align:center;margin:0 4px}#CTZ_HISTORY_LIST a,#CTZ_HISTORY_VIEW a{word-break:break-all;display:block;margin-bottom:8px;padding:6px 12px;border:1px solid rgba(150,162,170,0.4);border-radius:8px;cursor:pointer}#CTZ_HISTORY_LIST a:hover,#CTZ_HISTORY_VIEW a:hover{background:rgba(77,66,86,0.08);color:#007aff !important;font-weight:600}.ctz-video-link{border:1px solid #ccc;display:inline-block;height:98px;width:fit-content;border-radius:4px;box-sizing:border-box;overflow:hidden;transition:all .3s}.ctz-video-link img{width:98px;height:98px;vertical-align:bottom}.ctz-video-link span{padding:4px 12px;display:inline-block}.ctz-video-link:hover{border-color:#005ce6;color:#005ce6}#CTZ_MESSAGE_BOX{position:fixed;left:0;top:10px;width:100%;z-index:1000}.ctz-message{margin:0 auto;width:500px;height:48px;display:flex;align-items:center;justify-content:center;font-size:14px;border-radius:8px;box-shadow:0 0 8px #d0d4d6,0 0 8px #e6eaec;margin-bottom:12px;background:#fff}#IMPORT_BY_FILE,#IMPORT_BLACK{display:inline-flex}#IMPORT_BY_FILE input,#IMPORT_BLACK input{display:none}#CTZ_FILTER_BLOCK_WORDS input,#CTZ_FILTER_BLOCK_WORDS_CONTENT input{width:100%}#CTZ_COVER{position:fixed;top:0;left:-200%;width:100%;height:100%;pointer-events:none}.ctz-block-user-box button{font-size:12px;margin-left:8px}`;
+  var INNER_HTML = `<div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_IMAGE"><div><img src=""></div></div><div style="display: none" class="ctz-preview" id="CTZ_PREVIEW_VIDEO"><div><video src="" autoplay loop></video></div></div><iframe class="ctz-pdf-box-content" style="display: none"></iframe><div id="CTZ_MESSAGE_BOX"></div><div id="CTZ_OPEN_CLOSE" data-close="1"><div class="gear"><div class="gear_line_1"></div><div class="gear_line_2"></div><div class="gear_line_3"></div><div class="gear_line_4"></div></div></div><div id="CTZ_DIALOG" style="display: none"><div id="CTZ_DIALOG_CONTENT"><div id="CTZ_DIALOG_LEFT"><div id="CTZ_LEFT_BUTTONS"><button class="ctz-button" name="dialogClose">✕</button> <button class="ctz-button" name="dialogBig">+</button><div class="ctz-version"></div></div><div id="CTZ_DIALOG_MENU"><div data-href="#CTZ_BASIS">通用</div><div data-href="#CTZ_HIGH_PERFORMANCE">高性能</div><div data-href="#CTZ_POSITION">悬浮模块</div><div data-href="#CTZ_HIDDEN">隐藏模块</div><div data-href="#CTZ_FILTER" data-commit="更改后请重新刷新页面">屏蔽内容</div><div data-href="#CTZ_BLOCK_WORDS" data-commit="更改后请重新刷新页面, 点击屏蔽词删除">屏蔽词</div><div data-href="#CTZ_BLACKLIST" data-commit="更改后请重新刷新页面, 需开启接口拦截">黑名单</div><div data-href="#CTZ_VERSION">页面尺寸</div><div data-href="#CTZ_THEME">颜色</div><div data-href="#CTZ_CONFIG">配置操作</div><div data-href="#CTZ_HISTORY_LIST" data-commit="最多缓存500条, 包含已过滤项">推荐列表缓存</div><div data-href="#CTZ_HISTORY_VIEW" data-commit="最多缓存500条">浏览历史记录</div><div data-href="#CTZ_DEFAULT" data-commit="修改器自带功能, 不需要额外开启">默认功能</div></div></div><div id="CTZ_DIALOG_RIGHT"><div id="CTZ_DIALOG_RIGHT_TITLE"></div><div id="CTZ_DIALOG_MAIN"><div id="CTZ_BASIS" style="display: none"><div id="CTZ_BASIS_DEFAULT"><div class="ctz-form-box"><div class="ctz-form-box-item"><div>知乎搜索</div><div><input type="text" name="searchInZhihu" style="width: 278px" placeholder="回车搜索"></div></div><div class="ctz-form-box-item"><div></div><div class="ctz-to-zhihu"><a href="https://www.zhihu.com" target="_self" class="ctz-button" style="margin-right: 8px">返回知乎主页</a></div></div><div class="ctz-form-box-item"><div></div><div class="ctz-default-bottom"><a href="https://github.com/liuyubing233/zhihu-custom" target="_blank" class="ctz-button">Github⭐</a> <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank" class="ctz-button" style="width: 92px">GreasyFork </a><a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank" class="ctz-button">修改器介绍</a> <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank" class="ctz-button">更新日志</a></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div id="CTZ_FETCH_STATUS">状态获取中...</div><div><input id="CTZ_CHANGE_FETCH" class="ctz-i ctz-switch" name="fetchInterceptStatus" type="checkbox" value="on"></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>快捷键打开修改器 <span class="key-shadow">></span> (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)</div><div><input class="ctz-i ctz-switch" name="hotKey" type="checkbox" value="on"></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>去除浏览器标签上XX条私信/未读消息的提示</div><div><input class="ctz-i ctz-switch" name="globalTitleRemoveMessage" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>网页标签名称</div><div><input type="text" name="globalTitle" style="width: 278px"> <button class="ctz-button" name="buttonConfirmTitle" style="margin: 0 8px">确认</button> <button class="ctz-button" name="buttonResetTitle">还原</button></div></div><div class="ctz-form-box-item"><div>网页标签图标</div><div id="CTZ_TITLE_ICO"></div></div></div></div><div class="ctz-title">显示修改 <span class="ctz-commit" style="color: red">修改后刷新页面生效</span></div><div id="CTZ_BASIC_SHOW_SELECT" class="ctz-form-box"></div><div id="CTZ_BASIS_SHOW_CONTENT"></div></div><div id="CTZ_POSITION" style="display: none"><div class="ctz-form-box"><div class="ctz-form-box-item"><div>修改器弹出图标 ⚙︎ 定位方式</div><div><div class="ctz-select" name="suspensionOpen"></div></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>回答内容「收起」按钮悬浮</div><div><input class="ctz-i ctz-switch" name="suspensionPickUp" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>悬浮收起按钮位置，数字越大离右侧越远：</div><div><input name="suspensionPickupRight" type="number" class="ctz-i-change" style="width: 80px"></div></div></div><div class="ctz-title">信息模块悬浮 <span>拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>首页列表切换</div><div><input class="ctz-i ctz-switch" name="suspensionHomeTab" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>顶部发现模块</div><div><input class="ctz-i ctz-switch" name="suspensionFind" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>个人中心模块</div><div><input class="ctz-i ctz-switch" name="suspensionUser" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>搜索栏模块</div><div><input class="ctz-i ctz-switch" name="suspensionSearch" type="checkbox" value="on"></div></div></div></div><div id="CTZ_HIGH_PERFORMANCE" style="display: none"></div><div id="CTZ_HIDDEN" style="display: none"></div><div id="CTZ_FILTER" style="display: none"><div id="CTZ_FILTER_COMMEN"><div class="ctz-title">通用屏蔽 <span>在首页列表和回答中均生效</span></div><div class="ctz-form-box"><div class="ctz-form-box-item ctz-fetch-intercept"><div>屏蔽选自盐选专栏的内容 <span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span></div><div><input class="ctz-i ctz-switch" name="removeFromYanxuan" type="checkbox" value="on"></div></div></div></div><div id="CTZ_FILTER_LIST"><div class="ctz-title">列表内容屏蔽 <span>此部分设置只在首页列表生效</span></div><div id="CTZ_FILTER_LIST_CONTENT"></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>列表低赞内容屏蔽</div><div><input class="ctz-i ctz-switch" name="removeLessVote" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>关注、推荐、搜索屏蔽小于的点赞数量</div><div><input name="lessVoteNumber" class="ctz-i-change" type="number" style="width: 80px"></div></div></div></div><div id="CTZ_FILTER_ANSWER"><div class="ctz-title">回答内容屏蔽 <span>此部分设置只在回答页面生效</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>屏蔽匿名用户回答</div><div><input class="ctz-i ctz-switch" name="removeAnonymousAnswer" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>屏蔽带有虚构创作标签的回答</div><div><input class="ctz-i ctz-switch" name="removeUnrealAnswer" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>屏蔽选自电子书标签的回答</div><div><input class="ctz-i ctz-switch" name="removeFromEBook" type="checkbox" value="on"></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>回答页面低赞回答屏蔽</div><div><input class="ctz-i ctz-switch" name="removeLessVoteDetail" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>问题回答屏蔽小于的点赞数量</div><div><input name="lessVoteNumberDetail" class="ctz-i-change" type="number" style="width: 80px"></div></div></div></div></div><div id="CTZ_BLOCK_WORDS" style="display: none"><div class="ctz-title">标题屏蔽词 <span>匹配位置：列表标题</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div><input name="inputBlockedWord" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px"></div></div><div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS"><div class="ctz-block-words-content"></div></div></div><div class="ctz-title">内容屏蔽词 <span>匹配位置：列表、回答页内容</span></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div><input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px"></div></div><div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS_CONTENT"><div class="ctz-block-words-content"></div></div></div></div><div id="CTZ_BLACKLIST" class="ctz-fetch-intercept" style="display: none"><div class="ctz-form-box"><div class="ctz-form-box-item"><div>黑名单部分配置导出和导入</div><div><button class="ctz-button" name="exportBlackConfig" style="margin-right: 8px">配置导出</button><div id="IMPORT_BLACK"><input type="file" class="ctz-input-import-black" accept=".txt"> <button class="ctz-button" name="importBlackConfig">配置导入并合并</button></div></div></div></div><div class="ctz-title">通用设置</div><div id="CTZ_BLACKLIST_COMMON"></div><div class="ctz-title">黑名单标签</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>屏蔽用户后弹出标签选择</div><div><input class="ctz-i ctz-switch" name="openTagChooseAfterBlockedUser" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div></div><div><input name="inputBlockedUsersTag" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px"></div></div><div class="ctz-form-box-item"><div id="CTZ_BLOCKED_USERS_TAGS"></div></div></div><div class="ctz-title">黑名单列表</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div><button name="syncBlack" class="ctz-button">同步黑名单</button></div></div><div class="ctz-form-box-item"><div id="CTZ_BLOCKED_NUMBER"></div><div><button name="syncBlackRemove" class="ctz-button">清空黑名单列表</button></div></div><div class="ctz-form-box-item"><div id="CTA_BLOCKED_USERS"></div></div></div></div><div id="CTZ_HISTORY_LIST" style="display: none"><div style="margin-bottom: 12px; text-align: right"><button class="ctz-button" name="button_history_clear" data-id="list">清空列表缓存</button></div><div class="ctz-set-content"></div></div><div id="CTZ_HISTORY_VIEW" style="display: none"><div style="margin-bottom: 12px; text-align: right"><button class="ctz-button" name="button_history_clear" data-id="view">清空历史记录</button></div><div class="ctz-set-content"></div></div><div id="CTZ_THEME" style="display: none"><div class="ctz-set-background ctz-form-box"></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>修改文字颜色</div><div><input type="text" class="ctz-i-change" name="colorText1" style="width: 148px; margin-right: 8px" placeholder="例如：#f7f9f9"> <button class="ctz-button ctz-reset-font-size" name="reset-colorText1">↺</button></div></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>关注列表高亮原创内容</div><div><div><input class="ctz-i ctz-switch" name="highlightOriginal" type="checkbox" value="on"></div></div></div><div class="ctz-form-box-item"><div>关注列表高亮原创内容背景色</div><div><div><input type="text" class="ctz-i-change" name="backgroundHighlightOriginal" style="width: 148px; margin-right: 8px" placeholder="例如：#fbf8f1"> <button class="ctz-button ctz-reset-font-size" name="reset-backgroundHighlightOriginal">↺</button></div></div></div></div></div><div id="CTZ_VERSION" style="display: none"><div class="ctz-title">页面内容宽度</div><div id="CTZ_VERSION_RANGE_ZHIHU" class="ctz-form-box"></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>评论弹窗匹配页面宽度</div><div><input class="ctz-i ctz-switch" name="commitModalSizeSameVersion" type="checkbox" value="on"></div></div></div><div class="ctz-title">字体大小</div><div id="CTZ_FONT_SIZE_IN_ZHIHU" class="ctz-form-box"></div><div class="ctz-title">图片尺寸</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>回答和文章图片尺寸</div><div><div class="ctz-select" name="zoomImageType"></div></div></div><div id="CTZ_IMAGE_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>图片最大高度限制 <span class="ctz-tooltip"><span>?</span> <span>开启高度限制后，图片将按照高度等比例缩放，宽度限制将失效</span></span></div><div><div class="ctz-select" name="zoomImageHeight"></div></div></div><div id="CTZ_IMAGE_HEIGHT_CUSTOM" class="ctz-form-box-item" style="display: none"></div></div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>弹窗打开动图</div><div><input class="ctz-i ctz-switch" name="showGIFinDialog" type="checkbox" value="on"></div></div><div class="ctz-form-box-item"><div>评论图片预览不超出页面</div><div><input class="ctz-i ctz-switch" name="commentImageFullPage" type="checkbox" value="on"></div></div></div><div class="ctz-title">视频尺寸</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div>列表视频回答尺寸</div><div><div class="ctz-select" name="zoomListVideoType"></div></div></div><div id="CTZ_LIST_VIDEO_SIZE_CUSTOM" class="ctz-form-box-item" style="display: none"></div></div></div><div id="CTZ_CONFIG" style="display: none"><div class="ctz-form-box"><div class="ctz-form-box-item"><div></div><div class="ctz-config-buttons"><button class="ctz-button" name="useSimple">启用极简模式</button> <button class="ctz-button" name="configReset">恢复默认配置</button> <button class="ctz-button" name="configExport">配置导出</button><div id="IMPORT_BY_FILE"><input type="file" class="ctz-input-config-import" accept=".txt"> <button class="ctz-button" name="configImport">配置导入</button></div></div></div></div><div class="ctz-title">自定义样式</div><div class="ctz-form-box"><div class="ctz-form-box-item"><div style="align-items: start; padding: 0; text-align: right"><textarea name="textStyleCustom" placeholder="内容为CSS"></textarea> <button class="ctz-button" name="styleCustom">确定</button></div></div></div></div><div id="CTZ_DEFAULT" style="display: none"><div id="CTZ_DEFAULT_SELF" class="ctz-form-box"></div><div class="ctz-zhihu-self" style="margin-top: 18px"><div class="ctz-zhihu-key">更加方便的浏览，按 <span class="key-shadow">?</span> （<span class="key-shadow">Shift</span>+<span class="key-shadow">/</span>） 查看所有快捷键。 <a href="https://www.zhihu.com/settings/preference" target="_blank">前往开启快捷键功能</a></div></div></div></div></div></div></div><div id="CTZ_COVER"></div><div id="CTZ_EXTRA_OUTPUT_COVER" style="display: none"></div><div id="CTZ_EXTRA_OUTPUT_DIALOG" style="display: none" data-status="close"><div data-type="chooseBlockedUserTags"><div class="ctz-title">选择标签</div><div class="ctz-choose-blocked-user-tags"></div><div class="ctz-extra-footer"><button class="ctz-button" name="choose-blocked-user-tags-finish">完成</button></div></div><div data-type="changeBlockedUserTagName"><div class="ctz-title">修改标签名</div><div class="ctz-change-blocked-user-tag-name"><input type="text" name="blocked-user-tag-name"></div><div class="ctz-extra-footer"><button class="ctz-button" name="confirm-change-blocked-user-tag-name">修改</button> <button class="ctz-button" name="cancel-change-blocked-user-tag-name">取消</button></div></div></div>`;
+  var INNER_CSS = `.marginTB8{margin:8px 0}.PositionCenter{position:fixed;left:50%;top:50%;transform:translate(-50%, -50%)}.CommonTransition{transition-property:transform;transition-duration:500ms;transition-timing-function:cubic-bezier(.2, 0, 0, 1)}[theme-light='1'] #CTZ_DIALOG_MENU>div.target,[theme-light='1'] .ctz-switch:checked{background:#ff3b30}[theme-light='1'] #CTZ_DEFAULT_SELF a,[theme-light='1'] .ctz-zhihu-key a,[theme-light='1'] #CTZ_HISTORY_LIST a:hover,[theme-light='1'] #CTZ_HISTORY_VIEW a:hover,[theme-light='1'] .ctz-black-item a:hover,[theme-light='1'] .ctz-edit-user-tag:hover,[theme-light='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#ff3b30 !important}[theme-light='1'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='1'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#ff3b30}[theme-light='1'] .ctz-in-blocked-user-tag,[theme-light='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#ff3b30;color:#ff3b30;background:rgba(255,59,48,0.1)}[theme-light='2'] #CTZ_DIALOG_MENU>div.target,[theme-light='2'] .ctz-switch:checked{background:#a05a00}[theme-light='2'] #CTZ_DEFAULT_SELF a,[theme-light='2'] .ctz-zhihu-key a,[theme-light='2'] #CTZ_HISTORY_LIST a:hover,[theme-light='2'] #CTZ_HISTORY_VIEW a:hover,[theme-light='2'] .ctz-black-item a:hover,[theme-light='2'] .ctz-edit-user-tag:hover,[theme-light='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#a05a00 !important}[theme-light='2'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='2'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#a05a00}[theme-light='2'] .ctz-in-blocked-user-tag,[theme-light='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#a05a00;color:#a05a00;background:rgba(160,90,0,0.1)}[theme-light='3'] #CTZ_DIALOG_MENU>div.target,[theme-light='3'] .ctz-switch:checked{background:#007d1b}[theme-light='3'] #CTZ_DEFAULT_SELF a,[theme-light='3'] .ctz-zhihu-key a,[theme-light='3'] #CTZ_HISTORY_LIST a:hover,[theme-light='3'] #CTZ_HISTORY_VIEW a:hover,[theme-light='3'] .ctz-black-item a:hover,[theme-light='3'] .ctz-edit-user-tag:hover,[theme-light='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#007d1b !important}[theme-light='3'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='3'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#007d1b}[theme-light='3'] .ctz-in-blocked-user-tag,[theme-light='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#007d1b;color:#007d1b;background:rgba(0,125,27,0.1)}[theme-light='4'] #CTZ_DIALOG_MENU>div.target,[theme-light='4'] .ctz-switch:checked{background:#8e8e93}[theme-light='4'] #CTZ_DEFAULT_SELF a,[theme-light='4'] .ctz-zhihu-key a,[theme-light='4'] #CTZ_HISTORY_LIST a:hover,[theme-light='4'] #CTZ_HISTORY_VIEW a:hover,[theme-light='4'] .ctz-black-item a:hover,[theme-light='4'] .ctz-edit-user-tag:hover,[theme-light='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#8e8e93 !important}[theme-light='4'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='4'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#8e8e93}[theme-light='4'] .ctz-in-blocked-user-tag,[theme-light='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#8e8e93;color:#8e8e93;background:rgba(142,142,147,0.1)}[theme-light='5'] #CTZ_DIALOG_MENU>div.target,[theme-light='5'] .ctz-switch:checked{background:#af52de}[theme-light='5'] #CTZ_DEFAULT_SELF a,[theme-light='5'] .ctz-zhihu-key a,[theme-light='5'] #CTZ_HISTORY_LIST a:hover,[theme-light='5'] #CTZ_HISTORY_VIEW a:hover,[theme-light='5'] .ctz-black-item a:hover,[theme-light='5'] .ctz-edit-user-tag:hover,[theme-light='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#af52de !important}[theme-light='5'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='5'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#af52de}[theme-light='5'] .ctz-in-blocked-user-tag,[theme-light='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#af52de;color:#af52de;background:rgba(175,82,222,0.1)}[theme-light='6'] #CTZ_DIALOG_MENU>div.target,[theme-light='6'] .ctz-switch:checked{background:#ff9500}[theme-light='6'] #CTZ_DEFAULT_SELF a,[theme-light='6'] .ctz-zhihu-key a,[theme-light='6'] #CTZ_HISTORY_LIST a:hover,[theme-light='6'] #CTZ_HISTORY_VIEW a:hover,[theme-light='6'] .ctz-black-item a:hover,[theme-light='6'] .ctz-edit-user-tag:hover,[theme-light='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#ff9500 !important}[theme-light='6'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='6'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#ff9500}[theme-light='6'] .ctz-in-blocked-user-tag,[theme-light='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#ff9500;color:#ff9500;background:rgba(255,179,64,0.1)}[theme-light='7'] #CTZ_DIALOG_MENU>div.target,[theme-light='7'] .ctz-switch:checked{background:#ff9500}[theme-light='7'] #CTZ_DEFAULT_SELF a,[theme-light='7'] .ctz-zhihu-key a,[theme-light='7'] #CTZ_HISTORY_LIST a:hover,[theme-light='7'] #CTZ_HISTORY_VIEW a:hover,[theme-light='7'] .ctz-black-item a:hover,[theme-light='7'] .ctz-edit-user-tag:hover,[theme-light='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover{color:#ff9500 !important}[theme-light='7'] #CTZ_TITLE_ICO label input:checked+img,[theme-light='7'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div{border-color:#ff9500}[theme-light='7'] .ctz-in-blocked-user-tag,[theme-light='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#ff9500;color:#ff9500;background:rgba(255,179,64,0.1)}[theme-dark='0'] #CTZ_DIALOG,[theme-dark='1'] #CTZ_DIALOG,[theme-dark='2'] #CTZ_DIALOG,[theme-dark='3'] #CTZ_DIALOG,[theme-dark='4'] #CTZ_DIALOG,[theme-dark='7'] #CTZ_DIALOG{color:#dfdfdf;box-shadow:2px 2px 4px #4a4848,-2px -2px 4px #4a4848}[theme-dark='0'] #CTZ_DIALOG,[theme-dark='1'] #CTZ_DIALOG,[theme-dark='2'] #CTZ_DIALOG,[theme-dark='3'] #CTZ_DIALOG,[theme-dark='4'] #CTZ_DIALOG,[theme-dark='7'] #CTZ_DIALOG,[theme-dark='0'] #CTZ_DIALOG_LEFT,[theme-dark='1'] #CTZ_DIALOG_LEFT,[theme-dark='2'] #CTZ_DIALOG_LEFT,[theme-dark='3'] #CTZ_DIALOG_LEFT,[theme-dark='4'] #CTZ_DIALOG_LEFT,[theme-dark='7'] #CTZ_DIALOG_LEFT,[theme-dark='0'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='1'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='2'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='3'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='4'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='7'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='0'] .ctz-black-item,[theme-dark='1'] .ctz-black-item,[theme-dark='2'] .ctz-black-item,[theme-dark='3'] .ctz-black-item,[theme-dark='4'] .ctz-black-item,[theme-dark='7'] .ctz-black-item,[theme-dark='0'] .ctz-blocked-users-tag,[theme-dark='1'] .ctz-blocked-users-tag,[theme-dark='2'] .ctz-blocked-users-tag,[theme-dark='3'] .ctz-blocked-users-tag,[theme-dark='4'] .ctz-blocked-users-tag,[theme-dark='7'] .ctz-blocked-users-tag,[theme-dark='0'] .ctz-in-blocked-user-tag,[theme-dark='1'] .ctz-in-blocked-user-tag,[theme-dark='2'] .ctz-in-blocked-user-tag,[theme-dark='3'] .ctz-in-blocked-user-tag,[theme-dark='4'] .ctz-in-blocked-user-tag,[theme-dark='7'] .ctz-in-blocked-user-tag,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{background:#504e4e}[theme-dark='0'] #CTZ_DIALOG_RIGHT,[theme-dark='1'] #CTZ_DIALOG_RIGHT,[theme-dark='2'] #CTZ_DIALOG_RIGHT,[theme-dark='3'] #CTZ_DIALOG_RIGHT,[theme-dark='4'] #CTZ_DIALOG_RIGHT,[theme-dark='7'] #CTZ_DIALOG_RIGHT,[theme-dark='0'] #CTZ_HIDDEN .ctz-title,[theme-dark='1'] #CTZ_HIDDEN .ctz-title,[theme-dark='2'] #CTZ_HIDDEN .ctz-title,[theme-dark='3'] #CTZ_HIDDEN .ctz-title,[theme-dark='4'] #CTZ_HIDDEN .ctz-title,[theme-dark='7'] #CTZ_HIDDEN .ctz-title{background:#2f2c2b}[theme-dark='0'] .ctz-form-box,[theme-dark='1'] .ctz-form-box,[theme-dark='2'] .ctz-form-box,[theme-dark='3'] .ctz-form-box,[theme-dark='4'] .ctz-form-box,[theme-dark='7'] .ctz-form-box{background:#312e2e}[theme-dark='0'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='1'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='2'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='3'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='4'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div,[theme-dark='7'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div{color:#b8b7b7}[theme-dark='0'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='1'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='2'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='3'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='4'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='7'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='0'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='1'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='2'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='3'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='4'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='7'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='0'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='1'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='2'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='3'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='4'] #CTZ_BACKGROUND_DARK .ctz-background-item-name,[theme-dark='7'] #CTZ_BACKGROUND_DARK .ctz-background-item-name{color:#989796}[theme-dark='0'] .ctz-switch,[theme-dark='1'] .ctz-switch,[theme-dark='2'] .ctz-switch,[theme-dark='3'] .ctz-switch,[theme-dark='4'] .ctz-switch,[theme-dark='7'] .ctz-switch{background:#474443}[theme-dark='0'] #CTZ_DIALOG_MENU>div.target,[theme-dark='1'] #CTZ_DIALOG_MENU>div.target,[theme-dark='2'] #CTZ_DIALOG_MENU>div.target,[theme-dark='3'] #CTZ_DIALOG_MENU>div.target,[theme-dark='4'] #CTZ_DIALOG_MENU>div.target,[theme-dark='7'] #CTZ_DIALOG_MENU>div.target,[theme-dark='0'] .ctz-switch:checked,[theme-dark='1'] .ctz-switch:checked,[theme-dark='2'] .ctz-switch:checked,[theme-dark='3'] .ctz-switch:checked,[theme-dark='4'] .ctz-switch:checked,[theme-dark='7'] .ctz-switch:checked{background:#175ac0}[theme-dark='0'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='1'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='2'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='3'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='4'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='7'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='0'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='1'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='2'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='3'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='4'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='7'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='0'] .ctz-in-blocked-user-tag,[theme-dark='1'] .ctz-in-blocked-user-tag,[theme-dark='2'] .ctz-in-blocked-user-tag,[theme-dark='3'] .ctz-in-blocked-user-tag,[theme-dark='4'] .ctz-in-blocked-user-tag,[theme-dark='7'] .ctz-in-blocked-user-tag,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#175ac0}[theme-dark='0'] #CTZ_DEFAULT_SELF a,[theme-dark='1'] #CTZ_DEFAULT_SELF a,[theme-dark='2'] #CTZ_DEFAULT_SELF a,[theme-dark='3'] #CTZ_DEFAULT_SELF a,[theme-dark='4'] #CTZ_DEFAULT_SELF a,[theme-dark='7'] #CTZ_DEFAULT_SELF a,[theme-dark='0'] .ctz-zhihu-key a,[theme-dark='1'] .ctz-zhihu-key a,[theme-dark='2'] .ctz-zhihu-key a,[theme-dark='3'] .ctz-zhihu-key a,[theme-dark='4'] .ctz-zhihu-key a,[theme-dark='7'] .ctz-zhihu-key a,[theme-dark='0'] #CTZ_HISTORY_LIST a:hover,[theme-dark='1'] #CTZ_HISTORY_LIST a:hover,[theme-dark='2'] #CTZ_HISTORY_LIST a:hover,[theme-dark='3'] #CTZ_HISTORY_LIST a:hover,[theme-dark='4'] #CTZ_HISTORY_LIST a:hover,[theme-dark='7'] #CTZ_HISTORY_LIST a:hover,[theme-dark='0'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='1'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='2'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='3'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='4'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='7'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='0'] .ctz-black-item a:hover,[theme-dark='1'] .ctz-black-item a:hover,[theme-dark='2'] .ctz-black-item a:hover,[theme-dark='3'] .ctz-black-item a:hover,[theme-dark='4'] .ctz-black-item a:hover,[theme-dark='7'] .ctz-black-item a:hover,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='0'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='1'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='2'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='3'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='4'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='7'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='0'] .ctz-in-blocked-user-tag,[theme-dark='1'] .ctz-in-blocked-user-tag,[theme-dark='2'] .ctz-in-blocked-user-tag,[theme-dark='3'] .ctz-in-blocked-user-tag,[theme-dark='4'] .ctz-in-blocked-user-tag,[theme-dark='7'] .ctz-in-blocked-user-tag{color:#175ac0 !important}[theme-dark='0'] .ctz-form-box,[theme-dark='1'] .ctz-form-box,[theme-dark='2'] .ctz-form-box,[theme-dark='3'] .ctz-form-box,[theme-dark='4'] .ctz-form-box,[theme-dark='7'] .ctz-form-box{border-color:#514e4e}[theme-dark='0'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='1'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='2'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='3'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='4'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='7'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='0'] .key-shadow,[theme-dark='1'] .key-shadow,[theme-dark='2'] .key-shadow,[theme-dark='3'] .key-shadow,[theme-dark='4'] .key-shadow,[theme-dark='7'] .key-shadow{background:#383534}[theme-dark='0'] #CTZ_DIALOG input[type='range'],[theme-dark='1'] #CTZ_DIALOG input[type='range'],[theme-dark='2'] #CTZ_DIALOG input[type='range'],[theme-dark='3'] #CTZ_DIALOG input[type='range'],[theme-dark='4'] #CTZ_DIALOG input[type='range'],[theme-dark='7'] #CTZ_DIALOG input[type='range']{background:#474443;box-shadow:inset 1px 1px 2px #474443,inset -1px -1px 2px #474443}[theme-dark='0'] #CTZ_DIALOG input[type='range']::before,[theme-dark='1'] #CTZ_DIALOG input[type='range']::before,[theme-dark='2'] #CTZ_DIALOG input[type='range']::before,[theme-dark='3'] #CTZ_DIALOG input[type='range']::before,[theme-dark='4'] #CTZ_DIALOG input[type='range']::before,[theme-dark='7'] #CTZ_DIALOG input[type='range']::before,[theme-dark='0'] #CTZ_DIALOG input[type='range']::after,[theme-dark='1'] #CTZ_DIALOG input[type='range']::after,[theme-dark='2'] #CTZ_DIALOG input[type='range']::after,[theme-dark='3'] #CTZ_DIALOG input[type='range']::after,[theme-dark='4'] #CTZ_DIALOG input[type='range']::after,[theme-dark='7'] #CTZ_DIALOG input[type='range']::after{background:#5a5958}[theme-dark='0'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='1'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='2'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='3'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='4'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb,[theme-dark='7'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb{background:#989797;border:1px solid #b0b0af}[theme-dark='0'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='1'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='2'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='3'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='4'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active,[theme-dark='7'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#b0b0af}[theme-dark='0'] .ctz-button,[theme-dark='1'] .ctz-button,[theme-dark='2'] .ctz-button,[theme-dark='3'] .ctz-button,[theme-dark='4'] .ctz-button,[theme-dark='7'] .ctz-button{background:#62605e;border-color:#62605e;color:#dcdcdc}[theme-dark='5'] #CTZ_DIALOG{color:#dfdfdf;box-shadow:2px 2px 4px #4a4848,-2px -2px 4px #4a4848}[theme-dark='5'] #CTZ_DIALOG,[theme-dark='5'] #CTZ_DIALOG_LEFT,[theme-dark='5'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='5'] .ctz-black-item,[theme-dark='5'] .ctz-blocked-users-tag,[theme-dark='5'] .ctz-in-blocked-user-tag,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{background:#504e4e}[theme-dark='5'] #CTZ_DIALOG_RIGHT,[theme-dark='5'] #CTZ_HIDDEN .ctz-title{background:#2f2c2b}[theme-dark='5'] .ctz-form-box{background:#312e2e}[theme-dark='5'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div{color:#b8b7b7}[theme-dark='5'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='5'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='5'] #CTZ_BACKGROUND_DARK .ctz-background-item-name{color:#989796}[theme-dark='5'] .ctz-switch{background:#474443}[theme-dark='5'] #CTZ_DIALOG_MENU>div.target,[theme-dark='5'] .ctz-switch:checked{background:#570d0d}[theme-dark='5'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='5'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='5'] .ctz-in-blocked-user-tag,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#570d0d}[theme-dark='5'] #CTZ_DEFAULT_SELF a,[theme-dark='5'] .ctz-zhihu-key a,[theme-dark='5'] #CTZ_HISTORY_LIST a:hover,[theme-dark='5'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='5'] .ctz-black-item a:hover,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='5'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='5'] .ctz-in-blocked-user-tag{color:#570d0d !important}[theme-dark='5'] .ctz-form-box{border-color:#514e4e}[theme-dark='5'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='5'] .key-shadow{background:#383534}[theme-dark='5'] #CTZ_DIALOG input[type='range']{background:#474443;box-shadow:inset 1px 1px 2px #474443,inset -1px -1px 2px #474443}[theme-dark='5'] #CTZ_DIALOG input[type='range']::before,[theme-dark='5'] #CTZ_DIALOG input[type='range']::after{background:#5a5958}[theme-dark='5'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb{background:#989797;border:1px solid #b0b0af}[theme-dark='5'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#b0b0af}[theme-dark='5'] .ctz-button{background:#62605e;border-color:#62605e;color:#dcdcdc}[theme-dark='6'] #CTZ_DIALOG{color:#dfdfdf;box-shadow:2px 2px 4px #4a4848,-2px -2px 4px #4a4848}[theme-dark='6'] #CTZ_DIALOG,[theme-dark='6'] #CTZ_DIALOG_LEFT,[theme-dark='6'] #CTZ_EXTRA_OUTPUT_DIALOG,[theme-dark='6'] .ctz-black-item,[theme-dark='6'] .ctz-blocked-users-tag,[theme-dark='6'] .ctz-in-blocked-user-tag,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{background:#504e4e}[theme-dark='6'] #CTZ_DIALOG_RIGHT,[theme-dark='6'] #CTZ_HIDDEN .ctz-title{background:#2f2c2b}[theme-dark='6'] .ctz-form-box{background:#312e2e}[theme-dark='6'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div+div{color:#b8b7b7}[theme-dark='6'] #CTZ_BACKGROUND .ctz-background-item-name,[theme-dark='6'] #CTZ_BACKGROUND_LIGHT .ctz-background-item-name,[theme-dark='6'] #CTZ_BACKGROUND_DARK .ctz-background-item-name{color:#989796}[theme-dark='6'] .ctz-switch{background:#474443}[theme-dark='6'] #CTZ_DIALOG_MENU>div.target,[theme-dark='6'] .ctz-switch:checked{background:#093333}[theme-dark='6'] #CTZ_BACKGROUND .ctz-background-item input:checked+div+div,[theme-dark='6'] #CTZ_TITLE_ICO label input:checked+img,[theme-dark='6'] .ctz-in-blocked-user-tag,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true']{border-color:#093333}[theme-dark='6'] #CTZ_DEFAULT_SELF a,[theme-dark='6'] .ctz-zhihu-key a,[theme-dark='6'] #CTZ_HISTORY_LIST a:hover,[theme-dark='6'] #CTZ_HISTORY_VIEW a:hover,[theme-dark='6'] .ctz-black-item a:hover,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span:hover,[theme-dark='6'] [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags>span[data-choose='true'],[theme-dark='6'] .ctz-in-blocked-user-tag{color:#093333 !important}[theme-dark='6'] .ctz-form-box{border-color:#514e4e}[theme-dark='6'] .ctz-form-box .ctz-form-box-item::after,[theme-dark='6'] .key-shadow{background:#383534}[theme-dark='6'] #CTZ_DIALOG input[type='range']{background:#474443;box-shadow:inset 1px 1px 2px #474443,inset -1px -1px 2px #474443}[theme-dark='6'] #CTZ_DIALOG input[type='range']::before,[theme-dark='6'] #CTZ_DIALOG input[type='range']::after{background:#5a5958}[theme-dark='6'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb{background:#989797;border:1px solid #b0b0af}[theme-dark='6'] #CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#b0b0af}[theme-dark='6'] .ctz-button{background:#62605e;border-color:#62605e;color:#dcdcdc}.ctz-button{outline:none;position:relative;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;user-select:none;touch-action:manipulation;font-size:13px;height:24px;padding:0px 8px;border-radius:4px;border:1px solid transparent;background-color:#fff;border-color:rgba(150,162,170,0.4);font-weight:400}.ctz-button:hover{font-weight:600;background:#eeeeee}.ctz-button:active{background:#e0e0e0;font-weight:400}.ctz-button.ctz-button-primary{background:#007aff;color:#fff;border-color:transparent}.ctz-button.ctz-button-primary:hover{background:#0040dd}.ctz-button.ctz-button-primary:active{background:#007aff}.ctz-button-red{color:#ff3b30 !important;border:1px solid #ff3b30 !important}.ctz-button-red:hover{color:#ff453a !important;border:1px solid #ff453a !important}.ctz-button:disabled{border-color:#d0d0d0;background-color:rgba(0,0,0,0.08);color:#b0b0b0;cursor:not-allowed}.Profile-mainColumn,.Collections-mainColumn,.CollectionsDetailPage-mainColumn{flex:1}#root .css-1liaddi{margin-right:0}.ContentItem-title div{display:inline}.css-1acwmmj:empty{display:none !important}.css-hr0k1l::after{content:'点击键盘左、右按键切换图片';position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#fff}.HotLanding-contentItemCount.HotLanding-contentItemCountWithoutSub{margin-top:12px}body[data-suspension-pickup='true'] .ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question='true']{position:fixed;bottom:50px;background:#fff;padding:6px 12px;box-shadow:0 2px 8px #c9c9c9,0 -2px 8px #ffffff;border-radius:8px}body[data-suspension-pickup='true'] .ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question='true']:hover{background:#fff;color:#007aff !important;font-weight:600}body[data-suspension-pickup='true'] .ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question='true']:active{font-weight:200 !important}.Topstory-container,.css-knqde,.Search-container{width:fit-content !important}.Question-main .Question-mainColumn,.QuestionHeader-main{flex:1}.Question-main .List-item{border-bottom:1px dashed #ddd}.Question-main .Question-sideColumn{margin-left:12px}.QuestionHeader{min-width:auto}.QuestionHeader .QuestionHeader-content{margin:0 auto;padding:0;max-width:initial !important}.zhuanlan .AuthorInfo,.zhuanlan .css-1xy3kyp{max-width:initial}.GifPlayer.isPlaying img{cursor:pointer !important}.AppHeader-inner{margin:0 auto !important;padding:0 !important;min-width:min-content !important;width:fit-content !important}#CTZ_DIALOG{transition-property:transform;transition-duration:500ms;transition-timing-function:cubic-bezier(.2, 0, 0, 1);position:fixed;left:50%;top:50%;transform:translate(-50%, -50%);transition-property:height;width:800px;height:600px;max-width:100vw;max-height:100vh;border-radius:8px;box-shadow:2px 2px 4px #dbdbdb,-2px -2px 4px #dbdbdb;background:#e0e0e0;flex-direction:column;overflow:hidden;z-index:202;font-size:13px;border:1px solid rgba(142,142,147,0.1)}#CTZ_DIALOG input[type='text'],#CTZ_EXTRA_OUTPUT_DIALOG input[type='text'],#CTZ_DIALOG input[type='number'],#CTZ_EXTRA_OUTPUT_DIALOG input[type='number'],#CTZ_DIALOG textarea,#CTZ_EXTRA_OUTPUT_DIALOG textarea{box-sizing:border-box;margin:0;padding:1px 4px;font-size:13px;line-height:1.5;list-style:none;position:relative;display:inline-block;min-width:0;border:1px solid rgba(150,162,170,0.4);border-radius:4px;transition:all .2s;background:transparent}#CTZ_DIALOG label,#CTZ_EXTRA_OUTPUT_DIALOG label{cursor:pointer;transition:all .2s}#CTZ_DIALOG label:hover,#CTZ_EXTRA_OUTPUT_DIALOG label:hover{color:#007aff !important}#CTZ_DIALOG label .ctz-i[type='checkbox']~div,#CTZ_EXTRA_OUTPUT_DIALOG label .ctz-i[type='checkbox']~div{margin-left:8px;display:inline-block}#CTZ_DIALOG ::-webkit-scrollbar,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar{width:8px;height:8px;background:transparent}#CTZ_DIALOG ::-webkit-scrollbar-track,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar-track{border-radius:0}#CTZ_DIALOG ::-webkit-scrollbar-thumb,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar-thumb{background:#bbb;transition:all .2s;border-radius:8px}#CTZ_DIALOG ::-webkit-scrollbar-thumb:hover,#CTZ_EXTRA_OUTPUT_DIALOG ::-webkit-scrollbar-thumb:hover{background-color:rgba(95,95,95,0.7)}#CTZ_DIALOG a,#CTZ_EXTRA_OUTPUT_DIALOG a{transition:all .2s;text-decoration:none}#CTZ_DIALOG .ctz-button,#CTZ_EXTRA_OUTPUT_DIALOG .ctz-button{min-width:68px}#CTZ_DIALOG_LEFT{width:160px;display:flex;flex-direction:column;overflow:hidden;background:#e0e0e0}#CTZ_DIALOG_MENU{flex:1;overflow:hidden auto;padding:8px 12px 0}#CTZ_DIALOG_MENU>div{box-sizing:border-box;line-height:38px;padding-left:12px;border-radius:6px;font-size:13px;margin-bottom:2px;cursor:pointer}#CTZ_DIALOG_MENU>div:active{font-weight:200 !important}#CTZ_DIALOG_MENU>div:hover{background:rgba(77,66,86,0.08)}#CTZ_DIALOG_MENU>div.target{color:#fff !important;background:#007aff}#CTZ_DIALOG_RIGHT{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#ededec}#CTZ_DIALOG_RIGHT_TITLE{height:52px;line-height:52px;font-size:16px;font-weight:600;box-sizing:border-box;padding-left:18px;border-bottom:1px solid rgba(150,162,170,0.2)}#CTZ_DIALOG_RIGHT_TITLE div>span{font-size:12px;color:#ff3b30;padding-left:8px}#CTZ_DIALOG_MAIN{flex:1;overflow-y:auto}#CTZ_DIALOG_MAIN>div{box-sizing:border-box;width:100%;padding:18px}#CTZ_DIALOG_CONTENT{flex:1;display:flex;overflow:hidden}.ctz-zhihu-key a{color:#007aff !important}.ctz-zhihu-key a:hover{color:#bbb !important}.ctz-default-bottom a{margin-left:8px}.ctz-version{float:right;margin-right:12px;font-size:12px;line-height:20px}#CTZ_OPEN_CLOSE{transition-property:none;transition-duration:300ms;transition-timing-function:cubic-bezier(.2, 0, 0, 1);user-select:none;width:48px;height:48px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(150,162,170,0.4);border-radius:8px;opacity:.8;font-size:44px;cursor:pointer;z-index:201;position:fixed;bottom:0;right:0;box-sizing:border-box;border:2px solid rgba(150,162,170,0.2)}#CTZ_OPEN_CLOSE:hover{opacity:1}#CTZ_LEFT_BUTTONS{margin:8px 0 0 8px}#CTZ_LEFT_BUTTONS button{height:20px;width:20px;border-radius:6px;padding:0;border:0;font-size:12px;transform:scale(.8);color:#fff;line-height:20px;min-width:0 !important}#CTZ_LEFT_BUTTONS [name='dialogClose']{background:#fe6059}#CTZ_LEFT_BUTTONS [name='dialogClose']:hover{background:#d70015;color:#fff !important;font-weight:600}#CTZ_LEFT_BUTTONS [name='dialogBig']{background:#27c93f}#CTZ_LEFT_BUTTONS [name='dialogBig']:hover{background:#28cd41;color:#fff !important;font-weight:600}.gear{width:24px;height:24px;position:relative;border-radius:50%;box-sizing:border-box;border:6px solid #8e8e93;background:transparent}.gear_line_1,.gear_line_2,.gear_line_3,.gear_line_4{position:absolute;box-sizing:border-box;width:30px;height:6px;border-radius:2px;border-left:6px solid #8e8e93;border-right:6px solid #8e8e93;left:50%;top:50%;transform:translate(-50%, -50%)}.gear_line_2{transform:translate(-50%, -50%) rotate(45deg)}.gear_line_3{transform:translate(-50%, -50%) rotate(90deg)}.gear_line_4{transform:translate(-50%, -50%) rotate(135deg)}#CTZ_EXTRA_OUTPUT_COVER{position:fixed;left:50%;top:50%;transform:translate(-50%, -50%);width:800px;height:600px;background:rgba(0,0,0,0.4);z-index:203;border-radius:8px}#CTZ_EXTRA_OUTPUT_DIALOG{position:fixed;left:50%;top:50%;transform:translate(-50%, -50%);z-index:204;background:#ededec;border-radius:8px;overflow:hidden;min-width:420px;border:1px solid rgba(142,142,147,0.1);box-shadow:2px 2px 4px #dbdbdb,-2px -2px 4px #dbdbdb}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-extra-footer{text-align:right;padding:14px;border-top:1px solid rgba(142,142,147,0.1)}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-extra-footer button{margin-left:12px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-title{padding-left:14px;height:auto;font-size:16px}#CTZ_EXTRA_OUTPUT_DIALOG>div{padding-top:4px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-change-blocked-user-tag-name{width:420px;padding:0 14px 14px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-change-blocked-user-tag-name input[name='blocked-user-tag-name']{width:100%}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags{width:600px;padding:6px 6px 6px 14px}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags>span{cursor:pointer;display:inline-block;border-radius:6px;margin:0 8px 8px 0;border:1px solid rgba(150,162,170,0.4);padding:0 8px;background:#fff}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags>span:hover{background:rgba(77,66,86,0.08);color:#007aff !important;font-weight:600}#CTZ_EXTRA_OUTPUT_DIALOG .ctz-choose-blocked-user-tags>span[data-choose='true']{color:#007aff;border-color:#007aff;background:rgba(0,122,255,0.1)}.ctz-zhida{color:#09408e;margin:0 2px}.ctz-zhida span{font-size:10px;display:inline-block;vertical-align:top;height:15px;line-height:15px}#CTZ_HIDDEN,#CTZ_VERSION,#CTZ_FILTER{padding-top:0 !important}#CTZ_HIDDEN .ctz-title{position:sticky;top:0;margin:0 -18px;padding:0 18px 0 28px;background:#ededec}.ctz-radio-group{display:flex}.ctz-radio-group label{cursor:pointer;position:relative;margin:0 !important}.ctz-radio-group label div{box-sizing:border-box;padding:0 8px;height:24px;display:flex;align-items:center;justify-content:center;border-top:1px solid rgba(150,162,170,0.4);border-bottom:1px solid rgba(150,162,170,0.4);position:relative}.ctz-radio-group label div::after{content:'';position:absolute;height:100%;width:1px;background:rgba(150,162,170,0.4);right:0;top:0}.ctz-radio-group label:first-of-type div{border-radius:8px 0 0 8px;border-left:1px solid rgba(150,162,170,0.4)}.ctz-radio-group label:first-of-type div::before{display:none}.ctz-radio-group label:last-of-type div{border-radius:0 8px 8px 0;border-right:1px solid rgba(150,162,170,0.4)}.ctz-radio-group label:last-of-type div::after{display:none}.ctz-radio-group label:hover div{background:rgba(0,122,255,0.1)}.ctz-radio-group input{visibility:hidden;position:absolute}.ctz-radio-group input:checked+div{background:#007aff;color:#fff;border-color:#007aff;z-index:1}.ctz-radio-group input:checked+div::after{background:#007aff;z-index:1}.ctz-radio-group input:checked+div::before{content:'';position:absolute;height:100%;width:1px;background:#007aff;left:0;top:0;z-index:1}.ctz-radio{display:inline-block;padding-left:24px;line-height:24px}.ctz-radio input[type='radio']{display:none}.ctz-radio input[type='radio']+div{position:relative;cursor:pointer}.ctz-radio input[type='radio']+div::before{content:'';position:absolute;left:-20px;top:4px;border-radius:50%;border:1px solid #cecece;width:14px;height:14px;background:#fff;box-shadow:inset 5px 5px 5px #f0f0f0,inset -5px -5px 5px #ffffff}.ctz-radio input[type='radio']+div::after{content:'';position:absolute;left:-16px;top:8px;border-radius:50%;width:8px;height:8px}.ctz-radio input[type='radio']:checked+div::before{background:#007aff;border-color:#007aff;box-shadow:none}.ctz-radio input[type='radio']:checked+div::after{background:#fff}.ctz-radio input[type='radio']:focus+div::before{box-shadow:0 0 8px #007aff}.ctz-radio input[type='radio']:disabled+div::before{border:1px solid #cecece;box-shadow:0 0 4px #ddd}.ctz-i:not(.ctz-switch)[type='checkbox']{appearance:none;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;transition:all .2s;width:22px;height:22px;margin:0;position:relative;border-radius:4px;box-sizing:border-box;border:none;cursor:pointer}.ctz-i:not(.ctz-switch)[type='checkbox']::after{cursor:pointer;transition:all .2s;content:' ';width:22px;height:22px;border-radius:4px;border:1px solid rgba(150,162,170,0.4);box-sizing:border-box;left:0px;top:0px;z-index:1;position:absolute;font-weight:600;display:flex;align-items:center;justify-content:center}.ctz-i:not(.ctz-switch)[type='checkbox']:hover::after{border-color:#007aff}.ctz-i:not(.ctz-switch)[type='checkbox']:checked::after{content:'✓';font-size:16px;font-weight:600;color:#fff;background:#007aff;border-color:#007aff}.ctz-checkbox-group label{display:inline-flex !important;padding-right:12px}.ctz-checkbox-group label div{margin-right:12px}.ctz-checkbox-group label::after{content:'';height:12px;width:1px;background:rgba(150,162,170,0.4)}.ctz-checkbox-group label:last-of-type::after{display:none}.ctz-tooltip{position:relative;display:inline-block;margin-left:4px}.ctz-tooltip>span:first-child{display:inline-block;font-size:12px;border-radius:50%;border:1px solid #98989d;color:#98989d;width:12px;height:12px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.ctz-tooltip>span:last-child{display:none;position:absolute;top:30px;left:-50px;background-color:rgba(0,0,0,0.65);color:#fff;padding:8px 12px;z-index:10;border-radius:6px;width:max-content;line-height:24px}.ctz-tooltip>span:last-child::after{content:'';width:0;height:0;position:absolute;border-bottom:6px solid rgba(0,0,0,0.65);border-left:8px solid transparent;border-right:8px solid transparent;top:-6px;left:50px}.ctz-tooltip:hover>span:first-child{border-color:#007aff;color:#007aff}.ctz-tooltip:hover>span:last-child{display:block}.ctz-form-box{background:#e9e9e8;border:1px solid #dfdfde;border-radius:8px;margin-bottom:14px}.ctz-form-box-item{display:flex;padding:8px 12px;min-height:24px;position:relative}.ctz-form-box-item>div:first-of-type{flex:1;line-height:24px;word-break:keep-all;padding-right:12px}.ctz-form-box-item>div:nth-child(2){display:flex;flex-wrap:wrap;align-items:center}.ctz-form-box-item::after{content:'';position:absolute;background:#e0e0df;height:1px;width:96%;bottom:0;left:50%;transform:translateX(-50%)}.ctz-form-box-item:last-of-type::after{display:none}.ctz-form-box-item-vertical{display:block}.ctz-form-box-item-vertical>div:nth-child(2){display:block;padding-top:4px;font-size:12px;color:#999}.ctz-title{font-weight:bold;font-size:13px;display:flex;align-items:center;height:42px;line-height:42px;padding-left:10px}.ctz-title>span{font-size:12px;color:#999;padding-left:8px}.ctz-title>span b{color:#ff3b30}.ctz-switch{width:40px;height:24px;position:relative;background-color:#dcdfe6;border-radius:6px;background-clip:content-box;display:inline-block;appearance:none;-webkit-appearance:none;-moz-appearance:none;user-select:none;outline:none;margin:0;cursor:pointer}.ctz-switch::before{content:'';position:absolute;width:22px;height:22px;background-color:#ffffff;border-radius:5px;left:2px;top:0;bottom:0;margin:auto;transition:.3s}.ctz-switch:checked{background-color:#007aff;transition:.6s}.ctz-switch:checked::before{left:17px;transition:.3s}.ctz-switch:hover::before{background:#f0f0f0}.ctz-fetch-intercept .ctz-need-fetch{display:none}.ctz-fetch-intercept.ctz-fetch-intercept-close{color:#b0b0b0 !important;cursor:not-allowed !important;text-decoration:line-through}.ctz-fetch-intercept.ctz-fetch-intercept-close span.ctz-need-fetch{display:inline}.ctz-fetch-intercept.ctz-fetch-intercept-close div.ctz-need-fetch{display:block}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-remove-block{cursor:not-allowed !important}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-black-item .ctz-remove-block:hover,.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-black-item a:hover{background:transparent !important;color:#b0b0b0 !important}.ctz-fetch-intercept.ctz-fetch-intercept-close:hover{color:#b0b0b0 !important}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-switch{background-color:rgba(0,0,0,0.08);cursor:not-allowed !important}.ctz-fetch-intercept.ctz-fetch-intercept-close .ctz-switch::before{background:#ffffff !important}#CTZ_DIALOG input[type='range']{outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;height:6px;border-radius:8px;background:#dddddc;position:relative;box-shadow:inset 1px 1px 2px #d4d4d3,inset -1px -1px 2px #d4d4d3}#CTZ_DIALOG input[type='range']::before,#CTZ_DIALOG input[type='range']::after{content:'';background:#c6c6c5;position:absolute;height:10px;width:3px;border-radius:4px;top:-2px}#CTZ_DIALOG input[type='range']::before{left:-2px}#CTZ_DIALOG input[type='range']::after{right:-2px}#CTZ_DIALOG input[type='range']::-webkit-slider-thumb{-webkit-appearance:none;-moz-appearance:none;appearance:none;transition:all .2s;width:10px;height:25px;border-radius:16px;background:#fff;border:1px solid #c7c7c6;z-index:5}#CTZ_DIALOG input[type='range']::-webkit-slider-thumb:active{background:#f0f0f0}.ctz-select{position:relative;width:fit-content}.ctz-select-input{background:transparent;text-align:right;height:22px;border-radius:6px;border:1px solid transparent;padding:0 8px;line-height:22px;cursor:pointer}.ctz-select-input:hover{background:#ffffff;border:1px solid #e0e0e0}.ctz-select-icon{margin-left:4px}.ctz-option-box{position:absolute;top:24px;right:0;background:#e9e9e8;z-index:10;padding:6px;border-radius:6px;border:1px solid #e0e0e0;box-shadow:2px 2px 4px #dbdbdb,-2px -2px 4px #dbdbdb}.ctz-option-item{white-space:pre;cursor:default;padding:0 6px 0 24px;border-radius:4px;height:24px;line-height:24px;position:relative}.ctz-option-item:hover{color:#fff;background:#007aff}.ctz-option-item[data-choose="true"]::before{content:'✓';position:absolute;left:6px}#CTZ_BACKGROUND{gap:12px}.ctz-background-item{position:relative}.ctz-background-item input{position:absolute;visibility:hidden}.ctz-background-item input:checked+div+div{border-color:#007aff}.ctz-background-item input:checked+div+div+div{color:#272726}.ctz-background-item .ctz-background-item-div{border-radius:8px;height:46px;width:68px;margin:4px}.ctz-background-item .ctz-background-item-border{height:46px;width:68px;border-radius:12px;position:absolute;top:0;left:0;border:4px solid transparent}.ctz-background-item-name{font-size:12px;text-align:center;padding-top:8px;color:#777776}#CTZ_BACKGROUND_LIGHT,#CTZ_BACKGROUND_DARK{gap:10px;padding:4px 4px 24px 0}#CTZ_BACKGROUND_LIGHT .ctz-background-item,#CTZ_BACKGROUND_DARK .ctz-background-item{position:relative}#CTZ_BACKGROUND_LIGHT .ctz-background-item input,#CTZ_BACKGROUND_DARK .ctz-background-item input{position:absolute;visibility:hidden}#CTZ_BACKGROUND_LIGHT .ctz-background-item input:checked+div+div,#CTZ_BACKGROUND_DARK .ctz-background-item input:checked+div+div,#CTZ_BACKGROUND_LIGHT .ctz-background-item input:checked+div+div+div,#CTZ_BACKGROUND_DARK .ctz-background-item input:checked+div+div+div{opacity:1}#CTZ_BACKGROUND_LIGHT .ctz-background-item-div,#CTZ_BACKGROUND_DARK .ctz-background-item-div{height:18px;width:18px;border-radius:50%;margin:0}#CTZ_BACKGROUND_LIGHT .ctz-background-item-border,#CTZ_BACKGROUND_DARK .ctz-background-item-border{height:calc(18px - (4px * 2));width:calc(18px - (4px * 2));border-radius:50%;position:absolute;top:0;left:0;background:#fff;opacity:0}#CTZ_BACKGROUND_LIGHT .ctz-background-item-name,#CTZ_BACKGROUND_DARK .ctz-background-item-name{font-size:12px;text-align:center;padding-top:8px;color:#777776;opacity:0;position:absolute;word-break:keep-all;left:50%;transform:translateX(-50%)}#CTZ_CONFIG .ctz-title{padding-left:0}#CTZ_CONFIG textarea{resize:vertical;width:100%;margin-bottom:6px}.ctz-config-buttons{text-align:right}.ctz-config-buttons button{margin-left:8px}#CTZ_DEFAULT_SELF a{color:#007aff}#CTZ_DEFAULT_SELF a:hover{color:#bbb}#CTZ_BLOCK_WORDS{padding-top:0 !important}.ctz-block-words-content{display:flex;flex-wrap:wrap;cursor:default;margin-bottom:-4px}.ctz-block-words-content>span{padding:0px 6px;border-radius:4px;font-size:13px;margin:0 4px 4px 0;border:1px solid rgba(150,162,170,0.4);cursor:pointer;background:#fff}.ctz-block-words-content>span:hover{color:#ff3b30;border-color:#ff3b30}#CTA_BLOCKED_USERS,#CTZ_BLOCKED_USERS_TAGS{display:flex;flex-wrap:wrap;margin:0 -8px -8px 0}.ctz-black-item{height:24px;line-height:24px;box-sizing:content-box;padding:2px 6px;margin:0 8px 8px 0;display:flex;align-items:center;border-radius:4px;border:1px solid #8e8e93;background:#fff;transition:all .2s}.ctz-black-item a:hover{color:#007aff}.ctz-black-item .ctz-remove-block{width:24px;height:24px;text-align:center;border-radius:8px;cursor:pointer;font-style:normal}.ctz-black-item .ctz-remove-block:hover{background:rgba(142,142,147,0.1)}.ctz-black-box>button,.ctz-button-black{margin-left:8px}.ctz-blocked-users-tag{height:24px;line-height:24px;box-sizing:content-box;padding:0 6px;margin:0 8px 8px 0;display:flex;align-items:center;border-radius:6px;border:1px solid #8e8e93;background:#fff}.ctz-remove-blocked-tag:hover{color:#ff3b30;font-weight:600}.ctz-remove-blocked-tag:active{font-weight:200 !important}.ctz-black-tag{padding:0 6px;background:#000;color:#fff;font-size:12px;border-radius:4px;margin-left:8px;display:inline-block;line-height:22px}.ctz-in-blocked-user-tag{margin-left:4px;border-radius:4px;font-size:12px;border:1px solid #007aff;color:#007aff;background:rgba(0,122,255,0.1);height:16px;line-height:16px;padding:0 4px}.ctz-edit-user-tag,.ctz-edit-blocked-tag{display:inline-block;font-size:13px;margin-left:4px;cursor:pointer}.ctz-edit-user-tag:hover,.ctz-edit-blocked-tag:hover{font-weight:600 !important;color:#007aff}.ctz-edit-user-tag:active,.ctz-edit-blocked-tag:active{font-weight:200 !important}.ctz-block-user-box button{font-size:12px;margin-left:8px}.ctz-set-content:not(.ctz-flex-wrap)>div,.ctz-set-content:not(.ctz-flex-wrap)>label{margin-bottom:18px}.ctz-commit{font-size:12px;color:#999}.ctz-commit b{color:#ff3b30}.ctz-flex-wrap{display:flex;flex-wrap:wrap;min-height:24px;align-items:center}.ctz-flex-wrap label{margin-right:4px;display:flex;align-items:center}.ctz-flex-wrap label input[type='radio']{margin:0 4px 0 0}.ctz-video-download{position:absolute;top:20px;left:20px;font-size:24px;color:#fff;cursor:pointer}.ctz-loading{animation:loadingAnimation 2s infinite;font-size:24px;color:#91919d;cursor:none}@keyframes loadingAnimation{from{transform:rotate(0)}to{transform:rotate(360deg)}}.ctz-preview{box-sizing:border-box;position:fixed;height:100%;width:100%;top:0;left:0;overflow-y:auto;z-index:200;background-color:rgba(18,18,18,0.4)}.ctz-preview div{display:flex;justify-content:center;align-items:center;min-height:100%;width:100%}.ctz-preview div img{cursor:zoom-out;user-select:none}#CTZ_TITLE_ICO label input{display:none}#CTZ_TITLE_ICO label input:checked+img{border-color:#007aff}#CTZ_TITLE_ICO label img{width:28px;height:28px;border:4px solid transparent;border-radius:8px}#CTZ_TITLE_ICO label:hover img{border-color:#e0e0e0}.ctz-question-time{font-size:13px !important;font-weight:normal !important;line-height:24px}.ctz-stop-scroll{height:100% !important;overflow:hidden !important}.ctz-export-collection-box{float:right;text-align:right}.ctz-export-collection-box p{font-size:13px;color:#666;margin:4px 0}.ctz-pdf-dialog-item{padding:12px;border-bottom:1px solid #eee;margin:12px;background:#ffffff}.ctz-pdf-dialog-title{margin:0 0 1.4em;font-size:20px;font-weight:bold}.ctz-pdf-box-content{width:100%;background:#ffffff}.ctz-pdf-view{width:100%;background:#ffffff;word-break:break-all;white-space:pre-wrap;font-size:13px;overflow-x:hidden}.ctz-pdf-view a{color:#0066ff}.ctz-pdf-view img{max-width:100%}.ctz-pdf-view p{margin:1.4em 0}.ctz-unlock,.ctz-lock,.ctz-lock-mask{display:none;color:#999;cursor:pointer}.ctz-unlock,.ctz-lock{font-size:20px;align-items:center;justify-content:center}.ctz-lock-mask{position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:198}.position-suspensionSearch,.position-suspensionFind,.position-suspensionUser{position:fixed;z-index:100}.position-suspensionSearch:hover .ctz-unlock,.position-suspensionFind:hover .ctz-unlock,.position-suspensionUser:hover .ctz-unlock,.Topstory-container .TopstoryTabs:hover .ctz-unlock{display:flex}.ctz-move-this .ctz-unlock{display:none !important}.ctz-move-this .ctz-lock,.ctz-move-this .ctz-lock-mask{display:flex}.ctz-move-this .ctz-lock{z-index:199;color:#cccccc}.position-suspensionFind{display:flex;flex-direction:column;margin:0 !important}.position-suspensionFind .Tabs-item{padding:0 !important;margin-bottom:4px}.position-suspensionFind .Tabs-item .Tabs-link{padding:8px !important;border-radius:4px}.position-suspensionFind .Tabs-item .Tabs-link::after{content:'' !important;display:none !important}.position-suspensionUser{width:fit-content !important;margin:0 !important;display:flex;flex-direction:column}.position-suspensionUser .AppHeader-messages,.position-suspensionUser .AppHeader-notifications,.position-suspensionUser .css-18vqx7l{margin-right:0 !important;margin-bottom:12px}.position-suspensionUser .AppHeader-login,.position-suspensionUser .AppHeader-login~button{display:none}.position-suspensionSearch{line-height:30px;border-radius:16px;width:20px;transition:width .5s}.position-suspensionSearch .ctz-search-icon{font-size:24px;transform:rotate(-60deg)}.position-suspensionSearch .SearchBar-input-focus .ctz-search-pickup{display:none}.position-suspensionSearch.focus{width:300px}.position-suspensionSearch.focus>form,.position-suspensionSearch.focus>button,.position-suspensionSearch.focus .ctz-search-pickup{display:block}.position-suspensionSearch.focus .ctz-search-icon{display:none}.position-suspensionSearch.focus:hover{width:324px}.position-suspensionSearch .ctz-search-icon,.position-suspensionSearch .ctz-search-pickup{cursor:pointer;color:#0066ff;margin-right:6px}.position-suspensionSearch .ctz-search-icon:hover,.position-suspensionSearch .ctz-search-pickup:hover{color:#005ce6}.position-suspensionSearch .ctz-search-pickup{font-size:24px;margin-left:4px}.position-suspensionSearch>form,.position-suspensionSearch>button,.position-suspensionSearch .ctz-search-pickup{display:none}.position-suspensionSearch .ctz-search-icon{display:block}.key-shadow{border:1px solid #e0e0e0;border-radius:4px;box-shadow:rgba(0,0,0,0.06) 0 1px 1px 0;font-weight:600;min-width:26px;height:26px;padding:0px 6px;text-align:center;margin:0 4px}#CTZ_HISTORY_LIST a,#CTZ_HISTORY_VIEW a{word-break:break-all;display:block;margin-bottom:8px;padding:6px 12px;border:1px solid rgba(150,162,170,0.4);border-radius:8px;cursor:pointer}#CTZ_HISTORY_LIST a:hover,#CTZ_HISTORY_VIEW a:hover{background:rgba(77,66,86,0.08);color:#007aff !important;font-weight:600}.ctz-video-link{border:1px solid #ccc;display:inline-block;height:98px;width:fit-content;border-radius:4px;box-sizing:border-box;overflow:hidden;transition:all .3s}.ctz-video-link img{width:98px;height:98px;vertical-align:bottom}.ctz-video-link span{padding:4px 12px;display:inline-block}.ctz-video-link:hover{border-color:#005ce6;color:#005ce6}#CTZ_MESSAGE_BOX{position:fixed;left:0;top:10px;width:100%;z-index:1000}.ctz-message{margin:0 auto;width:500px;height:48px;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:8px;box-shadow:0 0 8px #d0d4d6,0 0 8px #e6eaec;margin-bottom:12px;background:#fff}#IMPORT_BY_FILE,#IMPORT_BLACK{display:inline-flex}#IMPORT_BY_FILE input,#IMPORT_BLACK input{display:none}#CTZ_FILTER_BLOCK_WORDS input,#CTZ_FILTER_BLOCK_WORDS_CONTENT input{width:100%}#CTZ_COVER{position:fixed;top:0;left:-200%;width:100%;height:100%;pointer-events:none}`;
   var loadIframePrint = (eventBtn, arrHTML, btnText) => {
     let max = 0;
     let finish = 0;
@@ -2900,6 +2885,37 @@
       addArticleTime();
     }, 500);
   };
+  var updateTopVote = async (contentItem) => {
+    const nodeItemMeta = contentItem.querySelector(".ContentItem-meta");
+    const nodeVote = contentItem.querySelector('[itemprop="upvoteCount"]');
+    const { topVote } = await myStorage.getConfig();
+    if (!nodeVote || !topVote || !nodeItemMeta) return;
+    const vote = nodeVote.content;
+    if (+vote === 0) return;
+    const className = "ctz-top-vote";
+    const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
+    const innerHTML = `${vote} 人赞同`;
+    if (domVotePrev) {
+      domVotePrev.innerHTML = innerHTML;
+    } else {
+      const domVote = domC("div", {
+        className,
+        innerHTML,
+        style: "font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0;"
+      });
+      nodeItemMeta.appendChild(domVote);
+      const metaObserver = new MutationObserver(() => {
+        updateTopVote(contentItem);
+      });
+      metaObserver.observe(nodeVote, {
+        attributes: true,
+        childList: false,
+        characterData: false,
+        characterDataOldValue: false,
+        subtree: false
+      });
+    }
+  };
   var CLASS_VIDEO_ONE = ".css-1h1xzpn";
   var CLASS_VIDEO_TWO = ".VideoAnswerPlayer-video";
   var CLASS_VIDEO_TWO_BOX = ".VideoAnswerPlayer";
@@ -2974,13 +2990,15 @@
       return originalPlay.apply(this, arguments);
     };
   };
+  var timeout;
   var fnReplaceZhidaToSearch = async (domFind = document.body, index2 = 0) => {
-    if (index2 === 10) return;
+    if (index2 === 5) return;
     const { replaceZhidaToSearch = "default" /* 不替换 */ } = await myStorage.getConfig();
     if (replaceZhidaToSearch === "default" /* 不替换 */) return;
     const domsZhida = domFind.querySelectorAll(".RichContent-EntityWord");
     if (!domsZhida.length) {
-      setTimeout(() => {
+      timeout && clearTimeout(timeout);
+      timeout = setTimeout(() => {
         fnReplaceZhidaToSearch(domFind, ++index2);
       }, 500);
       return;
@@ -3041,11 +3059,12 @@
   };
   var doReadMore = (currentDom) => {
     const contentItem = currentDom.classList.contains("ContentItem") ? currentDom : currentDom.querySelector(".ContentItem") || domP(currentDom, "class", "ContentItem");
-    if (!contentItem || !contentItem.querySelector(".is-collapsed")) return;
+    if (!contentItem) return;
     let pageType = void 0;
-    (dom(".Topstory-recommend") || dom(".Topstory-follow") || dom(".zhuanlan .css-1voxft1") || dom(".SearchMain")) && (pageType = "LIST");
-    dom(".Question-main") && (pageType = "QUESTION");
-    dom(".Profile-main") && (pageType = "USER_HOME");
+    const domPByClass = (name) => domP(currentDom, "class", name);
+    (domPByClass("Topstory-recommend") || domPByClass("Topstory-follow") || domPByClass("zhuanlan .css-1voxft1") || domPByClass("SearchMain")) && (pageType = "LIST");
+    domPByClass("Question-main") && (pageType = "QUESTION");
+    domPByClass("Profile-main") && (pageType = "USER_HOME");
     doContentItem(pageType, contentItem, true);
   };
   var doContentItem = async (pageType, contentItem, needTimeout = false) => {
@@ -3070,6 +3089,7 @@
         }
       };
       doByPageType[pageType]();
+      updateTopVote(contentItem);
       initVideoDownload(contentItem);
       addAnswerCopyLink(contentItem);
       fnReplaceZhidaToSearch(contentItem);
@@ -3086,127 +3106,26 @@
       doFun();
     }
   };
-  var myListenAnswerItem = {
+  var myListenAnswer = {
     initTimestamp: 0,
+    loaded: true,
     init: async function() {
+      if (!location.pathname.includes("/question/") || !this.loaded) return;
       const currentTime = +/* @__PURE__ */ new Date();
       if (currentTime - this.initTimestamp < 500) {
         setTimeout(() => this.init(), 500);
         return;
       }
-      const nodes = domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`);
-      const removeAnswers = store.getRemoveAnswers();
-      const config = await myStorage.getConfig();
-      const {
-        removeFromYanxuan,
-        removeUnrealAnswer,
-        removeFromEBook,
-        removeAnonymousAnswer,
-        removeLessVoteDetail,
-        lessVoteNumberDetail = 0,
-        answerOpen = "default" /* 默认 */,
-        removeBlockUserContent,
-        blockedUsers,
-        blockWordsAnswer = [],
-        highPerformanceAnswer
-      } = config;
+      if (this.initTimestamp !== 0) {
+        this.loaded = false;
+      }
+      this.initTimestamp = currentTime;
       const questionAnswerContent = dom(".QuestionAnswer-content");
-      if (questionAnswerContent) {
-        doContentItem("QUESTION", questionAnswerContent.querySelector(".ContentItem"));
-      }
-      for (let i = 0, len = nodes.length; i < len; i++) {
-        let message2 = "";
-        const nodeItem = nodes[i];
-        nodeItem.classList.add(CLASS_LISTENED);
-        nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
-        if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
-        const nodeItemContent = nodeItem.querySelector(".ContentItem");
-        if (!nodeItemContent) continue;
-        let dataZop = {};
-        let dataCardContent = {};
-        try {
-          dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
-          dataCardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
-        } catch {
-        }
-        (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message2 = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
-        if (!message2 && removeFromYanxuan) {
-          const itemId = String(dataZop.itemId || "");
-          const findItem = removeAnswers.find((i2) => i2.id === itemId);
-          findItem && (message2 = findItem.message);
-        }
-        if (!message2) {
-          const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
-          const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
-          const tagNames = (nodeTag1 ? nodeTag1.innerText : "") + (nodeTag2 ? nodeTag2.innerText : "");
-          if (removeUnrealAnswer) {
-            tagNames.includes("虚构创作") && (message2 = "已删除一条虚构创作的回答");
-          }
-          if (removeFromEBook) {
-            tagNames.includes("电子书") && (message2 = "已删除一条来自电子书的回答");
-          }
-        }
-        if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-          const findBlocked = blockedUsers.find((i2) => i2.id === dataCardContent.author_member_hash_id);
-          findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}的回答`);
-        }
-        if (!message2 && removeAnonymousAnswer) {
-          const userName = nodeItem.querySelector('[itemprop="name"]').content;
-          userName === "匿名用户" && (message2 = `已屏蔽一条「匿名用户」回答`);
-        }
-        if (!message2) {
-          const domRichContent = nodeItem.querySelector(".RichContent");
-          const innerText = domRichContent ? domRichContent.innerText : "";
-          if (innerText) {
-            let matchedWord = "";
-            for (let itemWord of blockWordsAnswer) {
-              const rep = new RegExp(itemWord.toLowerCase());
-              if (rep.test(innerText.toLowerCase())) {
-                matchedWord += `「${itemWord}」`;
-                break;
-              }
-            }
-            if (matchedWord) {
-              message2 = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
-            }
-          }
-        }
-        if (message2) {
-          fnHidden(nodeItem, message2);
-        } else {
-          doContentItem("QUESTION", nodeItemContent);
-          if (answerOpen !== "default" /* 默认 */) {
-            const buttonUnfold = nodeItem.querySelector(".ContentItem-expandButton");
-            const buttonFold = nodeItem.querySelector(".RichContent-collapsedText");
-            if (answerOpen === "on" /* 自动展开所有回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
-              buttonUnfold && buttonUnfold.click();
-              nodeItem.classList.add(OB_CLASS_FOLD.on);
-            }
-            const isF = buttonFold && nodeItem.offsetHeight > 939;
-            const isFC = buttonUnfold;
-            if (answerOpen === "off" /* 收起长回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
-              nodeItem.classList.add(OB_CLASS_FOLD.off);
-              isF && buttonFold && buttonFold.click();
-            }
-          }
-        }
-      }
-      if (highPerformanceAnswer) {
-        setTimeout(() => {
-          const nodes2 = domA(".AnswersNavWrapper .List-item");
-          if (nodes2.length > 30) {
-            const nIndex = nodes2.length - 30;
-            nodes2.forEach((item, index2) => {
-              if (index2 < nIndex) {
-                item.remove();
-              }
-            });
-            fnLog(`已开启高性能模式，删除${nIndex}条回答`);
-          }
-        }, 500);
-      }
+      questionAnswerContent && doContentItem("QUESTION", questionAnswerContent.querySelector(".ContentItem"));
+      processingData(domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`));
     },
     reset: function() {
+      this.dataLoad();
       domA(`.AnswersNavWrapper .List-item.${CLASS_LISTENED}`).forEach((item) => {
         item.classList.remove(CLASS_LISTENED);
       });
@@ -3214,11 +3133,122 @@
     restart: function() {
       this.reset();
       this.init();
+    },
+    dataLoad: function() {
+      this.loaded = true;
     }
   };
   var OB_CLASS_FOLD = {
     on: "ctz-fold-open",
     off: "ctz-fold-close"
+  };
+  var processingData = async (nodes) => {
+    const removeAnswers = store.getRemoveAnswers();
+    const config = await myStorage.getConfig();
+    const {
+      removeFromYanxuan,
+      removeUnrealAnswer,
+      removeFromEBook,
+      removeAnonymousAnswer,
+      removeLessVoteDetail,
+      lessVoteNumberDetail = 0,
+      answerOpen = "default" /* 默认 */,
+      removeBlockUserContent,
+      blockedUsers,
+      blockWordsAnswer = [],
+      highPerformanceAnswer
+    } = config;
+    for (let i = 0, len = nodes.length; i < len; i++) {
+      let message2 = "";
+      const nodeItem = nodes[i];
+      nodeItem.classList.add(CLASS_LISTENED);
+      nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
+      if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
+      const nodeItemContent = nodeItem.querySelector(".ContentItem");
+      if (!nodeItemContent) continue;
+      let dataZop = {};
+      let dataCardContent = {};
+      try {
+        dataZop = JSON.parse(nodeItemContent.getAttribute("data-zop") || "{}");
+        dataCardContent = JSON.parse(nodeItemContent.getAttribute("data-za-extra-module") || "{}").card.content;
+      } catch {
+      }
+      (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message2 = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
+      if (!message2 && removeFromYanxuan) {
+        const itemId = String(dataZop.itemId || "");
+        const findItem = removeAnswers.find((i2) => i2.id === itemId);
+        findItem && (message2 = findItem.message);
+      }
+      if (!message2) {
+        const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
+        const nodeTag2 = nodeItem.querySelector(".LabelContainer-wrapper");
+        const tagNames = (nodeTag1 ? nodeTag1.innerText : "") + (nodeTag2 ? nodeTag2.innerText : "");
+        if (removeUnrealAnswer) {
+          tagNames.includes("虚构创作") && (message2 = "已删除一条虚构创作的回答");
+        }
+        if (removeFromEBook) {
+          tagNames.includes("电子书") && (message2 = "已删除一条来自电子书的回答");
+        }
+      }
+      if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
+        const findBlocked = blockedUsers.find((i2) => i2.id === dataCardContent.author_member_hash_id);
+        findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}的回答`);
+      }
+      if (!message2 && removeAnonymousAnswer) {
+        const userName = nodeItem.querySelector('[itemprop="name"]').content;
+        userName === "匿名用户" && (message2 = `已屏蔽一条「匿名用户」回答`);
+      }
+      if (!message2) {
+        const domRichContent = nodeItem.querySelector(".RichContent");
+        const innerText = domRichContent ? domRichContent.innerText : "";
+        if (innerText) {
+          let matchedWord = "";
+          for (let itemWord of blockWordsAnswer) {
+            const rep = new RegExp(itemWord.toLowerCase());
+            if (rep.test(innerText.toLowerCase())) {
+              matchedWord += `「${itemWord}」`;
+              break;
+            }
+          }
+          if (matchedWord) {
+            message2 = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
+          }
+        }
+      }
+      if (message2) {
+        fnHidden(nodeItem, message2);
+      } else {
+        doContentItem("QUESTION", nodeItemContent);
+        if (answerOpen !== "default" /* 默认 */) {
+          const buttonUnfold = nodeItem.querySelector(".ContentItem-expandButton");
+          const buttonFold = nodeItem.querySelector(".RichContent-collapsedText");
+          if (answerOpen === "on" /* 自动展开所有回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
+            buttonUnfold && buttonUnfold.click();
+            nodeItem.classList.add(OB_CLASS_FOLD.on);
+          }
+          const isF = buttonFold && nodeItem.offsetHeight > 939;
+          const isFC = buttonUnfold;
+          if (answerOpen === "off" /* 收起长回答 */ && !nodeItem.classList.contains(OB_CLASS_FOLD.off) && (isF || isFC)) {
+            nodeItem.classList.add(OB_CLASS_FOLD.off);
+            isF && buttonFold && buttonFold.click();
+          }
+        }
+      }
+    }
+    if (highPerformanceAnswer) {
+      setTimeout(() => {
+        const nodes2 = domA(".AnswersNavWrapper .List-item");
+        if (nodes2.length > 30) {
+          const nIndex = nodes2.length - 30;
+          nodes2.forEach((item, index2) => {
+            if (index2 < nIndex) {
+              item.remove();
+            }
+          });
+          fnLog(`已开启高性能模式，删除${nIndex}条回答`);
+        }
+      }, 500);
+    }
   };
   var formatCommentAuthors = (data) => {
     const { setCommentAuthors, getCommentAuthors } = store;
@@ -3381,178 +3411,134 @@
     const button = dom(`.${CLASS_ZHIHU_COMMENT_DIALOG} button[aria-label="关闭"]`);
     button && button.click();
   };
-  var myListenListItem = {
-    initTimestamp: 0,
-    init: async function() {
-      const nodeLoading = dom(".Topstory-recommend .List-item.List-item");
-      const currentTime = +/* @__PURE__ */ new Date();
-      if (nodeLoading || currentTime - this.initTimestamp < 500) {
-        setTimeout(() => this.init(), 500);
-        return;
+  var processingData2 = async (nodes) => {
+    if (!nodes.length) return;
+    const userInfo = store.getUserInfo();
+    const removeRecommends = store.getRemoveRecommends();
+    const pfConfig = await myStorage.getConfig();
+    const {
+      filterKeywords = [],
+      blockWordsAnswer = [],
+      removeItemAboutVideo,
+      removeItemAboutPin,
+      removeItemAboutArticle,
+      removeLessVote,
+      lessVoteNumber = 0,
+      removeItemQuestionAsk,
+      removeFollowVoteAnswer,
+      removeFollowVoteArticle,
+      removeFollowFQuestion,
+      listOutPutNotInterested,
+      highlightOriginal,
+      backgroundHighlightOriginal,
+      themeDark = 1 /* 深色一 */,
+      themeLight = 0 /* 默认 */,
+      removeMyOperateAtFollow,
+      listOutputToQuestion,
+      fetchInterceptStatus,
+      removeBlockUserContent,
+      blockedUsers = []
+    } = pfConfig;
+    const pfHistory = await myStorage.getHistory();
+    const historyList = pfHistory.list;
+    const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
+    for (let i = 0, len = nodes.length; i < len; i++) {
+      const nodeItem = nodes[i];
+      if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
+      nodeItem.classList.add(CLASS_LISTENED);
+      nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
+      const nodeContentItem = nodeItem.querySelector(".ContentItem");
+      if (!nodeItem.scrollHeight || !nodeContentItem) continue;
+      let message2 = "";
+      let dataZop = {};
+      let cardContent = {};
+      const isVideo = nodeContentItem.classList.contains("ZVideoItem");
+      const isArticle = nodeContentItem.classList.contains("ArticleItem");
+      const isTip = nodeContentItem.classList.contains("PinItem");
+      try {
+        dataZop = JSON.parse(nodeContentItem.getAttribute("data-zop") || "{}");
+        cardContent = JSON.parse(nodeContentItem.getAttribute("data-za-extra-module") || "{}").card.content;
+      } catch {
       }
-      this.initTimestamp = currentTime;
-      await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
-      setTimeout(async () => {
-        await this.traversal(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
-      }, 500);
-      await recommendHighPerformance();
-    },
-    traversal: async function(nodes) {
-      if (!nodes.length) return;
-      const userinfo = store.getUserinfo();
-      const removeRecommends = store.getRemoveRecommends();
-      const pfConfig = await myStorage.getConfig();
-      const {
-        filterKeywords = [],
-        blockWordsAnswer = [],
-        removeItemAboutVideo,
-        removeItemAboutPin,
-        removeItemAboutArticle,
-        removeLessVote,
-        lessVoteNumber = 0,
-        removeItemQuestionAsk,
-        removeFollowVoteAnswer,
-        removeFollowVoteArticle,
-        removeFollowFQuestion,
-        listOutPutNotInterested,
-        highlightOriginal,
-        backgroundHighlightOriginal,
-        themeDark = 1 /* 深色一 */,
-        themeLight = 0 /* 默认 */,
-        removeMyOperateAtFollow,
-        listOutputToQuestion,
-        fetchInterceptStatus,
-        removeBlockUserContent,
-        blockedUsers = []
-      } = pfConfig;
-      const pfHistory = await myStorage.getHistory();
-      const historyList = pfHistory.list;
-      const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
-      for (let i = 0, len = nodes.length; i < len; i++) {
-        const nodeItem = nodes[i];
-        if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
-        nodeItem.classList.add(CLASS_LISTENED);
-        nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
-        const nodeContentItem = nodeItem.querySelector(".ContentItem");
-        if (!nodeItem.scrollHeight || !nodeContentItem) continue;
-        let message2 = "";
-        let dataZop = {};
-        let cardContent = {};
-        const isVideo = nodeContentItem.classList.contains("ZVideoItem");
-        const isArticle = nodeContentItem.classList.contains("ArticleItem");
-        const isTip = nodeContentItem.classList.contains("PinItem");
-        try {
-          dataZop = JSON.parse(nodeContentItem.getAttribute("data-zop") || "{}");
-          cardContent = JSON.parse(nodeContentItem.getAttribute("data-za-extra-module") || "{}").card.content;
-        } catch {
+      const { title = "", itemId } = dataZop || {};
+      const domFeedSource = nodeItem.querySelector(".FeedSource");
+      if (domFeedSource) {
+        if (removeMyOperateAtFollow && nodeItem.classList.contains("TopstoryItem-isFollow")) {
+          try {
+            const findUserId = nodeItem.querySelector(".UserLink .UserLink-link").href.match(/[^\/]+$/)[0];
+            const myUserId = userInfo.url.match(/[^\/]+$/)[0];
+            findUserId === myUserId && (message2 = "关注列表屏蔽自己的操作");
+          } catch {
+          }
         }
-        const { title = "", itemId } = dataZop || {};
-        const domFeedSource = nodeItem.querySelector(".FeedSource");
+        if (nodeItem.classList.contains("TopstoryItem-isFollow")) {
+          const textFeed = domFeedSource.textContent || "";
+          !message2 && removeFollowVoteAnswer && textFeed.includes("赞同了回答") && (message2 = "屏蔽关注人赞同的回答操作");
+          !message2 && removeFollowVoteArticle && textFeed.includes("赞同了文章") && (message2 = "屏蔽关注人赞同了文章操作");
+          !message2 && removeFollowFQuestion && textFeed.includes("关注了问题") && (message2 = "屏蔽关注人关注了问题操作");
+        }
+      }
+      if (!message2) {
+        const removeItem = removeRecommends.find((i2) => i2.id === String(itemId));
+        removeItem && (message2 = `推荐列表已屏蔽${removeItem.message}: ${title}`);
+      }
+      if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
+        const findBlocked = blockedUsers.find((i2) => i2.id === cardContent.author_member_hash_id);
+        findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
+      }
+      !message2 && isVideo && removeItemAboutVideo && (message2 = `列表屏蔽视频：${title}`);
+      !message2 && isArticle && removeItemAboutArticle && (message2 = `列表屏蔽文章：${title}`);
+      !message2 && isTip && removeItemAboutPin && (message2 = `列表屏蔽想法`);
+      if (!message2 && removeLessVote && (cardContent["upvote_num"] || 0) < lessVoteNumber) {
+        message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`;
+      }
+      if (!message2 && removeItemQuestionAsk && nodeItem.querySelector(".TopstoryQuestionAskItem")) {
+        message2 = "屏蔽邀请回答";
+      }
+      !message2 && (message2 = replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
+      if (!message2) {
+        const domRichContent = nodeItem.querySelector(".RichContent");
+        const innerText = domRichContent ? domRichContent.innerText : "";
+        message2 = replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
+      }
+      if (message2) {
+        fnHidden(nodeItem, message2);
+        const { itemId: itemId2, type } = dataZop;
+        doFetchNotInterested({ id: `${itemId2 || ""}`, type: `${type}` });
+      } else {
         if (domFeedSource) {
-          if (removeMyOperateAtFollow && nodeItem.classList.contains("TopstoryItem-isFollow")) {
-            try {
-              const findUserId = nodeItem.querySelector(".UserLink .UserLink-link").href.match(/[^\/]+$/)[0];
-              const myUserId = userinfo.url.match(/[^\/]+$/)[0];
-              findUserId === myUserId && (message2 = "关注列表屏蔽自己的操作");
-            } catch {
-            }
-          }
-          if (nodeItem.classList.contains("TopstoryItem-isFollow")) {
-            const textFeed = domFeedSource.textContent || "";
-            !message2 && removeFollowVoteAnswer && textFeed.includes("赞同了回答") && (message2 = "屏蔽关注人赞同的回答操作");
-            !message2 && removeFollowVoteArticle && textFeed.includes("赞同了文章") && (message2 = "屏蔽关注人赞同了文章操作");
-            !message2 && removeFollowFQuestion && textFeed.includes("关注了问题") && (message2 = "屏蔽关注人关注了问题操作");
+          const textFeed = domFeedSource.textContent || "";
+          const domUserLink = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
+          const userName = domUserLink ? domUserLink.innerText : "";
+          if (textFeed.includes("发布了想法") || dataZop && dataZop.authorName === userName) {
+            const nodeActions = nodeItem.querySelector(".ContentItem-actions");
+            nodeItem.style.cssText = highlightOriginal ? `${highlight}border: 1px solid #aaa;` : "";
+            nodeActions && (nodeActions.style.cssText = highlightOriginal ? highlight : "");
           }
         }
-        if (!message2) {
-          const removeItem = removeRecommends.find((i2) => i2.id === String(itemId));
-          removeItem && (message2 = `推荐列表已屏蔽${removeItem.message}: ${title}`);
-        }
-        if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-          const findBlocked = blockedUsers.find((i2) => i2.id === cardContent.author_member_hash_id);
-          findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
-        }
-        !message2 && isVideo && removeItemAboutVideo && (message2 = `列表屏蔽视频：${title}`);
-        !message2 && isArticle && removeItemAboutArticle && (message2 = `列表屏蔽文章：${title}`);
-        !message2 && isTip && removeItemAboutPin && (message2 = `列表屏蔽想法`);
-        if (!message2 && removeLessVote && (cardContent["upvote_num"] || 0) < lessVoteNumber) {
-          message2 = `屏蔽低赞内容: ${title}, ${cardContent["upvote_num"] || 0}`;
-        }
-        if (!message2 && removeItemQuestionAsk && nodeItem.querySelector(".TopstoryQuestionAskItem")) {
-          message2 = "屏蔽邀请回答";
-        }
-        !message2 && (message2 = this.replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
-        if (!message2) {
-          const domRichContent = nodeItem.querySelector(".RichContent");
-          const innerText = domRichContent ? domRichContent.innerText : "";
-          message2 = this.replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
-        }
-        if (message2) {
-          fnHidden(nodeItem, message2);
-          const { itemId: itemId2, type } = dataZop;
-          doFetchNotInterested({ id: `${itemId2 || ""}`, type: `${type}` });
-        } else {
-          if (domFeedSource) {
-            const textFeed = domFeedSource.textContent || "";
-            const domUserLink = nodeItem.querySelector(".FeedSource-firstline .UserLink-link");
-            const userName = domUserLink ? domUserLink.innerText : "";
-            if (textFeed.includes("发布了想法") || dataZop && dataZop.authorName === userName) {
-              const nodeActions = nodeItem.querySelector(".ContentItem-actions");
-              nodeItem.style.cssText = highlightOriginal ? `${highlight}border: 1px solid #aaa;` : "";
-              nodeActions && (nodeActions.style.cssText = highlightOriginal ? highlight : "");
-            }
+        const nodeItemTitle = nodeItem.querySelector(".ContentItem-title");
+        if (nodeItemTitle) {
+          if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
+            nodeItemTitle.appendChild(createButtonFontSize12("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
           }
-          const nodeItemTitle = nodeItem.querySelector(".ContentItem-title");
-          if (nodeItemTitle) {
-            if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
-              nodeItemTitle.appendChild(createButtonFontSize12("不感兴趣", CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
-            }
-            if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
-              const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
-              const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
-              nodeItemTitle.appendChild(createButtonFontSize12("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
-            }
+          if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {
+            const domUrl = nodeContentItem.querySelector('[itemprop="url"]');
+            const pathAnswer = domUrl ? domUrl.getAttribute("content") || "" : "";
+            nodeItemTitle.appendChild(createButtonFontSize12("直达问题", CLASS_TO_QUESTION, { _params: { path: pathAnswer.replace(/\/answer[\W\w]+/, "") } }));
           }
-        }
-        if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
-          const nodeA = nodeItem.querySelector(".ContentItem-title a");
-          if (nodeA) {
-            const typeObj = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
-            const historyItem = `<a href="${nodeA.href}" target="_blank"><b style="${typeObj.style}">「${typeObj.name}」</b>${nodeA.innerText}</a>`;
-            !historyList.includes(historyItem) && historyList.unshift(historyItem);
-          }
-        }
-        if (i === len - 1) {
-          myStorage.updateHistoryItem("list", historyList);
         }
       }
-    },
-    reset: function() {
-      domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
-        item.classList.remove(CLASS_LISTENED);
-      });
-    },
-    restart: function() {
-      this.reset();
-      this.init();
-    },
-    replaceBlockWord: function(innerText, nodeItemContent, blockWords, title, byWhat) {
-      if (innerText) {
-        let matchedWord = "";
-        for (let word of blockWords) {
-          const rep = new RegExp(word.toLowerCase());
-          if (rep.test(innerText.toLowerCase())) {
-            matchedWord += `「${word}」`;
-            break;
-          }
-        }
-        if (matchedWord) {
-          const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-          const routeURL = elementItemProp && elementItemProp.getAttribute("content");
-          return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+      if (domP(nodeItem, "class", "Topstory-recommend") && nodeItem.querySelector(".ContentItem-title a")) {
+        const nodeA = nodeItem.querySelector(".ContentItem-title a");
+        if (nodeA) {
+          const typeObj = isVideo ? RECOMMEND_TYPE.zvideo : isArticle ? RECOMMEND_TYPE.article : isTip ? RECOMMEND_TYPE.pin : RECOMMEND_TYPE.answer;
+          const historyItem = `<a href="${nodeA.href}" target="_blank"><b style="${typeObj.style}">「${typeObj.name}」</b>${nodeA.innerText}</a>`;
+          !historyList.includes(historyItem) && historyList.unshift(historyItem);
         }
       }
-      return "";
+      if (i === len - 1) {
+        myStorage.updateHistoryItem("list", historyList);
+      }
     }
   };
   var RECOMMEND_TYPE = {
@@ -3571,6 +3557,82 @@
     pin: {
       name: "想法",
       style: "color: #9c27b0"
+    }
+  };
+  var replaceBlockWord = (innerText, nodeItemContent, blockWords, title, byWhat) => {
+    if (innerText) {
+      let matchedWord = "";
+      for (let word of blockWords) {
+        const rep = new RegExp(word.toLowerCase());
+        if (rep.test(innerText.toLowerCase())) {
+          matchedWord += `「${word}」`;
+          break;
+        }
+      }
+      if (matchedWord) {
+        const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+        const routeURL = elementItemProp && elementItemProp.getAttribute("content");
+        return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
+      }
+    }
+    return "";
+  };
+  var recommendHighPerformance = async () => {
+    const { highPerformanceRecommend } = await myStorage.getConfig();
+    if (!highPerformanceRecommend) return;
+    setTimeout(() => {
+      const nodes = domA(`.${CLASS_LISTENED}`);
+      if (nodes.length > 50) {
+        const nodeLast = nodes[nodes.length - 1];
+        const yLastPrev = nodeLast.offsetTop;
+        const yDocument = document.documentElement.scrollTop;
+        const code = nodeLast.dataset.code;
+        const nIndex = nodes.length - 50;
+        nodes.forEach((item, index2) => {
+          index2 < nIndex && item.remove();
+        });
+        const nNodeLast = dom(`[data-code="${code}"]`);
+        if (nNodeLast) {
+          const nYLast = nNodeLast.offsetTop;
+          window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
+        }
+        fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
+      }
+    }, 100);
+  };
+  var myListenList = {
+    initTimestamp: 0,
+    loaded: true,
+    init: async function() {
+      if (!this.loaded) return;
+      const nodeLoading = dom(".Topstory-recommend .List-item.List-item");
+      const currentTime = +/* @__PURE__ */ new Date();
+      if (nodeLoading || currentTime - this.initTimestamp < 500) {
+        setTimeout(() => this.init(), 500);
+        return;
+      }
+      if (this.initTimestamp !== 0) {
+        this.loaded = false;
+      }
+      this.initTimestamp = currentTime;
+      await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+      setTimeout(async () => {
+        await processingData2(domA(`.TopstoryItem:not(.${CLASS_LISTENED})`));
+      }, 500);
+      await recommendHighPerformance();
+    },
+    reset: function() {
+      this.dataLoad();
+      domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
+        item.classList.remove(CLASS_LISTENED);
+      });
+    },
+    restart: function() {
+      this.reset();
+      this.init();
+    },
+    dataLoad: function() {
+      this.loaded = true;
     }
   };
   var myListenSearchListItem = {
@@ -3941,6 +4003,7 @@
       };
     };
   };
+  var timeoutChangeSuspensionTab;
   var changeSuspensionTab = async (index2 = 0, prevDom) => {
     const name = "suspensionHomeTab";
     const { suspensionHomeTab } = await myStorage.getConfig();
@@ -3954,8 +4017,9 @@
       }
       return;
     }
-    if (index2 >= 10) return;
-    setTimeout(() => changeSuspensionTab(++index2, dom(".Topstory-container .TopstoryTabs")), 500);
+    if (index2 >= 5) return;
+    timeoutChangeSuspensionTab && clearTimeout(timeoutChangeSuspensionTab);
+    timeoutChangeSuspensionTab = setTimeout(() => changeSuspensionTab(++index2, dom(".Topstory-container .TopstoryTabs")), 500);
   };
   var suspensionHeader = async (name) => {
     const { getHeaderCache, getHeaderFound } = storeSuspension;
@@ -4101,8 +4165,12 @@
       this.init();
     }
   };
+  var CONTENT_HREF = ["www.zhihu.com/question/", "zhuanlan.zhihu.com/p/", "www.zhihu.com/zvideo/"];
   var initHistoryView = async () => {
     const { href, origin, pathname } = location;
+    let isContentHref = false;
+    CONTENT_HREF.forEach((item) => href.includes(item) && (isContentHref = true));
+    if (!isContentHref) return;
     setTimeout(async () => {
       let name = "";
       const isQuestion = href.includes("www.zhihu.com/question/");
@@ -4156,6 +4224,7 @@
       { label: "操作栏仅显示数字和图标", value: "justNumberInAction" }
     ],
     [
+      { label: "问题详情 - 替换回答顶部赞同数显示（实时显示点赞数量）", value: "topVote" },
       { label: "问题详情 - 一键获取回答链接", value: "copyAnswerLink" },
       { label: "回答、文章顶部显示导出当前内容/回答按钮", value: "topExportContent" }
     ],
@@ -4258,12 +4327,13 @@
     createHTMLBackgroundSetting(nDomMain);
     createHTMLHiddenConfig(nDomMain);
     createHTMLMySelect(nDomMain);
+    createHTMLRightTitle(nDomMain);
     dom("#CTZ_BLACKLIST_COMMON", nDomMain).innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
     appendHomeLink(nDomMain);
     document.body.appendChild(nDomMain);
   };
   var appendHomeLink = (domMain = document.body) => {
-    const userInfo = store.getUserinfo();
+    const userInfo = store.getUserInfo();
     const boxToZhihu = dom(".ctz-to-zhihu", domMain);
     if (dom(".ctz-home-link") || !userInfo || !boxToZhihu) return;
     const hrefUser = userInfo.url ? userInfo.url.replace("/api/v4", "") : "";
@@ -4310,9 +4380,9 @@
     if (nodeTopStoryC) {
       const heightTopStoryContent = nodeTopStoryC.offsetHeight;
       if (heightTopStoryContent < 200) {
-        myListenListItem.restart();
+        myListenList.restart();
       } else {
-        myListenListItem.init();
+        myListenList.init();
       }
       heightTopStoryContent < window.innerHeight && windowResize();
     }
@@ -4322,7 +4392,7 @@
     doListenComment();
     fnJustNumberInAction();
     myListenSearchListItem.init();
-    myListenAnswerItem.init();
+    myListenAnswer.init();
     myListenUserHomeList.init();
     canCopy();
     changeSizeBeforeResize();
@@ -4369,7 +4439,7 @@
     const changeBackground = () => {
       mySize.change();
       myBackground.init();
-      myListenListItem.restart();
+      myListenList.restart();
       onUseThemeDark();
     };
     const rangeChoosePercent = () => {
@@ -4399,8 +4469,8 @@
       titleIco: changeICO,
       showGIFinDialog: previewGIF,
       questionCreatedAndModifiedTime: addQuestionTime,
-      highlightOriginal: () => myListenListItem.restart(),
-      listOutPutNotInterested: () => myListenListItem.restart(),
+      highlightOriginal: () => myListenList.restart(),
+      listOutPutNotInterested: () => myListenList.restart(),
       articleCreateTimeToTop: addArticleTime,
       versionHomeIsPercent: rangeChoosePercent,
       versionAnswerIsPercent: rangeChoosePercent,
@@ -4416,11 +4486,14 @@
       suspensionPickupRight: suspensionPickupAttribute,
       videoInAnswerArticle: () => {
         changeVideoStyle();
-        myListenListItem.restart();
-        myListenAnswerItem.restart();
+        myListenList.restart();
+        myListenAnswer.restart();
       },
       homeContentOpen: () => {
         myListenUserHomeList.restart();
+      },
+      topVote: () => {
+        appendHiddenStyle();
       }
     };
     if (name === "fetchInterceptStatus") {
@@ -4496,7 +4569,7 @@
     });
     moveAndOpen();
     initRootEvent();
-    dom('#CTZ_DEFAULT input[name="searchInZhihu"]').onchange = function(e) {
+    dom('input[name="searchInZhihu"]').onchange = function(e) {
       const domInput = e.target;
       const value = domInput.value;
       if (value) {
@@ -4603,8 +4676,8 @@
       openChange();
     });
     const T0 = performance.now();
-    const { hostname, href } = location;
-    const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers, setJsInitialData } = store;
+    const { hostname, href, pathname, hash } = location;
+    const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserInfo, findRemoveAnswers, setJsInitialData } = store;
     async function onDocumentStart() {
       if (!HTML_HOOTS.includes(hostname) || window.frameElement) return;
       if (!document.head) {
@@ -4650,15 +4723,22 @@
             });
           }
           return originFetch(url, opt).then((res) => {
-            interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => findRemoveRecommends(r.data));
+            interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => {
+              myListenList.dataLoad();
+              findRemoveRecommends(r.data);
+            });
+            interceptionResponse(res, /\/api\/v3\/moments/, (r) => {
+              myListenList.dataLoad();
+            });
             interceptionResponse(res, /\api\/v4\/members\/[^/]+\/answers/, (r) => setUserAnswer(r.data));
             interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
             interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
-              setUserinfo(r);
+              setUserInfo(r);
               appendHomeLink();
             });
             interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
             interceptionResponse(res, /\/api\/v4\/questions\/[^/]+\/feeds/, (r) => {
+              myListenAnswer.dataLoad();
               const answerTargets = r.data.map((i) => formatDataToHump(i.target));
               findRemoveAnswers(answerTargets);
             });
@@ -4745,11 +4825,16 @@
         org: topBlockUser
       });
     };
+    let prevHash = hash;
+    let prevPathname = pathname;
     const changeHistory = () => {
+      if (location.hash !== prevHash && prevPathname === location.pathname) return;
+      prevHash = location.hash;
+      prevPathname = location.pathname;
       historyToChangePathname();
-      myListenListItem.reset();
+      myListenList.reset();
       myListenSearchListItem.reset();
-      myListenAnswerItem.reset();
+      myListenAnswer.reset();
       myListenUserHomeList.reset();
     };
     window.addEventListener("popstate", throttle(changeHistory));

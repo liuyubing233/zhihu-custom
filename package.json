@@ -33,6 +33,7 @@
   "devDependencies": {
     "@types/node": "^20.5.9",
     "esbuild": "^0.24.2",
+    "html-minifier": "^4.0.0",
     "less": "^4.2.0",
     "shelljs": "^0.8.5",
     "typescript": "^5.2.2"

@@ -4,15 +4,11 @@ const CLASS_CAN_COPY = 'ctz-can-copy';
 
 /** 解除禁止转载的限制 */
 export const canCopy = () => {
-  nodeArrCopy(domA(`.RichContent-inner:not(.${CLASS_CAN_COPY})`));
-};
-
-const nodeArrCopy = (nodes: NodeListOf<HTMLElement>) => {
-  nodes.forEach((item) => {
+  domA(`.RichContent-inner:not(.${CLASS_CAN_COPY})`).forEach((item) => {
     item.classList.add(CLASS_CAN_COPY);
     item.oncopy = (event) => {
       eventCopy(event);
-      message('已复制内容，禁止转载提示无视掉即可');
+      message('已复制内容，若有禁止转载提示可无视');
       return true;
     };
   });
@@ -28,7 +24,6 @@ export const eventCopy = (event: ClipboardEvent) => {
     clipboardData.setData('text/plain', text);
   }
 };
-
 
 /** 复制文本 */
 export const copy = async (value: string) => {

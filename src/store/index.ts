@@ -1,7 +1,7 @@
 import { IBlockedUser } from '../components/black-list';
 import { EVideoInAnswerArticle } from '../components/select';
 import { myStorage } from '../tools';
-import { IJsInitialData, IZhihuAnswerTarget, IZhihuRecommendItem, IZhihuUserinfo } from '../types/zhihu';
+import { IJsInitialData, IZhihuAnswerTarget, IZhihuRecommendItem, IZhihuUserInfo } from '../types/zhihu';
 
 /** 回答需要移除的ID和移除信息 */
 interface IRecommendRemoved {
@@ -11,7 +11,7 @@ interface IRecommendRemoved {
 
 class Store {
   /** 用户信息 更改prev: userInfo */
-  userinfo: IZhihuUserinfo | undefined = undefined;
+  userInfo: IZhihuUserInfo | undefined = undefined;
   /** 上一个请求的 Headers */
   prevFetchHeaders: HeadersInit = {};
   /** 推荐类别过滤的内容 */
@@ -29,8 +29,8 @@ class Store {
 
   constructor() {
     // fix this is undefined
-    this.setUserinfo = this.setUserinfo.bind(this);
-    this.getUserinfo = this.getUserinfo.bind(this);
+    this.setUserInfo = this.setUserInfo.bind(this);
+    this.getUserInfo = this.getUserInfo.bind(this);
     this.setFetchHeaders = this.setFetchHeaders.bind(this);
     this.getFetchHeaders = this.getFetchHeaders.bind(this);
     this.findRemoveRecommends = this.findRemoveRecommends.bind(this);
@@ -47,11 +47,11 @@ class Store {
     this.getJsInitialData = this.getJsInitialData.bind(this);
   }
 
-  setUserinfo(inner: IZhihuUserinfo) {
-    this.userinfo = inner;
+  setUserInfo(inner: IZhihuUserInfo) {
+    this.userInfo = inner;
   }
-  getUserinfo() {
-    return this.userinfo;
+  getUserInfo() {
+    return this.userInfo;
   }
 
   setFetchHeaders(headers: HeadersInit) {

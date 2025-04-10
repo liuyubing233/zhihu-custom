@@ -58,13 +58,13 @@ export const answerAddBlockButton = async (contentItem: HTMLElement) => {
  * @param showBlock 显示屏蔽用户按钮
  * @param showBlockTag 显示黑名单用户标签
  * @param showBlockTagType 黑名单用户标签显示类型
- * @param userinfo 黑名单用户信息
+ * @param userInfo 黑名单用户信息
  */
-export const changeBlockedUsersBox = (isBlocked: boolean, showBlock?: boolean, showBlockTag?: boolean, showBlockTagType?: boolean, userinfo?: IBlockedUser) => {
+export const changeBlockedUsersBox = (isBlocked: boolean, showBlock?: boolean, showBlockTag?: boolean, showBlockTagType?: boolean, userInfo?: IBlockedUser) => {
   if (isBlocked) {
     return (
       fnReturnStr(
-        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userinfo && userinfo.tags && userinfo.tags.length ? '：' + userinfo.tags.join('、') : ''}</span>`,
+        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userInfo && userInfo.tags && userInfo.tags.length ? '：' + userInfo.tags.join('、') : ''}</span>`,
         showBlockTag
       ) + fnReturnStr(`<button class="${CLASS_BTN_REMOVE_BLOCKED} ctz-button">解除屏蔽</button>`, showBlock)
     );

@@ -2,6 +2,7 @@ import { checkThemeDarkOrLight, myBackground } from './components/background';
 import { interceptResponseForBlocked, topBlockUser } from './components/black-list';
 import { initBlockedWords } from './components/blocked-words';
 import { canCopy, eventCopy } from './components/copy';
+import { closeExtra, openChange } from './components/ctz-dialog';
 import { myCtzTypeOperation } from './components/ctz-type-operate';
 import { myCustomStyle } from './components/custom-style';
 import { echoData } from './components/echo-data';
@@ -11,12 +12,11 @@ import { echoHistory } from './components/history';
 import { keydownNextImage } from './components/image';
 import { fnJustNumberInAction } from './components/just-number';
 import { myRecommendClosePosition } from './components/list-position';
-import { myListenAnswerItem } from './components/listen-answer-item';
+import { myListenAnswer } from './components/listen-answer';
 import { closeCommentDialog, formatCommentAuthors } from './components/listen-comment';
-import { myListenListItem } from './components/listen-list-item';
+import { myListenList } from './components/listen-list';
 import { myListenSearchListItem } from './components/listen-search-list-item';
 import { initOneClickInvitation } from './components/one-click-invitation';
-import { closeExtra, openChange } from './components/open';
 import { myPageFilterSetting } from './components/page-filter-setting';
 import { changeICO, changeTitle, myCachePageTitle } from './components/page-title';
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';
@@ -48,8 +48,8 @@ import { INNER_CSS } from './web-resources';
   });
 
   const T0 = performance.now();
-  const { hostname, href } = location;
-  const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserinfo, findRemoveAnswers, setJsInitialData } = store;
+  const { hostname, href, pathname, hash } = location;
+  const { setFetchHeaders, getFetchHeaders, findRemoveRecommends, setUserAnswer, setUserArticle, setUserInfo, findRemoveAnswers, setJsInitialData } = store;
 
   /** 在启动时注入的内容 */
   async function onDocumentStart() {
@@ -108,20 +108,29 @@ import { INNER_CSS } from './web-resources';
 
         return originFetch(url, opt).then((res) => {
           // 推荐列表
-          interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => findRemoveRecommends(r.data));
+          interceptionResponse(res, /\/api\/v3\/feed\/topstory\/recommend/, (r) => {
+            myListenList.dataLoad();
+            findRemoveRecommends(r.data);
+          });
+          // 关注列表
+          interceptionResponse(res, /\/api\/v3\/moments/, (r) => {
+            myListenList.dataLoad();
+          });
+
           // 用户主页回答
           interceptionResponse(res, /\api\/v4\/members\/[^/]+\/answers/, (r) => setUserAnswer(r.data));
           // 用户主页文章
           interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
           // 个人信息
           interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
-            setUserinfo(r);
+            setUserInfo(r);
             appendHomeLink();
           });
           // 评论
           interceptionResponse(res, /\/api\/v4\/comment_v5/, (r) => formatCommentAuthors(r.data));
           // 回答内容
           interceptionResponse(res, /\/api\/v4\/questions\/[^/]+\/feeds/, (r) => {
+            myListenAnswer.dataLoad();
             const answerTargets = r.data.map((i: any) => formatDataToHump(i.target));
             findRemoveAnswers(answerTargets);
           });
@@ -221,13 +230,19 @@ import { INNER_CSS } from './web-resources';
     });
   };
 
+  let prevHash = hash;
+  let prevPathname = pathname;
   /** 页面路由变化, 部分操作方法 */
   const changeHistory = () => {
+    // 只改动 hash 的情况下不进行更新
+    if (location.hash !== prevHash && prevPathname === location.pathname) return;
+    prevHash = location.hash;
+    prevPathname = location.pathname;
     historyToChangePathname();
     // 重置监听起点
-    myListenListItem.reset();
+    myListenList.reset();
     myListenSearchListItem.reset();
-    myListenAnswerItem.reset();
+    myListenAnswer.reset();
     myListenUserHomeList.reset();
   };
   /** history 变化 */

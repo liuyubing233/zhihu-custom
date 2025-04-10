@@ -119,7 +119,7 @@
 }
 
 .ctz-question-time {
-  font-size: 14px !important;
+  font-size: @FontSize !important;
   font-weight: normal !important;
   line-height: 24px;
 }
@@ -134,7 +134,7 @@
   float: right;
   text-align: right;
   p {
-    font-size: 14px;
+    font-size: @FontSize;
     color: #666;
     margin: 4px 0;
   }
@@ -163,7 +163,7 @@
   background: #ffffff;
   word-break: break-all;
   white-space: pre-wrap;
-  font-size: 14px;
+  font-size: @FontSize;
   overflow-x: hidden;
   a {
     color: #0066ff;
@@ -215,18 +215,19 @@
       display: flex;
     }
   }
-  &.ctz-move-this {
-    .ctz-unlock {
-      display: none !important;
-    }
-    .ctz-lock,
-    .ctz-lock-mask {
-      display: flex;
-    }
-    .ctz-lock {
-      z-index: 199;
-      color: #cccccc;
-    }
+}
+
+.ctz-move-this {
+  .ctz-unlock {
+    display: none !important;
+  }
+  .ctz-lock,
+  .ctz-lock-mask {
+    display: flex;
+  }
+  .ctz-lock {
+    z-index: 199;
+    color: #cccccc;
   }
 }
 
@@ -384,7 +385,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: @FontSize;
   border-radius: 8px;
   box-shadow: 0px 0px 8px #d0d4d6, 0px 0px 8px #e6eaec;
   margin-bottom: 12px;
@@ -414,15 +415,4 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-}
-
-.ctz-block-user-box {
-  button {
-    font-size: 12px;
-    margin-left: 8px;
-    // height: 20px;
-    // line-height: 20px;
-    // padding: 0 4px;
-    // border-radius: 4px;
-  }
 }

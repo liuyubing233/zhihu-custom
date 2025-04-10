@@ -1,9 +1,8 @@
 import { onExportBlack, onImportBlack, onSyncBlackList, onSyncRemoveBlockedUsers } from '../components/black-list';
+import { onChangeMenu, openChange } from '../components/ctz-dialog';
 import { myCustomStyle } from '../components/custom-style';
 import { fnChanger } from '../components/fn-changer';
 import { echoHistory } from '../components/history';
-import { onChangeMenu } from '../components/menu';
-import { openChange } from '../components/open';
 import { buttonConfirmPageTitle, buttonResetPageTitle } from '../components/page-title';
 import { myPreview } from '../components/preview';
 import { moveAndOpen } from '../components/suspension/move';
@@ -68,7 +67,7 @@ export const initOperate = () => {
   moveAndOpen();
   initRootEvent();
 
-  dom('#CTZ_DEFAULT input[name="searchInZhihu"]')!.onchange = function (e) {
+  dom('input[name="searchInZhihu"]')!.onchange = function (e) {
     const domInput = e.target as HTMLInputElement;
     const value = domInput.value;
     if (value) {
@@ -171,24 +170,4 @@ const myButtonOperation: Record<string, Function> = {
   importBlackConfig: () => {
     dom('.ctz-input-import-black')!.click();
   },
-};
-
-/** 配置导入文件方法 */
-const configImport = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  const configFile = (target.files || [])[0];
-  if (!configFile) return;
-  const reader = new FileReader();
-  reader.readAsText(configFile);
-  reader.onload = async (oFREvent) => {
-    let config = oFREvent.target ? oFREvent.target.result : '';
-    if (typeof config === 'string') {
-      const nConfig = JSON.parse(config);
-      await myStorage.updateConfig(nConfig);
-      setTimeout(() => {
-        location.reload();
-      }, 300);
-    }
-  };
-  target.value = '';
 };

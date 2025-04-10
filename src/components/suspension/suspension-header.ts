@@ -3,6 +3,7 @@ import { mySize } from '../size';
 import { myMove } from './move';
 import { IHeaderName, storeSuspension } from './store';
 
+let timeoutChangeSuspensionTab: NodeJS.Timeout | undefined;
 /** 改变列表切换TAB悬浮 */
 export const changeSuspensionTab = async (index = 0, prevDom?: HTMLElement) => {
   const name = 'suspensionHomeTab';
@@ -18,8 +19,9 @@ export const changeSuspensionTab = async (index = 0, prevDom?: HTMLElement) => {
     }
     return;
   }
-  if (index >= 10) return;
-  setTimeout(() => changeSuspensionTab(++index, dom('.Topstory-container .TopstoryTabs')), 500);
+  if (index >= 5) return;
+  timeoutChangeSuspensionTab && clearTimeout(timeoutChangeSuspensionTab);
+  timeoutChangeSuspensionTab = setTimeout(() => changeSuspensionTab(++index, dom('.Topstory-container .TopstoryTabs')), 500);
 };
 
 /** 改变顶部元素的模块悬浮 */

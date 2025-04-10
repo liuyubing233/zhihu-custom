@@ -22,6 +22,12 @@ export const updateItemTime = (contentItem: HTMLElement) => {
   );
 };
 
+export const removeItemTime = (contentItem?: Element) => {
+  if (!contentItem) return;
+  const prevTime = contentItem.querySelector(`.${CLASS_TIME_ITEM}`);
+  prevTime && prevTime.remove();
+};
+
 let questionTimeout: NodeJS.Timeout;
 let questionFindIndex = 0;
 const resetQuestionTime = () => {
@@ -50,7 +56,7 @@ export const addQuestionTime = async () => {
       domC('div', {
         className: 'ctz-question-time',
         innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,
-        style: 'color: rgb(132, 145, 165);'
+        style: 'color: rgb(132, 145, 165);',
       })
     );
   resetQuestionTime();

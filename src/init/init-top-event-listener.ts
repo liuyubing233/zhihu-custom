@@ -3,6 +3,7 @@ import { addAnswerCopyLink } from '../components/link';
 import { printAnswer, printArticle } from '../components/print';
 import { EVideoInAnswerArticle } from '../components/select';
 import { updateItemTime } from '../components/time';
+import { updateTopVote } from '../components/topVote';
 import { CLASS_VIDEO_ONE, CLASS_VIDEO_TWO_BOX, initVideoDownload } from '../components/video';
 import { fnReplaceZhidaToSearch } from '../components/zhida-to-search';
 import { CLASS_NOT_INTERESTED, CLASS_TO_QUESTION } from '../misc';
@@ -50,13 +51,14 @@ export const initRootEvent = async () => {
 /** 点击阅读全文后的操作 */
 export const doReadMore = (currentDom: HTMLElement) => {
   const contentItem = currentDom.classList.contains('ContentItem') ? currentDom : currentDom.querySelector('.ContentItem') || domP(currentDom, 'class', 'ContentItem');
-  if (!contentItem || !contentItem.querySelector('.is-collapsed')) return;
+  if (!contentItem) return;
   // 展开
   let pageType: IPageType | undefined = undefined;
 
-  (dom('.Topstory-recommend') || dom('.Topstory-follow') || dom('.zhuanlan .css-1voxft1') || dom('.SearchMain')) && (pageType = 'LIST');
-  dom('.Question-main') && (pageType = 'QUESTION');
-  dom('.Profile-main') && (pageType = 'USER_HOME');
+  const domPByClass = (name: string) => domP(currentDom, 'class', name);
+  (domPByClass('Topstory-recommend') || domPByClass('Topstory-follow') || domPByClass('zhuanlan .css-1voxft1') || domPByClass('SearchMain')) && (pageType = 'LIST');
+  domPByClass('Question-main') && (pageType = 'QUESTION');
+  domPByClass('Profile-main') && (pageType = 'USER_HOME');
   doContentItem(pageType, contentItem as HTMLElement, true);
 };
 
@@ -93,7 +95,7 @@ export const doContentItem = async (pageType?: IPageType, contentItem?: HTMLElem
     };
 
     doByPageType[pageType]();
-    // updateTopVote(contentItem);
+    updateTopVote(contentItem);
     initVideoDownload(contentItem);
     addAnswerCopyLink(contentItem);
     fnReplaceZhidaToSearch(contentItem);

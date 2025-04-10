@@ -1,5 +1,5 @@
 import { domById, myStorage } from '../../tools';
-import { openChange } from '../open';
+import { openChange } from '../ctz-dialog';
 import { ESuspensionOpen } from '../select';
 
 /** 绑定页面元素的点击拖动方法 */

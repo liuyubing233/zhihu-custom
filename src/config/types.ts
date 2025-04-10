@@ -414,7 +414,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 操作栏仅显示数字和图标 */
   justNumberInAction?: boolean;
   /** 内容顶部是否显示赞同数 */
-  // topVote?: boolean;
+  topVote?: boolean;
   /** 文档或回答顶部显示导出当前内容/回答按钮 */
   topExportContent?: boolean;
   // /** 回答内容中的视频回答替换为视频链接 */

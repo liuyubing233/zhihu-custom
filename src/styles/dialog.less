@@ -18,7 +18,7 @@
   flex-direction: column;
   overflow: hidden;
   z-index: 202;
-  font-size: 14px;
+  font-size: @FontSize;
   border: 1px solid @gray01;
 }
 
@@ -29,8 +29,8 @@
   textarea {
     box-sizing: border-box;
     margin: 0;
-    padding: 0px 4px;
-    font-size: 14px;
+    padding: 1px 4px;
+    font-size: @FontSize;
     line-height: 1.5;
     list-style: none;
     position: relative;
@@ -101,7 +101,7 @@
     line-height: @HeightMenuItem;
     padding-left: 12px;
     border-radius: 6px;
-    font-size: 14px;
+    font-size: @FontSize;
     margin-bottom: 2px;
     cursor: pointer;
 
@@ -132,7 +132,7 @@
   box-sizing: border-box;
   padding-left: 18px;
   border-bottom: 1px solid @gray02;
-  & > span {
+  div > span {
     font-size: 12px;
     color: @red1;
     padding-left: 8px;
@@ -155,8 +155,7 @@
   overflow: hidden;
 }
 
-.ctz-zhihu-key a,
-.ctz-default-bottom a {
+.ctz-zhihu-key a {
   color: @blue1!important;
   &:hover {
     color: #bbb !important;
@@ -164,9 +163,8 @@
 }
 
 .ctz-default-bottom {
-  margin-top: 12px;
   a {
-    margin-right: 12px;
+    margin-left: 8px;
   }
 }
 
@@ -214,9 +212,8 @@
     padding: 0;
     border: 0;
     font-size: 12px;
-    transform: scale(0.75);
+    transform: scale(0.8);
     color: #fff;
-    font-size: 12px;
     line-height: 20px;
     min-width: 0 !important;
   }

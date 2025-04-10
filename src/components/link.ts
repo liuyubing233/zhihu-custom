@@ -4,39 +4,34 @@ import { copy } from './copy';
 /** 知乎外链直接打开(修改外链内容，去除知乎重定向) */
 export const initLinkChanger = () => {
   const esName = ['a.external', 'a.LinkCard'];
-  const operaLink = 'ctz-link-changed';
-  const hrefChanger = (item: HTMLAnchorElement) => {
-    const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, '') || '';
-    let href = '';
-    // 解决 hrefFormat 格式已经是 decode 后的格式
-    try {
-      href = decodeURIComponent(hrefFormat);
-    } catch {
-      href = hrefFormat;
-    }
-    item.href = href;
-    item.classList.add(operaLink);
-  };
-
   for (let i = 0, len = esName.length; i < len; i++) {
     const name = esName[i];
-    const links = domA(`${name}:not(.${operaLink})`);
+    const links = domA(`${name}:not(.ctz-link-changed)`);
     for (let index = 0, linkLen = links.length; index < linkLen; index++) {
-      hrefChanger(links[index] as HTMLAnchorElement);
+      const item = links[index] as HTMLAnchorElement;
+      const hrefFormat = item.href.replace(/^(https|http):\/\/link\.zhihu\.com\/\?target\=/, '') || '';
+      let href = '';
+      // 解决 hrefFormat 格式已经是 decode 后的格式
+      try {
+        href = decodeURIComponent(hrefFormat);
+      } catch {
+        href = hrefFormat;
+      }
+      item.href = href;
+      item.classList.add('ctz-link-changed');
     }
   }
 };
 
-const CLASS_COPY_LINK = 'ctz-copy-answer-link';
 /** 回答内容意见分享 */
 export const addAnswerCopyLink = async (contentItem: HTMLElement) => {
   const { copyAnswerLink } = await myStorage.getConfig();
   if (!copyAnswerLink) return;
-  const prevButton = contentItem.querySelector(`.${CLASS_COPY_LINK}`);
+  const prevButton = contentItem.querySelector(`.ctz-copy-answer-link`);
   prevButton && prevButton.remove();
   const nodeUser = contentItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
-  const nDomButton = createButtonFontSize12('获取回答链接', CLASS_COPY_LINK);
+  const nDomButton = createButtonFontSize12('获取回答链接', 'ctz-copy-answer-link');
   nDomButton.onclick = function () {
     const metaUrl = contentItem.querySelector('[itemprop="url"]');
     if (!metaUrl) return;

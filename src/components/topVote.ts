@@ -10,7 +10,7 @@ export const updateTopVote = async (contentItem: HTMLElement) => {
   if (+vote === 0) return;
   const className = 'ctz-top-vote';
   const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
-  const innerHTML = `${vote} 人赞同了该回答`;
+  const innerHTML = `${vote} 人赞同`;
   if (domVotePrev) {
     domVotePrev.innerHTML = innerHTML;
   } else {

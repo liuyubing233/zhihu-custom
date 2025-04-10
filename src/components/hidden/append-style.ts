@@ -21,5 +21,9 @@ export const appendHiddenStyle = async () => {
     trueNumber === keys.length && (hiddenContent += value);
   });
 
+  if (config.topVote) {
+    hiddenContent += `.css-dvccr2{display: none!important;}`;
+  }
+
   fnAppendStyle('CTZ_STYLE_HIDDEN', hiddenContent);
 };

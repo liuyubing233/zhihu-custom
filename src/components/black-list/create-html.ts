@@ -1,5 +1,5 @@
 import { dom, domById, domC, message, myStorage } from '../../tools';
-import { closeExtra, openExtra } from '../open';
+import { closeExtra, openExtra } from '../ctz-dialog';
 import { removeBlockUser } from './do-fetch';
 import { IBlockedUser } from './types';
 
