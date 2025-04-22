@@ -88,11 +88,11 @@ body[data-suspension-pickup='true'] {
   }
 }
 
-// 文章页面内容宽度优化
-.zhuanlan .AuthorInfo,
-.zhuanlan .css-1xy3kyp {
-  max-width: initial;
-}
+// // 文章页面内容宽度优化
+// .zhuanlan .AuthorInfo,
+// .zhuanlan .css-1xy3kyp {
+//   max-width: initial;
+// }
 
 // 图片
 .GifPlayer.isPlaying img {
@@ -105,4 +105,23 @@ body[data-suspension-pickup='true'] {
   padding: 0 !important;
   min-width: min-content !important;
   width: fit-content !important;
+}
+
+// 专栏部分宽度
+.zhuanlan {
+  .Post-Row-Content-left {
+    flex: 1;
+  }
+
+  .Post-Row-Content-right {
+    margin-left: 10px;
+  }
+
+  .css-1pariuy,
+  .css-44kk6u {
+    max-width: none;
+  }
+  .css-9w3zhd {
+    width: auto;
+  }
 }

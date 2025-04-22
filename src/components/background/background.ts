@@ -61,7 +61,7 @@ const cssBackground = (background1: string, background2: string) =>
 /** 使用背景色1的元素名称 */
 const NAME_BACKGROUND_1 =
   `body,.Input-wrapper,.toolbar-section button:hover` +
-  `,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
+  `,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout,.zhuanlan .css-34mzkj,.zhuanlan .css-2sopzd,.zhuanlan .css-44kk6u` +
   `,.css-i9srcr,.css-i9srcr div,.css-127i0sx,.css-1wi7vwy,.css-1ta275q,.css-mk7s6o,.css-1o83xzo .section div,.PostItem` +
   `,.Report-list tr:nth-child(odd),.LinkCard.new,.Post-content,.Post-content .ContentItem-actions,.Messages-newItem` +
   `,.Modal-wrapper textarea,.New-RightCard-Outer-Dark,.WriteIndexLayout-main,.Messages-item:hover,.Menu-item.is-active` +
@@ -76,6 +76,7 @@ const NAME_BACKGROUND_1 =
 /** 使用背景色2的元素名称 */
 const NAME_BACKGROUND_2 =
   `.${CLASS_MESSAGE}` +
+  `,.zhuanlan .Post-Row-Content .Post-Row-Content-left,.zhuanlan .Post-content .ContentItem-actions,.zhuanlan .css-1pariuy,.zhuanlan .Column-EmptyCard` +
   `,.Card,.HotItem,.AppHeader,.Topstory-content>div,.PlaceHolder-inner,.PlaceHolder-bg,.ContentItem-actions,.QuestionHeader,.QuestionHeader-footer ` +
   `,.QZcfWkCJoarhIYxlM_sG,.Sticky,.SearchTabs,.Modal-inner,.Modal-content,.Modal-content div` +
   `,.Select-list button:active,.Select-list button:hover,.modal-dialog,.modal-dialog-buttons,.zh-profile-card div,.QuestionAnswers-answerAdd div` +

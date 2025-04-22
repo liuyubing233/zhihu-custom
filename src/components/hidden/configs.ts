@@ -501,18 +501,36 @@ export const HIDDEN_ARRAY: IHiddenArray = [
         {
           label: '文章标题图片',
           value: 'hiddenZhuanlanTitleImage',
-          css: '.css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}',
+          css: '.zhuanlan .Post-Row-Content-left-article .css-1ac3ifk{display: none!important;}',
+          // css: '.css-1ntkiwo,.TitleImage,.css-78p1r9,.ArticleItem .RichContent>div:first-of-type:not(.RichContent-cover)>div:last-of-type{display: none!important;}',
+        },
+        // {
+        //   label: '文章悬浮分享按钮',
+        //   value: 'hiddenZhuanlanShare',
+        //   css: '.zhuanlan .Post-SideActions .Popover.ShareMenu{display: none!important;}',
+        // },
+        // {
+        //   label: '文章悬浮赞同按钮',
+        //   value: 'hiddenZhuanlanVoters',
+        //   css: '.zhuanlan .Post-SideActions .like{display: none!important;}',
+        // },
+        // {
+        //   label: '文章底部知乎热榜',
+        //   value: 'hiddenZhuanlanButtonHot',
+        //   css: '.zhuanlan .Post-Sub .css-1ildg7g{display: none;}',
+        // },
+        {
+          label: '文章所属专栏',
+          value: 'hiddenZhuanlanContributions',
+          css: '.zhuanlan .PostIndex-Contributions,.zhuanlan .css-3ibr72{display: none;}',
         },
         {
-          label: '文章悬浮分享按钮',
-          value: 'hiddenZhuanlanShare',
-          css: '.zhuanlan .Post-SideActions .Popover.ShareMenu{display: none!important;}',
-        },
-        {
-          label: '文章悬浮赞同按钮',
-          value: 'hiddenZhuanlanVoters',
-          css: '.zhuanlan .Post-SideActions .like{display: none!important;}',
-        },
+          label: '推荐阅读',
+          value: 'hiddenZhuanlan',
+          css: '.zhuanlan .Post-NormalSub{display:none;}'
+        }
+      ],
+      [
         {
           label: '文章作者头像',
           value: 'hiddenZhuanlanAvatarWrapper',
@@ -534,16 +552,11 @@ export const HIDDEN_ARRAY: IHiddenArray = [
           css: '.zhuanlan .FollowButton{display: none;}',
         },
         {
-          label: '文章底部知乎热榜',
-          value: 'hiddenZhuanlanButtonHot',
-          css: '.zhuanlan .Post-Sub .css-1ildg7g{display: none;}',
-        },
-        {
-          label: '文章所属专栏',
-          value: 'hiddenZhuanlanContributions',
-          css: '.zhuanlan .PostIndex-Contributions{display: none;}',
-        },
-      ],
+          label: '关于作者',
+          value: 'hiddenZhuanlanAuthorCard',
+          css: '.zhuanlan .Card.AuthorCard{display:none}'
+        }
+      ]
     ],
   },
   // 用户主页
@@ -683,4 +696,8 @@ export const HIDDEN_ARRAY_MORE = [
     keys: ['hiddenTopicRightNumberBoard', 'hiddenTopicRightParentChild', 'hiddenTopicRightFooter'],
     value: '[data-za-detail-view-path-module="TopicItem"]>div:nth-child(2){display: none;}',
   },
+  {
+    keys: ['hiddenZhuanlanAuthorCard', 'hiddenAD'],
+    value: '.zhuanlan .Post-Row-Content-right{display:none;}'
+  }
 ];
