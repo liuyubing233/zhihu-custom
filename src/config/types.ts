@@ -55,7 +55,7 @@ export interface IConfigHidden {
   /** 隐藏专栏下方操作条 */
   hiddenZhuanlanActions?: boolean;
   /** 隐藏文章底部知乎热榜 */
-  hiddenZhuanlanButtonHot?: boolean;
+  // hiddenZhuanlanButtonHot?: boolean;
   /** 隐藏专栏标题图片 */
   hiddenZhuanlanTitleImage?: boolean;
   /** 隐藏热门热度值 */
@@ -94,10 +94,10 @@ export interface IConfigHidden {
   hiddenSearchPageFooter?: boolean;
   /** 隐藏搜索结果知乎直达 */
   hiddenSearchResultZhida?: boolean;
-  /** 隐藏专栏悬浮分享按钮 */
-  hiddenZhuanlanShare?: boolean;
-  /** 隐藏专栏悬浮赞同按钮 */
-  hiddenZhuanlanVoters?: boolean;
+  // /** 隐藏专栏悬浮分享按钮 */
+  // hiddenZhuanlanShare?: boolean;
+  // /** 隐藏专栏悬浮赞同按钮 */
+  // hiddenZhuanlanVoters?: boolean;
   /** 列表[亲自答]隐藏标签 */
   hiddenListAnswerInPerson?: boolean;
   /** 隐藏关注列表关注人操作栏 */
@@ -229,8 +229,12 @@ export interface IConfigHidden {
   hiddenItemActionsUser?: boolean;
   /** 个人主页动态、回答、文章等操作栏 - 底部悬浮 */
   hiddenItemActionsIsFixedUser?: boolean;
-  /** 热榜顶部滚动新闻 */
+  /** 隐藏热榜顶部滚动新闻 */
   hiddenHotTopNews?: boolean;
+  /** 隐藏文章详情关于作者 */
+  hiddenZhuanlanAuthorCard?: boolean;
+  /** 隐藏文章底部推荐阅读 */
+  hiddenZhuanlan?: boolean;
 }
 
 /** 屏蔽内容模块默认配置 */
