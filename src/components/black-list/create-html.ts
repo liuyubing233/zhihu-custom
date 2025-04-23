@@ -133,7 +133,13 @@ export const initHTMLBlockedUsers = async (domMain: HTMLElement) => {
 
   const nodeBlockedUsers = dom(`#${ID_BLOCK_LIST}`, domMain)!;
   nodeBlockedUsers.innerHTML = blockedUsers
-    .map((info) => `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${blackItemContent(info)}</div>`)
+    .map(
+      (info) =>
+        `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify({
+          ...info,
+          name: '', // info 里不放置名字，解决部分用户名下存在特殊字符，导致info插入不完全的情况
+        })}'>${blackItemContent(info)}</div>`
+    )
     .join('');
 
   nodeBlockedUsers.onclick = async (event) => {
