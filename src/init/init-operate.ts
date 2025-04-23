@@ -170,4 +170,11 @@ const myButtonOperation: Record<string, Function> = {
   importBlackConfig: () => {
     dom('.ctz-input-import-black')!.click();
   },
+  buttonSearchInZhihu: () => {
+    const domInput = dom('[name="searchInZhihu"]') as HTMLInputElement;
+    const value = domInput.value;
+    if (value) {
+      window.open(`https://www.zhihu.com/search?q=${value}`);
+    }
+  },
 };

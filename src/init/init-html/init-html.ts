@@ -37,7 +37,7 @@ export const initHTML = () => {
   createHTMLBackgroundSetting(nDomMain);
   createHTMLHiddenConfig(nDomMain);
   createHTMLMySelect(nDomMain);
-  createHTMLRightTitle(nDomMain)
+  createHTMLRightTitle(nDomMain);
 
   dom('#CTZ_BLACKLIST_COMMON', nDomMain)!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
   // echoBlockedContent(nDomMain); // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容
@@ -58,6 +58,7 @@ export const appendHomeLink = (domMain: HTMLElement = document.body) => {
       target: '_blank',
       innerText: '前往个人主页',
       className: 'ctz-home-link ctz-button',
+      style: 'width: 100px;',
     })
   );
 };
