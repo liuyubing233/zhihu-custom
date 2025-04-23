@@ -1238,7 +1238,12 @@
     const { blockedUsers = [] } = await myStorage.getConfig();
     dom("#CTZ_BLOCKED_NUMBER", domMain).innerText = blockedUsers.length ? `黑名单数量：${blockedUsers.length}` : "";
     const nodeBlockedUsers = dom(`#${ID_BLOCK_LIST}`, domMain);
-    nodeBlockedUsers.innerHTML = blockedUsers.map((info) => `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify(info)}'>${blackItemContent(info)}</div>`).join("");
+    nodeBlockedUsers.innerHTML = blockedUsers.map(
+      (info) => `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify({
+        ...info,
+        name: ""
+      })}'>${blackItemContent(info)}</div>`
+    ).join("");
     nodeBlockedUsers.onclick = async (event) => {
       const target = event.target;
       const item = target.parentElement;
