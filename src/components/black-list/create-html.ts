@@ -28,6 +28,25 @@ export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
 const tagContext = (i: string) =>
   i + `<span class="${CLASS_EDIT_TAG}">✎</span>` + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`;
 
+const tagInputCallback = async (e: Event) => {
+  const { blockedUsersTags = [] } = await myStorage.getConfig();
+  const target = e.target as HTMLInputElement;
+  const value = target.value.toLowerCase();
+  if (blockedUsersTags.includes(value)) {
+    message('该标签已经存在');
+    return;
+  }
+  blockedUsersTags.push(value);
+  await myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
+  const domItem = domC('span', {
+    innerHTML: tagContext(value),
+    className: 'ctz-blocked-users-tag',
+  });
+  domItem.dataset.info = value;
+  domById(ID_BLOCKED_USERS_TAGS)!.appendChild(domItem);
+  target.value = '';
+};
+
 /** 初始化黑名单标签 */
 const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
   const prevConfig = await myStorage.getConfig();
@@ -101,23 +120,20 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
     }
   };
 
-  dom('input[name="inputBlockedUsersTag"]', domMain)!.onchange = async (e) => {
-    const { blockedUsersTags = [] } = await myStorage.getConfig();
+  dom('input[name="inputBlockedUsersTag"]', domMain)!.onchange = tagInputCallback;
+
+  dom('input[name="inputCreateNewTag"]')!.onchange = async (e) => {
     const target = e.target as HTMLInputElement;
     const value = target.value.toLowerCase();
-    if (blockedUsersTags.includes(value)) {
-      message('该标签已经存在');
-      return;
-    }
-    blockedUsersTags.push(value);
-    await myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
-    const domItem = domC('span', {
-      innerHTML: tagContext(value),
-      className: 'ctz-blocked-users-tag',
+    await tagInputCallback(e);
+    const boxTags = dom('.ctz-choose-blocked-user-tags')!;
+    const nTag = domC('span', {
+      innerHTML: value,
     });
-    domItem.dataset.info = value;
-    domById(ID_BLOCKED_USERS_TAGS)!.appendChild(domItem);
-    target.value = '';
+    nTag.dataset.choose = 'false';
+    nTag.dataset.type = 'blockedUserTag'
+    nTag.dataset.name = value
+    boxTags.appendChild(nTag);
   };
 };
 
