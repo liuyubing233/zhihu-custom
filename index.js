@@ -2602,33 +2602,6 @@
       buttonLike && (buttonLike.innerHTML = (buttonLike.innerHTML || "").replace(/喜欢/, ""));
     });
   };
-  var myRecommendClosePosition = {
-    prevY: 0,
-    yDocument: 0,
-    savePosition: function(currentItem) {
-      if (currentItem.querySelector(".is-collapsed")) return;
-      if (!dom(".Topstory-recommend")) return;
-      const topstoryItem = currentItem.classList.contains("TopstoryItem") ? currentItem : domP(currentItem, "class", "TopstoryItem");
-      if (!topstoryItem || !topstoryItem.nextElementSibling) return;
-      const nextDom = topstoryItem.nextElementSibling;
-      if (nextDom.getBoundingClientRect().y > 0 && nextDom.getBoundingClientRect().y - window.innerHeight < 0) {
-        this.prevY = nextDom.offsetTop;
-        this.yDocument = document.documentElement.scrollTop;
-      } else {
-        this.prevY = 0;
-        this.yDocument = 0;
-      }
-    },
-    doPosition: function(currentItem) {
-      if (this.prevY === 0 || this.yDocument === 0) return;
-      if (!currentItem.querySelector(".is-collapsed")) return;
-      if (!dom(".Topstory-recommend")) return;
-      const topstoryItem = currentItem.classList.contains("TopstoryItem") ? currentItem : domP(currentItem, "class", "TopstoryItem");
-      if (!topstoryItem || !topstoryItem.nextElementSibling) return;
-      const nextDom = topstoryItem.nextElementSibling;
-      window.scrollTo({ top: this.yDocument - (this.prevY - nextDom.offsetTop) });
-    }
-  };
   var initLinkChanger = () => {
     const esName = ["a.external", "a.LinkCard"];
     for (let i = 0, len = esName.length; i < len; i++) {
@@ -4902,11 +4875,6 @@
         canCopy();
       })
     );
-    window.addEventListener("keyup", async (event) => {
-      if (event.key === "o") {
-        myRecommendClosePosition.doPosition(document.activeElement);
-      }
-    });
     window.addEventListener("keydown", async (event) => {
       const config = await myStorage.getConfig();
       const { hotKey, keyEscCloseCommentDialog } = config;
@@ -4926,7 +4894,6 @@
       if (event.key === "o") {
         const currentDom = document.activeElement;
         currentDom && doReadMore(currentDom);
-        myRecommendClosePosition.savePosition(currentDom);
       }
       keydownNextImage(event);
     });

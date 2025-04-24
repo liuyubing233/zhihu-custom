@@ -29,7 +29,6 @@ export const recommendHighPerformance = async () => {
         // 原页面滚动位置减去最后一个元素位置的差值，得出新的位置，解决闪烁问题
         window.scrollTo({ top: yDocument - (yLastPrev - nYLast) });
       }
-
       fnLog(`已开启高性能模式，删除${nIndex}条推荐内容`);
     }
   }, 100);

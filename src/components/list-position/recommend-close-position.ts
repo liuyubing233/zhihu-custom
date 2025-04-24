@@ -6,11 +6,12 @@ export const myRecommendClosePosition = {
   yDocument: 0,
   savePosition: function (currentItem: HTMLElement) {
     // 如果存在 .is-collapsed，则为展开操作，不进行保存
-    if (currentItem.querySelector('.is-collapsed')) return;
+    if (!currentItem.querySelector('.is-collapsed')) return;
     // 不是推荐列表则跳出
     if (!dom('.Topstory-recommend')) return;
     const topstoryItem = currentItem.classList.contains('TopstoryItem') ? currentItem : domP(currentItem, 'class', 'TopstoryItem');
     if (!topstoryItem || !topstoryItem.nextElementSibling) return;
+    console.log('savePosition', currentItem)
     const nextDom = topstoryItem.nextElementSibling as HTMLElement;
     if (nextDom.getBoundingClientRect().y > 0 && nextDom.getBoundingClientRect().y - window.innerHeight < 0) {
       // 保证收起时的下一项在页面内
@@ -24,9 +25,10 @@ export const myRecommendClosePosition = {
   doPosition: function (currentItem: HTMLElement) {
     if (this.prevY === 0 || this.yDocument === 0) return;
     // 如果不存在 .is-collapsed，则为展开后内容，不进行保存
-    if (!currentItem.querySelector('.is-collapsed')) return;
+    if (currentItem.querySelector('.is-collapsed')) return;
     // 不是推荐列表则跳出
     if (!dom('.Topstory-recommend')) return;
+    console.log('doPosition', currentItem)
     const topstoryItem = currentItem.classList.contains('TopstoryItem') ? currentItem : domP(currentItem, 'class', 'TopstoryItem');
     if (!topstoryItem || !topstoryItem.nextElementSibling) return;
     const nextDom = topstoryItem.nextElementSibling as HTMLElement;
