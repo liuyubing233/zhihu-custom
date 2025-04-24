@@ -69,22 +69,22 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
     if (target.classList.contains(CLASS_EDIT_TAG)) {
       const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
       const item = target.parentElement as HTMLElement;
-      const info = item.dataset.info || '';
+      const prevName = item.dataset.info || '';
       openExtra('changeBlockedUserTagName');
 
-      dom('[data-type="changeBlockedUserTagName"] .ctz-title')!.innerHTML = `修改标签名（原名称： ${info}）`;
-      (dom('[name="blocked-user-tag-name"]') as HTMLInputElement).value = info;
+      dom('[data-type="changeBlockedUserTagName"] .ctz-title')!.innerHTML = `修改标签名（原名称： ${prevName}）`;
+      (dom('[name="blocked-user-tag-name"]') as HTMLInputElement).value = prevName;
 
       // 确认
       dom('[name="confirm-change-blocked-user-tag-name"]')!.onclick = async function () {
         const nInfo = (dom('[name="blocked-user-tag-name"]') as HTMLInputElement).value;
-        const indexTag = blockedUsersTags.findIndex((i) => i === info);
+        const indexTag = blockedUsersTags.findIndex((i) => i === prevName);
         blockedUsersTags.splice(indexTag, 1, nInfo);
         blockedUsers.forEach((item) => {
           if (!item.tags) return;
-          const nIndex = (item.tags || []).findIndex((i) => i === info);
+          const nIndex = (item.tags || []).findIndex((i) => i === prevName);
           if (nIndex >= 0) {
-            item.tags.splice(indexTag, 1, nInfo);
+            item.tags.splice(nIndex, 1, nInfo);
           }
         });
         await myStorage.updateConfig({
