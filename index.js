@@ -1278,6 +1278,7 @@
       blockedUsers.forEach((i) => {
         if (i.id === info.id) {
           i.tags = chooseTags;
+          info.name = i.name;
         }
       });
       item.innerHTML = blackItemContent(info);

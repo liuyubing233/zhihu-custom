@@ -192,6 +192,7 @@ export const chooseBlockedUserTags = async (item: HTMLElement, needCover = true)
     blockedUsers.forEach((i) => {
       if (i.id === info.id) {
         i.tags = chooseTags;
+        info.name = i.name;
       }
     });
 
