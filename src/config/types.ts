@@ -235,6 +235,8 @@ export interface IConfigHidden {
   hiddenZhuanlanAuthorCard?: boolean;
   /** 隐藏文章底部推荐阅读 */
   hiddenZhuanlan?: boolean;
+  /** 隐藏回答内容「所属专栏」模块 */
+  hiddenAnswerBelongZhuanlan?: boolean;
 }
 
 /** 屏蔽内容模块默认配置 */
