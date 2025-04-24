@@ -281,8 +281,10 @@ import { INNER_CSS } from './web-resources';
     })
   );
 
-  window.addEventListener('keyup', async () => {
-    myRecommendClosePosition.doPosition(document.activeElement as HTMLElement);
+  window.addEventListener('keyup', async (event) => {
+    if (event.key === 'o') {
+      myRecommendClosePosition.doPosition(document.activeElement as HTMLElement);
+    }
   });
 
   window.addEventListener('keydown', async (event) => {

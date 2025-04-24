@@ -2858,13 +2858,12 @@
     dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute("content") || "")}</div>`);
     datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute("content") || "")}</div>`);
     dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute("content") || "")}</div>`);
-    insertAfter(
+    nodeBox.appendChild(
       domC("div", {
         className: CLASS_TIME_ITEM,
         innerHTML,
         style: "line-height: 24px;padding-top: 2px;font-size: 14px;color: rgb(132, 145, 165);"
-      }),
-      nodeBox
+      })
     );
   };
   var questionTimeout;
@@ -4903,8 +4902,10 @@
         canCopy();
       })
     );
-    window.addEventListener("keyup", async () => {
-      myRecommendClosePosition.doPosition(document.activeElement);
+    window.addEventListener("keyup", async (event) => {
+      if (event.key === "o") {
+        myRecommendClosePosition.doPosition(document.activeElement);
+      }
     });
     window.addEventListener("keydown", async (event) => {
       const config = await myStorage.getConfig();

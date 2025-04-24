@@ -1,5 +1,5 @@
 import { CLASS_TIME_ITEM } from '../misc';
-import { dom, domC, formatTime, insertAfter, myStorage } from '../tools';
+import { dom, domC, formatTime, myStorage } from '../tools';
 
 /** 问题添加时间 */
 export const updateItemTime = (contentItem: HTMLElement) => {
@@ -12,13 +12,12 @@ export const updateItemTime = (contentItem: HTMLElement) => {
   dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute('content') || '')}</div>`);
   datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute('content') || '')}</div>`);
   dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute('content') || '')}</div>`);
-  insertAfter(
+  nodeBox.appendChild(
     domC('div', {
       className: CLASS_TIME_ITEM,
       innerHTML,
       style: 'line-height: 24px;padding-top: 2px;font-size: 14px;color: rgb(132, 145, 165);',
-    }),
-    nodeBox
+    })
   );
 };
 
