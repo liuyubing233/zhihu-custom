@@ -25,20 +25,16 @@ export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
   `<span class="${CLASS_EDIT_USER_TAG}">✎</span>` +
   `<i class="${CLASS_REMOVE_BLOCK}">✕</i>`;
 
+const tagContext = (i: string) =>
+  i + `<span class="${CLASS_EDIT_TAG}">✎</span>` + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`;
+
 /** 初始化黑名单标签 */
 const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
   const prevConfig = await myStorage.getConfig();
 
   // 初始化黑名单标签列表
   const nodeBlockedUsersTags = dom(`#${ID_BLOCKED_USERS_TAGS}`, domMain)!;
-  nodeBlockedUsersTags.innerHTML = (prevConfig.blockedUsersTags || [])
-    .map(
-      (i) =>
-        `<span class="ctz-blocked-users-tag" data-info="${i}">${
-          i + `<span class="${CLASS_EDIT_TAG}">✎</span>` + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`
-        }</span>`
-    )
-    .join('');
+  nodeBlockedUsersTags.innerHTML = (prevConfig.blockedUsersTags || []).map((i) => `<span class="ctz-blocked-users-tag" data-info="${i}">${tagContext(i)}</span>`).join('');
   nodeBlockedUsersTags.onclick = async (event) => {
     const nConfig = await myStorage.getConfig();
     const { blockedUsers = [], blockedUsersTags = [] } = nConfig;
@@ -116,7 +112,7 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
     blockedUsersTags.push(value);
     await myStorage.updateConfigItem('blockedUsersTags', blockedUsersTags);
     const domItem = domC('span', {
-      innerHTML: value + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`,
+      innerHTML: tagContext(value),
       className: 'ctz-blocked-users-tag',
     });
     domItem.dataset.info = value;

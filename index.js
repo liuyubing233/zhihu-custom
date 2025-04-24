@@ -1155,12 +1155,11 @@
   var ID_BLOCK_LIST = "CTA_BLOCKED_USERS";
   var CLASS_BLACK_TAG = "ctz-black-tag";
   var blackItemContent = ({ id, name, tags = [] }) => `<a href="https://www.zhihu.com/people/${id}" target="_blank">${name}</a>` + tags.map((tag) => `<span class="ctz-in-blocked-user-tag">${tag}</span>`).join("") + `<span class="${CLASS_EDIT_USER_TAG}">✎</span><i class="${CLASS_REMOVE_BLOCK}">✕</i>`;
+  var tagContext = (i) => i + `<span class="${CLASS_EDIT_TAG}">✎</span><i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`;
   var initHTMLBlockedUserTags = async (domMain) => {
     const prevConfig = await myStorage.getConfig();
     const nodeBlockedUsersTags = dom(`#${ID_BLOCKED_USERS_TAGS}`, domMain);
-    nodeBlockedUsersTags.innerHTML = (prevConfig.blockedUsersTags || []).map(
-      (i) => `<span class="ctz-blocked-users-tag" data-info="${i}">${i + `<span class="${CLASS_EDIT_TAG}">✎</span><i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`}</span>`
-    ).join("");
+    nodeBlockedUsersTags.innerHTML = (prevConfig.blockedUsersTags || []).map((i) => `<span class="ctz-blocked-users-tag" data-info="${i}">${tagContext(i)}</span>`).join("");
     nodeBlockedUsersTags.onclick = async (event) => {
       const nConfig = await myStorage.getConfig();
       const { blockedUsers = [], blockedUsersTags = [] } = nConfig;
@@ -1226,7 +1225,7 @@
       blockedUsersTags.push(value);
       await myStorage.updateConfigItem("blockedUsersTags", blockedUsersTags);
       const domItem = domC("span", {
-        innerHTML: value + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`,
+        innerHTML: tagContext(value),
         className: "ctz-blocked-users-tag"
       });
       domItem.dataset.info = value;
