@@ -693,7 +693,7 @@
       }, time);
     };
   }
-  var formatTime = (t, f = "YYYY-MM-DD HH:mm:ss") => {
+  var formatTime = (t, f = "YYYY-MM-DD HH:mm:ss", showTimeFromNow = false) => {
     if (!t) return "";
     const d = new Date(t);
     const year = d.getFullYear();
@@ -703,7 +703,43 @@
     const min = d.getMinutes();
     const sec = d.getSeconds();
     const preArr = (num) => String(num).length !== 2 ? "0" + String(num) : String(num);
-    return f.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
+    const strDate = f.replace(/YYYY/g, String(year)).replace(/MM/g, preArr(month)).replace(/DD/g, preArr(day)).replace(/HH/g, preArr(hour)).replace(/mm/g, preArr(min)).replace(/ss/g, preArr(sec));
+    if (showTimeFromNow) {
+      return strDate + `（${timeFromNow(t)}）`;
+    }
+    return strDate;
+  };
+  var timeFromNow = (t) => {
+    if (!t) return "";
+    const d = new Date(t);
+    const year = d.getFullYear();
+    const day = d.getDate();
+    const hour = d.getHours();
+    const min = d.getMinutes();
+    const prevTimestamp = +new Date(t);
+    const now = /* @__PURE__ */ new Date();
+    const nowTimestamp = +now;
+    const nowYear = now.getFullYear();
+    const nowDay = now.getDate();
+    const nowHour = now.getHours();
+    const nowMin = now.getMinutes();
+    const fromNow = nowTimestamp - prevTimestamp;
+    if (fromNow <= 1e3 * 60) {
+      return "刚刚";
+    }
+    if (fromNow <= 1e3 * 60 * 60) {
+      return `${nowMin - min}分钟前`;
+    }
+    if (fromNow <= 1e3 * 60 * 60 * 24) {
+      return `${nowHour - hour}小时前`;
+    }
+    if (fromNow <= 1e3 * 60 * 60 * 24 * 31) {
+      return `${nowDay - day}天前`;
+    }
+    if (fromNow <= 1e3 * 60 * 60 * 24 * 365) {
+      return `${Math.floor(fromNow / 1e3 / 60 / 60 / 24 / 30)}个月前`;
+    }
+    return `${nowYear - year}年前`;
   };
   var THEMES = [
     { label: "浅色", value: 0 /* 浅色 */, background: "#fff", color: "#69696e" },
@@ -2828,14 +2864,14 @@
     const datePublished = contentItem.querySelector('[itemprop="datePublished"]');
     const dateModified = contentItem.querySelector('[itemprop="dateModified"]');
     let innerHTML = "";
-    dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute("content") || "")}</div>`);
-    datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute("content") || "")}</div>`);
-    dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute("content") || "")}</div>`);
+    dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute("content") || "", "YYYY-MM-DD HH:mm:ss", true)}</div>`);
+    datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute("content") || "", "YYYY-MM-DD HH:mm:ss", true)}</div>`);
+    dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute("content") || "", "YYYY-MM-DD HH:mm:ss", true)}</div>`);
     nodeBox.appendChild(
       domC("div", {
         className: CLASS_TIME_ITEM,
         innerHTML,
-        style: "line-height: 24px;padding-top: 2px;font-size: 14px;color: rgb(132, 145, 165);"
+        style: "line-height: 24px;padding-top: 2px;font-size: 13px;color: rgb(132, 145, 165);"
       })
     );
   };
@@ -2863,23 +2899,22 @@
     nodeBox && nodeBox.appendChild(
       domC("div", {
         className: "ctz-question-time",
-        innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,
+        innerHTML: `<div>创建时间：${formatTime(nodeCreated.content, "YYYY-MM-DD HH:mm:ss", true)}</div><div>最后修改时间：${formatTime(nodeModified.content, "YYYY-MM-DD HH:mm:ss", true)}</div>`,
         style: "color: rgb(132, 145, 165);"
       })
     );
     resetQuestionTime();
   };
-  var C_ARTICLE_TIME = "ctz-article-time";
   var addArticleTime = async () => {
     const { articleCreateTimeToTop } = await myStorage.getConfig();
-    const nodeT = dom(`.${C_ARTICLE_TIME}`);
+    const nodeT = dom(".ctz-article-time");
     if (nodeT) return;
     const nodeContentTime = dom(".ContentItem-time");
     const nodeBox = dom(".Post-Header");
     if (!articleCreateTimeToTop || !nodeContentTime || !nodeBox) return;
     nodeBox.appendChild(
       domC("span", {
-        className: C_ARTICLE_TIME,
+        className: "ctz-article-time",
         style: "line-height: 30px;color: rgb(132, 145, 165);",
         innerHTML: nodeContentTime.innerText || ""
       })
@@ -4229,13 +4264,13 @@
     [
       { label: "问题详情 - 替换回答顶部赞同数显示（实时显示点赞数量）", value: "topVote" },
       { label: "问题详情 - 一键获取回答链接", value: "copyAnswerLink" },
-      { label: "回答、文章顶部显示导出当前内容/回答按钮", value: "topExportContent" }
+      { label: "回答和文章顶部显示「导出当前内容/回答按钮」", value: "topExportContent" }
     ],
     [
-      { label: "用户主页 - 内容发布、修改时间", value: "userHomeContentTimeTop" },
-      { label: "列表 - 发布、修改时间", value: "listItemCreatedAndModifiedTime" },
-      { label: "问题详情 - 问题 - 发布、修改时间", value: "questionCreatedAndModifiedTime" },
-      { label: "问题详情 - 回答 - 发布、修改时间", value: "answerItemCreatedAndModifiedTime" },
+      { label: "用户主页 - 内容发布和修改时间", value: "userHomeContentTimeTop" },
+      { label: "列表 - 发布和修改时间", value: "listItemCreatedAndModifiedTime" },
+      { label: "问题详情 - 问题 - 发布和修改时间", value: "questionCreatedAndModifiedTime" },
+      { label: "问题详情 - 回答 - 发布和修改时间", value: "answerItemCreatedAndModifiedTime" },
       { label: "文章 - 发布时间", value: "articleCreateTimeToTop" }
     ],
     [

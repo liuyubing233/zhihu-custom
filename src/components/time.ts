@@ -9,14 +9,14 @@ export const updateItemTime = (contentItem: HTMLElement) => {
   const datePublished = contentItem.querySelector('[itemprop="datePublished"]');
   const dateModified = contentItem.querySelector('[itemprop="dateModified"]');
   let innerHTML = '';
-  dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute('content') || '')}</div>`);
-  datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute('content') || '')}</div>`);
-  dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute('content') || '')}</div>`);
+  dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute('content') || '', 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
+  datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute('content') || '', 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
+  dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute('content') || '', 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
   nodeBox.appendChild(
     domC('div', {
       className: CLASS_TIME_ITEM,
       innerHTML,
-      style: 'line-height: 24px;padding-top: 2px;font-size: 14px;color: rgb(132, 145, 165);',
+      style: 'line-height: 24px;padding-top: 2px;font-size: 13px;color: rgb(132, 145, 165);',
     })
   );
 };
@@ -54,25 +54,24 @@ export const addQuestionTime = async () => {
     nodeBox.appendChild(
       domC('div', {
         className: 'ctz-question-time',
-        innerHTML: `<div>创建时间：${formatTime(nodeCreated.content)}</div><div>最后修改时间：${formatTime(nodeModified.content)}</div>`,
+        innerHTML: `<div>创建时间：${formatTime(nodeCreated.content, 'YYYY-MM-DD HH:mm:ss', true)}</div><div>最后修改时间：${formatTime(nodeModified.content, 'YYYY-MM-DD HH:mm:ss', true)}</div>`,
         style: 'color: rgb(132, 145, 165);',
       })
     );
   resetQuestionTime();
 };
 
-const C_ARTICLE_TIME = 'ctz-article-time';
 /** 文章发布时间置顶 */
 export const addArticleTime = async () => {
   const { articleCreateTimeToTop } = await myStorage.getConfig();
-  const nodeT = dom(`.${C_ARTICLE_TIME}`);
+  const nodeT = dom('.ctz-article-time');
   if (nodeT) return;
   const nodeContentTime = dom('.ContentItem-time');
   const nodeBox = dom('.Post-Header');
   if (!articleCreateTimeToTop || !nodeContentTime || !nodeBox) return;
   nodeBox.appendChild(
     domC('span', {
-      className: C_ARTICLE_TIME,
+      className: 'ctz-article-time',
       style: 'line-height: 30px;color: rgb(132, 145, 165);',
       innerHTML: nodeContentTime.innerText || '',
     })

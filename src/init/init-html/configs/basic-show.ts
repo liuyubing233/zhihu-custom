@@ -25,13 +25,13 @@ export const BASIC_SHOW: ICommonContent[][] = [
   [
     { label: '问题详情 - 替换回答顶部赞同数显示（实时显示点赞数量）', value: 'topVote' },
     { label: '问题详情 - 一键获取回答链接', value: 'copyAnswerLink' },
-    { label: '回答、文章顶部显示导出当前内容/回答按钮', value: 'topExportContent' },
+    { label: '回答和文章顶部显示「导出当前内容/回答按钮」', value: 'topExportContent' },
   ],
   [
-    { label: '用户主页 - 内容发布、修改时间', value: 'userHomeContentTimeTop' },
-    { label: '列表 - 发布、修改时间', value: 'listItemCreatedAndModifiedTime' },
-    { label: '问题详情 - 问题 - 发布、修改时间', value: 'questionCreatedAndModifiedTime' },
-    { label: '问题详情 - 回答 - 发布、修改时间', value: 'answerItemCreatedAndModifiedTime' },
+    { label: '用户主页 - 内容发布和修改时间', value: 'userHomeContentTimeTop' },
+    { label: '列表 - 发布和修改时间', value: 'listItemCreatedAndModifiedTime' },
+    { label: '问题详情 - 问题 - 发布和修改时间', value: 'questionCreatedAndModifiedTime' },
+    { label: '问题详情 - 回答 - 发布和修改时间', value: 'answerItemCreatedAndModifiedTime' },
     { label: '文章 - 发布时间', value: 'articleCreateTimeToTop' },
   ],
   [
