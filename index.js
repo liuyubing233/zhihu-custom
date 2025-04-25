@@ -2898,7 +2898,7 @@
     nodeBox && nodeBox.appendChild(
       domC("div", {
         className: "ctz-question-time",
-        innerHTML: `<div>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</div>` + (modified && modified !== create && `<div>最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</div>`),
+        innerHTML: `<div>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</div>` + (modified && modified !== create ? `<div>最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</div>` : ""),
         style: "color: rgb(132, 145, 165);"
       })
     );
