@@ -713,28 +713,22 @@
     if (!t) return "";
     const d = new Date(t);
     const year = d.getFullYear();
-    const day = d.getDate();
-    const hour = d.getHours();
-    const min = d.getMinutes();
     const prevTimestamp = +new Date(t);
     const now = /* @__PURE__ */ new Date();
     const nowTimestamp = +now;
     const nowYear = now.getFullYear();
-    const nowDay = now.getDate();
-    const nowHour = now.getHours();
-    const nowMin = now.getMinutes();
     const fromNow = nowTimestamp - prevTimestamp;
     if (fromNow <= 1e3 * 60) {
       return "刚刚";
     }
     if (fromNow <= 1e3 * 60 * 60) {
-      return `${nowMin - min}分钟前`;
+      return `${Math.floor(fromNow / 1e3 / 60)}分钟前`;
     }
     if (fromNow <= 1e3 * 60 * 60 * 24) {
-      return `${nowHour - hour}小时前`;
+      return `${Math.floor(fromNow / 1e3 / 60 / 60)}小时前`;
     }
     if (fromNow <= 1e3 * 60 * 60 * 24 * 31) {
-      return `${nowDay - day}天前`;
+      return `${Math.floor(fromNow / 1e3 / 60 / 60 / 24)}天前`;
     }
     if (fromNow <= 1e3 * 60 * 60 * 24 * 365) {
       return `${Math.floor(fromNow / 1e3 / 60 / 60 / 24 / 30)}个月前`;
@@ -2200,7 +2194,7 @@
         {
           label: "回答底部发布编辑时间（保留IP）",
           value: "hiddenAnswerItemTimeButHaveIP",
-          css: ".Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}"
+          css: ".Question-main .ContentItem-time>a,.RichContent .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}"
         },
         {
           label: "回答底部「继续追问」模块",
@@ -2864,9 +2858,12 @@
     const datePublished = contentItem.querySelector('[itemprop="datePublished"]');
     const dateModified = contentItem.querySelector('[itemprop="dateModified"]');
     let innerHTML = "";
-    dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute("content") || "", "YYYY-MM-DD HH:mm:ss", true)}</div>`);
-    datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute("content") || "", "YYYY-MM-DD HH:mm:ss", true)}</div>`);
-    dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute("content") || "", "YYYY-MM-DD HH:mm:ss", true)}</div>`);
+    const create = dateCreated ? dateCreated.content || "" : "";
+    const published = datePublished ? datePublished.content || "" : "";
+    const modified = dateModified ? dateModified.content || "" : "";
+    create && (innerHTML += `<div>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</div>`);
+    published && (innerHTML += `<div>发布时间：${formatTime(published, "YYYY-MM-DD HH:mm:ss", true)}</div>`);
+    modified && modified !== published && modified !== create && (innerHTML += `<div>最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</div>`);
     nodeBox.appendChild(
       domC("div", {
         className: CLASS_TIME_ITEM,
@@ -2896,10 +2893,12 @@
       resetQuestionTime();
       return;
     }
+    const create = nodeCreated.content || "";
+    const modified = nodeModified.content || "";
     nodeBox && nodeBox.appendChild(
       domC("div", {
         className: "ctz-question-time",
-        innerHTML: `<div>创建时间：${formatTime(nodeCreated.content, "YYYY-MM-DD HH:mm:ss", true)}</div><div>最后修改时间：${formatTime(nodeModified.content, "YYYY-MM-DD HH:mm:ss", true)}</div>`,
+        innerHTML: `<div>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</div>` + (modified && modified !== create && `<div>最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</div>`),
         style: "color: rgb(132, 145, 165);"
       })
     );

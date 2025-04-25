@@ -445,7 +445,7 @@ const HIDDEN_ITEM_ANSWER: IHiddenItem = {
       {
         label: '回答底部发布编辑时间（保留IP）',
         value: 'hiddenAnswerItemTimeButHaveIP',
-        css: '.Question-main .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}',
+        css: '.Question-main .ContentItem-time>a,.RichContent .ContentItem-time>a{display: none;}.Question-main .ContentItem-time:empty{display: none;margin: 0;}',
       },
       {
         label: '回答底部「继续追问」模块',

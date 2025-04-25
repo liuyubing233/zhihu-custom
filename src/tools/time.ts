@@ -34,17 +34,11 @@ export const timeFromNow = (t: string | number) => {
   if (!t) return '';
   const d = new Date(t);
   const year = d.getFullYear();
-  const day = d.getDate();
-  const hour = d.getHours();
-  const min = d.getMinutes();
 
   const prevTimestamp = +new Date(t);
   const now = new Date();
   const nowTimestamp = +now;
   const nowYear = now.getFullYear();
-  const nowDay = now.getDate();
-  const nowHour = now.getHours();
-  const nowMin = now.getMinutes();
 
   const fromNow = nowTimestamp - prevTimestamp;
 
@@ -55,17 +49,17 @@ export const timeFromNow = (t: string | number) => {
 
   // 一小时内
   if (fromNow <= 1000 * 60 * 60) {
-    return `${nowMin - min}分钟前`;
+    return `${Math.floor(fromNow / 1000 / 60)}分钟前`;
   }
 
   // 一天内
   if (fromNow <= 1000 * 60 * 60 * 24) {
-    return `${nowHour - hour}小时前`;
+    return `${Math.floor(fromNow / 1000 / 60 / 60)}小时前`;
   }
 
   // 一个月内
   if (fromNow <= 1000 * 60 * 60 * 24 * 31) {
-    return `${nowDay - day}天前`;
+    return `${Math.floor(fromNow / 1000 / 60 / 60 / 24)}天前`;
   }
 
   // 一年内

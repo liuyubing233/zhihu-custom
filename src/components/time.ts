@@ -5,13 +5,16 @@ import { dom, domC, formatTime, myStorage } from '../tools';
 export const updateItemTime = (contentItem: HTMLElement) => {
   const nodeBox = contentItem.querySelector('.ContentItem-meta');
   if (!nodeBox || contentItem.querySelector(`.${CLASS_TIME_ITEM}`)) return;
-  const dateCreated = contentItem.querySelector('[itemprop="dateCreated"]');
-  const datePublished = contentItem.querySelector('[itemprop="datePublished"]');
-  const dateModified = contentItem.querySelector('[itemprop="dateModified"]');
+  const dateCreated = contentItem.querySelector('[itemprop="dateCreated"]') as HTMLMetaElement;
+  const datePublished = contentItem.querySelector('[itemprop="datePublished"]') as HTMLMetaElement;
+  const dateModified = contentItem.querySelector('[itemprop="dateModified"]') as HTMLMetaElement;
   let innerHTML = '';
-  dateCreated && (innerHTML += `<div>创建时间：${formatTime(dateCreated.getAttribute('content') || '', 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
-  datePublished && (innerHTML += `<div>发布时间：${formatTime(datePublished.getAttribute('content') || '', 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
-  dateModified && (innerHTML += `<div>最后修改时间：${formatTime(dateModified.getAttribute('content') || '', 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
+  const create = dateCreated ? dateCreated.content || '' : '';
+  const published = datePublished ? datePublished.content || '' : '';
+  const modified = dateModified ? dateModified.content || '' : '';
+  create && (innerHTML += `<div>创建时间：${formatTime(create, 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
+  published && (innerHTML += `<div>发布时间：${formatTime(published, 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
+  modified && modified !== published && modified !== create && (innerHTML += `<div>最后修改时间：${formatTime(modified, 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
   nodeBox.appendChild(
     domC('div', {
       className: CLASS_TIME_ITEM,
@@ -50,11 +53,16 @@ export const addQuestionTime = async () => {
     resetQuestionTime();
     return;
   }
+  const create = nodeCreated.content || '';
+  const modified = nodeModified.content || '';
+
   nodeBox &&
     nodeBox.appendChild(
       domC('div', {
         className: 'ctz-question-time',
-        innerHTML: `<div>创建时间：${formatTime(nodeCreated.content, 'YYYY-MM-DD HH:mm:ss', true)}</div><div>最后修改时间：${formatTime(nodeModified.content, 'YYYY-MM-DD HH:mm:ss', true)}</div>`,
+        innerHTML:
+          `<div>创建时间：${formatTime(create, 'YYYY-MM-DD HH:mm:ss', true)}</div>` +
+          (modified && modified !== create && `<div>最后修改时间：${formatTime(modified, 'YYYY-MM-DD HH:mm:ss', true)}</div>`),
         style: 'color: rgb(132, 145, 165);',
       })
     );
