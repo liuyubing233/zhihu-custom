@@ -1,5 +1,5 @@
-import { CLASS_TIME_ITEM } from '../misc';
-import { dom, domC, formatTime, myStorage } from '../tools';
+import { CLASS_TIME_ITEM } from '../../misc';
+import { dom, domC, formatTime, myStorage } from '../../tools';
 
 /** 问题添加时间 */
 export const updateItemTime = (contentItem: HTMLElement) => {
@@ -12,14 +12,14 @@ export const updateItemTime = (contentItem: HTMLElement) => {
   const create = dateCreated ? dateCreated.content || '' : '';
   const published = datePublished ? datePublished.content || '' : '';
   const modified = dateModified ? dateModified.content || '' : '';
-  create && (innerHTML += `<div>创建时间：${formatTime(create, 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
-  published && (innerHTML += `<div>发布时间：${formatTime(published, 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
-  modified && modified !== published && modified !== create && (innerHTML += `<div>最后修改时间：${formatTime(modified, 'YYYY-MM-DD HH:mm:ss', true)}</div>`);
+  create && (innerHTML += `<span>创建时间：${formatTime(create, 'YYYY-MM-DD HH:mm:ss', true)}</span>`);
+  published && (innerHTML += `<span>发布时间：${formatTime(published, 'YYYY-MM-DD HH:mm:ss', true)}</span>`);
+  modified && modified !== published && modified !== create && (innerHTML += `<span>｜最后修改时间：${formatTime(modified, 'YYYY-MM-DD HH:mm:ss', true)}</span>`);
   nodeBox.appendChild(
     domC('div', {
       className: CLASS_TIME_ITEM,
       innerHTML,
-      style: 'line-height: 24px;padding-top: 2px;font-size: 13px;color: rgb(132, 145, 165);',
+      style: 'line-height: 24px;padding-top: 2px;font-size: 13px;color: rgb(132, 145, 165);display:inline-block;',
     })
   );
 };
@@ -61,8 +61,8 @@ export const addQuestionTime = async () => {
       domC('div', {
         className: 'ctz-question-time',
         innerHTML:
-          `<div>创建时间：${formatTime(create, 'YYYY-MM-DD HH:mm:ss', true)}</div>` +
-          (modified && modified !== create ? `<div>最后修改时间：${formatTime(modified, 'YYYY-MM-DD HH:mm:ss', true)}</div>` : ''),
+          `<span>创建时间：${formatTime(create, 'YYYY-MM-DD HH:mm:ss', true)}</span>` +
+          (modified && modified !== create ? `<span>｜最后修改时间：${formatTime(modified, 'YYYY-MM-DD HH:mm:ss', true)}</span>` : ''),
         style: 'color: rgb(132, 145, 165);',
       })
     );

@@ -2861,14 +2861,14 @@
     const create = dateCreated ? dateCreated.content || "" : "";
     const published = datePublished ? datePublished.content || "" : "";
     const modified = dateModified ? dateModified.content || "" : "";
-    create && (innerHTML += `<div>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</div>`);
-    published && (innerHTML += `<div>发布时间：${formatTime(published, "YYYY-MM-DD HH:mm:ss", true)}</div>`);
-    modified && modified !== published && modified !== create && (innerHTML += `<div>最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</div>`);
+    create && (innerHTML += `<span>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</span>`);
+    published && (innerHTML += `<span>发布时间：${formatTime(published, "YYYY-MM-DD HH:mm:ss", true)}</span>`);
+    modified && modified !== published && modified !== create && (innerHTML += `<span>｜最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</span>`);
     nodeBox.appendChild(
       domC("div", {
         className: CLASS_TIME_ITEM,
         innerHTML,
-        style: "line-height: 24px;padding-top: 2px;font-size: 13px;color: rgb(132, 145, 165);"
+        style: "line-height: 24px;padding-top: 2px;font-size: 13px;color: rgb(132, 145, 165);display:inline-block;"
       })
     );
   };
@@ -2898,7 +2898,7 @@
     nodeBox && nodeBox.appendChild(
       domC("div", {
         className: "ctz-question-time",
-        innerHTML: `<div>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</div>` + (modified && modified !== create ? `<div>最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</div>` : ""),
+        innerHTML: `<span>创建时间：${formatTime(create, "YYYY-MM-DD HH:mm:ss", true)}</span>` + (modified && modified !== create ? `<span>｜最后修改时间：${formatTime(modified, "YYYY-MM-DD HH:mm:ss", true)}</span>` : ""),
         style: "color: rgb(132, 145, 165);"
       })
     );
@@ -2921,37 +2921,6 @@
     setTimeout(() => {
       addArticleTime();
     }, 500);
-  };
-  var updateTopVote = async (contentItem) => {
-    const nodeItemMeta = contentItem.querySelector(".ContentItem-meta");
-    const nodeVote = contentItem.querySelector('[itemprop="upvoteCount"]');
-    const { topVote } = await myStorage.getConfig();
-    if (!nodeVote || !topVote || !nodeItemMeta) return;
-    const vote = nodeVote.content;
-    if (+vote === 0) return;
-    const className = "ctz-top-vote";
-    const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
-    const innerHTML = `${vote} 人赞同`;
-    if (domVotePrev) {
-      domVotePrev.innerHTML = innerHTML;
-    } else {
-      const domVote = domC("div", {
-        className,
-        innerHTML,
-        style: "font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0 0;"
-      });
-      nodeItemMeta.appendChild(domVote);
-      const metaObserver = new MutationObserver(() => {
-        updateTopVote(contentItem);
-      });
-      metaObserver.observe(nodeVote, {
-        attributes: true,
-        childList: false,
-        characterData: false,
-        characterDataOldValue: false,
-        subtree: false
-      });
-    }
   };
   var CLASS_VIDEO_ONE = ".css-1h1xzpn";
   var CLASS_VIDEO_TWO = ".VideoAnswerPlayer-video";
@@ -3026,6 +2995,37 @@
       }
       return originalPlay.apply(this, arguments);
     };
+  };
+  var updateTopVote = async (contentItem) => {
+    const nodeItemMeta = contentItem.querySelector(".ContentItem-meta");
+    const nodeVote = contentItem.querySelector('[itemprop="upvoteCount"]');
+    const { topVote } = await myStorage.getConfig();
+    if (!nodeVote || !topVote || !nodeItemMeta) return;
+    const vote = nodeVote.content;
+    if (+vote === 0) return;
+    const className = "ctz-top-vote";
+    const domVotePrev = nodeItemMeta.querySelector(`.${className}`);
+    const innerHTML = `${vote} 人赞同`;
+    if (domVotePrev) {
+      domVotePrev.innerHTML = innerHTML;
+    } else {
+      const domVote = domC("div", {
+        className,
+        innerHTML,
+        style: "font-size: 13px;padding-top: 2px;color: rgb(132, 145, 165);"
+      });
+      nodeItemMeta.appendChild(domVote);
+      const metaObserver = new MutationObserver(() => {
+        updateTopVote(contentItem);
+      });
+      metaObserver.observe(nodeVote, {
+        attributes: true,
+        childList: false,
+        characterData: false,
+        characterDataOldValue: false,
+        subtree: false
+      });
+    }
   };
   var timeout;
   var fnReplaceZhidaToSearch = async (domFind = document.body, index2 = 0) => {

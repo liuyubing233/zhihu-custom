@@ -1,4 +1,4 @@
-import { domC, myStorage } from "../tools";
+import { domC, myStorage } from "../../tools";
 
 /** 内容顶部显示赞同数 nodeItem className: ContentItem-meta */
 export const updateTopVote = async (contentItem: HTMLElement) => {
@@ -17,7 +17,7 @@ export const updateTopVote = async (contentItem: HTMLElement) => {
     const domVote = domC('div', {
       className,
       innerHTML,
-      style: 'font-size: 14px;padding-top: 2px;color: rgb(132, 145, 165);margin: 8px 0 0;',
+      style: 'font-size: 13px;padding-top: 2px;color: rgb(132, 145, 165);',
     });
     nodeItemMeta.appendChild(domVote);
     const metaObserver = new MutationObserver(() => {
