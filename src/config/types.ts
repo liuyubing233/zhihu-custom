@@ -237,6 +237,10 @@ export interface IConfigHidden {
   hiddenZhuanlan?: boolean;
   /** 隐藏回答内容「所属专栏」模块 */
   hiddenAnswerBelongZhuanlan?: boolean;
+  /** 隐藏回答人下方标签 */
+  hiddenAnswerDownTags?: boolean;
+  /** 隐藏回答「谢邀」标签 */
+  hiddenThanksInvite?: boolean;
 }
 
 /** 屏蔽内容模块默认配置 */

@@ -332,7 +332,7 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
 /** 回答 */
 const HIDDEN_ITEM_ANSWER: IHiddenItem = {
   key: 'CTZ_HIDDEN_ANSWER',
-  name: '问答页面/回答内容',
+  name: '问答页面',
   desc: '只在问答页面/回答内容中隐藏相应内容',
   content: [
     [
@@ -426,14 +426,14 @@ const HIDDEN_ITEM_ANSWER: IHiddenItem = {
         css: '.AnswerItem .css-dvccr2{display: none;}',
       },
       {
-        label: '回答内容赞赏按钮',
-        value: 'hiddenReward',
-        css: '.Reward{display: none!important;}',
+        label: '回答人下方标签',
+        value: 'hiddenAnswerDownTags',
+        css: '.css-9x8rdd{display: none;margin: 0;}',
       },
       {
-        label: '回答内容618红包链接',
-        value: 'hidden618HongBao',
-        css: '.MCNLinkCard[data-mcn-source="淘宝"],.MCNLinkCard[data-mcn-source="京东"],.MCNLinkCard[data-mcn-source="知乎"]{display:none;}',
+        label: '回答「谢邀」标签',
+        value: 'hiddenThanksInvite',
+        css: '.css-1l65l8l{display: none;margin: 0;}',
       },
     ],
     [
@@ -455,8 +455,18 @@ const HIDDEN_ITEM_ANSWER: IHiddenItem = {
       {
         label: '回答内容「所属专栏」模块',
         value: 'hiddenAnswerBelongZhuanlan',
-        css: '.css-3ibr72,.css-n4rzfz{display: none!important;}'
-      }
+        css: '.css-3ibr72,.css-n4rzfz{display: none!important;}',
+      },
+      {
+        label: '回答内容赞赏按钮',
+        value: 'hiddenReward',
+        css: '.Reward{display: none!important;}',
+      },
+      {
+        label: '回答内容618红包链接',
+        value: 'hidden618HongBao',
+        css: '.MCNLinkCard[data-mcn-source="淘宝"],.MCNLinkCard[data-mcn-source="京东"],.MCNLinkCard[data-mcn-source="知乎"]{display:none;}',
+      },
     ],
     [
       {
@@ -496,7 +506,7 @@ const HIDDEN_ITEM_ANSWER: IHiddenItem = {
 /** 文章专栏 */
 const HIDDEN_ITEM_ARTICLE: IHiddenItem = {
   key: 'CTZ_HIDDEN_ARTICLE',
-  name: '文章页面/文章内容',
+  name: '文章专栏',
   desc: '只在文章页面/文章内容中隐藏相应内容',
   content: [
     [
