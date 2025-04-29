@@ -25,7 +25,7 @@ const fnChangeMenu = (target: HTMLElement, domMain: HTMLElement) => {
   if (!chooseId) return;
   domA('#CTZ_DIALOG_MENU>div', domMain).forEach((item) => item.classList.remove('target'));
   domA('#CTZ_DIALOG_MAIN>div', domMain).forEach((item) => (item.style.display = chooseId === item.id ? 'block' : 'none'));
-  domA('#CTZ_DIALOG_RIGHT_TITLE>div', domMain).forEach((item) => (item.style.display = currentHref === item.dataset.id ? 'block' : 'none'));
+  domA('.ctz-right-title-content>div', domMain).forEach((item) => (item.style.display = currentHref === item.dataset.id ? 'block' : 'none'));
   target.classList.add('target');
 };
 
@@ -43,7 +43,7 @@ export const createHTMLRightTitle = (domMain: HTMLElement = document.body) => {
       href: itemDom.dataset.href || '',
     };
   });
-  dom('#CTZ_DIALOG_RIGHT_TITLE', domMain)!.innerHTML = arr
+  dom('.ctz-right-title-content', domMain)!.innerHTML = arr
     .map(
       ({ name, commit, href }, index) => `<div data-id="${href}" style="display: ${(!hash && index === 0) || hash === href ? 'block' : 'none'}">${name}<span>${commit}</span></div>`
     )

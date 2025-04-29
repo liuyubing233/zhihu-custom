@@ -24,8 +24,7 @@
     <div id="CTZ_DIALOG_LEFT">
       <div id="CTZ_LEFT_BUTTONS">
         <button class="ctz-button" name="dialogClose">✕</button>
-        <button class="ctz-button" name="dialogBig">+</button>
-        <div class="ctz-version"></div>
+        <button class="ctz-button" name="dialogBig">⇵</button>
       </div>
       <div id="CTZ_DIALOG_MENU">
         <div data-href="#CTZ_BASIS">通用</div>
@@ -37,7 +36,6 @@
         <div data-href="#CTZ_BLACKLIST" data-commit="更改后请重新刷新页面, 需开启接口拦截">黑名单</div>
         <div data-href="#CTZ_VERSION">页面尺寸</div>
         <div data-href="#CTZ_THEME">颜色</div>
-        <div data-href="#CTZ_CONFIG">配置操作</div>
         <div data-href="#CTZ_HISTORY_LIST" data-commit="最多缓存500条, 包含已过滤项">推荐列表缓存</div>
         <div data-href="#CTZ_HISTORY_VIEW" data-commit="最多缓存500条">浏览历史记录</div>
         <div data-href="#CTZ_DEFAULT" data-commit="修改器自带功能, 不需要额外开启">默认功能</div>
@@ -45,7 +43,10 @@
     </div>
 
     <div id="CTZ_DIALOG_RIGHT">
-      <div id="CTZ_DIALOG_RIGHT_TITLE"></div>
+      <div id="CTZ_DIALOG_RIGHT_TITLE">
+        <div class="ctz-right-title-content"></div>
+        <div class="ctz-version" style="font-size: 12px"></div>
+      </div>
 
       <div id="CTZ_DIALOG_MAIN">
         <!-- 基础设置 -->
@@ -62,23 +63,31 @@
               <div class="ctz-form-box-item">
                 <div></div>
                 <div class="ctz-to-zhihu">
-                  <a href="https://www.zhihu.com" target="_self" class="ctz-button" style="margin-right: 8px;width: 100px;">返回知乎主页</a>
+                  <a href="https://www.zhihu.com" target="_self" class="ctz-button" style="margin-right: 8px; width: 100px">返回知乎主页</a>
                 </div>
               </div>
               <div class="ctz-form-box-item">
                 <div></div>
                 <div class="ctz-default-bottom">
-                  <a href="https://github.com/liuyubing233/zhihu-custom" target="_blank" class="ctz-button" style="width: 100px">Github⭐</a>
-                  <a
-                    href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8"
-                    target="_blank"
-                    class="ctz-button"
-                    style="width: 100px"
-                  >
+                  <a href="https://github.com/liuyubing233/zhihu-custom" target="_blank" class="ctz-button">Github⭐</a>
+                  <a href="https://greasyfork.org/zh-CN/scripts/423404-%E7%9F%A5%E4%B9%8E%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9%E5%99%A8" target="_blank" class="ctz-button">
                     GreasyFork
                   </a>
-                  <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank" class="ctz-button" style="width: 100px">修改器介绍</a>
-                  <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank" class="ctz-button" style="width: 100px">更新日志</a>
+                  <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/README.md" target="_blank" class="ctz-button">修改器介绍</a>
+                  <a href="https://github.com/liuyubing233/zhihu-custom/blob/main/CHANGELOG.md" target="_blank" class="ctz-button">更新日志</a>
+                </div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div></div>
+                <div class="ctz-config-buttons">
+                  <button class="ctz-button" name="useSimple">启用极简模式</button>
+                  <button class="ctz-button" name="configReset">恢复默认配置</button>
+                  <button class="ctz-button" name="configExport">配置导出</button>
+                  <!-- <button class="ctz-button" name="configRemove">清空配置</button> -->
+                  <div id="IMPORT_BY_FILE">
+                    <input type="file" class="ctz-input-config-import" accept=".txt" />
+                    <button class="ctz-button" name="configImport">配置导入</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -95,7 +104,7 @@
             <div class="ctz-form-box">
               <div class="ctz-form-box-item">
                 <div>
-                  快捷键打开修改器
+                  使用快捷键打开修改器
                   <span class="key-shadow">></span>
                   (<span class="key-shadow">Shift</span>+<span class="key-shadow">.</span>)
                 </div>
@@ -129,9 +138,18 @@
             显示修改
             <span class="ctz-commit" style="color: red">修改后刷新页面生效</span>
           </div>
-
           <div id="CTZ_BASIC_SHOW_SELECT" class="ctz-form-box"></div>
           <div id="CTZ_BASIS_SHOW_CONTENT"></div>
+
+          <div class="ctz-title">自定义样式</div>
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div style="align-items: start; padding: 0; text-align: right">
+                <textarea name="textStyleCustom" placeholder="内容为CSS" style="resize: vertical; width: 100%;"></textarea>
+                <button class="ctz-button" name="styleCustom">确定</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 悬浮模块 -->
@@ -466,35 +484,6 @@
           </div>
         </div>
 
-        <!-- 配置操作 -->
-        <div id="CTZ_CONFIG" style="display: none">
-          <div class="ctz-form-box">
-            <div class="ctz-form-box-item">
-              <div></div>
-              <div class="ctz-config-buttons">
-                <button class="ctz-button" name="useSimple">启用极简模式</button>
-                <button class="ctz-button" name="configReset">恢复默认配置</button>
-                <button class="ctz-button" name="configExport">配置导出</button>
-                <!-- <button class="ctz-button" name="configRemove">清空配置</button> -->
-                <div id="IMPORT_BY_FILE">
-                  <input type="file" class="ctz-input-config-import" accept=".txt" />
-                  <button class="ctz-button" name="configImport">配置导入</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="ctz-title">自定义样式</div>
-          <div class="ctz-form-box">
-            <div class="ctz-form-box-item">
-              <div style="align-items: start; padding: 0; text-align: right">
-                <textarea name="textStyleCustom" placeholder="内容为CSS"></textarea>
-                <button class="ctz-button" name="styleCustom">确定</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- 默认功能 -->
         <div id="CTZ_DEFAULT" style="display: none">
           <div id="CTZ_DEFAULT_SELF" class="ctz-form-box"></div>
@@ -529,7 +518,7 @@
   <div data-type="chooseBlockedUserTags">
     <div class="ctz-title">选择标签</div>
     <div class="ctz-choose-blocked-user-tags"></div>
-    <div style="padding: 0 14px 6px;">
+    <div style="padding: 0 14px 6px">
       <input name="inputCreateNewTag" type="text" placeholder="添加新的标签，输入后回车添加（不区分大小写）" style="width: 300px" />
     </div>
     <div class="ctz-extra-footer">

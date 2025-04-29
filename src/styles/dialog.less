@@ -130,12 +130,16 @@
   font-size: 16px;
   font-weight: 600;
   box-sizing: border-box;
-  padding-left: 18px;
+  padding: 0 18px;
   border-bottom: 1px solid @gray02;
-  div > span {
-    font-size: 12px;
-    color: @red1;
-    padding-left: 8px;
+  display: flex;
+  .ctz-right-title-content {
+    flex: 1;
+    div > span {
+      font-size: 12px;
+      color: @red1;
+      padding-left: 8px;
+    }
   }
 }
 
@@ -162,17 +166,12 @@
   }
 }
 
-.ctz-default-bottom {
-  a {
+.ctz-default-bottom,
+.ctz-config-buttons {
+  a, button {
     margin-left: 8px;
+    width: 100px;
   }
-}
-
-.ctz-version {
-  float: right;
-  margin-right: 12px;
-  font-size: 12px;
-  line-height: 20px;
 }
 
 /** 打开关闭抽屉按钮 */
@@ -206,16 +205,13 @@
 #CTZ_LEFT_BUTTONS {
   margin: 8px 0 0 8px;
   button {
-    height: 20px;
-    width: 20px;
-    border-radius: 6px;
+    height: 22px;
+    border-radius: 4px;
     padding: 0;
     border: 0;
     font-size: 12px;
-    transform: scale(0.8);
     color: #fff;
-    line-height: 20px;
-    min-width: 0 !important;
+    width: 70px;
   }
   [name='dialogClose'] {
     background: #fe6059;
@@ -224,7 +220,7 @@
 
   [name='dialogBig'] {
     background: #27c93f;
-    .Hover(#fff, @green3);
+    .Hover(#fff, @green1);
   }
 }
 

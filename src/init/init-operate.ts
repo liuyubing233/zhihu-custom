@@ -145,7 +145,7 @@ const myButtonOperation: Record<string, Function> = {
     const nodeDialog = domById('CTZ_DIALOG')!;
     const isHeight = nodeDialog.style.height === '100vh';
     nodeDialog.style.height = isHeight ? '' : '100vh';
-    dom(`button[name="dialogBig"]`)!.innerText = isHeight ? '+' : '-';
+    dom(`button[name="dialogBig"]`)!.innerText = isHeight ? '⇵' : '-';
   },
   // 启用极简模式
   useSimple: async () => {

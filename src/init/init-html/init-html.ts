@@ -16,7 +16,7 @@ import { BASIC_SHOW, DEFAULT_FUNCTION, FILTER_LIST, HIGH_PERFORMANCE } from './c
 export const initHTML = () => {
   const nDomMain = domC('div', { id: 'CTZ_MAIN', innerHTML: INNER_HTML });
   // 版本号
-  dom('.ctz-version', nDomMain)!.innerText = GM_info.script.version;
+  dom('.ctz-version', nDomMain)!.innerText = 'version: ' + GM_info.script.version;
 
   // 添加更多默认设置
   dom('#CTZ_DEFAULT_SELF', nDomMain)!.innerHTML = DEFAULT_FUNCTION.map(({ title, commit }) =>
