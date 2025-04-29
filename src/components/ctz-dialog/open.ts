@@ -18,7 +18,7 @@ export const openChange = () => {
     const nodeDialog = domById('CTZ_DIALOG')!;
     nodeDialog.style.display = 'none';
     nodeDialog.style.height = '';
-    dom(`button[name="dialogBig"]`)!.innerText = '+';
+    dom(`button[name="dialogBig"]`)!.innerText = '⇵';
     nodeButton.dataset.close = '1';
     myScroll.on();
   }
