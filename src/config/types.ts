@@ -130,6 +130,8 @@ export interface IConfigHidden {
   hiddenListVideoContent?: boolean;
   /** 隐藏主页创作中心 */
   hiddenHomeCreatorEntrance?: boolean;
+  /** 隐藏主页圈子 */
+  hiddenHomeQuanzi?: boolean;
   /** 隐藏主页推荐关注 */
   hiddenHomeRecommendFollow?: boolean;
   /** 隐藏主页分类圆桌 */

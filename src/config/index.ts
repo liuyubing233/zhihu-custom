@@ -111,6 +111,7 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenQuestionSpecial: true,
   hiddenListVideoContent: true,
   hiddenHomeCreatorEntrance: true,
+  hiddenHomeQuanzi: true,
   hiddenHomeRecommendFollow: true,
   hiddenHomeCategory: true,
   hiddenHomeCategoryMore: true,

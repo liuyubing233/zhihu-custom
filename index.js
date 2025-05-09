@@ -510,6 +510,7 @@
     hiddenQuestionSpecial: true,
     hiddenListVideoContent: true,
     hiddenHomeCreatorEntrance: true,
+    hiddenHomeQuanzi: true,
     hiddenHomeRecommendFollow: true,
     hiddenHomeCategory: true,
     hiddenHomeCategoryMore: true,
@@ -1795,7 +1796,7 @@
         {
           label: "广告",
           value: "hiddenAD",
-          css: ".TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer,.Pc-Business-Card-PcTopFeedBanner,.ZhiGoodsCard{display: none!important;}"
+          css: ".TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer,.Pc-Business-Card-PcTopFeedBanner,.ZhiGoodsCard,.Pc-word-new{display: none!important;}"
         }
       ],
       [
@@ -1952,6 +1953,11 @@
           label: "创作中心",
           value: "hiddenHomeCreatorEntrance",
           css: ".Topstory .css-19idom{display: none;}"
+        },
+        {
+          label: "圈子",
+          value: "hiddenHomeQuanzi",
+          css: ".Card.css-ow690v{display:none;}"
         },
         {
           label: "盐选作者平台",
