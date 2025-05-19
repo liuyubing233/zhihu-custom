@@ -49,10 +49,18 @@ const packageJson = fs.readFileSync(pathPackageJson).toString();
 fs.writeFileSync(pathPackageJson, packageJson.replace(regExpVersion, `$1${nVersion}$3`));
 echo(`package.json 文件版本号修改完成。\r\n原版本号: ${prevVersion}，新版本号: ${nVersion}`);
 
+/************** 更新日志修改开始 ⬇ **************/
+const strChangelogThis = fs.readFileSync(path.join(__dirname, '../CHANGELOG_THIS.md')).toString();
+const pathChangelogList = path.join(__dirname, './public/CHANGELOG_LIST.md');
+const strChangelogMenu = fs.readFileSync(path.join(__dirname, './public/CHANGELOG_MENU.md')).toString();
+const strChangelogList = fs.readFileSync(pathChangelogList).toString();
+const nStrChangelogList = `## ${nVersion}` + '\n\n`' + timeFormatter() + '`\n\n' + strChangelogThis + '\n' + strChangelogList;
+const nStrChangelog = strChangelogMenu + '\n' + nStrChangelogList;
 const pathChangelog = path.join(__dirname, '../CHANGELOG.md');
-const changelogJson = fs.readFileSync(pathChangelog).toString();
-fs.writeFileSync(pathChangelog, changelogJson.replace(VERSION_TAG, nVersion + '\n\n`' + timeFormatter() + '`'));
+fs.writeFileSync(pathChangelogList, nStrChangelogList);
+fs.writeFileSync(pathChangelog, nStrChangelog);
 echo(`CHANGELOG 内容修改完成。`);
+/************** 更新日志修改完成 ⬆ **************/
 
 const pathReadme = path.join(__dirname, '../README.md');
 const readmeJson = fs.readFileSync(pathReadme).toString();
