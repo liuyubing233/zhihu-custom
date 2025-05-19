@@ -134,15 +134,16 @@ export const myCollectionExport = {
 
 /** 导出当前回答 */
 export const printAnswer = (contentItem: HTMLElement) => {
-  const prevButton = contentItem.querySelector('.ctz-answer-print');
+  const boxItem = (contentItem.classList.contains('AnswerItem') ? contentItem.parentElement : contentItem) as HTMLElement;
+  const prevButton = boxItem.querySelector('.ctz-answer-print');
   if (prevButton) return;
-  const nodeUser = contentItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
+  const nodeUser = boxItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo');
   if (!nodeUser) return;
   const nButton = createButtonFontSize12('导出回答', 'ctz-answer-print');
   nButton.onclick = function () {
-    const nodeUser = contentItem.querySelector('.AuthorInfo-name .UserLink-link');
-    const nodeContent = contentItem.querySelector('.RichContent-inner');
-    const innerHTML = `<h1>${JSON.parse(contentItem.querySelector('.AnswerItem')!.getAttribute('data-zop') || '{}').title}</h1>${nodeUser!.outerHTML + nodeContent!.innerHTML}`;
+    const nodeUser = boxItem.querySelector('.AuthorInfo-name .UserLink-link');
+    const nodeContent = boxItem.querySelector('.RichContent-inner');
+    const innerHTML = `<h1>${JSON.parse(boxItem.querySelector('.AnswerItem')!.getAttribute('data-zop') || '{}').title}</h1>${nodeUser!.outerHTML + nodeContent!.innerHTML}`;
     loadIframePrint(this as HTMLButtonElement, [innerHTML], '导出回答');
   };
   nodeUser.appendChild(nButton);
