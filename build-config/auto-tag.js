@@ -70,7 +70,7 @@ echo(`README 内容修改完成。`);
 const doExec = async (commit) => {
   const res = exec(commit);
   if (res.code !== 0) {
-    echo(`ERROR: ${commit}: ${code.stderr}`);
+    echo(`ERROR: ${commit}: ${res.code.stderr}`);
     return Promise.reject();
   }
   return Promise.resolve();
