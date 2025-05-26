@@ -168,7 +168,8 @@
 
 .ctz-default-bottom,
 .ctz-config-buttons {
-  a, button {
+  a,
+  button {
     margin-left: 8px;
     width: 100px;
   }
@@ -347,10 +348,28 @@
   padding-top: 0 !important;
 }
 
-#CTZ_HIDDEN .ctz-title {
+// 标题悬浮
+#CTZ_HIDDEN .ctz-title,
+#CTZ_FILTER .ctz-title {
   position: sticky;
   top: 0;
   margin: 0 -18px;
   padding: 0 18px 0 28px;
   background: #ededec;
+  z-index: 1;
+}
+
+// 不感兴趣
+#CTZ_NOT_INTERESTED_LIST {
+  & > div {
+    display: block;
+    line-height: 24px;
+    .ctz-remove-not-interested-item {
+      cursor: pointer;
+      margin-left: 6px;
+      &:hover {
+        color: @blue1;
+      }
+    }
+  }
 }

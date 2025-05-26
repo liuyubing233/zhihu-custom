@@ -1,5 +1,6 @@
 import { answerAddBlockButton } from '../components/black-list/add-block-button';
 import { addAnswerCopyLink } from '../components/link';
+import { addNotInterestedItem } from '../components/not-interested';
 import { printAnswer, printArticle } from '../components/print';
 import { EVideoInAnswerArticle } from '../components/select';
 import { updateItemTime } from '../components/time';
@@ -37,10 +38,11 @@ export const initRootEvent = async () => {
     // 点击外置「不感兴趣」按钮
     if (target.classList.contains(CLASS_NOT_INTERESTED) && fetchInterceptStatus) {
       // @ts-ignore 自添加属性
-      const { id, type } = target._params;
+      const { id, type, title } = target._params;
       doFetchNotInterested({ id, type });
       const nodeTopStoryItem = domP(target, 'class', 'TopstoryItem');
       nodeTopStoryItem && (nodeTopStoryItem.style.display = 'none');
+      addNotInterestedItem(title)
     }
 
     // 点击阅读全文

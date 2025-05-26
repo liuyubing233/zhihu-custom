@@ -285,6 +285,10 @@ export interface IConfigFilter {
   removeFromEBook?: boolean;
   /** 屏蔽匿名用户提问 */
   removeAnonymousQuestion?: boolean;
+  /** 「不感兴趣」按钮 */
+  listOutPutNotInterested?: boolean;
+  /** 不感兴趣的内容题目 */
+  notInterestedList?: string[];
 }
 
 /** 悬浮模块默认配置 */
@@ -340,7 +344,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   filterKeywords?: string[];
   /** 屏蔽词方法：回答内容屏蔽 */
   blockWordsAnswer?: string[];
-
   /** 列表页面内容宽度 */
   versionHome?: string;
   /** 列表页面内容宽度是否使用百分比 */
@@ -371,8 +374,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   titleIco?: string;
   /** 内容标题添加类别标签 */
   questionTitleTag?: boolean;
-  /** 推荐列表外置「不感兴趣」按钮 */
-  listOutPutNotInterested?: boolean;
   /** 列表更多按钮固定至题目右侧 */
   fixedListItemMore?: boolean;
   /** 关注列表高亮原创内容 */
@@ -437,7 +438,6 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   listOutputToQuestion?: boolean;
   /** 用户主页内容发布、修改时间置顶 */
   userHomeContentTimeTop?: boolean;
-
   /** 一键获取回答链接 */
   copyAnswerLink?: boolean;
   /** 时间戳 */

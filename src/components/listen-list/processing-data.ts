@@ -32,6 +32,7 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     fetchInterceptStatus,
     removeBlockUserContent,
     blockedUsers = [],
+    notInterestedList = [],
   } = pfConfig;
   const pfHistory = await myStorage.getHistory();
   const historyList = pfHistory.list;
@@ -78,6 +79,11 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
         !message && removeFollowVoteArticle && textFeed.includes('赞同了文章') && (message = '屏蔽关注人赞同了文章操作');
         !message && removeFollowFQuestion && textFeed.includes('关注了问题') && (message = '屏蔽关注人关注了问题操作');
       }
+    }
+
+    // 屏蔽不感兴趣内容
+    if (!message) {
+      notInterestedList.find((i) => i === title) && (message = `屏蔽不感兴趣的内容：${title}`);
     }
 
     // 屏蔽盐选等...
@@ -138,7 +144,7 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
       if (nodeItemTitle) {
         // 列表外置不感兴趣按钮
         if (listOutPutNotInterested && fetchInterceptStatus && !nodeItem.querySelector(`.${CLASS_NOT_INTERESTED}`)) {
-          nodeItemTitle.appendChild(createButtonFontSize12('不感兴趣', CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type } }));
+          nodeItemTitle.appendChild(createButtonFontSize12('不感兴趣', CLASS_NOT_INTERESTED, { _params: { id: dataZop.itemId, type: dataZop.type, title } }));
         }
         // 推荐列表显示「直达问题」按钮
         if (listOutputToQuestion && !isVideo && !isArticle && !isTip && !nodeItem.querySelector(`.${CLASS_TO_QUESTION}`)) {

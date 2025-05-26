@@ -3,6 +3,7 @@ import { BLOCKED_USER_COMMON } from '../../components/black-list';
 import { createHTMLRightTitle, initMenu } from '../../components/ctz-dialog';
 import { initFetchInterceptStatus } from '../../components/fetch-intercept-status-change';
 import { createHTMLHiddenConfig } from '../../components/hidden';
+import { createHTMLNotInterestedList } from '../../components/not-interested';
 import { createHTMLTitleICOChange } from '../../components/page-title';
 import { createHTMLMySelect } from '../../components/select';
 import { createHTMLSizeSetting } from '../../components/size';
@@ -38,6 +39,7 @@ export const initHTML = () => {
   createHTMLHiddenConfig(nDomMain);
   createHTMLMySelect(nDomMain);
   createHTMLRightTitle(nDomMain);
+  createHTMLNotInterestedList()
 
   dom('#CTZ_BLACKLIST_COMMON', nDomMain)!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
   // echoBlockedContent(nDomMain); // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容

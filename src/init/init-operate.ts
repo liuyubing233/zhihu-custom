@@ -36,6 +36,7 @@ export const initOperate = () => {
       return;
     }
   };
+
   nodeContent.onchange = (e) => {
     const target = e.target as HTMLInputElement;
     if (target.classList.contains(CLASS_INPUT_CHANGE)) {
@@ -113,12 +114,7 @@ const myButtonOperation: Record<string, Function> = {
   configReset: async function () {
     const isUse = confirm('是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
-    const { filterKeywords = [], blockedUsers = [] } = await myStorage.getConfig();
-    await myStorage.updateConfig({
-      ...CONFIG_DEFAULT,
-      filterKeywords,
-      blockedUsers,
-    });
+    await myStorage.updateConfig(CONFIG_DEFAULT);
     setTimeout(() => {
       location.reload();
     }, 300);

@@ -192,7 +192,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   globalTitle: '',
   titleIco: '',
   questionTitleTag: true,
-  listOutPutNotInterested: false,
+  listOutPutNotInterested: true,
   fixedListItemMore: false,
   highlightOriginal: true,
   highlightListItem: false,
@@ -237,6 +237,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   homeContentOpen: EHomeContentOpen.默认,
   removeBlockUserContent: true,
   blockedUsers: [],
+  notInterestedList: [],
 };
 
 /** 缓存的历史记录数量 */

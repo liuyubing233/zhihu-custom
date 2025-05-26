@@ -32,7 +32,6 @@
         <div data-href="#CTZ_POSITION">悬浮模块</div>
         <div data-href="#CTZ_HIDDEN">隐藏模块</div>
         <div data-href="#CTZ_FILTER" data-commit="更改后请重新刷新页面">屏蔽内容</div>
-        <div data-href="#CTZ_BLOCK_WORDS" data-commit="更改后请重新刷新页面, 点击屏蔽词删除">屏蔽词</div>
         <div data-href="#CTZ_BLACKLIST" data-commit="更改后请重新刷新页面, 需开启接口拦截">黑名单</div>
         <div data-href="#CTZ_VERSION">页面尺寸</div>
         <div data-href="#CTZ_THEME">颜色</div>
@@ -145,7 +144,7 @@
           <div class="ctz-form-box">
             <div class="ctz-form-box-item">
               <div style="align-items: start; padding: 0; text-align: right">
-                <textarea name="textStyleCustom" placeholder="内容为CSS" style="resize: vertical; width: 100%;"></textarea>
+                <textarea name="textStyleCustom" placeholder="内容为CSS" style="resize: vertical; width: 100%"></textarea>
                 <button class="ctz-button" name="styleCustom">确定</button>
               </div>
             </div>
@@ -220,6 +219,13 @@
                 </div>
                 <div><input class="ctz-i ctz-switch" name="removeFromYanxuan" type="checkbox" value="on" /></div>
               </div>
+              <div class="ctz-form-box-item ctz-fetch-intercept">
+                <div>
+                  显示「不感兴趣」按钮，屏蔽的内容在下方「不感兴趣的内容」查看
+                  <span class="ctz-need-fetch">（接口拦截已关闭，此功能无法使用）</span>
+                </div>
+                <div><input class="ctz-i ctz-switch" name="listOutPutNotInterested" type="checkbox" value="on" /></div>
+              </div>
             </div>
           </div>
 
@@ -273,39 +279,47 @@
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- 屏蔽词 -->
-        <div id="CTZ_BLOCK_WORDS" style="display: none">
           <!-- 标题屏蔽词 -->
-          <div class="ctz-title">
-            标题屏蔽词
-            <span>匹配位置：列表标题</span>
-          </div>
-          <div class="ctz-form-box">
-            <div class="ctz-form-box-item">
-              <div></div>
-              <div><input name="inputBlockedWord" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px" /></div>
+          <div id="CTZ_FILTER_WORD_TITLE">
+            <div class="ctz-title">
+              标题屏蔽词
+              <span>匹配位置：列表标题，点击屏蔽词删除</span>
             </div>
-            <div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS">
-              <div class="ctz-block-words-content"></div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div></div>
+                <div><input name="inputBlockedWord" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px" /></div>
+              </div>
+              <div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS">
+                <div class="ctz-block-words-content"></div>
+              </div>
             </div>
           </div>
 
           <!-- 内容屏蔽词 -->
-          <div class="ctz-title">
-            内容屏蔽词
-            <span>匹配位置：列表、回答页内容</span>
+          <div id="CTZ_FILTER_WORD_CONTENT">
+            <div class="ctz-title">
+              内容屏蔽词
+              <span>匹配位置：列表、回答页内容，点击屏蔽词删除</span>
+            </div>
+            <div class="ctz-form-box">
+              <div class="ctz-form-box-item">
+                <div></div>
+                <div><input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px" /></div>
+              </div>
+              <div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS_CONTENT">
+                <div class="ctz-block-words-content"></div>
+              </div>
+            </div>
           </div>
 
-          <div class="ctz-form-box">
-            <div class="ctz-form-box-item">
-              <div></div>
-              <div><input name="inputBlockedWordAnswer" type="text" placeholder="输入后回车添加（不区分大小写）" style="width: 256px" /></div>
+          <div id="CTZ_FILTER_CONTENT">
+            <div class="ctz-title">
+              不感兴趣的内容
+              <span>用来解决知乎本身点击不感兴趣之后仍然推送的问题，点击✕删除</span>
             </div>
-            <div class="ctz-form-box-item" id="CTZ_FILTER_BLOCK_WORDS_CONTENT">
-              <div class="ctz-block-words-content"></div>
-            </div>
+            <div class="ctz-form-box" id="CTZ_NOT_INTERESTED_LIST"></div>
           </div>
         </div>
 

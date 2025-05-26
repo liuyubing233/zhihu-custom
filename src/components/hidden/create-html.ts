@@ -6,6 +6,6 @@ import { HIDDEN_ARRAY } from './configs';
 export const createHTMLHiddenConfig = (domMain: HTMLElement) => {
   // 隐藏元素部分
   dom('#CTZ_HIDDEN', domMain)!.innerHTML = HIDDEN_ARRAY.map(
-    (item, index) => (item.name ? `<div class="ctz-title" style="z-index: ${index + 1};">${item.name}<span>${item.desc}</span></div>` : '') + createHTMLFormBoxSwitch(item.content)
+    (item, index) => (item.name ? `<div class="ctz-title">${item.name}<span>${item.desc}</span></div>` : '') + createHTMLFormBoxSwitch(item.content)
   ).join('');
 };
