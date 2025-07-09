@@ -189,7 +189,7 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
       {
         label: '圈子',
         value: 'hiddenHomeQuanzi',
-        css: '.Card.css-ow690v{display:none;}'
+        css: '.Card.css-18gpi2u{display:none;}'
       },
       {
         label: '盐选作者平台',
