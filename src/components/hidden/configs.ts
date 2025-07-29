@@ -39,6 +39,12 @@ const HIDDEN_ITEM_COMMON: IHiddenItem = {
     ],
     [
       {
+        label: '隐藏首页分享想法模块',
+        value: 'hiddenHomeWriteArea',
+        css: '.Topstory-mainColumn .WriteArea{display: none}',
+      },
+
+      {
         label: '顶部发现模块-首页',
         value: 'hiddenAppHeaderTabHome',
         css: '.AppHeader-Tab:nth-of-type(1){display: none}',
@@ -189,7 +195,7 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
       {
         label: '圈子',
         value: 'hiddenHomeQuanzi',
-        css: '.Card.css-18gpi2u{display:none;}'
+        css: '.Card.css-18gpi2u{display:none;}',
       },
       {
         label: '盐选作者平台',

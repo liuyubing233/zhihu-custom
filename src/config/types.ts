@@ -243,6 +243,8 @@ export interface IConfigHidden {
   hiddenAnswerDownTags?: boolean;
   /** 隐藏回答「谢邀」标签 */
   hiddenThanksInvite?: boolean;
+  /** 隐藏首页分享想法模块 */
+  hiddenHomeWriteArea?: boolean;
 }
 
 /** 屏蔽内容模块默认配置 */

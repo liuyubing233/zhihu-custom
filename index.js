@@ -1820,6 +1820,11 @@
       ],
       [
         {
+          label: "隐藏首页分享想法模块",
+          value: "hiddenHomeWriteArea",
+          css: ".Topstory-mainColumn .WriteArea{display: none}"
+        },
+        {
           label: "顶部发现模块-首页",
           value: "hiddenAppHeaderTabHome",
           css: ".AppHeader-Tab:nth-of-type(1){display: none}"
