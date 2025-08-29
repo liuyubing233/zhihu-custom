@@ -4558,11 +4558,6 @@
         };
       }
       await myStorage.updateConfig(config);
-      if (config.removeBlockUserContentList && config.removeBlockUserContentList.length) {
-        config.blockedUsers = [...config.removeBlockUserContentList];
-        delete config.removeBlockUserContentList;
-        await myStorage.updateConfig(config);
-      }
       initHistoryView();
       appendHiddenStyle();
       myBackground.init();
