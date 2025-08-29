@@ -13,8 +13,9 @@ export const doFetchNotInterested = ({ id, type }: { id: string; type: string })
     fnLog(`调用不感兴趣接口错误，id为NaN, 原ID：${id}`);
     return;
   }
-  fetch('/api/v3/feed/topstory/uninterestv2', {
-    body: `item_brief=${encodeURIComponent(JSON.stringify({ source: 'TS', type: type, id: idToNum }))}`,
+
+  fetch('/api/v4/zrec-feedback/uninterested', {
+    body: `scene_code=RECOMMEND&content_type=1&content_token=${id}&uninterested_type=less_similar&feed_deliver_type=Normal&desktop=true`,
     method: 'POST',
     headers: new Headers({
       ...nHeader,
