@@ -21,7 +21,7 @@ import { changeICO, changeTitle, myCachePageTitle } from './components/page-titl
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';
 import { closeAllSelect } from './components/select';
 import { changeSizeBeforeResize, mySize } from './components/size';
-import { changeSuspensionTab, initCacheHeader, suspensionPickupAttribute } from './components/suspension';
+import { suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
 import { myListenUserHomeList } from './components/user-home';
 import { changeVideoStyle, fixVideoAutoPlay, initVideoDownload } from './components/video';
@@ -176,7 +176,7 @@ import { INNER_CSS } from './web-resources';
       echoData();
       changeICO();
       changeTitle();
-      changeSuspensionTab();
+      // changeSuspensionTab();
       suspensionPickupAttribute();
       mySize.initAfterLoad();
       myCustomStyle.init();
@@ -184,7 +184,7 @@ import { INNER_CSS } from './web-resources';
       initResizeObserver();
       myCtzTypeOperation.init();
       echoHistory();
-      initCacheHeader();
+      // initCacheHeader();
       changeSizeBeforeResize();
 
       if (removeTopAD) {

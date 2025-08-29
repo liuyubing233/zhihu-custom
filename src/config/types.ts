@@ -295,30 +295,30 @@ export interface IConfigFilter {
 
 /** 悬浮模块默认配置 */
 export interface IConfigSuspension {
-  /** 问题列表切换 */
-  suspensionHomeTab?: boolean;
-  /** 问题列表切换定位 */
-  suspensionHomeTabPo?: string;
-  /** 问题列表切换是否固定 */
-  suspensionHomeTabFixed?: boolean;
-  /** 顶部发现模块 */
-  suspensionFind?: boolean;
-  /** 顶部发现模块定位 */
-  suspensionFindPo?: string;
-  /** 顶部发现模块是否固定 */
-  suspensionFindFixed?: boolean;
-  /** 搜索栏 */
-  suspensionSearch?: boolean;
-  /** 搜索栏定位 */
-  suspensionSearchPo?: string;
-  /** 搜索栏是否固定 */
-  suspensionSearchFixed?: boolean;
-  /** 个人中心 */
-  suspensionUser?: boolean;
-  /** 个人中心定位 */
-  suspensionUserPo?: string;
-  /** 个人中心是否固定 */
-  suspensionUserFixed?: boolean;
+  // /** 问题列表切换 */
+  // suspensionHomeTab?: boolean;
+  // /** 问题列表切换定位 */
+  // suspensionHomeTabPo?: string;
+  // /** 问题列表切换是否固定 */
+  // suspensionHomeTabFixed?: boolean;
+  // /** 顶部发现模块 */
+  // suspensionFind?: boolean;
+  // /** 顶部发现模块定位 */
+  // suspensionFindPo?: string;
+  // /** 顶部发现模块是否固定 */
+  // suspensionFindFixed?: boolean;
+  // /** 搜索栏 */
+  // suspensionSearch?: boolean;
+  // /** 搜索栏定位 */
+  // suspensionSearchPo?: string;
+  // /** 搜索栏是否固定 */
+  // suspensionSearchFixed?: boolean;
+  // /** 个人中心 */
+  // suspensionUser?: boolean;
+  // /** 个人中心定位 */
+  // suspensionUserPo?: string;
+  // /** 个人中心是否固定 */
+  // suspensionUserFixed?: boolean;
   /** 长回答和列表收起按钮*/
   suspensionPickUp?: boolean;
   /** 悬浮收起按钮位置，数字越大离右侧越远 */

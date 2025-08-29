@@ -7,7 +7,7 @@ import { myListenAnswer } from './listen-answer';
 import { myListenList } from './listen-list';
 import { changeICO, changeTitle } from './page-title';
 import { mySize } from './size';
-import { changeSuspensionTab, suspensionHeader, suspensionPickupAttribute } from './suspension';
+import { suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
 import { myListenUserHomeList } from './user-home';
 import { changeVideoStyle } from './video';
@@ -70,13 +70,13 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     [INPUT_NAME_THEME_DARK]: changeBackground,
     colorText1: changeBackground,
     backgroundHighlightOriginal: changeBackground,
-    suspensionHomeTab: () => {
-      mySize.change();
-      changeSuspensionTab();
-    },
-    suspensionFind: () => suspensionHeader('suspensionFind'),
-    suspensionSearch: () => suspensionHeader('suspensionSearch'),
-    suspensionUser: () => suspensionHeader('suspensionUser'),
+    // suspensionHomeTab: () => {
+    //   mySize.change();
+    //   changeSuspensionTab();
+    // },
+    // suspensionFind: () => suspensionHeader('suspensionFind'),
+    // suspensionSearch: () => suspensionHeader('suspensionSearch'),
+    // suspensionUser: () => suspensionHeader('suspensionUser'),
     titleIco: changeICO,
     showGIFinDialog: previewGIF,
     questionCreatedAndModifiedTime: addQuestionTime,
