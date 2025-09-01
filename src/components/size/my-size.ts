@@ -102,13 +102,15 @@ export const mySize = {
       );
 
     /** 图片尺寸修改 */
-    const xxxHiddenListArticleTopImg = zoomImageHeight === EZoomImageHeight.开启 || zoomImageType === EZoomImageType.自定义尺寸 ? '.ContentItem .css-75aco3{display: none;}' : ''
-    const xxxImage = `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${
-      // 高度控制优先
-      (zoomImageHeight === EZoomImageHeight.开启 ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : '') ||
-      // 宽度控制在后
-      (zoomImageType === EZoomImageType.自定义尺寸 ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : '')
-    }}` + xxxHiddenListArticleTopImg;
+    const xxxHiddenListArticleTopImg = zoomImageHeight === EZoomImageHeight.开启 || zoomImageType === EZoomImageType.自定义尺寸 ? '.ContentItem .css-75aco3{display: none;}' : '';
+
+    const xxxImage =
+      `img.lazy,img.origin_image,.GifPlayer img,.ArticleItem-image,.ztext figure .content_image,.ztext figure .origin_image,.TitleImage{${
+        // 高度控制优先
+        (zoomImageHeight === EZoomImageHeight.开启 ? `max-height: ${zoomImageHeightSize}px!important;width: auto!important;` : '') ||
+        // 宽度控制在后
+        (zoomImageType === EZoomImageType.自定义尺寸 ? `width: ${zoomImageSize}px!important;cursor: zoom-in!important;max-width: 100%!important;` : '')
+      }}` + xxxHiddenListArticleTopImg;
 
     /** 列表视频回答内容尺寸修改 */
     const xxxVideo = `.ZVideoItem>div:first-of-type{${fnReturnStr(`width: ${zoomListVideoSize}px!important;`, zoomListVideoType === EZoomListVideoType.自定义尺寸)}}`;

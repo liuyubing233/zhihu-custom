@@ -1,5 +1,11 @@
 import { createHTMLFormItem } from '../../init/init-html/common-html';
+import { initImagePreview } from '../../init/init-image-preview';
 import { dom, domA, myStorage } from '../../tools';
+import { myListenAnswer } from '../listen-answer';
+import { myListenList } from '../listen-list';
+import { mySize } from '../size';
+import { myListenUserHomeList } from '../user-home';
+import { changeVideoStyle } from '../video';
 import { OPTIONS_MAP, SELECT_BASIS_SHOW } from './config';
 
 /** 创建自定义选择框和添加监听方法 */
@@ -47,6 +53,30 @@ export const createHTMLMySelect = (domMain: HTMLElement) => {
         optionChoose(itemOptionBox, target);
         open();
         await myStorage.updateConfigItem(name, value);
+        switch (name) {
+          case 'zoomImageType':
+            mySize.change();
+            initImagePreview();
+            break;
+          case 'videoInAnswerArticle':
+            changeVideoStyle();
+            myListenList.restart();
+            myListenAnswer.restart();
+            break;
+          case 'linkShopping':
+          case 'zoomListVideoType':
+          case 'zoomImageHeight':
+            mySize.change();
+            break;
+          case 'homeContentOpen':
+            myListenUserHomeList.restart();
+            break;
+          default:
+            // mySize.change();
+            break;
+        }
+
+        // console.log('name,', name, value);
       };
     }
   });

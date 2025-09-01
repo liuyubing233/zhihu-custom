@@ -1,16 +1,12 @@
-import { initImagePreview } from '../init/init-image-preview';
 import { dom, domById, myStorage } from '../tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, myBackground, onUseThemeDark } from './background';
 import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
-import { myListenAnswer } from './listen-answer';
 import { myListenList } from './listen-list';
 import { changeICO, changeTitle } from './page-title';
 import { mySize } from './size';
 import { suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
-import { myListenUserHomeList } from './user-home';
-import { changeVideoStyle } from './video';
 
 /** 更改编辑器方法 */
 export const fnChanger = async (ev: HTMLInputElement) => {
@@ -18,10 +14,10 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   const doCssVersion = [
     'questionTitleTag',
     'fixedListItemMore',
-    'linkShopping',
+    // 'linkShopping',
     'highlightListItem',
     'zoomImageSize',
-    'zoomImageHeight',
+    // 'zoomImageHeight',
     'zoomImageHeightSize',
     'versionHome',
     'versionAnswer',
@@ -40,7 +36,7 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     'fontSizeForAnswer',
     'fontSizeForArticle',
     'contentLineHeight',
-    'zoomListVideoType',
+    // 'zoomListVideoType',
     'zoomListVideoSize',
     'commitModalSizeSameVersion',
   ];
@@ -88,21 +84,21 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     versionArticleIsPercent: rangeChoosePercent,
     versionUserHomeIsPercent: rangeChoosePercent,
     versionCollectionIsPercent: rangeChoosePercent,
-    zoomImageType: () => {
-      mySize.change();
-      initImagePreview();
-    },
+    // zoomImageType: () => {
+    //   mySize.change();
+    //   initImagePreview();
+    // },
     globalTitleRemoveMessage: changeTitle,
     suspensionPickUp: suspensionPickupAttribute,
     suspensionPickupRight: suspensionPickupAttribute,
-    videoInAnswerArticle: () => {
-      changeVideoStyle();
-      myListenList.restart();
-      myListenAnswer.restart();
-    },
-    homeContentOpen: () => {
-      myListenUserHomeList.restart();
-    },
+    // videoInAnswerArticle: () => {
+    //   changeVideoStyle();
+    //   myListenList.restart();
+    //   myListenAnswer.restart();
+    // },
+    // homeContentOpen: () => {
+    //   myListenUserHomeList.restart();
+    // },
     topVote: () => {
       appendHiddenStyle()
     }
