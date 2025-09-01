@@ -146,17 +146,17 @@ export interface IConfigHidden {
   hiddenAnswerItemTime?: boolean;
   /** 回答底部发布编辑时间（保留IP） */
   hiddenAnswerItemTimeButHaveIP?: boolean;
-  /** 发现模块-隐藏首页 */
-  hiddenAppHeaderTabHome?: boolean;
-  /** 发现模块-隐藏知学堂 */
-  hiddenAppHeaderTabZhi?: boolean;
-  /** 发现模块-隐藏会员 */
-  // hiddenAppHeaderTabVIP?: boolean;
-  // /** 发现模块-隐藏发现 */
-  /** 发现模块-知乎直答 */
-  hiddenAppHeaderTabFind?: boolean;
-  /** 发现模块-隐藏等你来答 */
-  hiddenAppHeaderTabWaitingForYou?: boolean;
+  // /** 发现模块-隐藏首页 */
+  // hiddenAppHeaderTabHome?: boolean;
+  // /** 发现模块-隐藏知学堂 */
+  // hiddenAppHeaderTabZhi?: boolean;
+  // /** 发现模块-隐藏会员 */
+  // // hiddenAppHeaderTabVIP?: boolean;
+  // // /** 发现模块-隐藏发现 */
+  // /** 发现模块-知乎直答 */
+  // hiddenAppHeaderTabFind?: boolean;
+  // /** 发现模块-隐藏等你来答 */
+  // hiddenAppHeaderTabWaitingForYou?: boolean;
   /** 隐藏全部问题列表切换模块 */
   hiddenHomeListTab?: boolean;
   /** 问题列表切换 - 隐藏关注 */

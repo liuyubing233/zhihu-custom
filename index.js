@@ -1813,24 +1813,39 @@
           css: ".Topstory-mainColumn .WriteArea{display: none}"
         },
         {
-          label: "顶部发现模块-首页",
-          value: "hiddenAppHeaderTabHome",
-          css: ".AppHeader-Tab:nth-of-type(1){display: none}"
+          label: "顶部菜单栏 - 关注",
+          value: "hiddenHeaderFollow",
+          css: '.AppHeader a[href="https://www.zhihu.com/follow"]{display:none}'
         },
         {
-          label: "顶部发现模块-知乎直答",
-          value: "hiddenAppHeaderTabFind",
-          css: ".AppHeader-Tab:nth-of-type(2){display: none}"
+          label: "顶部菜单栏 - 推荐",
+          value: "hiddenHeaderRecommend",
+          css: '.AppHeader a[href="https://www.zhihu.com/"]{display:none}'
         },
         {
-          label: "顶部发现模块-知学堂",
-          value: "hiddenAppHeaderTabZhi",
-          css: ".AppHeader-Tab:nth-of-type(3){display: none}"
+          label: "顶部菜单栏 - 热榜",
+          value: "hiddenHeaderHot",
+          css: '.AppHeader a[href="https://www.zhihu.com/hot"]{display:none}'
         },
         {
-          label: "顶部发现模块-等你来答",
-          value: "hiddenAppHeaderTabWaitingForYou",
-          css: ".AppHeader-Tab:nth-of-type(4){display: none}"
+          label: "顶部菜单栏 - 专栏",
+          value: "hiddenHeaderColumnSquare",
+          css: '.AppHeader a[href="https://www.zhihu.com/column-square"]{display:none}'
+        },
+        {
+          label: "顶部菜单栏 - 付费咨询",
+          value: "hiddenHeaderConsult",
+          css: '.AppHeader a[href="https://www.zhihu.com/consult"]{display:none}'
+        },
+        {
+          label: "顶部菜单栏 - 知学堂",
+          value: "hiddenHeaderEducationLearning",
+          css: '.AppHeader a[href="https://www.zhihu.com/education/learning"]{display:none}'
+        },
+        {
+          label: "顶部菜单栏 - 直答",
+          value: "hiddenHeaderZhida",
+          css: '.AppHeader a[href="https://www.zhihu.com/zhida"]{display:none}'
         }
       ],
       [
