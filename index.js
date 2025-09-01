@@ -955,9 +955,15 @@
     let clipboardData = event.clipboardData;
     if (!clipboardData) return;
     const selection = window.getSelection();
+    if (!selection) return;
+    const range = selection.getRangeAt(0);
+    const container = document.createElement("div");
+    container.appendChild(range.cloneContents());
+    const html = container.innerHTML;
     let text = selection ? selection.toString() : "";
     if (text) {
       event.preventDefault();
+      clipboardData.setData("text/html", html);
       clipboardData.setData("text/plain", text);
     }
   };
@@ -4761,7 +4767,8 @@
       }
       keydownNextImage(event);
     });
-    document.addEventListener("copy", function(event) {
+    window.addEventListener("copy", function(event) {
+      console.log("???????copy");
       eventCopy(event);
     });
     document.addEventListener("click", function(event) {
