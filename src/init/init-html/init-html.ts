@@ -39,7 +39,7 @@ export const initHTML = () => {
   createHTMLHiddenConfig(nDomMain);
   createHTMLMySelect(nDomMain);
   createHTMLRightTitle(nDomMain);
-  createHTMLNotInterestedList()
+  createHTMLNotInterestedList();
 
   dom('#CTZ_BLACKLIST_COMMON', nDomMain)!.innerHTML += createHTMLFormBoxSwitch(BLOCKED_USER_COMMON);
   // echoBlockedContent(nDomMain); // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容

@@ -174,6 +174,35 @@
             </div>
           </div>
 
+          <div class="ctz-form-box">
+            <div class="ctz-form-box-item">
+              <div>菜单栏切换模块悬浮</div>
+              <div><input class="ctz-i ctz-switch" name="suspensionSwitch" type="checkbox" value="on" /></div>
+            </div>
+            <div id="CTZ_FORM_CHILDREN_SUSPENSION_SWITCH">
+              <div class="ctz-form-box-item">
+                <div>显示 - 关注</div>
+                <div><input class="ctz-i ctz-switch" name="suspensionSwitchFollow" type="checkbox" value="on" /></div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>显示 - 推荐</div>
+                <div><input class="ctz-i ctz-switch" name="suspensionSwitchDefault" type="checkbox" value="on" /></div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>显示 - 热榜</div>
+                <div><input class="ctz-i ctz-switch" name="suspensionSwitchHot" type="checkbox" value="on" /></div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>显示 - 专栏</div>
+                <div><input class="ctz-i ctz-switch" name="suspensionSwitchColumnSquare" type="checkbox" value="on" /></div>
+              </div>
+              <div class="ctz-form-box-item">
+                <div>显示 - 圈子</div>
+                <div><input class="ctz-i ctz-switch" name="suspensionSwitchRingFeeds" type="checkbox" value="on" /></div>
+              </div>
+            </div>
+          </div>
+
           <!-- <div class="ctz-title">
             信息模块悬浮
             <span>拖动悬浮模块定位位置，鼠标放置显示点击 ☒ 按钮即可拖动</span>
@@ -551,4 +580,16 @@
       <button class="ctz-button" name="cancel-change-blocked-user-tag-name">取消</button>
     </div>
   </div>
+</div>
+
+<!-- 菜单栏切换模块悬浮 -->
+<div id="CTZ_SUSPENSION_SWITCH" style="display: none">
+  <a href="https://www.zhihu.com/follow" target="_self" data-type="suspensionSwitchFollow">关</a>
+  <a href="https://www.zhihu.com" target="_self" data-type="suspensionSwitchDefault">推</a>
+  <a href="https://www.zhihu.com/hot" target="_self" data-type="suspensionSwitchHot">热</a>
+  <a href="https://www.zhihu.com/column-square" target="_self" data-type="suspensionSwitchColumnSquare">专</a>
+  <a href="https://www.zhihu.com/ring-feeds" target="_self" data-type="suspensionSwitchRingFeeds">圈</a>
+  <div class="lock-icon" data-lock="true">🔒</div>
+  <!-- 🔓 -->
+  <div class="move-mock"></div>
 </div>

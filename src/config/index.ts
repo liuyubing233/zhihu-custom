@@ -61,6 +61,14 @@ export const CONFIG_SUSPENSION: IConfigSuspension = {
   // suspensionUserFixed: true,
   suspensionPickUp: true,
   suspensionPickupRight: 0,
+  suspensionSwitch: false,
+  suspensionSwitchPo: 'left: 20px; top: 380px;',
+  // suspensionSwitchFixed: true,
+  suspensionSwitchFollow: true,
+  suspensionSwitchDefault: true,
+  suspensionSwitchHot: true,
+  suspensionSwitchColumnSquare: true,
+  suspensionSwitchRingFeeds: true,
 };
 
 /** 极简模式配置 */

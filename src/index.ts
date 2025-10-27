@@ -21,7 +21,7 @@ import { changeICO, changeTitle, myCachePageTitle } from './components/page-titl
 import { myCollectionExport, printArticle, printPeopleAnswer, printPeopleArticles } from './components/print';
 import { closeAllSelect } from './components/select';
 import { changeSizeBeforeResize, mySize } from './components/size';
-import { suspensionPickupAttribute } from './components/suspension';
+import { initSuspensionSwitch, suspensionPickupAttribute } from './components/suspension';
 import { addArticleTime, addQuestionTime } from './components/time';
 import { myListenUserHomeList } from './components/user-home';
 import { changeVideoStyle, fixVideoAutoPlay, initVideoDownload } from './components/video';
@@ -163,6 +163,7 @@ import { INNER_CSS } from './web-resources';
       } catch {}
       const { removeTopAD } = await myStorage.getConfig();
       initHTML();
+      initSuspensionSwitch();
       initOperate();
       myCachePageTitle.set(document.title);
       // 以下设置都在 initHTML 之后执行

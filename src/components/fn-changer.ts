@@ -5,7 +5,7 @@ import { previewGIF } from './image';
 import { myListenList } from './listen-list';
 import { changeICO, changeTitle } from './page-title';
 import { mySize } from './size';
-import { suspensionPickupAttribute } from './suspension';
+import { onChangeSuspensionSwitch, suspensionPickupAttribute } from './suspension';
 import { addArticleTime, addQuestionTime } from './time';
 
 /** 更改编辑器方法 */
@@ -100,8 +100,14 @@ export const fnChanger = async (ev: HTMLInputElement) => {
     //   myListenUserHomeList.restart();
     // },
     topVote: () => {
-      appendHiddenStyle()
-    }
+      appendHiddenStyle();
+    },
+    suspensionSwitch: onChangeSuspensionSwitch,
+    suspensionSwitchFollow: onChangeSuspensionSwitch,
+    suspensionSwitchDefault: onChangeSuspensionSwitch,
+    suspensionSwitchHot: onChangeSuspensionSwitch,
+    suspensionSwitchColumnSquare: onChangeSuspensionSwitch,
+    suspensionSwitchRingFeeds: onChangeSuspensionSwitch,
   };
 
   if (name === 'fetchInterceptStatus') {

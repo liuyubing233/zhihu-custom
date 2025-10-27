@@ -331,6 +331,17 @@ export interface IConfigSuspension {
   suspensionOpenTop?: string;
   suspensionOpenUseLeft?: boolean;
   suspensionOpenUseTop?: boolean;
+  /** 菜单栏切换模块悬浮 */
+  suspensionSwitch?: boolean;
+  /** 菜单栏切换模块悬浮定位 */
+  suspensionSwitchPo?: string;
+  /** 菜单栏切换模块悬浮是否固定 */
+  // suspensionSwitchFixed?: boolean;
+  suspensionSwitchFollow?: boolean;
+  suspensionSwitchDefault?: boolean;
+  suspensionSwitchHot?: boolean;
+  suspensionSwitchColumnSquare?: boolean;
+  suspensionSwitchRingFeeds?: boolean;
 }
 
 /** 配置参数 */
