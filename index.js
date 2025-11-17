@@ -3177,7 +3177,7 @@
         {
           label: "问题写回答按钮",
           value: "hiddenQuestionAnswer",
-          css: ".QuestionHeader .FollowButton ~ a{display: none;}"
+          css: ".QuestionHeader .FollowButton ~ button{display: none;}"
         },
         {
           label: "问题邀请回答按钮",
