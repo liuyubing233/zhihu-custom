@@ -33,7 +33,7 @@ export const addAnswerCopyLink = async (contentItem: HTMLElement) => {
   if (!nodeUser) return;
   const nDomButton = createButtonFontSize12('获取回答链接', 'ctz-copy-answer-link');
   nDomButton.onclick = function () {
-    const metaUrl = contentItem.querySelector('[itemprop="url"]');
+    const metaUrl = contentItem.querySelector(':scope>[itemprop="url"]');
     if (!metaUrl) return;
     const link = metaUrl.getAttribute('content') || '';
     if (link) {
