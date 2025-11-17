@@ -58,7 +58,7 @@ const cssBackground = (background1: string, background2: string) =>
   `${NAME_BACKGROUND_2}{background-color:${background2}!important;background:${background2}!important;}` +
   `${NAME_BACKGROUND_TRANSPARENT}{background-color: transparent!important;background: transparent!important;}`;
 
-/** 使用背景色1的元素名称 */
+/** 使用背景色1的元素名称 - 底色背景 */
 const NAME_BACKGROUND_1 =
   `body,.Input-wrapper,.toolbar-section button:hover,.PostItem` +
   `,.VideoAnswerPlayer-stateBar,.skeleton,.Community-ContentLayout` +
@@ -105,8 +105,9 @@ const NAME_BACKGROUND_2 =
   `,.Topstory-container .TopstoryTabs>a::after,.ZVideo,.KfeCollection-CreateSaltCard,.CreatorSalt-personalInfo,.CreatorSalt-sideBar-item,.css-d1sc5t,.css-1gvsmgz,.css-u56wtg,.css-1hrberl` +
   `,.CreatorSalt-community-story-wrapper .CreatorSalt-community-story-header,.ant-table-tbody>tr>td,.CreatorSalt-management-wrapper .CreatorSalt-management-search,.ant-table-thead .ant-table-cell` +
   `,.QuestionWaiting-typesTopper,.SearchSubTabs,.ContentItem-actions.Sticky.is-fixed button[data-zop-retract-question='true'],.Post-Row-Content-left,.hot-column-container,.recommend-column,.hot-column,.more-container` +
+  `,.css-1e6hvbc,.css-17pkp3f` +
   // `,.css-4jezjh,.css-1xj1964,.css-ggid2,.css-10kzyet,.css-ep38sv,.css-b0g50k,.css-w0en9j,.css-14pitda,.css-15dztar,.css-1gkysn8,.css-97fdvh>div,.css-4lspwd,.css-1e6hvbc,.css-k32okj,.css-1b0ypf8 div,.css-np3nxw div,.css-1i12cbe` +
-  `,[class^="css-"]:not(.css-1ndlr1n,.css-1gomreu,.css-5ym188,.css-19q29v6,.css-1qyytj7,.css-2pfapc,.css-uq1pv2,.css-1khcilw,.css-i9srcr,.css-pu97ow,.css-74nox5)` +
+  // `,[class^="css-"]:not(.css-1ndlr1n,.css-1gomreu,.css-5ym188,.css-19q29v6,.css-1qyytj7,.css-2pfapc,.css-uq1pv2,.css-1khcilw,.css-i9srcr,.css-pu97ow,.css-74nox5)` +
   `,[class6="index-goodCourseCardContainer"]` +
   `,${appendClassStart(
     'App-root,PcContent-root,TopNavBar-root,CourseConsultation-corner,CourseConsultation-cornerButton,CornerButtonToTop-cornerButton,LearningRouteCard-pathContent,index-item,index-hoverCard,ShelfTopNav-root' +
