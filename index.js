@@ -2866,6 +2866,11 @@
           css: '.AppHeader a[href="https://www.zhihu.com/column-square"]{display:none}'
         },
         {
+          label: "顶部菜单栏 - 圈子",
+          value: "hiddenHeaderColumnRingFeeds",
+          css: '.AppHeader a[href="https://www.zhihu.com/ring-feeds"]{display:none}'
+        },
+        {
           label: "顶部菜单栏 - 付费咨询",
           value: "hiddenHeaderConsult",
           css: '.AppHeader a[href="https://www.zhihu.com/consult"]{display:none}'
@@ -2878,7 +2883,7 @@
         {
           label: "顶部菜单栏 - 直答",
           value: "hiddenHeaderZhida",
-          css: '.AppHeader a[href="https://www.zhihu.com/zhida"]{display:none}'
+          css: '.AppHeader a[href="https://zhida.zhihu.com/"]{display:none}'
         }
       ],
       [
@@ -3500,6 +3505,10 @@
     {
       keys: ["hiddenZhuanlanAuthorCard", "hiddenAD"],
       value: ".zhuanlan .Post-Row-Content-right{display:none;}"
+    },
+    {
+      keys: ["hiddenHeaderEducationLearning", "hiddenHeaderConsult"],
+      value: ".AppHeader .css-53paqb{display: none;}"
     }
   ];
   var appendHiddenStyle = async () => {
