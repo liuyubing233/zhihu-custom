@@ -140,6 +140,8 @@ export interface IConfigHidden {
   hiddenHomeCategoryMore?: boolean;
   /** 隐藏主页知乎指南 */
   hiddenHomeFooter?: boolean;
+  /** 隐藏主页大家都在搜 */
+  hiddenHomeHotSearch?: boolean;
   /** 隐藏回答内容操作栏 */
   hiddenAnswerItemActions?: boolean;
   /** 隐藏回答下方发布编辑时间 */

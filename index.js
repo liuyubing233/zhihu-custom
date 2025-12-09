@@ -2311,6 +2311,7 @@
     hiddenHomeCategory: true,
     hiddenHomeCategoryMore: true,
     hiddenHomeFooter: true,
+    hiddenHomeHotSearch: true,
     removeFromYanxuan: true,
     removeUnrealAnswer: false,
     removeFollowVoteAnswer: false,
@@ -3024,6 +3025,11 @@
           label: "知乎指南",
           value: "hiddenHomeFooter",
           css: ".Topstory .Footer,.Topstory footer{display: none;}"
+        },
+        {
+          label: "大家都在搜",
+          value: "hiddenHomeHotSearch",
+          css: ".Topstory .HotSearchCard{display: none;}"
         }
       ],
       [

@@ -262,6 +262,11 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
         value: 'hiddenHomeFooter',
         css: '.Topstory .Footer,.Topstory footer{display: none;}',
       },
+      {
+        label: '大家都在搜',
+        value: 'hiddenHomeHotSearch',
+        css: '.Topstory .HotSearchCard{display: none;}',
+      }
     ],
     [
       {

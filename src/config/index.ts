@@ -124,6 +124,7 @@ export const CONFIG_SIMPLE: IPfConfig = {
   hiddenHomeCategory: true,
   hiddenHomeCategoryMore: true,
   hiddenHomeFooter: true,
+  hiddenHomeHotSearch: true,
   removeFromYanxuan: true,
   removeUnrealAnswer: false,
   removeFollowVoteAnswer: false,
