@@ -247,6 +247,10 @@ export interface IConfigHidden {
   hiddenThanksInvite?: boolean;
   /** 隐藏首页分享想法模块 */
   hiddenHomeWriteArea?: boolean;
+  /** 问答页面信息栏 - 大家都在搜 */
+  hiddenAnswerRightHotSearchCard?: boolean;
+  /** 隐藏选中文字后的弹窗模块 */
+  hiddenSelectedTextPopup?: boolean;
 }
 
 /** 屏蔽内容模块默认配置 */
