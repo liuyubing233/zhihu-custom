@@ -2,7 +2,6 @@ import { CLASS_ZHIHU_COMMENT_DIALOG } from '../misc';
 import { store } from '../store';
 import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, domC, domP, fnLog, myStorage } from '../tools';
 import { addBlockUser, changeBlockedUsersBox, CLASS_BLOCK_USER_BOX, CLASS_BTN_ADD_BLOCKED, CLASS_BTN_REMOVE_BLOCKED, IBlockedUser, removeBlockUser } from './black-list';
-import { formatPreviewSize } from './image';
 
 /** 格式化评论区接口内的用户信息并储存 */
 export const formatCommentAuthors = (data: any[]) => {
@@ -177,49 +176,49 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
       continue;
     }
 
-    item.querySelectorAll('.comment_img img').forEach((itemImage) => {
-      (itemImage as HTMLImageElement).onclick = () => {
-        setTimeout(commentImagePreview, 100);
-      };
-    });
+    // item.querySelectorAll('.comment_img img').forEach((itemImage) => {
+    //   (itemImage as HTMLImageElement).onclick = () => {
+    //     setTimeout(commentImagePreview, 100);
+    //   };
+    // });
 
     formatComments(item, '.css-1kwt8l8');
   }
 };
 
-let commentPreviewObserver: MutationObserver | undefined = undefined;
-/** 评论图片预览尺寸调整 */
-const commentImagePreview = async () => {
-  const { commentImageFullPage } = await myStorage.getConfig();
-  if (commentImageFullPage) {
-    const commentPreviewImage = dom('.ImageView-img') as HTMLImageElement;
-    if (!commentPreviewImage) return;
-    // 预览图地址会多一个 _r
-    const imageSrc = commentPreviewImage.src.replace('_r', '');
-    const commentImage = dom(`.comment_img img[data-original="${imageSrc}"]`) as HTMLImageElement;
-    if (!commentImage) return;
-    const { width, height, scaleX, scaleY } = formatPreviewSize(commentImage);
-    const { innerWidth, innerHeight } = window;
+// let commentPreviewObserver: MutationObserver | undefined = undefined;
+// /** 评论图片预览尺寸调整 */
+// const commentImagePreview = async () => {
+//   const { commentImageFullPage } = await myStorage.getConfig();
+//   if (commentImageFullPage) {
+//     const commentPreviewImage = dom('.ImageView-img') as HTMLImageElement;
+//     if (!commentPreviewImage) return;
+//     // 预览图地址会多一个 _r
+//     const imageSrc = commentPreviewImage.src.replace('_r', '');
+//     const commentImage = dom(`.comment_img img[data-original="${imageSrc}"]`) as HTMLImageElement;
+//     if (!commentImage) return;
+//     const { width, height, scaleX, scaleY } = formatPreviewSize(commentImage);
+//     const { innerWidth, innerHeight } = window;
 
-    commentPreviewImage.style.cssText =
-      `width: ${width}px;` +
-      `height: ${height}px;` +
-      `transform: translateX(${innerWidth / 2 - (width * scaleX) / 2}px) translateY(${
-        innerHeight / 2 - (height * scaleY) / 2
-      }px) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;` +
-      `transform-origin: 0 0;` +
-      `transition: none;`;
+//     commentPreviewImage.style.cssText =
+//       `width: ${width}px;` +
+//       `height: ${height}px;` +
+//       `transform: translateX(${innerWidth / 2 - (width * scaleX) / 2}px) translateY(${
+//         innerHeight / 2 - (height * scaleY) / 2
+//       }px) scaleX(${scaleX}) scaleY(${scaleY}) translateZ(0px);will-change:unset;` +
+//       `transform-origin: 0 0;` +
+//       `transition: none;`;
 
-    const nodeImageBox = domP(commentPreviewImage, 'class', 'ImageView')!;
-    commentPreviewObserver && commentPreviewObserver.disconnect();
-    commentPreviewObserver = new MutationObserver((records) => {
-      if (!nodeImageBox.classList.contains('is-active')) {
-        commentPreviewImage.style.transition = '';
-      }
-    });
-    commentPreviewObserver.observe(nodeImageBox, { characterData: true, attributes: true });
-  }
-};
+//     const nodeImageBox = domP(commentPreviewImage, 'class', 'ImageView')!;
+//     commentPreviewObserver && commentPreviewObserver.disconnect();
+//     commentPreviewObserver = new MutationObserver((records) => {
+//       if (!nodeImageBox.classList.contains('is-active')) {
+//         commentPreviewImage.style.transition = '';
+//       }
+//     });
+//     commentPreviewObserver.observe(nodeImageBox, { characterData: true, attributes: true });
+//   }
+// };
 
 /** 关闭知乎评论弹窗 */
 export const closeCommentDialog = () => {

@@ -474,7 +474,7 @@ export interface IPfConfig extends IConfigHidden, IConfigFilter, IConfigSuspensi
   /** 回答页高性能模式 */
   highPerformanceAnswer?: boolean;
   /** 评论图片预览不超出页面 */
-  commentImageFullPage?: boolean;
+  // commentImageFullPage?: boolean;
   /** 取消评论输入框自动聚焦 */
   cancelCommentAutoFocus?: boolean;
   /** 键盘ESC键关闭评论弹窗 */

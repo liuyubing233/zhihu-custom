@@ -238,7 +238,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   suspensionOpen: ESuspensionOpen.左右,
   showBlockUserCommentTag: true,
   showBlockUserTag: true,
-  commentImageFullPage: true,
+  // commentImageFullPage: true,
   keyEscCloseCommentDialog: true,
   replaceZhidaToSearch: EReplaceZhidaToSearch.不替换,
   videoInAnswerArticle: EVideoInAnswerArticle.默认,

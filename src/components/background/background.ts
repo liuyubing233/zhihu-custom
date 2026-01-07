@@ -121,7 +121,8 @@ const NAME_BACKGROUND_2 =
 
 /** 透明背景色的元素名称 */
 const NAME_BACKGROUND_TRANSPARENT =
-  `.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k,#CTZ_SUSPENSION_SWITCH>a,#CTZ_SUSPENSION_SWITCH>a:hover` +
+  `#CTZ_HIDDEN .ctz-title, #CTZ_FILTER .ctz-title` +
+  `,.zhuanlan .Post-content .RichContent-actions.is-fixed,.AnnotationTag,.ProfileHeader-wrapper,.css-1ggwojn,.css-3dzt4y,.css-u4sx7k,#CTZ_SUSPENSION_SWITCH>a,#CTZ_SUSPENSION_SWITCH>a:hover` +
   `,.VideoPlaceholderContainer>section,.MoreAnswers .List-headerText,.ColumnHomeTop:before,.ColumnHomeBottom,.Popover button:not(.SearchBar-askDropdownButton),.ChatUserListItem .Chat-ActionMenuPopover-Button` +
   `,#root .App-main footer.css-2pfapc div,#root .App-main footer.css-2pfapc a,#root .css-ov3mmw *,#root .css-g9qnka *,#root .css-74nox5 *,#root .css-s5fc8s>.card *,.WriteIndexMain>div, .Popover-content>div,.css-ysdf4p>div`;
 
