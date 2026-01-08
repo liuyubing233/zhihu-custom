@@ -251,6 +251,8 @@ export interface IConfigHidden {
   hiddenAnswerRightHotSearchCard?: boolean;
   /** 隐藏选中文字后的弹窗模块 */
   hiddenSelectedTextPopup?: boolean;
+  /** 专栏大家都在搜 */
+  hiddenZhuanlanHotSearchCard?: boolean;
 }
 
 /** 屏蔽内容模块默认配置 */

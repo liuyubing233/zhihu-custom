@@ -646,6 +646,11 @@ const HIDDEN_ITEM_ARTICLE: IHiddenItem = {
         value: 'hiddenZhuanlanAuthorCard',
         css: '.zhuanlan .Card.AuthorCard{display:none}',
       },
+      {
+        label: '大家都在搜',
+        value: 'hiddenZhuanlanHotSearchCard',
+        css: '.zhuanlan .HotSearchCard{display:none}',
+      },
     ],
   ],
 };
@@ -799,10 +804,6 @@ export const HIDDEN_ARRAY_MORE = [
   {
     keys: ['hiddenTopicRightNumberBoard', 'hiddenTopicRightParentChild', 'hiddenTopicRightFooter'],
     value: '[data-za-detail-view-path-module="TopicItem"]>div:nth-child(2){display: none;}',
-  },
-  {
-    keys: ['hiddenZhuanlanAuthorCard', 'hiddenAD'],
-    value: '.zhuanlan .Post-Row-Content-right{display:none;}',
   },
   {
     keys: ['hiddenHeaderEducationLearning', 'hiddenHeaderConsult'],
