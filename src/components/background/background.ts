@@ -73,7 +73,7 @@ const NAME_BACKGROUND_1 =
   `,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-submenu-title:hover` +
   `,.Creator-salt-new-author-menu .Creator-salt-new-author-route .ant-menu-item:hover,.index-learnPath-dfrcu .index-learnContainer-9QR37 .index-learnShow-p3yvw .index-learnCard-vuCza,.index-courseCard-ebw4r` +
   `,[class^="index-goodCourseCard-"]` +
-  `,.css-m0zh86,.css-1503iqi,.css-wqf2py:hover,.css-1kxql2v,.css-jjc8wi,.css-1gtqxw0,.css-19bjnr2:hover,.css-kwaq2d:hover,.css-1b31wiw:hover,.css-2sopzd,.css-34mzkj` +
+  `,.css-m0zh86,.css-1503iqi,.css-wqf2py:hover,.css-1kxql2v,.css-jjc8wi,.css-1gtqxw0,.css-19bjnr2:hover,.css-kwaq2d:hover,.css-1b31wiw:hover,.css-2sopzd,.css-34mzkj,.css-13ev0i:hover` +
   // `,.css-13ev0i:hover,.css-oqi8p3 .lazy[data-lazy-status]` +
   `,${appendClassStart('Tabs-container,EpisodeList-sectionItem')}`;
 
@@ -109,7 +109,7 @@ const NAME_BACKGROUND_2 =
   `,.HotSearchCard,.WriteArea>div,.Creator-mainColumn .Card>div>div,.css-qd51c>div:not(.css-13gd32n),.ant-modal-content` +
   `,.css-1e6hvbc,.css-17pkp3f,.css-kt4t4n,.css-u3vsx3,.css-7v0dz0,.css-1ur5o1n,.css-1503iqi,.css-i9srcr,.css-vpzinw,.css-hdz1a3,.css-1q65fkr,.css-127i0sx,.css-ej3ubf,.css-mv0sgu,.css-qbngl8,.css-1na61gt,.css-h4qwk4,.css-14wefvy>div` +
   `,.css-tzviga,.css-1e31h8y,.css-13uu85k,.css-16t5hun,.css-nnul91,.css-rt4ywx,.css-ov3mmw,.css-3zr8ne,.css-lxxesj,.css-zylli3,.css-erbxwb,.css-1dja9sh,.css-7b4wc9,.css-1xvgm7g,.css-1ta275q,.css-1ta275q>div` +
-  `,.css-1oqbvad,.css-44kk6u,.css-1pariuy` +
+  `,.css-1oqbvad,.css-44kk6u,.css-1pariuy,.css-ksdfxq,.css-b0g50k,.css-3dzt4y` +
   // `,.css-4jezjh,.css-1xj1964,.css-ggid2,.css-10kzyet,.css-ep38sv,.css-b0g50k,.css-w0en9j,.css-14pitda,.css-15dztar,.css-1gkysn8,.css-97fdvh>div,.css-4lspwd,.css-1e6hvbc,.css-k32okj,.css-1b0ypf8 div,.css-np3nxw div,.css-1i12cbe` +
   // `,[class^="css-"]:not(.css-1ndlr1n,.css-1gomreu,.css-5ym188,.css-19q29v6,.css-1qyytj7,.css-2pfapc,.css-uq1pv2,.css-1khcilw,.css-i9srcr,.css-pu97ow,.css-74nox5)` +
   `,[class6="index-goodCourseCardContainer"]` +
