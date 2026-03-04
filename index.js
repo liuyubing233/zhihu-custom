@@ -1437,15 +1437,38 @@
     ["google" /* 谷歌 */]: "https://www.google.com.hk/search?q=",
     ["bing" /* 必应 */]: "https://www.bing.com/search?q="
   };
+  var CLASS_VIDEO_ONE_NAME = CLASS_VIDEO_ONE.replace(".", "");
+  var CLASS_VIDEO_TWO_BOX_NAME = CLASS_VIDEO_TWO_BOX.replace(".", "");
+  var CONTENT_CONFIG_TTL = 1500;
+  var contentConfigCache = void 0;
+  var contentConfigAt = 0;
+  var contentConfigPromise = void 0;
+  var getContentConfig = async (force = false) => {
+    const now = Date.now();
+    if (!force && contentConfigCache && now - contentConfigAt < CONTENT_CONFIG_TTL) {
+      return contentConfigCache;
+    }
+    if (contentConfigPromise) {
+      return contentConfigPromise;
+    }
+    contentConfigPromise = myStorage.getConfig(force).then((config) => {
+      contentConfigCache = config;
+      contentConfigAt = Date.now();
+      return config;
+    }).finally(() => {
+      contentConfigPromise = void 0;
+    });
+    return contentConfigPromise;
+  };
   var initRootEvent = async () => {
     const domRoot = dom("#root");
     if (!domRoot) return;
     domRoot.addEventListener("click", async function(event) {
-      const config = await myStorage.getConfig();
+      const config = await getContentConfig();
       const { fetchInterceptStatus, videoInAnswerArticle } = config;
       const target = event.target;
       if (videoInAnswerArticle === "1" /* 修改为链接 */) {
-        if (target.classList.contains(CLASS_VIDEO_ONE.replace(".", "")) || target.classList.contains(CLASS_VIDEO_TWO_BOX.replace(".", ""))) {
+        if (target.classList.contains(CLASS_VIDEO_ONE_NAME) || target.classList.contains(CLASS_VIDEO_TWO_BOX_NAME)) {
           const domVideo = target.querySelector("video");
           const videoSrc = domVideo ? domVideo.src : "";
           if (!videoSrc) return;
@@ -1478,7 +1501,7 @@
   };
   var doContentItem = async (pageType, contentItem, needTimeout = false) => {
     if (!contentItem || !pageType) return;
-    const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, answerItemCreatedAndModifiedTime, userHomeContentTimeTop } = await myStorage.getConfig();
+    const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, answerItemCreatedAndModifiedTime, userHomeContentTimeTop } = await getContentConfig();
     const doFun = () => {
       const doByPageType = {
         LIST: () => {
@@ -1518,11 +1541,17 @@
   var myListenAnswer = {
     initTimestamp: 0,
     loaded: true,
+    retryTimer: void 0,
     init: async function() {
       if (!location.pathname.includes("/question/") || !this.loaded) return;
       const currentTime = +/* @__PURE__ */ new Date();
       if (currentTime - this.initTimestamp < 500) {
-        setTimeout(() => this.init(), 500);
+        if (!this.retryTimer) {
+          this.retryTimer = setTimeout(() => {
+            this.retryTimer = void 0;
+            this.init();
+          }, 500);
+        }
         return;
       }
       if (this.initTimestamp !== 0) {
@@ -1534,6 +1563,10 @@
       processingData(domA(`.AnswersNavWrapper .List-item:not(.${CLASS_LISTENED})`));
     },
     reset: function() {
+      if (this.retryTimer) {
+        clearTimeout(this.retryTimer);
+        this.retryTimer = void 0;
+      }
       this.dataLoad();
       domA(`.AnswersNavWrapper .List-item.${CLASS_LISTENED}`).forEach((item) => {
         item.classList.remove(CLASS_LISTENED);
@@ -1553,6 +1586,7 @@
   };
   var processingData = async (nodes) => {
     const removeAnswers = store.getRemoveAnswers();
+    const removeAnswerMap = new Map(removeAnswers.map((item) => [String(item.id), item.message]));
     const config = await myStorage.getConfig();
     const {
       removeFromYanxuan,
@@ -1567,11 +1601,14 @@
       blockWordsAnswer = [],
       highPerformanceAnswer
     } = config;
+    const blockedUserMap = new Map((blockedUsers || []).map((item) => [item.id, item.name]));
+    const blockWordPatterns = createWordPatterns(blockWordsAnswer);
+    const codePrefix = Date.now();
     for (let i = 0, len = nodes.length; i < len; i++) {
       let message2 = "";
       const nodeItem = nodes[i];
       nodeItem.classList.add(CLASS_LISTENED);
-      nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
+      nodeItem.dataset.code = `${codePrefix}-${i}`;
       if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       const nodeItemContent = nodeItem.querySelector(".ContentItem");
       if (!nodeItemContent) continue;
@@ -1585,8 +1622,8 @@
       (dataCardContent["upvote_num"] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message2 = `过滤低赞回答: ${dataCardContent["upvote_num"]}赞`);
       if (!message2 && removeFromYanxuan) {
         const itemId = String(dataZop.itemId || "");
-        const findItem = removeAnswers.find((i2) => i2.id === itemId);
-        findItem && (message2 = findItem.message);
+        const findMessage = removeAnswerMap.get(itemId);
+        findMessage && (message2 = findMessage);
       }
       if (!message2) {
         const nodeTag1 = nodeItem.querySelector(".KfeCollection-AnswerTopCard-Container");
@@ -1600,28 +1637,20 @@
         }
       }
       if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-        const findBlocked = blockedUsers.find((i2) => i2.id === dataCardContent.author_member_hash_id);
-        findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}的回答`);
+        const blockedName = blockedUserMap.get(String(dataCardContent.author_member_hash_id || ""));
+        blockedName && (message2 = `已删除黑名单用户${blockedName}的回答`);
       }
       if (!message2 && removeAnonymousAnswer) {
-        const userName = nodeItem.querySelector('[itemprop="name"]').content;
+        const userNode = nodeItem.querySelector('[itemprop="name"]');
+        const userName = userNode ? userNode.content : "";
         userName === "匿名用户" && (message2 = `已屏蔽一条「匿名用户」回答`);
       }
       if (!message2) {
         const domRichContent = nodeItem.querySelector(".RichContent");
         const innerText = domRichContent ? domRichContent.innerText : "";
-        if (innerText) {
-          let matchedWord = "";
-          for (let itemWord of blockWordsAnswer) {
-            const rep = new RegExp(itemWord.toLowerCase());
-            if (rep.test(innerText.toLowerCase())) {
-              matchedWord += `「${itemWord}」`;
-              break;
-            }
-          }
-          if (matchedWord) {
-            message2 = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
-          }
+        const matchedWord = findMatchedWord(innerText, blockWordPatterns);
+        if (matchedWord) {
+          message2 = `匹配到屏蔽词${matchedWord}，已屏蔽该回答内容`;
         }
       }
       if (message2) {
@@ -1649,15 +1678,38 @@
         const nodes2 = domA(".AnswersNavWrapper .List-item");
         if (nodes2.length > 30) {
           const nIndex = nodes2.length - 30;
-          nodes2.forEach((item, index2) => {
-            if (index2 < nIndex) {
-              item.remove();
-            }
-          });
+          for (let i = 0; i < nIndex; i++) {
+            const item = nodes2[i];
+            item && item.remove();
+          }
           fnLog(`已开启高性能模式，删除${nIndex}条回答`);
         }
       }, 500);
     }
+  };
+  var createWordPatterns = (words) => {
+    const result = [];
+    for (const word of words) {
+      if (!word) continue;
+      try {
+        result.push({
+          word,
+          reg: new RegExp(word.toLowerCase())
+        });
+      } catch {
+      }
+    }
+    return result;
+  };
+  var findMatchedWord = (innerText, patterns) => {
+    if (!innerText || !patterns.length) return "";
+    const lowerText = innerText.toLowerCase();
+    for (const item of patterns) {
+      if (item.reg.test(lowerText)) {
+        return `「${item.word}」`;
+      }
+    }
+    return "";
   };
   var processingData2 = async (nodes) => {
     if (!nodes.length) return;
@@ -1688,14 +1740,20 @@
       blockedUsers = [],
       notInterestedList = []
     } = pfConfig;
+    const removeRecommendMap = new Map(removeRecommends.map((item) => [String(item.id), item.message]));
+    const blockedUserMap = new Map(blockedUsers.map((item) => [item.id, item.name]));
+    const notInterestedSet = new Set(notInterestedList);
+    const filterKeywordPatterns = createWordPatterns2(filterKeywords);
+    const answerWordPatterns = createWordPatterns2(blockWordsAnswer);
     const pfHistory = await myStorage.getHistory();
     const historyList = pfHistory.list;
     const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
+    const codePrefix = Date.now();
     for (let i = 0, len = nodes.length; i < len; i++) {
       const nodeItem = nodes[i];
       if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
       nodeItem.classList.add(CLASS_LISTENED);
-      nodeItem.dataset.code = `${+/* @__PURE__ */ new Date()}-${i}`;
+      nodeItem.dataset.code = `${codePrefix}-${i}`;
       const nodeContentItem = nodeItem.querySelector(".ContentItem");
       if (!nodeItem.scrollHeight || !nodeContentItem) continue;
       let message2 = "";
@@ -1728,15 +1786,15 @@
         }
       }
       if (!message2) {
-        notInterestedList.find((i2) => i2 === title) && (message2 = `屏蔽不感兴趣的内容：${title}`);
+        notInterestedSet.has(title) && (message2 = `屏蔽不感兴趣的内容：${title}`);
       }
       if (!message2) {
-        const removeItem = removeRecommends.find((i2) => i2.id === String(itemId));
-        removeItem && (message2 = `推荐列表已屏蔽${removeItem.message}: ${title}`);
+        const removeMessage = removeRecommendMap.get(String(itemId));
+        removeMessage && (message2 = `推荐列表已屏蔽${removeMessage}: ${title}`);
       }
       if (!message2 && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-        const findBlocked = blockedUsers.find((i2) => i2.id === cardContent.author_member_hash_id);
-        findBlocked && (message2 = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
+        const blockedName = blockedUserMap.get(String(cardContent.author_member_hash_id || ""));
+        blockedName && (message2 = `已删除黑名单用户${blockedName}发布的内容：${title}`);
       }
       !message2 && isVideo && removeItemAboutVideo && (message2 = `列表屏蔽视频：${title}`);
       !message2 && isArticle && removeItemAboutArticle && (message2 = `列表屏蔽文章：${title}`);
@@ -1747,11 +1805,11 @@
       if (!message2 && removeItemQuestionAsk && nodeItem.querySelector(".TopstoryQuestionAskItem")) {
         message2 = "屏蔽邀请回答";
       }
-      !message2 && (message2 = replaceBlockWord(title, nodeContentItem, filterKeywords, title, "标题"));
+      !message2 && (message2 = replaceBlockWord(title, nodeContentItem, filterKeywordPatterns, title, "标题"));
       if (!message2) {
         const domRichContent = nodeItem.querySelector(".RichContent");
         const innerText = domRichContent ? domRichContent.innerText : "";
-        message2 = replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, "内容");
+        message2 = replaceBlockWord(innerText, nodeContentItem, answerWordPatterns, title, "内容");
       }
       if (message2) {
         fnHidden(nodeItem, message2);
@@ -1793,6 +1851,20 @@
       }
     }
   };
+  var createWordPatterns2 = (words) => {
+    const result = [];
+    for (const word of words) {
+      if (!word) continue;
+      try {
+        result.push({
+          word,
+          reg: new RegExp(word.toLowerCase())
+        });
+      } catch {
+      }
+    }
+    return result;
+  };
   var RECOMMEND_TYPE = {
     answer: {
       name: "问题",
@@ -1812,20 +1884,19 @@
     }
   };
   var replaceBlockWord = (innerText, nodeItemContent, blockWords, title, byWhat) => {
-    if (innerText) {
-      let matchedWord = "";
-      for (let word of blockWords) {
-        const rep = new RegExp(word.toLowerCase());
-        if (rep.test(innerText.toLowerCase())) {
-          matchedWord += `「${word}」`;
-          break;
-        }
+    if (!innerText || !blockWords.length) return "";
+    const lowerText = innerText.toLowerCase();
+    let matchedWord = "";
+    for (const item of blockWords) {
+      if (item.reg.test(lowerText)) {
+        matchedWord = `「${item.word}」`;
+        break;
       }
-      if (matchedWord) {
-        const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-        const routeURL = elementItemProp && elementItemProp.getAttribute("content");
-        return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
-      }
+    }
+    if (matchedWord) {
+      const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+      const routeURL = elementItemProp && elementItemProp.getAttribute("content");
+      return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
     }
     return "";
   };
@@ -1855,12 +1926,18 @@
   var myListenList = {
     initTimestamp: 0,
     loaded: true,
+    retryTimer: void 0,
     init: async function() {
       if (!this.loaded) return;
       const nodeLoading = dom(".Topstory-recommend .List-item.List-item");
       const currentTime = +/* @__PURE__ */ new Date();
       if (nodeLoading || currentTime - this.initTimestamp < 500) {
-        setTimeout(() => this.init(), 500);
+        if (!this.retryTimer) {
+          this.retryTimer = setTimeout(() => {
+            this.retryTimer = void 0;
+            this.init();
+          }, 500);
+        }
         return;
       }
       if (this.initTimestamp !== 0) {
@@ -1874,6 +1951,10 @@
       await recommendHighPerformance();
     },
     reset: function() {
+      if (this.retryTimer) {
+        clearTimeout(this.retryTimer);
+        this.retryTimer = void 0;
+      }
       this.dataLoad();
       domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
         item.classList.remove(CLASS_LISTENED);
@@ -1889,10 +1970,16 @@
   };
   var myListenUserHomeList = {
     timestamp: 0,
+    retryTimer: void 0,
     init: async function() {
       const nTimestamp = +/* @__PURE__ */ new Date();
       if (nTimestamp - this.timestamp < 500) {
-        setTimeout(() => this.init(), 500);
+        if (!this.retryTimer) {
+          this.retryTimer = setTimeout(() => {
+            this.retryTimer = void 0;
+            this.init();
+          }, 500);
+        }
         return;
       }
       this.timestamp = nTimestamp;
@@ -1914,6 +2001,10 @@
       }
     },
     reset: function() {
+      if (this.retryTimer) {
+        clearTimeout(this.retryTimer);
+        this.retryTimer = void 0;
+      }
       domA(`.Profile-main .ListShortcut .List-item .ContentItem.${CLASS_LISTENED}`).forEach((item) => {
         item.classList.remove(CLASS_LISTENED);
       });
@@ -2011,15 +2102,17 @@
       optionChoose(itemOptionBox, itemChoose);
     });
   };
-  var Store = class {
+  var Store = class _Store {
     constructor() {
       this.userInfo = void 0;
       this.prevFetchHeaders = {};
       this.removeRecommends = [];
+      this.removeRecommendMap = /* @__PURE__ */ new Map();
       this.commendAuthors = [];
       this.userAnswers = [];
       this.userArticle = [];
       this.removeAnswers = [];
+      this.removeAnswerMap = /* @__PURE__ */ new Map();
       this.jsInitialData = void 0;
       this.setUserInfo = this.setUserInfo.bind(this);
       this.getUserInfo = this.getUserInfo.bind(this);
@@ -2038,6 +2131,9 @@
       this.setJsInitialData = this.setJsInitialData.bind(this);
       this.getJsInitialData = this.getJsInitialData.bind(this);
     }
+    static {
+      this.MAX_REMOVE_CACHE = 2e3;
+    }
     setUserInfo(inner) {
       this.userInfo = inner;
     }
@@ -2052,9 +2148,9 @@
     }
     async findRemoveRecommends(recommends) {
       const { removeAnonymousQuestion, removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
-      recommends.forEach((item) => {
+      for (const item of recommends) {
         const target = item.target;
-        if (!target) return;
+        if (!target) continue;
         let message2 = "";
         if (removeFromYanxuan && target.paid_info) {
           message2 = "选自盐选专栏的回答";
@@ -2066,12 +2162,11 @@
           message2 = "已删除一条视频回答";
         }
         if (message2) {
-          this.removeRecommends.push({
-            id: String(item.target.id),
-            message: message2
-          });
+          const id = String(item.target.id);
+          this.removeRecommendMap.set(id, message2);
         }
-      });
+      }
+      this.syncRemoveRecommends();
     }
     getRemoveRecommends() {
       return this.removeRecommends;
@@ -2096,7 +2191,7 @@
     }
     async findRemoveAnswers(answers) {
       const { removeFromYanxuan, videoInAnswerArticle } = await myStorage.getConfig();
-      answers.forEach((item) => {
+      for (const item of answers) {
         let message2 = "";
         if (removeFromYanxuan && item.answerType === "paid" && item.labelInfo) {
           message2 = "已删除一条选自盐选专栏的回答";
@@ -2105,12 +2200,10 @@
           message2 = "已删除一条视频回答";
         }
         if (message2) {
-          this.removeAnswers.push({
-            id: item.id,
-            message: message2
-          });
+          this.removeAnswerMap.set(String(item.id), message2);
         }
-      });
+      }
+      this.syncRemoveAnswers();
     }
     getRemoveAnswers() {
       return this.removeAnswers;
@@ -2120,6 +2213,30 @@
     }
     getJsInitialData() {
       return this.jsInitialData;
+    }
+    syncRemoveRecommends() {
+      const overflow = this.removeRecommendMap.size - _Store.MAX_REMOVE_CACHE;
+      if (overflow > 0) {
+        const keys = this.removeRecommendMap.keys();
+        for (let i = 0; i < overflow; i++) {
+          const key = keys.next().value;
+          if (key === void 0) break;
+          this.removeRecommendMap.delete(key);
+        }
+      }
+      this.removeRecommends = Array.from(this.removeRecommendMap.entries()).map(([id, message2]) => ({ id, message: message2 }));
+    }
+    syncRemoveAnswers() {
+      const overflow = this.removeAnswerMap.size - _Store.MAX_REMOVE_CACHE;
+      if (overflow > 0) {
+        const keys = this.removeAnswerMap.keys();
+        for (let i = 0; i < overflow; i++) {
+          const key = keys.next().value;
+          if (key === void 0) break;
+          this.removeAnswerMap.delete(key);
+        }
+      }
+      this.removeAnswers = Array.from(this.removeAnswerMap.entries()).map(([id, message2]) => ({ id, message: message2 }));
     }
   };
   var store = new Store();
@@ -2432,32 +2549,71 @@
     notInterestedList: []
   };
   var SAVE_HISTORY_NUMBER = 500;
+  var memoryRawCache = {};
+  var configCacheRaw = "";
+  var configCache = void 0;
+  var historyCacheRaw = "";
+  var historyCache = void 0;
+  var parseStorageData = (raw) => {
+    if (!raw) return void 0;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return void 0;
+    }
+  };
   var myStorage = {
     set: async function(name, value) {
       value.t = +/* @__PURE__ */ new Date();
       const v = JSON.stringify(value);
+      memoryRawCache[name] = v;
+      if (name === "pfConfig") {
+        configCacheRaw = v;
+        configCache = parseStorageData(v) || {};
+      }
+      if (name === "pfHistory") {
+        historyCacheRaw = v;
+        historyCache = parseStorageData(v) || { list: [], view: [] };
+      }
       localStorage.setItem(name, v);
       await GM.setValue(name, v);
     },
-    get: async function(name) {
-      const config = await GM.getValue(name);
-      const configLocal = localStorage.getItem(name);
-      const cParse = config ? JSON.parse(config) : null;
-      const cLParse = configLocal ? JSON.parse(configLocal) : null;
-      if (!cParse && !cLParse) return "";
-      if (!cParse) return configLocal;
-      if (!cLParse) return config;
-      if (cParse.t < cLParse.t) return configLocal;
-      return config;
+    get: async function(name, force = false) {
+      if (!force && memoryRawCache[name] !== void 0) return memoryRawCache[name];
+      const gmValue = await GM.getValue(name);
+      const config = typeof gmValue === "string" ? gmValue : gmValue ? JSON.stringify(gmValue) : "";
+      const configLocal = localStorage.getItem(name) || "";
+      const cParse = parseStorageData(config);
+      const cLParse = parseStorageData(configLocal);
+      if (!cParse && !cLParse) {
+        memoryRawCache[name] = "";
+        return "";
+      }
+      if (!cParse) {
+        memoryRawCache[name] = configLocal;
+        return configLocal;
+      }
+      if (!cLParse) {
+        memoryRawCache[name] = config;
+        return config;
+      }
+      const nextRaw = cParse.t < cLParse.t ? configLocal : config;
+      memoryRawCache[name] = nextRaw;
+      return nextRaw;
     },
-    getConfig: async function() {
-      const nConfig = await this.get("pfConfig");
-      return Promise.resolve(nConfig ? JSON.parse(nConfig) : {});
+    getConfig: async function(force = false) {
+      const nConfig = await this.get("pfConfig", force);
+      if (!force && configCache && nConfig === configCacheRaw) return configCache;
+      configCacheRaw = nConfig || "";
+      configCache = parseStorageData(configCacheRaw) || {};
+      return configCache;
     },
-    getHistory: async function() {
-      const nHistory = await myStorage.get("pfHistory");
-      const h = nHistory ? JSON.parse(nHistory) : { list: [], view: [] };
-      return Promise.resolve(h);
+    getHistory: async function(force = false) {
+      const nHistory = await myStorage.get("pfHistory", force);
+      if (!force && historyCache && nHistory === historyCacheRaw) return historyCache;
+      historyCacheRaw = nHistory || "";
+      historyCache = parseStorageData(historyCacheRaw) || { list: [], view: [] };
+      return historyCache;
     },
     updateConfigItem: async function(key, value) {
       const config = await this.getConfig();
@@ -3823,14 +3979,21 @@
   };
   var myListenSearchListItem = {
     initTimestamp: 0,
+    retryTimer: void 0,
     init: async function() {
       const currentTime = +/* @__PURE__ */ new Date();
       if (currentTime - this.initTimestamp < 500) {
-        setTimeout(() => this.init(), 500);
+        if (!this.retryTimer) {
+          this.retryTimer = setTimeout(() => {
+            this.retryTimer = void 0;
+            this.init();
+          }, 500);
+        }
         return;
       }
+      this.initTimestamp = currentTime;
       const nodes = domA(`.SearchResult-Card[role="listitem"]:not(.${CLASS_LISTENED})`);
-      if (this.index + 1 === nodes.length) return;
+      if (!nodes.length) return;
       const { removeItemAboutVideo, removeItemAboutArticle, removeItemAboutAD, removeLessVote, lessVoteNumber = 0 } = await myStorage.getConfig();
       for (let i = 0, len = nodes.length; i < len; i++) {
         let message2 = "";
@@ -3858,6 +4021,10 @@
       }
     },
     reset: function() {
+      if (this.retryTimer) {
+        clearTimeout(this.retryTimer);
+        this.retryTimer = void 0;
+      }
       domA(`.SearchResult-Card[role="listitem"].${CLASS_LISTENED}`).forEach((item) => {
         item.classList.remove(CLASS_LISTENED);
       });
@@ -4355,40 +4522,115 @@
       })
     );
   };
+  var FAST_TRIGGER_DELAY = 120;
+  var HEAVY_TRIGGER_DELAY = 700;
+  var HEAVY_MIN_INTERVAL = 1500;
+  var FORCE_RESIZE_INTERVAL = 1500;
+  var isFastRunning = false;
+  var isFastPending = false;
+  var isHeavyRunning = false;
+  var isHeavyPending = false;
+  var heavyTimer = void 0;
+  var lastHeavyRunAt = 0;
+  var lastForceResizeAt = 0;
+  var wasTopstoryTiny = false;
+  var hasSetSearchPlaceholder = false;
   var initResizeObserver = () => {
-    const resizeObserver = new ResizeObserver(throttle(resizeFun));
+    const onResize = throttle(() => {
+      scheduleFast();
+      scheduleHeavy();
+    }, FAST_TRIGGER_DELAY);
+    const resizeObserver = new ResizeObserver(() => onResize());
     resizeObserver.observe(document.body);
+    scheduleFast();
+    scheduleHeavy();
   };
-  async function resizeFun() {
+  function scheduleFast() {
+    if (isFastRunning) {
+      isFastPending = true;
+      return;
+    }
+    isFastRunning = true;
+    runFastTasks().catch(() => void 0).finally(() => {
+      isFastRunning = false;
+      if (isFastPending) {
+        isFastPending = false;
+        scheduleFast();
+      }
+    });
+  }
+  function scheduleHeavy() {
+    if (heavyTimer) return;
+    const now = Date.now();
+    const wait = Math.max(HEAVY_TRIGGER_DELAY, HEAVY_MIN_INTERVAL - (now - lastHeavyRunAt));
+    heavyTimer = setTimeout(() => {
+      heavyTimer = void 0;
+      runHeavyTasks().catch(() => void 0);
+    }, wait);
+  }
+  async function runFastTasks() {
     if (!HTML_HOOTS.includes(location.hostname)) return;
-    const { hiddenSearchBoxTopSearch, globalTitle } = await myStorage.getConfig();
     const nodeTopStoryC = domById("TopstoryContent");
     if (nodeTopStoryC) {
       const heightTopStoryContent = nodeTopStoryC.offsetHeight;
       if (heightTopStoryContent < 200) {
-        myListenList.restart();
+        if (!wasTopstoryTiny) {
+          myListenList.restart();
+        }
+        wasTopstoryTiny = true;
       } else {
+        wasTopstoryTiny = false;
         myListenList.init();
       }
-      heightTopStoryContent < window.innerHeight && windowResize();
+      if (heightTopStoryContent < window.innerHeight) {
+        const now = Date.now();
+        if (now - lastForceResizeAt > FORCE_RESIZE_INTERVAL) {
+          lastForceResizeAt = now;
+          windowResize();
+        }
+      }
+    } else {
+      wasTopstoryTiny = false;
     }
-    initLinkChanger();
-    previewGIF();
-    initImagePreview();
-    doListenComment();
-    fnJustNumberInAction();
     myListenSearchListItem.init();
     myListenAnswer.init();
     myListenUserHomeList.init();
-    canCopy();
-    changeSizeBeforeResize();
-    pathnameHasFn({
-      collection: () => myCollectionExport.init()
-    });
-    globalTitle !== document.title && changeTitle();
-    const nodeSearchBarInput = dom(".SearchBar-input input");
-    if (hiddenSearchBoxTopSearch && nodeSearchBarInput) {
-      nodeSearchBarInput.placeholder = "";
+  }
+  async function runHeavyTasks() {
+    if (isHeavyRunning) {
+      isHeavyPending = true;
+      return;
+    }
+    if (!HTML_HOOTS.includes(location.hostname)) return;
+    isHeavyRunning = true;
+    try {
+      const { hiddenSearchBoxTopSearch, globalTitle } = await myStorage.getConfig();
+      lastHeavyRunAt = Date.now();
+      initLinkChanger();
+      previewGIF();
+      initImagePreview();
+      doListenComment();
+      fnJustNumberInAction();
+      canCopy();
+      changeSizeBeforeResize();
+      pathnameHasFn({
+        collection: () => myCollectionExport.init()
+      });
+      globalTitle !== document.title && changeTitle();
+      const nodeSearchBarInput = dom(".SearchBar-input input");
+      if (hiddenSearchBoxTopSearch && nodeSearchBarInput && !hasSetSearchPlaceholder) {
+        nodeSearchBarInput.placeholder = "";
+        hasSetSearchPlaceholder = true;
+      }
+      if (!hiddenSearchBoxTopSearch) {
+        hasSetSearchPlaceholder = false;
+      }
+    } finally {
+      isHeavyRunning = false;
+      if (isHeavyPending) {
+        isHeavyPending = false;
+        scheduleHeavy();
+      }
     }
   }
   var fnChanger = async (ev) => {
@@ -4853,7 +5095,6 @@
       keydownNextImage(event);
     });
     window.addEventListener("copy", function(event) {
-      console.log("???????copy");
       eventCopy(event);
     });
     document.addEventListener("click", function(event) {

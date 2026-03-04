@@ -34,15 +34,21 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     blockedUsers = [],
     notInterestedList = [],
   } = pfConfig;
+  const removeRecommendMap = new Map(removeRecommends.map((item) => [String(item.id), item.message]));
+  const blockedUserMap = new Map(blockedUsers.map((item) => [item.id, item.name]));
+  const notInterestedSet = new Set(notInterestedList);
+  const filterKeywordPatterns = createWordPatterns(filterKeywords);
+  const answerWordPatterns = createWordPatterns(blockWordsAnswer);
   const pfHistory = await myStorage.getHistory();
   const historyList = pfHistory.list;
   const highlight = await doHighlightOriginal(backgroundHighlightOriginal, themeDark, themeLight);
+  const codePrefix = Date.now();
 
   for (let i = 0, len = nodes.length; i < len; i++) {
     const nodeItem = nodes[i];
     if (nodeItem.classList.contains(CTZ_HIDDEN_ITEM_CLASS)) continue;
     nodeItem.classList.add(CLASS_LISTENED);
-    nodeItem.dataset.code = `${+new Date()}-${i}`; // 添加唯一标识
+    nodeItem.dataset.code = `${codePrefix}-${i}`; // 添加唯一标识
     const nodeContentItem = nodeItem.querySelector('.ContentItem');
     if (!nodeItem.scrollHeight || !nodeContentItem) continue;
     let message = ''; // 屏蔽信息
@@ -83,19 +89,19 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
 
     // 屏蔽不感兴趣内容
     if (!message) {
-      notInterestedList.find((i) => i === title) && (message = `屏蔽不感兴趣的内容：${title}`);
+      notInterestedSet.has(title) && (message = `屏蔽不感兴趣的内容：${title}`);
     }
 
     // 屏蔽盐选等...
     if (!message) {
-      const removeItem = removeRecommends.find((i) => i.id === String(itemId));
-      removeItem && (message = `推荐列表已屏蔽${removeItem.message}: ${title}`);
+      const removeMessage = removeRecommendMap.get(String(itemId));
+      removeMessage && (message = `推荐列表已屏蔽${removeMessage}: ${title}`);
     }
 
     // 屏蔽用户的内容
     if (!message && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-      const findBlocked = blockedUsers.find((i) => i.id === cardContent.author_member_hash_id);
-      findBlocked && (message = `已删除黑名单用户${findBlocked.name}发布的内容：${title}`);
+      const blockedName = blockedUserMap.get(String(cardContent.author_member_hash_id || ''));
+      blockedName && (message = `已删除黑名单用户${blockedName}发布的内容：${title}`);
     }
 
     // 列表种类过滤
@@ -113,12 +119,12 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     }
 
     // 标题屏蔽词过滤
-    !message && (message = replaceBlockWord(title, nodeContentItem, filterKeywords, title, '标题'));
+    !message && (message = replaceBlockWord(title, nodeContentItem, filterKeywordPatterns, title, '标题'));
     // 内容屏蔽词过滤
     if (!message) {
       const domRichContent = nodeItem.querySelector('.RichContent');
       const innerText = domRichContent ? (domRichContent as HTMLElement).innerText : '';
-      message = replaceBlockWord(innerText, nodeContentItem, blockWordsAnswer, title, '内容');
+      message = replaceBlockWord(innerText, nodeContentItem, answerWordPatterns, title, '内容');
     }
 
     if (message) {
@@ -169,6 +175,25 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
   }
 };
 
+interface IWordPattern {
+  word: string;
+  reg: RegExp;
+}
+
+const createWordPatterns = (words: string[]): IWordPattern[] => {
+  const result: IWordPattern[] = [];
+  for (const word of words) {
+    if (!word) continue;
+    try {
+      result.push({
+        word,
+        reg: new RegExp(word.toLowerCase()),
+      });
+    } catch {}
+  }
+  return result;
+};
+
 const RECOMMEND_TYPE = {
   answer: {
     name: '问题',
@@ -188,21 +213,21 @@ const RECOMMEND_TYPE = {
   },
 };
 
-const replaceBlockWord = (innerText: string, nodeItemContent: Element, blockWords: string[], title: string, byWhat: string) => {
-  if (innerText) {
-    let matchedWord = '';
-    for (let word of blockWords) {
-      const rep = new RegExp(word.toLowerCase());
-      if (rep.test(innerText.toLowerCase())) {
-        matchedWord += `「${word}」`;
-        break;
-      }
+const replaceBlockWord = (innerText: string, nodeItemContent: Element, blockWords: IWordPattern[], title: string, byWhat: string) => {
+  if (!innerText || !blockWords.length) return '';
+
+  const lowerText = innerText.toLowerCase();
+  let matchedWord = '';
+  for (const item of blockWords) {
+    if (item.reg.test(lowerText)) {
+      matchedWord = `「${item.word}」`;
+      break;
     }
-    if (matchedWord) {
-      const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
-      const routeURL = elementItemProp && elementItemProp.getAttribute('content');
-      return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
-    }
+  }
+  if (matchedWord) {
+    const elementItemProp = nodeItemContent.querySelector('[itemprop="url"]');
+    const routeURL = elementItemProp && elementItemProp.getAttribute('content');
+    return `${byWhat}屏蔽词匹配，匹配内容：${matchedWord}，《${title}》，链接：${routeURL}`;
   }
   return '';
 };

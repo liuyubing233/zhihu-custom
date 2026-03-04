@@ -6,6 +6,7 @@ import { recommendHighPerformance } from './recommend-high-performance';
 interface IMyListenList {
   initTimestamp: number;
   loaded: boolean;
+  retryTimer: ReturnType<typeof setTimeout> | undefined;
   /** 列表内容监听加载 */
   init: () => Promise<void>;
   /** 重置列表监听 */
@@ -20,6 +21,7 @@ interface IMyListenList {
 export const myListenList: IMyListenList = {
   initTimestamp: 0,
   loaded: true,
+  retryTimer: undefined,
   init: async function () {
     if (!this.loaded) return;
     const nodeLoading = dom('.Topstory-recommend .List-item.List-item');
@@ -27,7 +29,12 @@ export const myListenList: IMyListenList = {
     // 存在此元素时为加载数据状态，半秒钟后再次加载
     // 时间戳添加，解决重置问题
     if (nodeLoading || currentTime - this.initTimestamp < 500) {
-      setTimeout(() => this.init(), 500);
+      if (!this.retryTimer) {
+        this.retryTimer = setTimeout(() => {
+          this.retryTimer = undefined;
+          this.init();
+        }, 500);
+      }
       return;
     }
     if (this.initTimestamp !== 0) {
@@ -42,6 +49,10 @@ export const myListenList: IMyListenList = {
     await recommendHighPerformance();
   },
   reset: function () {
+    if (this.retryTimer) {
+      clearTimeout(this.retryTimer);
+      this.retryTimer = undefined;
+    }
     this.dataLoad();
     domA(`.TopstoryItem.${CLASS_LISTENED}`).forEach((item) => {
       item.classList.remove(CLASS_LISTENED);

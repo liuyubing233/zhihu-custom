@@ -5,13 +5,19 @@ import { EHomeContentOpen } from '../select';
 
 export const myListenUserHomeList = {
   timestamp: 0,
+  retryTimer: undefined as ReturnType<typeof setTimeout> | undefined,
   init: async function () {
     const nTimestamp = +new Date();
     if (nTimestamp - this.timestamp < 500) {
-      setTimeout(() => this.init(), 500);
+      if (!this.retryTimer) {
+        this.retryTimer = setTimeout(() => {
+          this.retryTimer = undefined;
+          this.init();
+        }, 500);
+      }
       return;
     }
-    this.timestamp = nTimestamp
+    this.timestamp = nTimestamp;
 
     const { homeContentOpen } = await myStorage.getConfig();
     const nodes = domA(`.Profile-main .ListShortcut .List-item .ContentItem:not(.${CLASS_LISTENED})`);
@@ -33,6 +39,10 @@ export const myListenUserHomeList = {
     }
   },
   reset: function () {
+    if (this.retryTimer) {
+      clearTimeout(this.retryTimer);
+      this.retryTimer = undefined;
+    }
     domA(`.Profile-main .ListShortcut .List-item .ContentItem.${CLASS_LISTENED}`).forEach((item) => {
       item.classList.remove(CLASS_LISTENED);
     });
