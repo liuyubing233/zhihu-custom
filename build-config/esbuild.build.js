@@ -1,14 +1,16 @@
 const esbuild = require('esbuild');
 const { envEnd, envLoad } = require('./esbuild.plugins');
+const pkg = require('../package.json');
 
 const env = process.env;
 const isDev = env.APP_ENV === 'dev';
+const author = typeof pkg.author === 'string' ? pkg.author : pkg.author?.name || '';
 const info =
   `// ==UserScript==\n` +
-  `// @name         ${env.npm_package_displayName}\n` +
+  `// @name         ${pkg.displayName || pkg.name}\n` +
   `// @namespace    http://tampermonkey.net/\n` +
-  `// @version      ${env.npm_package_version}\n` +
-  `// @description  ${env.npm_package_description}\n` +
+  `// @version      ${pkg.version}\n` +
+  `// @description  ${pkg.description}\n` +
   `// @compatible   edge Violentmonkey\n` +
   `// @compatible   edge Tampermonkey\n` +
   `// @compatible   chrome Violentmonkey\n` +
@@ -17,8 +19,8 @@ const info =
   `// @compatible   firefox Tampermonkey\n` +
   `// @compatible   safari Violentmonkey\n` +
   `// @compatible   safari Tampermonkey\n` +
-  `// @author       ${env.npm_package_author_name}\n` +
-  `// @license      ${env.npm_package_license}\n` +
+  `// @author       ${author}\n` +
+  `// @license      ${pkg.license}\n` +
   '// @match        *://*.zhihu.com/*\n' +
   `// @grant        unsafeWindow\n` +
   `// @grant        GM_info\n` +

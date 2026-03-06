@@ -1399,10 +1399,47 @@
     }
   };
   var timeout;
+  var CLASS_ZHIDA_REPLACED = "ctz-zhida-replaced";
+  var DATASET_MODE = "ctzZhidaMode";
+  var hasInitZhidaClickListener = false;
+  var initZhidaClickListener = () => {
+    if (hasInitZhidaClickListener) return;
+    hasInitZhidaClickListener = true;
+    window.addEventListener(
+      "click",
+      (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const domItem = target.closest(`a.RichContent-EntityWord.${CLASS_ZHIDA_REPLACED}`);
+        if (!domItem) return;
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        const mode = domItem.dataset[DATASET_MODE];
+        if (mode === "removeLink" /* 去除知乎直达跳转 */) {
+          event.preventDefault();
+          return;
+        }
+        const { href, target: linkTarget } = domItem;
+        if (!href) {
+          event.preventDefault();
+          return;
+        }
+        event.preventDefault();
+        const needOpenInNewTab = linkTarget === "_blank" || event.metaKey || event.ctrlKey || event.shiftKey;
+        if (needOpenInNewTab) {
+          window.open(href, "_blank", "noopener,noreferrer");
+          return;
+        }
+        location.href = href;
+      },
+      true
+    );
+  };
   var fnReplaceZhidaToSearch = async (domFind = document.body, index2 = 0) => {
     if (index2 === 5) return;
     const { replaceZhidaToSearch = "default" /* 不替换 */ } = await myStorage.getConfig();
     if (replaceZhidaToSearch === "default" /* 不替换 */) return;
+    initZhidaClickListener();
     const domsZhida = domFind.querySelectorAll(".RichContent-EntityWord");
     if (!domsZhida.length) {
       timeout && clearTimeout(timeout);
@@ -1419,15 +1456,16 @@
       if (domSvg) {
         domSvg.style.display = "none";
       }
+      domItem.classList.add(CLASS_ZHIDA_REPLACED);
+      domItem.dataset[DATASET_MODE] = replaceZhidaToSearch;
       if (replaceZhidaToSearch === "removeLink" /* 去除知乎直达跳转 */) {
-        domItem.onclick = function(e) {
-          e.preventDefault();
-        };
+        domItem.removeAttribute("href");
         domItem.style.cssText = `color: inherit!important; cursor: text!important;background: transparent!important;`;
         continue;
       }
       const prevTextContent = domItem.textContent || "";
       domItem.innerHTML = prevTextContent + '<span style="transform: rotate(-45deg);display: inline-block;">⚲</span>';
+      domItem.rel = "noopener noreferrer";
       domItem.href = SEARCH_PATH[replaceZhidaToSearch] + encodeURIComponent(prevTextContent);
     }
   };
