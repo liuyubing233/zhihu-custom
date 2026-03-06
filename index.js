@@ -3013,7 +3013,7 @@
         {
           label: "隐藏选中文字后的弹窗模块",
           value: "hiddenSelectedTextPopup",
-          css: ".css-1b15i3v{display: none!important;}"
+          css: ".css-s3a8u1{display: none!important;}"
         }
       ],
       [
