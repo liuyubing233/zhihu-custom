@@ -3,6 +3,7 @@ import { CLASS_LISTENED } from '../../misc';
 import { store } from '../../store';
 import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, fnHidden, fnLog, myStorage } from '../../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../../types/zhihu/zhihu.type';
+import { createBlockedUserTagHTML, IBlockedUser } from '../black-list';
 import { EAnswerOpen } from '../select';
 
 /** 监听详情回答 - 过滤 */
@@ -55,6 +56,20 @@ const OB_CLASS_FOLD = {
   off: 'ctz-fold-close',
 };
 
+const CLASS_BLOCKED_CONTENT_REPLACEMENT = 'ctz-blocked-content-replacement';
+const BLOCKED_CONTENT_REPLACEMENT_TEXT = `<span class="ctz-blocked-content-replacement-text">***</span>`;
+
+const replaceBlockedAnswerContent = (nodeItem: HTMLElement, blockedUser: IBlockedUser, showBlockUserTagType?: boolean) => {
+  const nodeRichContent = nodeItem.querySelector('.RichContent') as HTMLElement | null;
+  const nodeContent = (nodeRichContent && nodeRichContent.querySelector('.RichContent-inner')) || nodeRichContent;
+  if (!nodeContent || nodeContent.classList.contains(CLASS_BLOCKED_CONTENT_REPLACEMENT)) return;
+  nodeContent.innerHTML = BLOCKED_CONTENT_REPLACEMENT_TEXT + createBlockedUserTagHTML(showBlockUserTagType, blockedUser);
+  nodeContent.classList.add(CLASS_BLOCKED_CONTENT_REPLACEMENT);
+  nodeRichContent && nodeRichContent.classList.remove('is-collapsed');
+  nodeItem.querySelectorAll('.ContentItem-expandButton,.RichContent-collapsedText').forEach((item) => ((item as HTMLElement).style.display = 'none'));
+  fnLog(`已将黑名单用户${blockedUser.name}的回答替换为 ***`);
+};
+
 const processingData = async (nodes: NodeListOf<HTMLElement>) => {
   const removeAnswers = store.getRemoveAnswers();
   const removeAnswerMap = new Map(removeAnswers.map((item) => [String(item.id), item.message]));
@@ -68,11 +83,13 @@ const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     lessVoteNumberDetail = 0,
     answerOpen = EAnswerOpen.默认,
     removeBlockUserContent,
+    replaceBlockUserContentWithStar,
+    showBlockUserTagType,
     blockedUsers,
     blockWordsAnswer = [],
     highPerformanceAnswer,
   } = config;
-  const blockedUserMap = new Map((blockedUsers || []).map((item) => [item.id, item.name]));
+  const blockedUserMap = new Map((blockedUsers || []).map((item) => [item.id, item]));
   const blockWordPatterns = createWordPatterns(blockWordsAnswer);
   const codePrefix = Date.now();
 
@@ -116,20 +133,27 @@ const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     }
 
     // 屏蔽用户的回答
+    let blockedUserToReplace: IBlockedUser | undefined = undefined;
     if (!message && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-      const blockedName = blockedUserMap.get(String(dataCardContent.author_member_hash_id || ''));
-      blockedName && (message = `已删除黑名单用户${blockedName}的回答`);
+      const blockedUser = blockedUserMap.get(String(dataCardContent.author_member_hash_id || ''));
+      if (blockedUser) {
+        if (replaceBlockUserContentWithStar) {
+          blockedUserToReplace = blockedUser;
+        } else {
+          message = `已删除黑名单用户${blockedUser.name}的回答`;
+        }
+      }
     }
 
     // 屏蔽「匿名用户」回答
-    if (!message && removeAnonymousAnswer) {
+    if (!message && !blockedUserToReplace && removeAnonymousAnswer) {
       const userNode = nodeItem.querySelector('[itemprop="name"]') as HTMLMetaElement | null;
       const userName = userNode ? userNode.content : '';
       userName === '匿名用户' && (message = `已屏蔽一条「匿名用户」回答`);
     }
 
     // 屏蔽词
-    if (!message) {
+    if (!message && !blockedUserToReplace) {
       const domRichContent = nodeItem.querySelector('.RichContent');
       const innerText = domRichContent ? (domRichContent as HTMLElement).innerText : '';
       const matchedWord = findMatchedWord(innerText, blockWordPatterns);
@@ -142,9 +166,12 @@ const processingData = async (nodes: NodeListOf<HTMLElement>) => {
       // 最后信息 & 起点位置处理
       fnHidden(nodeItem, message);
     } else {
+      if (blockedUserToReplace) {
+        replaceBlockedAnswerContent(nodeItem, blockedUserToReplace, showBlockUserTagType);
+      }
       doContentItem('QUESTION', nodeItemContent as HTMLElement);
       // 自动展开回答 和 默认收起长回答
-      if (answerOpen !== EAnswerOpen.默认) {
+      if (!blockedUserToReplace && answerOpen !== EAnswerOpen.默认) {
         const buttonUnfold = nodeItem.querySelector('.ContentItem-expandButton') as HTMLButtonElement;
         const buttonFold = nodeItem.querySelector('.RichContent-collapsedText') as HTMLButtonElement;
         if (answerOpen === EAnswerOpen.自动展开所有回答 && !nodeItem.classList.contains(OB_CLASS_FOLD.on)) {
