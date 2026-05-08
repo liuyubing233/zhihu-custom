@@ -17,7 +17,7 @@ const HIDDEN_ITEM_COMMON: IHiddenItem = {
       {
         label: '广告',
         value: 'hiddenAD',
-        css: '.TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer,.Pc-Business-Card-PcTopFeedBanner,.ZhiGoodsCard,.Pc-word-new{display: none!important;}',
+        css: '.TopstoryItem--advertCard,.Pc-card,.Pc-word,.RichText-ADLinkCardContainer,.Pc-Business-Card-PcTopFeedBanner,.ZhiGoodsCard,.Pc-word-new,.Business-Card-PcRightBanner-link{display: none!important;}',
       },
     ],
     [
