@@ -369,9 +369,9 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
     ],
     [
       {
-        label: '搜索栏知乎热搜',
+        label: '搜索栏大家都在搜',
         value: 'hiddenSearchBoxTopSearch',
-        css: '.SearchBar-noValueMenu .AutoComplete-group:first-child{display:none;}',
+        css: '.Search-container .HotSearchCard{display:none;}',
       },
       {
         label: '搜索页知乎热搜',
