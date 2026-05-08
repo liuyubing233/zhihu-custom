@@ -18,6 +18,15 @@ const CLASS_EDIT_TAG = 'ctz-edit-blocked-tag';
 export const ID_BLOCK_LIST = 'CTA_BLOCKED_USERS';
 /** class: 黑名单标签 */
 export const CLASS_BLACK_TAG = 'ctz-black-tag';
+const REPLACE_DISABLED_SWITCH_NAMES = ['removeBlockUserContent', 'removeBlockUserComment'];
+
+/** 替换模式开启时，原黑名单隐藏开关不再生效 */
+export const changeReplaceBlockUserSwitchDisabled = (disabled?: boolean) => {
+  REPLACE_DISABLED_SWITCH_NAMES.forEach((name) => {
+    const input = dom(`[name="${name}"]`) as HTMLInputElement;
+    input && (input.disabled = !!disabled);
+  });
+};
 
 export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
   `<a href="https://www.zhihu.com/people/${id}" target="_blank">${name}</a>` +

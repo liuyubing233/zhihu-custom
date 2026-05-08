@@ -103,6 +103,14 @@ const BLOCKED_CONTENT_REPLACEMENT_TEXT = `<span class="ctz-blocked-content-repla
 
 const buttonListener = () => setTimeout(doListenComment, 500);
 
+const getUserIdFromPeopleLink = (href: string) => {
+  try {
+    return new URL(href, location.origin).pathname.replace(/^\/people\//, '').replace(/\/$/, '');
+  } catch {
+    return href.replace(/[\w\W]+\/people\//, '').replace(/[?#][\w\W]*$/, '').replace(/\/$/, '');
+  }
+};
+
 const replaceBlockedCommentContent = (item: HTMLElement, commentBoxClass: string, blockedUser: IBlockedUser, showBlockUserTagType?: boolean) => {
   const commentBox = item.querySelector(commentBoxClass) as HTMLElement | null;
   const commentContent = ((commentBox && commentBox.querySelector('.CommentContent')) || item.querySelector('.CommentContent')) as HTMLElement | null;
@@ -146,21 +154,21 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
     let isHidden = false;
     let blockedUserToReplace: IBlockedUser | undefined = undefined;
 
-    itemCommentUsers.forEach(async (userOne) => {
+    itemCommentUsers.forEach(async (userOne, index) => {
       if (isHidden) return;
       const userLink = userOne.querySelector('.css-1gomreu a') as HTMLAnchorElement;
       if (!userLink) return;
-      const userId = userLink.href.replace(/[\w\W]+\/people\//, '');
+      const userId = getUserIdFromPeopleLink(userLink.href);
       /** 匹配在黑名单的位置 */
       const findUser = (blockedUsers || []).find((i) => i.id === userId);
       /** 是否在黑名单中 */
       const isBlocked = !!findUser;
 
-      // 屏蔽黑名单用户发布的评论
-      if (removeBlockUserComment && isBlocked) {
-        if (replaceBlockUserContentWithStar && findUser) {
+      // 只有评论作者命中黑名单时才隐藏或替换，回复对象命中不影响评论内容
+      if (index === 0 && findUser) {
+        if (replaceBlockUserContentWithStar) {
           blockedUserToReplace = findUser;
-        } else {
+        } else if (removeBlockUserComment) {
           isHidden = true;
           fnLog('已隐藏一个黑名单用户的评论，' + `${findUser.name}`);
           return;

@@ -1,6 +1,6 @@
 import { CLASS_INPUT_CHANGE, CLASS_INPUT_CLICK } from '../misc';
 import { dom, domA, domById, myStorage } from '../tools';
-import { echoBlockedContent } from './black-list';
+import { changeReplaceBlockUserSwitchDisabled, echoBlockedContent } from './black-list';
 import { echoMySelect } from './select';
 import { VERSION_RANGE_HAVE_PERCENT } from './size';
 
@@ -52,6 +52,7 @@ export const echoData = async () => {
   });
 
   echoMySelect();
+  changeReplaceBlockUserSwitchDisabled(config.replaceBlockUserContentWithStar);
   // 回填（渲染）黑名单内容应在 echoData 中设置，保证每次打开弹窗都是最新内容
   echoBlockedContent(document.body);
 };

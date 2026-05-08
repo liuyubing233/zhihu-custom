@@ -1,5 +1,6 @@
 import { dom, domById, myStorage } from '../tools';
 import { INPUT_NAME_THEME, INPUT_NAME_THEME_DARK, INPUT_NAME_ThEME_LIGHT, myBackground, onUseThemeDark } from './background';
+import { changeReplaceBlockUserSwitchDisabled } from './black-list';
 import { appendHiddenStyle } from './hidden';
 import { previewGIF } from './image';
 import { myListenList } from './listen-list';
@@ -127,6 +128,10 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   }
 
   await myStorage.updateConfigItem(name, type === 'checkbox' ? checked : value);
+
+  if (name === 'replaceBlockUserContentWithStar') {
+    changeReplaceBlockUserSwitchDisabled(checked);
+  }
 
   if (type === 'range') {
     const nodeName = domById(name);

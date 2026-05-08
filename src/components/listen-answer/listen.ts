@@ -107,19 +107,25 @@ const processingData = async (nodes: NodeListOf<HTMLElement>) => {
       dataZop = JSON.parse(nodeItemContent.getAttribute('data-zop') || '{}');
       dataCardContent = JSON.parse(nodeItemContent.getAttribute('data-za-extra-module') || '{}').card.content;
     } catch {}
+    const blockedUser = blockedUserMap.get(String(dataCardContent.author_member_hash_id || ''));
+    // 替换模式优先级最高：命中黑名单时不再执行其他隐藏规则
+    const blockedUserToReplace = replaceBlockUserContentWithStar ? blockedUser : undefined;
     // FIRST
     // 低赞回答过滤
-    (dataCardContent['upvote_num'] || 0) < lessVoteNumberDetail && removeLessVoteDetail && (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
+    !blockedUserToReplace &&
+      (dataCardContent['upvote_num'] || 0) < lessVoteNumberDetail &&
+      removeLessVoteDetail &&
+      (message = `过滤低赞回答: ${dataCardContent['upvote_num']}赞`);
 
     // 屏蔽接口过滤的回答，如盐选专栏...
-    if (!message && removeFromYanxuan) {
+    if (!message && !blockedUserToReplace && removeFromYanxuan) {
       const itemId = String(dataZop.itemId || '');
       const findMessage = removeAnswerMap.get(itemId);
       findMessage && (message = findMessage);
     }
 
     // 屏蔽带有选中标签的回答
-    if (!message) {
+    if (!message && !blockedUserToReplace) {
       const nodeTag1 = nodeItem.querySelector('.KfeCollection-AnswerTopCard-Container') as HTMLElement;
       const nodeTag2 = nodeItem.querySelector('.LabelContainer-wrapper') as HTMLElement;
       const tagNames = (nodeTag1 ? nodeTag1.innerText : '') + (nodeTag2 ? nodeTag2.innerText : '');
@@ -133,16 +139,8 @@ const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     }
 
     // 屏蔽用户的回答
-    let blockedUserToReplace: IBlockedUser | undefined = undefined;
-    if (!message && removeBlockUserContent && blockedUsers && blockedUsers.length) {
-      const blockedUser = blockedUserMap.get(String(dataCardContent.author_member_hash_id || ''));
-      if (blockedUser) {
-        if (replaceBlockUserContentWithStar) {
-          blockedUserToReplace = blockedUser;
-        } else {
-          message = `已删除黑名单用户${blockedUser.name}的回答`;
-        }
-      }
+    if (!message && !blockedUserToReplace && removeBlockUserContent && blockedUser) {
+      message = `已删除黑名单用户${blockedUser.name}的回答`;
     }
 
     // 屏蔽「匿名用户」回答
