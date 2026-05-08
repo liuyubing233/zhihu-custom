@@ -15,6 +15,7 @@ export const BLOCKED_USER_COMMON: ICommonContent[][] = [
     { label: '评论区 - 「屏蔽用户」按钮', value: 'showBlockUserComment' },
     { label: '屏蔽黑名单用户发布的内容（问题、回答、文章）', value: 'removeBlockUserContent' },
     { label: '屏蔽黑名单用户发布的评论', value: 'removeBlockUserComment' },
+    { label: '将黑名单用户发布的内容使用 * 代替', value: 'replaceBlockUserContentWithStar' },
     { label: '列表和回答 - 黑名单用户标识<div class="ctz-black-tag">黑名单</div>', value: 'showBlockUserTag' },
     { label: '评论区 - 黑名单用户标识<div class="ctz-black-tag">黑名单</div>', value: 'showBlockUserCommentTag' },
     { label: '黑名单用户标识显示标签分类<div class="ctz-black-tag">黑名单：xx</div>', value: 'showBlockUserTagType' },
@@ -31,6 +32,8 @@ export interface IConfigBlackList {
   showBlockUserComment?: boolean;
   /** 屏蔽黑名单用户发布的评论 */
   removeBlockUserComment?: boolean;
+  /** 将黑名单用户发布的评论和回答内容替换为 *** */
+  replaceBlockUserContentWithStar?: boolean;
   /** 黑名单用户发布的评论显示黑名单标识 */
   showBlockUserCommentTag?: boolean;
   /** 列表和回答显示黑名单用户标识 */
@@ -52,6 +55,7 @@ export const BLACK_LIST_CONFIG_NAMES: (keyof IConfigBlackList)[] = [
   'userHomeTopBlockUser',
   'showBlockUserComment',
   'removeBlockUserComment',
+  'replaceBlockUserContentWithStar',
   'showBlockUserCommentTag',
   'showBlockUserTag',
   'showBlockUserTagType',

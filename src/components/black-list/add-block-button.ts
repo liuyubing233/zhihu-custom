@@ -11,6 +11,10 @@ export const CLASS_BTN_ADD_BLOCKED = 'ctz-block-add-blocked';
 /** class：移除屏蔽 */
 export const CLASS_BTN_REMOVE_BLOCKED = 'ctz-block-remove-blocked';
 
+/** 黑名单标识 */
+export const createBlockedUserTagHTML = (showBlockTagType?: boolean, userInfo?: IBlockedUser) =>
+  `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userInfo && userInfo.tags && userInfo.tags.length ? '：' + userInfo.tags.join('、') : ''}</span>`;
+
 /** 添加「屏蔽用户」按钮*/
 export const answerAddBlockButton = async (contentItem: HTMLElement) => {
   const nodeUser = contentItem.querySelector('.AnswerItem-authorInfo>.AuthorInfo') as HTMLElement;
@@ -63,10 +67,8 @@ export const answerAddBlockButton = async (contentItem: HTMLElement) => {
 export const changeBlockedUsersBox = (isBlocked: boolean, showBlock?: boolean, showBlockTag?: boolean, showBlockTagType?: boolean, userInfo?: IBlockedUser) => {
   if (isBlocked) {
     return (
-      fnReturnStr(
-        `<span class="${CLASS_BLACK_TAG}">黑名单${showBlockTagType && userInfo && userInfo.tags && userInfo.tags.length ? '：' + userInfo.tags.join('、') : ''}</span>`,
-        showBlockTag
-      ) + fnReturnStr(`<button class="${CLASS_BTN_REMOVE_BLOCKED} ctz-button">解除屏蔽</button>`, showBlock)
+      fnReturnStr(createBlockedUserTagHTML(showBlockTagType, userInfo), showBlockTag) +
+      fnReturnStr(`<button class="${CLASS_BTN_REMOVE_BLOCKED} ctz-button">解除屏蔽</button>`, showBlock)
     );
   } else {
     return fnReturnStr(`<button class="${CLASS_BTN_ADD_BLOCKED} ctz-button">屏蔽用户</button>`, showBlock);

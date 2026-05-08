@@ -245,6 +245,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   openTagChooseAfterBlockedUser: true,
   homeContentOpen: EHomeContentOpen.默认,
   removeBlockUserContent: true,
+  replaceBlockUserContentWithStar: false,
   blockedUsers: [],
   notInterestedList: [],
 };
