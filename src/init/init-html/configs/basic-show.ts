@@ -3,15 +3,10 @@ import { ICommonContent } from '../types';
 /** 基础设置 - 显示设置部分 */
 export const BASIC_SHOW: ICommonContent[][] = [
   [
-    {
-      label:
-        `列表 - 标题类别显示` +
-        `<b style="color: #ec7259">「问题」</b>` +
-        `<b style="color: #00965e">「文章」</b>` +
-        `<b style="color: #12c2e9">「视频」</b>` +
-        `<b style="color: #9c27b0">「想法」</b>`,
-      value: 'questionTitleTag',
-    },
+    { label: `列表 - 标题类别显示<b style="color: #ec7259">「问题」</b>`, value: 'listTitleTagQuestion' },
+    { label: `列表 - 标题类别显示<b style="color: #00965e">「文章」</b>`, value: 'listTitleTagArticle' },
+    { label: `列表 - 标题类别显示<b style="color: #12c2e9">「视频」</b>`, value: 'listTitleTagVideo' },
+    { label: `列表 - 标题类别显示<b style="color: #9c27b0">「想法」</b>`, value: 'listTitleTagPin' },
     { label: '列表和回答 - 点击高亮边框', value: 'highlightListItem' },
     { label: '列表 - 「···」按钮移动到最右侧', value: 'fixedListItemMore' },
     { label: '列表 - 显示「直达问题」按钮', value: 'listOutputToQuestion' },

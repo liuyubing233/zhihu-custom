@@ -66,10 +66,17 @@ import { INNER_CSS } from './web-resources';
       fnLog('欢迎使用，初始化中...');
       config = CONFIG_DEFAULT;
     } else {
+      const savedConfig = config;
       config = {
         ...CONFIG_DEFAULT,
-        ...config,
+        ...savedConfig,
       };
+      // 从旧版单开关迁移到新版四个独立开关，避免升级后覆盖用户原选择。
+      ['listTitleTagQuestion', 'listTitleTagArticle', 'listTitleTagVideo', 'listTitleTagPin'].forEach((key) => {
+        if (savedConfig[key] === undefined && typeof savedConfig.questionTitleTag === 'boolean') {
+          config[key] = savedConfig.questionTitleTag;
+        }
+      });
     }
     await myStorage.updateConfig(config);
 
