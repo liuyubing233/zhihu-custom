@@ -3,7 +3,7 @@ import { store } from '../../store';
 import { CTZ_HIDDEN_ITEM_CLASS, createButtonFontSize12, doFetchNotInterested, domP, fnHidden, myStorage } from '../../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../../types/zhihu';
 import { EThemeDark, EThemeLight, doHighlightOriginal } from '../background';
-import { createBlockedUserTagHTML, IBlockedUser } from '../black-list';
+import { createBlockedUserTagHTML, getAllBlockedUsers, IBlockedUser } from '../black-list';
 
 const CLASS_BLOCKED_CONTENT_REPLACEMENT = 'ctz-blocked-content-replacement';
 const BLOCKED_CONTENT_REPLACEMENT_TEXT = `<span class="ctz-blocked-content-replacement-text">***</span>`;
@@ -44,11 +44,10 @@ export const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     removeBlockUserContent,
     replaceBlockUserContentWithStar,
     showBlockUserTagType,
-    blockedUsers = [],
     notInterestedList = [],
   } = pfConfig;
   const removeRecommendMap = new Map(removeRecommends.map((item) => [String(item.id), item.message]));
-  const blockedUserMap = new Map(blockedUsers.map((item) => [item.id, item]));
+  const blockedUserMap = new Map(getAllBlockedUsers(pfConfig).map((item) => [item.id, item]));
   const notInterestedSet = new Set(notInterestedList);
   const filterKeywordPatterns = createWordPatterns(filterKeywords);
   const answerWordPatterns = createWordPatterns(blockWordsAnswer);

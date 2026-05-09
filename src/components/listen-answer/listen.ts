@@ -3,7 +3,7 @@ import { CLASS_LISTENED } from '../../misc';
 import { store } from '../../store';
 import { CTZ_HIDDEN_ITEM_CLASS, dom, domA, fnHidden, fnLog, myStorage } from '../../tools';
 import { IZhihuCardContent, IZhihuDataZop } from '../../types/zhihu/zhihu.type';
-import { createBlockedUserTagHTML, IBlockedUser } from '../black-list';
+import { createBlockedUserTagHTML, getAllBlockedUsers, IBlockedUser } from '../black-list';
 import { EAnswerOpen } from '../select';
 
 /** 监听详情回答 - 过滤 */
@@ -85,11 +85,10 @@ const processingData = async (nodes: NodeListOf<HTMLElement>) => {
     removeBlockUserContent,
     replaceBlockUserContentWithStar,
     showBlockUserTagType,
-    blockedUsers,
     blockWordsAnswer = [],
     highPerformanceAnswer,
   } = config;
-  const blockedUserMap = new Map((blockedUsers || []).map((item) => [item.id, item]));
+  const blockedUserMap = new Map(getAllBlockedUsers(config).map((item) => [item.id, item]));
   const blockWordPatterns = createWordPatterns(blockWordsAnswer);
   const codePrefix = Date.now();
 

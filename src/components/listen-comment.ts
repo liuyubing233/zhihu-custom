@@ -8,8 +8,11 @@ import {
   CLASS_BTN_ADD_BLOCKED,
   CLASS_BTN_REMOVE_BLOCKED,
   createBlockedUserTagHTML,
+  BLOCKED_USER_LIST_TYPE,
+  findBlockedUserWithType,
   IBlockedUser,
   removeBlockUser,
+  removeItemAfterBlock,
 } from './black-list';
 
 /** 格式化评论区接口内的用户信息并储存 */
@@ -131,8 +134,8 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
     return;
   }
   const commentAuthors = store.getCommentAuthors();
-  const { removeBlockUserComment, replaceBlockUserContentWithStar, blockedUsers, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType } =
-    await myStorage.getConfig();
+  const config = await myStorage.getConfig();
+  const { removeBlockUserComment, replaceBlockUserContentWithStar, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType } = config;
   const comments = nodeComments.children;
   for (let i = 0, len = comments.length; i < len; i++) {
     const item = comments[i] as HTMLElement;
@@ -160,7 +163,8 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
       if (!userLink) return;
       const userId = getUserIdFromPeopleLink(userLink.href);
       /** 匹配在黑名单的位置 */
-      const findUser = (blockedUsers || []).find((i) => i.id === userId);
+      const blockedUserInfo = findBlockedUserWithType(config, userId);
+      const findUser = blockedUserInfo?.user;
       /** 是否在黑名单中 */
       const isBlocked = !!findUser;
 
@@ -185,19 +189,30 @@ const formatComments = async (nodeComments?: HTMLElement, commentBoxClass = '.cs
         className: CLASS_BLOCK_USER_BOX,
         innerHTML: changeBlockedUsersBox(isBlocked, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType, findUser),
       });
+      let currentBlockedSource = blockedUserInfo?.listType;
+      let currentBlockedUser = findUser;
       nBox.onclick = async function (event) {
         const me = this as HTMLElement;
         const target = event.target as HTMLButtonElement;
         // 解除屏蔽
         if (target.classList.contains(CLASS_BTN_REMOVE_BLOCKED)) {
-          await removeBlockUser(commentUserInfo);
+          if (currentBlockedSource === BLOCKED_USER_LIST_TYPE.local) {
+            await removeItemAfterBlock(commentUserInfo, BLOCKED_USER_LIST_TYPE.local);
+          } else {
+            await removeBlockUser(commentUserInfo);
+          }
+          currentBlockedSource = undefined;
+          currentBlockedUser = undefined;
           me.innerHTML = changeBlockedUsersBox(false, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType);
           return;
         }
         // 添加屏蔽
         if (target.classList.contains(CLASS_BTN_ADD_BLOCKED)) {
-          await addBlockUser(commentUserInfo);
-          me.innerHTML = changeBlockedUsersBox(true, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType);
+          const listType = await addBlockUser(commentUserInfo);
+          if (!listType) return;
+          currentBlockedSource = listType;
+          currentBlockedUser = commentUserInfo;
+          me.innerHTML = changeBlockedUsersBox(true, showBlockUserComment, showBlockUserCommentTag, showBlockUserTagType, currentBlockedUser);
           return;
         }
       };

@@ -2,7 +2,8 @@ import { domC, fnReturnStr, myStorage } from '../../tools';
 import { IZhihuCardContent } from '../../types/zhihu/zhihu.type';
 import { CLASS_BLACK_TAG } from './create-html';
 import { addBlockUser, removeBlockUser } from './do-fetch';
-import { IBlockedUser } from './types';
+import { BLOCKED_USER_LIST_TYPE, findBlockedUserWithType, IBlockedUser, TBlockedUserListType } from './types';
+import { removeItemAfterBlock } from './update';
 
 /** class：黑名单模块盒子 */
 export const CLASS_BLOCK_USER_BOX = 'ctz-block-user-box';
@@ -28,27 +29,40 @@ export const answerAddBlockButton = async (contentItem: HTMLElement) => {
   const userId = aContent.author_member_hash_id || '';
   if (!userUrl.replace(/https:\/\/www.zhihu.com\/people\//, '')) return;
 
-  const { blockedUsers = [], showBlockUserTag, showBlockUser, showBlockUserTagType } = await myStorage.getConfig();
+  const config = await myStorage.getConfig();
+  const { showBlockUserTag, showBlockUser, showBlockUserTagType } = config;
 
-  const blockedUserInfo = blockedUsers.find((i) => i.id === userId);
+  const blockedUserInfo = findBlockedUserWithType(config, userId);
+  let currentBlockedSource: TBlockedUserListType | undefined = blockedUserInfo?.listType;
+  let currentBlockedUser = blockedUserInfo?.user;
   const nBlackBox = domC('div', {
     className: CLASS_BLOCK_USER_BOX,
-    innerHTML: changeBlockedUsersBox(!!blockedUserInfo, showBlockUser, showBlockUserTag, showBlockUserTagType, blockedUserInfo),
+    innerHTML: changeBlockedUsersBox(!!blockedUserInfo, showBlockUser, showBlockUserTag, showBlockUserTagType, currentBlockedUser),
   });
   nBlackBox.onclick = async function (ev) {
     const target = ev.target as HTMLElement;
     const matched = userUrl.match(/(?<=people\/)[\w\W]+/);
     const urlToken = matched ? matched[0] : '';
+    const nextUserInfo = { id: userId, name: userName, urlToken };
     const me = this as HTMLElement;
     // 屏蔽用户
     if (target.classList.contains(CLASS_BTN_ADD_BLOCKED)) {
-      await addBlockUser({ id: userId, name: userName, urlToken });
-      me.innerHTML = changeBlockedUsersBox(true, showBlockUser, showBlockUserTag, showBlockUserTagType);
+      const listType = await addBlockUser(nextUserInfo);
+      if (!listType) return;
+      currentBlockedSource = listType;
+      currentBlockedUser = nextUserInfo;
+      me.innerHTML = changeBlockedUsersBox(true, showBlockUser, showBlockUserTag, showBlockUserTagType, currentBlockedUser);
       return;
     }
     // 解除屏蔽
     if (target.classList.contains(CLASS_BTN_REMOVE_BLOCKED)) {
-      await removeBlockUser({ id: userId, name: userName, urlToken });
+      if (currentBlockedSource === BLOCKED_USER_LIST_TYPE.local) {
+        await removeItemAfterBlock(nextUserInfo, BLOCKED_USER_LIST_TYPE.local);
+      } else {
+        await removeBlockUser(nextUserInfo);
+      }
+      currentBlockedSource = undefined;
+      currentBlockedUser = undefined;
       me.innerHTML = changeBlockedUsersBox(false, showBlockUser, showBlockUserTag, showBlockUserTagType);
       return;
     }
