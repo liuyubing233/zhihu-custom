@@ -139,6 +139,33 @@
   }
 }
 
+.ctz-people-export-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  color: #666;
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.ctz-people-export-progress-track {
+  display: inline-block;
+  width: 90px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #e5e5e5;
+}
+
+.ctz-people-export-progress-bar {
+  display: block;
+  width: 0;
+  height: 100%;
+  transition: width 0.2s;
+  background: @primary;
+}
+
 .ctz-pdf-dialog-item {
   padding: 12px;
   border-bottom: 1px solid #eee;

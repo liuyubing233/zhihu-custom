@@ -22,8 +22,10 @@ class Store {
   commendAuthors: IBlockedUser[] = [];
   /** 当前用户主页的回答内容 */
   userAnswers: any[] = [];
+  userAnswersRequestUrl = '';
   /** 当前用户主页的文章内容 */
   userArticle: any[] = [];
+  userArticleRequestUrl = '';
   /** 回答内容过滤的项 */
   removeAnswers: IRecommendRemoved[] = [];
   removeAnswerMap = new Map<string, string>();
@@ -40,8 +42,10 @@ class Store {
     this.getRemoveRecommends = this.getRemoveRecommends.bind(this);
     this.setUserAnswer = this.setUserAnswer.bind(this);
     this.getUserAnswer = this.getUserAnswer.bind(this);
+    this.getUserAnswerRequestUrl = this.getUserAnswerRequestUrl.bind(this);
     this.setUserArticle = this.setUserArticle.bind(this);
     this.getUserArticle = this.getUserArticle.bind(this);
+    this.getUserArticleRequestUrl = this.getUserArticleRequestUrl.bind(this);
     this.setCommentAuthors = this.setCommentAuthors.bind(this);
     this.getCommentAuthors = this.getCommentAuthors.bind(this);
     this.findRemoveAnswers = this.findRemoveAnswers.bind(this);
@@ -94,17 +98,29 @@ class Store {
     return this.removeRecommends;
   }
 
-  setUserAnswer(data: any[]) {
+  setUserAnswer(data: any[], requestUrl = '') {
     this.userAnswers = data;
+    if (requestUrl) {
+      this.userAnswersRequestUrl = requestUrl;
+    }
   }
   getUserAnswer() {
     return this.userAnswers;
   }
-  setUserArticle(data: any[]) {
+  getUserAnswerRequestUrl() {
+    return this.userAnswersRequestUrl;
+  }
+  setUserArticle(data: any[], requestUrl = '') {
     this.userArticle = data;
+    if (requestUrl) {
+      this.userArticleRequestUrl = requestUrl;
+    }
   }
   getUserArticle() {
     return this.userArticle;
+  }
+  getUserArticleRequestUrl() {
+    return this.userArticleRequestUrl;
   }
   async setCommentAuthors(authors: IBlockedUser[]) {
     this.commendAuthors = authors;

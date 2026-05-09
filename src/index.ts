@@ -110,9 +110,9 @@ import { INNER_CSS } from './web-resources';
           });
 
           // 用户主页回答
-          interceptionResponse(res, /\api\/v4\/members\/[^/]+\/answers/, (r) => setUserAnswer(r.data));
+          interceptionResponse(res, /\api\/v4\/members\/[^/]+\/answers/, (r) => setUserAnswer(r.data, res.url));
           // 用户主页文章
-          interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data));
+          interceptionResponse(res, /\api\/v4\/members\/[^/]+\/articles/, (r) => setUserArticle(r.data, res.url));
           // 个人信息
           interceptionResponse(res, /\/api\/v4\/me\?/, (r) => {
             setUserInfo(r);

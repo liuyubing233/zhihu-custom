@@ -1,6 +1,208 @@
 import { store } from '../store';
-import { createButtonFontSize12, dom, domC, insertAfter, myStorage } from '../tools';
+import { createButtonFontSize12, dom, domA, domC, insertAfter, message, myStorage } from '../tools';
 import { INNER_CSS } from '../web-resources';
+
+type IProfileExportType = 'answer' | 'article';
+
+const CLASS_PEOPLE_EXPORT_PROGRESS = 'ctz-people-export-progress';
+const PROFILE_EXPORT_LIMIT = 20;
+
+const parseJSONAttr = (value: string | null): any => {
+  if (!value) return undefined;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return undefined;
+  }
+};
+
+const normalizeContentId = (value: any) => {
+  if (value === undefined || value === null) return '';
+  const str = String(value);
+  const matched = str.match(/\d+/g);
+  return matched ? matched[matched.length - 1] : str;
+};
+
+const getVisibleProfileItems = (contentClassName: string) =>
+  Array.from(domA(`.Profile-main .ListShortcut .List-item .${contentClassName}`)).filter((item) => item.offsetParent || item.getClientRects().length);
+
+const getProfileItemId = (contentItem: HTMLElement, type: IProfileExportType) => {
+  const dataZop = parseJSONAttr(contentItem.getAttribute('data-zop'));
+  const dataZaExtra = parseJSONAttr(contentItem.getAttribute('data-za-extra-module'));
+  const attrId = dataZop?.itemId || dataZaExtra?.card?.content?.token;
+  if (attrId) return normalizeContentId(attrId);
+
+  const hrefSelector = type === 'answer' ? 'a[href*="/answer/"]' : 'a[href*="/p/"]';
+  const link = contentItem.querySelector(hrefSelector) as HTMLAnchorElement | null;
+  const href = link ? link.href || link.getAttribute('href') || '' : '';
+  const matched = href.match(type === 'answer' ? /\/answer\/(\d+)/ : /\/p\/(\d+)/);
+  return matched ? matched[1] : '';
+};
+
+const getExportDataId = (item: any) => normalizeContentId(item && item.id);
+
+const mergeProfileExportData = (...dataList: any[][]) => {
+  const data: any[] = [];
+  const dataMap = new Map<string, any>();
+  dataList.forEach((list) => {
+    list.forEach((item) => {
+      const id = getExportDataId(item);
+      if (!id) {
+        data.push(item);
+        return;
+      }
+      if (!dataMap.has(id)) {
+        dataMap.set(id, item);
+        data.push(item);
+      }
+    });
+  });
+  return data;
+};
+
+const orderProfileExportData = (data: any[], visibleItems: HTMLElement[], type: IProfileExportType) => {
+  const visibleIds = visibleItems.map((item) => getProfileItemId(item, type)).filter(Boolean);
+  if (!visibleIds.length || visibleIds.length !== visibleItems.length) return data.slice(0, visibleItems.length);
+
+  const dataMap = new Map<string, any>();
+  data.forEach((item) => {
+    const id = getExportDataId(item);
+    id && dataMap.set(id, item);
+  });
+  const orderedData = visibleIds.map((id) => dataMap.get(id)).filter(Boolean);
+  return orderedData.length === visibleIds.length ? orderedData : data.slice(0, visibleItems.length);
+};
+
+const createProfileExportProgress = (eventBtn: HTMLButtonElement) => {
+  let nodeProgress = eventBtn.parentElement?.querySelector(`.${CLASS_PEOPLE_EXPORT_PROGRESS}`) as HTMLElement | undefined;
+  if (!nodeProgress) {
+    nodeProgress = domC('span', {
+      className: CLASS_PEOPLE_EXPORT_PROGRESS,
+      innerHTML:
+        `<span class="ctz-people-export-progress-text">已加载 0/0</span>` +
+        `<span class="ctz-people-export-progress-track"><span class="ctz-people-export-progress-bar"></span></span>`,
+    });
+    insertAfter(nodeProgress, eventBtn);
+  }
+  return nodeProgress;
+};
+
+const updateProfileExportProgress = (nodeProgress: HTMLElement, loaded: number, total: number) => {
+  const nodeText = nodeProgress.querySelector('.ctz-people-export-progress-text') as HTMLElement;
+  const nodeBar = nodeProgress.querySelector('.ctz-people-export-progress-bar') as HTMLElement;
+  const countLoaded = Math.min(loaded, total);
+  const percent = total ? Math.floor((countLoaded / total) * 100) : 0;
+  nodeText.innerText = `已加载 ${countLoaded}/${total}`;
+  nodeBar.style.width = `${percent}%`;
+};
+
+const getProfileUrlToken = (requestUrl: string) => {
+  const apiMatched = requestUrl.match(/\/api\/v4\/members\/([^/]+)\/(?:answers|articles)/);
+  if (apiMatched) return apiMatched[1];
+  const pathMatched = location.pathname.match(/\/(?:people|org)\/([^/]+)/);
+  return pathMatched ? pathMatched[1] : '';
+};
+
+const normalizeProfileExportUrl = (urlValue: string) => {
+  if (!urlValue) return '';
+  const url = new URL(urlValue, location.origin);
+  if (location.protocol === 'https:' && url.protocol === 'http:') {
+    url.protocol = 'https:';
+  }
+  return url.href;
+};
+
+const createProfileExportUrl = (apiPath: string, requestUrl: string, offset: number, limit: number) => {
+  const token = getProfileUrlToken(requestUrl);
+  if (!token) return '';
+  const url = new URL(requestUrl || `/api/v4/members/${token}/${apiPath}`, location.origin);
+  url.pathname = `/api/v4/members/${token}/${apiPath}`;
+  url.searchParams.set('offset', String(offset));
+  url.searchParams.set('limit', String(limit));
+  return normalizeProfileExportUrl(url.href);
+};
+
+const getExportFetchHeaders = () => {
+  const headers = new Headers(store.getFetchHeaders());
+  ['vod-authorization', 'content-encoding', 'Content-Type', 'content-type'].forEach((name) => headers.delete(name));
+  return headers;
+};
+
+// 个人主页已改为下拉加载，导出时以当前 DOM 中实际显示的数量为准，从接口第一页重新补齐对应数量的完整内容。
+const fetchProfileExportData = async (apiPath: string, requestUrl: string, targetCount: number, nodeProgress: HTMLElement) => {
+  const data: any[] = [];
+  let offset = 0;
+  let nextUrl = createProfileExportUrl(apiPath, requestUrl, offset, Math.min(Math.max(targetCount, 1), PROFILE_EXPORT_LIMIT));
+  while (nextUrl && data.length < targetCount) {
+    const response = await fetch(nextUrl, {
+      method: 'GET',
+      headers: getExportFetchHeaders(),
+    });
+    if (!response.ok) throw new Error(`request failed: ${response.status}`);
+    const res = await response.json();
+    const currentData = Array.isArray(res.data) ? res.data : [];
+    data.push(...currentData);
+    updateProfileExportProgress(nodeProgress, data.length, targetCount);
+    if (!currentData.length || res.paging?.is_end) break;
+    offset += currentData.length;
+    nextUrl = normalizeProfileExportUrl(res.paging?.next || createProfileExportUrl(apiPath, requestUrl, offset, PROFILE_EXPORT_LIMIT));
+  }
+  return data.slice(0, targetCount);
+};
+
+const runPeopleExport = async ({
+  eventBtn,
+  type,
+  apiPath,
+  contentClassName,
+  loadingText,
+  buttonText,
+  emptyText,
+  requestUrl,
+  cacheData,
+  toHTML,
+}: {
+  eventBtn: HTMLButtonElement;
+  type: IProfileExportType;
+  apiPath: string;
+  contentClassName: string;
+  loadingText: string;
+  buttonText: string;
+  emptyText: string;
+  requestUrl: string;
+  cacheData: any[];
+  toHTML: (item: any) => string;
+}) => {
+  const visibleItems = getVisibleProfileItems(contentClassName);
+  const total = visibleItems.length;
+  const nodeProgress = createProfileExportProgress(eventBtn);
+  eventBtn.innerText = loadingText;
+  eventBtn.disabled = true;
+  updateProfileExportProgress(nodeProgress, 0, total);
+
+  if (!total) {
+    eventBtn.innerText = buttonText;
+    eventBtn.disabled = false;
+    message(emptyText);
+    return;
+  }
+
+  try {
+    const fetchedData = await fetchProfileExportData(apiPath, requestUrl, total, nodeProgress);
+    const exportData = orderProfileExportData(mergeProfileExportData(fetchedData, cacheData), visibleItems, type);
+    updateProfileExportProgress(nodeProgress, exportData.length, total);
+    if (!exportData.length) throw new Error('empty export data');
+    if (exportData.length < total) {
+      message(`仅加载到 ${exportData.length}/${total} 条内容，已导出可加载部分`, 5000);
+    }
+    loadIframePrint(eventBtn, exportData.map(toHTML), buttonText);
+  } catch (error) {
+    eventBtn.innerText = buttonText;
+    eventBtn.disabled = false;
+    message('个人主页内容导出失败，请稍后重试', 5000);
+    console.error(error);
+  }
+};
 
 const loadIframePrint = (eventBtn: HTMLButtonElement, arrHTML: string[], btnText: string) => {
   let max = 0;
@@ -179,12 +381,18 @@ export const printPeopleAnswer = async () => {
   if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
   const nButton = createButtonFontSize12('导出此页回答', 'ctz-people-answer-print');
   nButton.onclick = async function () {
-    const eventBtn = this as HTMLButtonElement;
-    eventBtn.innerText = '加载回答内容中...';
-    eventBtn.disabled = true;
-    const data = store.getUserAnswer();
-    const content = data.map((item) => `<h1>${item.question.title}</h1><div>${item.content}</div>`);
-    loadIframePrint(eventBtn, content, '导出此页回答');
+    await runPeopleExport({
+      eventBtn: this as HTMLButtonElement,
+      type: 'answer',
+      apiPath: 'answers',
+      contentClassName: 'AnswerItem',
+      loadingText: '加载回答内容中...',
+      buttonText: '导出此页回答',
+      emptyText: '当前页面没有可导出的回答',
+      requestUrl: store.getUserAnswerRequestUrl(),
+      cacheData: store.getUserAnswer(),
+      toHTML: (item) => `<h1>${item.question?.title || ''}</h1><div>${item.content || ''}</div>`,
+    });
   };
   nodeListHeader.appendChild(nButton);
   setTimeout(() => {
@@ -200,12 +408,18 @@ export const printPeopleArticles = async () => {
   if (!nodeListHeader || prevButton || !fetchInterceptStatus) return;
   const nButton = createButtonFontSize12('导出此页文章', 'ctz-people-export-articles-once');
   nButton.onclick = async function () {
-    const eventBtn = this as HTMLButtonElement;
-    eventBtn.innerText = '加载文章内容中...';
-    eventBtn.disabled = true;
-    const data = store.getUserArticle();
-    const content = data.map((item) => `<h1>${item.title}</h1><div>${item.content}</div>`);
-    loadIframePrint(eventBtn, content, '导出此页文章');
+    await runPeopleExport({
+      eventBtn: this as HTMLButtonElement,
+      type: 'article',
+      apiPath: 'articles',
+      contentClassName: 'ArticleItem',
+      loadingText: '加载文章内容中...',
+      buttonText: '导出此页文章',
+      emptyText: '当前页面没有可导出的文章',
+      requestUrl: store.getUserArticleRequestUrl(),
+      cacheData: store.getUserArticle(),
+      toHTML: (item) => `<h1>${item.title || ''}</h1><div>${item.content || ''}</div>`,
+    });
   };
   nodeListHeader.appendChild(nButton);
   setTimeout(() => {
