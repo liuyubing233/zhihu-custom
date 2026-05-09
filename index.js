@@ -564,7 +564,10 @@
         zoomListVideoSize,
         zoomListVideoType,
         fixedListItemMore,
-        questionTitleTag,
+        listTitleTagQuestion,
+        listTitleTagArticle,
+        listTitleTagVideo,
+        listTitleTagPin,
         themeDark = 1 /* 深色一 */,
         themeLight = 0 /* 默认 */,
         suspensionHomeTabPo,
@@ -606,8 +609,14 @@
         fixedListItemMore
       );
       const xxxTitleTag = fnReturnStr(
-        `.AnswerItem .ContentItem-title::before{content:'「问答」';color:#ec7259;font-size:14px;}.TopstoryItem .PinItem::before{content:'「想法」';font-size:14px;color:#9c27b0;margin-right:6px;font-weight:normal;display:inline;}.PinItem>.ContentItem-title{margin-top:4px;}.ZvideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}.ZVideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}.ArticleItem .ContentItem-title::before{content:'「文章」';font-size:14px;color:#00965e}.TopstoryQuestionAskItem .ContentItem-title::before{content:'「提问」';font-size:14px;color:#533b77}`,
-        questionTitleTag
+        `.AnswerItem .ContentItem-title::before{content:'「问答」';color:#ec7259;font-size:14px;}.TopstoryQuestionAskItem .ContentItem-title::before{content:'「提问」';font-size:14px;color:#533b77}`,
+        listTitleTagQuestion
+      ) + fnReturnStr(`.ArticleItem .ContentItem-title::before{content:'「文章」';font-size:14px;color:#00965e}`, listTitleTagArticle) + fnReturnStr(
+        `.ZvideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}.ZVideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}`,
+        listTitleTagVideo
+      ) + fnReturnStr(
+        `.TopstoryItem .PinItem::before{content:'「想法」';font-size:14px;color:#9c27b0;margin-right:6px;font-weight:normal;display:inline;}.PinItem>.ContentItem-title{margin-top:4px;}`,
+        listTitleTagPin
       );
       const xxxSusHomeTab = fnReturnStr(
         `.Topstory-container .TopstoryTabs{${suspensionHomeTabPo}position:fixed;z-index:100;display:flex;flex-direction:column;height:initial!important;}.Topstory-container .TopstoryTabs>a{font-size:0 !important;border-radius:50%}.Topstory-container .TopstoryTabs>a::after{font-size:16px !important;display:inline-block;padding:6px 8px;margin-bottom:4px;border:1px solid #999999;color:#999999;background: ${dark ? THEME_CONFIG_DARK[themeDark].background : THEME_CONFIG_LIGHT[themeLight].background || "transparent"};}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link {margin:0!important}.Topstory-container .TopstoryTabs>a.TopstoryTabs-link.is-active::after{color:#0066ff!important;border-color:#0066ff!important;}.Topstory [aria-controls='Topstory-recommend']::after{content:'推';}.Topstory [aria-controls='Topstory-follow']::after{content:'关';border-top-left-radius:4px;border-top-right-radius:4px;}.Topstory [aria-controls='Topstory-hot']::after{content:'热';}.Topstory [aria-controls="Topstory-zvideo"]::after{content:'视';border-bottom-left-radius:4px;border-bottom-right-radius:4px}.Topstory-tabs{border-color: transparent!important;}`,
@@ -2730,6 +2739,10 @@
     zoomImageType: "2" /* 自定义尺寸 */,
     zoomImageSize: "200",
     questionTitleTag: true,
+    listTitleTagQuestion: true,
+    listTitleTagArticle: true,
+    listTitleTagVideo: true,
+    listTitleTagPin: true,
     listOutPutNotInterested: true,
     fixedListItemMore: true,
     highlightOriginal: true,
@@ -2774,6 +2787,10 @@
     globalTitle: "",
     titleIco: "",
     questionTitleTag: true,
+    listTitleTagQuestion: true,
+    listTitleTagArticle: true,
+    listTitleTagVideo: true,
+    listTitleTagPin: true,
     listOutPutNotInterested: true,
     fixedListItemMore: false,
     highlightOriginal: true,
@@ -4686,10 +4703,10 @@
   };
   var BASIC_SHOW = [
     [
-      {
-        label: `列表 - 标题类别显示<b style="color: #ec7259">「问题」</b><b style="color: #00965e">「文章」</b><b style="color: #12c2e9">「视频」</b><b style="color: #9c27b0">「想法」</b>`,
-        value: "questionTitleTag"
-      },
+      { label: `列表 - 标题类别显示<b style="color: #ec7259">「问题」</b>`, value: "listTitleTagQuestion" },
+      { label: `列表 - 标题类别显示<b style="color: #00965e">「文章」</b>`, value: "listTitleTagArticle" },
+      { label: `列表 - 标题类别显示<b style="color: #12c2e9">「视频」</b>`, value: "listTitleTagVideo" },
+      { label: `列表 - 标题类别显示<b style="color: #9c27b0">「想法」</b>`, value: "listTitleTagPin" },
       { label: "列表和回答 - 点击高亮边框", value: "highlightListItem" },
       { label: "列表 - 「···」按钮移动到最右侧", value: "fixedListItemMore" },
       { label: "列表 - 显示「直达问题」按钮", value: "listOutputToQuestion" }
@@ -4933,6 +4950,10 @@
   var fnChanger = async (ev) => {
     const doCssVersion = [
       "questionTitleTag",
+      "listTitleTagQuestion",
+      "listTitleTagArticle",
+      "listTitleTagVideo",
+      "listTitleTagPin",
       "fixedListItemMore",
       "highlightListItem",
       "zoomImageSize",
@@ -5205,10 +5226,16 @@
         fnLog("欢迎使用，初始化中...");
         config = CONFIG_DEFAULT;
       } else {
+        const savedConfig = config;
         config = {
           ...CONFIG_DEFAULT,
-          ...config
+          ...savedConfig
         };
+        ["listTitleTagQuestion", "listTitleTagArticle", "listTitleTagVideo", "listTitleTagPin"].forEach((key) => {
+          if (savedConfig[key] === void 0 && typeof savedConfig.questionTitleTag === "boolean") {
+            config[key] = savedConfig.questionTitleTag;
+          }
+        });
       }
       await myStorage.updateConfig(config);
       initHistoryView();

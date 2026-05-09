@@ -14,6 +14,10 @@ export const fnChanger = async (ev: HTMLInputElement) => {
   // onchange 时只调用 mySize 的 name
   const doCssVersion = [
     'questionTitleTag',
+    'listTitleTagQuestion',
+    'listTitleTagArticle',
+    'listTitleTagVideo',
+    'listTitleTagPin',
     'fixedListItemMore',
     // 'linkShopping',
     'highlightListItem',

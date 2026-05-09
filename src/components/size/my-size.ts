@@ -36,7 +36,10 @@ export const mySize = {
       zoomListVideoSize,
       zoomListVideoType,
       fixedListItemMore,
-      questionTitleTag,
+      listTitleTagQuestion,
+      listTitleTagArticle,
+      listTitleTagVideo,
+      listTitleTagPin,
       themeDark = EThemeDark.深色一,
       themeLight = EThemeLight.默认,
       suspensionHomeTabPo,
@@ -122,14 +125,21 @@ export const mySize = {
     );
 
     /** 内容标题添加类别显示 */
-    const xxxTitleTag = fnReturnStr(
-      `.AnswerItem .ContentItem-title::before{content:'「问答」';color:#ec7259;font-size:14px;}` +
-        `.TopstoryItem .PinItem::before{content:'「想法」';font-size:14px;color:#9c27b0;margin-right:6px;font-weight:normal;display:inline;}` +
-        `.PinItem>.ContentItem-title{margin-top:4px;}.ZvideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}.ZVideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}` +
-        `.ArticleItem .ContentItem-title::before{content:'「文章」';font-size:14px;color:#00965e}` +
-        `.TopstoryQuestionAskItem .ContentItem-title::before{content:'「提问」';font-size:14px;color:#533b77}`,
-      questionTitleTag
-    );
+    const xxxTitleTag =
+      fnReturnStr(
+        `.AnswerItem .ContentItem-title::before{content:'「问答」';color:#ec7259;font-size:14px;}` +
+          `.TopstoryQuestionAskItem .ContentItem-title::before{content:'「提问」';font-size:14px;color:#533b77}`,
+        listTitleTagQuestion
+      ) +
+      fnReturnStr(`.ArticleItem .ContentItem-title::before{content:'「文章」';font-size:14px;color:#00965e}`, listTitleTagArticle) +
+      fnReturnStr(
+        `.ZvideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}.ZVideoItem .ContentItem-title::before{content:'「视频」';font-size:14px;color:#12c2e9}`,
+        listTitleTagVideo
+      ) +
+      fnReturnStr(
+        `.TopstoryItem .PinItem::before{content:'「想法」';font-size:14px;color:#9c27b0;margin-right:6px;font-weight:normal;display:inline;}.PinItem>.ContentItem-title{margin-top:4px;}`,
+        listTitleTagPin
+      );
 
     /** 首页问题列表切换模块悬浮 */
     const xxxSusHomeTab = fnReturnStr(
