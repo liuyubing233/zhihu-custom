@@ -24,7 +24,7 @@ const HIDDEN_ITEM_COMMON: IHiddenItem = {
       {
         label: '隐藏选中文字后的弹窗模块',
         value: 'hiddenSelectedTextPopup',
-        css: '.css-s3a8u1{display: none!important;}',
+        css: '.css-fg13ww,.css-fg13ww + svg{display: none!important;}',
       }
     ],
     [
