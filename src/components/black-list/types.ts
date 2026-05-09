@@ -8,6 +8,57 @@ export interface IBlockedUser {
   tags?: string[]; // 标签
 }
 
+export const BLOCKED_USER_LIST_TYPE = {
+  zhihu: 'zhihu',
+  local: 'local',
+} as const;
+
+export type TBlockedUserListType = (typeof BLOCKED_USER_LIST_TYPE)[keyof typeof BLOCKED_USER_LIST_TYPE];
+
+export const BLOCKED_USER_LIST_CONFIG_KEY: Record<TBlockedUserListType, 'blockedUsers' | 'localBlockedUsers'> = {
+  zhihu: 'blockedUsers',
+  local: 'localBlockedUsers',
+};
+
+const mergeTags = (a?: string[], b?: string[]) => [...new Set([...(a || []), ...(b || [])])];
+
+export const mergeBlockedUser = (prev: IBlockedUser | undefined, next: IBlockedUser): IBlockedUser => ({
+  ...prev,
+  ...next,
+  tags: mergeTags(prev?.tags, next.tags),
+});
+
+export const mergeBlockedUsers = (users: IBlockedUser[]) => {
+  const map = new Map<string, IBlockedUser>();
+  users.forEach((user) => {
+    if (!user.id) return;
+    map.set(user.id, mergeBlockedUser(map.get(user.id), user));
+  });
+  return [...map.values()];
+};
+
+export const getBlockedUsersByType = (config: IConfigBlackList, listType: TBlockedUserListType) => config[BLOCKED_USER_LIST_CONFIG_KEY[listType]] || [];
+
+export const getAllBlockedUsers = (config: IConfigBlackList) => mergeBlockedUsers([...(config.blockedUsers || []), ...(config.localBlockedUsers || [])]);
+
+export const findBlockedUserWithType = (config: IConfigBlackList, id: string) => {
+  const zhihuUser = (config.blockedUsers || []).find((item) => item.id === id);
+  if (zhihuUser) return { user: zhihuUser, listType: BLOCKED_USER_LIST_TYPE.zhihu };
+  const localUser = (config.localBlockedUsers || []).find((item) => item.id === id);
+  if (localUser) return { user: localUser, listType: BLOCKED_USER_LIST_TYPE.local };
+};
+
+export const isZhihuBlockListFullText = (text: string) => /(黑名单|屏蔽).*(上限|数量|已满|最多)|limit|maximum|too many/i.test(text);
+
+export const isZhihuBlockListFullResponse = async (res: Response) => {
+  if (res.ok) return false;
+  try {
+    return isZhihuBlockListFullText(await res.clone().text());
+  } catch {
+    return false;
+  }
+};
+
 export const BLOCKED_USER_COMMON: ICommonContent[][] = [
   [
     { label: '列表和回答 - 「屏蔽用户」按钮', value: 'showBlockUser' },
@@ -46,6 +97,8 @@ export interface IConfigBlackList {
   removeBlockUserContent?: boolean;
   /** 黑名单列表 */
   blockedUsers?: IBlockedUser[];
+  /** 本地黑名单列表 */
+  localBlockedUsers?: IBlockedUser[];
   /** 黑名单标签 */
   blockedUsersTags?: string[];
 }
@@ -62,5 +115,6 @@ export const BLACK_LIST_CONFIG_NAMES: (keyof IConfigBlackList)[] = [
   'openTagChooseAfterBlockedUser',
   'removeBlockUserContent',
   'blockedUsers',
+  'localBlockedUsers',
   'blockedUsersTags',
 ];

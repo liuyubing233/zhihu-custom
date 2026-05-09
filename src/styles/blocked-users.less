@@ -1,6 +1,7 @@
 @import './common.less';
 
 #CTA_BLOCKED_USERS,
+#CTA_LOCAL_BLOCKED_USERS,
 #CTZ_BLOCKED_USERS_TAGS {
   display: flex;
   flex-wrap: wrap;
@@ -15,6 +16,7 @@
   margin: 0 8px 8px 0;
   display: flex;
   align-items: center;
+  position: relative;
   border-radius: 4px;
   border: 1px solid @gray1;
   background: #fff;
@@ -24,15 +26,45 @@
     color: @primary;
   }
 
-  .ctz-remove-block {
+  .ctz-black-item-more {
     width: 24px;
     height: 24px;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
     font-style: normal;
+    margin-left: 4px;
     &:hover {
       background: @gray01;
+    }
+  }
+
+  &[data-menu-open='true'] {
+    z-index: 4;
+  }
+}
+
+.ctz-black-item-menu {
+  position: fixed;
+  z-index: 10001;
+  min-width: 128px;
+  padding: 4px 0;
+  border: 1px solid @gray1;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+
+  span {
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 10px;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+      background: @gray01;
+      color: @primary;
     }
   }
 }
@@ -101,7 +133,6 @@
   padding: 0 4px;
 }
 
-.ctz-edit-user-tag,
 .ctz-edit-blocked-tag {
   display: inline-block;
   cursor: pointer;

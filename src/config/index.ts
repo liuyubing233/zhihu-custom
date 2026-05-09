@@ -255,6 +255,7 @@ export const CONFIG_DEFAULT: IPfConfig = {
   removeBlockUserContent: true,
   replaceBlockUserContentWithStar: false,
   blockedUsers: [],
+  localBlockedUsers: [],
   notInterestedList: [],
 };
 

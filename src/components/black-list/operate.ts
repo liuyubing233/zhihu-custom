@@ -1,8 +1,8 @@
 import { store } from '../../store';
-import { dom, domA, domById, domC, fnDomReplace, formatTime, message, myStorage } from '../../tools';
+import { dom, domById, domC, fnDomReplace, formatTime, message, myStorage } from '../../tools';
 import { ID_BLOCK_LIST, initHTMLBlockedUsers } from './create-html';
 import { removeBlockUser } from './do-fetch';
-import { BLACK_LIST_CONFIG_NAMES, IBlockedUser, IConfigBlackList } from './types';
+import { BLACK_LIST_CONFIG_NAMES, IBlockedUser, IConfigBlackList, mergeBlockedUsers } from './types';
 
 /** 导出黑名单部分配置 */
 export const onExportBlack = async () => {
@@ -28,56 +28,48 @@ export const onImportBlack = async (oFREvent: ProgressEvent<FileReader>) => {
   let configBlackJson = oFREvent.target ? oFREvent.target.result : '';
   if (typeof configBlackJson !== 'string') return;
   const configBlack = JSON.parse(configBlackJson) as IConfigBlackList;
-  const { blockedUsers = [], blockedUsersTags = [] } = configBlack;
+  const { blockedUsers = [], localBlockedUsers = [], blockedUsersTags = [] } = configBlack;
   const prevConfig = await myStorage.getConfig();
-  const { blockedUsers: prevBlockUsers = [], blockedUsersTags: prevBlockedUsersTags = [] } = prevConfig;
+  const { blockedUsers: prevBlockUsers = [], localBlockedUsers: prevLocalBlockedUsers = [], blockedUsersTags: prevBlockedUsersTags = [] } = prevConfig;
   // 标签合并去重
   const nTags = [...new Set([...prevBlockedUsersTags, ...blockedUsersTags])];
-  // 原黑名单列表去重后剩余的用户
-  const prevListLess = prevBlockUsers.filter((item) => !blockedUsers.findIndex((i) => i.id === item.id));
-  blockedUsers.forEach((item) => {
-    const prevUser = prevBlockUsers.find((i) => i.id === item.id);
-    if (prevUser) {
-      item.tags = [...new Set([...(item.tags || []), ...(prevUser.tags || [])])];
-    }
-  });
-  // 黑名单用户合并去重
-  let nBlackList: IBlockedUser[] = [...blockedUsers, ...prevListLess];
+  const nBlackList: IBlockedUser[] = mergeBlockedUsers([...prevBlockUsers, ...blockedUsers]);
+  const blockedUserIds = new Set(nBlackList.map((item) => item.id));
+  const nLocalBlackList: IBlockedUser[] = mergeBlockedUsers([...prevLocalBlockedUsers, ...localBlockedUsers]).filter((item) => !blockedUserIds.has(item.id));
   await myStorage.updateConfig({
     ...prevConfig,
     ...configBlack,
     blockedUsers: nBlackList,
+    localBlockedUsers: nLocalBlackList,
     blockedUsersTags: nTags,
   });
-  message('导入完成，请等待黑名单同步...');
+  message('导入完成，请等待知乎黑名单同步...');
   onSyncBlackList(0);
 };
 
 /** 清空黑名单列表 */
-export const onSyncRemoveBlockedUsers = () => {
-  if (!confirm('您确定要取消屏蔽所有黑名单用户吗？')) return;
-  if (!confirm('确定清空所有屏蔽用户？')) return;
+export const onSyncRemoveBlockedUsers = async () => {
+  if (!confirm('您确定要取消所有知乎黑名单用户吗？')) return;
+  if (!confirm('确定清空所有知乎黑名单用户？')) return;
+
+  const { blockedUsers = [] } = await myStorage.getConfig();
+  if (!blockedUsers.length) return;
 
   const buttonSync = dom('button[name="syncBlackRemove"]') as HTMLButtonElement;
   if (!buttonSync.querySelector('ctz-loading')) {
     fnDomReplace(buttonSync, { innerHTML: '<i class="ctz-loading">↻</i>', disabled: true });
   }
 
-  const removeButtons = domA('.ctz-remove-block');
-  const len = removeButtons.length;
+  const len = blockedUsers.length;
   let finishNumber = 0;
 
-  if (!removeButtons.length) return;
   for (let i = 0; i < len; i++) {
-    const item = removeButtons[i] as HTMLElement;
-    const itemParent = item.parentElement!;
-    const info = itemParent.dataset.info ? JSON.parse(itemParent.dataset.info) : {};
+    const info = blockedUsers[i];
     if (info.id) {
       removeBlockUser(info, false).then(async () => {
         finishNumber++;
-        itemParent.remove();
         if (finishNumber === len) {
-          fnDomReplace(buttonSync, { innerHTML: '清空黑名单列表', disabled: false });
+          fnDomReplace(buttonSync, { innerHTML: '清空知乎黑名单', disabled: false });
           await myStorage.updateConfigItem('blockedUsers', []);
           initHTMLBlockedUsers(document.body);
         }
@@ -90,7 +82,7 @@ export const onSyncRemoveBlockedUsers = () => {
 export function onSyncBlackList(offset = 0, l: IBlockedUser[] = []) {
   const nodeList = domById(ID_BLOCK_LIST);
   if (!l.length && nodeList) {
-    nodeList.innerHTML = '黑名单列表加载中...';
+    nodeList.innerHTML = '知乎黑名单加载中...';
   }
 
   const buttonSync = dom('button[name="syncBlack"]') as HTMLButtonElement;
@@ -108,22 +100,28 @@ export function onSyncBlackList(offset = 0, l: IBlockedUser[] = []) {
     .then((response) => response.json())
     .then(async ({ data, paging }: { data: any[]; paging: any }) => {
       const prevConfig = await myStorage.getConfig();
-      const { blockedUsers = [] } = prevConfig;
+      const { blockedUsers = [], localBlockedUsers = [] } = prevConfig;
+      const prevBlockedUsers = [...blockedUsers, ...localBlockedUsers];
 
       data.forEach(({ id, name, url_token }) => {
-        const findItem = blockedUsers.find((i) => i.id === id);
+        const findItem = prevBlockedUsers.find((i) => i.id === id);
         l.push({ id, name, urlToken: url_token, tags: (findItem && findItem.tags) || [] });
       });
       if (!paging.is_end) {
         onSyncBlackList(offset + limit, l);
         if (nodeList) {
-          nodeList.innerHTML = `黑名单列表加载中（${l.length} / ${paging.totals}）...`;
+          nodeList.innerHTML = `知乎黑名单加载中（${l.length} / ${paging.totals}）...`;
         }
       } else {
-        await myStorage.updateConfigItem('blockedUsers', l);
+        const syncedIds = new Set(l.map((item) => item.id));
+        await myStorage.updateConfig({
+          ...prevConfig,
+          blockedUsers: l,
+          localBlockedUsers: localBlockedUsers.filter((item) => !syncedIds.has(item.id)),
+        });
         initHTMLBlockedUsers(document.body);
-        fnDomReplace(buttonSync, { innerHTML: '同步黑名单', disabled: false });
-        message('黑名单列表同步完成');
+        fnDomReplace(buttonSync, { innerHTML: '同步知乎黑名单', disabled: false });
+        message('知乎黑名单同步完成');
       }
     });
 }

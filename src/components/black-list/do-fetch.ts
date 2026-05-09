@@ -1,25 +1,48 @@
 import { store } from '../../store';
-import { IBlockedUser } from './types';
+import { message } from '../../tools';
+import { BLOCKED_USER_LIST_TYPE, IBlockedUser, isZhihuBlockListFullResponse, TBlockedUserListType } from './types';
 import { removeItemAfterBlock, updateItemAfterBlock } from './update';
 
+const getXSRFToken = () => document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)?.[0] || '';
+
+interface IAddBlockUserOptions {
+  openTagChoose?: boolean;
+}
+
 /** 拉黑用户（屏蔽用户）方法 */
-export const addBlockUser = (userInfo: IBlockedUser) => {
+export const addBlockUser = (userInfo: IBlockedUser, options: IAddBlockUserOptions = {}) => {
   const { name, urlToken } = userInfo;
   // const message = `是否要屏蔽${name}？\n屏蔽后，对方将不能关注你、向你发私信、评论你的实名回答、使用「@」提及你、邀请你回答问题，但仍然可以查看你的公开信息。`;
   // if (!confirm(message)) return Promise.reject();
-  return new Promise<void>((resolve) => {
+  return new Promise<TBlockedUserListType | undefined>((resolve) => {
     const headers = store.getFetchHeaders();
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
       method: 'POST',
       headers: new Headers({
         ...headers,
-        'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)![0] || '',
+        'x-xsrftoken': getXSRFToken(),
       }),
       credentials: 'include',
-    }).then(async () => {
-      await updateItemAfterBlock(userInfo);
-      resolve();
-    });
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          await updateItemAfterBlock(userInfo, BLOCKED_USER_LIST_TYPE.zhihu, options);
+          resolve(BLOCKED_USER_LIST_TYPE.zhihu);
+          return;
+        }
+        if (await isZhihuBlockListFullResponse(res)) {
+          await updateItemAfterBlock(userInfo, BLOCKED_USER_LIST_TYPE.local, options);
+          message('知乎黑名单已满，已添加至本地黑名单');
+          resolve(BLOCKED_USER_LIST_TYPE.local);
+          return;
+        }
+        message(`屏蔽用户失败：${name}`);
+        resolve(undefined);
+      })
+      .catch(() => {
+        message(`屏蔽用户失败：${name}`);
+        resolve(undefined);
+      });
   });
 };
 
@@ -30,17 +53,17 @@ export const removeBlockUser = (info: IBlockedUser, needConfirm = true) => {
   //   if (!confirm(message)) return Promise.reject();
   // }
   return new Promise<void>((resolve) => {
-    const { urlToken, id } = info;
+    const { urlToken } = info;
     const headers = store.getFetchHeaders();
     fetch(`https://www.zhihu.com/api/v4/members/${urlToken}/actions/block`, {
       method: 'DELETE',
       headers: new Headers({
         ...headers,
-        'x-xsrftoken': document.cookie.match(/(?<=_xsrf=)[\w-]+(?=;)/)![0] || '',
+        'x-xsrftoken': getXSRFToken(),
       }),
       credentials: 'include',
     }).then(async () => {
-      await removeItemAfterBlock(info);
+      await removeItemAfterBlock(info, BLOCKED_USER_LIST_TYPE.zhihu);
       resolve();
     });
   });

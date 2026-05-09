@@ -1,24 +1,37 @@
 import { dom, domById, domC, message, myStorage } from '../../tools';
 import { closeExtra, openExtra } from '../ctz-dialog';
-import { removeBlockUser } from './do-fetch';
-import { IBlockedUser } from './types';
+import { addBlockUser, removeBlockUser } from './do-fetch';
+import {
+  BLOCKED_USER_LIST_CONFIG_KEY,
+  BLOCKED_USER_LIST_TYPE,
+  getBlockedUsersByType,
+  IBlockedUser,
+  mergeBlockedUser,
+  TBlockedUserListType,
+} from './types';
 
 /** id：黑名单标签列表 */
 const ID_BLOCKED_USERS_TAGS = 'CTZ_BLOCKED_USERS_TAGS';
 /** class: 黑名单标签删除按钮 */
 const CLASS_REMOVE_BLOCKED_TAG = 'ctz-remove-blocked-tag';
-/** class: 黑名单元素删除按钮类名 */
-const CLASS_REMOVE_BLOCK = 'ctz-remove-block';
-/** class: 编辑用户标签 */
-const CLASS_EDIT_USER_TAG = 'ctz-edit-user-tag';
+/** class: 黑名单用户操作菜单 */
+const CLASS_BLACK_ITEM_MORE = 'ctz-black-item-more';
+const CLASS_BLACK_ITEM_ACTION = 'ctz-black-item-action';
+const ID_BLOCKED_USER_MENU = 'CTZ_BLOCKED_USER_MENU';
 /** class: 修改标签名 */
 const CLASS_EDIT_TAG = 'ctz-edit-blocked-tag';
 
-/** id: 黑名单列表 */
+/** id: 知乎黑名单列表 */
 export const ID_BLOCK_LIST = 'CTA_BLOCKED_USERS';
+/** id: 本地黑名单列表 */
+export const ID_LOCAL_BLOCK_LIST = 'CTA_LOCAL_BLOCKED_USERS';
 /** class: 黑名单标签 */
 export const CLASS_BLACK_TAG = 'ctz-black-tag';
 const REPLACE_DISABLED_SWITCH_NAMES = ['removeBlockUserContent', 'removeBlockUserComment'];
+const BLOCKED_USER_LIST_ID: Record<TBlockedUserListType, string> = {
+  zhihu: ID_BLOCK_LIST,
+  local: ID_LOCAL_BLOCK_LIST,
+};
 
 /** 替换模式开启时，原黑名单隐藏开关不再生效 */
 export const changeReplaceBlockUserSwitchDisabled = (disabled?: boolean) => {
@@ -28,14 +41,37 @@ export const changeReplaceBlockUserSwitchDisabled = (disabled?: boolean) => {
   });
 };
 
-export const blackItemContent = ({ id, name, tags = [] }: IBlockedUser) =>
-  `<a href="https://www.zhihu.com/people/${id}" target="_blank">${name}</a>` +
-  tags.map((tag) => `<span class="ctz-in-blocked-user-tag">${tag}</span>`).join('') +
-  `<span class="${CLASS_EDIT_USER_TAG}">✎</span>` +
-  `<i class="${CLASS_REMOVE_BLOCK}">✕</i>`;
+const escapeHTML = (value = '') =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+const encodeBlockedUserInfo = (info: IBlockedUser) => encodeURIComponent(JSON.stringify(info));
+
+const getBlockedUserInfoFromItem = (item: HTMLElement): IBlockedUser => {
+  try {
+    return item.dataset.info ? JSON.parse(decodeURIComponent(item.dataset.info)) : { id: '', name: '', urlToken: '' };
+  } catch {
+    return { id: '', name: '', urlToken: '' };
+  }
+};
+
+const getBlockedUserListTypeFromItem = (item: HTMLElement): TBlockedUserListType =>
+  item.dataset.listType === BLOCKED_USER_LIST_TYPE.local ? BLOCKED_USER_LIST_TYPE.local : BLOCKED_USER_LIST_TYPE.zhihu;
+
+export const blackItemContent = ({ id, name, urlToken, tags = [] }: IBlockedUser, listType: TBlockedUserListType = BLOCKED_USER_LIST_TYPE.zhihu) => {
+  return (
+    `<a href="https://www.zhihu.com/people/${escapeHTML(urlToken || id)}" target="_blank">${escapeHTML(name)}</a>` +
+    tags.map((tag) => `<span class="ctz-in-blocked-user-tag">${escapeHTML(tag)}</span>`).join('') +
+    `<i class="${CLASS_BLACK_ITEM_MORE}">···</i>`
+  );
+};
 
 const tagContext = (i: string) =>
-  i + `<span class="${CLASS_EDIT_TAG}">✎</span>` + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`;
+  escapeHTML(i) + `<span class="${CLASS_EDIT_TAG}">✎</span>` + `<i class="${CLASS_REMOVE_BLOCKED_TAG}" style="margin-left:4px;cursor:pointer;font-style: normal;font-size:12px;">✕</i>`;
 
 const tagInputCallback = async (e: Event) => {
   const { blockedUsersTags = [] } = await myStorage.getConfig();
@@ -62,17 +98,17 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
 
   // 初始化黑名单标签列表
   const nodeBlockedUsersTags = dom(`#${ID_BLOCKED_USERS_TAGS}`, domMain)!;
-  nodeBlockedUsersTags.innerHTML = (prevConfig.blockedUsersTags || []).map((i) => `<span class="ctz-blocked-users-tag" data-info="${i}">${tagContext(i)}</span>`).join('');
+  nodeBlockedUsersTags.innerHTML = (prevConfig.blockedUsersTags || []).map((i) => `<span class="ctz-blocked-users-tag" data-info="${escapeHTML(i)}">${tagContext(i)}</span>`).join('');
   nodeBlockedUsersTags.onclick = async (event) => {
     const nConfig = await myStorage.getConfig();
-    const { blockedUsers = [], blockedUsersTags = [] } = nConfig;
+    const { blockedUsers = [], localBlockedUsers = [], blockedUsersTags = [] } = nConfig;
     const target = event.target as HTMLElement;
 
     // 删除标签
     if (target.classList.contains(CLASS_REMOVE_BLOCKED_TAG)) {
       const item = target.parentElement as HTMLElement;
       const info = item.dataset.info || '';
-      const isUsed = blockedUsers.some((item) => {
+      const isUsed = [...blockedUsers, ...localBlockedUsers].some((item) => {
         if (item.tags && item.tags.length) {
           return item.tags.some((i) => i === info);
         }
@@ -91,7 +127,7 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
 
     // 修改标签名
     if (target.classList.contains(CLASS_EDIT_TAG)) {
-      const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
+      const { blockedUsers = [], localBlockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
       const item = target.parentElement as HTMLElement;
       const prevName = item.dataset.info || '';
       openExtra('changeBlockedUserTagName');
@@ -104,7 +140,7 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
         const nInfo = (dom('[name="blocked-user-tag-name"]') as HTMLInputElement).value;
         const indexTag = blockedUsersTags.findIndex((i) => i === prevName);
         blockedUsersTags.splice(indexTag, 1, nInfo);
-        blockedUsers.forEach((item) => {
+        [...blockedUsers, ...localBlockedUsers].forEach((item) => {
           if (!item.tags) return;
           const nIndex = (item.tags || []).findIndex((i) => i === prevName);
           if (nIndex >= 0) {
@@ -115,6 +151,7 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
           ...nConfig,
           blockedUsersTags,
           blockedUsers,
+          localBlockedUsers,
         });
 
         initHTMLBlockedUserTags(domMain);
@@ -137,50 +174,146 @@ const initHTMLBlockedUserTags = async (domMain: HTMLElement) => {
     await tagInputCallback(e);
     const boxTags = dom('.ctz-choose-blocked-user-tags')!;
     const nTag = domC('span', {
-      innerHTML: value,
+      innerHTML: escapeHTML(value),
     });
     nTag.dataset.choose = 'false';
-    nTag.dataset.type = 'blockedUserTag'
-    nTag.dataset.name = value
+    nTag.dataset.type = 'blockedUserTag';
+    nTag.dataset.name = value;
     boxTags.appendChild(nTag);
   };
 };
 
 /** 初始化黑名单列表 */
 export const initHTMLBlockedUsers = async (domMain: HTMLElement) => {
-  const { blockedUsers = [] } = await myStorage.getConfig();
+  removeBlockedUserMenu();
+  const { blockedUsers = [], localBlockedUsers = [] } = await myStorage.getConfig();
 
-  dom('#CTZ_BLOCKED_NUMBER', domMain)!.innerText = blockedUsers.length ? `黑名单数量：${blockedUsers.length}` : '';
+  dom('#CTZ_BLOCKED_NUMBER', domMain)!.innerText = blockedUsers.length ? `知乎黑名单数量：${blockedUsers.length}` : '';
+  dom('#CTZ_LOCAL_BLOCKED_NUMBER', domMain)!.innerText = localBlockedUsers.length ? `本地黑名单数量：${localBlockedUsers.length}` : '';
 
-  const nodeBlockedUsers = dom(`#${ID_BLOCK_LIST}`, domMain)!;
-  nodeBlockedUsers.innerHTML = blockedUsers
-    .map(
-      (info) =>
-        `<div class="ctz-black-item ctz-black-id-${info.id}" data-info='${JSON.stringify({
-          ...info,
-          name: '', // info 里不放置名字，解决部分用户名下存在特殊字符，导致info插入不完全的情况
-        })}'>${blackItemContent(info)}</div>`
-    )
-    .join('');
+  renderBlockedUserList(domMain, blockedUsers, BLOCKED_USER_LIST_TYPE.zhihu);
+  renderBlockedUserList(domMain, localBlockedUsers, BLOCKED_USER_LIST_TYPE.local);
+};
 
-  nodeBlockedUsers.onclick = async (event) => {
-    // 黑名单列表点击
-    const target = event.target as HTMLElement;
-    const item = target.parentElement as HTMLElement;
-    const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
+const renderBlockedUserList = (domMain: HTMLElement, list: IBlockedUser[], listType: TBlockedUserListType) => {
+  const nodeBlockedUsers = dom(`#${BLOCKED_USER_LIST_ID[listType]}`, domMain)!;
+  nodeBlockedUsers.innerHTML = list.map((info) => createBlockedUserItemHTML(info, listType)).join('');
+  nodeBlockedUsers.onclick = (event) => onBlockedUserListClick(event, listType);
+};
 
-    // 删除黑名单用户
-    if (target.classList.contains(CLASS_REMOVE_BLOCK)) {
+const createBlockedUserItemHTML = (info: IBlockedUser, listType: TBlockedUserListType) =>
+  `<div class="ctz-black-item ctz-black-id-${escapeHTML(info.id)}" data-list-type="${listType}" data-info="${encodeBlockedUserInfo(info)}">${blackItemContent(
+    info,
+    listType
+  )}</div>`;
+
+const onBlockedUserListClick = async (event: MouseEvent, defaultListType: TBlockedUserListType) => {
+  const target = event.target as HTMLElement;
+  const item = target.closest('.ctz-black-item') as HTMLElement | null;
+  if (!item) return;
+
+  if (target.classList.contains(CLASS_BLACK_ITEM_MORE)) {
+    const listType = item.dataset.listType ? getBlockedUserListTypeFromItem(item) : defaultListType;
+    openBlockedUserMenu(target, item, listType);
+    return;
+  }
+};
+
+const onBlockedUserAction = async (action: string, item: HTMLElement, listType: TBlockedUserListType) => {
+  const info = getBlockedUserInfoFromItem(item);
+  if (!info.id) return;
+
+  if (action === 'tags') {
+    chooseBlockedUserTags(item);
+    return;
+  }
+
+  if (action === 'move') {
+    if (listType === BLOCKED_USER_LIST_TYPE.zhihu) {
+      await moveBlockedUserToLocal(info);
+    } else {
+      const movedType = await addBlockUser(info, { openTagChoose: false });
+      movedType === BLOCKED_USER_LIST_TYPE.zhihu && message('已移动至知乎黑名单');
+    }
+    return;
+  }
+
+  if (action === 'remove') {
+    if (listType === BLOCKED_USER_LIST_TYPE.zhihu) {
       removeBlockUser(info);
-      return;
+    } else {
+      await removeLocalBlockedUser(info);
     }
+  }
+};
 
-    // 编辑用户标签
-    if (target.classList.contains(CLASS_EDIT_USER_TAG)) {
-      chooseBlockedUserTags(item);
-      return;
-    }
+const removeBlockedUserMenu = () => {
+  domById(ID_BLOCKED_USER_MENU)?.remove();
+};
+
+const openBlockedUserMenu = (button: HTMLElement, item: HTMLElement, listType: TBlockedUserListType) => {
+  removeBlockedUserMenu();
+  const moveText = listType === BLOCKED_USER_LIST_TYPE.zhihu ? '移动至本地黑名单' : '移动至知乎黑名单';
+  const nodeMenu = domC('div', {
+    id: ID_BLOCKED_USER_MENU,
+    className: 'ctz-black-item-menu',
+    innerHTML:
+      `<span class="${CLASS_BLACK_ITEM_ACTION}" data-action="tags">设置标签</span>` +
+      `<span class="${CLASS_BLACK_ITEM_ACTION}" data-action="move">${moveText}</span>` +
+      `<span class="${CLASS_BLACK_ITEM_ACTION}" data-action="remove">从黑名单移除</span>`,
+  });
+
+  nodeMenu.onclick = async (event) => {
+    const actionNode = (event.target as HTMLElement).closest(`.${CLASS_BLACK_ITEM_ACTION}`) as HTMLElement | null;
+    if (!actionNode || !actionNode.dataset.action) return;
+    removeBlockedUserMenu();
+    await onBlockedUserAction(actionNode.dataset.action, item, listType);
   };
+
+  document.body.appendChild(nodeMenu);
+  const rect = button.getBoundingClientRect();
+  const menuRect = nodeMenu.getBoundingClientRect();
+  let left = Math.min(Math.max(rect.left, 8), window.innerWidth - menuRect.width - 8);
+  let top = rect.bottom + 6;
+  if (top + menuRect.height > window.innerHeight - 8) {
+    top = rect.top - menuRect.height - 6;
+  }
+  nodeMenu.style.left = `${left}px`;
+  nodeMenu.style.top = `${Math.max(top, 8)}px`;
+  setTimeout(() => {
+    document.addEventListener(
+      'click',
+      (event) => {
+        const target = event.target as HTMLElement;
+        if (!target.closest(`#${ID_BLOCKED_USER_MENU}`) && !target.classList.contains(CLASS_BLACK_ITEM_MORE)) {
+          removeBlockedUserMenu();
+        }
+      },
+      { once: true }
+    );
+  });
+};
+
+const removeLocalBlockedUser = async (info: IBlockedUser) => {
+  const config = await myStorage.getConfig();
+  await myStorage.updateConfig({
+    ...config,
+    localBlockedUsers: (config.localBlockedUsers || []).filter((item) => item.id !== info.id),
+  });
+  initHTMLBlockedUsers(document.body);
+};
+
+const moveBlockedUserToLocal = async (info: IBlockedUser) => {
+  await removeBlockUser(info, false);
+  const config = await myStorage.getConfig();
+  const localBlockedUsers = config.localBlockedUsers || [];
+  const localUser = localBlockedUsers.find((item) => item.id === info.id);
+  await myStorage.updateConfig({
+    ...config,
+    localBlockedUsers: [mergeBlockedUser(localUser, info), ...localBlockedUsers.filter((item) => item.id !== info.id)],
+  });
+  initHTMLBlockedUsers(document.body);
+  message('已移动至本地黑名单');
 };
 
 /**
@@ -188,15 +321,20 @@ export const initHTMLBlockedUsers = async (domMain: HTMLElement) => {
  * @param item 黑名单列表ITEM
  */
 export const chooseBlockedUserTags = async (item: HTMLElement, needCover = true) => {
-  const info = item.dataset.info ? JSON.parse(item.dataset.info) : {};
+  const info = getBlockedUserInfoFromItem(item);
+  const listType = getBlockedUserListTypeFromItem(item);
   openExtra('chooseBlockedUserTags', needCover);
-  const { blockedUsers = [], blockedUsersTags = [] } = await myStorage.getConfig();
+  const config = await myStorage.getConfig();
+  const { blockedUsersTags = [] } = config;
+  const blockedUsers = getBlockedUsersByType(config, listType);
   const currentTags = info.tags || [];
 
   dom('[data-type="chooseBlockedUserTags"] .ctz-title')!.innerText = `选择用户标签：${info.name}`;
 
   const boxTags = dom('.ctz-choose-blocked-user-tags')!;
-  boxTags.innerHTML = blockedUsersTags.map((i) => `<span data-type="blockedUserTag" data-name="${i}" data-choose="${currentTags.includes(i)}">${i}</span>`).join('');
+  boxTags.innerHTML = blockedUsersTags
+    .map((i) => `<span data-type="blockedUserTag" data-name="${escapeHTML(i)}" data-choose="${currentTags.includes(i)}">${escapeHTML(i)}</span>`)
+    .join('');
   boxTags.onclick = (event) => {
     const target = event.target as HTMLElement;
     if (target.dataset.type === 'blockedUserTag') {
@@ -217,9 +355,9 @@ export const chooseBlockedUserTags = async (item: HTMLElement, needCover = true)
       }
     });
 
-    item.innerHTML = blackItemContent(info);
-    item.dataset.info = JSON.stringify(info);
-    await myStorage.updateConfigItem('blockedUsers', blockedUsers);
+    item.innerHTML = blackItemContent(info, listType);
+    item.dataset.info = encodeBlockedUserInfo(info);
+    await myStorage.updateConfigItem(BLOCKED_USER_LIST_CONFIG_KEY[listType], blockedUsers);
     closeExtra();
   };
 };
