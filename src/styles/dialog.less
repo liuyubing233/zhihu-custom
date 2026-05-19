@@ -143,6 +143,66 @@
   }
 }
 
+#CTZ_DIALOG_RIGHT_ANCHOR {
+  flex: 0 0 auto;
+  gap: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  padding: 6px 18px 0;
+  border-bottom: 1px solid @gray02;
+  background: #ededec;
+
+  .ctz-right-anchor-item {
+    position: relative;
+    border: 0;
+    border-radius: 6px 6px 0 0;
+    padding: 0 12px;
+    height: 34px;
+    line-height: 34px;
+    font-size: @FontSize;
+    font-family: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+    color: inherit;
+    background: transparent;
+    transition: all 0.2s;
+    appearance: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 10px;
+      bottom: -1px;
+      left: 10px;
+      height: 2px;
+      border-radius: 2px;
+      background: transparent;
+      transition: all 0.2s;
+    }
+
+    &:hover {
+      color: @blue1;
+      background: rgba(77, 66, 86, 0.08);
+    }
+
+    &.target {
+      color: @blue1;
+      font-weight: 600;
+      background: @blue01;
+
+      &::after {
+        background: @blue1;
+      }
+    }
+
+    &:focus-visible {
+      outline: 1px solid @blue1;
+      outline-offset: -2px;
+    }
+  }
+}
+
 #CTZ_DIALOG_MAIN {
   flex: 1;
   overflow-y: auto;

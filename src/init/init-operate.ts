@@ -1,5 +1,5 @@
 import { onExportBlack, onImportBlack, onSyncBlackList, onSyncRemoveBlockedUsers } from '../components/black-list';
-import { onChangeMenu, openChange } from '../components/ctz-dialog';
+import { onChangeMenu, onChangeRightTitleAnchor, onScrollRightTitleAnchor, openChange } from '../components/ctz-dialog';
 import { myCustomStyle } from '../components/custom-style';
 import { fnChanger } from '../components/fn-changer';
 import { echoHistory } from '../components/history';
@@ -46,6 +46,8 @@ export const initOperate = () => {
   };
 
   dom('#CTZ_DIALOG_MENU')!.onclick = onChangeMenu;
+  dom('#CTZ_DIALOG_RIGHT_ANCHOR')!.onclick = onChangeRightTitleAnchor;
+  dom('#CTZ_DIALOG_MAIN')!.onscroll = onScrollRightTitleAnchor;
   domA('.ctz-preview').forEach((item) => {
     item.onclick = function () {
       myPreview.hide(this);

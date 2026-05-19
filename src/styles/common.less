@@ -81,9 +81,23 @@
   #CTZ_HISTORY_LIST a:hover,
   #CTZ_HISTORY_VIEW a:hover,
   .ctz-black-item a:hover,
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item:hover,
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item.target,
   .ctz-black-item-action:hover,
   [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span:hover {
     color: @primary !important;
+  }
+
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item.target {
+    background: @primary01;
+  }
+
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item.target::after {
+    background: @primary;
+  }
+
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item:focus-visible {
+    outline-color: @primary;
   }
 
   #CTZ_TITLE_ICO label input:checked + img,
@@ -139,6 +153,7 @@
   }
 
   #CTZ_DIALOG_RIGHT,
+  #CTZ_DIALOG_RIGHT_ANCHOR,
   #CTZ_HIDDEN .ctz-title,
   #CTZ_FILTER .ctz-title {
     background: #2f2c2b;
@@ -179,10 +194,24 @@
   #CTZ_HISTORY_LIST a:hover,
   #CTZ_HISTORY_VIEW a:hover,
   .ctz-black-item a:hover,
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item:hover,
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item.target,
   [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span:hover,
   [data-type='chooseBlockedUserTags'] .ctz-choose-blocked-user-tags > span[data-choose='true'],
   .ctz-in-blocked-user-tag {
     color: @primary!important;
+  }
+
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item.target {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item.target::after {
+    background: @primary;
+  }
+
+  #CTZ_DIALOG_RIGHT_ANCHOR .ctz-right-anchor-item:focus-visible {
+    outline-color: @primary;
   }
 
   .ctz-form-box {
