@@ -6,7 +6,7 @@ import { VERSION_RANGE_HAVE_PERCENT } from './size';
 
 /** 回填数据，供每次打开使用 */
 export const echoData = async () => {
-  const config = await myStorage.getConfig();
+  const config = await myStorage.getConfig(true);
   const textSameName: Record<string, Function> = {
     globalTitle: (e: HTMLInputElement) => (e.value = config.globalTitle || document.title),
     customizeCss: (e: HTMLInputElement) => (e.value = config.customizeCss || ''),

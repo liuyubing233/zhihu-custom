@@ -16,45 +16,75 @@ const parseStorageData = (raw: string) => {
   }
 };
 
+const updateRawCache = (name: string, raw: string) => {
+  memoryRawCache[name] = raw;
+  if (name === 'pfConfig') {
+    configCacheRaw = raw;
+    configCache = parseStorageData(raw) || {};
+  }
+  if (name === 'pfHistory') {
+    historyCacheRaw = raw;
+    historyCache = parseStorageData(raw) || { list: [], view: [] };
+  }
+};
+
+const syncRawStorage = async (name: string, raw: string, gmRaw: string, localRaw: string) => {
+  if (!raw) return;
+  if (localRaw !== raw) {
+    localStorage.setItem(name, raw);
+  }
+  if (gmRaw !== raw) {
+    await GM.setValue(name, raw);
+  }
+};
+
+window.addEventListener('storage', (event) => {
+  if (!event.key || !['pfConfig', 'pfHistory'].includes(event.key)) return;
+  updateRawCache(event.key, event.newValue || '');
+});
+
 /** 使用 localStorage + GM 存储，解决跨域存储配置不同的问题 */
 export const myStorage = {
-  set: async function (name: string, value: Record<string, any>) {
-    value.t = +new Date();
-    const v = JSON.stringify(value);
-    memoryRawCache[name] = v;
-    if (name === 'pfConfig') {
-      configCacheRaw = v;
-      configCache = parseStorageData(v) || {};
+  set: async function (name: string, value: Record<string, any>, refreshTimestamp = true) {
+    const nextValue = { ...value };
+    if (refreshTimestamp || !nextValue.t) {
+      nextValue.t = +new Date();
     }
-    if (name === 'pfHistory') {
-      historyCacheRaw = v;
-      historyCache = parseStorageData(v) || { list: [], view: [] };
-    }
+    const v = JSON.stringify(nextValue);
+    updateRawCache(name, v);
     localStorage.setItem(name, v);
     await GM.setValue(name, v);
   },
+  remove: async function (name: string) {
+    updateRawCache(name, '');
+    localStorage.removeItem(name);
+    await GM.deleteValue(name);
+  },
   get: async function (name: string, force = false) {
-    if (!force && memoryRawCache[name] !== undefined) return memoryRawCache[name] as string;
+    const configLocal = localStorage.getItem(name) || '';
+    if (!force && memoryRawCache[name] !== undefined && memoryRawCache[name] === configLocal) return memoryRawCache[name] as string;
 
     const gmValue = await GM.getValue(name);
     const config = typeof gmValue === 'string' ? gmValue : gmValue ? JSON.stringify(gmValue) : '';
-    const configLocal = localStorage.getItem(name) || '';
     const cParse = parseStorageData(config);
     const cLParse = parseStorageData(configLocal);
     if (!cParse && !cLParse) {
-      memoryRawCache[name] = '';
+      updateRawCache(name, '');
       return '';
     }
     if (!cParse) {
-      memoryRawCache[name] = configLocal;
+      updateRawCache(name, configLocal);
+      await syncRawStorage(name, configLocal, config, configLocal);
       return configLocal;
     }
     if (!cLParse) {
-      memoryRawCache[name] = config;
+      updateRawCache(name, config);
+      await syncRawStorage(name, config, config, configLocal);
       return config;
     }
     const nextRaw = cParse.t < cLParse.t ? configLocal : config;
-    memoryRawCache[name] = nextRaw;
+    updateRawCache(name, nextRaw);
+    await syncRawStorage(name, nextRaw, config, configLocal);
     return nextRaw;
   },
   getConfig: async function (force = false): Promise<IPfConfig> {
@@ -73,7 +103,7 @@ export const myStorage = {
   },
   /** 修改配置中的值 */
   updateConfigItem: async function (key: string | Record<string, any>, value?: any) {
-    const config = await this.getConfig();
+    const config = await this.getConfig(true);
     if (typeof key === 'string') {
       config[key] = value;
     } else {
@@ -84,8 +114,8 @@ export const myStorage = {
     await this.updateConfig(config);
   },
   /** 更新配置 */
-  updateConfig: async function (params: IPfConfig) {
-    await this.set('pfConfig', params);
+  updateConfig: async function (params: IPfConfig, refreshTimestamp = true) {
+    await this.set('pfConfig', params, refreshTimestamp);
   },
   updateHistoryItem: async function (key: 'list' | 'view', params: string[]) {
     const pfHistory = await this.getHistory();

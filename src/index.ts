@@ -78,7 +78,7 @@ import { INNER_CSS } from './web-resources';
         }
       });
     }
-    await myStorage.updateConfig(config);
+    await myStorage.updateConfig(config, false);
 
     initHistoryView();
     appendHiddenStyle();

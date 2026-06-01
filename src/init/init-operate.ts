@@ -97,7 +97,7 @@ export const initOperate = () => {
 const myButtonOperation: Record<string, Function> = {
   // 导出配置
   configExport: async () => {
-    const config = (await myStorage.get('pfConfig')) || '{}';
+    const config = (await myStorage.get('pfConfig', true)) || '{}';
     const dateNumber = +new Date();
     const link = domC('a', {
       href: 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(config),
@@ -109,8 +109,7 @@ const myButtonOperation: Record<string, Function> = {
   },
   // 清空配置
   configRemove: async () => {
-    GM.deleteValue('pfConfig');
-    localStorage.removeItem('pfConfig');
+    await myStorage.remove('pfConfig');
   },
   // 恢复默认配置
   configReset: async function () {
@@ -149,8 +148,8 @@ const myButtonOperation: Record<string, Function> = {
   useSimple: async () => {
     const isUse = confirm('是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存');
     if (!isUse) return;
-    const prevConfig = await myStorage.getConfig();
-    myStorage.updateConfig({
+    const prevConfig = await myStorage.getConfig(true);
+    await myStorage.updateConfig({
       ...prevConfig,
       ...CONFIG_SIMPLE,
     });

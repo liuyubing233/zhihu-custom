@@ -799,7 +799,7 @@
     );
   };
   var echoData = async () => {
-    const config = await myStorage.getConfig();
+    const config = await myStorage.getConfig(true);
     const textSameName = {
       globalTitle: (e) => e.value = config.globalTitle || document.title,
       customizeCss: (e) => e.value = config.customizeCss || ""
@@ -3159,43 +3159,70 @@
       return void 0;
     }
   };
+  var updateRawCache = (name, raw) => {
+    memoryRawCache[name] = raw;
+    if (name === "pfConfig") {
+      configCacheRaw = raw;
+      configCache = parseStorageData(raw) || {};
+    }
+    if (name === "pfHistory") {
+      historyCacheRaw = raw;
+      historyCache = parseStorageData(raw) || { list: [], view: [] };
+    }
+  };
+  var syncRawStorage = async (name, raw, gmRaw, localRaw) => {
+    if (!raw) return;
+    if (localRaw !== raw) {
+      localStorage.setItem(name, raw);
+    }
+    if (gmRaw !== raw) {
+      await GM.setValue(name, raw);
+    }
+  };
+  window.addEventListener("storage", (event) => {
+    if (!event.key || !["pfConfig", "pfHistory"].includes(event.key)) return;
+    updateRawCache(event.key, event.newValue || "");
+  });
   var myStorage = {
-    set: async function(name, value) {
-      value.t = +/* @__PURE__ */ new Date();
-      const v = JSON.stringify(value);
-      memoryRawCache[name] = v;
-      if (name === "pfConfig") {
-        configCacheRaw = v;
-        configCache = parseStorageData(v) || {};
+    set: async function(name, value, refreshTimestamp = true) {
+      const nextValue = { ...value };
+      if (refreshTimestamp || !nextValue.t) {
+        nextValue.t = +/* @__PURE__ */ new Date();
       }
-      if (name === "pfHistory") {
-        historyCacheRaw = v;
-        historyCache = parseStorageData(v) || { list: [], view: [] };
-      }
+      const v = JSON.stringify(nextValue);
+      updateRawCache(name, v);
       localStorage.setItem(name, v);
       await GM.setValue(name, v);
     },
+    remove: async function(name) {
+      updateRawCache(name, "");
+      localStorage.removeItem(name);
+      await GM.deleteValue(name);
+    },
     get: async function(name, force = false) {
-      if (!force && memoryRawCache[name] !== void 0) return memoryRawCache[name];
+      const configLocal = localStorage.getItem(name) || "";
+      if (!force && memoryRawCache[name] !== void 0 && memoryRawCache[name] === configLocal) return memoryRawCache[name];
       const gmValue = await GM.getValue(name);
       const config = typeof gmValue === "string" ? gmValue : gmValue ? JSON.stringify(gmValue) : "";
-      const configLocal = localStorage.getItem(name) || "";
       const cParse = parseStorageData(config);
       const cLParse = parseStorageData(configLocal);
       if (!cParse && !cLParse) {
-        memoryRawCache[name] = "";
+        updateRawCache(name, "");
         return "";
       }
       if (!cParse) {
-        memoryRawCache[name] = configLocal;
+        updateRawCache(name, configLocal);
+        await syncRawStorage(name, configLocal, config, configLocal);
         return configLocal;
       }
       if (!cLParse) {
-        memoryRawCache[name] = config;
+        updateRawCache(name, config);
+        await syncRawStorage(name, config, config, configLocal);
         return config;
       }
       const nextRaw = cParse.t < cLParse.t ? configLocal : config;
-      memoryRawCache[name] = nextRaw;
+      updateRawCache(name, nextRaw);
+      await syncRawStorage(name, nextRaw, config, configLocal);
       return nextRaw;
     },
     getConfig: async function(force = false) {
@@ -3213,7 +3240,7 @@
       return historyCache;
     },
     updateConfigItem: async function(key, value) {
-      const config = await this.getConfig();
+      const config = await this.getConfig(true);
       if (typeof key === "string") {
         config[key] = value;
       } else {
@@ -3223,8 +3250,8 @@
       }
       await this.updateConfig(config);
     },
-    updateConfig: async function(params) {
-      await this.set("pfConfig", params);
+    updateConfig: async function(params, refreshTimestamp = true) {
+      await this.set("pfConfig", params, refreshTimestamp);
     },
     updateHistoryItem: async function(key, params) {
       const pfHistory = await this.getHistory();
@@ -5351,7 +5378,7 @@
       if (confirm(
         !checked ? "关闭接口拦截，确认后将刷新页面。\n「黑名单设置；外置不感兴趣；快速屏蔽用户；回答、文章和收藏夹导出」功能将不可用。" : "开启接口拦截，确认后将刷新页面。\n如遇到知乎页面无法显示数据的情况请尝试关闭接口拦截。"
       )) {
-        myStorage.updateConfigItem("fetchInterceptStatus", checked);
+        await myStorage.updateConfigItem("fetchInterceptStatus", checked);
         window.location.reload();
       } else {
         ev.checked = !checked;
@@ -5446,7 +5473,7 @@
   };
   var myButtonOperation = {
     configExport: async () => {
-      const config = await myStorage.get("pfConfig") || "{}";
+      const config = await myStorage.get("pfConfig", true) || "{}";
       const dateNumber = +/* @__PURE__ */ new Date();
       const link = domC("a", {
         href: "data:text/csv;charset=utf-8,\uFEFF" + encodeURIComponent(config),
@@ -5457,8 +5484,7 @@
       document.body.removeChild(link);
     },
     configRemove: async () => {
-      GM.deleteValue("pfConfig");
-      localStorage.removeItem("pfConfig");
+      await myStorage.remove("pfConfig");
     },
     configReset: async function() {
       const isUse = confirm("是否启恢复默认配置？\n该功能会覆盖当前配置，建议先将配置导出保存");
@@ -5489,8 +5515,8 @@
     useSimple: async () => {
       const isUse = confirm("是否启用极简模式？\n该功能会覆盖当前配置，建议先将配置导出保存");
       if (!isUse) return;
-      const prevConfig = await myStorage.getConfig();
-      myStorage.updateConfig({
+      const prevConfig = await myStorage.getConfig(true);
+      await myStorage.updateConfig({
         ...prevConfig,
         ...CONFIG_SIMPLE
       });
@@ -5560,7 +5586,7 @@
           }
         });
       }
-      await myStorage.updateConfig(config);
+      await myStorage.updateConfig(config, false);
       initHistoryView();
       appendHiddenStyle();
       myBackground.init();
