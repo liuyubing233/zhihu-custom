@@ -2974,7 +2974,7 @@
     hiddenFixedActions: true,
     hiddenLogo: true,
     hiddenHeader: true,
-    hiddenHeaderScroll: true,
+    hiddenHomePayAsk: true,
     hiddenItemActions: true,
     hiddenQuestionShare: true,
     hiddenQuestionTag: true,
@@ -3611,12 +3611,7 @@
         {
           label: "顶部悬浮模块",
           value: "hiddenHeader",
-          css: ".AppHeader,.ColumnPageHeader-Wrapper{display: none!important;}.PubIndex-CategoriesHeader{top: 0!important;}"
-        },
-        {
-          label: "滚动顶部悬浮模块/问题名称",
-          value: "hiddenHeaderScroll",
-          css: ".AppHeader.is-fixed{display:none!important;}.zhuanlan .css-f2kkrj{top:0;}"
+          css: ".AppHeader,.ColumnPageHeader-Wrapper,#root .css-1g41cri{display: none!important;}.PubIndex-CategoriesHeader{top: 0!important;}"
         }
       ],
       [
@@ -3651,19 +3646,14 @@
           css: '.AppHeader a[href="https://www.zhihu.com/ring-feeds"]{display:none}'
         },
         {
-          label: "顶部菜单栏 - 付费咨询",
-          value: "hiddenHeaderConsult",
-          css: '.AppHeader a[href="https://www.zhihu.com/consult"]{display:none}'
+          label: "顶部菜单栏 - AI Works",
+          value: "hiddenHeaderSquare",
+          css: '.AppHeader a[href="https://www.zhihu.com/project/square"]{display:none}'
         },
         {
-          label: "顶部菜单栏 - 知学堂",
-          value: "hiddenHeaderEducationLearning",
-          css: '.AppHeader a[href="https://www.zhihu.com/education/learning"]{display:none}'
-        },
-        {
-          label: "顶部菜单栏 - 直答",
-          value: "hiddenHeaderZhida",
-          css: '.AppHeader a[href="https://zhida.zhihu.com/"]{display:none}'
+          label: "顶部菜单栏 - 故事",
+          value: "hiddenHeaderVipWeb",
+          css: '.AppHeader a[href="https://www.zhihu.com/fiore/h5/vip-web"]{display:none}'
         }
       ],
       [
@@ -3816,6 +3806,11 @@
           label: "大家都在搜",
           value: "hiddenHomeHotSearch",
           css: ".Topstory .HotSearchCard{display: none;}"
+        },
+        {
+          label: "付费咨询",
+          value: "hiddenHomePayAsk",
+          css: ".Topstory .css-ga65ow{display:none;}"
         }
       ],
       [

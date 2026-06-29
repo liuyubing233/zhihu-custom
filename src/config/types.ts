@@ -26,8 +26,10 @@ export interface IConfigHidden {
   hiddenLogo?: boolean;
   /** 隐藏header */
   hiddenHeader?: boolean;
-  /** 隐藏顶部滚动header */
-  hiddenHeaderScroll?: boolean;
+  /** 付费咨询 */
+  hiddenHomePayAsk?: boolean;
+  // /** 隐藏顶部滚动header */
+  // hiddenHeaderScroll?: boolean;
   /** 隐藏列表回答操作 */
   hiddenItemActions?: boolean;
   /** 隐藏列表回答操作栏 - 底部悬浮 */
