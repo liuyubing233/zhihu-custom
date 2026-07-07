@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         本地调试5555
+// @name         知乎本地调试
 // @namespace    http://tampermonkey.net/
 // @version      0.0.1
 // @description  写入tampermonkey，本地开发使用

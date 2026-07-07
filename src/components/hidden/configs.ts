@@ -245,6 +245,13 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
   content: [
     [
       {
+        label: '顶部分享此刻想法',
+        value: 'hiddenWriteArea',
+        css: '.Topstory .WriteArea{display:none;}'
+      }
+    ],
+    [
+      {
         label: '创作中心',
         value: 'hiddenHomeCreatorEntrance',
         css: '.Topstory .css-19idom{display: none;}',
@@ -262,7 +269,7 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
       {
         label: '推荐关注',
         value: 'hiddenHomeRecommendFollow',
-        css: '.Topstory .css-173vipd{display: none;}',
+        css: '.Topstory .css-1iaxl4o{display: none;}',
       },
       {
         label: '分类圆桌',
@@ -287,7 +294,7 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
       {
         label: '付费咨询',
         value: 'hiddenHomePayAsk',
-        css: '.Topstory .css-ga65ow{display:none;}'
+        css: '.Topstory .css-1dyj6jm{display:none;}'
       }
     ],
     [
