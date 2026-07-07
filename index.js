@@ -3372,9 +3372,10 @@
     init: async function() {
       const { themeDark = 1 /* 深色一 */, themeLight = 0 /* 默认 */, colorText1 } = await myStorage.getConfig();
       const useDark = await isDark();
+      const isRegular = !useDark && themeLight === 0 /* 默认 */;
       fnAppendStyle(
         "CTZ_STYLE_BACKGROUND",
-        (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)
+        isRegular ? "" : (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)
       );
       const domHTML = dom("html");
       if (useDark) {

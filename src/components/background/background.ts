@@ -14,9 +14,12 @@ export const myBackground = {
   init: async function () {
     const { themeDark = EThemeDark.深色一, themeLight = EThemeLight.默认, colorText1 } = await myStorage.getConfig();
     const useDark = await isDark();
+
+    const isRegular = !useDark && themeLight === EThemeLight.默认;
+
     fnAppendStyle(
       'CTZ_STYLE_BACKGROUND',
-      (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1)
+      isRegular ? '' : (useDark ? this.dark(themeDark) : this.light(themeLight)) + fnReturnStr(`.ContentItem-title, body{color: ${colorText1}!important;}`, !!colorText1),
     );
 
     const domHTML = dom('html')!;
@@ -47,7 +50,7 @@ export const myBackground = {
         `.ztext pre,.ztext code{background: ${background}!important;}` +
         // 暗黑模式下的自定义按钮颜色
         `.ctz-button{background: ${background2};border-color: #f7f9f9;color: #f7f9f9;}`,
-      (i) => `html[data-theme=dark] ${i}` // 添加 html[data-theme=dark] 前缀
+      (i) => `html[data-theme=dark] ${i}`, // 添加 html[data-theme=dark] 前缀
     );
   },
 };
@@ -116,7 +119,7 @@ const NAME_BACKGROUND_2 =
   `,${appendClassStart(
     'App-root,PcContent-root,TopNavBar-root,CourseConsultation-corner,CourseConsultation-cornerButton,CornerButtonToTop-cornerButton,LearningRouteCard-pathContent,index-item,index-hoverCard,ShelfTopNav-root' +
       ',ProductCard-root,NewOrderedLayout-root,Tabs-tabHeader,ButtonBar-root,WebPage-root,LearningPathWayCard-pathItem,VideoCourseList-title,Article-header,PcContent-coverFix,index-module,TopNavBar-module,PcContent-module,CourseRecord-module' +
-      ',Learned-module,Tab-module,PcContentBought-module,Media-module'
+      ',Learned-module,Tab-module,PcContentBought-module,Media-module',
   )}`;
 
 /** 透明背景色的元素名称 */
@@ -145,7 +148,7 @@ const DARK_NAME_COLOR_WHITE =
   `,.CommentContent,.css-1j6g1cv > span, .css-1j6g1cv > div,blockquote` +
   `,[class^="css-"],[class^="index-descInfo"],[class^="TopNavBar-tab-"] a` +
   `,${appendClassStart(
-    'index-title,CourseConsultation-tip,index-text,index-number,CourseDescription-playCount,LecturerList-title,LearningRouteCard-title,index-tabItemLabel,VideoCourseCard-module,TextTruncation-module'
+    'index-title,CourseConsultation-tip,index-text,index-number,CourseDescription-playCount,LecturerList-title,LearningRouteCard-title,index-tabItemLabel,VideoCourseCard-module,TextTruncation-module',
   )}`;
 
 /** 黑夜模式下的黑色字体元素名称 */
