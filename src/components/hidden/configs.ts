@@ -25,7 +25,7 @@ const HIDDEN_ITEM_COMMON: IHiddenItem = {
         label: '隐藏选中文字后的弹窗模块',
         value: 'hiddenSelectedTextPopup',
         css: '.css-fg13ww,.css-fg13ww + svg{display: none!important;}',
-      }
+      },
     ],
     [
       {
@@ -247,8 +247,8 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
       {
         label: '顶部分享此刻想法',
         value: 'hiddenWriteArea',
-        css: '.Topstory .WriteArea{display:none;}'
-      }
+        css: '.Topstory .WriteArea{display:none;}',
+      },
     ],
     [
       {
@@ -294,8 +294,8 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
       {
         label: '付费咨询',
         value: 'hiddenHomePayAsk',
-        css: '.Topstory .css-1dyj6jm{display:none;}'
-      }
+        css: '.Topstory .css-1dyj6jm{display:none;}',
+      },
     ],
     [
       {
@@ -413,6 +413,8 @@ const HIDDEN_ITEM_LIST: IHiddenItem = {
     ],
   ],
 };
+
+const AnswerRightHidden = '.Question-sideColumn{display: none!important;}.Question-mainColumn{width: auto;}';
 
 /** 回答 */
 const HIDDEN_ITEM_ANSWER: IHiddenItem = {
@@ -562,7 +564,7 @@ const HIDDEN_ITEM_ANSWER: IHiddenItem = {
       {
         label: '问答页面右侧信息栏',
         value: 'hiddenAnswerRightFooter',
-        css: '.Question-sideColumn{display: none!important;}.Question-main .Question-mainColumn,.ListShortcut{width: inherit;}',
+        css: AnswerRightHidden,
       },
       {
         label: '问答页面信息栏 - 关于作者',
@@ -830,5 +832,17 @@ export const HIDDEN_ARRAY_MORE = [
   {
     keys: ['hiddenHeaderEducationLearning', 'hiddenHeaderConsult'],
     value: '.AppHeader .css-53paqb{display: none;}',
+  },
+  {
+    keys: [
+      'hiddenAnswerRightFooterAnswerAuthor',
+      'hiddenAnswerRightFooterFavorites',
+      'hiddenAnswerRightFooterFavorites',
+      'hiddenAnswerRightFooterRelatedQuestions',
+      'hiddenAnswerRightFooterContentList',
+      'hiddenAnswerRightFooterFooter',
+      'hiddenAnswerRightHotSearchCard',
+    ],
+    value: AnswerRightHidden,
   },
 ];
