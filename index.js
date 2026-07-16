@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         知乎修改器🤜持续更新🤛努力实现功能最全的知乎配置插件
 // @namespace    http://tampermonkey.net/
-// @version      5.21.2
+// @version      5.21.3
 // @description  知乎高性能模式，页面模块自定义隐藏，列表及回答内容过滤，保存浏览历史记录，推荐页内容缓存，一键邀请，复制代码块删除版权信息，列表种类和关键词强过滤并自动调用「不感兴趣」接口，屏蔽用户回答，视频下载，设置自动收起所有长回答或自动展开所有回答，移除登录提示弹窗，设置过滤故事档案局和盐选科普回答等知乎官方账号回答，手动调节文字大小，切换主题及深色模式调整，隐藏知乎热搜，列表添加标签种类，去除广告，设置购买链接显示方式，收藏夹内容、回答、文章导出为PDF，一键移除所有屏蔽选项，外链直接打开，键盘左右切换预览图片，快捷键收起时修正定位，更多功能请在插件里体验...
 // @compatible   edge Violentmonkey
 // @compatible   edge Tampermonkey
@@ -741,11 +741,11 @@
       const versionSizeUserHome = formatVersionPercentSize("versionUserHome");
       const versionSizeCollection = formatVersionPercentSize("versionCollection");
       const NAME_HOME = ".Topstory-mainColumn,.SearchMain";
-      const NAME_ANSWER = ".Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content";
+      const NAME_ANSWER = ".Question-main,.Question-mainColumn,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content,.QuestionPage>div";
       const NAME_ARTICLE = ".Post-NormalSub>div,.zhuanlan .Post-Row-Content,.zhuanlan .css-1pariuy,.zhuanlan .css-44kk6u";
       const NAME_USER_HOME = '#ProfileHeader,[itemprop="people"] .Profile-main';
       const NAME_COLLECTION = ".CollectionsDetailPage";
-      const xxxWidth = `${NAME_HOME}{width: ${versionSizeHome}!important;}${NAME_ANSWER}{width: ${versionSizeAnswer}!important;}${NAME_ARTICLE}{width: ${versionSizeArticle}!important;}.zhuanlan .Post-SideActions{right: ${!versionArticleIsPercent ? `calc(50vw - ${+(versionArticle || "1000") / 2 + 150}px)` : `calc(50vw - ${+(versionArticlePercent || "70") / 2}vw + 150px)`}}${NAME_USER_HOME}{width: ${versionSizeUserHome}!important;}${NAME_COLLECTION}{width: ${versionSizeCollection}!important}${NAME_HOME},${NAME_ANSWER},${NAME_ARTICLE},${NAME_USER_HOME},${NAME_COLLECTION},.${CLASS_ZHIHU_COMMENT_DIALOG},.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG},.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{min-width: ${VERSION_MIN_WIDTH}px!important;}` + fnReturnStr(
+      const xxxWidth = `${NAME_HOME}{width: ${versionSizeHome}!important;}${NAME_ANSWER}{width: ${versionSizeAnswer}!important;margin: 0 auto; padding: 0;}${NAME_ARTICLE}{width: ${versionSizeArticle}!important;}.zhuanlan .Post-SideActions{right: ${!versionArticleIsPercent ? `calc(50vw - ${+(versionArticle || "1000") / 2 + 150}px)` : `calc(50vw - ${+(versionArticlePercent || "70") / 2}vw + 150px)`}}${NAME_USER_HOME}{width: ${versionSizeUserHome}!important;}${NAME_COLLECTION}{width: ${versionSizeCollection}!important}${NAME_HOME},${NAME_ANSWER},${NAME_ARTICLE},${NAME_USER_HOME},${NAME_COLLECTION},.${CLASS_ZHIHU_COMMENT_DIALOG},.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG},.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{min-width: ${VERSION_MIN_WIDTH}px!important;}` + fnReturnStr(
         `.Topstory-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeHome}!important;max-width:100vw;}.PostIndex-body .${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeArticle}!important;max-width:100vw;}` + fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeAnswer}!important;max-width:100vw;}`, location.pathname.includes("question")) + fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeCollection}!important;max-width:100vw;}`, location.pathname.includes("collection")) + fnReturnStr(`.${CLASS_ZHIHU_COMMENT_DIALOG}{width: ${versionSizeUserHome}!important;max-width:100vw;}`, location.pathname.includes("people")),
         commitModalSizeSameVersion
       );

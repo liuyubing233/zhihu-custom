@@ -69,7 +69,7 @@ export const mySize = {
     const versionSizeCollection = formatVersionPercentSize('versionCollection');
 
     const NAME_HOME = '.Topstory-mainColumn,.SearchMain';
-    const NAME_ANSWER = '.Question-main,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content';
+    const NAME_ANSWER = '.Question-main,.Question-mainColumn,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content,.QuestionPage>div';
     const NAME_ARTICLE = '.Post-NormalSub>div,.zhuanlan .Post-Row-Content,.zhuanlan .css-1pariuy,.zhuanlan .css-44kk6u';
     //.Post-NormalMain .Post-Header， ,.Post-NormalMain>div 旧的专栏 ,.zhuanlan .css-1xy3kyp ,.zhuanlan .css-1voxft1 ,.zhuanlan .css-9w3zhd,.zhuanlan .css-15k5nix,.zhuanlan .css-1byd3cx
     const NAME_USER_HOME = '#ProfileHeader,[itemprop="people"] .Profile-main';
@@ -80,7 +80,7 @@ export const mySize = {
       // 首页列表页面内容宽度
       `${NAME_HOME}{width: ${versionSizeHome}!important;}` +
       // 回答详情页面内容宽度
-      `${NAME_ANSWER}{width: ${versionSizeAnswer}!important;}` +
+      `${NAME_ANSWER}{width: ${versionSizeAnswer}!important;margin: 0 auto; padding: 0;}` +
       // 文章页面内容宽度
       `${NAME_ARTICLE}{width: ${versionSizeArticle}!important;}` +
       `.zhuanlan .Post-SideActions{right: ${
