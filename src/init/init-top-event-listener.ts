@@ -44,6 +44,7 @@ export const initRootEvent = async () => {
   if (!domRoot) return;
   domRoot.addEventListener('click', async function (event) {
     const config = await getContentConfig();
+    if (!config) return;
     const { fetchInterceptStatus, videoInAnswerArticle } = config;
     const target = event.target as HTMLElement;
     if (videoInAnswerArticle === EVideoInAnswerArticle.修改为链接) {
@@ -104,8 +105,9 @@ type IPageType = 'LIST' | 'QUESTION' | 'USER_HOME';
  */
 export const doContentItem = async (pageType?: IPageType, contentItem?: HTMLElement, needTimeout = false) => {
   if (!contentItem || !pageType) return;
-  const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, answerItemCreatedAndModifiedTime, userHomeContentTimeTop } =
-    await getContentConfig();
+  const config = await getContentConfig();
+  if (!config) return;
+  const { topExportContent, fetchInterceptStatus, listItemCreatedAndModifiedTime, answerItemCreatedAndModifiedTime, userHomeContentTimeTop } = config;
   const doFun = () => {
     const doByPageType: Record<IPageType, Function> = {
       LIST: () => {
