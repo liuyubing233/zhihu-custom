@@ -69,8 +69,8 @@ export const mySize = {
     const versionSizeCollection = formatVersionPercentSize('versionCollection');
 
     const NAME_HOME = '.Topstory-mainColumn,.SearchMain';
-    const NAME_ANSWER = '.Question-main,.Question-mainColumn,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content,.QuestionPage>div';
-    const NAME_ARTICLE = '.Post-NormalSub>div,.zhuanlan .Post-Row-Content,.zhuanlan .css-1pariuy,.zhuanlan .css-44kk6u';
+    const NAME_ANSWER = '.QuestionPage,.Question-mainColumn,.QuestionHeader-footer-inner,.QuestionHeader .QuestionHeader-content,.QuestionPage>div';
+    const NAME_ARTICLE = '.Post-NormalSub>div,.zhuanlan .Post-Row-Content,.zhuanlan .css-pi1fiy';
     //.Post-NormalMain .Post-Header， ,.Post-NormalMain>div 旧的专栏 ,.zhuanlan .css-1xy3kyp ,.zhuanlan .css-1voxft1 ,.zhuanlan .css-9w3zhd,.zhuanlan .css-15k5nix,.zhuanlan .css-1byd3cx
     const NAME_USER_HOME = '#ProfileHeader,[itemprop="people"] .Profile-main';
     const NAME_COLLECTION = '.CollectionsDetailPage';
@@ -226,7 +226,7 @@ export const mySize = {
         !!fontSizeForList
       ) +
       // 回答文字大小
-      fnReturnStr(`.Question-main .RichContent-inner,.Question-main .ctz-list-item-time,.Question-main .CommentContent{font-size: ${fontSizeForAnswer}px}`, !!fontSizeForAnswer) +
+      fnReturnStr(`.QuestionPage .RichContent-inner,.QuestionPage .ctz-list-item-time,.QuestionPage .CommentContent{font-size: ${fontSizeForAnswer}px}`, !!fontSizeForAnswer) +
       // 文章文字大小
       fnReturnStr(`.zhuanlan .Post-RichTextContainer,.zhuanlan .ctz-article-create-time,.zhuanlan .CommentContent{font-size: ${fontSizeForArticle}px}`, !!fontSizeForArticle) +
       // 文章标题文字大小

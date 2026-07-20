@@ -87,7 +87,7 @@ export const doReadMore = (currentDom: HTMLElement) => {
 
   const domPByClass = (name: string) => domP(currentDom, 'class', name);
   (domPByClass('Topstory-recommend') || domPByClass('Topstory-follow') || domPByClass('zhuanlan .css-1voxft1') || domPByClass('SearchMain')) && (pageType = 'LIST');
-  domPByClass('Question-main') && (pageType = 'QUESTION');
+  domPByClass('QuestionPage') && (pageType = 'QUESTION');
   domPByClass('Profile-main') && (pageType = 'USER_HOME');
   doContentItem(pageType, contentItem as HTMLElement, true);
 };
