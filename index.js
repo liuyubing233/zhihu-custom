@@ -27,14 +27,22 @@
 
 "use strict";
 (() => {
-  var judgeBrowserType = () => {
-    const userAgent = navigator.userAgent;
-    if (userAgent.includes("Firefox")) return "Firefox";
-    if (userAgent.includes("Edg")) return "Edge";
-    if (userAgent.includes("Chrome")) return "Chrome";
-    return "Safari";
+  const judgeBrowserType = () => {
+    const g =
+      typeof globalThis !== "undefined" ? globalThis :
+      typeof window !== "undefined" ? window :
+      typeof self !== "undefined" ? self : undefined;
+  
+    const ua = g?.navigator?.userAgent ?? "";
+  
+    return (
+      (ua.includes("Firefox") && "Firefox") ||
+      (ua.includes("Edg") && "Edge") ||
+      (ua.includes("Chrome") && "Chrome") ||
+      (ua.includes("Safari") && "Safari") ||
+      "Unknown"
+    );
   };
-  var isSafari = judgeBrowserType() === "Safari";
   var windowResize = () => {
     window.dispatchEvent(new Event("resize"));
   };
